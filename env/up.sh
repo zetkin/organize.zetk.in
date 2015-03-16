@@ -55,4 +55,4 @@ else
 fi
 
 echo Starting with API settings: $api_params
-container_up zetkin-od "-ti --rm -p 80:80 -v $PWD/..:/var/app $api_params"
+container_up zetkin-od "-ti --rm -p 8000:8000 -v $PWD/..:/var/app $api_params"
