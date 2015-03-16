@@ -6,4 +6,4 @@ cd /var/app
 # which we shuld instead COPY the repository into the image at build-time.
 npm install
 exec 2>&1
-exec node app.js
+exec node bin/server.js
