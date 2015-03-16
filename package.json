@@ -1,0 +1,16 @@
+{
+    "name": "zetkin-organizer-dashboard",
+    "author": "Richard Olsson",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/zetkin/organizer-dashboard.git"
+    },
+    "version": "0.0.0",
+    "main": "app",
+    "scripts": {
+        "start": "node ."
+    },
+    "dependencies": {
+      "express": "~4.12.0"
+    }
+}
