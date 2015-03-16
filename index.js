@@ -1,9 +1,11 @@
-express = require('express');
-http = require('http');
+'use strict';
 
-app = express();
+var express = require('express');
+var http = require('http');
 
-api = express.Router()
+var app = module.exports = express();
+
+var api = express.Router()
 api.all(/(.*)/, function(req, res) {
     // TODO: Verify data?
     var options = {
@@ -29,9 +31,4 @@ app.use('/api', api);
 app.get('/', function(req, res) {
     res.set('Content-Type', 'text/plain');
     res.send('Hello, world!');
-});
-
-var server = app.listen(80, function() {
-    var addr = server.address();
-    console.log('Listening on http://%s:%s', addr.address, addr.port);
 });
