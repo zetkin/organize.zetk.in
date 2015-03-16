@@ -1,9 +1,11 @@
-express = require('express');
-http = require('http');
+'use strict';
 
-app = express();
+var express = require('express');
+var http = require('http');
 
-api = express.Router()
+var app = express();
+
+var api = express.Router()
 api.all(/(.*)/, function(req, res) {
     // TODO: Verify data?
     var options = {
