@@ -8,7 +8,8 @@
   "version": "0.0.0",
   "main": "app",
   "scripts": {
-    "start": "node ."
+    "start": "node bin/server.js",
+    "test": "tape tests/test.js"
   },
   "dependencies": {
     "express": "~4.12.0"
