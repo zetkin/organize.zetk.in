@@ -1,6 +1,6 @@
 'use strict';
 
-var app = require('../');
+var app = require('../zetkin');
 
 var server = app.listen(8000, function() {
     var addr = server.address();
