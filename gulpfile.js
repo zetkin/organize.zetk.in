@@ -15,15 +15,15 @@ gulp.task('cleanStatic', function() {
 });
 
 gulp.task('cleanBuild', function() {
-    return gulp.src('react/build', {read:false}).pipe(clean());
+    return gulp.src('./zetkin/react/build', {read:false}).pipe(clean());
 });
 
 gulp.task('buildReact', function() {
-    return gulp.src('react/app.jsx').pipe(react()).pipe(gulp.dest('react/build'));
+    return gulp.src('./zetkin/react/app.jsx').pipe(react()).pipe(gulp.dest('./zetkin/react/build'));
 });
 
 gulp.task('bundle', function() {
-    return browserify('./react/build/app.js')
+    return browserify('./zetkin/react/build/app.js')
         .bundle()
         .pipe(source('main.js'))
         .pipe(gulp.dest('./static/js'));

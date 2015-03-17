@@ -33,7 +33,7 @@ api.all(/(.*)/, function(req, res) {
 });
 
 app.use('/api', api);
-app.use('/static/', express.static(path.join(__dirname, 'static')));
+app.use('/static/', express.static(path.join(__dirname, '../static')));
 
 app.use(function(req, res, next) {
     try {
