@@ -6,7 +6,7 @@ require('node-jsx').install({ extension: '.jsx' });
 var React = require('react/addons');
 var reactApp = require('./react/app.jsx');
 var template = require('./utils/template');
-var data = require('./bootstrap/data');
+var dataRouter = require('./bootstrap/datarouter');
 var express = require('express');
 var http = require('http');
 var path = require('path');
@@ -37,24 +37,28 @@ api.all(/(.*)/, function(req, res) {
 app.use('/api', api);
 app.use('/static/', express.static(path.join(__dirname, '../static')));
 
+// Special router which augments the response object with a "bootstrapData"
+// property which contains all data necessary to render the current endpoint.
+app.use(dataRouter);
+
 var renderBaseTemplate = template.makeFileRenderer('templates/base.html');
 
 app.use(function(req, res, next) {
-    data.loadDataForRequest(req, function(data) {
-        try {
-            var App = React.createFactory(reactApp);
-            var content = React.renderToString(App({ data: data }));
-            var html = renderBaseTemplate({
-                title: 'Zetkin',
-                data: JSON.stringify(data),
-                react_markup: content
-            });
+    var data = res.bootstrapData;
 
-            res.send(html);
-        } catch (err) {
-            // TODO: Global error handling
-            console.log(err);
-            return next();
-        }
-    });
+    try {
+        var App = React.createFactory(reactApp);
+        var content = React.renderToString(App({ data: data }));
+        var html = renderBaseTemplate({
+            title: 'Zetkin',
+            data: JSON.stringify(data),
+            react_markup: content
+        });
+
+        res.send(html);
+    } catch (err) {
+        // TODO: Global error handling
+        console.log(err);
+        return next();
+    }
 });
