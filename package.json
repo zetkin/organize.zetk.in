@@ -9,7 +9,7 @@
   "main": "app",
   "scripts": {
     "start": "node bin/server.js",
-    "test": "tape tests/test.js"
+    "test": "tape tests/*.js"
   },
   "dependencies": {
     "express": "~4.12.0",

@@ -3,7 +3,7 @@
 var test = require('tape');
 var servertest = require('servertest');
 var http = require('http');
-var app = require('../');
+var app = require('../zetkin');
 
 process.env.API_HOST = 'localhost';
 

@@ -32,16 +32,11 @@ var App = React.createClass({
         }
 
         return (
-            <html>
-                <head>
-                    <title>Hello Zetkin!</title>
-                </head>
-                <body>
-                    <h1>Hello, Zetkin!</h1>
-                    { message }
-                    <script type="text/javascript" src="/static/js/main.js"></script>
-                </body>
-            </html>
+            <div>
+                <h1>Hello, Zetkin!</h1>
+                <p>{ this.props.data.foo }</p>
+                { message }
+            </div>
         );
     }
 });
@@ -51,7 +46,10 @@ module.exports = App;
 // Bootstrap client-side React
 if (typeof window !== 'undefined') {
     window.onload = function() {
-        React.render(React.createElement(App), document)
+        var dataElement = document.getElementById('bootstrap-data');
+        var data = JSON.parse(dataElement.innerText);
+        var ctr = document.getElementById('ctr');
+        React.render(React.createElement(App, { data: data }), ctr);
     }
 }
 
