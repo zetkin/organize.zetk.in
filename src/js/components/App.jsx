@@ -6,6 +6,8 @@ import Header from './header/Header';
 import Dashboard from './dashboard/Dashboard';
 import NotFoundPage from './NotFoundPage';
 
+import PeopleSection from './sections/people/PeopleSection';
+
 
 export default class App extends FluxComponent {
     render() {
@@ -26,6 +28,9 @@ export default class App extends FluxComponent {
 
                             <Router.Location ref="dashboard" path="/"
                                 handler={ Dashboard }/>
+
+                            <Router.Location ref="people" path="/people"
+                                handler={ PeopleSection }/>
 
                             <Router.NotFound ref="notfound"
                                 handler={ NotFoundPage }/>
