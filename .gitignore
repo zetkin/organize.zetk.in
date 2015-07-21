@@ -1,5 +1,3 @@
 node_modules
-
-# Build cache/intermediates
-static
-zetkin/react/build
+*.swp
+dist
