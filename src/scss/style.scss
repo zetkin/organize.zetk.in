@@ -1,9 +1,11 @@
 @import "_base";
 @import "header/_base";
+@import "section/_base";
 @import "dashboard/_base";
 
 @media screen and (min-width: 720px) {
     @import "_medium";
     @import "header/_medium";
+    @import "section/_medium";
     @import "dashboard/_medium";
 }
