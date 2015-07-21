@@ -1,16 +1,20 @@
 import FluxComponent from 'flummox/component';
+import cookieParser from 'cookie-parser';
 import React from 'react/addons';
 import express from 'express';
 import http from 'http';
 import path from 'path';
 
 import dataRouter from './datarouter';
+import authRouter from './authrouter';
 import apiProxy from './apiproxy';
 import App from '../components/App';
 
 
 var app = express();
 
+app.use(cookieParser());
+app.use(authRouter);
 app.use(dataRouter);
 app.use('/api', apiProxy);
 app.use('/static/', express.static(path.join(__dirname, '../../static')));
