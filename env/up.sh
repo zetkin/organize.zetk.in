@@ -43,7 +43,7 @@ container_up() {
     fi
 }
 
-build_if_not_exists zetkin-od app
+build_if_not_exists organize.zetk.in app
 
 # Check whether there is a locally running container for the Zetkin platform.
 # If not, use a development server as API back-end
@@ -55,4 +55,4 @@ else
 fi
 
 echo Starting with API settings: $api_params
-container_up zetkin-od "-ti --rm -p 8000:8000 -v $PWD/..:/var/app $api_params"
+container_up organize.zetk.in "-ti --rm -p 4080:8000 -v $PWD/..:/var/app $api_params"
