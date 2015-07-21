@@ -26,6 +26,9 @@ export default class App extends FluxComponent {
 
                             <Router.Location ref="dashboard" path="/"
                                 handler={ Dashboard }/>
+
+                            <Router.NotFound ref="notfound"
+                                handler={ NotFoundPage }/>
                         </Router.Locations>
                     </div>
                     <script type="text/json"
