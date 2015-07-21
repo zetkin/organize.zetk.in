@@ -9,6 +9,7 @@ export default class DashboardStore extends Store {
         // TODO: Don't hardcode configuration
 
         this.setState({
+            widgets: [ { type: 'upcoming_campaigns' } ],
             shortcuts: [ 'people', 'campaign', 'contact', 'maps',
                 'survey', 'resources', 'meetups', 'finance', 'settings' ]
         });
@@ -16,5 +17,9 @@ export default class DashboardStore extends Store {
 
     getShortcuts() {
         return this.state.shortcuts;
+    }
+
+    getWidgets() {
+        return this.state.widgets;
     }
 }
