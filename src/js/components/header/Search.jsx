@@ -6,7 +6,7 @@ import FluxComponent from '../FluxComponent';
 export default class Search extends FluxComponent {
     render() {
         return (
-            <form>
+            <form className="search-form">
                 <input type="search"/>
             </form>
         );

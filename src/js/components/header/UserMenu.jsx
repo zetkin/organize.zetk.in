@@ -11,8 +11,8 @@ export default class UserMenu extends FluxComponent {
         var orgName = 'SPD';
 
         return (
-            <nav id="user-menu">
-                <div className="user-card">
+            <nav className="user-menu">
+                <div className="user-info">
                     <span className="user-name">{ userName }</span>
                     <span className="user-org">{ orgName }</span>
                 </div>

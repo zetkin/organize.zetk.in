@@ -19,6 +19,7 @@ export default class App extends FluxComponent {
             <html>
                 <head>
                     <script src="/static/js/main.js"></script>
+                    <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
                 </head>
                 <body>
                     <div id="app">
