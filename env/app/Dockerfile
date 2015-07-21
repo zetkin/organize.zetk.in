@@ -8,8 +8,8 @@ RUN apt-get update && apt-get install -q -y --force-yes --fix-missing \
 
 RUN npm install npm -g
 
-RUN mkdir /etc/service/organizer-dashboard
-ADD run.sh /etc/service/organizer-dashboard/run
+RUN mkdir /etc/service/organize.zetk.in
+ADD run.sh /etc/service/organize.zetk.in/run
 
 # Need to be in right working directory for tests to run
 WORKDIR /var/app
