@@ -5,6 +5,22 @@ import url from 'url';
 
 var router = express();
 
+var redirectToLogin = function(req, res) {
+    // TODO: Don't hard-code this URL
+    var reqUrlObj = url.parse(req.url, true);
+
+    reqUrlObj.protocol = req.protocol;
+    reqUrlObj.host = req.get('Host');
+    if ('token' in reqUrlObj.query) {
+        delete reqUrlObj.query.token;
+    }
+
+    var redir = encodeURI(url.format(reqUrlObj));
+    var loginUrl = 'http://accounts.zetk.in:8000/login?redir=' + redir;
+
+    res.redirect(303, loginUrl);
+}
+
 /**
  * This is the main user authentication flow, concisting of:
  *
@@ -20,7 +36,24 @@ router.all(/.*/, function(req, res, next) {
         // Use token from cookie for authentication with
         // the Zetkin Platform API.
         Z.setToken(req.cookies.apitoken);
-        next();
+
+        // Verify that the token is valid
+        Z.resource('/session').get()
+            .then(function(result) {
+                next();
+            })
+            .catch(function(err) {
+                if (err.httpStatus == 401) {
+                    // There was a token, but it's invalid (e.g. expired).
+                    // The visitor will need to authenticate again to get
+                    // a new token.
+                    res.clearCookie('apitoken');
+                    redirectToLogin(req, res);
+                }
+                else {
+                    next();
+                }
+            });
     }
     else {
         var urlObj = url.parse(req.url, true);
@@ -43,12 +76,7 @@ router.all(/.*/, function(req, res, next) {
             // 1. Anonymous visitor must login
             // The visitor is not authenticated, so they will be
             // redirected to accounts.zetk.in for logging in.
-            // TODO: Don't hard-code this URL
-            var reqUrl = req.protocol + '://' + req.get('Host') + req.url;
-            var redir = encodeURI(reqUrl);
-            var loginUrl = 'http://accounts.zetk.in:8000/login?redir=' + redir;
-
-            res.redirect(303, loginUrl);
+            redirectToLogin(req, res);
         }
     }
 });

@@ -13,10 +13,10 @@ import App from '../components/App';
 
 var app = express();
 
+app.use('/api', apiProxy);
 app.use(cookieParser());
 app.use(authRouter);
 app.use(dataRouter);
-app.use('/api', apiProxy);
 app.use('/static/', express.static(path.join(__dirname, '../../static')));
 
 app.use(function(req, res, next) {
