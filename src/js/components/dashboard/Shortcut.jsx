@@ -5,8 +5,10 @@ import { Link } from 'react-router-component';
 
 export default class Shortcut extends React.Component {
     render() {
+        var href = '/' + this.props.target;
+
         return (
-            <Link href={ this.props.target }>{ this.props.target }</Link>
+            <Link href={ href }>{ this.props.target }</Link>
         );
     }
 }
