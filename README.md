@@ -10,11 +10,8 @@ userspace, but we don't encourage or support that. Read more about how to get
 up and running with Docker in the [`env`](./env) folder.
 
 ## Repository contents
-- `bin`: Contains the main server entry-point
 - `env`: Contains files related to the Docker image configuration
-- `gulp.sh`: Shorthand script for running local gulp (see comments in file)
 - `gulpfile.js`: Tasks for the Gulp task runner
 - `package.json`: NPM package configuration (dependencies et c)
-- `runtests.sh`: Shorthand for running test suite within Docker
-- `tests`: Test suite
-- `zetkin`: All application code resides within this directory
+- `src`: All application code resides within this directory
+- `tests`: Test suite (currently not set up properly)
