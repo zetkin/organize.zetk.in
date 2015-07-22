@@ -30,7 +30,7 @@ export default class App extends FluxComponent {
                             <Router.Location ref="dashboard" path="/"
                                 handler={ Dashboard }/>
 
-                            <Router.Location ref="people" path="/people"
+                            <Router.Location ref="people" path="/people(/*)"
                                 handler={ PeopleSection }/>
 
                             <Router.NotFound ref="notfound"

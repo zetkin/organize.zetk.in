@@ -1,6 +1,9 @@
 import React from 'react/addons';
 
 import SectionBase from '../SectionBase';
+import PeopleListPane from './PeopleListPane';
+import JoinRequestsPane from './JoinRequestsPane';
+import InvitePane from './InvitePane';
 
 
 export default class PeopleSection extends SectionBase {
@@ -10,13 +13,14 @@ export default class PeopleSection extends SectionBase {
 
     getSubSections() {
         return [
-            { title: 'People' },
-            { title: 'Join requests' },
-            { title: 'Invite' }
-        ];
-    }
+            { path: '/', title: 'People',
+                startPane: PeopleListPane },
 
-    renderSectionContent() {
-        return <h1>People</h1>;
+            { path: '/requests', title: 'Join requests',
+                startPane: JoinRequestsPane },
+
+            { path: '/invite', title: 'Invite',
+                startPane: InvitePane }
+        ];
     }
 }
