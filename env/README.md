@@ -14,24 +14,24 @@ first run, but the necessary downloads will be cached for future runs.
 
 ```
 $ ./up.sh
-building zetkin-od
+building organize.zetk.in
 [...]
-starting zetkin-od
+starting organize.zetk.in
 [...]
 ```
 
-This launches the `zetkin-od` container and starts serving from port 8000 on the
+This launches the `organize.zetk.in` container and starts serving from port 4080 on the
 host of the docker daemon, usually localhost on Linux, or the IP adress returned
 by `boot2docker ip` on other systems.
 
 ## Reloading during development
 If you are modifying the code, you need to restart the API service to force
 reload the server to load the new code. The easiest way to do this is to use
-`docker exec` to interact with the Runit service within the `zetkin-od`
+`docker exec` to interact with the Runit service within the `organize.zetk.in`
 container:
 
 ```
-docker exec api sv restart organizer-dashboard
+docker exec organize.zetk.in sv restart organize.zetk.in
 ```
 
 A nice way to set this up so that the organizer dashboard service is restarted
@@ -41,8 +41,9 @@ command, when issued in the root repository folder, will listen for changes to
 python files and issue the restart signal whenever a JS or JSX file is saved.
 
 ```
-watchmedo shell-command -c "docker exec api sv restart organizer-dashboard" \
-  -p "*.js;*.jsx" -R -W zetkin
+watchmedo shell-command \
+  -c "docker exec organize.zetk.in sv restart organize.zetk.in" \
+  -p "*.js;*.jsx" -R -W src
 ```
 
 Of course, any other watcher will do as well.
