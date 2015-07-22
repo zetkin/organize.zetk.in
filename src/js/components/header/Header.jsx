@@ -8,7 +8,7 @@ import UserMenu from './UserMenu';
 export default class Header extends React.Component {
     render() {
         return (
-            <header>
+            <header className="appheader">
                 <Logo />
                 <Search />
                 <UserMenu />
