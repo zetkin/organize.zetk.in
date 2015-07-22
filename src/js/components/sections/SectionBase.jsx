@@ -1,34 +1,39 @@
 import React from 'react/addons';
-import { Link } from 'react-router-component';
+import { Link, Locations, Location } from 'react-router-component';
 
 import FluxComponent from '../FluxComponent';
 
 
 export default class SectionBase extends FluxComponent {
     render() {
-        var i;
         var subSections = this.getSubSections();
-        var navItems = [];
-
-        for (i in subSections) {
-            var subData = subSections[i];
-
-            // TODO: Add icons et c
-            navItems.push(
-                <li key={ i }>{ subData.title }</li>
-            );
-        }
+        var basePath = this.getBasePath();
 
         return (
             <div className="section">
                 <nav className="section-nav">
                     <ul>
-                        { navItems }
+                        { subSections.map(function(subData) {
+                            var path = basePath + subData.path;
+                            return (
+                                <li key={ subData.path }>
+                                    <Link href={ path}>
+                                        { subData.title }
+                                    </Link>
+                                </li>
+                            );
+                        }, this)}
                         <li key="back"><Link href="/">Dashboard</Link></li>
                     </ul>
                 </nav>
                 <div className="section-content">
-                    { this.renderSectionContent() }
+                    <Locations contextual>
+                        { subSections.map(function(subData) {
+                            return <Location key={ subData.path }
+                                    path={ subData.path }
+                                    handler={ subData.startPane }/>;
+                        })}
+                    </Locations>
                 </div>
             </div>
         );
