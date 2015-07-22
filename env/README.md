@@ -34,19 +34,14 @@ container:
 docker exec organize.zetk.in sv restart organize.zetk.in
 ```
 
-A nice way to set this up so that the organizer dashboard service is restarted
-when code changes is to use the `watchmedo` tool, which is part of the
-[watchdog](https://pypi.python.org/pypi/watchdog) Python package. The following
-command, when issued in the root repository folder, will listen for changes to
-python files and issue the restart signal whenever a JS or JSX file is saved.
+There is a gulp task in the project Gulpfile called `restartDevServer` which
+does exactly this. The task is included in `gulp watch` as a task that is run
+whenever a relevant file changes. To listen for changes, build and restart the
+server automatically, use `gulp watch`
 
 ```
-watchmedo shell-command \
-  -c "docker exec organize.zetk.in sv restart organize.zetk.in" \
-  -p "*.js;*.jsx" -R -W src
+gulp watch
 ```
-
-Of course, any other watcher will do as well.
 
 ## If you're on Windows
 Getting everything to work on Windows is slightly more cumbersome. In essence,
