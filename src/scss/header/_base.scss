@@ -1,0 +1,57 @@
+.appheader {
+    padding: 10px;
+    height: 60px;
+
+    .logo {
+        display: none;
+    }
+
+    .search-form {
+        margin: 0;
+
+        input {
+            float: left;
+            display: block;
+            height: 30px;
+            padding: 4px;
+            border-width: 0;
+            width: 80%;
+        }
+    }
+
+    .user-menu {
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+
+        .user-info {
+            position: absolute;
+            top: 0;
+            right: 0;
+
+            width: 40px;
+            height: 40px;
+            background-color: red;
+        }
+
+        .user-name {
+            display: none;
+        }
+
+        .user-org {
+            display: none;
+        }
+
+        ul {
+            margin-top: 50px;
+            display: none;
+        }
+
+        &:hover {
+            ul {
+                display: block;
+            }
+        }
+    }
+}

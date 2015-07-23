@@ -1,0 +1,39 @@
+.appheader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+
+    .logo {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        display: block;
+
+        margin: 0;
+    }
+
+    .search-form {
+        input {
+            float: none;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    .user-menu {
+        .user-info {
+            width: 120px;
+        }
+
+        .user-name {
+            display: block;
+        }
+
+        .user-org {
+            display: block;
+        }
+    }
+}

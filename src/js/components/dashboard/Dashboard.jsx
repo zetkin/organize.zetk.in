@@ -50,14 +50,14 @@ export default class Dashboard extends FluxComponent {
 
 
         return (
-            <div id="dashboard">
-                <ul id="dashboard-favorites">
+            <div className="dashboard">
+                <ul className="dashboard-favorites">
                     { favoriteElements }
                 </ul>
-                <ul id="dashboard-shortcuts">
+                <ul className="dashboard-shortcuts">
                     { shortcutElements }
                 </ul>
-                <ul id="dashboard-widgets">
+                <ul className="dashboard-widgets">
                     { widgetElements }
                 </ul>
             </div>
