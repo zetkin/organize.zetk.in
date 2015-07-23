@@ -1,5 +1,4 @@
 import React from 'react/addons';
-import { Locations, Location, NotFound } from 'react-router-component';
 
 import FluxComponent from '../FluxComponent';
 
@@ -18,30 +17,6 @@ class EmptyNotFound extends React.Component {
 
 export default class PaneBase extends FluxComponent {
     render() {
-        var childPanes;
-        var childRouter;
-
-        var childPanes = this.getChildPanes();
-
-        if (childPanes && childPanes.length) {
-            var LocationFactory = React.createFactory(Location);
-            var LocationsFactory = React.createFactory(Locations);
-            var NotFoundFactory = React.createFactory(NotFound);
-            var routerArgs = [{ contextual: true }];
-
-            childPanes.map(function(pane) {
-                routerArgs.push(LocationFactory({
-                    path: pane.path,
-                    handler: pane.component
-                }));
-            });
-
-            routerArgs.push(NotFoundFactory({ handler: EmptyNotFound }));
-            routerArgs.push(LocationFactory({ path: '/', handler: EmptyIndex }));
-
-            childRouter = LocationsFactory.apply(null, routerArgs);
-        }
-
         return (
             <div className="section-pane">
                 <header>
@@ -50,7 +25,6 @@ export default class PaneBase extends FluxComponent {
                 </header>
                 <div className="section-pane-content">
                     { this.renderPaneContent() }
-                    { childRouter }
                 </div>
             </div>
         );
@@ -64,15 +38,15 @@ export default class PaneBase extends FluxComponent {
         return null;
     }
 
-    getChildPanes() {
-        return [];
-    }
-
-    getChildLocations() {
-        return null;
-    }
-
     renderPaneContent() {
         return null;
+    }
+
+    subPath(path) {
+        return this.props.panePath + '/' + path;
+    }
+
+    subPanePath(paneType, ...params) {
+        return this.subPath(paneType + ':' + params.join(','));
     }
 }
