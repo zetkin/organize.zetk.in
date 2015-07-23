@@ -7,8 +7,10 @@ export default class UserMenu extends FluxComponent {
     render() {
         // TODO: Don't hard-code this
         var accountUrl = 'http://accounts.zetk.in:8000/';
-        var userName = 'Clara Zetkin';
-        var orgName = 'SPD';
+
+        var userStore = this.getStore('user');
+        var userName = userStore.getUserInfo().email;
+        var orgName = 'Some org'; // TODO: Selected organization
 
         return (
             <nav className="user-menu">
