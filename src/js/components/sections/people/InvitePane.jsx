@@ -1,6 +1,6 @@
 import React from 'react/addons';
 
-import PaneBase from '../PaneBase';
+import PaneBase from '../../panes/PaneBase';
 
 
 export default class InvitePane extends PaneBase {

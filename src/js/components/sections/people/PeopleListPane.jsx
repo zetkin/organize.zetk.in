@@ -1,8 +1,7 @@
 import React from 'react/addons';
-import { Link, Locations, Location, NotFound } from 'react-router-component';
+import { Link } from 'react-router-component';
 
-import PaneBase from '../PaneBase';
-import PersonPane from './PersonPane';
+import PaneBase from '../../panes/PaneBase';
 
 
 export default class PeopleListPane extends PaneBase {
@@ -10,17 +9,11 @@ export default class PeopleListPane extends PaneBase {
         return 'People';
     }
 
-    getChildPanes() {
-        return [
-            { path: '/:personId', component: PersonPane }
-        ];
-    }
-
     renderPaneContent() {
         return (
             <div>
                 <h3>Jiddermekk</h3>
-                <Link href="/1337">Person 1337</Link>
+                <Link href={ this.subPanePath('person', 1337) }>Person 1337</Link>
             </div>
         );
     }
