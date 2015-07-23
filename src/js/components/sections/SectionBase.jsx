@@ -29,8 +29,11 @@ export default class SectionBase extends FluxComponent {
                 <div className="section-content">
                     <Locations contextual>
                         { subSections.map(function(subData) {
+                            var path = (subData.path === '/')?
+                                '(/*)' : subData.path + '(/*)';
+
                             return <Location key={ subData.path }
-                                    path={ subData.path }
+                                    path={ path }
                                     handler={ subData.startPane }/>;
                         })}
                     </Locations>

@@ -13,14 +13,14 @@ export default class PeopleSection extends SectionBase {
 
     getSubSections() {
         return [
-            { path: '/', title: 'People',
-                startPane: PeopleListPane },
-
             { path: '/requests', title: 'Join requests',
                 startPane: JoinRequestsPane },
 
             { path: '/invite', title: 'Invite',
-                startPane: InvitePane }
+                startPane: InvitePane },
+
+            { path: '/', title: 'People',
+                startPane: PeopleListPane }
         ];
     }
 }

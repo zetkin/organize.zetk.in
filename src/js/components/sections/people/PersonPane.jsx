@@ -5,6 +5,6 @@ import PaneBase from '../PaneBase';
 
 export default class PersonPane extends PaneBase {
     getPaneTitle() {
-        return 'Person';
+        return 'Person ' + this.props.personId;
     }
 }
