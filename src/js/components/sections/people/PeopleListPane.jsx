@@ -1,7 +1,7 @@
 import React from 'react/addons';
 import { Link } from 'react-router-component';
 
-import PaneBase from '../PaneBase';
+import PaneBase from '../../panes/PaneBase';
 
 
 export default class PeopleListPane extends PaneBase {

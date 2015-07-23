@@ -1,4 +1,4 @@
-import PersonPane from '../components/sections/people/PersonPane';
+import PersonPane from '../components/panes/PersonPane';
 
 var _panes = {
     'person': PersonPane

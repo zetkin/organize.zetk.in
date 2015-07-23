@@ -1,6 +1,6 @@
 import React from 'react/addons';
 
-import PaneBase from '../PaneBase';
+import PaneBase from './PaneBase';
 
 
 export default class PersonPane extends PaneBase {
