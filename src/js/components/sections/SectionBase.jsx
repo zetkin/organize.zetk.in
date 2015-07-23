@@ -1,14 +1,9 @@
 import React from 'react/addons';
 import { Link } from 'react-router-component';
 
+import PaneUtils from '../../utils/PaneUtils';
 import FluxComponent from '../FluxComponent';
 
-
-class DummyPane extends React.Component {
-    render() {
-        return <h1>Dummy pane { this.props.params }</h1>;
-    }
-}
 
 export default class SectionBase extends FluxComponent {
     render() {
@@ -44,10 +39,19 @@ export default class SectionBase extends FluxComponent {
 
             for (i = 1; i < subPathSegments.length; i++) {
                 var segment = subPathSegments[i];
+                var segmentData = segment.split(':');
+                var paneName = segmentData[0];
+                var paneParams = [];
+
+                if (segmentData.length == 2) {
+                    paneParams = segmentData[1].split(',');
+                }
 
                 panePath = basePath + '/' + subPathSegments.slice(0, i).join('/');
+
+                Pane = PaneUtils.resolve(paneName);
                 panes.push(
-                    <DummyPane key={ segment } panePath={ panePath } params={ segment }/>
+                    <Pane key={ segment } panePath={ panePath } params={ paneParams }/>
                 );
             }
         }
