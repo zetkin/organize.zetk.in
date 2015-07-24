@@ -20,4 +20,15 @@ router.all(/.*/, function(req, res, next) {
         });
 });
 
+router.get(/person:(\d+)$/, function(req, res, next) {
+    req.flux.getActions('person').getPerson(req.params[0])
+        .then(function() {
+            next();
+        })
+        .catch(function(err) {
+            // TODO: What could this be? Handle!
+            next();
+        });
+});
+
 export default router;
