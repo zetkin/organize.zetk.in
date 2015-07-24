@@ -6,20 +6,58 @@ export default class UserStore extends Store {
         super();
 
         this.setState({
-            user: null
+            user: null,
+            memberships: null,
+            activeMembership: null
         });
 
         var userActions = flux.getActions('user');
         this.register(userActions.getUserInfo, this.onGetUserInfoComplete);
+        this.register(userActions.getUserMemberships,
+            this.onGetUserMembershipsComplete);
+        this.register(userActions.setActiveMembership,
+            this.onSetActiveMembershipComplete);
     }
 
     getUserInfo() {
         return this.state.user;
     }
 
+    getMemberships() {
+        return this.state.memberships;
+    }
+
+    getActiveMembership() {
+        return this.state.activeMembership;
+    }
+
     onGetUserInfoComplete(res) {
         this.setState({
             user: res.data.data
+        });
+    }
+
+    onSetActiveMembershipComplete(membership) {
+        this.setState({
+            activeMembership: membership
+        });
+    }
+
+    onGetUserMembershipsComplete(res) {
+        var i;
+        var memberships = res.data.data;
+        var officialMemberships = [];
+
+        for (i in memberships) {
+            if (memberships[i].role != null) {
+                officialMemberships.push(memberships[i]);
+            }
+        }
+
+        this.setState({
+            memberships: officialMemberships,
+            activeMembership: (officialMemberships.length > 0)?
+                officialMemberships[0] : null
         });
     }
 

@@ -10,6 +10,7 @@ router.all(/.*/, function(req, res, next) {
     req.flux = new Flux();
 
     req.flux.getActions('user').getUserInfo()
+        .then(req.flux.getActions('user').getUserMemberships)
         .then(function(result) {
             next();
         })
