@@ -18,20 +18,23 @@ export default class UserMenu extends FluxComponent {
         var memberships = userStore.getMemberships();
 
         return (
-            <nav className="user-menu">
-                <div className="user-info">
-                    <span className="user-name">{ userName }</span>
-                    <span className="user-org">{ orgName }</span>
+            <nav className="usermenu">
+                <div className="usermenu-info">
+                    <span className="usermenu-info-name">{ userName }</span>
+                    <span className="usermenu-info-org">{ orgName }</span>
                 </div>
                 <ul>
                     <li><a href="/logout">Log out</a></li>
                     <li><a href={ accountUrl }>Account settings</a></li>
-                    <li>Switch organization</li>
+                    <li className="usermenu-orglabel">Switch organization</li>
                     {memberships.map(function(ms) {
                         return (
-                            <li onClick={ this.onOrgClick.bind(this, ms) }>
-                                <span>{ ms.organization.title }</span>
-                                <span>{ ms.role }</span>
+                            <li className="usermenu-orgitem"
+                                onClick={ this.onOrgClick.bind(this, ms) }>
+                                <span className="usermenu-orgitem-title">
+                                    { ms.organization.title }</span>
+                                <span className="usermenu-orgitem-role">
+                                    { ms.role }</span>
                             </li>
                         );
                     }, this)}
