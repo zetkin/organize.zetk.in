@@ -17,8 +17,15 @@ var app = express();
 app.use('/api', apiProxy);
 app.use(cookieParser());
 app.use(authRouter);
+
+app.use('/favicon.ico', (req, res) =>
+    res.status(404).type('txt').send('Not found'));
+
+app.use('/static/', express.static(
+    path.join(__dirname, '../../static'),
+    { fallthrough: false }));
+
 app.use(dataRouter);
-app.use('/static/', express.static(path.join(__dirname, '../../static')));
 
 app.get('/logout', function(req, res, next) {
     Z.resource('/session').del()
