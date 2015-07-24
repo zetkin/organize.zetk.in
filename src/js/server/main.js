@@ -1,6 +1,7 @@
 import Z from 'zetkin';
 
-var app = require('./app');
+import app from './app';
+import polyfills from '../utils/polyfills';
 
 var port = process.env.ZETKIN_FRONTEND_PORT || 8000;
 

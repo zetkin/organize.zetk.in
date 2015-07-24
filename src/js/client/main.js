@@ -8,6 +8,7 @@ import cookie from 'cookie-cutter';
 import React from 'react/addons';
 import Z from 'zetkin';
 
+import polyfills from '../utils/polyfills';
 import App from '../components/App';
 import Flux from '../flux';
 
