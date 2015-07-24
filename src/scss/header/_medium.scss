@@ -23,16 +23,19 @@
         }
     }
 
-    .user-menu {
-        .user-info {
-            width: 120px;
+    .usermenu {
+        .usermenu-info {
+            width: 200px;
+            height: 40px;
+            padding: 5px 10px;
+            text-align: right;
         }
 
-        .user-name {
+        .usermenu-info-name {
             display: block;
         }
 
-        .user-org {
+        .usermenu-info-org {
             display: block;
         }
     }
