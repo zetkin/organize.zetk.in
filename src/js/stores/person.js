@@ -1,5 +1,7 @@
 import { Store } from 'flummox';
 
+import StoreUtils from '../utils/StoreUtils';
+
 
 export default class PersonStore extends Store {
     constructor(flux) {
@@ -31,22 +33,10 @@ export default class PersonStore extends Store {
     }
 
     onRetrievePersonComplete(res) {
-        var i;
-        var updated = false;
         var people = this.state.people;
         var person = res.data.data;
 
-        for (i = 0; i < people.length; i++) {
-            if (people[i].id == person.id) {
-                people[i] = person;
-                updated = true;
-                break;
-            }
-        }
-
-        if (!updated) {
-            people.push(person);
-        }
+        StoreUtils.updateOrAdd(people, person.id, person);
 
         this.setState({
             people: people
