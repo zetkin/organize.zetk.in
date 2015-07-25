@@ -22,12 +22,13 @@ export default class PeopleListPane extends PaneBase {
             <div>
                 <h3>People</h3>
                 <table>
-                    {people.map(function(person, index) {
+                    {people.map(function(p, index) {
                         return (
-                            <tr onClick={ this.onPersonClick.bind(this, person) }>
-                                <td>{ person.first_name }</td>
-                                <td>{ person.last_name }</td>
-                                <td>{ person.email }</td>
+                            <tr key={ p.id}
+                                onClick={ this.onPersonClick.bind(this, p) }>
+                                <td>{ p.first_name }</td>
+                                <td>{ p.last_name }</td>
+                                <td>{ p.email }</td>
                             </tr>
                         );
                     }, this)}
