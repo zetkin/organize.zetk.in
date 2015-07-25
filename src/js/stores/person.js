@@ -52,4 +52,12 @@ export default class PersonStore extends Store {
             people: people
         });
     }
+
+    static serialize(state) {
+        return JSON.stringify(state)
+    }
+
+    static deserialize(stateStr) {
+        return JSON.parse(stateStr);
+    }
 }
