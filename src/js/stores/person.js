@@ -20,6 +20,8 @@ export default class PersonStore extends Store {
             this.onUpdatePersonBegin, this.onUpdatePersonComplete);
         this.register(personActions.createPerson,
             this.onCreatePersonComplete);
+        this.registerAsync(personActions.deletePerson,
+            this.onDeletePersonBegin, null);
     }
 
     getPeople() {
@@ -72,6 +74,13 @@ export default class PersonStore extends Store {
 
         this.setState({
             people: people
+        });
+    }
+
+    onDeletePersonBegin(personId) {
+        StoreUtils.remove(this.state.people, personId);
+        this.setState({
+            people: this.state.people
         });
     }
 
