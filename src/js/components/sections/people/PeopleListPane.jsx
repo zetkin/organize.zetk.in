@@ -11,7 +11,7 @@ export default class PeopleListPane extends PaneBase {
 
     componentDidMount() {
         this.listenTo('person', this.forceUpdate);
-        this.getActions('person').getPeople();
+        this.getActions('person').retrievePeople();
     }
 
     renderPaneContent() {

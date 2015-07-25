@@ -21,7 +21,7 @@ router.all(/.*/, function(req, res, next) {
 });
 
 router.get(/person:(\d+)$/, function(req, res, next) {
-    req.flux.getActions('person').getPerson(req.params[0])
+    req.flux.getActions('person').retrievePerson(req.params[0])
         .then(function() {
             next();
         })

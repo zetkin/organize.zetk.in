@@ -10,10 +10,10 @@ export default class PersonStore extends Store {
         });
 
         var personActions = flux.getActions('person');
-        this.register(personActions.getPeople,
-            this.onGetPeopleComplete);
-        this.register(personActions.getPerson,
-            this.onGetPersonComplete);
+        this.register(personActions.retrievePeople,
+            this.onRetrievePeopleComplete);
+        this.register(personActions.retrievePerson,
+            this.onRetrievePersonComplete);
     }
 
     getPeople() {
@@ -24,13 +24,13 @@ export default class PersonStore extends Store {
         return this.state.people.find(p => p.id == id);
     }
 
-    onGetPeopleComplete(res) {
+    onRetrievePeopleComplete(res) {
         this.setState({
             people: res.data.data
         });
     }
 
-    onGetPersonComplete(res) {
+    onRetrievePersonComplete(res) {
         var i;
         var updated = false;
         var people = this.state.people;
