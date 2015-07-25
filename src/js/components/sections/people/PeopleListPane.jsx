@@ -20,7 +20,9 @@ export default class PeopleListPane extends PaneBase {
 
         return (
             <div>
-                <h3>People</h3>
+                <input type="button" value="Add"
+                    onClick={ this.onAddClick.bind(this) }/>
+
                 <table>
                     {people.map(function(p, index) {
                         return (
@@ -39,5 +41,9 @@ export default class PeopleListPane extends PaneBase {
 
     onPersonClick(person) {
         this.gotoSubPane('person', person.id);
+    }
+
+    onAddClick(person) {
+        this.gotoSubPane('addperson');
     }
 }
