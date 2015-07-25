@@ -29,11 +29,13 @@ export default class PersonPane extends PaneBase {
 
     renderPaneContent(data) {
         if (data.person) {
-            return (
+            return [
                 <PersonForm ref="personForm"
                     person={ data.person }
-                    onSubmit={ this.onSubmit.bind(this) }/>
-            );
+                    onSubmit={ this.onSubmit.bind(this) }/>,
+                <input type="button" value="Delete"
+                    onClick={ this.onDeleteClick.bind(this) }/>
+            ];
         }
         else {
             // TODO: Show loading indicator?
@@ -49,5 +51,12 @@ export default class PersonPane extends PaneBase {
         var personId = this.props.params[0];
 
         this.getActions('person').updatePerson(personId, values);
+    }
+
+    onDeleteClick(ev) {
+        var personId = this.props.params[0];
+
+        this.getActions('person').deletePerson(personId);
+        this.closePane();
     }
 }
