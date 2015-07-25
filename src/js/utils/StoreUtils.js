@@ -19,6 +19,19 @@ function updateOrAdd(dataSet, id, newData) {
 }
 
 
+function remove(dataSet, id) {
+    var i;
+
+    for (i = 0; i < dataSet.length; i++) {
+        if (dataSet[i].id == id) {
+            dataSet.splice(i, 1);
+            return;
+        }
+    }
+}
+
+
 export default {
-    updateOrAdd: updateOrAdd
+    updateOrAdd: updateOrAdd,
+    remove: remove
 }
