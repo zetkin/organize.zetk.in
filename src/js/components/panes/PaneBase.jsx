@@ -17,29 +17,35 @@ class EmptyNotFound extends React.Component {
 
 export default class PaneBase extends FluxComponent {
     render() {
+        var data = this.getRenderData();
+
         return (
             <div className="section-pane">
                 <header>
-                    <h2>{ this.getPaneTitle() }</h2>
-                    <small>{ this.getPaneSubTitle() }</small>
+                    <h2>{ this.getPaneTitle(data) }</h2>
+                    <small>{ this.getPaneSubTitle(data) }</small>
                 </header>
                 <div className="section-pane-content">
-                    { this.renderPaneContent() }
+                    { this.renderPaneContent(data) }
                 </div>
             </div>
         );
     }
 
-    getPaneTitle() {
+    getPaneTitle(data) {
         throw "Must implement getPaneTitle()";
     }
 
-    getPaneSubTitle() {
+    getPaneSubTitle(data) {
         return null;
     }
 
-    renderPaneContent() {
+    renderPaneContent(data) {
         return null;
+    }
+
+    getRenderData() {
+        return {};
     }
 
     subPath(path) {
