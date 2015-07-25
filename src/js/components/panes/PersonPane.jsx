@@ -7,6 +7,10 @@ import SelectInput from '../form/SelectInput';
 
 
 export default class PersonPane extends PaneBase {
+    componentDidMount() {
+        this.listenTo('person', this.forceUpdate);
+    }
+
     getRenderData() {
         var personId = this.props.params[0];
         var personStore = this.getStore('person');
@@ -70,9 +74,9 @@ export default class PersonPane extends PaneBase {
         ev.preventDefault();
 
         var form = this.refs.personForm;
-        var values = form.getValues();
+        var values = form.getChangedValues();
+        var personId = this.props.params[0];
 
-        console.log('all values', values);
-        console.log('changed', form.getChangedValues());
+        this.getActions('person').updatePerson(personId, values);
     }
 }
