@@ -18,6 +18,8 @@ export default class PersonStore extends Store {
             this.onRetrievePersonComplete);
         this.registerAsync(personActions.updatePerson,
             this.onUpdatePersonBegin, this.onUpdatePersonComplete);
+        this.register(personActions.createPerson,
+            this.onCreatePersonComplete);
     }
 
     getPeople() {
@@ -52,6 +54,13 @@ export default class PersonStore extends Store {
 
         this.setState({
             people: people
+        });
+    }
+
+    onCreatePersonComplete(res) {
+        this.state.people.push(res.data.data);
+        this.setState({
+            people: this.state.people
         });
     }
 
