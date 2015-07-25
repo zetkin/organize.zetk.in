@@ -53,7 +53,12 @@ export default class PaneBase extends FluxComponent {
     }
 
     subPanePath(paneType, ...params) {
-        return this.subPath(paneType + ':' + params.join(','));
+        var urlSegment = paneType;
+        if (params.length) {
+            urlSegment += ':' + params.join(',');
+        }
+
+        return this.subPath(urlSegment);
     }
 
     gotoSubPath(path) {
