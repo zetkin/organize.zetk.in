@@ -16,6 +16,8 @@ export default class PersonStore extends Store {
             this.onRetrievePeopleComplete);
         this.register(personActions.retrievePerson,
             this.onRetrievePersonComplete);
+        this.registerAsync(personActions.updatePerson,
+            this.onUpdatePersonBegin, this.onUpdatePersonComplete);
     }
 
     getPeople() {
@@ -29,6 +31,27 @@ export default class PersonStore extends Store {
     onRetrievePeopleComplete(res) {
         this.setState({
             people: res.data.data
+        });
+    }
+
+    onUpdatePersonBegin(personId, data) {
+        var people = this.state.people;
+
+        StoreUtils.updateOrAdd(people, personId, data);
+
+        this.setState({
+            people: people
+        });
+    }
+
+    onUpdatePersonComplete(res) {
+        var people = this.state.people;
+        var person = res.data.data;
+
+        StoreUtils.updateOrAdd(people, person.id, person);
+
+        this.setState({
+            people: people
         });
     }
 

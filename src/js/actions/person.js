@@ -18,4 +18,9 @@ export default class PersonActions extends Actions {
         var orgId = this.flux.getStore('org').getActiveId();
         return Z.resource('orgs', orgId, 'people', personId).get();
     }
+
+    updatePerson(personId, data) {
+        var orgId = this.flux.getStore('org').getActiveId();
+        return Z.resource('orgs', orgId, 'people', personId).patch(data);
+    }
 }
