@@ -6,7 +6,6 @@ function updateOrAdd(dataSet, id, newData) {
         if (dataSet[i].id == id) {
             var attr;
             for (attr in newData) {
-                console.log('updating', attr);
                 dataSet[i][attr] = newData[attr];
             }
             updated = true;
