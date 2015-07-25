@@ -68,6 +68,14 @@ export default class PaneBase extends FluxComponent {
     gotoSubPane(paneType, ...params) {
         this.context.router.navigate(this.subPanePath(paneType, ...params));
     }
+
+    closePane() {
+        var pathElements = this.props.panePath.split('/');
+        var parentPathElements = pathElements.slice(0, pathElements.length-1);
+        var parentPath = parentPathElements.join('/');
+
+        this.context.router.navigate(parentPath);
+    }
 }
 
 PaneBase.contextTypes.router = React.PropTypes.any;
