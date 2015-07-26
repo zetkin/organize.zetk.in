@@ -18,9 +18,14 @@ class EmptyNotFound extends React.Component {
 export default class PaneBase extends FluxComponent {
     render() {
         var data = this.getRenderData();
+        var classNames = ['section-pane'];
+
+        if (this.props.paneType) {
+            classNames.push('section-pane-' + this.props.paneType);
+        }
 
         return (
-            <div className="section-pane">
+            <div className={ classNames.join(' ') }>
                 <header>
                     <h2>{ this.getPaneTitle(data) }</h2>
                     <small>{ this.getPaneSubTitle(data) }</small>

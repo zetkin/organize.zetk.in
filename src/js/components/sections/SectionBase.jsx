@@ -75,6 +75,7 @@ export default class SectionBase extends FluxComponent {
                 Pane = PaneUtils.resolve(paneName);
                 panes.push(
                     <Pane ref={ 'pane' + i } key={ segment }
+                        paneType={ paneName }
                         panePath={ panePath } params={ paneParams }/>
                 );
             }
