@@ -7,7 +7,7 @@ import FluxComponent from '../FluxComponent';
 
 
 export default class SectionBase extends FluxComponent {
-    componentDidMount() {
+    runPaneManager() {
         var panes = [];
         var containerDOMNode;
 
@@ -23,8 +23,17 @@ export default class SectionBase extends FluxComponent {
         PaneManager.run(panes, containerDOMNode);
     }
 
+    componentDidMount() {
+        this.runPaneManager();
+    }
+
     componentWillUnmount() {
-        // TODO: Shut down page manager
+        PaneManager.stop();
+    }
+
+    componentDidUpdate() {
+        PaneManager.stop();
+        this.runPaneManager();
     }
 
     render() {
