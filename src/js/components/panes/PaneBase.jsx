@@ -17,29 +17,35 @@ class EmptyNotFound extends React.Component {
 
 export default class PaneBase extends FluxComponent {
     render() {
+        var data = this.getRenderData();
+
         return (
             <div className="section-pane">
                 <header>
-                    <h2>{ this.getPaneTitle() }</h2>
-                    <small>{ this.getPaneSubTitle() }</small>
+                    <h2>{ this.getPaneTitle(data) }</h2>
+                    <small>{ this.getPaneSubTitle(data) }</small>
                 </header>
                 <div className="section-pane-content">
-                    { this.renderPaneContent() }
+                    { this.renderPaneContent(data) }
                 </div>
             </div>
         );
     }
 
-    getPaneTitle() {
+    getPaneTitle(data) {
         throw "Must implement getPaneTitle()";
     }
 
-    getPaneSubTitle() {
+    getPaneSubTitle(data) {
         return null;
     }
 
-    renderPaneContent() {
+    renderPaneContent(data) {
         return null;
+    }
+
+    getRenderData() {
+        return {};
     }
 
     subPath(path) {
@@ -47,6 +53,29 @@ export default class PaneBase extends FluxComponent {
     }
 
     subPanePath(paneType, ...params) {
-        return this.subPath(paneType + ':' + params.join(','));
+        var urlSegment = paneType;
+        if (params.length) {
+            urlSegment += ':' + params.join(',');
+        }
+
+        return this.subPath(urlSegment);
+    }
+
+    gotoSubPath(path) {
+        this.context.router.navigate(this.subPath(path));
+    }
+
+    gotoSubPane(paneType, ...params) {
+        this.context.router.navigate(this.subPanePath(paneType, ...params));
+    }
+
+    closePane() {
+        var pathElements = this.props.panePath.split('/');
+        var parentPathElements = pathElements.slice(0, pathElements.length-1);
+        var parentPath = parentPathElements.join('/');
+
+        this.context.router.navigate(parentPath);
     }
 }
+
+PaneBase.contextTypes.router = React.PropTypes.any;

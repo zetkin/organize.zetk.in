@@ -29,7 +29,8 @@ export default class UserMenu extends FluxComponent {
                     <li className="usermenu-orglabel">Switch organization</li>
                     {memberships.map(function(ms) {
                         return (
-                            <li className="usermenu-orgitem"
+                            <li key={ ms.organization.id }
+                                className="usermenu-orgitem"
                                 onClick={ this.onOrgClick.bind(this, ms) }>
                                 <span className="usermenu-orgitem-title">
                                     { ms.organization.title }</span>
