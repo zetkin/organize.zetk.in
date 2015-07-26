@@ -1,8 +1,8 @@
 import React from 'react/addons';
 
-import Form from '../form/Form';
-import TextInput from '../form/TextInput';
-import SelectInput from '../form/SelectInput';
+import Form from './Form';
+import TextInput from './inputs/TextInput';
+import SelectInput from './inputs/SelectInput';
 
 
 export default class PersonForm extends Form {
