@@ -2,10 +2,40 @@ import React from 'react/addons';
 import { Link } from 'react-router-component';
 
 import PaneUtils from '../../utils/PaneUtils';
+import PaneManager from '../../utils/PaneManager';
 import FluxComponent from '../FluxComponent';
 
 
 export default class SectionBase extends FluxComponent {
+    runPaneManager() {
+        var panes = [];
+        var containerDOMNode;
+
+        Object.keys(this.refs)
+            .filter(key => (key.indexOf('pane') == 0 && key != 'paneContainer'))
+            .sort()
+            .map(function(key) {
+                var paneDOMNode = React.findDOMNode(this.refs[key]);
+                panes.push(paneDOMNode);
+            }, this);
+
+        containerDOMNode = React.findDOMNode(this.refs.paneContainer);
+        PaneManager.run(panes, containerDOMNode);
+    }
+
+    componentDidMount() {
+        this.runPaneManager();
+    }
+
+    componentWillUnmount() {
+        PaneManager.stop();
+    }
+
+    componentDidUpdate() {
+        PaneManager.stop();
+        this.runPaneManager();
+    }
+
     render() {
         var Pane;
         var panes = [];
@@ -21,7 +51,7 @@ export default class SectionBase extends FluxComponent {
             Pane = subSections[0].startPane;
             panePath = basePath + '/' + subSections[0].path;
             panes.push(
-                <Pane key={ subSections[0].path }
+                <Pane ref="pane0" key={ subSections[0].path }
                         panePath={ panePath }/>);
         }
         else {
@@ -32,7 +62,9 @@ export default class SectionBase extends FluxComponent {
                 if (section.path == subPathSegments[0]) {
                     Pane = section.startPane;
                     panePath = basePath + '/' + section.path;
-                    panes.push(<Pane key={ section.path } panePath={ panePath }/>);
+                    panes.push(
+                        <Pane ref="pane0" key={ section.path }
+                            panePath={ panePath }/>);
                     break;
                 }
             }
@@ -51,7 +83,9 @@ export default class SectionBase extends FluxComponent {
 
                 Pane = PaneUtils.resolve(paneName);
                 panes.push(
-                    <Pane key={ segment } panePath={ panePath } params={ paneParams }/>
+                    <Pane ref={ 'pane' + i } key={ segment }
+                        paneType={ paneName }
+                        panePath={ panePath } params={ paneParams }/>
                 );
             }
         }
@@ -73,7 +107,7 @@ export default class SectionBase extends FluxComponent {
                         <li key="back"><Link href="/">Dashboard</Link></li>
                     </ul>
                 </nav>
-                <div className="section-content">
+                <div className="section-content" ref="paneContainer">
                     { panes }
                 </div>
             </div>
