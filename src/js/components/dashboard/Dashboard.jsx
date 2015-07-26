@@ -45,7 +45,7 @@ export default class Dashboard extends FluxComponent {
                     break;
             }
 
-            widgetElements.push(<WidgetClass key={ i } data={ widgetData }/>);
+            widgetElements.push(<li key={ 'widget-' + i }><WidgetClass key={ i } data={ widgetData }/></li>);
         }
 
 

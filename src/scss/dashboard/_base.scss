@@ -1,0 +1,49 @@
+.dashboard-favorites {
+    @include list-unstyled ;
+    display: flex;
+    padding: 0.417em;
+    font-size: 1.2em;
+
+    li{
+        @include card;
+        flex: 1;
+        margin: 0 0.417em;
+        line-height: 8em;
+        text-align: center;
+        font-weight: 700;
+
+        a{
+            display: inline-block;
+            width: 100%;
+        }
+    }
+}
+.dashboard-shortcuts {
+    @include list-unstyled;
+    background-color: #333;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.25);
+    margin: 0 0.833em;
+    font-size: 1.2em;
+
+    li{
+        display: inline-block;
+        color: #fff;
+        font-weight: 700;
+        margin-left: 0.833em;
+        line-height: 2.667em;
+
+        a{
+            display: inline-block;
+        }
+    }
+}
+.dashboard-widgets{
+    @include list-unstyled;
+    margin: 0.833em;
+
+    .dashboard-widget{
+        @include card;
+        padding: 1em;
+        margin-bottom: 0.833em;
+    }
+}
