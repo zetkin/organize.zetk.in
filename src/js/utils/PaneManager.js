@@ -10,7 +10,8 @@ function run(paneElements, container) {
 
     _panes = [];
     for (i = 0; i < paneElements.length; i++) {
-        _panes[i] = new Section(paneElements[i]);
+        var isBase = (i == 0);
+        _panes[i] = new Section(paneElements[i], isBase);
     }
 
     _stackWidth = container.offsetWidth;
@@ -71,13 +72,14 @@ function updateStack() {
 
 
 
-function Section(domElement) {
+function Section(domElement, isBase) {
     this.domElement = domElement;
     this.contentElement = domElement.getElementsByClassName('section-pane-content')[0];
     this.shaderElement = document.createElement('div');
     this.shaderElement.className = 'section-pane-shader';
     this.domElement.appendChild(this.shaderElement);
     this.dragging = false;
+    this.isBase = isBase;
 
     var startX, startY,
         originalX, originalY,
@@ -147,11 +149,13 @@ function Section(domElement) {
     });
 
     this.domElement.addEventListener('touchstart', function(ev) {
-        startDragging(ev.touches[0]);
+        if (!section.isBase) {
+            startDragging(ev.touches[0]);
+        }
     });
 
     this.domElement.addEventListener('mousedown', function(ev) {
-        if (ev.pageY < 160) {
+        if (!section.isBase && ev.pageY < 160) {
             startDragging(ev);
             ev.preventDefault();
             ev.stopImmediatePropagation();
