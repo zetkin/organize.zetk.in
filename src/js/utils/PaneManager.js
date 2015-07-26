@@ -11,16 +11,16 @@ function run(paneElements, container) {
     _panes = [];
     for (i = 0; i < paneElements.length; i++) {
         var isBase = (i == 0);
-        _panes[i] = new Section(paneElements[i], isBase);
+        _panes[i] = new Pane(paneElements[i], isBase);
     }
 
     _stackWidth = container.offsetWidth;
     window.addEventListener('resize', function(ev) {
         _stackWidth = container.offsetWidth;
         if (_panes.length > 1) {
-            var lastSection = _panes[_panes.length-1];
+            var lastPane = _panes[_panes.length-1];
 
-            lastSection.setX(_stackWidth - lastSection.getWidth());
+            lastPane.setX(_stackWidth - lastPane.getWidth());
         }
     });
 
@@ -72,7 +72,7 @@ function updateStack() {
 
 
 
-function Section(domElement, isBase) {
+function Pane(domElement, isBase) {
     this.domElement = domElement;
     this.contentElement = domElement.getElementsByClassName('section-pane-content')[0];
     this.shaderElement = document.createElement('div');
