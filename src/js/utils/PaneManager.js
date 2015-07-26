@@ -1,4 +1,5 @@
 var _panes,
+    _running,
     _stackWidth;
 
 function run(paneElements, container) {
@@ -25,12 +26,23 @@ function run(paneElements, container) {
     });
 
     // Start updating
+    _running = true;
     updateStack();
+}
+
+function stop() {
+    var i;
+
+    for (i in _panes) {
+        _panes[i].stop();
+    }
+
+    // Stop updating
+    _running = false;
 }
 
 function updateStack() {
     var i, len, shade, maxRight;
-
 
     len = _panes.length;
     for (i=0; i<len; i++) {
@@ -67,7 +79,9 @@ function updateStack() {
         maxRight = sectionX;
     }
 
-    requestAnimationFrame(updateStack);
+    if (_running) {
+        requestAnimationFrame(updateStack);
+    }
 }
 
 
@@ -144,34 +158,39 @@ function Pane(domElement, isBase) {
         dragging = false;
     }
 
-    this.domElement.addEventListener('mousewheel', function(ev) {
+    this.domElement.addEventListener('mousewheel', onDomElementMouseWheel);
+    function onDomElementMouseWheel(ev) {
         section.setScroll(section.getScroll() + ev.wheelDeltaY/2);
-    });
+    }
 
-    this.domElement.addEventListener('touchstart', function(ev) {
+    this.domElement.addEventListener('touchstart', onDomElementTouchStart);
+    function onDomElementTouchStart(ev) {
         if (!section.isBase) {
             startDragging(ev.touches[0]);
         }
-    });
+    }
 
-    this.domElement.addEventListener('mousedown', function(ev) {
+    this.domElement.addEventListener('mousedown', onDomElementMouseDown);
+    function onDomElementMouseDown(ev) {
         if (!section.isBase && ev.pageY < 160) {
             startDragging(ev);
             ev.preventDefault();
             ev.stopImmediatePropagation();
         }
-    });
+    }
 
-    this.domElement.addEventListener('mousemove', function(ev) {
+    this.domElement.addEventListener('mousemove', onDomElementMouseMove);
+    function onDomElementMouseMove(ev) {
         if (dragging) {
             section.setX(originalX + (ev.pageX - startX));
             ev.preventDefault();
             ev.stopPropagation();
             ev.stopImmediatePropagation();
         }
-    });
+    }
 
-    this.domElement.addEventListener('touchmove', function(ev) {
+    this.domElement.addEventListener('touchmove', onDomElementTouchMove);
+    function onDomElementTouchMove(ev) {
         if (dragging) {
             var touch = ev.changedTouches[0],
                 dx = touch.pageX - startX,
@@ -191,15 +210,10 @@ function Pane(domElement, isBase) {
                 speedY = (originalY + dy) - section.getScroll();
             }
         }
-    });
+    }
 
-    document.addEventListener('touchend', function(ev) {
-        stopDragging();
-    });
-
-    document.addEventListener('mouseup', function(ev) {
-        stopDragging();
-    });
+    document.addEventListener('touchend', stopDragging);
+    document.addEventListener('mouseup', stopDragging);
 
     this.update = function() {
         if (speedY*speedY > 0.01) {
@@ -211,8 +225,21 @@ function Pane(domElement, isBase) {
             speedX *= 0.8;
         }
     }
+
+    this.stop = function() {
+        this.domElement.removeChild(this.shaderElement);
+        this.domElement.removeEventListener('touchmove', onDomElementTouchMove);
+        this.domElement.removeEventListener('mousemove', onDomElementMouseMove);
+        this.domElement.removeEventListener('mousedown', onDomElementMouseDown);
+        this.domElement.removeEventListener('touchstart', onDomElementTouchStart);
+        this.domElement.removeEventListener('mousewheel', onDomElementMouseWheel);
+
+        document.removeEventListener('touchend', stopDragging);
+        document.removeEventListener('mouseup', stopDragging);
+    }
 }
 
 export default {
-    run: run
+    run: run,
+    stop: stop
 };
