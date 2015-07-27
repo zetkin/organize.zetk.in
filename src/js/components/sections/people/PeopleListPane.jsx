@@ -1,5 +1,4 @@
 import React from 'react/addons';
-import { Link } from 'react-router-component';
 
 import PaneBase from '../../panes/PaneBase';
 
