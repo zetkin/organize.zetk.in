@@ -13,4 +13,9 @@ export default class LocationActions extends Actions {
         var orgId = this.flux.getStore('org').getActiveId();
         return Z.resource('orgs', orgId, 'locations').get();
     }
+
+    retrieveLocation(locationId) {
+        var orgId = this.flux.getStore('org').getActiveId();
+        return Z.resource('orgs', orgId, 'locations', locationId).get();
+    }
 }
