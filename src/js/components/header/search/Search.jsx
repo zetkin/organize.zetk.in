@@ -1,6 +1,7 @@
 import React from 'react/addons';
 
 import FluxComponent from '../../FluxComponent';
+import PersonMatch from './PersonMatch';
 
 
 export default class Search extends FluxComponent {
@@ -30,14 +31,16 @@ export default class Search extends FluxComponent {
             resultList = (
                 <ul className="search-form-results">
                 {results.map(function(match) {
+                    var Match;
                     var key = match.type + ':' + match.data.id;
 
-                    return (
-                        <li key={ key }>
-                            <span>{ match.type }</span>
-                            <span>{ match.data.id }</span>
-                        </li>
-                    );
+                    switch(match.type) {
+                        case 'person':
+                            Match = PersonMatch;
+                            break;
+                    }
+
+                    return <Match key={ key } data={ match.data }/>;
                 })}
                 </ul>
             );
