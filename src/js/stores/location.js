@@ -18,6 +18,10 @@ export default class LocationStore extends Store {
         return this.state.locations;
     }
 
+    getLocation(id) {
+        return this.state.locations.find(p => p.id == id);
+    }
+
     onRetrieveLocationsComplete(res) {
         this.setState({
             locations: res.data.data
