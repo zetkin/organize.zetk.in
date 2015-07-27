@@ -38,7 +38,32 @@
         padding: 0 5em;
         width: 100%;
 
+        &::before {
+            content: "";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: black;
+            opacity: 0.0;
+            z-index: 1000;
+
+            visibility: hidden;
+            transition: opacity 0.4s;
+        }
+
+        &.focused {
+            &::before {
+                visibility: visible;
+                opacity: 0.4;
+            }
+        }
+
         input {
+            position: relative;
+            z-index: 3000;
             display: block;
             height: 32px;
             padding: 4px;
