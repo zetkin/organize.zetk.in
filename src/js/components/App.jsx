@@ -7,6 +7,7 @@ import Dashboard from './dashboard/Dashboard';
 import NotFoundPage from './NotFoundPage';
 
 import PeopleSection from './sections/people/PeopleSection';
+import MapsSection from './sections/maps/MapsSection';
 
 
 export default class App extends FluxComponent {
@@ -19,7 +20,10 @@ export default class App extends FluxComponent {
             <html>
                 <head>
                     <script src="/static/js/main.js"></script>
-                    <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+                    <link rel="stylesheet" type="text/css"
+                        href="/static/css/style.css"/>
+                    <script type="text/javascript"
+                          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCih1zeZELzFJxP2SFkNJVDLs2ZCT_y3gY"/>
                 </head>
                 <body>
                     <div id="app">
@@ -32,6 +36,9 @@ export default class App extends FluxComponent {
 
                             <Router.Location ref="people" path="/people(/*)"
                                 handler={ PeopleSection }/>
+
+                            <Router.Location ref="maps" path="/maps(/*)"
+                                handler={ MapsSection }/>
 
                             <Router.NotFound ref="notfound"
                                 handler={ NotFoundPage }/>

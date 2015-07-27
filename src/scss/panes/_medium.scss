@@ -5,3 +5,16 @@
 .section-pane-addperson {
     min-width: 400px;
 }
+
+.section-pane-location {
+    min-width: 400px;
+}
+
+.section-pane-locations {
+    .viewswitch {
+        position: absolute;
+        z-index: 2000;
+        bottom: 20px;
+        left: 20px;
+    }
+}

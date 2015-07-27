@@ -31,4 +31,11 @@ router.get(/person:(\d+)$/, function(req, res, next) {
         });
 });
 
+router.get(/location:(\d+)$/, function(req, res, next) {
+    req.flux.getActions('location').retrieveLocation(req.params[0])
+        .then(function() {
+            next();
+        });
+});
+
 export default router;

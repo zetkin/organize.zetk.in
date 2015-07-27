@@ -52,7 +52,7 @@ export default class SectionBase extends FluxComponent {
             panePath = basePath + '/' + subSections[0].path;
             panes.push(
                 <Pane ref="pane0" key={ subSections[0].path }
-                        panePath={ panePath }/>);
+                    paneType={ subSections[0].path } panePath={ panePath }/>);
         }
         else {
             var subPathSegments = subPath.split('/');
@@ -64,7 +64,7 @@ export default class SectionBase extends FluxComponent {
                     panePath = basePath + '/' + section.path;
                     panes.push(
                         <Pane ref="pane0" key={ section.path }
-                            panePath={ panePath }/>);
+                            paneType={ section.path } panePath={ panePath }/>);
                     break;
                 }
             }
@@ -90,8 +90,11 @@ export default class SectionBase extends FluxComponent {
             }
         }
 
+        var sectionType = this.constructor.name
+            .replace(/Section$/, '').toLowerCase();
+
         return (
-            <div className="section">
+            <div className={ 'section section-' + sectionType }>
                 <nav className="section-nav">
                     <ul>
                         { subSections.map(function(subData) {

@@ -24,7 +24,9 @@ export default class Form extends React.Component {
                 {inputs.map(function(input, index) {
                     var props = input.props;
 
-                    if (!this.state.values.hasOwnProperty(props.name)) {
+                    if (props.name !== undefined
+                        && !this.state.values.hasOwnProperty(props.name)) {
+
                         this.state.values[props.name] = props.initialValue;
                     }
 
@@ -34,7 +36,7 @@ export default class Form extends React.Component {
 
                     var elem = React.cloneElement(input, props);
 
-                    return <li key={ props.name }>{ elem }</li>;
+                    return <li key={ index }>{ elem }</li>;
                 }, this)}
                 </ul>
             </form>
