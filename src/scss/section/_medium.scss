@@ -49,6 +49,14 @@
             background: linear-gradient(90deg, rgba(0,0,0,0.0), rgba(0,0,0,0.02));
         }
 
+        header {
+            margin: 100px 20px 0;
+        }
+
+        .section-pane-content {
+            margin: 20px;
+        }
+
         .section-pane-shader {
             display: block;
             position: absolute;
