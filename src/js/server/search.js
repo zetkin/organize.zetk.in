@@ -26,7 +26,8 @@ function search(ws, req) {
         }
 
         queue = new SearchQueue(msg.org, msg.query, writeFunc, [
-            searchPeople
+            searchPeople,
+            searchLocations
         ]);
     });
 }
@@ -73,9 +74,21 @@ function searchPeople(orgId, q, writeMatch) {
                 }
             }
         })
-        .catch(function(err) {
-            console.log(err);
-        });
+}
+
+function searchLocations(orgId, q, writeMatch) {
+    return Z.resource('orgs', orgId, 'locations').get()
+        .then(function(result) {
+            var i;
+            var locations = result.data.data;
+
+            for (i in locations) {
+                var loc = locations[i];
+                if (searchMatches(q, loc)) {
+                    writeMatch(q, 'location', loc);
+                }
+            }
+        })
 }
 
 export default search;
