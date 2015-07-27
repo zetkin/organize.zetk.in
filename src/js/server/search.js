@@ -1,4 +1,3 @@
-import url from 'url';
 import Z from 'zetkin';
 
 import searchMatches from '../utils/searchMatches';
