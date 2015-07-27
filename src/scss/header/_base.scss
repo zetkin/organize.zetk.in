@@ -1,21 +1,49 @@
 .appheader {
-    padding: 10px;
-    height: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 0.8em;
+    background-color: $c-brand-main;
 
     .logo {
-        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0;
+        color: #fff;
+        a{
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 1.8em;
+            color: transparent;
+            line-height: 1.35;
+        }
+        a::after{
+            content: "Z";
+            position: absolute;
+            color: #fff;
+            top: 0;
+            left: 0;
+            padding: 0 0.362em;;
+            display: block;
+        }
     }
 
     .search-form {
         margin: 0;
+        padding: 0 5em;
+        width: 100%;
 
         input {
-            float: left;
             display: block;
-            height: 30px;
+            height: 32px;
             padding: 4px;
             border-width: 0;
-            width: 80%;
+            width: 100%;
         }
     }
 
@@ -24,31 +52,32 @@
         position: absolute;
         top: 0;
         right: 0;
+        font-size: 1.6em;
 
-        .usermenu-info {
+        .usermenu-avatar {
             position: absolute;
             top: 0;
             right: 0;
-
-            width: 50px;
-            height: 50px;
-            background-color: red;
-        }
-
-        .usermenu-info-name {
-            display: none;
-        }
-
-        .usermenu-info-org {
-            display: none;
+            width: 3em;
+            height: 3em;
+            // Avatar placeholder
+            &::after {
+                content: "";
+                display: block;
+                height: 80%;
+                width: 80%;
+                margin: 10%;
+                background-color: #EEE;
+                border-radius: 50%;
+            }
         }
 
         ul {
-            width: 200px;
+            width: 15em;
             display: none;
             background-color: white;
-            margin-top: 50px;
-            padding: 10px;
+            margin-top: 3em;
+            padding: 0.5em;
         }
 
         &:hover {
@@ -59,7 +88,7 @@
 
         li {
             list-style-type: none;
-            margin: 5px;
+            margin: 0.5em;
 
             a {
                 text-decoration: none;
@@ -67,25 +96,32 @@
                 font-weight: bold;
             }
         }
-
-        li.usermenu-orglabel {
-            color: #888;
-            font-size: 80%;
-            text-align: center;
-        }
-
-        li.usermenu-orgitem {
-            margin-left: 10px;
-            cursor: pointer;
-
-            .usermenu-orgitem-title {
+        .usermenu-info{
+            span{
                 display: block;
+            }
+            .usermenu-info-name{
                 font-weight: bold;
             }
+            .usermenu-info-org{
+                font-size: 0.8em;
+            }
+        }
 
-            .usermenu-orgitem-role {
-                display: block;
-                font-size: 80%;
+        .orgpicker {
+            .orgpicker-label {
+                margin: 1em 0 0.25em;
+                font-size: 0.8em;
+                color: #888;
+            }
+            ul.orgpicker-list {
+                @include list-unstyled;
+
+                .orgpicker-item {
+                    font-weight: bold;
+                    cursor: pointer;
+                    margin: 0.5em 0;
+                }
             }
         }
     }
