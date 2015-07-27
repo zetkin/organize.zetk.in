@@ -13,11 +13,12 @@ export default class SearchStore extends Store {
 
         this.setState({
             query: '',
-            results: [],
+            results: []
         });
 
         var searchActions = flux.getActions('search');
         this.register(searchActions.search, this.onSearch);
+        this.register(searchActions.clearSearch, this.onClearSearch);
     }
 
     getQuery() {
@@ -26,6 +27,13 @@ export default class SearchStore extends Store {
 
     getResults() {
         return this.state.results;
+    }
+
+    onClearSearch() {
+        this.setState({
+            query: '',
+            results: []
+        });
     }
 
     onSearch(query) {
