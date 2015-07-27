@@ -30,10 +30,12 @@ export default class LocationPane extends PaneBase {
     renderPaneContent(data) {
         if (data.loc) {
             // TODO: Render form
-            return (
-                <LocationForm ref="form" loc={ data.loc }
-                    onSubmit={ this.onSubmit.bind(this) }/>
-            );
+            return [
+                <LocationForm key="form" ref="form" loc={ data.loc }
+                    onSubmit={ this.onSubmit.bind(this) }/>,
+                <input key="submit" type="button" value="Delete"
+                    onClick={ this.onDeleteClick.bind(this) }/>
+            ];
         }
         else {
             // TODO: Show loading indicator?
@@ -48,5 +50,12 @@ export default class LocationPane extends PaneBase {
         var values = this.refs.form.getChangedValues();
 
         this.getActions('location').updateLocation(locationId, values);
+    }
+
+    onDeleteClick(ev) {
+        var locationId = this.props.params[0];
+
+        this.getActions('location').deleteLocation(locationId);
+        this.closePane();
     }
 }
