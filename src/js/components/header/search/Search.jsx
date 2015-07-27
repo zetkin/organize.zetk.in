@@ -1,6 +1,6 @@
 import React from 'react/addons';
 
-import FluxComponent from '../FluxComponent';
+import FluxComponent from '../../FluxComponent';
 
 
 export default class Search extends FluxComponent {
