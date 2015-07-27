@@ -8,10 +8,15 @@ export default class MatchBase extends React.Component {
         return (
             <li>
                 <Link href={ this.getLinkTarget() }>
+                    { this.getImage() }
                     { this.getTitle() }
                 </Link>
             </li>
         );
+    }
+
+    getImage() {
+        return null;
     }
 }
 
