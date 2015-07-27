@@ -29,6 +29,7 @@ export default class App extends FluxComponent {
                     <div id="app">
                         <Header />
                         <Router.Locations id="main" ref="router"
+                            onNavigation={ this.onNavigation.bind(this) }
                             path={ this.props.path }>
 
                             <Router.Location ref="dashboard" path="/"
@@ -50,5 +51,9 @@ export default class App extends FluxComponent {
                 </body>
             </html>
         );
+    }
+
+    onNavigation() {
+        this.getActions('search').clearSearch();
     }
 }

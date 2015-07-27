@@ -71,7 +71,6 @@ export default class Search extends FluxComponent {
     }
 
     onBlur(ev) {
-        this.getActions('search').clearSearch();
         this.setState({
             focused: false
         });
