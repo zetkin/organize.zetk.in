@@ -20,6 +20,37 @@ export default class LocationsPane extends PaneBase {
         };
 
         this.map = new google.maps.Map(ctrDOMNode, mapOptions);
+        this.markers = [];
+    }
+
+    componentDidUpdate() {
+        var i;
+        var marker;
+        var locationStore = this.getStore('location');
+        var locations = locationStore.getLocations();
+        var bounds = new google.maps.LatLngBounds();
+
+        // Remove old markers
+        while (marker = this.markers.pop()) {
+            marker.setMap(null);
+        }
+
+        for (i in locations) {
+            var loc = locations[i];
+            var latLng = new google.maps.LatLng(loc.lat, loc.lng);
+
+            marker = new google.maps.Marker({
+                position: latLng,
+                map: this.map,
+                title: loc.title
+            });
+
+            bounds.extend(latLng);
+            this.markers.push(marker);
+        }
+
+        this.map.setCenter(bounds.getCenter());
+        this.map.setZoom(12); // TODO: Calculate this somehow
     }
 
     renderPaneContent() {
