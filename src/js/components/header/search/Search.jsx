@@ -1,6 +1,7 @@
 import React from 'react/addons';
 
 import FluxComponent from '../../FluxComponent';
+import LocationMatch from './LocationMatch';
 import PersonMatch from './PersonMatch';
 
 
@@ -37,6 +38,9 @@ export default class Search extends FluxComponent {
                     switch(match.type) {
                         case 'person':
                             Match = PersonMatch;
+                            break;
+                        case 'location':
+                            Match = LocationMatch;
                             break;
                     }
 
