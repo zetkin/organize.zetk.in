@@ -33,6 +33,7 @@ export default class LocationsPane extends PaneBase {
         // Remove old markers
         while (marker = this.markers.pop()) {
             marker.setMap(null);
+            google.maps.event.clearInstanceListeners(marker);
         }
 
         for (i in locations) {
@@ -44,6 +45,9 @@ export default class LocationsPane extends PaneBase {
                 map: this.map,
                 title: loc.title
             });
+
+            google.maps.event.addListener(marker, 'click',
+                this.onMarkerClick.bind(this, marker, loc));
 
             bounds.extend(latLng);
             this.markers.push(marker);
@@ -65,5 +69,9 @@ export default class LocationsPane extends PaneBase {
         return (
             <div ref="mapContainer" style={ style }/>
         );
+    }
+
+    onMarkerClick(marker, locationData) {
+        this.gotoSubPane('location', locationData.id);
     }
 }

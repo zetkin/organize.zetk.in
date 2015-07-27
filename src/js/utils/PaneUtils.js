@@ -1,8 +1,10 @@
-import PersonPane from '../components/panes/PersonPane';
 import AddPersonPane from '../components/panes/AddPersonPane';
+import LocationPane from '../components/panes/LocationPane';
+import PersonPane from '../components/panes/PersonPane';
 
 var _panes = {
     'addperson': AddPersonPane,
+    'location': LocationPane,
     'person': PersonPane
 };
 
