@@ -5,7 +5,7 @@ import TextInput from './inputs/TextInput';
 import SelectInput from './inputs/SelectInput';
 
 
-export default class PersonForm extends Form {
+export default class PersonForm extends React.Component {
     render() {
         var person = this.props.person || {};
         var genderOptions = {
