@@ -18,6 +18,8 @@ export default class LocationStore extends Store {
             this.onRetrieveLocationComplete);
         this.register(locationActions.updateLocation,
             this.onUpdateLocationComplete);
+        this.registerAsync(locationActions.deleteLocation,
+            this.onDeleteLocationBegin, null);
     }
 
     getLocations() {
@@ -49,6 +51,13 @@ export default class LocationStore extends Store {
 
         StoreUtils.updateOrAdd(this.state.locations, loc.id, loc);
 
+        this.setState({
+            locations: this.state.locations
+        });
+    }
+
+    onDeleteLocationBegin(locationId) {
+        StoreUtils.remove(this.state.locations, locationId);
         this.setState({
             locations: this.state.locations
         });
