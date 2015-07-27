@@ -7,10 +7,6 @@ import InvitePane from './InvitePane';
 
 
 export default class PeopleSection extends SectionBase {
-    getStartPane() {
-        return PeopleListPane;
-    }
-
     getSubSections() {
         return [
             { path: 'list', title: 'People',
