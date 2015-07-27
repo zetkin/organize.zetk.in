@@ -16,6 +16,8 @@ export default class LocationStore extends Store {
             this.onRetrieveLocationsComplete);
         this.register(locationActions.retrieveLocation,
             this.onRetrieveLocationComplete);
+        this.register(locationActions.updateLocation,
+            this.onUpdateLocationComplete);
     }
 
     getLocations() {
@@ -33,6 +35,16 @@ export default class LocationStore extends Store {
     }
 
     onRetrieveLocationComplete(res) {
+        var loc = res.data.data;
+
+        StoreUtils.updateOrAdd(this.state.locations, loc.id, loc);
+
+        this.setState({
+            locations: this.state.locations
+        });
+    }
+
+    onUpdateLocationComplete(res) {
         var loc = res.data.data;
 
         StoreUtils.updateOrAdd(this.state.locations, loc.id, loc);
