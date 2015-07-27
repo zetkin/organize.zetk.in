@@ -13,9 +13,32 @@ export default class LocationMap extends React.Component {
 
         this.map = new google.maps.Map(ctrDOMNode, mapOptions);
         this.markers = [];
+
+        this.resetMarkers();
     }
 
     componentDidUpdate() {
+        this.resetMarkers();
+    }
+
+    componentWillUnmount() {
+        var marker;
+
+
+        // Remove old markers
+        while (marker = this.markers.pop()) {
+            marker.setMap(null);
+            google.maps.event.clearInstanceListeners(marker);
+        }
+    }
+
+    render() {
+        return (
+            <div ref="mapContainer" style={ this.props.style }/>
+        )
+    }
+
+    resetMarkers() {
         var i;
         var marker;
         var bounds = new google.maps.LatLngBounds();
@@ -45,22 +68,6 @@ export default class LocationMap extends React.Component {
 
         this.map.setCenter(bounds.getCenter());
         this.map.setZoom(12); // TODO: Calculate this somehow
-    }
-
-    componentWillUnmount() {
-        var marker;
-
-        // Remove old markers
-        while (marker = this.markers.pop()) {
-            marker.setMap(null);
-            google.maps.event.clearInstanceListeners(marker);
-        }
-    }
-
-    render() {
-        return (
-            <div ref="mapContainer" style={ this.props.style }/>
-        )
     }
 
     onMarkerClick(marker, locationData) {
