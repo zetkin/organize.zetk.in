@@ -1,6 +1,7 @@
 import React from 'react/addons';
 
 import FluxComponent from '../FluxComponent';
+import OrgPicker from './OrgPicker';
 
 
 export default class UserMenu extends FluxComponent {
@@ -14,37 +15,22 @@ export default class UserMenu extends FluxComponent {
 
         var userStore = this.getStore('user');
         var userName = userStore.getUserInfo().email;
-        var orgName = userStore.getActiveMembership().organization.title;
+        var activeOrg = userStore.getActiveMembership().organization;
         var memberships = userStore.getMemberships();
 
         return (
             <nav className="usermenu">
-                <div className="usermenu-info">
-                    <span className="usermenu-info-name">{ userName }</span>
-                    <span className="usermenu-info-org">{ orgName }</span>
-                </div>
+                <div className="usermenu-avatar"></div>
                 <ul>
+                    <li className="usermenu-info">
+                        <span className="usermenu-info-name">{ userName }</span>
+                        <span className="usermenu-info-org">{ activeOrg.title }</span>
+                    </li>
                     <li><a href="/logout">Log out</a></li>
                     <li><a href={ accountUrl }>Account settings</a></li>
-                    <li className="usermenu-orglabel">Switch organization</li>
-                    {memberships.map(function(ms) {
-                        return (
-                            <li key={ ms.organization.id }
-                                className="usermenu-orgitem"
-                                onClick={ this.onOrgClick.bind(this, ms) }>
-                                <span className="usermenu-orgitem-title">
-                                    { ms.organization.title }</span>
-                                <span className="usermenu-orgitem-role">
-                                    { ms.role }</span>
-                            </li>
-                        );
-                    }, this)}
+                    <li>< OrgPicker memberships={ memberships } activeOrg={ activeOrg }/></li>
                 </ul>
             </nav>
         );
-    }
-
-    onOrgClick(membership) {
-        this.getActions('user').setActiveMembership(membership);
     }
 }

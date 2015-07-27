@@ -1,12 +1,11 @@
 import React from 'react/addons';
+import { Link } from 'react-router-component';
 
-import FluxComponent from '../FluxComponent';
-
-
-export default class Logo extends FluxComponent {
+export default class Logo extends React.Component {
     render() {
+        let href = '/'
         return (
-            <h1 className="logo">Zetkin</h1>
+            <h1 className="logo"><Link href={ href }>Zetkin</Link></h1>
         );
     }
 }
