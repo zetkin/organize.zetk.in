@@ -6,6 +6,8 @@ import LocationStore from './stores/location';
 import OrgStore from './stores/org';
 import PersonActions from './actions/person';
 import PersonStore from './stores/person';
+import SearchActions from './actions/search';
+import SearchStore from './stores/search';
 import UserActions from './actions/user';
 import UserStore from './stores/user';
 
@@ -16,12 +18,14 @@ export default class Flux extends Flummox {
 
         this.createActions('location', LocationActions, this);
         this.createActions('person', PersonActions, this);
+        this.createActions('search', SearchActions);
         this.createActions('user', UserActions);
 
         this.createStore('dashboard', DashboardStore, this);
         this.createStore('location', LocationStore, this);
         this.createStore('org', OrgStore, this);
         this.createStore('person', PersonStore, this);
+        this.createStore('search', SearchStore, this);
         this.createStore('user', UserStore, this);
     }
 }

@@ -2,6 +2,7 @@ import FluxComponent from 'flummox/component';
 import cookieParser from 'cookie-parser';
 import React from 'react/addons';
 import express from 'express';
+import expressWs from 'express-ws';
 import http from 'http';
 import path from 'path';
 import Z from 'zetkin';
@@ -9,6 +10,7 @@ import Z from 'zetkin';
 import dataRouter from './datarouter';
 import authRouter from './authrouter';
 import apiProxy from './apiproxy';
+import search from './search';
 import App from '../components/App';
 
 
@@ -27,6 +29,9 @@ app.use('/static/', express.static(
 
 app.use(dataRouter);
 
+expressWs(app);
+app.ws('/search', search);
+
 app.get('/logout', function(req, res, next) {
     Z.resource('/session').del()
         .then(function(result) {
@@ -39,6 +44,14 @@ app.get('/logout', function(req, res, next) {
 });
 
 app.use(function(req, res, next) {
+    if (req.url == '/search') {
+        // Don't render any output for search. Because of how
+        // the express-ws middleware works, all routes must
+        // call next(), even if the route is later in the chain
+        // than the ws handler.
+        return next();
+    }
+
     try {
         var AppFactory = React.createFactory(App);
         var props = {
