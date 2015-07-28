@@ -8,7 +8,23 @@ export default class CampaignListPane extends PaneBase {
         return 'All campaigns';
     }
 
+    componentDidMount() {
+        this.listenTo('campaign', this.forceUpdate);
+        this.getActions('campaign').retrieveCampaigns();
+    }
+
     renderPaneContent() {
-        return null;
+        var campaignStore = this.getStore('campaign');
+        var campaigns = campaignStore.getCampaigns();
+
+        return (
+            <ul>
+                {campaigns.map(function(campaign) {
+                    return (
+                        <li key={ campaign.id }>{ campaign.title }</li>
+                    );
+                })}
+            </ul>
+        );
     }
 }
