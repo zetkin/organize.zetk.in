@@ -1,5 +1,7 @@
 import Flummox from 'flummox';
 
+import CampaignActions from './actions/campaign';
+import CampaignStore from './stores/campaign';
 import DashboardStore from './stores/dashboard';
 import LocationActions from './actions/location';
 import LocationStore from './stores/location';
@@ -16,11 +18,13 @@ export default class Flux extends Flummox {
     constructor() {
         super();
 
+        this.createActions('campaign', CampaignActions, this);
         this.createActions('location', LocationActions, this);
         this.createActions('person', PersonActions, this);
         this.createActions('search', SearchActions);
         this.createActions('user', UserActions);
 
+        this.createStore('campaign', CampaignStore, this);
         this.createStore('dashboard', DashboardStore, this);
         this.createStore('location', LocationStore, this);
         this.createStore('org', OrgStore, this);
