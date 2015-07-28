@@ -6,6 +6,7 @@ import Header from './header/Header';
 import Dashboard from './dashboard/Dashboard';
 import NotFoundPage from './NotFoundPage';
 
+import CampaignSection from './sections/campaign/CampaignSection';
 import PeopleSection from './sections/people/PeopleSection';
 import MapsSection from './sections/maps/MapsSection';
 
@@ -37,6 +38,9 @@ export default class App extends FluxComponent {
 
                             <Router.Location ref="people" path="/people(/*)"
                                 handler={ PeopleSection }/>
+
+                            <Router.Location ref="campaign" path="/campaign(/*)"
+                                handler={ CampaignSection }/>
 
                             <Router.Location ref="maps" path="/maps(/*)"
                                 handler={ MapsSection }/>
