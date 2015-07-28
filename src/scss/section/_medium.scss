@@ -6,7 +6,7 @@
     bottom: 0;
 
     ul {
-        margin: 10px 0;
+        margin: 1em 0;
         padding: 0;
     }
 
@@ -28,8 +28,8 @@
         &::before {
             content: "";
             display: block;
-            width: 64px;
-            height: 48px;
+            width: 6.4em;
+            height: 4.8em;
             background-color: #888;
             margin: 0 auto 0.5em auto;
         }
@@ -45,10 +45,10 @@
             display: block;
             position: absolute;
             background-color: $c-brand-main;
-            width: 4px;
-            height: 40px;
+            width: 0.4em;
+            height: 4em;
             right: 0;
-            top: 4;
+            top: 0.4em;
 
             opacity: 0;
             transition: opacity 0.3s;
