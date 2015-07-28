@@ -5,15 +5,60 @@
     left: 0;
     bottom: 0;
 
-    padding: 10px;
-
     ul {
-        margin: 0;
+        margin: 1em 0;
         padding: 0;
     }
 
-    li {
+    .section-nav-item a {
+        display: block;
+        position: relative;
         list-style-type: none;
+        cursor: pointer;
+        margin-bottom: 1em;
+
+        font-size: 1.1em;
+        text-align: center;
+
+        opacity: 0.9;
+        transition: opacity 0.3s;
+
+        color: white;
+
+        &::before {
+            content: "";
+            display: block;
+            width: 6.4em;
+            height: 4.8em;
+            background-color: #888;
+            margin: 0 auto 0.5em auto;
+        }
+
+        &:hover {
+            opacity: 1.0;
+
+            font-weight: bold;
+        }
+
+        &::after {
+            content: "";
+            display: block;
+            position: absolute;
+            background-color: $c-brand-main;
+            width: 0.4em;
+            height: 4em;
+            right: 0;
+            top: 0.4em;
+
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+    }
+
+    .section-nav-item.selected a {
+        &::after {
+            opacity: 1;
+        }
     }
 }
 

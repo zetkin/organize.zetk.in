@@ -1,5 +1,6 @@
 import React from 'react/addons';
 import { Link } from 'react-router-component';
+import cx from 'classnames';
 
 import PaneUtils from '../../utils/PaneUtils';
 import PaneManager from '../../utils/PaneManager';
@@ -43,11 +44,13 @@ export default class SectionBase extends FluxComponent {
         var router = this.context.router;
         var subSections = this.getSubSections();
         var basePath = router.getMatch().matchedPath;
+        var curSubSectionIndex;
 
         var i;
         var subPath = router.getMatch().unmatchedPath;
 
         if (!subPath) {
+            curSubSectionIndex = 0;
             Pane = subSections[0].startPane;
             panePath = basePath + '/' + subSections[0].path;
             panes.push(
@@ -60,6 +63,7 @@ export default class SectionBase extends FluxComponent {
             for (i = 0; i < subSections.length; i++) {
                 var section = subSections[i];
                 if (section.path == subPathSegments[0]) {
+                    curSubSectionIndex = i;
                     Pane = section.startPane;
                     panePath = basePath + '/' + section.path;
                     panes.push(
@@ -97,17 +101,24 @@ export default class SectionBase extends FluxComponent {
             <div className={ 'section section-' + sectionType }>
                 <nav className="section-nav">
                     <ul>
-                        { subSections.map(function(subData) {
+                        { subSections.map(function(subData, index) {
                             var path = basePath + '/' + subData.path;
+                            var classes = cx('section-nav-item',
+                                'section-nav-item-' + subData.path, {
+                                    'selected': (index === curSubSectionIndex)
+                                });
+
                             return (
-                                <li key={ subData.path }>
+                                <li key={ subData.path } className={ classes }>
                                     <Link href={ path}>
                                         { subData.title }
                                     </Link>
                                 </li>
                             );
                         }, this)}
-                        <li key="back"><Link href="/">Dashboard</Link></li>
+                        <li key="back"
+                            className='section-nav-item section-nav-back'>
+                            <Link href="/">Dashboard</Link></li>
                     </ul>
                 </nav>
                 <div className="section-content" ref="paneContainer">
