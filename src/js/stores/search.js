@@ -55,9 +55,13 @@ export default class SearchStore extends Store {
     }
 
     onChangeScope(scope) {
-        this.setState({
-            scope: scope
-        });
+        if (scope != this.state.scope) {
+            this.setState({
+                scope: scope
+            });
+
+            this.execSearch(this.state.query, scope, []);
+        }
     }
 
     onEndSearch() {
@@ -76,6 +80,10 @@ export default class SearchStore extends Store {
     }
 
     onSearch(query) {
+        this.execSearch(query, this.state.scope, this.state.results);
+    }
+
+    execSearch(query, scope, initialResults) {
         var orgId = this.flux.getStore('org').getActiveId();
 
         this.setState({
@@ -92,14 +100,14 @@ export default class SearchStore extends Store {
         else {
             // Remove results that no longer match
             this.setState({
-                results: this.state.results
+                results: initialResults
                     .filter(r => searchMatches(query, r.data))
             });
 
             var sendQuery = function(query) {
                 this.ws.send(JSON.stringify({
                     'cmd': 'search',
-                    'scope': this.state.scope,
+                    'scope': scope,
                     'org': orgId,
                     'query': query
                 }));
