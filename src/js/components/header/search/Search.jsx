@@ -8,6 +8,7 @@ import PersonMatch from './PersonMatch';
 export default class Search extends FluxComponent {
     componentDidMount() {
         this.listenTo('search', this.forceUpdate);
+        document.addEventListener('keydown', this.onKeyDown.bind(this));
     }
 
     componentDidUpdate() {
@@ -63,6 +64,14 @@ export default class Search extends FluxComponent {
                 { resultList }
             </form>
         );
+    }
+
+    onKeyDown(ev) {
+        var inputDOMNode = React.findDOMNode(this.refs.searchField);
+        if (ev.keyCode == 27 && ev.target == inputDOMNode) {
+            inputDOMNode.blur();
+            this.getActions('search').clearSearch();
+        }
     }
 
     onChange(ev) {
