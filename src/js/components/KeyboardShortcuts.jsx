@@ -1,3 +1,4 @@
+import { Link } from 'react-router-component';
 import React from 'react/addons';
 import cx from 'classnames';
 
@@ -22,14 +23,16 @@ export default class KeyboardShortcuts extends FluxComponent {
     }
 
     render() {
+        var reference;
         var classNames = cx({
             'shortcutref': true,
-            'visible': this.state.showMainReference
+            'shortcutref-mainvisible': this.state.showMainReference,
+            'shortcutref-navvisible': this.state.keyPrefix === 'g'
         });
 
         return (
             <div className={ classNames }>
-                <div className="shortcutref-content">
+                <div className="shortcutref-main">
                     <h1>Shortcut reference</h1>
                     <h2>Navigation shortcuts</h2>
                     <ul>
@@ -49,6 +52,20 @@ export default class KeyboardShortcuts extends FluxComponent {
                     <ul>
                         <li><code>?</code> Open shortcut reference</li>
                         <li><code>ESC</code> Cancel (e.g. close shortcut reference)</li>
+                    </ul>
+                </div>
+
+                <div className="shortcutref-nav">
+                    <p>
+                        Quickly press another key to navigate.
+                    </p>
+                    <Link href="/help/shortcuts">What is this?</Link>
+                    <ul>
+                        <li><code>h</code> home</li>
+                        <li><code>p</code> people</li>
+                        <li><code>c</code> campaign</li>
+                        <li><code>m</code> maps</li>
+                        <li><code>1-7</code> sub-section</li>
                     </ul>
                 </div>
             </div>
