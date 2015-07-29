@@ -1,6 +1,7 @@
 import React from 'react/addons';
 
 import FluxComponent from '../../FluxComponent';
+import CampaignMatch from './CampaignMatch';
 import LocationMatch from './LocationMatch';
 import PersonMatch from './PersonMatch';
 
@@ -36,11 +37,14 @@ export default class Search extends FluxComponent {
                     var key = match.type + ':' + match.data.id;
 
                     switch(match.type) {
-                        case 'person':
-                            Match = PersonMatch;
+                        case 'campaign':
+                            Match = CampaignMatch;
                             break;
                         case 'location':
                             Match = LocationMatch;
+                            break;
+                        case 'person':
+                            Match = PersonMatch;
                             break;
                     }
 

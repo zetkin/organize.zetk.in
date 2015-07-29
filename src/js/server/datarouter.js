@@ -38,4 +38,25 @@ router.get(/location:(\d+)$/, function(req, res, next) {
         });
 });
 
+router.get(/campaigns$/, function(req, res, next) {
+    req.flux.getActions('campaign').retrieveCampaigns()
+        .then(function() {
+            next();
+        });
+});
+
+router.get(/campaign:(\d+)$/, function(req, res, next) {
+    req.flux.getActions('campaign').retrieveCampaign(req.params[0])
+        .then(function() {
+            next();
+        });
+});
+
+router.get(/campaign\/actions$/, function(req, res, next) {
+    req.flux.getActions('action').retrieveAllActions()
+        .then(function() {
+            next();
+        });
+});
+
 export default router;

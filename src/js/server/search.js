@@ -25,8 +25,9 @@ function search(ws, req) {
         }
 
         queue = new SearchQueue(msg.org, msg.query, writeFunc, [
-            searchPeople,
-            searchLocations
+            searchCampaigns,
+            searchLocations,
+            searchPeople
         ]);
     });
 }
@@ -88,6 +89,21 @@ function searchLocations(orgId, q, writeMatch) {
                 }
             }
         })
+}
+
+function searchCampaigns(orgId, q, writeMatch) {
+    return Z.resource('orgs', orgId, 'campaigns').get()
+        .then(function(result) {
+            var i;
+            var campaigns = result.data.data;
+
+            for (i in campaigns) {
+                var campaign = campaigns[i];
+                if (searchMatches(q, campaign)) {
+                    writeMatch(q, 'campaign', campaign);
+                }
+            }
+        });
 }
 
 export default search;
