@@ -45,4 +45,11 @@ router.get(/campaigns$/, function(req, res, next) {
         });
 });
 
+router.get(/campaign:(\d+)$/, function(req, res, next) {
+    req.flux.getActions('campaign').retrieveCampaign(req.params[0])
+        .then(function() {
+            next();
+        });
+});
+
 export default router;
