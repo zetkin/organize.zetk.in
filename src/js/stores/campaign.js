@@ -23,4 +23,12 @@ export default class CampaignStore extends Store {
             campaigns: res.data.data
         });
     }
+
+    static serialize(state) {
+        return JSON.stringify(state);
+    }
+
+    static deserialize(stateStr) {
+        return JSON.parse(stateStr);
+    }
 }

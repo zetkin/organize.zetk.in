@@ -38,4 +38,11 @@ router.get(/location:(\d+)$/, function(req, res, next) {
         });
 });
 
+router.get(/campaigns$/, function(req, res, next) {
+    req.flux.getActions('campaign').retrieveCampaigns()
+        .then(function() {
+            next();
+        });
+});
+
 export default router;
