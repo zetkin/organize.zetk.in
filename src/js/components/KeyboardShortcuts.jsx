@@ -39,10 +39,13 @@ export default class KeyboardShortcuts extends FluxComponent {
                 this.setKeyPrefix(null);
             }
             else if (this.state.keyPrefix === '/') {
+                // Prevent default, which is to type '/' into the search field
+                ev.preventDefault();
+
                 switch (ev.keyCode) {
                     case 47: // '/'
                         // TODO: Focus search field
-                        console.log('should focus search field');
+                        this.getActions('search').beginSearch(null);
                         break;
                 }
 
