@@ -1,6 +1,7 @@
 import React from 'react/addons';
 
 import FluxComponent from '../../FluxComponent';
+import ScopeSelect from './ScopeSelect';
 import CampaignMatch from './CampaignMatch';
 import LocationMatch from './LocationMatch';
 import PersonMatch from './PersonMatch';
@@ -24,6 +25,7 @@ export default class Search extends FluxComponent {
     render() {
         var searchStore = this.getStore('search');
         var results = searchStore.getResults();
+        var scope = searchStore.getScope();
         var resultList;
         var classes = ['search-form'];
 
@@ -58,6 +60,9 @@ export default class Search extends FluxComponent {
 
         return (
             <form className={ classes.join(' ') }>
+                <ScopeSelect value={ scope }
+                    onSelect={ this.onScopeSelect.bind(this) }/>
+
                 <input type="search" ref="searchField"
                     placeholder="Start typing to search"
                     value={ searchStore.getQuery() }
@@ -68,6 +73,10 @@ export default class Search extends FluxComponent {
                 { resultList }
             </form>
         );
+    }
+
+    onScopeSelect(scope) {
+        this.getActions('search').changeScope(scope);
     }
 
     onKeyDown(ev) {
@@ -85,7 +94,7 @@ export default class Search extends FluxComponent {
     onFocus(ev) {
         var searchStore = this.getStore('search');
         if (!searchStore.isSearchActive()) {
-            this.getActions('search').beginSearch(null);
+            this.getActions('search').beginSearch();
         }
     }
 
