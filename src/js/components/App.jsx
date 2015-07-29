@@ -46,7 +46,8 @@ export default class App extends FluxComponent {
                                 handler={ NotFoundPage }/>
                         </Router.Locations>
                         <KeyboardShortcuts
-                            onNavigationShortcut={ this.onNavigationShortcut.bind(this) } />
+                            onSectionShortcut={ this.onSectionShortcut.bind(this) }
+                            onSubSectionShortcut={ this.onSubSectionShortcut.bind(this) }/>
                     </div>
                     <script type="text/json"
                         id="bootstrap-data"
@@ -60,7 +61,17 @@ export default class App extends FluxComponent {
         this.getActions('search').clearSearch();
     }
 
-    onNavigationShortcut(path) {
+    onSectionShortcut(path) {
         this.refs.router.navigate(path);
+    }
+
+    onSubSectionShortcut(index) {
+        var curMatch = this.refs.router.getMatch();
+        var router = this.refs.router;
+        var ref = curMatch.route.ref;
+
+        if (ref !== 'dashboard' && ref !== 'notfound') {
+            router.refs[ref].gotoSubSectionAt(index);
+        }
     }
 }

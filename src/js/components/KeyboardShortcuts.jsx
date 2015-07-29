@@ -58,17 +58,46 @@ export default class KeyboardShortcuts extends FluxComponent {
         if (ev.target == document.body) {
             if (this.state.keyPrefix === 'g') {
                 switch (ev.keyCode) {
-                    case 104: // 'h' == home
+                    case 49:    // 1 = 1st sub-section
                         this.closeReference();
-                        this.props.onNavigationShortcut('/');
+                        this.navigateToSubSection(0);
                         break;
-                    case 109: // 'm' == maps
+                    case 50:    // 2 = 2nd sub-section
                         this.closeReference();
-                        this.props.onNavigationShortcut('/maps');
+                        this.navigateToSubSection(1);
                         break;
-                    case 112: // 'p' == people
+                    case 51:    // 3 = 3rd sub-section
                         this.closeReference();
-                        this.props.onNavigationShortcut('/people');
+                        this.navigateToSubSection(2);
+                        break;
+                    case 52:    // 4 = 4th sub-section
+                        this.closeReference();
+                        this.navigateToSubSection(3);
+                        break;
+                    case 53:    // 5 = 5th sub-section
+                        this.closeReference();
+                        this.navigateToSubSection(4);
+                        break;
+                    case 54:    // 6 = 6th sub-section
+                        this.closeReference();
+                        this.navigateToSubSection(5);
+                        break;
+                    case 55:    // 7 = 7th sub-section
+                        this.closeReference();
+                        this.navigateToSubSection(6);
+                        break;
+
+                    case 104:   // 'h' == home
+                        this.closeReference();
+                        this.navigateToSection('/');
+                        break;
+                    case 109:   // 'm' == maps
+                        this.closeReference();
+                        this.navigateToSection('/maps');
+                        break;
+                    case 112:   // 'p' == people
+                        this.closeReference();
+                        this.navigateToSection('/people');
                         break;
                 }
 
@@ -107,6 +136,14 @@ export default class KeyboardShortcuts extends FluxComponent {
         }
     }
 
+    navigateToSection(path) {
+        this.props.onSectionShortcut(path);
+    }
+
+    navigateToSubSection(index) {
+        this.props.onSubSectionShortcut(index);
+    }
+
     closeReference() {
         this.setState({
             showMainReference: false
@@ -137,5 +174,6 @@ export default class KeyboardShortcuts extends FluxComponent {
 }
 
 KeyboardShortcuts.propTypes = {
-    onNavigationShortcut: React.PropTypes.func.isRequired
+    onSectionShortcut: React.PropTypes.func.isRequired,
+    onSubSectionShortcut: React.PropTypes.func.isRequired
 };

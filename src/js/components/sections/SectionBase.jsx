@@ -135,6 +135,18 @@ export default class SectionBase extends FluxComponent {
     renderSectionContent() {
         throw "renderSectionContent() not implemented";
     }
+
+    gotoSubSectionAt(index) {
+        var subSections = this.getSubSections();
+
+        if (index < subSections.length) {
+            var router = this.context.router;
+            var basePath = router.getMatch().matchedPath;
+            var path = basePath + '/' + subSections[index].path;
+
+            router.navigate(path);
+        }
+    }
 }
 
 SectionBase.contextTypes.router = React.PropTypes.any
