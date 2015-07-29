@@ -13,11 +13,15 @@ export default class SearchStore extends Store {
 
         this.setState({
             query: '',
+            isActive: false,
+            scope: null,
             results: []
         });
 
         var searchActions = flux.getActions('search');
         this.register(searchActions.search, this.onSearch);
+        this.register(searchActions.beginSearch, this.onBeginSearch);
+        this.register(searchActions.endSearch, this.onEndSearch);
         this.register(searchActions.clearSearch, this.onClearSearch);
     }
 
@@ -29,9 +33,33 @@ export default class SearchStore extends Store {
         return this.state.results;
     }
 
+    getScope() {
+        return this.state.scope;
+    }
+
+    isSearchActive() {
+        return this.state.isActive;
+    }
+
+    onBeginSearch(scope) {
+        // TODO: Open WS already at this point?
+        this.setState({
+            isActive: true,
+            scope: scope
+        });
+    }
+
+    onEndSearch() {
+        this.setState({
+            isActive: false
+        });
+    }
+
     onClearSearch() {
         this.setState({
             query: '',
+            isActive: false,
+            scope: null,
             results: []
         });
     }
@@ -40,6 +68,7 @@ export default class SearchStore extends Store {
         var orgId = this.flux.getStore('org').getActiveId();
 
         this.setState({
+            isActive: true,
             query: query
         });
 

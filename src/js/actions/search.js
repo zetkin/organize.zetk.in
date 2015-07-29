@@ -6,6 +6,14 @@ export default class SearchActions extends Actions {
         return query;
     }
 
+    beginSearch(scope) {
+        return scope;
+    }
+
+    endSearch() {
+        return true;
+    }
+
     clearSearch() {
         return true;
     }
