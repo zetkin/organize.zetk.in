@@ -37,6 +37,7 @@ export default class KeyboardShortcuts extends FluxComponent {
                         <li><code>gp</code> Go to people section</li>
                         <li><code>gc</code> Go to campaign section</li>
                         <li><code>gm</code> Go to maps section</li>
+                        <li><code>g{'<N>'}</code> Go to Nth sub-section of current section</li>
                     </ul>
 
                     <h2>Search</h2>
