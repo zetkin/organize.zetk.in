@@ -20,20 +20,26 @@ function run(paneElements, container) {
     }
 
     _layout = (window.innerWidth > 720)? HORIZONTAL : VERTICAL;
+    _stackWidth = container.offsetWidth;
 
     window.addEventListener('resize', function(ev) {
+        var prevLayout = _layout;
+
         _layout = (window.innerWidth > 720)? HORIZONTAL : VERTICAL;
+        _stackWidth = container.offsetWidth;
 
-        if (_layout == VERTICAL) {
-            resetVerticalLayout();
-        }
-        else {
-            _stackWidth = container.offsetWidth;
-            resetHorizontalLayout();
+        if (_layout != prevLayout) {
+            // Layout changed! Reset and start new layout
+            if (_layout == VERTICAL) {
+                resetVerticalLayout();
+            }
+            else {
+                resetHorizontalLayout();
 
-            if (!_running) {
-                _running = true;
-                updateStack();
+                if (!_running) {
+                    _running = true;
+                    updateStack();
+                }
             }
         }
     });
@@ -44,10 +50,6 @@ function run(paneElements, container) {
     else {
         _stackWidth = container.offsetWidth;
         resetHorizontalLayout();
-
-        // Start updating
-        _running = true;
-        updateStack();
     }
 }
 
@@ -71,6 +73,8 @@ function resetVerticalLayout() {
         pane.resetTransform();
         pane.setY(40 * i);
     }
+
+    _running = false;
 }
 
 function resetHorizontalLayout() {
@@ -86,10 +90,21 @@ function resetHorizontalLayout() {
         var lastPane = _panes[_panes.length-1];
         lastPane.setX(_stackWidth - lastPane.getWidth());
     }
+
+    // Start updating
+    _running = true;
+    updateStack();
 }
 
 function updateStack() {
     var i, len, shade, maxRight;
+
+    if (!_running) {
+        // The loop has been requested to stop. Bail
+        // before doing anything and before requesting
+        // a new animation frame.
+        return;
+    }
 
     len = _panes.length;
     for (i=0; i<len; i++) {
@@ -126,9 +141,7 @@ function updateStack() {
         maxRight = sectionX;
     }
 
-    if (_running) {
-        requestAnimationFrame(updateStack);
-    }
+    requestAnimationFrame(updateStack);
 }
 
 
