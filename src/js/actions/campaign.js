@@ -13,4 +13,9 @@ export default class CampaignActions extends Actions {
         var orgId = this.flux.getStore('org').getActiveId();
         return Z.resource('orgs', orgId, 'campaigns').get();
     }
+
+    retrieveCampaign(campaignId) {
+        var orgId = this.flux.getStore('org').getActiveId();
+        return Z.resource('orgs', orgId, 'campaigns', campaignId).get();
+    }
 }
