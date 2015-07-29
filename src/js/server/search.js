@@ -24,11 +24,22 @@ function search(ws, req) {
             queue.abort();
         }
 
-        queue = new SearchQueue(msg.org, msg.query, writeFunc, [
-            searchCampaigns,
-            searchLocations,
-            searchPeople
-        ]);
+        var searchFuncs = [];
+
+        if (!msg.scope || msg.scope == 'people') {
+            searchFuncs.push(searchPeople);
+        }
+
+        if (!msg.scope || msg.scope == 'maps') {
+            searchFuncs.push(searchLocations);
+        }
+
+        if (!msg.scope || msg.scope == 'campaign') {
+            searchFuncs.push(searchCampaigns);
+        }
+
+        queue = new SearchQueue(msg.org, msg.query, writeFunc, searchFuncs);
+        queue.run();
     });
 }
 
@@ -52,7 +63,9 @@ function SearchQueue(orgId, query, writeMatch, searchFuncs) {
         }
     };
 
-    _proceed();
+    this.run = function() {
+        _proceed();
+    }
 
     this.abort = function() {
         _idx = searchFuncs.length;

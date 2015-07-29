@@ -88,6 +88,7 @@ export default class SearchStore extends Store {
             var sendQuery = function(query) {
                 this.ws.send(JSON.stringify({
                     'cmd': 'search',
+                    'scope': this.state.scope,
                     'org': orgId,
                     'query': query
                 }));
