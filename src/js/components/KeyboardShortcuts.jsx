@@ -1,4 +1,5 @@
 import React from 'react/addons';
+import cx from 'classnames';
 
 import FluxComponent from './FluxComponent';
 
@@ -8,17 +9,49 @@ export default class KeyboardShortcuts extends FluxComponent {
         super(props);
 
         this.state = {
+            showMainReference: false,
             keyPrefix: null
         };
     }
 
     componentDidMount() {
+        document.addEventListener('keydown',
+            this.onKeyDown.bind(this));
         document.addEventListener('keypress',
             this.onKeyPress.bind(this));
     }
 
     render() {
-        return null;
+        var classNames = cx({
+            'shortcutref': true,
+            'visible': this.state.showMainReference
+        });
+
+        return (
+            <div className={ classNames }>
+                <div className="shortcutref-content">
+                    <h1>Shortcut reference</h1>
+                    <h2>Navigation shortcuts</h2>
+                    <ul>
+                        <li><code>gh</code> Go home to dashboard</li>
+                        <li><code>gp</code> Go to people section</li>
+                        <li><code>gc</code> Go to campaign section</li>
+                        <li><code>gm</code> Go to maps section</li>
+                    </ul>
+
+                    <h2>Search</h2>
+                    <ul>
+                        <li><code>{ '//' }</code> Activate search field</li>
+                    </ul>
+
+                    <h2>Misc</h2>
+                    <ul>
+                        <li><code>?</code> Open shortcut reference</li>
+                        <li><code>ESC</code> Cancel (e.g. close shortcut reference)</li>
+                    </ul>
+                </div>
+            </div>
+        );
     }
 
     onKeyPress(ev) {
@@ -26,12 +59,15 @@ export default class KeyboardShortcuts extends FluxComponent {
             if (this.state.keyPrefix === 'g') {
                 switch (ev.keyCode) {
                     case 104: // 'h' == home
+                        this.closeReference();
                         this.props.onNavigationShortcut('/');
                         break;
                     case 109: // 'm' == maps
+                        this.closeReference();
                         this.props.onNavigationShortcut('/maps');
                         break;
                     case 112: // 'p' == people
+                        this.closeReference();
                         this.props.onNavigationShortcut('/people');
                         break;
                 }
@@ -45,6 +81,7 @@ export default class KeyboardShortcuts extends FluxComponent {
                 switch (ev.keyCode) {
                     case 47: // '/'
                         // TODO: Focus search field
+                        this.closeReference();
                         this.getActions('search').beginSearch(null);
                         break;
                 }
@@ -61,10 +98,24 @@ export default class KeyboardShortcuts extends FluxComponent {
                         break;
                     case 63: // '?'
                         // TODO: Show reference
-                        console.log('should show reference');
+                        this.setState({
+                            showMainReference: true
+                        });
                         break;
                 }
             }
+        }
+    }
+
+    closeReference() {
+        this.setState({
+            showMainReference: false
+        });
+    }
+
+    onKeyDown(ev) {
+        if (ev.keyCode === 27) {
+            this.closeReference();
         }
     }
 
