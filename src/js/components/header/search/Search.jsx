@@ -7,16 +7,18 @@ import PersonMatch from './PersonMatch';
 
 
 export default class Search extends FluxComponent {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            focused: false
-        };
-    }
-
     componentDidMount() {
         this.listenTo('search', this.forceUpdate);
+        document.addEventListener('keydown', this.onKeyDown.bind(this));
+    }
+
+    componentDidUpdate() {
+        var searchStore = this.getStore('search');
+
+        if (searchStore.isSearchActive()) {
+            var inputDOMNode = React.findDOMNode(this.refs.searchField);
+            inputDOMNode.focus();
+        }
     }
 
     render() {
@@ -25,7 +27,7 @@ export default class Search extends FluxComponent {
         var resultList;
         var classes = ['search-form'];
 
-        if (this.state.focused) {
+        if (searchStore.isSearchActive()) {
             classes.push('focused');
         }
 
@@ -56,7 +58,7 @@ export default class Search extends FluxComponent {
 
         return (
             <form className={ classes.join(' ') }>
-                <input type="search"
+                <input type="search" ref="searchField"
                     placeholder="Start typing to search"
                     value={ searchStore.getQuery() }
                     onChange={ this.onChange.bind(this) }
@@ -68,19 +70,26 @@ export default class Search extends FluxComponent {
         );
     }
 
+    onKeyDown(ev) {
+        var inputDOMNode = React.findDOMNode(this.refs.searchField);
+        if (ev.keyCode == 27 && ev.target == inputDOMNode) {
+            inputDOMNode.blur();
+            this.getActions('search').clearSearch();
+        }
+    }
+
     onChange(ev) {
         this.getActions('search').search(ev.target.value);
     }
 
     onFocus(ev) {
-        this.setState({
-            focused: true
-        });
+        var searchStore = this.getStore('search');
+        if (!searchStore.isSearchActive()) {
+            this.getActions('search').beginSearch(null);
+        }
     }
 
     onBlur(ev) {
-        this.setState({
-            focused: false
-        });
+        this.getActions('search').endSearch();
     }
 }

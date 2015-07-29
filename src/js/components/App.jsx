@@ -5,6 +5,7 @@ import FluxComponent from './FluxComponent';
 import Header from './header/Header';
 import Dashboard from './dashboard/Dashboard';
 import NotFoundPage from './NotFoundPage';
+import KeyboardShortcuts from './KeyboardShortcuts';
 
 import CampaignSection from './sections/campaign/CampaignSection';
 import PeopleSection from './sections/people/PeopleSection';
@@ -48,6 +49,9 @@ export default class App extends FluxComponent {
                             <Router.NotFound ref="notfound"
                                 handler={ NotFoundPage }/>
                         </Router.Locations>
+                        <KeyboardShortcuts
+                            onSectionShortcut={ this.onSectionShortcut.bind(this) }
+                            onSubSectionShortcut={ this.onSubSectionShortcut.bind(this) }/>
                     </div>
                     <script type="text/json"
                         id="bootstrap-data"
@@ -59,5 +63,22 @@ export default class App extends FluxComponent {
 
     onNavigation() {
         this.getActions('search').clearSearch();
+    }
+
+    onSectionShortcut(path) {
+        this.refs.router.navigate(path);
+    }
+
+    onSubSectionShortcut(index) {
+        var curMatch = this.refs.router.getMatch();
+        var router = this.refs.router;
+        var ref = curMatch.route.ref;
+
+        if (ref !== 'dashboard' && ref !== 'notfound') {
+            return router.refs[ref].gotoSubSectionAt(index);
+        }
+        else {
+            return false;
+        }
     }
 }
