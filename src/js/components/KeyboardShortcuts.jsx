@@ -116,10 +116,21 @@ export default class KeyboardShortcuts extends FluxComponent {
                 ev.preventDefault();
 
                 switch (ev.keyCode) {
-                    case 47: // '/'
-                        // TODO: Focus search field
+                    case 47:    // '/'
                         this.closeReference();
                         this.getActions('search').beginSearch(null);
+                        break;
+                    case 99:    // 'c' == campaign
+                        this.closeReference();
+                        this.getActions('search').beginSearch('campaign');
+                        break;
+                    case 109:   // 'm' == maps
+                        this.closeReference();
+                        this.getActions('search').beginSearch('maps');
+                        break;
+                    case 112:   // 'p' == people
+                        this.closeReference();
+                        this.getActions('search').beginSearch('people');
                         break;
                 }
 
