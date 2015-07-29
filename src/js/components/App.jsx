@@ -5,6 +5,7 @@ import FluxComponent from './FluxComponent';
 import Header from './header/Header';
 import Dashboard from './dashboard/Dashboard';
 import NotFoundPage from './NotFoundPage';
+import KeyboardShortcuts from './KeyboardShortcuts';
 
 import PeopleSection from './sections/people/PeopleSection';
 import MapsSection from './sections/maps/MapsSection';
@@ -44,6 +45,8 @@ export default class App extends FluxComponent {
                             <Router.NotFound ref="notfound"
                                 handler={ NotFoundPage }/>
                         </Router.Locations>
+                        <KeyboardShortcuts
+                            onNavigationShortcut={ this.onNavigationShortcut.bind(this) } />
                     </div>
                     <script type="text/json"
                         id="bootstrap-data"
@@ -55,5 +58,9 @@ export default class App extends FluxComponent {
 
     onNavigation() {
         this.getActions('search').clearSearch();
+    }
+
+    onNavigationShortcut(path) {
+        this.refs.router.navigate(path);
     }
 }
