@@ -80,6 +80,7 @@
         position: absolute;
         top: 0;
         bottom: 0;
+        right: auto;
         display: block;
         background-color: white;
 
@@ -99,7 +100,7 @@
         }
 
         .section-pane-content {
-            margin: 20px;
+            display: block;
         }
 
         .section-pane-shader {

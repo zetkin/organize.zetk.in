@@ -1,6 +1,10 @@
 var _panes,
+    _layout,
     _running,
     _stackWidth;
+
+const VERTICAL = 'v';
+const HORIZONTAL = 'h';
 
 function run(paneElements, container) {
     document.addEventListener('touchmove', function(ev) {
@@ -15,19 +19,36 @@ function run(paneElements, container) {
         _panes[i] = new Pane(paneElements[i], isBase);
     }
 
-    _stackWidth = container.offsetWidth;
-    window.addEventListener('resize', function(ev) {
-        _stackWidth = container.offsetWidth;
-        if (_panes.length > 1) {
-            var lastPane = _panes[_panes.length-1];
+    _layout = (window.innerWidth > 720)? HORIZONTAL : VERTICAL;
 
-            lastPane.setX(_stackWidth - lastPane.getWidth());
+    window.addEventListener('resize', function(ev) {
+        _layout = (window.innerWidth > 720)? HORIZONTAL : VERTICAL;
+
+        if (_layout == VERTICAL) {
+            resetVerticalLayout();
+        }
+        else {
+            _stackWidth = container.offsetWidth;
+            resetHorizontalLayout();
+
+            if (!_running) {
+                _running = true;
+                updateStack();
+            }
         }
     });
 
-    // Start updating
-    _running = true;
-    updateStack();
+    if (_layout == VERTICAL) {
+        resetVerticalLayout();
+    }
+    else {
+        _stackWidth = container.offsetWidth;
+        resetHorizontalLayout();
+
+        // Start updating
+        _running = true;
+        updateStack();
+    }
 }
 
 function stop() {
@@ -39,6 +60,32 @@ function stop() {
 
     // Stop updating
     _running = false;
+}
+
+function resetVerticalLayout() {
+    var i, len = _panes.length;
+
+    for (i = 0; i < len; i++) {
+        var pane = _panes[i];
+
+        pane.resetTransform();
+        pane.setY(40 * i);
+    }
+}
+
+function resetHorizontalLayout() {
+    var i, len = _panes.length;
+
+    for (i = 0; i < len; i++) {
+        var pane = _panes[i];
+
+        pane.resetTransform();
+    }
+
+    if (_panes.length > 1) {
+        var lastPane = _panes[_panes.length-1];
+        lastPane.setX(_stackWidth - lastPane.getWidth());
+    }
 }
 
 function updateStack() {
@@ -113,6 +160,14 @@ function Pane(domElement, isBase) {
         this.domElement.style.webkitTransform = 'translate3d('+x+'px,0,0)';
     }
 
+    var y = 0;
+    this.getY = function() {
+        return y;
+    };
+    this.setY = function(val) {
+        this.domElement.style.top = val+'px';
+    };
+
     var shade = 0;
     this.getShade = function() {
         return shade;
@@ -160,19 +215,21 @@ function Pane(domElement, isBase) {
 
     this.domElement.addEventListener('mousewheel', onDomElementMouseWheel);
     function onDomElementMouseWheel(ev) {
-        section.setScroll(section.getScroll() + ev.wheelDeltaY/2);
+        if (_layout == HORIZONTAL) {
+            section.setScroll(section.getScroll() + ev.wheelDeltaY/2);
+        }
     }
 
     this.domElement.addEventListener('touchstart', onDomElementTouchStart);
     function onDomElementTouchStart(ev) {
-        if (!section.isBase) {
+        if (_layout == HORIZONTAL && !section.isBase) {
             startDragging(ev.touches[0]);
         }
     }
 
     this.domElement.addEventListener('mousedown', onDomElementMouseDown);
     function onDomElementMouseDown(ev) {
-        if (!section.isBase && ev.pageY < 160) {
+        if (_layout == HORIZONTAL && !section.isBase && ev.pageY < 160) {
             startDragging(ev);
             ev.preventDefault();
             ev.stopImmediatePropagation();
@@ -214,6 +271,16 @@ function Pane(domElement, isBase) {
 
     document.addEventListener('touchend', stopDragging);
     document.addEventListener('mouseup', stopDragging);
+
+    this.resetTransform = function() {
+        this.domElement.style.top = '';
+        this.domElement.style.transform = '';
+        this.domElement.style.webkitTransform = '';
+        this.contentElement.style.transform = '';
+        this.contentElement.style.webkitTransform = '';
+
+        stopDragging();
+    }
 
     this.update = function() {
         if (speedY*speedY > 0.01) {
