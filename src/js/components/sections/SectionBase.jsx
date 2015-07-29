@@ -145,6 +145,10 @@ export default class SectionBase extends FluxComponent {
             var path = basePath + '/' + subSections[index].path;
 
             router.navigate(path);
+            return true;
+        }
+        else {
+            return false;
         }
     }
 }

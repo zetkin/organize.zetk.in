@@ -71,7 +71,10 @@ export default class App extends FluxComponent {
         var ref = curMatch.route.ref;
 
         if (ref !== 'dashboard' && ref !== 'notfound') {
-            router.refs[ref].gotoSubSectionAt(index);
+            return router.refs[ref].gotoSubSectionAt(index);
+        }
+        else {
+            return false;
         }
     }
 }
