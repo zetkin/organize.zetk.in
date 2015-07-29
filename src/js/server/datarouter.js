@@ -52,4 +52,11 @@ router.get(/campaign:(\d+)$/, function(req, res, next) {
         });
 });
 
+router.get(/campaign\/actions$/, function(req, res, next) {
+    req.flux.getActions('action').retrieveAllActions()
+        .then(function() {
+            next();
+        });
+});
+
 export default router;
