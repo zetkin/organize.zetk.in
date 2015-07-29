@@ -19,12 +19,18 @@ export default class CampaignListPane extends PaneBase {
 
         return (
             <ul>
-                {campaigns.map(function(campaign) {
+                {campaigns.map(function(c) {
                     return (
-                        <li key={ campaign.id }>{ campaign.title }</li>
+                        <li key={ c.id }
+                            onClick={ this.onCampaignClick.bind(this, c) }>
+                            { c.title }</li>
                     );
-                })}
+                }, this)}
             </ul>
         );
+    }
+
+    onCampaignClick(campaign) {
+        this.gotoSubPane('campaign', campaign.id);
     }
 }
