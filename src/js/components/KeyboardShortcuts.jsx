@@ -46,6 +46,9 @@ export default class KeyboardShortcuts extends FluxComponent {
                     <h2>Search</h2>
                     <ul>
                         <li><code>{ '//' }</code> Activate search field</li>
+                        <li><code>{ '/p' }</code> Activate search, limiting results to people</li>
+                        <li><code>{ '/c' }</code> Activate search, limiting results to campaign</li>
+                        <li><code>{ '/m' }</code> Activate search, limiting results to maps</li>
                     </ul>
 
                     <h2>Misc</h2>
