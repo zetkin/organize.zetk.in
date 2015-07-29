@@ -10,6 +10,10 @@ export default class SearchActions extends Actions {
         return scope;
     }
 
+    changeScope(scope) {
+        return scope;
+    }
+
     endSearch() {
         return true;
     }

@@ -21,6 +21,7 @@ export default class SearchStore extends Store {
         var searchActions = flux.getActions('search');
         this.register(searchActions.search, this.onSearch);
         this.register(searchActions.beginSearch, this.onBeginSearch);
+        this.register(searchActions.changeScope, this.onChangeScope);
         this.register(searchActions.endSearch, this.onEndSearch);
         this.register(searchActions.clearSearch, this.onClearSearch);
     }
@@ -42,9 +43,19 @@ export default class SearchStore extends Store {
     }
 
     onBeginSearch(scope) {
+        // Don't override scope if undefined
+        if (scope === undefined)
+            scope = this.state.scope;
+
         // TODO: Open WS already at this point?
         this.setState({
             isActive: true,
+            scope: scope
+        });
+    }
+
+    onChangeScope(scope) {
+        this.setState({
             scope: scope
         });
     }
