@@ -4,6 +4,7 @@ import SectionBase from '../SectionBase';
 import CampaignListPane from './CampaignListPane';
 import CampaignOverviewPane from './CampaignOverviewPane';
 import CampaignPlannerPane from './CampaignPlannerPane';
+import AllActionsPane from './AllActionsPane';
 
 
 export default class CampaignSection extends SectionBase {
@@ -14,7 +15,9 @@ export default class CampaignSection extends SectionBase {
             { path: 'planner', title: 'Planner',
                 startPane: CampaignPlannerPane },
             { path: 'campaigns', title: 'All campaigns',
-                startPane: CampaignListPane }
+                startPane: CampaignListPane },
+            { path: 'actions', title: 'All actions',
+                startPane: AllActionsPane }
         ];
     }
 }
