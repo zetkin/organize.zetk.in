@@ -43,6 +43,12 @@ app.get('/logout', function(req, res, next) {
         });
 });
 
+app.get('/officialsonly', function(req, res, next) {
+    // TODO: Implement error screen (static?)
+    res.type('text/plain');
+    res.send('You are not an official');
+});
+
 app.use(function(req, res, next) {
     if (req.url == '/search') {
         // Don't render any output for search. Because of how
