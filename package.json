@@ -12,6 +12,7 @@
     "test": "tape tests/*.js"
   },
   "dependencies": {
+    "animated-scrollto": "^1.1.0",
     "array.prototype.find": "^1.0.0",
     "bugsnag": "^1.6.4",
     "classnames": "^2.1.3",

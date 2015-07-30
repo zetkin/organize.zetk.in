@@ -27,6 +27,8 @@ export default class PaneBase extends FluxComponent {
         return (
             <div className={ classNames.join(' ') }>
                 <header>
+                    <a className="section-pane-closelink"
+                        onClick={ this.onCloseClick.bind(this) }/>
                     <h2>{ this.getPaneTitle(data) }</h2>
                     <small>{ this.getPaneSubTitle(data) }</small>
                 </header>
@@ -76,10 +78,14 @@ export default class PaneBase extends FluxComponent {
 
     closePane() {
         var pathElements = this.props.panePath.split('/');
-        var parentPathElements = pathElements.slice(0, pathElements.length-1);
+        var parentPathElements = pathElements.slice(0, pathElements.length);
         var parentPath = parentPathElements.join('/');
 
         this.context.router.navigate(parentPath);
+    }
+
+    onCloseClick(ev) {
+        this.closePane();
     }
 }
 

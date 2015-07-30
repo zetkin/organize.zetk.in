@@ -1,7 +1,4 @@
 html {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
     box-sizing: border-box;
 }
 
@@ -10,29 +7,23 @@ html {
 }
 
 body {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    margin: 0;
     background-color: #ddd;
     font-size: 62.5%;
 
     font-family: Arial, sans-serif;
 }
 
+#main {
+    position: absolute;
+    top: 4.8em;
+    right: 0;
+    left: 0;
+}
+
 a {
     color: inherit;
     text-decoration: none;
-}
-
-#main {
-    position: fixed;
-    overflow: hidden;
-    top: 4.8em;
-    left: 0;
-    right: 0;
-    bottom: 0;
 }
 
 .shortcutref {

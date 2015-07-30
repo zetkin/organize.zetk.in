@@ -1,6 +1,10 @@
 var _panes,
+    _layout,
     _running,
     _stackWidth;
+
+const VERTICAL = 'v';
+const HORIZONTAL = 'h';
 
 function run(paneElements, container) {
     document.addEventListener('touchmove', function(ev) {
@@ -15,19 +19,33 @@ function run(paneElements, container) {
         _panes[i] = new Pane(paneElements[i], isBase);
     }
 
+    _layout = (window.innerWidth > 720)? HORIZONTAL : VERTICAL;
     _stackWidth = container.offsetWidth;
-    window.addEventListener('resize', function(ev) {
-        _stackWidth = container.offsetWidth;
-        if (_panes.length > 1) {
-            var lastPane = _panes[_panes.length-1];
 
-            lastPane.setX(_stackWidth - lastPane.getWidth());
+    window.addEventListener('resize', function(ev) {
+        var prevLayout = _layout;
+
+        _layout = (window.innerWidth > 720)? HORIZONTAL : VERTICAL;
+        _stackWidth = container.offsetWidth;
+
+        if (_layout != prevLayout) {
+            // Layout changed! Reset and start new layout
+            if (_layout == VERTICAL) {
+                resetVerticalLayout();
+            }
+            else {
+                resetHorizontalLayout();
+            }
         }
     });
 
-    // Start updating
-    _running = true;
-    updateStack();
+    if (_layout == VERTICAL) {
+        resetVerticalLayout();
+    }
+    else {
+        _stackWidth = container.offsetWidth;
+        resetHorizontalLayout();
+    }
 }
 
 function stop() {
@@ -41,8 +59,71 @@ function stop() {
     _running = false;
 }
 
+function resetVerticalLayout() {
+    var i, len = _panes.length;
+
+    for (i = 0; i < len; i++) {
+        var pane = _panes[i];
+
+        pane.resetTransform();
+        pane.setY(40 * i);
+    }
+
+    if (len > 2) {
+        var animatedScrollTo = require('animated-scrollto');
+
+        // Scroll down to show the topmost pane as well as the
+        // header of the one underneith (vertically above) that.
+        var scrollTop = (len - 2) * 40;
+        setTimeout(function() {
+            animatedScrollTo(document.body, scrollTop, 400);
+        }, 70);
+    }
+
+    _running = false;
+}
+
+function resetHorizontalLayout() {
+    var i, len = _panes.length;
+
+    for (i = 0; i < len; i++) {
+        var pane = _panes[i];
+
+        pane.resetTransform();
+    }
+
+    if (_panes.length > 1) {
+        var topPane = _panes[_panes.length-1];
+
+        // Position top pane so that it's shown in it's entirety
+        topPane.setX(_stackWidth - topPane.getWidth());
+
+        // Distribute the remaining space to the left of the top pane
+        // across all of the underlying panes (except the base pane).
+        var perPane = topPane.getX() / (len - 1)
+        i = len - 1;
+        while (i-->1) {
+            pane = _panes[i];
+            pane.setX(i * perPane);
+        }
+    }
+
+    // Start updating
+    if (!_running) {
+        _running = true;
+        updateStack();
+    }
+}
+
 function updateStack() {
     var i, len, shade, maxRight;
+
+    if (!_running) {
+        // The loop has been requested to stop. Bail
+        // before doing anything and before requesting
+        // a new animation frame.
+        return;
+    }
 
     len = _panes.length;
     for (i=0; i<len; i++) {
@@ -79,9 +160,7 @@ function updateStack() {
         maxRight = sectionX;
     }
 
-    if (_running) {
-        requestAnimationFrame(updateStack);
-    }
+    requestAnimationFrame(updateStack);
 }
 
 
@@ -112,6 +191,14 @@ function Pane(domElement, isBase) {
         this.domElement.style.transform = 'translate3d('+x+'px,0,0)';
         this.domElement.style.webkitTransform = 'translate3d('+x+'px,0,0)';
     }
+
+    var y = 0;
+    this.getY = function() {
+        return y;
+    };
+    this.setY = function(val) {
+        this.domElement.style.top = val+'px';
+    };
 
     var shade = 0;
     this.getShade = function() {
@@ -160,19 +247,21 @@ function Pane(domElement, isBase) {
 
     this.domElement.addEventListener('mousewheel', onDomElementMouseWheel);
     function onDomElementMouseWheel(ev) {
-        section.setScroll(section.getScroll() + ev.wheelDeltaY/2);
+        if (_layout == HORIZONTAL) {
+            section.setScroll(section.getScroll() + ev.wheelDeltaY/2);
+        }
     }
 
     this.domElement.addEventListener('touchstart', onDomElementTouchStart);
     function onDomElementTouchStart(ev) {
-        if (!section.isBase) {
+        if (_layout == HORIZONTAL && !section.isBase) {
             startDragging(ev.touches[0]);
         }
     }
 
     this.domElement.addEventListener('mousedown', onDomElementMouseDown);
     function onDomElementMouseDown(ev) {
-        if (!section.isBase && ev.pageY < 160) {
+        if (_layout == HORIZONTAL && !section.isBase && ev.pageY < 160) {
             startDragging(ev);
             ev.preventDefault();
             ev.stopImmediatePropagation();
@@ -214,6 +303,16 @@ function Pane(domElement, isBase) {
 
     document.addEventListener('touchend', stopDragging);
     document.addEventListener('mouseup', stopDragging);
+
+    this.resetTransform = function() {
+        this.domElement.style.top = '';
+        this.domElement.style.transform = '';
+        this.domElement.style.webkitTransform = '';
+        this.contentElement.style.transform = '';
+        this.contentElement.style.webkitTransform = '';
+
+        stopDragging();
+    }
 
     this.update = function() {
         if (speedY*speedY > 0.01) {
