@@ -76,7 +76,7 @@ export default class PaneBase extends FluxComponent {
 
     closePane() {
         var pathElements = this.props.panePath.split('/');
-        var parentPathElements = pathElements.slice(0, pathElements.length-1);
+        var parentPathElements = pathElements.slice(0, pathElements.length);
         var parentPath = parentPathElements.join('/');
 
         this.context.router.navigate(parentPath);
