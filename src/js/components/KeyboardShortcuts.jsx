@@ -46,6 +46,9 @@ export default class KeyboardShortcuts extends FluxComponent {
                     <h2>Search</h2>
                     <ul>
                         <li><code>{ '//' }</code> Activate search field</li>
+                        <li><code>{ '/p' }</code> Activate search, limiting results to people</li>
+                        <li><code>{ '/c' }</code> Activate search, limiting results to campaign</li>
+                        <li><code>{ '/m' }</code> Activate search, limiting results to maps</li>
                     </ul>
 
                     <h2>Misc</h2>
@@ -116,10 +119,21 @@ export default class KeyboardShortcuts extends FluxComponent {
                 ev.preventDefault();
 
                 switch (ev.keyCode) {
-                    case 47: // '/'
-                        // TODO: Focus search field
+                    case 47:    // '/'
                         this.closeReference();
                         this.getActions('search').beginSearch(null);
+                        break;
+                    case 99:    // 'c' == campaign
+                        this.closeReference();
+                        this.getActions('search').beginSearch('campaign');
+                        break;
+                    case 109:   // 'm' == maps
+                        this.closeReference();
+                        this.getActions('search').beginSearch('maps');
+                        break;
+                    case 112:   // 'p' == people
+                        this.closeReference();
+                        this.getActions('search').beginSearch('people');
                         break;
                 }
 

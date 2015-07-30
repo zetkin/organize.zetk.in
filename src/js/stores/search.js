@@ -21,6 +21,7 @@ export default class SearchStore extends Store {
         var searchActions = flux.getActions('search');
         this.register(searchActions.search, this.onSearch);
         this.register(searchActions.beginSearch, this.onBeginSearch);
+        this.register(searchActions.changeScope, this.onChangeScope);
         this.register(searchActions.endSearch, this.onEndSearch);
         this.register(searchActions.clearSearch, this.onClearSearch);
     }
@@ -42,11 +43,25 @@ export default class SearchStore extends Store {
     }
 
     onBeginSearch(scope) {
+        // Don't override scope if undefined
+        if (scope === undefined)
+            scope = this.state.scope;
+
         // TODO: Open WS already at this point?
         this.setState({
             isActive: true,
             scope: scope
         });
+    }
+
+    onChangeScope(scope) {
+        if (scope != this.state.scope) {
+            this.setState({
+                scope: scope
+            });
+
+            this.execSearch(this.state.query, scope, []);
+        }
     }
 
     onEndSearch() {
@@ -65,6 +80,10 @@ export default class SearchStore extends Store {
     }
 
     onSearch(query) {
+        this.execSearch(query, this.state.scope, this.state.results);
+    }
+
+    execSearch(query, scope, initialResults) {
         var orgId = this.flux.getStore('org').getActiveId();
 
         this.setState({
@@ -81,13 +100,14 @@ export default class SearchStore extends Store {
         else {
             // Remove results that no longer match
             this.setState({
-                results: this.state.results
+                results: initialResults
                     .filter(r => searchMatches(query, r.data))
             });
 
             var sendQuery = function(query) {
                 this.ws.send(JSON.stringify({
                     'cmd': 'search',
+                    'scope': scope,
                     'org': orgId,
                     'query': query
                 }));

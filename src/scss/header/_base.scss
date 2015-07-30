@@ -65,11 +65,95 @@
             position: relative;
             z-index: 3000;
             display: block;
-            height: 32px;
-            padding: 4px;
+            height: 2em;
+            padding: 0.4em 0.4em 0.4em 2.5em;
             border-width: 0;
-            width: 100%;
             font-size: 1.5em;
+            width: 100%;
+
+            &:focus {
+                text-align: left;
+            }
+        }
+
+        .search-form-scopeselect {
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            top: 0.5em;
+            left: 0.5em;
+            z-index: 4000;
+
+            li {
+                padding: 0;
+                list-style-type: none;
+            }
+
+            .search-form-scopeselect-value {
+                width: 3em;
+                height: 2em;
+                background-color: #ddd;
+                margin-bottom: 0.5em;
+
+                // Value icon
+                &::before {
+                    content: "";
+                    display: block;
+                    margin: 0.1em;
+                    width: 1.6em;
+                    height: 1.6em;
+                }
+            }
+
+            .search-form-scopeselect-item {
+                position: relative;
+                background-color: white;
+                display: none;
+                font-size: 1.2em;
+                padding: 0.3em 0.3em 0.3em 3em;
+
+                // Item icon
+                &::before {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    content: "";
+                    display: block;
+                    margin: 0.1em;
+                    width: 1.6em;
+                    height: 1.6em;
+                }
+            }
+
+            .search-form-scopeselect-all {
+                &::before {
+                    background-color: black;
+                }
+            }
+
+            .search-form-scopeselect-people {
+                &::before {
+                    background-color: red;
+                }
+            }
+
+            .search-form-scopeselect-campaign {
+                &::before {
+                    background-color: blue;
+                }
+            }
+
+            .search-form-scopeselect-maps {
+                &::before {
+                    background-color: green;
+                }
+            }
+
+            &.open {
+                .search-form-scopeselect-item {
+                    display: block;
+                }
+            }
         }
 
         .search-form-results {
