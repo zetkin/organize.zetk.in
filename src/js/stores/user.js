@@ -27,6 +27,10 @@ export default class UserStore extends Store {
         return this.state.memberships;
     }
 
+    isOfficial() {
+        return (this.state.memberships.length > 0);
+    }
+
     getActiveMembership() {
         return this.state.activeMembership;
     }
