@@ -93,8 +93,19 @@ function resetHorizontalLayout() {
     }
 
     if (_panes.length > 1) {
-        var lastPane = _panes[_panes.length-1];
-        lastPane.setX(_stackWidth - lastPane.getWidth());
+        var topPane = _panes[_panes.length-1];
+
+        // Position top pane so that it's shown in it's entirety
+        topPane.setX(_stackWidth - topPane.getWidth());
+
+        // Distribute the remaining space to the left of the top pane
+        // across all of the underlying panes (except the base pane).
+        var perPane = topPane.getX() / (len - 1)
+        i = len - 1;
+        while (i-->1) {
+            pane = _panes[i];
+            pane.setX(i * perPane);
+        }
     }
 
     // Start updating
