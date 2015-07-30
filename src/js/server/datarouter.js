@@ -14,10 +14,10 @@ router.all(/.*/, function(req, res, next) {
         .then(function(result) {
             var memberships = req.flux.getStore('user').getMemberships();
 
-            if (memberships.length == 0 && req.url != '/officialsonly') {
+            if (memberships.length == 0 && req.url != '/activist') {
                 // This user does not have any official roles. Redirect to
                 // page which explains why they can't use organizer app.
-                res.redirect(303, '/officialsonly');
+                res.redirect(303, '/activist');
             }
             else {
                 next();
