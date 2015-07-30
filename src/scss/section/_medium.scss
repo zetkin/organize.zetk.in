@@ -74,6 +74,10 @@
         // Base pane, always full-width and not interactive
         left: 0;
         right: 0;
+
+        .section-pane-closelink {
+            display: none;
+        }
     }
 
     .section-pane {
@@ -97,6 +101,15 @@
 
         header {
             margin: 100px 20px 0;
+        }
+
+        .section-pane-closelink {
+            top: 1em;
+            left: 1em;
+            right: auto;
+            background-color: red;
+            width: 1em;
+            height: 1em;
         }
 
         .section-pane-content {

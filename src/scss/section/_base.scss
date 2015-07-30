@@ -14,6 +14,24 @@
         display: none;
     }
 
+    &:first-child {
+        .section-pane-closelink {
+            display: none;
+        }
+    }
+
+    // Completely transparent link placed just over the pane (where the header
+    // of the underlying pane shows). The user will be tapping the underlying
+    // header, but actually hitting this to close the overlying pane.
+    .section-pane-closelink {
+        background: transparent;
+        position: absolute;
+        top: -40px;
+        left: 0;
+        right: 0;
+        height: 40px;
+    }
+
     &::before {
         content: "";
         display: block;
