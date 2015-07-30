@@ -28,8 +28,16 @@ function waitForActions(execActions) {
     }
 }
 
+router.get([/people$/, /people\/list$/], waitForActions(req => [
+    req.flux.getActions('person').retrievePeople()
+]));
+
 router.get(/person:(\d+)$/, waitForActions(req => [
     req.flux.getActions('person').retrievePerson(req.params[0])
+]));
+
+router.get([/maps$/, /maps\/locations$/], waitForActions(req => [
+    req.flux.getActions('location').retrieveLocations()
 ]));
 
 router.get(/location:(\d+)$/, waitForActions(req => [
