@@ -12,6 +12,7 @@ import authRouter from './authrouter';
 import apiProxy from './apiproxy';
 import search from './search';
 import App from '../components/App';
+import ActivistPage from '../components/fullpages/ActivistPage';
 
 
 var app = express();
@@ -27,11 +28,6 @@ app.use('/static/', express.static(
     path.join(__dirname, '../../static'),
     { fallthrough: false }));
 
-app.use(dataRouter);
-
-expressWs(app);
-app.ws('/search', search);
-
 app.get('/logout', function(req, res, next) {
     Z.resource('/session').del()
         .then(function(result) {
@@ -43,6 +39,41 @@ app.get('/logout', function(req, res, next) {
         });
 });
 
+app.use(dataRouter);
+
+expressWs(app);
+app.ws('/search', search);
+
+function renderReactPage(Component, req, res) {
+    try {
+        var PageFactory = React.createFactory(Component);
+        var props = {
+            path: req.path
+        };
+
+        var html = React.renderToString(
+            React.createElement(FluxComponent, { flux: req.flux },
+                PageFactory(props)));
+
+        res.send(html);
+    }
+    catch (err) {
+        res.send('ERROR!')
+        throw err; // TODO: Better error handling
+    }
+}
+
+app.get('/activist', function(req, res, next) {
+    if (req.flux.getStore('user').isOfficial()) {
+        // Officials should not be able to see the message to non-officials,
+        // which would be very confusing.
+        res.redirect(303, '/');
+    }
+    else {
+        renderReactPage(ActivistPage, req, res);
+    }
+});
+
 app.use(function(req, res, next) {
     if (req.url == '/search') {
         // Don't render any output for search. Because of how
@@ -52,23 +83,7 @@ app.use(function(req, res, next) {
         return next();
     }
 
-    try {
-        var AppFactory = React.createFactory(App);
-        var props = {
-            base: 'http://' + req.headers.host,
-            path: req.path
-        };
-
-        var html = React.renderToString(
-            React.createElement(FluxComponent, { flux: req.flux },
-                AppFactory(props)));
-
-        res.send(html);
-    }
-    catch (err) {
-        res.send('ERROR!')
-        throw err; // TODO: Better error handling
-    }
+    renderReactPage(App, req, res);
 });
 
 module.exports = app;
