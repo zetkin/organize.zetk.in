@@ -20,43 +20,32 @@ router.all(/.*/, function(req, res, next) {
         });
 });
 
-router.get(/person:(\d+)$/, function(req, res, next) {
+function waitForActions(execActions) {
+    return function(req, res, next) {
+        var promises = execActions(req);
+
+        Promise.all(promises).then(() => next());
+    }
+}
+
+router.get(/person:(\d+)$/, waitForActions(req => [
     req.flux.getActions('person').retrievePerson(req.params[0])
-        .then(function() {
-            next();
-        })
-        .catch(function(err) {
-            // TODO: What could this be? Handle!
-            next();
-        });
-});
+]));
 
-router.get(/location:(\d+)$/, function(req, res, next) {
+router.get(/location:(\d+)$/, waitForActions(req => [
     req.flux.getActions('location').retrieveLocation(req.params[0])
-        .then(function() {
-            next();
-        });
-});
+]));
 
-router.get(/campaigns$/, function(req, res, next) {
+router.get(/campaigns$/, waitForActions(req => [
     req.flux.getActions('campaign').retrieveCampaigns()
-        .then(function() {
-            next();
-        });
-});
+]));
 
-router.get(/campaign:(\d+)$/, function(req, res, next) {
+router.get(/campaign:(\d+)$/, waitForActions(req => [
     req.flux.getActions('campaign').retrieveCampaign(req.params[0])
-        .then(function() {
-            next();
-        });
-});
+]));
 
-router.get(/campaign\/actions$/, function(req, res, next) {
+router.get(/campaign\/actions$/, waitForActions(req => [
     req.flux.getActions('action').retrieveAllActions()
-        .then(function() {
-            next();
-        });
-});
+]));
 
 export default router;
