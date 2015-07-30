@@ -69,6 +69,17 @@ function resetVerticalLayout() {
         pane.setY(40 * i);
     }
 
+    if (len > 2) {
+        var animatedScrollTo = require('animated-scrollto');
+
+        // Scroll down to show the topmost pane as well as the
+        // header of the one underneith (vertically above) that.
+        var scrollTop = (len - 2) * 40;
+        setTimeout(function() {
+            animatedScrollTo(document.body, scrollTop, 400);
+        }, 70);
+    }
+
     _running = false;
 }
 
