@@ -35,11 +35,6 @@ function run(paneElements, container) {
             }
             else {
                 resetHorizontalLayout();
-
-                if (!_running) {
-                    _running = true;
-                    updateStack();
-                }
             }
         }
     });
@@ -92,8 +87,10 @@ function resetHorizontalLayout() {
     }
 
     // Start updating
-    _running = true;
-    updateStack();
+    if (!_running) {
+        _running = true;
+        updateStack();
+    }
 }
 
 function updateStack() {
