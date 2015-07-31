@@ -1,6 +1,7 @@
 import React from 'react/addons';
 
 import PaneBase from '../../panes/PaneBase';
+import ActionList from '../../misc/actionlist/ActionList';
 
 
 export default class AllActionsPane extends PaneBase {
@@ -18,15 +19,7 @@ export default class AllActionsPane extends PaneBase {
         var actions = actionStore.getActions();
 
         return (
-            <ul>
-                {actions.map(function(a) {
-                    return (
-                        <li key={ a.id }>
-                            { a.id }
-                        </li>
-                    );
-                }, this)}
-            </ul>
+            <ActionList actions={ actions }/>
         );
     }
 }
