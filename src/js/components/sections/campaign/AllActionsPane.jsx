@@ -19,7 +19,14 @@ export default class AllActionsPane extends PaneBase {
         var actions = actionStore.getActions();
 
         return (
-            <ActionList actions={ actions }/>
+            <ActionList actions={ actions }
+                onActionOperation={ this.onActionOperation.bind(this) }/>
         );
+    }
+
+    onActionOperation(action, operation) {
+        if (operation == 'edit') {
+            this.gotoSubPane('editaction', action.id);
+        }
     }
 }
