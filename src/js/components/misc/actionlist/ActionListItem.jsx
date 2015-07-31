@@ -46,13 +46,17 @@ export default class ActionListItem extends FluxComponent {
                     { action.location.title }</span>
                 <ul className="operations">
                     <li className="operation">
-                        <a href="">Edit</a></li>
+                        <a onClick={ this.onEditClick.bind(this) }>
+                            Edit</a></li>
                     <li className="operation">
-                        <a href="">Send reminders</a></li>
+                        <a onClick={ this.onSendClick.bind(this) }>
+                            Send reminders</a></li>
                     <li className="operation">
-                        <a href="">Book all available activists</a></li>
+                        <a onClick={ this.onBookClick.bind(this) }>
+                            Book all available activists</a></li>
                     <li className="operation">
-                        <a href="">Cancel action</a></li>
+                        <a onClick={ this.onCancelClick.bind(this) }>
+                            Cancel action</a></li>
                 </ul>
             </li>
         );
@@ -63,8 +67,37 @@ export default class ActionListItem extends FluxComponent {
             expanded: !this.state.expanded
         });
     }
+
+    onEditClick(ev) {
+        ev.stopPropagation();
+        if (this.props.onOperation) {
+            this.props.onOperation('edit');
+        }
+    }
+
+    onSendClick(ev) {
+        ev.stopPropagation();
+        if (this.props.onOperation) {
+            this.props.onOperation('sendreminders');
+        }
+    }
+
+    onBookClick(ev) {
+        ev.stopPropagation();
+        if (this.props.onOperation) {
+            this.props.onOperation('bookall');
+        }
+    }
+
+    onCancelClick(ev) {
+        ev.stopPropagation();
+        if (this.props.onOperation) {
+            this.props.onOperation('cancel');
+        }
+    }
 }
 
 ActionListItem.propTypes = {
-    action: React.PropTypes.object.isRequired
+    action: React.PropTypes.object.isRequired,
+    onOperation: React.PropTypes.func
 };

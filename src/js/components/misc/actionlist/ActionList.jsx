@@ -17,8 +17,10 @@ export default class ActionList extends FluxComponent {
                 </ul>
                 <ul className="actionlist-items">
                     {actions.map(function(action) {
+                        var onOperation = this.onOperation.bind(this, action);
                         return (
                             <ActionListItem key={ action.id }
+                                onOperation={ onOperation }
                                 action={ action }/>
                         );
                     }, this)}
@@ -26,8 +28,15 @@ export default class ActionList extends FluxComponent {
             </div>
         );
     }
+
+    onOperation(action, operation) {
+        if (this.props.onActionOperation) {
+            this.props.onActionOperation(action, operation);
+        }
+    }
 }
 
 ActionList.propTypes = {
-    actions: React.PropTypes.array.isRequired
+    actions: React.PropTypes.array.isRequired,
+    onActionOperation: React.PropTypes.func
 };
