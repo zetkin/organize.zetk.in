@@ -23,14 +23,46 @@ export default class ActionListItem extends FluxComponent {
         };
     }
 
+    componentDidMount() {
+        this.listenTo('participant', this.forceUpdate);
+
+        var action = this.props.action;
+        var participantStore = this.getStore('participant');
+        var participants = participantStore.getParticipants(action.id);
+
+        if (!participants) {
+            this.getActions('participant').retrieveParticipants(action.id);
+        }
+    }
+
     render() {
         var action = this.props.action;
         var actionDate = new Date(action.start_time);
+        var participantStore = this.getStore('participant');
+        var participants = participantStore.getParticipants(action.id);
+        var participantList;
 
         var classNames = cx({
             'actionlist-item': true,
             'expanded': this.state.expanded
         });
+
+        if (participants) {
+            participantList = (
+                <ul className="participants">
+                {participants.map(function(person) {
+                    var name = person.first_name + ' ' + person.last_name;
+                    return (
+                        <li className="participant">
+                            <figure>
+                                <figcaption>{ name }</figcaption>
+                            </figure>
+                        </li>
+                    );
+                }, this)}
+                </ul>
+            );
+        }
 
         return (
             <li className={ classNames }
@@ -44,6 +76,9 @@ export default class ActionListItem extends FluxComponent {
                     { action.activity.title }</span>
                 <span className="location">
                     { action.location.title }</span>
+
+                { participantList }
+
                 <ul className="operations">
                     <li className="operation">
                         <a onClick={ this.onEditClick.bind(this) }>
