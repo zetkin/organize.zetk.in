@@ -16,6 +16,8 @@ export default class ActionStore extends Store {
             this.onRetrieveAllActionsComplete);
         this.register(actionActions.retrieveAction,
             this.onRetrieveActionComplete);
+        this.register(actionActions.updateAction,
+            this.onUpdateActionComplete);
     }
 
     getAction(id) {
@@ -33,6 +35,15 @@ export default class ActionStore extends Store {
     }
 
     onRetrieveActionComplete(res) {
+        var action = res.data.data;
+        StoreUtils.updateOrAdd(this.state.actions, action.id, action);
+
+        this.setState({
+            actions: this.state.actions
+        });
+    }
+
+    onUpdateActionComplete(res) {
         var action = res.data.data;
         StoreUtils.updateOrAdd(this.state.actions, action.id, action);
 

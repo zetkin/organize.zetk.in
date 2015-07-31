@@ -18,4 +18,9 @@ export default class ActionActions extends Actions {
         var orgId = this.flux.getStore('org').getActiveId();
         return Z.resource('orgs', orgId, 'actions', id).get();
     }
+
+    updateAction(id, data) {
+        var orgId = this.flux.getStore('org').getActiveId();
+        return Z.resource('orgs', orgId, 'actions', id).patch(data);
+    }
 }
