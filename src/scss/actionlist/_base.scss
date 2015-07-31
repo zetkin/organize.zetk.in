@@ -1,5 +1,8 @@
 .actionlist {
-    max-width: 640px;
+    ul, li {
+        margin: 0;
+        padding: 0;
+    }
 }
 
 .actionlist-columns {
@@ -34,6 +37,10 @@
 .actionlist-items {
     margin: 0;
     padding: 0;
+
+    .participants {
+        display: none;
+    }
 
     .actionlist-item {
         list-style-type: none;
