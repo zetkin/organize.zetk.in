@@ -65,4 +65,10 @@ router.get(/campaign\/actions$/, waitForActions(req => [
     req.flux.getActions('action').retrieveAllActions()
 ]));
 
+router.get(/editaction:(\d+)$/, waitForActions(req => [
+    req.flux.getActions('action').retrieveAction(req.params[0]),
+    req.flux.getActions('activity').retrieveActivities(),
+    req.flux.getActions('location').retrieveLocations()
+]));
+
 export default router;
