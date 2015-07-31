@@ -14,6 +14,10 @@ export default class ActionStore extends Store {
             this.onRetrieveAllActionsComplete);
     }
 
+    getAction(id) {
+        return this.state.actions.find(a => (a.id == id));
+    }
+
     getActions() {
         return this.state.actions;
     }
