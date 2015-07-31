@@ -22,6 +22,7 @@
     "express": "^4.12.3",
     "express-ws": "^0.2.6",
     "flummox": "^3.5.0",
+    "flux": "^2.0.3",
     "merge": "^1.2.0",
     "react": "~0.13.0",
     "react-router-component": "^0.24.4",

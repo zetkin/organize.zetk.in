@@ -1,4 +1,5 @@
 import Flummox from 'flummox';
+import { Dispatcher } from 'flux';
 
 import ActionActions from './actions/action';
 import ActionStore from './stores/action';
@@ -20,9 +21,24 @@ import UserActions from './actions/user';
 import UserStore from './stores/user';
 
 
+class ScheduledDispatcher extends Dispatcher {
+    dispatch(...args) {
+        if (!this.isDispatching()) {
+            super.dispatch(...args);
+        }
+        else {
+            setTimeout(() => {
+                super.dispatch(...args);
+            }, 0);
+        }
+    }
+}
+
 export default class Flux extends Flummox {
     constructor() {
         super();
+
+        this.dispatcher = new ScheduledDispatcher();
 
         this.createActions('action', ActionActions, this);
         this.createActions('activity', ActivityActions, this);
