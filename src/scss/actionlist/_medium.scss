@@ -1,0 +1,13 @@
+.actionlist-columns {
+    li:nth-child(3) {
+        display: block;
+        width: 80px;
+        right: 240px;
+    }
+
+    li:nth-child(4) {
+        display: block;
+        width: 100px;
+        right: 125px;
+    }
+}
