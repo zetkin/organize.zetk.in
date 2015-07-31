@@ -1,5 +1,7 @@
 import { Store } from 'flummox';
 
+import StoreUtils from '../utils/StoreUtils';
+
 
 export default class ActionStore extends Store {
     constructor(flux) {
@@ -12,6 +14,8 @@ export default class ActionStore extends Store {
         var actionActions = flux.getActions('action');
         this.register(actionActions.retrieveAllActions,
             this.onRetrieveAllActionsComplete);
+        this.register(actionActions.retrieveAction,
+            this.onRetrieveActionComplete);
     }
 
     getAction(id) {
@@ -25,6 +29,15 @@ export default class ActionStore extends Store {
     onRetrieveAllActionsComplete(res) {
         this.setState({
             actions: res.data.data
+        });
+    }
+
+    onRetrieveActionComplete(res) {
+        var action = res.data.data;
+        StoreUtils.updateOrAdd(this.state.actions, action.id, action);
+
+        this.setState({
+            actions: this.state.actions
         });
     }
 
