@@ -17,7 +17,10 @@ export default class AllActivitiesPane extends PaneBase {
         const activityStore = this.getStore('activity');
         const activities = activityStore.getActivities();
 
-        return (
+        return [
+            <input type="button" value="Add"
+                onClick={ this.onAddClick.bind(this) }/>,
+
             <ul>
                 {activities.map(function(a) {
                     return (
@@ -27,7 +30,11 @@ export default class AllActivitiesPane extends PaneBase {
                     );
                 }, this)}
             </ul>
-        );
+        ];
+    }
+
+    onAddClick(ev) {
+        this.gotoSubPane('addactivity');
     }
 
     onActivityClick(activity) {
