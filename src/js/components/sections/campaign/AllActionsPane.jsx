@@ -1,6 +1,7 @@
 import React from 'react/addons';
 
 import PaneBase from '../../panes/PaneBase';
+import ActionList from '../../misc/actionlist/ActionList';
 
 
 export default class AllActionsPane extends PaneBase {
@@ -10,7 +11,10 @@ export default class AllActionsPane extends PaneBase {
 
     componentDidMount() {
         this.listenTo('action', this.forceUpdate);
+        this.listenTo('participant', this.onParticipantStoreUpdate);
         this.getActions('action').retrieveAllActions();
+
+        this.openMovePane();
     }
 
     renderPaneContent() {
@@ -18,15 +22,27 @@ export default class AllActionsPane extends PaneBase {
         var actions = actionStore.getActions();
 
         return (
-            <ul>
-                {actions.map(function(a) {
-                    return (
-                        <li key={ a.id }>
-                            { a.id }
-                        </li>
-                    );
-                }, this)}
-            </ul>
+            <ActionList actions={ actions }
+                onActionOperation={ this.onActionOperation.bind(this) }/>
         );
+    }
+
+    onActionOperation(action, operation) {
+        if (operation == 'edit') {
+            this.gotoSubPane('editaction', action.id);
+        }
+    }
+
+    onParticipantStoreUpdate() {
+        this.openMovePane();
+    }
+
+    openMovePane() {
+        const participantStore = this.getStore('participant');
+        const moves = participantStore.getMoves();
+
+        if (moves.length) {
+            this.gotoSubPane('moveparticipants');
+        }
     }
 }

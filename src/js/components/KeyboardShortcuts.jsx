@@ -101,6 +101,9 @@ export default class KeyboardShortcuts extends FluxComponent {
                         this.navigateToSubSection(6);
                         break;
 
+                    case 99:    // 'c' == campaign
+                        this.navigateToSection('/campaign');
+                        break;
                     case 104:   // 'h' == home
                         this.navigateToSection('/');
                         break;

@@ -6,6 +6,10 @@
     min-width: 400px;
 }
 
+.section-pane-editaction {
+    min-width: 400px;
+}
+
 .section-pane-location {
     min-width: 400px;
 }
@@ -16,6 +20,58 @@
         z-index: 2000;
         bottom: 20px;
         left: 20px;
+    }
+}
+
+.section-pane-moveparticipants {
+    min-width: 400px;
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        list-style-type: none;
+        padding-left: 0;
+        margin: 1em 0;
+        font-size: 1.1em;
+
+        &::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .person {
+            display: block;
+            font-weight: bold;
+        }
+
+        .action {
+            width: 45%;
+            display: block;
+            float: left;
+
+            padding: 0.5em;
+            padding: 0.5em;
+            background-color: #eee;
+
+            .date, .activity, .location {
+                display: block;
+            }
+        }
+
+        .action + .action {
+            position: relative;
+            float: right;
+            &::before {
+                content: "\25B6";
+                position: absolute;
+                left: -14%;
+                top: 1.5em;
+            }
+        }
     }
 }
 

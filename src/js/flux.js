@@ -1,13 +1,18 @@
 import Flummox from 'flummox';
+import { Dispatcher } from 'flux';
 
 import ActionActions from './actions/action';
 import ActionStore from './stores/action';
+import ActivityActions from './actions/activity';
+import ActivityStore from './stores/activity';
 import CampaignActions from './actions/campaign';
 import CampaignStore from './stores/campaign';
 import DashboardStore from './stores/dashboard';
 import LocationActions from './actions/location';
 import LocationStore from './stores/location';
 import OrgStore from './stores/org';
+import ParticipantActions from './actions/participant';
+import ParticipantStore from './stores/participant';
 import PersonActions from './actions/person';
 import PersonStore from './stores/person';
 import SearchActions from './actions/search';
@@ -16,22 +21,59 @@ import UserActions from './actions/user';
 import UserStore from './stores/user';
 
 
+export default class QueuedDispatcher extends Dispatcher {
+    constructor() {
+        super();
+
+        this.payloads = [];
+    }
+
+    dispatch(payload) {
+        if (!this.isDispatching()) {
+            super.dispatch(payload);
+            this.dispatchQueue();
+        }
+        else {
+            this.addToQueue(payload);
+        }
+    }
+
+    addToQueue(payload) {
+        this.payloads.push(payload);
+    }
+
+    dispatchQueue() {
+        if (!this.payloads.length) {
+            return false;
+        }
+
+        this.dispatch(this.payloads.shift());
+    }
+}
+
+
 export default class Flux extends Flummox {
     constructor() {
         super();
 
+        this.dispatcher = new QueuedDispatcher();
+
         this.createActions('action', ActionActions, this);
+        this.createActions('activity', ActivityActions, this);
         this.createActions('campaign', CampaignActions, this);
         this.createActions('location', LocationActions, this);
+        this.createActions('participant', ParticipantActions, this);
         this.createActions('person', PersonActions, this);
         this.createActions('search', SearchActions);
         this.createActions('user', UserActions);
 
         this.createStore('action', ActionStore, this);
+        this.createStore('activity', ActivityStore, this);
         this.createStore('campaign', CampaignStore, this);
         this.createStore('dashboard', DashboardStore, this);
         this.createStore('location', LocationStore, this);
         this.createStore('org', OrgStore, this);
+        this.createStore('participant', ParticipantStore, this);
         this.createStore('person', PersonStore, this);
         this.createStore('search', SearchStore, this);
         this.createStore('user', UserStore, this);
