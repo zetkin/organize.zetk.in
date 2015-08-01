@@ -19,6 +19,11 @@ export default class ActivityActions extends Actions {
         return Z.resource('orgs', orgId, 'activities', id).patch(data);
     }
 
+    createActivity(data) {
+        var orgId = this.flux.getStore('org').getActiveId();
+        return Z.resource('orgs', orgId, 'activities').post(data);
+    }
+
     static serialize(state) {
         return JSON.stringify(state);
     }

@@ -11,6 +11,8 @@ export default class ActivityStore extends Store {
         });
 
         var activityActions = flux.getActions('activity');
+        this.register(activityActions.createActivity,
+            this.onCreateActivityComplete);
         this.register(activityActions.retrieveActivities,
             this.onRetrieveActivitiesComplete);
         this.register(activityActions.updateActivity,
@@ -35,6 +37,16 @@ export default class ActivityStore extends Store {
         const activity = res.data.data;
 
         StoreUtils.updateOrAdd(this.state.activities, activity.id, activity);
+
+        this.setState({
+            activities: this.state.activities
+        });
+    }
+
+    onCreateActivityComplete(res) {
+        const activity = res.data.data;
+
+        this.state.activities.push(activity);
 
         this.setState({
             activities: this.state.activities
