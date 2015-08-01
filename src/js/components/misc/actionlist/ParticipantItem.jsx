@@ -39,6 +39,7 @@ export default class ParticipantItem extends React.Component {
         return this.props.connectDragSource(
             <li className="participant">
                 <figure>
+                    { person.id }
                     <figcaption>{ name }</figcaption>
                 </figure>
             </li>
