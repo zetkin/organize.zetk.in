@@ -15,4 +15,12 @@ export default class ParticipantActions extends Actions {
                 .meta('actionId', actionId)
                 .get();
     }
+
+    moveParticipant(personId, oldActionId, newActionId) {
+        return {
+            personId: personId,
+            oldActionId: oldActionId,
+            newActionId: newActionId
+        };
+    }
 }

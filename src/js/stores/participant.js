@@ -14,6 +14,9 @@ export default class ParticipantStore extends Store {
         this.registerAsync(participantActions.retrieveParticipants,
             this.onRetrieveParticipantsBegin,
             this.onRetrieveParticipantsComplete);
+
+        this.register(participantActions.moveParticipant,
+            this.onMoveParticipant);
     }
 
     getParticipants(actionId) {
@@ -36,6 +39,28 @@ export default class ParticipantStore extends Store {
     onRetrieveParticipantsComplete(res) {
         var actionId = res.meta.actionId;
         this.state.participants[actionId] = res.data.data;
+
+        this.setState({
+            participants: this.state.participants
+        });
+    }
+
+    onMoveParticipant(payload) {
+        var i, person;
+        var oldArray = this.state.participants[payload.oldActionId];
+        var newArray = this.state.participants[payload.newActionId];
+
+        for (i in oldArray) {
+            if (oldArray[i].id == payload.personId) {
+                person = oldArray[i];
+                oldArray.splice(i, 1);
+                break;
+            }
+        }
+
+        if (person) {
+            newArray.push(person);
+        }
 
         this.setState({
             participants: this.state.participants
