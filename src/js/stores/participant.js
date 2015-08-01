@@ -7,7 +7,8 @@ export default class ParticipantStore extends Store {
 
         this.flux = flux;
         this.setState({
-            participants: {}
+            participants: {},
+            moves: []
         });
 
         var participantActions = this.flux.getActions('participant');
@@ -26,6 +27,10 @@ export default class ParticipantStore extends Store {
         else {
             return null;
         }
+    }
+
+    getMoves() {
+        return this.state.moves;
     }
 
     onRetrieveParticipantsBegin(actionId) {
@@ -63,8 +68,63 @@ export default class ParticipantStore extends Store {
         }
 
         this.setState({
-            participants: this.state.participants
+            participants: this.state.participants,
+            moves: this.addMove({
+                person: payload.personId,
+                from: payload.oldActionId,
+                to: payload.newActionId
+            })
         });
+    }
+
+    addMove(move) {
+        var i;
+        var oldMove;
+        var updated = false;
+        var moves = this.state.moves;
+
+        // Search for inverses
+        for (i in moves) {
+            oldMove = moves[i];
+            if (oldMove.person == move.person
+                && oldMove.from == move.to && oldMove.to == move.from) {
+                // This is an inverse of a previous move, i.e. it undos it,
+                // and can thus just be removed since the result is no move.
+                moves.splice(i, 1);
+                updated = true;
+                break;
+            }
+        }
+
+        // Search for chain
+        oldMove = moves.find(m =>
+            (m.to == move.from && m.person == move.person));
+
+        if (oldMove) {
+            // This extends a chain of moves for this person. Just update the
+            // previous move to avoid storing the entire chain.
+            oldMove.to = move.to;
+            updated = true;
+        }
+
+        // Search for replace
+        oldMove = moves.find(m =>
+            (m.from == move.to && m.person == move.person));
+
+        if (oldMove) {
+            // This moves the person to an action from which it was previously
+            // moved away, i.e. A > B, C > A. In effect, there has only really
+            // been one move made, C > B.
+            oldMove.from = move.from;
+            updated = true;
+        }
+
+        if (!updated) {
+            // If no old move was updated this is a new move
+            moves.push(move);
+        }
+
+        return moves;
     }
 
     static serialize(state) {
