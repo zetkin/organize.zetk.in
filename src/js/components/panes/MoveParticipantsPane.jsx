@@ -32,7 +32,9 @@ export default class MoveParticipantsPane extends PaneBase {
             }, this)}
             </ul>,
             <input type="button" value="Execute"
-                onClick={ this.onExecuteClick.bind(this) }/>
+                onClick={ this.onExecuteClick.bind(this) }/>,
+            <input type="button" value="Reset and cancel"
+                onClick={ this.onResetClick.bind(this) }/>
         ];
     }
 
@@ -46,5 +48,16 @@ export default class MoveParticipantsPane extends PaneBase {
                 participantActions.clearMoves();
                 this.closePane();
             }.bind(this));
+    }
+
+    onResetClick(ev) {
+        const participantActions = this.getActions('participant');
+        const participantStore = this.getStore('participant');
+        const moves = participantStore.getMoves();
+
+        participantActions.undoMoves(moves);
+        participantActions.clearMoves();
+
+        this.closePane();
     }
 }
