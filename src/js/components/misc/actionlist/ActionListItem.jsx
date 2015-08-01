@@ -43,10 +43,8 @@ export default class ActionListItem extends FluxComponent {
         this.listenTo('participant', this.forceUpdate);
 
         var action = this.props.action;
-        var participantStore = this.getStore('participant');
-        var participants = participantStore.getParticipants(action.id);
 
-        if (!participants) {
+        if (!this.props.participants) {
             this.getActions('participant').retrieveParticipants(action.id);
         }
     }
@@ -54,8 +52,6 @@ export default class ActionListItem extends FluxComponent {
     render() {
         var action = this.props.action;
         var actionDate = new Date(action.start_time);
-        var participantStore = this.getStore('participant');
-        var participants = participantStore.getParticipants(action.id);
         var participantList;
 
         var classNames = cx({
@@ -63,10 +59,10 @@ export default class ActionListItem extends FluxComponent {
             'expanded': this.state.expanded
         });
 
-        if (participants) {
+        if (this.props.participants) {
             participantList = this.props.connectDropTarget(
                 <ul className="participants">
-                {participants.map(function(person) {
+                {this.props.participants.map(function(person) {
                     return (
                         <ParticipantItem key={ person.id }
                             action={ action } person={ person }/>

@@ -21,10 +21,14 @@ export default class ActionList extends FluxComponent {
                         var onMoveParticipant =
                             this.onMoveParticipant.bind(this, action);
 
+                        var participantStore = this.getStore('participant');
+                        var participants = participantStore.getParticipants(action.id);
+
                         return (
                             <ActionListItem key={ action.id }
                                 onMoveParticipant={ onMoveParticipant }
                                 onOperation={ onOperation }
+                                participants={ participants }
                                 action={ action }/>
                         );
                     }, this)}
