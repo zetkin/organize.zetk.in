@@ -14,18 +14,23 @@ export default class AllActivitiesPane extends PaneBase {
     }
 
     renderPaneContent() {
-        var activityStore = this.getStore('activity');
-        var activities = activityStore.getActivities();
+        const activityStore = this.getStore('activity');
+        const activities = activityStore.getActivities();
 
         return (
             <ul>
                 {activities.map(function(a) {
                     return (
-                        <li key={ a.id }>
+                        <li key={ a.id }
+                            onClick={ this.onActivityClick.bind(this, a) }>
                             { a.title }</li>
                     );
                 }, this)}
             </ul>
         );
+    }
+
+    onActivityClick(activity) {
+        this.gotoSubPane('editactivity', activity.id);
     }
 }
