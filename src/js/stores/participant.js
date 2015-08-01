@@ -18,6 +18,8 @@ export default class ParticipantStore extends Store {
 
         this.register(participantActions.moveParticipant,
             this.onMoveParticipant);
+        this.register(participantActions.clearMoves,
+            this.onClearMoves);
     }
 
     getParticipants(actionId) {
@@ -74,6 +76,12 @@ export default class ParticipantStore extends Store {
                 from: payload.oldActionId,
                 to: payload.newActionId
             })
+        });
+    }
+
+    onClearMoves() {
+        this.setState({
+            moves: []
         });
     }
 

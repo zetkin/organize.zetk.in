@@ -40,4 +40,8 @@ export default class ParticipantActions extends Actions {
 
         return Promise.all(apiCalls);
     }
+
+    clearMoves() {
+        return true;
+    }
 }
