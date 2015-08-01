@@ -24,10 +24,13 @@ export default class EditActivityPane extends PaneBase {
 
     renderPaneContent(data) {
         if (data.activity) {
-            return (
-                <ActivityForm ref="form" activity={ data.activity }
-                    onSubmit={ this.onSubmit.bind(this) }/>
-            );
+            return [
+                <ActivityForm key="form" ref="form" activity={ data.activity }
+                    onSubmit={ this.onSubmit.bind(this) }/>,
+
+                <input key="delete" type="button" value="Delete"
+                    onClick={ this.onDeleteClick.bind(this) }/>
+            ];
         }
         else {
             // TODO: Show loading indicator?
@@ -42,5 +45,12 @@ export default class EditActivityPane extends PaneBase {
         const activityId = this.props.params[0];
 
         this.getActions('activity').updateActivity(activityId, values);
+    }
+
+    onDeleteClick(ev) {
+        const activityId = this.props.params[0];
+
+        this.getActions('activity').deleteActivity(activityId);
+        this.closePane();
     }
 }
