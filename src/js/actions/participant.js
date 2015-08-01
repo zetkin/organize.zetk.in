@@ -23,4 +23,21 @@ export default class ParticipantActions extends Actions {
             newActionId: newActionId
         };
     }
+
+    executeMoves(moves) {
+        var i;
+        var orgId = this.flux.getStore('org').getActiveId();
+        var apiCalls = [];
+
+        // TODO: Make some server-side batch executer for this?
+        for (i in moves) {
+            var move = moves[i];
+            apiCalls.push(Z.resource('orgs', orgId, 'actions',
+                move.from, 'participants', move.person).del());
+            apiCalls.push(Z.resource('orgs', orgId, 'actions',
+                move.to, 'participants', move.person).put());
+        }
+
+        return Promise.all(apiCalls);
+    }
 }
