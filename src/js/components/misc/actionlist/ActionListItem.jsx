@@ -7,9 +7,13 @@ import ParticipantItem from './ParticipantItem';
 
 
 const actionTarget = {
-    canDrop(props) {
-        // TODO: Check for duplicates et c
-        return true;
+    canDrop(props, monitor) {
+        const person = monitor.getItem();
+        const participants = props.participants;
+        const duplicate = participants.find(p => (p.id == person.id));
+
+        // Only allow drops if it wouldn't result in duplicate
+        return (duplicate === undefined);
     },
 
     drop(props) {

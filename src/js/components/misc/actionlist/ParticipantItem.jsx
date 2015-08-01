@@ -8,6 +8,11 @@ const participantSource = {
 
     endDrag(props, monitor, component) {
         const dropResult = monitor.getDropResult();
+        if (!dropResult) {
+            // This was not a successful drag
+            return;
+        }
+
         const person = monitor.getItem();
         const oldAction = props.action;
         const newAction = dropResult.newAction;
