@@ -17,6 +17,11 @@ var babel = require('gulp-babel');
 var rename = require('gulp-rename');
 
 
+var babelConfig = {
+    stage: 1
+};
+
+
 gulp.task('cleanJs', function(cb) {
     return del([
         'dist/organize.zetk.in',
@@ -52,13 +57,13 @@ gulp.task('copyTemplates', function() {
 
 gulp.task('buildPlainJs', [ 'cleanJs' ], function() {
     return gulp.src('./src/js/**/*.js')
-        .pipe(babel())
+        .pipe(babel(babelConfig))
         .pipe(gulp.dest('./dist/organize.zetk.in'));
 });
 
 gulp.task('buildJsx', [ 'buildPlainJs' ], function() {
     return gulp.src('./src/js/components/**/*.jsx')
-        .pipe(babel())
+        .pipe(babel(babelConfig))
         .pipe(rename(function(path) {
             path.extname = '.js'
         }))

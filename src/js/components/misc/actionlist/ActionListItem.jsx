@@ -1,10 +1,35 @@
 import React from 'react/addons';
 import cx from 'classnames';
+import { DropTarget } from 'react-dnd';
 
 import FluxComponent from '../../FluxComponent';
 import ParticipantItem from './ParticipantItem';
 
 
+const actionTarget = {
+    canDrop(props) {
+        // TODO: Check for duplicates et c
+        return true;
+    },
+
+    drop(props) {
+        return {
+            onMoveParticipant: props.onMoveParticipant,
+            newAction: props.action
+        };
+    }
+};
+
+function collect(connect, monitor) {
+    return {
+        connectDropTarget: connect.dropTarget(),
+        isOver: monitor.isOver(),
+        canDrop: monitor.canDrop()
+    };
+}
+
+
+@DropTarget('person', actionTarget, collect)
 export default class ActionListItem extends FluxComponent {
     constructor(props) {
         super(props);
@@ -39,12 +64,12 @@ export default class ActionListItem extends FluxComponent {
         });
 
         if (participants) {
-            participantList = (
+            participantList = this.props.connectDropTarget(
                 <ul className="participants">
                 {participants.map(function(person) {
                     return (
                         <ParticipantItem key={ person.id }
-                            person={ person }/>
+                            action={ action } person={ person }/>
                     );
                 }, this)}
                 </ul>

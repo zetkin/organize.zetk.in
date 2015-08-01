@@ -25,6 +25,7 @@
     "flux": "^2.0.3",
     "merge": "^1.2.0",
     "react": "~0.13.0",
+    "react-dnd": "^1.1.4",
     "react-router-component": "^0.24.4",
     "ws": "^0.7.2",
     "zetkin": "^0.5.0"

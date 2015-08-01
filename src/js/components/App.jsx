@@ -1,5 +1,7 @@
 import React from 'react/addons';
 import Router from 'react-router-component';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd/modules/backends/HTML5';
 
 import FluxComponent from './FluxComponent';
 import Header from './header/Header';
@@ -12,6 +14,7 @@ import PeopleSection from './sections/people/PeopleSection';
 import MapsSection from './sections/maps/MapsSection';
 
 
+@DragDropContext(HTML5Backend)
 export default class App extends FluxComponent {
     render() {
         var json = {
