@@ -18,8 +18,12 @@ export default class ActionList extends FluxComponent {
                 <ul className="actionlist-items">
                     {actions.map(function(action) {
                         var onOperation = this.onOperation.bind(this, action);
+                        var onMoveParticipant =
+                            this.onMoveParticipant.bind(this, action);
+
                         return (
                             <ActionListItem key={ action.id }
+                                onMoveParticipant={ onMoveParticipant }
                                 onOperation={ onOperation }
                                 action={ action }/>
                         );
@@ -33,6 +37,11 @@ export default class ActionList extends FluxComponent {
         if (this.props.onActionOperation) {
             this.props.onActionOperation(action, operation);
         }
+    }
+
+    onMoveParticipant(action, person, oldAction) {
+        this.getActions('participant').moveParticipant(
+            person.id, oldAction.id, action.id);
     }
 }
 
