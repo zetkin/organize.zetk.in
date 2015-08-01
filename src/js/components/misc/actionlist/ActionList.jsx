@@ -5,6 +5,10 @@ import ActionListItem from './ActionListItem';
 
 
 export default class ActionList extends FluxComponent {
+    componentDidMount() {
+        this.listenTo('participant', this.forceUpdate);
+    }
+
     render() {
         var actions = this.props.actions;
         return (

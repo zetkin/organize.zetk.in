@@ -13,6 +13,8 @@ export default class AllActionsPane extends PaneBase {
         this.listenTo('action', this.forceUpdate);
         this.listenTo('participant', this.onParticipantStoreUpdate);
         this.getActions('action').retrieveAllActions();
+
+        this.openMovePane();
     }
 
     renderPaneContent() {
@@ -32,6 +34,10 @@ export default class AllActionsPane extends PaneBase {
     }
 
     onParticipantStoreUpdate() {
+        this.openMovePane();
+    }
+
+    openMovePane() {
         const participantStore = this.getStore('participant');
         const moves = participantStore.getMoves();
 
