@@ -21,24 +21,42 @@ import UserActions from './actions/user';
 import UserStore from './stores/user';
 
 
-class ScheduledDispatcher extends Dispatcher {
-    dispatch(...args) {
+export default class QueuedDispatcher extends Dispatcher {
+    constructor() {
+        super();
+
+        this.payloads = [];
+    }
+
+    dispatch(payload) {
         if (!this.isDispatching()) {
-            super.dispatch(...args);
+            super.dispatch(payload);
+            this.dispatchQueue();
         }
         else {
-            setTimeout(() => {
-                super.dispatch(...args);
-            }, 0);
+            this.addToQueue(payload);
         }
     }
+
+    addToQueue(payload) {
+        this.payloads.push(payload);
+    }
+
+    dispatchQueue() {
+        if (!this.payloads.length) {
+            return false;
+        }
+
+        this.dispatch(this.payloads.shift());
+    }
 }
+
 
 export default class Flux extends Flummox {
     constructor() {
         super();
 
-        this.dispatcher = new ScheduledDispatcher();
+        this.dispatcher = new QueuedDispatcher();
 
         this.createActions('action', ActionActions, this);
         this.createActions('activity', ActivityActions, this);
