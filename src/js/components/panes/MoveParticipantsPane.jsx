@@ -2,6 +2,8 @@ import React from 'react/addons';
 
 import PaneBase from './PaneBase';
 import PersonForm from '../forms/PersonForm';
+import Person from '../misc/elements/Person';
+import Action from '../misc/elements/Action';
 
 
 export default class MoveParticipantsPane extends PaneBase {
@@ -22,12 +24,23 @@ export default class MoveParticipantsPane extends PaneBase {
     }
 
     renderPaneContent(data) {
+        const actionStore = this.getStore('action');
+        const peopleStore = this.getStore('person');
+
         return [
-            <ul>
+            <ul className="movelist">
             {data.moves.map(function(move) {
                 var key = [move.person, move.from, move.to].join(',');
+                var person = peopleStore.getPerson(move.person);
+                var fromAction = actionStore.getAction(move.from);
+                var toAction = actionStore.getAction(move.to);
+
                 return (
-                    <li key={ key }>{ key }</li>
+                    <li key={ key }>
+                        <Person person={ person }/>
+                        <Action action={ fromAction }/>
+                        <Action action={ toAction }/>
+                    </li>
                 );
             }, this)}
             </ul>,
