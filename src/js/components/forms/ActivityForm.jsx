@@ -8,7 +8,7 @@ import TextInput from './inputs/TextInput';
 
 export default class ActivityForm extends FluxComponent {
     render() {
-        var activity = this.props.activity;
+        var activity = this.props.activity || {};
 
         return (
             <Form ref="form" {...this.props }>
