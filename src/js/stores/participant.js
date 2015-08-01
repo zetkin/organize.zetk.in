@@ -18,6 +18,8 @@ export default class ParticipantStore extends Store {
 
         this.register(participantActions.moveParticipant,
             this.onMoveParticipant);
+        this.register(participantActions.undoMoves,
+            this.onUndoMoves);
         this.register(participantActions.clearMoves,
             this.onClearMoves);
     }
@@ -53,21 +55,10 @@ export default class ParticipantStore extends Store {
     }
 
     onMoveParticipant(payload) {
-        var i, person;
         var oldArray = this.state.participants[payload.oldActionId];
         var newArray = this.state.participants[payload.newActionId];
 
-        for (i in oldArray) {
-            if (oldArray[i].id == payload.personId) {
-                person = oldArray[i];
-                oldArray.splice(i, 1);
-                break;
-            }
-        }
-
-        if (person) {
-            newArray.push(person);
-        }
+        this.moveBetweenArrays(payload.personId, oldArray, newArray);
 
         this.setState({
             participants: this.state.participants,
@@ -79,10 +70,41 @@ export default class ParticipantStore extends Store {
         });
     }
 
+    onUndoMoves(moves) {
+        var move;
+
+        while (move = moves.pop()) {
+            var originalArray = this.state.participants[move.from];
+            var postMoveArray = this.state.participants[move.to];
+
+            this.moveBetweenArrays(move.person, postMoveArray, originalArray);
+        }
+
+        this.setState({
+            participants: this.state.participants
+        });
+    }
+
     onClearMoves() {
         this.setState({
             moves: []
         });
+    }
+
+    moveBetweenArrays(personId, arr0, arr1) {
+        var i, person;
+
+        for (i in arr0) {
+            if (arr0[i].id == personId) {
+                person = arr0[i];
+                arr0.splice(i, 1);
+                break;
+            }
+        }
+
+        if (person) {
+            arr1.push(person);
+        }
     }
 
     addMove(move) {
