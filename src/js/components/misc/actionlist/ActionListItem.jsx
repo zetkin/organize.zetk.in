@@ -6,17 +6,7 @@ import FluxComponent from '../../FluxComponent';
 
 export default class ActionListItem extends FluxComponent {
     constructor(props) {
-        super(props, {
-            formats: {
-                time: {
-                    'whm': {
-                        day: 'long',
-                        hour: 'numeric',
-                        minute: 'numeric'
-                    }
-                }
-            }
-        });
+        super(props);
 
         this.state = {
             expanded: false
