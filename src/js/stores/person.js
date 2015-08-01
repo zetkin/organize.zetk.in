@@ -22,6 +22,10 @@ export default class PersonStore extends Store {
             this.onCreatePersonComplete);
         this.registerAsync(personActions.deletePerson,
             this.onDeletePersonBegin, null);
+
+        var participantActions = flux.getActions('participant');
+        this.register(participantActions.retrieveParticipants,
+            this.onRetrieveParticipantsComplete);
     }
 
     getPeople() {
@@ -79,6 +83,20 @@ export default class PersonStore extends Store {
 
     onDeletePersonBegin(personId) {
         StoreUtils.remove(this.state.people, personId);
+        this.setState({
+            people: this.state.people
+        });
+    }
+
+    onRetrieveParticipantsComplete(res) {
+        var i;
+        const participants = res.data.data;
+
+        for (i in participants) {
+            var person = participants[i];
+            StoreUtils.updateOrAdd(this.state.people, person.id, person);
+        }
+
         this.setState({
             people: this.state.people
         });
