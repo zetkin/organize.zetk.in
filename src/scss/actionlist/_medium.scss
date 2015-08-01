@@ -36,6 +36,10 @@
         }
     }
 
+    .participants {
+        min-height: 50px;
+    }
+
     &.expanded ul.participants {
         max-height: 400px;
     }
