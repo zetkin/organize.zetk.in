@@ -11,6 +11,7 @@ export default class AllActionsPane extends PaneBase {
 
     componentDidMount() {
         this.listenTo('action', this.forceUpdate);
+        this.listenTo('participant', this.onParticipantStoreUpdate);
         this.getActions('action').retrieveAllActions();
     }
 
@@ -27,6 +28,15 @@ export default class AllActionsPane extends PaneBase {
     onActionOperation(action, operation) {
         if (operation == 'edit') {
             this.gotoSubPane('editaction', action.id);
+        }
+    }
+
+    onParticipantStoreUpdate() {
+        const participantStore = this.getStore('participant');
+        const moves = participantStore.getMoves();
+
+        if (moves.length) {
+            this.gotoSubPane('moveparticipants');
         }
     }
 }
