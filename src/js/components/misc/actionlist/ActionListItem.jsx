@@ -2,6 +2,7 @@ import React from 'react/addons';
 import cx from 'classnames';
 
 import FluxComponent from '../../FluxComponent';
+import ParticipantItem from './ParticipantItem';
 
 
 export default class ActionListItem extends FluxComponent {
@@ -41,13 +42,9 @@ export default class ActionListItem extends FluxComponent {
             participantList = (
                 <ul className="participants">
                 {participants.map(function(person) {
-                    var name = person.first_name + ' ' + person.last_name;
                     return (
-                        <li className="participant">
-                            <figure>
-                                <figcaption>{ name }</figcaption>
-                            </figure>
-                        </li>
+                        <ParticipantItem key={ person.id }
+                            person={ person }/>
                     );
                 }, this)}
                 </ul>
