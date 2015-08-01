@@ -65,6 +65,10 @@ router.get(/campaign\/actions$/, waitForActions(req => [
     req.flux.getActions('action').retrieveAllActions()
 ]));
 
+router.get(/campaign\/activities$/, waitForActions(req => [
+    req.flux.getActions('activity').retrieveActivities()
+]));
+
 router.get(/editaction:(\d+)$/, waitForActions(req => [
     req.flux.getActions('action').retrieveAction(req.params[0]),
     req.flux.getActions('activity').retrieveActivities(),
