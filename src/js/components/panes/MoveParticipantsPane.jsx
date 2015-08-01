@@ -22,7 +22,7 @@ export default class MoveParticipantsPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        return (
+        return [
             <ul>
             {data.moves.map(function(move) {
                 var key = [move.person, move.from, move.to].join(',');
@@ -30,7 +30,21 @@ export default class MoveParticipantsPane extends PaneBase {
                     <li key={ key }>{ key }</li>
                 );
             }, this)}
-            </ul>
-        );
+            </ul>,
+            <input type="button" value="Execute"
+                onClick={ this.onExecuteClick.bind(this) }/>
+        ];
+    }
+
+    onExecuteClick(ev) {
+        const participantActions = this.getActions('participant');
+        const participantStore = this.getStore('participant');
+        const moves = participantStore.getMoves();
+
+        participantActions.executeMoves(moves)
+            .then(function() {
+                participantActions.clearMoves();
+                this.closePane();
+            }.bind(this));
     }
 }
