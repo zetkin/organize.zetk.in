@@ -9,9 +9,26 @@ export default class CampaignActions extends Actions {
         this.flux = flux;
     }
 
+    createCampaign(data) {
+        var orgId = this.flux.getStore('org').getActiveId();
+        return Z.resource('orgs', orgId, 'campaigns').post(data);
+    }
+
+    deleteCampaign(id) {
+        var orgId = this.flux.getStore('org').getActiveId();
+        return Z.resource('orgs', orgId, 'campaigns', id)
+                .meta('campaignId', id)
+                .del();
+    }
+
     retrieveCampaigns() {
         var orgId = this.flux.getStore('org').getActiveId();
         return Z.resource('orgs', orgId, 'campaigns').get();
+    }
+
+    updateCampaign(id, data) {
+        var orgId = this.flux.getStore('org').getActiveId();
+        return Z.resource('orgs', orgId, 'campaigns', id).patch(data);
     }
 
     retrieveCampaign(campaignId) {

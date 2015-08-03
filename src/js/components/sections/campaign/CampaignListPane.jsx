@@ -17,7 +17,9 @@ export default class CampaignListPane extends PaneBase {
         var campaignStore = this.getStore('campaign');
         var campaigns = campaignStore.getCampaigns();
 
-        return (
+        return [
+            <input type="button" value="Add"
+                onClick={ this.onAddClick.bind(this) }/>,
             <ul>
                 {campaigns.map(function(c) {
                     return (
@@ -27,10 +29,14 @@ export default class CampaignListPane extends PaneBase {
                     );
                 }, this)}
             </ul>
-        );
+        ];
+    }
+
+    onAddClick(ev) {
+        this.gotoSubPane('addcampaign');
     }
 
     onCampaignClick(campaign) {
-        this.gotoSubPane('campaign', campaign.id);
+        this.gotoSubPane('editcampaign', campaign.id);
     }
 }

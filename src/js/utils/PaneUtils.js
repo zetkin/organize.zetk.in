@@ -1,8 +1,10 @@
 import AddActivityPane from '../components/panes/AddActivityPane';
+import AddCampaignPane from '../components/panes/AddCampaignPane';
 import AddPersonPane from '../components/panes/AddPersonPane';
 import CampaignPane from '../components/panes/CampaignPane';
 import EditActionPane from '../components/panes/EditActionPane';
 import EditActivityPane from '../components/panes/EditActivityPane';
+import EditCampaignPane from '../components/panes/EditCampaignPane';
 import LocationPane from '../components/panes/LocationPane';
 import MoveParticipantsPane from '../components/panes/MoveParticipantsPane';
 import PersonPane from '../components/panes/PersonPane';
@@ -10,9 +12,11 @@ import PersonPane from '../components/panes/PersonPane';
 var _panes = {
     'addactivity': AddActivityPane,
     'addperson': AddPersonPane,
+    'addcampaign': AddCampaignPane,
     'campaign': CampaignPane,
     'editaction': EditActionPane,
     'editactivity': EditActivityPane,
+    'editcampaign': EditCampaignPane,
     'location': LocationPane,
     'moveparticipants': MoveParticipantsPane,
     'person': PersonPane
