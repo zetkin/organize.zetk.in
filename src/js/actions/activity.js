@@ -9,9 +9,24 @@ export default class ActivityActions extends Actions {
         this.flux = flux;
     }
 
+    createActivity(data) {
+        var orgId = this.flux.getStore('org').getActiveId();
+        return Z.resource('orgs', orgId, 'activities').post(data);
+    }
+
     retrieveActivities() {
         var orgId = this.flux.getStore('org').getActiveId();
         return Z.resource('orgs', orgId, 'activities').get();
+    }
+
+    updateActivity(id, data) {
+        var orgId = this.flux.getStore('org').getActiveId();
+        return Z.resource('orgs', orgId, 'activities', id).patch(data);
+    }
+
+    deleteActivity(id) {
+        var orgId = this.flux.getStore('org').getActiveId();
+        return Z.resource('orgs', orgId, 'activities', id).del();
     }
 
     static serialize(state) {
