@@ -19,6 +19,8 @@ export default class CampaignStore extends Store {
             this.onCreateCampaignComplete);
         this.register(campaignActions.updateCampaign,
             this.onUpdateCampaignComplete);
+        this.register(campaignActions.deleteCampaign,
+            this.onDeleteCampaignComplete);
     }
 
     getCampaigns() {
@@ -59,6 +61,15 @@ export default class CampaignStore extends Store {
 
         StoreUtils.updateOrAdd(this.state.campaigns, campaign.id, campaign);
 
+        this.setState({
+            campaigns: this.state.campaigns
+        });
+    }
+
+    onDeleteCampaignComplete(res) {
+        const campaignId = res.meta.campaignId;
+
+        StoreUtils.remove(this.state.campaigns, campaignId);
         this.setState({
             campaigns: this.state.campaigns
         });
