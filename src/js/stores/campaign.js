@@ -15,6 +15,8 @@ export default class CampaignStore extends Store {
             this.onRetrieveCampaignsComplete);
         this.register(campaignActions.retrieveCampaign,
             this.onRetrieveCampaignComplete);
+        this.register(campaignActions.createCampaign,
+            this.onCreateCampaignComplete);
     }
 
     getCampaigns() {
@@ -33,6 +35,15 @@ export default class CampaignStore extends Store {
 
     onRetrieveCampaignComplete(res) {
         var campaign = res.data.data;
+    onCreateCampaignComplete(res) {
+        const campaign = res.data.data;
+
+        this.state.campaigns.push(campaign);
+
+        this.setState({
+            campaigns: this.state.campaigns
+        });
+    }
 
         StoreUtils.updateOrAdd(this.state.campaigns, campaign.id, campaign);
 

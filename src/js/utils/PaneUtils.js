@@ -1,4 +1,5 @@
 import AddActivityPane from '../components/panes/AddActivityPane';
+import AddCampaignPane from '../components/panes/AddCampaignPane';
 import AddPersonPane from '../components/panes/AddPersonPane';
 import CampaignPane from '../components/panes/CampaignPane';
 import EditActionPane from '../components/panes/EditActionPane';
@@ -10,6 +11,7 @@ import PersonPane from '../components/panes/PersonPane';
 var _panes = {
     'addactivity': AddActivityPane,
     'addperson': AddPersonPane,
+    'addcampaign': AddCampaignPane,
     'campaign': CampaignPane,
     'editaction': EditActionPane,
     'editactivity': EditActivityPane,
