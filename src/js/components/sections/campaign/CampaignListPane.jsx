@@ -37,6 +37,6 @@ export default class CampaignListPane extends PaneBase {
     }
 
     onCampaignClick(campaign) {
-        this.gotoSubPane('campaign', campaign.id);
+        this.gotoSubPane('editcampaign', campaign.id);
     }
 }
