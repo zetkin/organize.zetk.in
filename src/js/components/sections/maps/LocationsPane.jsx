@@ -54,12 +54,17 @@ export default class LocationsPane extends PaneBase {
             };
 
             content = (
+                <div>
+                <input value="Add" type="button"
+                    className={ 'locations-map-button' }
+                    onClick={ this.onAddClick.bind(this) } />
                 <LocationMap style={ style } 
                     locations={ locations }
                     pendingLocation={ pendingLocation }
                     ref="locationMap"
                     onLocationChange={ this.onLocationChange.bind(this) }
                     onLocationSelect={ this.onLocationSelect.bind(this) }/>
+                </div>
             );
         }
         else if (this.state.viewMode == 'list') {
@@ -81,9 +86,6 @@ export default class LocationsPane extends PaneBase {
 
         return (
             <div>
-                <input value="Add" type="button"
-                    className={ 'locations-map-button' }
-                    onClick={ this.onAddClick.bind(this) } />
                 <ViewSwitch states={ switchStates }
                     selected={ this.state.viewMode }
                     onSwitch={ this.onViewSwitch.bind(this) }/>
@@ -93,15 +95,24 @@ export default class LocationsPane extends PaneBase {
         );
     }
     onAddClick() {
-        var center = this.refs.locationMap.map.getCenter();
+        // TODO: when in list mode what to use as center?
         var loc = {
             editable: false,
-            lat: center.lat(),
-            lng: center.lng(),
+            lat: 51.139000385664374,
+            lng: 11.265701483215253
+        };
+        if (this.refs.locationMap) {
+           var center = this.refs.locationMap.map.getCenter();
+           loc.lat = center.lat();
+           loc.lng = center.lng();
         }
+        
         // add pending that not is editable
         this.getActions('location').setPendingLocation(loc);
         this.gotoSubPane('addlocation');
+        this.setState({
+            viewMode: 'map'
+        });
     }
 
     onLocationSelect(loc) {
