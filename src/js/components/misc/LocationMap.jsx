@@ -10,6 +10,13 @@ export default class LocationMap extends React.Component {
             disableDefaultUI: true,
             zoom: 11
         };
+        // TODO: create nicer looking svg path
+        this.iconSettings =  {
+                path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
+               fillColor: 'red',
+               fillOpacity: 1,
+               strokeColor: '#000',
+        }
 
         this.map = new google.maps.Map(ctrDOMNode, mapOptions);
         this.markers = [];
@@ -43,21 +50,16 @@ export default class LocationMap extends React.Component {
         var marker;
         var bounds = new google.maps.LatLngBounds();
 
+        var locations = this.props.locations;
         // Remove old markers
         while (marker = this.markers.pop()) {
             marker.setMap(null);
             google.maps.event.clearInstanceListeners(marker);
         }
 
-        for (i in this.props.locations) {
-            var loc = this.props.locations[i];
-            var latLng = new google.maps.LatLng(loc.lat, loc.lng);
-
-            marker = new google.maps.Marker({
-                position: latLng,
-                map: this.map,
-                title: loc.title
-            });
+        for (i in locations) {
+            this.createMarker(locations[i], bounds);
+        }
 
         // dont set new center if user moved the map
         if (setBounds) {
@@ -65,15 +67,41 @@ export default class LocationMap extends React.Component {
             this.map.setZoom(12); // TODO: Calculate this somehow
         }
     }
-            google.maps.event.addListener(marker, 'click',
-                this.onMarkerClick.bind(this, marker, loc));
+    createMarker(loc, bounds) {
+        var marker;
+        var latLng = new google.maps.LatLng(loc.lat, loc.lng);
 
-            bounds.extend(latLng);
-            this.markers.push(marker);
+        var editable = loc.editable || false;
+        marker = new google.maps.Marker({
+            position: latLng,
+            map: this.map,
+            draggable: editable, 
+            title: loc.title,
+        });
+        // if editable only drag the marker (all info already vibile)
+        if (editable) {
+            var iconSettings = this.iconSettings;
+            iconSettings.fillColor = 'green';
+            marker.setIcon(iconSettings);
+            google.maps.event.addListener(marker, 'dragend', 
+                    this.onMarkerDragEnd.bind(this, marker, loc));
+        }
+        else {
+            google.maps.event.addListener(marker, 'click',
+            this.onMarkerClick.bind(this, marker, loc));
         }
 
-        this.map.setCenter(bounds.getCenter());
-        this.map.setZoom(12); // TODO: Calculate this somehow
+        bounds.extend(latLng);
+        this.markers.push(marker);
+    }
+    onMarkerDragEnd (marker, locationData) {
+        var pos = marker.getPosition();
+        if (this.props.onLocationChange) {
+            this.props.onLocationChange({
+                lat: pos.lat(),
+                lng: pos.lng()
+            });
+        }
     }
 
     onMarkerClick(marker, locationData) {
