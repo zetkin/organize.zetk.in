@@ -14,7 +14,7 @@ export default class LocationMap extends React.Component {
         this.map = new google.maps.Map(ctrDOMNode, mapOptions);
         this.markers = [];
 
-        this.resetMarkers();
+        this.resetMarkers(true);
     }
 
     componentDidUpdate() {
@@ -38,7 +38,7 @@ export default class LocationMap extends React.Component {
         )
     }
 
-    resetMarkers() {
+    resetMarkers(setBounds) {
         var i;
         var marker;
         var bounds = new google.maps.LatLngBounds();
@@ -59,6 +59,12 @@ export default class LocationMap extends React.Component {
                 title: loc.title
             });
 
+        // dont set new center if user moved the map
+        if (setBounds) {
+            this.map.setCenter(bounds.getCenter());
+            this.map.setZoom(12); // TODO: Calculate this somehow
+        }
+    }
             google.maps.event.addListener(marker, 'click',
                 this.onMarkerClick.bind(this, marker, loc));
 
