@@ -56,6 +56,9 @@ export default class LocationMap extends React.Component {
             marker.setMap(null);
             google.maps.event.clearInstanceListeners(marker);
         }
+        if (this.props.pendingLocation) {
+            this.createMarker(this.props.pendingLocation, bounds);
+        }
 
         for (i in locations) {
             this.createMarker(locations[i], bounds);
