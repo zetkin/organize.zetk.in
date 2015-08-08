@@ -8,7 +8,9 @@ export default class LocationStore extends Store {
         super();
 
         this.setState({
-            locations: []
+            locations: [],
+            inEditMode: false,
+            pendingLocation: false,
         });
 
         var locationActions = flux.getActions('location');
@@ -18,6 +20,14 @@ export default class LocationStore extends Store {
             this.onRetrieveLocationComplete);
         this.register(locationActions.updateLocation,
             this.onUpdateLocationComplete);
+        this.register(locationActions.createLocation,
+            this.onCreateLocationComplete);
+        this.register(locationActions.setPendingLatLng,
+            this.onSetPendingLatLngComplete);
+        this.register(locationActions.setPendingLocation,
+            this.onSetPendingLocationComplete);
+        this.register(locationActions.clearPendingLocation,
+            this.onClearPendingLocationComplete);
         this.registerAsync(locationActions.deleteLocation,
             this.onDeleteLocationBegin, null);
     }
@@ -28,6 +38,13 @@ export default class LocationStore extends Store {
 
     getLocation(id) {
         return this.state.locations.find(p => p.id == id);
+    }
+
+    getPendingLocation() {
+        return this.state.pendingLocation;
+    }
+    getEditState() {
+        return this.state.inEditMode;
     }
 
     onRetrieveLocationsComplete(res) {
@@ -61,6 +78,39 @@ export default class LocationStore extends Store {
         this.setState({
             locations: this.state.locations
         });
+    }
+
+    
+    onCreateLocationComplete(res) {
+        this.state.locations.push(res.data.data);
+        this.setState({
+            locations: this.state.locations
+        });
+    }
+
+    onSetPendingLatLngComplete(loc) {
+        var pendingLocation = this.state.pendingLocation;
+        pendingLocation.lat = loc.lat;
+        pendingLocation.lng = loc.lng;
+        this.setState({
+            pendingLocation: pendingLocation
+        });
+    }
+    onSetPendingLocationComplete(loc) {
+        this.setState({
+            inEditMode: loc.editable || false,
+            pendingLocation: {
+                editable: loc.editable || false,
+                lat : loc.lat,
+                lng : loc.lng
+            }
+        });
+    }
+    onClearPendingLocationComplete() {
+        this.setState({
+            inEditMode: false,
+            pendingLocation: false
+        })
     }
 
     static serialize(state) {
