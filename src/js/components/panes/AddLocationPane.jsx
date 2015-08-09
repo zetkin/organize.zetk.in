@@ -17,8 +17,6 @@ export default class AddLocationPane extends PaneBase {
         return [ 
             <LocationForm key="form" ref="form" loc={ data.loc }
                 onSubmit={ this.onSubmit.bind(this) }/>,
-            <input key="submit" type="button" value="Change position"
-                onClick={ this.onChangePositionClick.bind(this) }/>,
             <input key="delete" type="button" value="Delete"
                     onClick={ this.onDeleteClick.bind(this) }/>
         ]
@@ -33,17 +31,15 @@ export default class AddLocationPane extends PaneBase {
             values.lng = pendingLatLng.lng;
         }
         this.getActions('location').createLocation(values);
+        this.getActions('location').clearPendingLocation();
+        this.closePane();
     }
     onDeleteClick(ev) {
-        console.log('cancel');
+        this.closePane();
+        this.getActions('location').clearPendingLocation();
     }
     onCloseClick() {
         this.closePane();
         this.getActions('location').clearPendingLocation();
-    }
-    onChangePositionClick(ev) {
-        var loc =  this.getStore('location').getPendingLocation();
-        loc.editable = true;
-        this.getActions('location').setPendingLocation(loc);
     }
 }

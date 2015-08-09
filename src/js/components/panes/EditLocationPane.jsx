@@ -7,6 +7,10 @@ import LocationForm from '../forms/LocationForm';
 export default class LocationPane extends PaneBase {
     componentDidMount() {
         this.listenTo('location', this.forceUpdate);
+
+        var locationId = this.props.params[0];
+        var loc = this.getStore('location').getLocation(locationId);
+        this.getActions('location').setPendingLocation(loc);
     }
 
     getRenderData() {
@@ -14,7 +18,7 @@ export default class LocationPane extends PaneBase {
         var locationId = this.props.params[0];
 
         return {
-            loc: locationStore.getLocation(locationId)
+            loc: this.getStore('location').getLocation(locationId)
         }
     }
 
@@ -33,8 +37,6 @@ export default class LocationPane extends PaneBase {
             return [
                 <LocationForm key="form" ref="form" loc={ data.loc }
                     onSubmit={ this.onSubmit.bind(this) }/>,
-                <input key="submit" type="button" value="Change position"
-                    onClick={ this.onChangePositionClick.bind(this) }/>,
                 <input key="delete" type="button" value="Delete"
                     onClick={ this.onDeleteClick.bind(this) }/>
             ];
@@ -56,17 +58,6 @@ export default class LocationPane extends PaneBase {
             values.lng = pendingLatLng.lng;
         }
         this.getActions('location').updateLocation(locationId, values);
-    }
-    onChangePositionClick(ev) {
-        // set location to be editable
-        var locationId = this.props.params[0];
-        var loc = this.getStore('location').getLocation(locationId);
-        var pendingLoc = {
-            lat: loc.lat,
-            lng: loc.lng,
-            editable: true
-        }
-        this.getActions('location').setPendingLocation(pendingLoc);
     }
 
     onAbortChangePositionClick(ev) {

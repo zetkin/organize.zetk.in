@@ -12,7 +12,7 @@ export default class LocationMap extends React.Component {
         };
         // TODO: create nicer looking svg path
         this.iconSettings =  {
-                path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
+               path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
                fillColor: 'red',
                fillOpacity: 1,
                strokeColor: '#000',
@@ -56,12 +56,17 @@ export default class LocationMap extends React.Component {
             marker.setMap(null);
             google.maps.event.clearInstanceListeners(marker);
         }
+
+        var pendingId;
         if (this.props.pendingLocation) {
-            this.createMarker(this.props.pendingLocation, bounds);
+            this.createMarker(this.props.pendingLocation, bounds, true);
+            pendingId = this.props.pendingLocation.id;
         }
 
         for (i in locations) {
-            this.createMarker(locations[i], bounds);
+            if (pendingId !== locations[i].id) {
+                this.createMarker(locations[i], bounds, false);
+            }
         }
 
         // dont set new center if user moved the map
@@ -70,11 +75,10 @@ export default class LocationMap extends React.Component {
             this.map.setZoom(12); // TODO: Calculate this somehow
         }
     }
-    createMarker(loc, bounds) {
+    createMarker(loc, bounds, editable) {
         var marker;
         var latLng = new google.maps.LatLng(loc.lat, loc.lng);
 
-        var editable = loc.editable || false;
         marker = new google.maps.Marker({
             position: latLng,
             map: this.map,
@@ -101,6 +105,7 @@ export default class LocationMap extends React.Component {
         var pos = marker.getPosition();
         if (this.props.onLocationChange) {
             this.props.onLocationChange({
+                id: this.props.pendingLocation.id,
                 lat: pos.lat(),
                 lng: pos.lng()
             });

@@ -9,7 +9,6 @@ export default class LocationStore extends Store {
 
         this.setState({
             locations: [],
-            inEditMode: false,
             pendingLocation: false,
         });
 
@@ -88,27 +87,18 @@ export default class LocationStore extends Store {
         });
     }
 
-    onSetPendingLatLngComplete(loc) {
-        var pendingLocation = this.state.pendingLocation;
-        pendingLocation.lat = loc.lat;
-        pendingLocation.lng = loc.lng;
-        this.setState({
-            pendingLocation: pendingLocation
-        });
-    }
     onSetPendingLocationComplete(loc) {
+        var newLoc = {
+            lat: loc.lat,
+            lng: loc.lng,
+            id: loc.id
+        }
         this.setState({
-            inEditMode: loc.editable || false,
-            pendingLocation: {
-                editable: loc.editable || false,
-                lat : loc.lat,
-                lng : loc.lng
-            }
+            pendingLocation: newLoc
         });
     }
     onClearPendingLocationComplete() {
         this.setState({
-            inEditMode: false,
             pendingLocation: false
         })
     }

@@ -27,15 +27,6 @@ export default class LocationsPane extends PaneBase {
         var locationStore = this.getStore('location');
 
         var locations = locationStore.getLocations();
-
-        // this is wrong to store state of component in store
-        // alternative is store to diffrent types of pending locations
-        // one for current editiabel. and one for not editable but pending
-        // or keep track of whats not saved in locations array
-        if (locationStore.getEditState()) {
-            locations = [];
-        }
-
         // add pending to location list
         var pendingLocation = locationStore.getPendingLocation();
 
@@ -97,7 +88,6 @@ export default class LocationsPane extends PaneBase {
     onAddClick() {
         // TODO: when in list mode what to use as center?
         var loc = {
-            editable: false,
             lat: 51.139000385664374,
             lng: 11.265701483215253
         };
@@ -119,7 +109,9 @@ export default class LocationsPane extends PaneBase {
         this.gotoSubPane('location', loc.id);
     }
     onLocationChange(loc) {
-        this.getActions('location').setPendingLatLng(loc);
+        console.log('onLocationChange', loc);
+        this.getActions('location').setPendingLocation(loc);
+        //this.getActions('location').setPendingLatLng(loc);
     }
 
     onViewSwitch(state) {
