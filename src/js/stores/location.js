@@ -21,8 +21,6 @@ export default class LocationStore extends Store {
             this.onUpdateLocationComplete);
         this.register(locationActions.createLocation,
             this.onCreateLocationComplete);
-        this.register(locationActions.setPendingLatLng,
-            this.onSetPendingLatLngComplete);
         this.register(locationActions.setPendingLocation,
             this.onSetPendingLocationComplete);
         this.register(locationActions.clearPendingLocation,

@@ -67,6 +67,7 @@ export default class LocationPane extends PaneBase {
     onDeleteClick(ev) {
         var locationId = this.props.params[0];
         this.getActions('location').deleteLocation(locationId);
+        this.getActions('location').clearPendingLocation();
         this.closePane();
     }
     onCloseClick() {
