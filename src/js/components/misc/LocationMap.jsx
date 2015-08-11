@@ -19,6 +19,9 @@ export default class LocationMap extends React.Component {
         }
 
         this.map = new google.maps.Map(ctrDOMNode, mapOptions);
+        if (this.props.onMapClick) {
+            google.maps.event.addListener(this.map, 'click', this.onMapClick.bind(this));
+        }
         this.markers = [];
 
         this.resetMarkers(true);
@@ -121,6 +124,17 @@ export default class LocationMap extends React.Component {
         if (this.props.onLocationSelect) {
             this.props.onLocationSelect(locationData);
         }
+    }
+    
+    onMapClick(ev) {
+        var position = ev.latLng;
+        if (this.props.onMapClick) {
+            this.props.onMapClick({
+                lat: position.lat(),
+                lng: position.lng()
+            });
+        }
+
     }
 }
 
