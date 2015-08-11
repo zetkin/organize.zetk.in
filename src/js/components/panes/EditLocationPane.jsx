@@ -60,9 +60,6 @@ export default class LocationPane extends PaneBase {
         this.getActions('location').updateLocation(locationId, values);
     }
 
-    onAbortChangePositionClick(ev) {
-
-    }
 
     onDeleteClick(ev) {
         var locationId = this.props.params[0];

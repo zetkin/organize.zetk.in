@@ -2,6 +2,7 @@ import AddActivityPane from '../components/panes/AddActivityPane';
 import AddCampaignPane from '../components/panes/AddCampaignPane';
 import AddPersonPane from '../components/panes/AddPersonPane';
 import AddLocationPane from '../components/panes/AddLocationPane';
+import AddLocationWithMapPane from '../components/panes/AddLocationWithMapPane';
 import CampaignPane from '../components/panes/CampaignPane';
 import EditActionPane from '../components/panes/EditActionPane';
 import EditActivityPane from '../components/panes/EditActivityPane';
@@ -14,6 +15,7 @@ var _panes = {
     'addactivity': AddActivityPane,
     'addperson': AddPersonPane,
     'addcampaign': AddCampaignPane,
+    'addlocationwithmap': AddLocationWithMapPane,
     'addlocation': AddLocationPane,
     'campaign': CampaignPane,
     'editaction': EditActionPane,

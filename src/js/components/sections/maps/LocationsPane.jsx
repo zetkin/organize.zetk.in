@@ -97,7 +97,6 @@ export default class LocationsPane extends PaneBase {
            loc.lng = center.lng();
         }
         
-        // add pending that not is editable
         this.getActions('location').setPendingLocation(loc);
         this.gotoSubPane('addlocation');
         this.setState({
