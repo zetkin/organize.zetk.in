@@ -45,10 +45,13 @@ export default class LocationMap extends React.Component {
         )
     }
 
-    resetMarkers(setBounds) {
+    resetMarkers(getBounds) {
         var i;
         var marker;
-        var bounds = new google.maps.LatLngBounds();
+        var bounds;
+        if (getBounds) {
+            bounds = new google.maps.LatLngBounds();
+        }
 
         var locations = this.props.locations;
         // Remove old markers
@@ -59,23 +62,23 @@ export default class LocationMap extends React.Component {
 
         var pendingId;
         if (this.props.pendingLocation) {
-            this.createMarker(this.props.pendingLocation, bounds, true);
+            this.createMarker(this.props.pendingLocation, true);
             pendingId = this.props.pendingLocation.id;
         }
 
         for (i in locations) {
             if (pendingId !== locations[i].id) {
-                this.createMarker(locations[i], bounds, false);
+                this.createMarker(locations[i], false, bounds);
             }
         }
 
         // dont set new center if user moved the map
-        if (setBounds) {
+        if (getBounds) {
             this.map.setCenter(bounds.getCenter());
-            this.map.setZoom(12); // TODO: Calculate this somehow
+            this.map.fitBounds(bounds);
         }
     }
-    createMarker(loc, bounds, editable) {
+    createMarker(loc, editable, bounds) {
         var marker;
         var latLng = new google.maps.LatLng(loc.lat, loc.lng);
 
@@ -98,7 +101,9 @@ export default class LocationMap extends React.Component {
             this.onMarkerClick.bind(this, marker, loc));
         }
 
-        bounds.extend(latLng);
+        if (bounds) {
+            bounds.extend(latLng);
+        }
         this.markers.push(marker);
     }
     onMarkerDragEnd (marker, locationData) {
