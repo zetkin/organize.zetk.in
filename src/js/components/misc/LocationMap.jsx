@@ -33,8 +33,6 @@ export default class LocationMap extends React.Component {
 
     componentWillUnmount() {
         var marker;
-
-
         // Remove old markers
         while (marker = this.markers.pop()) {
             marker.setMap(null);
@@ -48,13 +46,12 @@ export default class LocationMap extends React.Component {
         )
     }
 
+    
+
     resetMarkers(getBounds) {
         var i;
         var marker;
         var bounds;
-        if (getBounds) {
-            bounds = new google.maps.LatLngBounds();
-        }
 
         var locations = this.props.locations;
         // Remove old markers
@@ -74,13 +71,25 @@ export default class LocationMap extends React.Component {
                 this.createMarker(locations[i], false, bounds);
             }
         }
-
-        // dont set new center if user moved the map
-        if (getBounds) {
-            this.map.setCenter(bounds.getCenter());
-            this.map.fitBounds(bounds);
+        // Use special locations for calculating bounds
+        // right now just an extra loop...
+        if (getBounds && this.props.locationsForBounds) {
+            this.positionateMap(this.props.locationsForBounds);
         }
     }
+
+    positionateMap (locations) {
+        var i;
+        var bounds = new google.maps.LatLngBounds();
+        // create Bounds and  loop through locations and 
+        for (i in locations) {
+            var latLng = new google.maps.LatLng(locations[i].lat, locations[i].lng);
+            bounds.extend(latLng);
+        }
+        this.map.setCenter(bounds.getCenter());
+        this.map.fitBounds(bounds);
+    }
+
     createMarker(loc, editable, bounds) {
         var marker;
         var latLng = new google.maps.LatLng(loc.lat, loc.lng);
@@ -91,6 +100,7 @@ export default class LocationMap extends React.Component {
             draggable: editable, 
             title: loc.title,
         });
+
         // if editable only drag the marker (all info already vibile)
         if (editable) {
             var iconSettings = this.iconSettings;
@@ -104,9 +114,6 @@ export default class LocationMap extends React.Component {
             this.onMarkerClick.bind(this, marker, loc));
         }
 
-        if (bounds) {
-            bounds.extend(latLng);
-        }
         this.markers.push(marker);
     }
     onMarkerDragEnd (marker, locationData) {

@@ -3,10 +3,17 @@ import React from 'react/addons';
 import PaneBase from './PaneBase';
 import LocationForm from '../forms/LocationForm';
 
+// Component is depening om misc/locationMap is rendered (/locations)
+// otherwise there is no UI for editing lat lng.
 
 export default class AddLocationPane extends PaneBase {
     componentDidMount() {
         this.listenTo('location', this.forceUpdate);
+        var locationStore = this.getStore('location');
+        if (locationStore.getPendingLocation() === false) {
+            this.getActions('location')
+                .setPendingLocation(locationStore.getAverageCenterOfLoctions());
+        }
     }
 
     getPaneTitle(data) {

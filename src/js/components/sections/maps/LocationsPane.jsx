@@ -51,6 +51,7 @@ export default class LocationsPane extends PaneBase {
                     onClick={ this.onAddClick.bind(this) } />
                 <LocationMap style={ style } 
                     locations={ locations }
+                    locationsForBounds={ locations }
                     pendingLocation={ pendingLocation }
                     ref="locationMap"
                     onLocationChange={ this.onLocationChange.bind(this) }
@@ -108,9 +109,7 @@ export default class LocationsPane extends PaneBase {
         this.gotoSubPane('location', loc.id);
     }
     onLocationChange(loc) {
-        console.log('onLocationChange', loc);
         this.getActions('location').setPendingLocation(loc);
-        //this.getActions('location').setPendingLatLng(loc);
     }
 
     onViewSwitch(state) {

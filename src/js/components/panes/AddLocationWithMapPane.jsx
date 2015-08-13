@@ -8,6 +8,7 @@ import LocationForm from '../forms/LocationForm';
 export default class AddLocationPane extends PaneBase {
     componentDidMount() {
         this.listenTo('location', this.forceUpdate);
+        // get bounds and center
     }
 
     getPaneTitle(data) {
@@ -16,18 +17,18 @@ export default class AddLocationPane extends PaneBase {
 
     renderPaneContent(data) {
         var locationStore = this.getStore('location');
-        // add pending to location list
         var pendingLocation = locationStore.getPendingLocation();
-        var style =  {
+        var style = {
             position: 'relative',
             height: '300px',
             width: '100%'
         }
         return [ 
             <LocationMap 
-                    pendingLocation={ pendingLocation }
                     style={ style } 
+                    pendingLocation={ pendingLocation }
                     onLocationChange={ this.onUpdatePosition.bind(this) }
+                    locationsForBounds={locationStore.getLocations()}
                     onMapClick={ this.onUpdatePosition.bind(this) } />,
             <LocationForm key="form" ref="form" loc={ data.loc }
                 onSubmit={ this.onSubmit.bind(this) }/>
