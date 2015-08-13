@@ -7,6 +7,10 @@ import LocationForm from '../forms/LocationForm';
 export default class LocationPane extends PaneBase {
     componentDidMount() {
         this.listenTo('location', this.forceUpdate);
+
+        var locationId = this.props.params[0];
+        var loc = this.getStore('location').getLocation(locationId);
+        this.getActions('location').setPendingLocation(loc);
     }
 
     getRenderData() {
@@ -14,7 +18,7 @@ export default class LocationPane extends PaneBase {
         var locationId = this.props.params[0];
 
         return {
-            loc: locationStore.getLocation(locationId)
+            loc: this.getStore('location').getLocation(locationId)
         }
     }
 
@@ -33,7 +37,7 @@ export default class LocationPane extends PaneBase {
             return [
                 <LocationForm key="form" ref="form" loc={ data.loc }
                     onSubmit={ this.onSubmit.bind(this) }/>,
-                <input key="submit" type="button" value="Delete"
+                <input key="delete" type="button" value="Delete"
                     onClick={ this.onDeleteClick.bind(this) }/>
             ];
         }
@@ -48,14 +52,23 @@ export default class LocationPane extends PaneBase {
 
         var locationId = this.props.params[0];
         var values = this.refs.form.getChangedValues();
-
+        var pendingLatLng = this.getStore('location').getPendingLocation();
+        if (pendingLatLng) {
+            values.lat = pendingLatLng.lat;
+            values.lng = pendingLatLng.lng;
+        }
         this.getActions('location').updateLocation(locationId, values);
     }
 
+
     onDeleteClick(ev) {
         var locationId = this.props.params[0];
-
         this.getActions('location').deleteLocation(locationId);
+        this.getActions('location').clearPendingLocation();
         this.closePane();
+    }
+    onCloseClick() {
+        this.closePane();
+        this.getActions('location').clearPendingLocation();
     }
 }

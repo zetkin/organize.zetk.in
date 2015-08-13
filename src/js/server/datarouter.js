@@ -49,6 +49,13 @@ router.get([/maps$/, /maps\/locations$/], waitForActions(req => [
     req.flux.getActions('location').retrieveLocations()
 ]));
 
+router.get(/addlocationwithmap$/, waitForActions(req => [
+    req.flux.getActions('location').retrieveLocations()
+]));
+router.get(/addlocation$/, waitForActions(req => [
+    req.flux.getActions('location').retrieveLocations()
+]));
+
 router.get(/location:(\d+)$/, waitForActions(req => [
     req.flux.getActions('location').retrieveLocation(req.params[0])
 ]));
