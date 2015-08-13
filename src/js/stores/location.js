@@ -37,6 +37,19 @@ export default class LocationStore extends Store {
         return this.state.locations.find(p => p.id == id);
     }
 
+    getAverageCenterOfLoctions() {
+        var sumOfLat = 0;
+        var sumOfLng = 0;
+        this.state.locations.forEach(function(location) {
+            sumOfLng += location.lng;
+            sumOfLat += location.lat;
+        });
+        return {
+            lat :  sumOfLat/this.state.locations.length,
+            lng :  sumOfLng/this.state.locations.length
+        }
+    }
+
     getPendingLocation() {
         return this.state.pendingLocation;
     }
