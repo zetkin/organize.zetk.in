@@ -24,12 +24,14 @@ export default class AddLocationPane extends PaneBase {
             width: '100%'
         }
         return [ 
+            <h3>1. Click on map add position of location</h3>,
             <LocationMap 
                     style={ style } 
                     pendingLocation={ pendingLocation }
                     onLocationChange={ this.onUpdatePosition.bind(this) }
                     locationsForBounds={locationStore.getLocations()}
                     onMapClick={ this.onUpdatePosition.bind(this) } />,
+            <h3>2. Enter information about the location and press save</h3>,
             <LocationForm key="form" ref="form" loc={ data.loc }
                 onSubmit={ this.onSubmit.bind(this) }/>
         ]
