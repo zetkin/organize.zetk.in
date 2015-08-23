@@ -8,7 +8,8 @@ export default class LocationStore extends Store {
         super();
 
         this.setState({
-            locations: []
+            locations: [],
+            pendingLocation: false,
         });
 
         var locationActions = flux.getActions('location');
@@ -18,6 +19,12 @@ export default class LocationStore extends Store {
             this.onRetrieveLocationComplete);
         this.register(locationActions.updateLocation,
             this.onUpdateLocationComplete);
+        this.register(locationActions.createLocation,
+            this.onCreateLocationComplete);
+        this.register(locationActions.setPendingLocation,
+            this.onSetPendingLocationComplete);
+        this.register(locationActions.clearPendingLocation,
+            this.onClearPendingLocationComplete);
         this.registerAsync(locationActions.deleteLocation,
             this.onDeleteLocationBegin, null);
     }
@@ -28,6 +35,26 @@ export default class LocationStore extends Store {
 
     getLocation(id) {
         return this.state.locations.find(p => p.id == id);
+    }
+
+    getAverageCenterOfLoctions() {
+        var sumOfLat = 0;
+        var sumOfLng = 0;
+        this.state.locations.forEach(function(location) {
+            sumOfLng += location.lng;
+            sumOfLat += location.lat;
+        });
+        return {
+            lat :  sumOfLat/this.state.locations.length,
+            lng :  sumOfLng/this.state.locations.length
+        }
+    }
+
+    getPendingLocation() {
+        return this.state.pendingLocation;
+    }
+    getEditState() {
+        return this.state.inEditMode;
     }
 
     onRetrieveLocationsComplete(res) {
@@ -61,6 +88,30 @@ export default class LocationStore extends Store {
         this.setState({
             locations: this.state.locations
         });
+    }
+
+    
+    onCreateLocationComplete(res) {
+        this.state.locations.push(res.data.data);
+        this.setState({
+            locations: this.state.locations
+        });
+    }
+
+    onSetPendingLocationComplete(loc) {
+        var newLoc = {
+            lat: loc.lat,
+            lng: loc.lng,
+            id: loc.id
+        }
+        this.setState({
+            pendingLocation: newLoc
+        });
+    }
+    onClearPendingLocationComplete() {
+        this.setState({
+            pendingLocation: false
+        })
     }
 
     static serialize(state) {

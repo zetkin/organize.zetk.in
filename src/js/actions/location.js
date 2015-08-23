@@ -23,9 +23,22 @@ export default class LocationActions extends Actions {
         var orgId = this.flux.getStore('org').getActiveId();
         return Z.resource('orgs', orgId, 'locations', locationId).patch(data);
     }
+    createLocation(data) {
+        var orgId = this.flux.getStore('org').getActiveId();
+        return Z.resource('orgs', orgId, 'locations').post(data);
+    }
 
     deleteLocation(locationId) {
         var orgId = this.flux.getStore('org').getActiveId();
         return Z.resource('orgs', orgId, 'locations', locationId).del();
+    }
+    setPendingLatLng(loc) {
+        return loc;
+    }
+    setPendingLocation(loc) {
+        return loc;
+    }
+    clearPendingLocation() {
+        return true;
     }
 }
