@@ -18,13 +18,14 @@ export default class LocationMap extends React.Component {
                strokeColor: '#000',
         }
 
+        this.centerSetFromData = false;
         this.map = new google.maps.Map(ctrDOMNode, mapOptions);
         if (this.props.onMapClick) {
             google.maps.event.addListener(this.map, 'click', this.onMapClick.bind(this));
         }
         this.markers = [];
 
-        this.resetMarkers(true);
+        this.resetMarkers();
     }
 
     componentDidUpdate() {
@@ -48,7 +49,7 @@ export default class LocationMap extends React.Component {
 
     
 
-    resetMarkers(getBounds) {
+    resetMarkers() {
         var i;
         var marker;
         var bounds;
@@ -73,8 +74,13 @@ export default class LocationMap extends React.Component {
         }
         // Use special locations for calculating bounds
         // right now just an extra loop...
-        if (getBounds && this.props.locationsForBounds) {
-            this.positionateMap(this.props.locationsForBounds);
+        // and and only center and set bounds if map not centered by
+        // data before
+        if (!this.centerSetFromData && this.props.locationsForBounds) {
+            if (this.props.locationsForBounds.length > 0) {
+                this.centerSetFromData = true;
+                this.positionateMap(this.props.locationsForBounds);
+            }
         }
     }
 

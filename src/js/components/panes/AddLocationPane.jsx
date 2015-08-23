@@ -10,6 +10,8 @@ export default class AddLocationPane extends PaneBase {
     componentDidMount() {
         this.listenTo('location', this.forceUpdate);
         var locationStore = this.getStore('location');
+        // When mounting pane from page reload set pendinglocation 
+        // sloppy
         if (locationStore.getPendingLocation() === false) {
             this.getActions('location')
                 .setPendingLocation(locationStore.getAverageCenterOfLoctions());
