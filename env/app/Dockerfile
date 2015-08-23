@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -q -y --force-yes --fix-missing \
         build-essential nodejs git
 
 RUN npm install npm -g
+RUN npm install -g gulp
+RUN npm install -g gulp-cli
 
 RUN mkdir /etc/service/organize.zetk.in
 ADD run.sh /etc/service/organize.zetk.in/run
