@@ -118,7 +118,7 @@ export default class SectionBase extends FluxComponent {
                         }, this)}
                         <li key="back"
                             className='section-nav-item section-nav-back'>
-                            <Link href="/">Dashboard</Link></li>
+                            <Link href="/">Back to <br />Dashboard</Link></li>
                     </ul>
                 </nav>
                 <div className="section-content" ref="paneContainer">
