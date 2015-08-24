@@ -14,4 +14,29 @@
     .search-form {
         max-width: 500px;
     }
+
+    .usermenu {
+        &:hover {
+            .usermenu-info ul {
+                display: block;
+            }
+        }
+
+        .usermenu-info{
+            display: block;
+            margin-top: 0;
+            padding: 0;
+            background-color: transparent;
+
+            .usermenu-user{
+                padding: 0.5em 3em 0.45em 0;
+            }
+
+            ul {
+                display: none;
+                padding: 0.5em;
+                background-color: white;
+            }
+        }
+    }
 }

@@ -199,56 +199,60 @@
                 border-radius: 50%;
             }
         }
-
-        ul {
-            width: 15em;
-            display: none;
-            background-color: white;
-            margin-top: 3em;
-            padding: 0.5em;
-        }
-
         &:hover {
-            ul {
+            .usermenu-info{
                 display: block;
-            }
-        }
-
-        li {
-            list-style-type: none;
-            margin: 0.5em;
-
-            a {
-                text-decoration: none;
-                color: black;
-                font-weight: bold;
             }
         }
         .usermenu-info{
-            span{
-                display: block;
-            }
-            .usermenu-info-name{
-                font-weight: bold;
-            }
-            .usermenu-info-org{
-                font-size: 0.8em;
-            }
-        }
+            display: none;
+            margin-top: 3em;
+            padding: 0.5em;
+            background-color: white;
 
-        .orgpicker {
-            .orgpicker-label {
-                margin: 1em 0 0.25em;
-                font-size: 0.8em;
-                color: #888;
-            }
-            ul.orgpicker-list {
-                @include list-unstyled;
-
-                .orgpicker-item {
+            .usermenu-user{
+                text-align: right;
+                span{
+                    display: block;
+                }
+                .usermenu-info-name{
                     font-weight: bold;
-                    cursor: pointer;
-                    margin: 0.5em 0;
+                }
+                .usermenu-info-org{
+                    font-size: 0.8em;
+                }
+            }
+            ul {
+                margin-top: 0;
+                text-align: right;
+            }
+
+
+            li {
+                list-style-type: none;
+                margin: 0.5em;
+
+                a {
+                    text-decoration: none;
+                    color: black;
+                    font-weight: bold;
+                }
+            }
+
+            .orgpicker {
+                .orgpicker-label {
+                    margin: 1em 0 0.25em;
+                    font-size: 0.8em;
+                    color: #888;
+                }
+                ul.orgpicker-list {
+                    @include list-unstyled;
+
+                    .orgpicker-item {
+                        font-weight: bold;
+                        cursor: pointer;
+                        margin: 0.5em 0;
+                    }
                 }
             }
         }

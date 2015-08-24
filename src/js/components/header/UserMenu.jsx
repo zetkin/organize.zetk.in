@@ -21,15 +21,17 @@ export default class UserMenu extends FluxComponent {
         return (
             <nav className="usermenu">
                 <div className="usermenu-avatar"></div>
-                <ul>
-                    <li className="usermenu-info">
-                        <span className="usermenu-info-name">{ userName }</span>
+                <div className="usermenu-info">
+                    <div className="usermenu-user">
+                        <a href={ accountUrl }><span className="usermenu-info-name">{ userName }</span></a>
                         <span className="usermenu-info-org">{ activeOrg.title }</span>
-                    </li>
-                    <li><a href="/logout">Log out</a></li>
-                    <li><a href={ accountUrl }>Account settings</a></li>
-                    <li>< OrgPicker memberships={ memberships } activeOrg={ activeOrg }/></li>
-                </ul>
+                    </div>
+                    <ul>
+                        <li><a href="/logout">Log out</a></li>
+                        <li><a href={ accountUrl }>Account settings</a></li>
+                        <li>< OrgPicker memberships={ memberships } activeOrg={ activeOrg }/></li>
+                    </ul>
+                </div>
             </nav>
         );
     }
