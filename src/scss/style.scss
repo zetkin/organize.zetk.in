@@ -5,6 +5,7 @@
 @import "section/_base";
 @import "dashboard/_base";
 @import "actionlist/_base";
+@import "forms/_base";
 
 @media screen and (min-width: 720px) {
     @import "_medium";
@@ -13,4 +14,5 @@
     @import "dashboard/_medium";
     @import "panes/_medium";
     @import "actionlist/_medium";
+    @import "forms/_medium";
 }

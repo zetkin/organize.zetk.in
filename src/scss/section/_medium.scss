@@ -1,3 +1,4 @@
+// TODO: Should be more bem-ish
 .section-nav {
     position: fixed;
     width: 10em;
@@ -10,55 +11,59 @@
         padding: 0;
     }
 
-    .section-nav-item a {
+}
+
+.section-nav-item a {
+    display: block;
+    position: relative;
+    list-style-type: none;
+    cursor: pointer;
+    margin-bottom: 1em;
+
+    font-size: 1.1em;
+    text-align: center;
+
+    opacity: 0.9;
+    transition: opacity 0.3s;
+
+    color: white;
+
+    &::before {
+        content: "";
         display: block;
-        position: relative;
-        list-style-type: none;
-        cursor: pointer;
-        margin-bottom: 1em;
-
-        font-size: 1.1em;
-        text-align: center;
-
-        opacity: 0.9;
-        transition: opacity 0.3s;
-
-        color: white;
-
-        &::before {
-            content: "";
-            display: block;
-            width: 6.4em;
-            height: 4.8em;
-            background-color: #888;
-            margin: 0 auto 0.5em auto;
-        }
-
-        &:hover {
-            opacity: 1.0;
-
-            font-weight: bold;
-        }
-
-        &::after {
-            content: "";
-            display: block;
-            position: absolute;
-            background-color: $c-brand-main;
-            width: 0.4em;
-            height: 4em;
-            right: 0;
-            top: 0.4em;
-
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
+        width: 6.4em;
+        height: 4.8em;
+        background-color: #888;
+        margin: 0 auto 0.5em auto;
     }
 
-    .section-nav-item.selected a {
-        &::after {
-            opacity: 1;
-        }
+    &:hover {
+        opacity: 1.0;
+
+        font-weight: bold;
+    }
+
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        background-color: $c-brand-main;
+        width: 0.4em;
+        height: 4em;
+        right: 0;
+        top: 0.4em;
+
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+}
+
+.section-nav-item.selected a {
+    &::after {
+        opacity: 1;
+    }
+    &::before {
+        background-color: #FFF;// Should highlight icon
     }
 }
 
@@ -70,15 +75,6 @@
     bottom: 0;
     background-color: white;
 
-    .section-pane:first-child {
-        // Base pane, always full-width and not interactive
-        left: 0;
-        right: 0;
-
-        .section-pane-closelink {
-            display: none;
-        }
-    }
 
     .section-pane {
         position: absolute;
@@ -100,7 +96,7 @@
         }
 
         header {
-            margin: 100px 20px 0;
+            margin: 50px 0px 0;
         }
 
         .section-pane-closelink {
@@ -125,6 +121,20 @@
             bottom: 0;
             background-color: rgba(0,0,0,0);
             pointer-events: none;
+        }
+    }
+
+    // TODO: Should 
+    .section-pane:first-child {
+        // Base pane, always full-width and not interactive
+        left: 0;
+        right: 0;
+        header {
+            margin-top: 0;
+        }
+
+        .section-pane-closelink {
+            display: none;
         }
     }
 
