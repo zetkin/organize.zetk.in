@@ -7,7 +7,8 @@ export default class CampaignStore extends Store {
         super();
 
         this.setState({
-            campaigns: []
+            campaigns: [],
+            selectedIndex: undefined
         });
 
         var campaignActions = flux.getActions('campaign');
@@ -21,6 +22,8 @@ export default class CampaignStore extends Store {
             this.onUpdateCampaignComplete);
         this.register(campaignActions.deleteCampaign,
             this.onDeleteCampaignComplete);
+        this.register(campaignActions.selectCampaign,
+            this.onSelectCampaignComplete);
     }
 
     getCampaigns() {
@@ -29,6 +32,15 @@ export default class CampaignStore extends Store {
 
     getCampaign(id) {
         return this.state.campaigns.find(c => c.id == id);
+    }
+
+    getSelectedCampaign() {
+        if (this.state.selectedIndex >= 0) {
+            return this.state.campaigns[this.state.selectedIndex];
+        }
+        else {
+            return null;
+        }
     }
 
     onRetrieveCampaignsComplete(res) {
@@ -72,6 +84,24 @@ export default class CampaignStore extends Store {
         StoreUtils.remove(this.state.campaigns, campaignId);
         this.setState({
             campaigns: this.state.campaigns
+        });
+    }
+
+    onSelectCampaignComplete(id) {
+        var i;
+
+        for (i = 0; i < this.state.campaigns.length; i++) {
+            if (this.state.campaigns[i].id == id) {
+                this.setState({
+                    selectedIndex: i
+                });
+
+                return;
+            }
+        }
+
+        this.setState({
+            selectedIndex: undefined
         });
     }
 
