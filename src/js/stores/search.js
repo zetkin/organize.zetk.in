@@ -115,8 +115,9 @@ export default class SearchStore extends Store {
 
             if (!this.wsOpen) {
                 if (!this.ws) {
-                    // TODO: Don't hardcode this URL
-                    this.ws = new WebSocket('ws://organize.zetk.in:4080/search');
+                    var url = 'ws://' + window.location.host + '/search';
+
+                    this.ws = new WebSocket(url);
                     this.ws.onopen = function() {
                         this.wsOpen = true;
                         sendQuery(this.state.query);

@@ -10,10 +10,10 @@ export default class UserMenu extends FluxComponent {
     }
 
     render() {
-        // TODO: Don't hard-code this
-        var accountUrl = 'http://accounts.zetk.in:8000/';
-
         var userStore = this.getStore('user');
+
+        var accountUrl = '//' + userStore.getAccountsHost();
+
         var userName = userStore.getUserInfo().email;
         var activeOrg = userStore.getActiveMembership().organization;
         var memberships = userStore.getMemberships();

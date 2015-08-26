@@ -8,7 +8,8 @@ export default class UserStore extends Store {
         this.setState({
             user: null,
             memberships: null,
-            activeMembership: null
+            activeMembership: null,
+            accountsHost: process.env.ZETKIN_ACCOUNTS_HOST
         });
 
         var userActions = flux.getActions('user');
@@ -33,6 +34,10 @@ export default class UserStore extends Store {
 
     getActiveMembership() {
         return this.state.activeMembership;
+    }
+
+    getAccountsHost() {
+        return this.state.accountsHost;
     }
 
     onGetUserInfoComplete(res) {
