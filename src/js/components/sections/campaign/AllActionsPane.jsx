@@ -2,6 +2,7 @@ import React from 'react/addons';
 
 import PaneBase from '../../panes/PaneBase';
 import ActionList from '../../misc/actionlist/ActionList';
+import CampaignSelect from '../../misc/CampaignSelect';
 
 
 export default class AllActionsPane extends PaneBase {
@@ -11,6 +12,7 @@ export default class AllActionsPane extends PaneBase {
 
     componentDidMount() {
         this.listenTo('action', this.forceUpdate);
+        this.listenTo('campaign', this.forceUpdate);
         this.listenTo('participant', this.onParticipantStoreUpdate);
         this.getActions('action').retrieveAllActions();
 
@@ -21,10 +23,11 @@ export default class AllActionsPane extends PaneBase {
         var actionStore = this.getStore('action');
         var actions = actionStore.getActions();
 
-        return (
+        return [
+            <CampaignSelect/>,
             <ActionList actions={ actions }
                 onActionOperation={ this.onActionOperation.bind(this) }/>
-        );
+        ];
     }
 
     onActionOperation(action, operation) {
