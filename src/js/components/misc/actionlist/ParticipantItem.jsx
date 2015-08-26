@@ -1,6 +1,8 @@
 import React from 'react/addons';
 import { DragSource } from 'react-dnd';
 
+import Avatar from '../Avatar';
+
 const participantSource = {
     beginDrag(props) {
         return props.person;
@@ -39,7 +41,7 @@ export default class ParticipantItem extends React.Component {
         return this.props.connectDragSource(
             <li className="participant">
                 <figure>
-                    { person.id }
+                    <Avatar person={ person }/>
                     <figcaption>{ name }</figcaption>
                 </figure>
             </li>
