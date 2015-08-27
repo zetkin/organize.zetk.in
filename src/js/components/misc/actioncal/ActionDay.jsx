@@ -18,16 +18,28 @@ export default class ActionDay extends React.Component {
                 <ul>
                 { this.props.actions.map(function(action) {
                     return (
-                        <div className="actionday-actionitem">
+                        <div key={ action.id }
+                            className="actionday-actionitem"
+                            onClick={ this.onClick.bind(this, action) }>
                             <span className="activity">
                                 { action.activity.title }</span>
                             <span className="location">
                                 { action.location.title }</span>
                         </div>
                     );
-                }) }
+                }, this) }
                 </ul>
             </div>
         );
     }
+
+    onClick(action) {
+        if (this.props.onSelectAction) {
+            this.props.onSelectAction(action);
+        }
+    }
 }
+
+ActionDay.propTypes = {
+    onSelectAction: React.PropTypes.func
+};

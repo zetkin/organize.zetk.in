@@ -51,7 +51,8 @@ export default class ActionCalendar extends React.Component {
             }
 
             days.push(
-                <ActionDay date={ new Date(d) } actions={ dayActions }/>
+                <ActionDay date={ new Date(d) } actions={ dayActions }
+                    onSelectAction={ this.onSelectAction.bind(this) }/>
             );
 
             console.log(d);
@@ -75,4 +76,14 @@ export default class ActionCalendar extends React.Component {
             </div>
         );
     }
+
+    onSelectAction(action) {
+        if (this.props.onSelectAction) {
+            this.props.onSelectAction(action);
+        }
+    }
 }
+
+ActionCalendar.propTypes = {
+    onSelectAction: React.PropTypes.func
+};
