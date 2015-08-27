@@ -9,7 +9,7 @@ export default class DayCycleGraph extends React.Component {
         var content = null;
 
         if (sum > 0) {
-            const minWidth = 0.05;
+            const minWidth = 0.03;
             const minCount = minWidth * sum;
             const staticCounts = phases.filter(x => x <= minCount);
             const dynWidth = 1.0 - (staticCounts.length * minWidth);
