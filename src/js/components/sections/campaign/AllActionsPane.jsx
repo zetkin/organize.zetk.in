@@ -37,6 +37,7 @@ export default class AllActionsPane extends PaneBase {
         if (this.state.viewMode == 'cal') {
             viewComponent = <ActionCalendar actions={ actions }
                     onAddAction={ this.onCalendarAddAction.bind(this) }
+                    onMoveAction={ this.onCalendarMoveAction.bind(this) }
                     onSelectAction={ this.onSelectAction.bind(this) }/>
         }
         else {
@@ -68,6 +69,28 @@ export default class AllActionsPane extends PaneBase {
     onCalendarAddAction(date) {
         // TODO: Pass date to new action somehow
         this.gotoSubPane('addaction');
+    }
+
+    onCalendarMoveAction(action, date) {
+        const oldStartTime = new Date(action.start_time);
+        const oldEndTime = new Date(action.end_time);
+
+        const startTime = new Date(date);
+        startTime.setHours(oldStartTime.getHours());
+        startTime.setMinutes(oldStartTime.getMinutes());
+        startTime.setSeconds(oldStartTime.getSeconds());
+
+        const endTime = new Date(date);
+        endTime.setHours(oldEndTime.getHours());
+        endTime.setMinutes(oldEndTime.getMinutes());
+        endTime.setSeconds(oldEndTime.getSeconds());
+
+        const values = {
+            start_time: startTime.toISOString(),
+            end_time: endTime.toISOString()
+        };
+
+        this.getActions('action').updateAction(action.id, values);
     }
 
     onSelectAction(action) {

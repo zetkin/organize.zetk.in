@@ -1,8 +1,31 @@
 import React from 'react/addons';
+import { DropTarget } from 'react-dnd';
 
 import ActionItem from './ActionItem';
 
 
+const dayTarget = {
+    canDrop(props, monitor) {
+        return true;
+    },
+
+    drop(props) {
+        return {
+            onMoveAction: props.onMoveAction,
+            newDate: props.date
+        };
+    }
+};
+
+function collect(connect, monitor) {
+    return {
+        connectDropTarget: connect.dropTarget(),
+        isOver: monitor.isOver(),
+        canDrop: monitor.canDrop()
+    };
+}
+
+@DropTarget('action', dayTarget, collect)
 export default class ActionDay extends React.Component {
     render() {
         const DAY_LABELS = [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ];
@@ -11,7 +34,7 @@ export default class ActionDay extends React.Component {
         const dateLabel = date.getDate() + '/' + date.getMonth();
         const dayLabel = DAY_LABELS[date.getDay()];
 
-        return (
+        return this.props.connectDropTarget(
             <div className="actionday">
                 <h3>
                     <span className="date">{ dateLabel }</span>
