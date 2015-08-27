@@ -2,6 +2,7 @@ import React from 'react/addons';
 
 import PaneBase from '../../panes/PaneBase';
 import CampaignSelect from '../../misc/CampaignSelect';
+import ActionLocations from '../../misc/actionlocations/ActionLocations';
 
 
 export default class AllActionsPane extends PaneBase {
@@ -16,8 +17,12 @@ export default class AllActionsPane extends PaneBase {
     }
 
     renderPaneContent() {
+        const actionStore = this.getStore('action');
+        const actions = actionStore.getActions();
+
         return [
-            <CampaignSelect/>
+            <CampaignSelect/>,
+            <ActionLocations actions={ actions }/>
         ];
     }
 }
