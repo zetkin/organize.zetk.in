@@ -62,3 +62,29 @@
         }
     }
 }
+
+.actionday-addbutton {
+    visibility: hidden;
+    display: block;
+    width: 100%;
+    background-color: #eee;
+    border-width: 0;
+    cursor: pointer;
+    opacity: 0;
+
+    text-align: center;
+
+    transition: opacity 0.3s 0.1s;
+
+    &::before {
+        content: "+";
+        color: #aaa;
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+}
+
+.actionday:hover .actionday-addbutton {
+    visibility: visible;
+    opacity: 1;
+}

@@ -18,28 +18,39 @@ export default class ActionDay extends React.Component {
                 <ul>
                 { this.props.actions.map(function(action) {
                     return (
-                        <div key={ action.id }
+                        <li key={ action.id }
                             className="actionday-actionitem"
-                            onClick={ this.onClick.bind(this, action) }>
+                            onClick={ this.onActionClick.bind(this, action) }>
                             <span className="activity">
                                 { action.activity.title }</span>
                             <span className="location">
                                 { action.location.title }</span>
-                        </div>
+                        </li>
                     );
                 }, this) }
+                    <li className="actionday-pseudoitem">
+                        <button className="actionday-addbutton"
+                            onClick={ this.onAddClick.bind(this) }/>
+                    </li>
                 </ul>
             </div>
         );
     }
 
-    onClick(action) {
+    onActionClick(action) {
         if (this.props.onSelectAction) {
             this.props.onSelectAction(action);
+        }
+    }
+
+    onAddClick() {
+        if (this.props.onAddAction) {
+            this.props.onAddAction();
         }
     }
 }
 
 ActionDay.propTypes = {
-    onSelectAction: React.PropTypes.func
+    onSelectAction: React.PropTypes.func,
+    onAddAction: React.PropTypes.func
 };
