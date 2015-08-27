@@ -1,5 +1,8 @@
 import React from 'react/addons';
 
+import DayCycleGraph from './DayCycleGraph';
+
+
 export default class ActionLocationItem extends React.Component {
     render() {
         const loc = this.props.location;
@@ -20,10 +23,11 @@ export default class ActionLocationItem extends React.Component {
         };
 
         return (
-            <li>
+            <li className="actionlocationitem">
                 <span className="title">{ loc.title }</span>
                 <span style={ countStyle } className="actioncount">
                     <span>{ totalCount }</span></span>
+                <DayCycleGraph phases={ counts }/>
             </li>
         );
     }
