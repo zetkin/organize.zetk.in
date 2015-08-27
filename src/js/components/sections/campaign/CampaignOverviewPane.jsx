@@ -2,6 +2,8 @@ import React from 'react/addons';
 
 import PaneBase from '../../panes/PaneBase';
 
+import CampaignSelect from '../../misc/CampaignSelect';
+
 
 export default class CampaignOverviewPane extends PaneBase {
     getPaneTitle() {
@@ -9,6 +11,8 @@ export default class CampaignOverviewPane extends PaneBase {
     }
 
     renderPaneContent() {
-        return null;
+        return [
+            <CampaignSelect/>
+        ];
     }
 }

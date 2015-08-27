@@ -7,6 +7,8 @@ export default class ActionStore extends Store {
     constructor(flux) {
         super();
 
+        this.flux = flux;
+
         this.setState({
             actions: []
         });
@@ -25,7 +27,16 @@ export default class ActionStore extends Store {
     }
 
     getActions() {
-        return this.state.actions;
+        const campaignStore = this.flux.getStore('campaign');
+        const campaign = campaignStore.getSelectedCampaign();
+
+        if (campaign) {
+            return this.state.actions.filter(action =>
+                (action.campaign.id == campaign.id))
+        }
+        else {
+            return this.state.actions;
+        }
     }
 
     onRetrieveAllActionsComplete(res) {
