@@ -1,0 +1,64 @@
+.actionweek {
+    margin: 1em 0;
+
+    h2 {
+        float: left;
+        font-size: 1em;
+        font-weight: normal;
+        width: 5%;
+    }
+    
+    &::after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+}
+
+.actionday {
+    width: 13%;
+    margin-left: 0.5%;
+    float: left;
+
+    h3 {
+        margin: 0 0 0.1em;
+        padding: 0.5em 1em;
+        background-color: white;
+        box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
+
+        .date {
+            font-size: 1.3em;
+            font-weight: bold;
+            padding-right: 0.5em;
+        }
+    }
+}
+
+.actionday-actionitem {
+    padding: 0.5em 1em;
+    margin: 0 0 0.1em;
+    background-color: white;
+    box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
+
+    .activity {
+        display: block;
+        font-size: 1.2em;
+        font-weight: bold;
+        margin: 0 0 0.2em;
+    }
+
+    .location {
+        display: block;
+        font-size: 1.1em;
+
+        &::before {
+            content: "";
+            display: block;
+            float: left;
+            background-color: #888;
+            width: 0.5em;
+            height: 0.5em;
+            margin: 0.1em;
+        }
+    }
+}
