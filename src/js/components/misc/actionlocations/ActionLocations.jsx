@@ -26,7 +26,7 @@ export default class ActionLocations extends React.Component {
             }
 
             var startTime = new Date(action.start_time);
-            var hour = startTime.getHours();
+            var hour = startTime.getUTCHours();
 
             if (hour <= 4 || hour > 22) {
                 locations[loc.id].numNightActions++;
