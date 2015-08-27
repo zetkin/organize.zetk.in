@@ -7,6 +7,7 @@
 @import "actionlist/_base";
 @import "forms/_base";
 @import "locations/_base";
+@import "actionlocations/_base";
 
 @media screen and (min-width: 720px) {
     @import "_medium";
@@ -16,4 +17,5 @@
     @import "panes/_medium";
     @import "actionlist/_medium";
     @import "forms/_medium";
+    @import "actionlocations/_medium";
 }
