@@ -36,6 +36,7 @@ export default class AllActionsPane extends PaneBase {
 
         if (this.state.viewMode == 'cal') {
             viewComponent = <ActionCalendar actions={ actions }
+                    onAddAction={ this.onCalendarAddAction.bind(this) }
                     onSelectAction={ this.onSelectAction.bind(this) }/>
         }
         else {
@@ -62,6 +63,11 @@ export default class AllActionsPane extends PaneBase {
         this.setState({
             viewMode: state
         });
+    }
+
+    onCalendarAddAction(date) {
+        // TODO: Pass date to new action somehow
+        this.gotoSubPane('addaction');
     }
 
     onSelectAction(action) {
