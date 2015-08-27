@@ -55,8 +55,6 @@ export default class ActionCalendar extends React.Component {
                     onSelectAction={ this.onSelectAction.bind(this) }/>
             );
 
-            console.log(d);
-
             if (d.getDay() == 0) {
                 weeks.push(
                     <ActionWeek firstDate={ new Date(d) }>
