@@ -1,5 +1,7 @@
 import React from 'react/addons';
 
+import ActionItem from './ActionItem';
+
 
 export default class ActionDay extends React.Component {
     render() {
@@ -17,16 +19,8 @@ export default class ActionDay extends React.Component {
                 </h3>
                 <ul>
                 { this.props.actions.map(function(action) {
-                    return (
-                        <li key={ action.id }
-                            className="actionday-actionitem"
-                            onClick={ this.onActionClick.bind(this, action) }>
-                            <span className="activity">
-                                { action.activity.title }</span>
-                            <span className="location">
-                                { action.location.title }</span>
-                        </li>
-                    );
+                    return <ActionItem key={ action.id } action={ action }
+                            onClick={ this.onActionClick.bind(this, action) }/>
                 }, this) }
                     <li className="actionday-pseudoitem">
                         <button className="actionday-addbutton"
