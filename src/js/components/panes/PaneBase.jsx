@@ -27,6 +27,9 @@ export default class PaneBase extends FluxComponent {
         return (
             <div className={ classNames.join(' ') }>
                 <header>
+                    <div className="pane-top">
+                    { this.renderPaneTop(data) }
+                    </div>
                     <a className="section-pane-closelink"
                         onClick={ this.onCloseClick.bind(this) }/>
                     <h2>{ this.getPaneTitle(data) }</h2>
@@ -37,6 +40,10 @@ export default class PaneBase extends FluxComponent {
                 </div>
             </div>
         );
+    }
+
+    renderPaneTop(data) {
+        return null;
     }
 
     getPaneTitle(data) {
