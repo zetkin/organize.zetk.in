@@ -11,7 +11,7 @@ export default class CampaignPlayer extends React.Component {
             new Date(props.actions[0].start_time) : null;
 
         this.state = {
-            playing: true,
+            playing: false,
             time: startDate? startDate.getTime() : 0
         };
     }
@@ -61,10 +61,6 @@ export default class CampaignPlayer extends React.Component {
             maxIntensity: 1.5,
             radius: 50
         });
-
-        if (this.props.actions.length) {
-            this.play();
-        }
     }
 
     componentWillUnmount() {
