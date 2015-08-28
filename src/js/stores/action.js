@@ -52,7 +52,9 @@ export default class ActionStore extends Store {
         StoreUtils.updateOrAdd(this.state.actions, action.id, action);
 
         this.setState({
-            actions: this.state.actions
+            actions: this.state.actions.sort((a0, a1) =>
+                (new Date(a0.start_time)).getTime() -
+                (new Date(a1.start_time)).getTime())
         });
     }
 
@@ -61,7 +63,9 @@ export default class ActionStore extends Store {
         StoreUtils.updateOrAdd(this.state.actions, action.id, action);
 
         this.setState({
-            actions: this.state.actions
+            actions: this.state.actions.sort((a0, a1) =>
+                (new Date(a0.start_time)).getTime() -
+                (new Date(a1.start_time)).getTime())
         });
     }
 
