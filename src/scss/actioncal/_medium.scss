@@ -1,4 +1,14 @@
-.actionweek {
+.actionminicalendar {
+    background-color: rgba(0,0,0,0.05);
+
+    margin: 0 -2em 2em;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding-bottom: 2em;
+}
+
+.actioncalendar .actionweek {
     margin: 1em 0;
 
     h2 {
@@ -15,10 +25,10 @@
     }
 }
 
-.actionday {
+.actioncalendar .actionday {
+    float: left;
     width: 13%;
     margin-left: 0.5%;
-    float: left;
 
     h3 {
         margin: 0 0 0.1em;
@@ -34,12 +44,31 @@
     }
 }
 
+.actionminicalendar .actionday {
+    display: inline-block;
+    width: 5em;
+    margin-left: 0.1em;
+
+    .date {
+        display: block;
+        font-size: 1em;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .weekday {
+        display: none;
+    }
+}
+
 .actionday-actionitem {
     padding: 0.5em 1em;
     margin: 0 0 0.1em;
     background-color: white;
     box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
+}
 
+.actioncalendar .actionday-actionitem {
     .activity {
         display: block;
         font-size: 1.2em;
@@ -63,7 +92,15 @@
     }
 }
 
-.actionday-addbutton {
+.actionminicalendar .actionday-actionitem {
+    height: 2em;
+
+    span {
+        display: none;
+    }
+}
+
+.actioncalendar .actionday-addbutton {
     visibility: hidden;
     display: block;
     width: 100%;
@@ -84,7 +121,11 @@
     }
 }
 
-.actionday:hover .actionday-addbutton {
+.actioncalendar .actionday:hover .actionday-addbutton {
     visibility: visible;
     opacity: 1;
+}
+
+.actionminicalendar .actionday-addbutton {
+    display: none;
 }
