@@ -72,6 +72,11 @@ router.get(/campaign\/dashboard$/, waitForActions(req => [
     req.flux.getActions('campaign').retrieveCampaigns()
 ]));
 
+router.get(/campaign\/playback$/, waitForActions(req => [
+    req.flux.getActions('campaign').retrieveCampaigns(),
+    req.flux.getActions('action').retrieveAllActions()
+]));
+
 router.get(/campaign\/actions$/, waitForActions(req => [
     req.flux.getActions('campaign').retrieveCampaigns(),
     req.flux.getActions('action').retrieveAllActions()
