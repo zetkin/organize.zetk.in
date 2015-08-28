@@ -7,15 +7,15 @@ export default class ActionMiniCalendar extends React.Component {
     render() {
         const actions = this.props.actions;
 
-        var startDate = this.props.startDate;
-        var endDate = this.props.endDate;
+        var startDate, endDate;
 
-        if (!startDate && actions.length > 0) {
+        if (actions.length) {
             startDate = new Date(actions[0].start_time);
-        }
-
-        if (!endDate && actions.length > 0) {
             endDate = new Date(actions[actions.length-1].end_time);
+        }
+        else {
+            startDate = new Date();
+            endDate = new Date();
         }
 
         var d = new Date(startDate.toDateString());
@@ -58,3 +58,7 @@ export default class ActionMiniCalendar extends React.Component {
         );
     }
 }
+
+ActionMiniCalendar.propTypes = {
+    actions: React.PropTypes.array.isRequired
+};
