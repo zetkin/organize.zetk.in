@@ -68,8 +68,6 @@ export default class CampaignPlayer extends React.Component {
     }
 
     render() {
-        var d = new Date(this.state.time);
-
         const actions = this.props.actions;
         const startTime = actions.length?
             new Date(actions[0].start_time).getTime() : 0;
@@ -78,8 +76,6 @@ export default class CampaignPlayer extends React.Component {
 
         return (
             <div className="campaignplayer">
-                <h1>{ d.toUTCString() }</h1>
-                <div className="heatmap" ref="mapContainer"/>
                 <Transport time={ this.state.time } playing={ this.state.playing }
                     startTime={ startTime } endTime={ endTime }
                     onPlay={ this.onPlay.bind(this) }
@@ -87,6 +83,7 @@ export default class CampaignPlayer extends React.Component {
                     onScrubBegin={ this.onScrubBegin.bind(this) }
                     onScrubEnd={ this.onScrubEnd.bind(this) }
                     onScrub={ this.onScrub.bind(this) }/>
+                <div className="heatmap" ref="mapContainer"/>
             </div>
         );
     }
