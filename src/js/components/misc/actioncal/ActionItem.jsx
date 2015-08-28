@@ -1,5 +1,6 @@
 import React from 'react/addons';
 import { DragSource } from 'react-dnd';
+import cx from 'classnames';
 
 
 const actionSource = {
@@ -33,9 +34,14 @@ function collect(connect, monitor) {
 export default class ActionItem extends React.Component {
     render() {
         const action = this.props.action;
+        const className = cx({
+            'actionday-actionitem': true,
+            'highlight': action.highlight
+        });
+
 
         return this.props.connectDragSource(
-            <li className="actionday-actionitem"
+            <li className={ className }
                 onClick={ this.onClick.bind(this) }>
                 <span className="activity">
                     { action.activity.title }</span>
