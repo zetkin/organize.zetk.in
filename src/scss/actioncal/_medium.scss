@@ -49,6 +49,7 @@
     width: 5em;
     min-height: 8em;
     margin-left: 0.1em;
+    vertical-align: top;
 
     .date {
         display: block;
@@ -67,6 +68,7 @@
     margin: 0 0 0.1em;
     background-color: white;
     box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
+    cursor: pointer;
 }
 
 .actioncalendar .actionday-actionitem {
@@ -105,9 +107,18 @@
         transition: background-color 0.2s;
         background-color: #fcc;
     }
+
+    &:hover {
+        transition: background-color 0.1s;
+        background-color: #fff0f0;
+    }
 }
 
-.actioncalendar .actionday-addbutton {
+.actionminicalendar .actionday-pseudoitem {
+    height: 2em;
+}
+
+.actionday-addbutton {
     visibility: hidden;
     display: block;
     width: 100%;
@@ -128,11 +139,11 @@
     }
 }
 
-.actioncalendar .actionday:hover .actionday-addbutton {
-    visibility: visible;
-    opacity: 1;
+.actionminicalendar .actionday-addbutton {
+    background-color: #ddd;
 }
 
-.actionminicalendar .actionday-addbutton {
-    display: none;
+.actionday:hover .actionday-addbutton {
+    visibility: visible;
+    opacity: 1;
 }

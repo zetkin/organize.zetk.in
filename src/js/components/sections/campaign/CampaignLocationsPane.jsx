@@ -22,6 +22,7 @@ export default class AllActionsPane extends PaneWithCalendar {
         const actions = actionStore.getActions();
 
         return <ActionMiniCalendar actions={ actions }
+                    onAddAction={ this.onCalendarAddAction.bind(this) }
                     onMoveAction={ this.onCalendarMoveAction.bind(this) }
                     onSelectAction={ this.onSelectAction.bind(this) }/>
     }
