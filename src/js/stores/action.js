@@ -20,6 +20,13 @@ export default class ActionStore extends Store {
             this.onRetrieveActionComplete);
         this.register(actionActions.updateAction,
             this.onUpdateActionComplete);
+
+        this.register(actionActions.highlightActionPhase,
+            this.onHighlightActionPhase);
+        this.register(actionActions.highlightActionLocation,
+            this.onHighlightActionLocation);
+        this.register(actionActions.clearActionHighlights,
+            this.onClearActionHighlights);
     }
 
     getAction(id) {
@@ -69,11 +76,63 @@ export default class ActionStore extends Store {
         });
     }
 
+    onHighlightActionPhase(payload) {
+        this.setState({
+            actions: this.state.actions.map(function(action) {
+                action.highlight = (
+                    action.location.id == payload.locId &&
+                    actionIsPhase(action, payload.phase));
+
+                return action;
+            })
+        });
+    }
+
+    onHighlightActionLocation(locId) {
+        this.setState({
+            actions: this.state.actions.map(function(action) {
+                action.highlight = (action.location.id == locId);
+                return action;
+            })
+        });
+    }
+
+    onClearActionHighlights() {
+        this.setState({
+            actions: this.state.actions.map(function(action) {
+                action.highlight = false;
+                return action;
+            })
+        });
+    }
+
     static serialize(state) {
         return JSON.stringify(state);
     }
 
     static deserialize(stateStr) {
         return JSON.parse(stateStr);
+    }
+}
+
+function actionIsPhase(action, phase) {
+    // TODO: Don't duplicate these constants in ActionLocationItem component
+    const startTime = new Date(action.start_time);
+    const hour = startTime.getUTCHours();
+
+    if (hour <= 4 || hour > 22) {
+        return phase == 4;
+    }
+    else if (hour <= 9) {
+        return phase == 0;
+    }
+    else if (hour <= 13) {
+        return phase == 1;
+    }
+    else if (hour <= 17) {
+        return phase == 2;
+    }
+    else if (hour <= 22) {
+        return phase == 3;
     }
 }
