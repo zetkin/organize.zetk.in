@@ -51,7 +51,7 @@ function run(paneElements, container) {
 function stop() {
     var i;
 
-    for (i in _panes) {
+    for (i = 0; i < _panes.length; i++) {
         _panes[i].stop();
     }
 

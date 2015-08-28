@@ -57,7 +57,7 @@ export default class UserStore extends Store {
         var memberships = res.data.data;
         var officialMemberships = [];
 
-        for (i in memberships) {
+        for (i = 0; i < memberships.length; i++) {
             if (memberships[i].role != null) {
                 officialMemberships.push(memberships[i]);
             }

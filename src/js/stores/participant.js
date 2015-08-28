@@ -94,7 +94,7 @@ export default class ParticipantStore extends Store {
     moveBetweenArrays(personId, arr0, arr1) {
         var i, person;
 
-        for (i in arr0) {
+        for (i = 0; i < arr0.length; i++) {
             if (arr0[i].id == personId) {
                 person = arr0[i];
                 arr0.splice(i, 1);
@@ -114,7 +114,7 @@ export default class ParticipantStore extends Store {
         var moves = this.state.moves;
 
         // Search for inverses
-        for (i in moves) {
+        for (i = 0; i < moves.length; i++) {
             oldMove = moves[i];
             if (oldMove.person == move.person
                 && oldMove.from == move.to && oldMove.to == move.from) {

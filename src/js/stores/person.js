@@ -92,7 +92,7 @@ export default class PersonStore extends Store {
         var i;
         const participants = res.data.data;
 
-        for (i in participants) {
+        for (i = 0; i < participants.length; i++) {
             var person = participants[i];
             StoreUtils.updateOrAdd(this.state.people, person.id, person);
         }

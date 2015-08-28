@@ -80,7 +80,7 @@ function searchPeople(orgId, q, writeMatch) {
             var i;
             var people = result.data.data;
 
-            for (i in people) {
+            for (i = 0; i < people.length; i++) {
                 var p = people[i];
                 if (searchMatches(q, p)) {
                     writeMatch(q, 'person', p);
@@ -95,7 +95,7 @@ function searchLocations(orgId, q, writeMatch) {
             var i;
             var locations = result.data.data;
 
-            for (i in locations) {
+            for (i = 0; i < locations.length; i++) {
                 var loc = locations[i];
                 if (searchMatches(q, loc)) {
                     writeMatch(q, 'location', loc);
@@ -110,7 +110,7 @@ function searchCampaigns(orgId, q, writeMatch) {
             var i;
             var campaigns = result.data.data;
 
-            for (i in campaigns) {
+            for (i = 0; i < campaigns.length; i++) {
                 var campaign = campaigns[i];
                 if (searchMatches(q, campaign)) {
                     writeMatch(q, 'campaign', campaign);
