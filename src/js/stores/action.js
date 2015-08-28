@@ -25,6 +25,8 @@ export default class ActionStore extends Store {
             this.onHighlightActionPhase);
         this.register(actionActions.highlightActionLocation,
             this.onHighlightActionLocation);
+        this.register(actionActions.highlightActions,
+            this.onHighlightActions);
         this.register(actionActions.clearActionHighlights,
             this.onClearActionHighlights);
     }
@@ -92,6 +94,15 @@ export default class ActionStore extends Store {
         this.setState({
             actions: this.state.actions.map(function(action) {
                 action.highlight = (action.location.id == locId);
+                return action;
+            })
+        });
+    }
+
+    onHighlightActions(actionIds) {
+        this.setState({
+            actions: this.state.actions.map(function(action) {
+                action.highlight = (actionIds.indexOf(action.id) >= 0);
                 return action;
             })
         });

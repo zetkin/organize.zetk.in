@@ -38,4 +38,8 @@ export default class ActionActions extends Actions {
     highlightActionLocation(locId) {
         return locId;
     }
+
+    highlightActions(actionIds) {
+        return actionIds;
+    }
 }
