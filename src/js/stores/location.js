@@ -37,7 +37,7 @@ export default class LocationStore extends Store {
         return this.state.locations.find(p => p.id == id);
     }
 
-    getAverageCenterOfLoctions() {
+    getAverageCenterOfLocations() {
         var sumOfLat = 0;
         var sumOfLng = 0;
         this.state.locations.forEach(function(location) {

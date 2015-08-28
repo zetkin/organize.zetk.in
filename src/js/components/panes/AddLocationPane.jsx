@@ -14,7 +14,7 @@ export default class AddLocationPane extends PaneBase {
         // sloppy
         if (locationStore.getPendingLocation() === false) {
             this.getActions('location')
-                .setPendingLocation(locationStore.getAverageCenterOfLoctions());
+                .setPendingLocation(locationStore.getAverageCenterOfLocations());
         }
     }
 
