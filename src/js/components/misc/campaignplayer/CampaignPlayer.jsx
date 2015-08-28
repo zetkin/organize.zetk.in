@@ -1,6 +1,6 @@
 import React from 'react/addons';
 
-import Scrubber from './Scrubber';
+import Transport from './Transport';
 
 
 export default class CampaignPlayer extends React.Component {
@@ -82,14 +82,12 @@ export default class CampaignPlayer extends React.Component {
 
         return (
             <div className="campaignplayer">
-                <input type="button" value="play"
-                    onClick={ this.onPlay.bind(this) }/>
-                <input type="button" value="stop"
-                    onClick={ this.onStop.bind(this) }/>
                 <h1>{ d.toUTCString() }</h1>
                 <div className="heatmap" ref="mapContainer"/>
-                <Scrubber time={ this.state.time }
+                <Transport time={ this.state.time }
                     startTime={ startTime } endTime={ endTime }
+                    onPlay={ this.onPlay.bind(this) }
+                    onStop={ this.onStop.bind(this) }
                     onScrubBegin={ this.onScrubBegin.bind(this) }
                     onScrubEnd={ this.onScrubEnd.bind(this) }
                     onScrub={ this.onScrub.bind(this) }/>
