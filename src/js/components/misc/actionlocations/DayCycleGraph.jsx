@@ -25,10 +25,12 @@ export default class DayCycleGraph extends React.Component {
                 };
 
                 return (
-                    <li className={ className } style={ style }>
+                    <li key={ idx } className={ className } style={ style }
+                        onMouseOver={ this.onMouseOver.bind(this, idx) }
+                        onMouseOut={ this.onMouseOut.bind(this) }>
                         { count }</li>
                 );
-            });
+            }, this);
         }
 
         return (
@@ -37,8 +39,24 @@ export default class DayCycleGraph extends React.Component {
             </ul>
         );
     }
+
+    onMouseOver(phase, ev) {
+        ev.stopPropagation();
+
+        if (this.props.onMouseOver) {
+            this.props.onMouseOver(phase);
+        }
+    }
+
+    onMouseOut() {
+        if (this.props.onMouseOut) {
+            this.props.onMouseOut();
+        }
+    }
 }
 
 DayCycleGraph.propTypes = {
+    onMouseOver: React.PropTypes.func,
+    onMouseOut: React.PropTypes.func,
     phases: React.PropTypes.arrayOf(React.PropTypes.number).isRequired
 };

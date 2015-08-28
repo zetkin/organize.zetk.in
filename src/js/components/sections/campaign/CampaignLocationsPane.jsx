@@ -32,7 +32,22 @@ export default class AllActionsPane extends PaneWithCalendar {
 
         return [
             <CampaignSelect/>,
-            <ActionLocations actions={ actions }/>
+            <ActionLocations actions={ actions }
+                onMouseOver={ this.onMouseOver.bind(this) }
+                onMouseOverPhase={ this.onMouseOverPhase.bind(this) }
+                onMouseOut={ this.onMouseOut.bind(this) }/>
         ];
+    }
+
+    onMouseOver(loc) {
+        this.getActions('action').highlightActionLocation(loc.id);
+    }
+
+    onMouseOverPhase(loc, phase) {
+        this.getActions('action').highlightActionPhase(loc.id, phase);
+    }
+
+    onMouseOut() {
+        this.getActions('action').clearActionHighlights();
     }
 }
