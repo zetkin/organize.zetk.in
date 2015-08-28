@@ -31,7 +31,7 @@ export default class ActionDay extends React.Component {
         const DAY_LABELS = [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ];
 
         const date = this.props.date;
-        const dateLabel = date.getDate() + '/' + date.getMonth();
+        const dateLabel = date.getDate() + '/' + (date.getMonth() + 1);
         const dayLabel = DAY_LABELS[date.getDay()];
 
         return this.props.connectDropTarget(
