@@ -47,6 +47,7 @@
 .actionminicalendar .actionday {
     display: inline-block;
     width: 5em;
+    min-height: 8em;
     margin-left: 0.1em;
 
     .date {

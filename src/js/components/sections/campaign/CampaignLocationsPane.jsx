@@ -1,12 +1,12 @@
 import React from 'react/addons';
 
-import PaneBase from '../../panes/PaneBase';
+import PaneWithCalendar from './PaneWithCalendar';
 import CampaignSelect from '../../misc/CampaignSelect';
 import ActionLocations from '../../misc/actionlocations/ActionLocations';
 import ActionMiniCalendar from '../../misc/actioncal/ActionMiniCalendar';
 
 
-export default class AllActionsPane extends PaneBase {
+export default class AllActionsPane extends PaneWithCalendar {
     getPaneTitle() {
         return 'Campaign locations';
     }
@@ -21,7 +21,9 @@ export default class AllActionsPane extends PaneBase {
         const actionStore = this.getStore('action');
         const actions = actionStore.getActions();
 
-        return <ActionMiniCalendar actions={ actions }/>
+        return <ActionMiniCalendar actions={ actions }
+                    onMoveAction={ this.onCalendarMoveAction.bind(this) }
+                    onSelectAction={ this.onSelectAction.bind(this) }/>
     }
 
     renderPaneContent() {

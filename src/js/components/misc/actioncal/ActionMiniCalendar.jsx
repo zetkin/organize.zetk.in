@@ -44,8 +44,8 @@ export default class ActionMiniCalendar extends React.Component {
 
             days.push(
                 <ActionDay date={ new Date(d) } actions={ dayActions }
-                    onMoveAction={ this.onMoveAction.bind(this) }
-                    onSelectAction={ this.onSelectAction.bind(this) }/>
+                    onMoveAction={ this.props.onMoveAction }
+                    onSelectAction={ this.props.onSelectAction }/>
             );
 
             d.setDate(d.getDate() + 1);
@@ -56,11 +56,5 @@ export default class ActionMiniCalendar extends React.Component {
                 { days }
             </div>
         );
-    }
-
-    onMoveAction(action, date) {
-    }
-
-    onSelectAction(action) {
     }
 }
