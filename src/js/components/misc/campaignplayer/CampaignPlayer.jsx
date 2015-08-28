@@ -139,6 +139,7 @@ export default class CampaignPlayer extends React.Component {
 
         var i ;
         var locationWeights = {};
+        var filteredActions = [];
 
         for (i = 0; i < actions.length; i++) {
             var action = actions[i];
@@ -148,6 +149,7 @@ export default class CampaignPlayer extends React.Component {
 
             if (time > actionStartTime) {
                 if (time < (actionEndTime + cooldown)) {
+                    filteredActions.push(action);
                     locationWeights[loc.id] = 1.0 - (time - actionEndTime) / cooldown;
                 }
                 else {
@@ -169,6 +171,13 @@ export default class CampaignPlayer extends React.Component {
         }
 
         this.heatmap.setData(points);
+
+        if (this.props.onActionsChange
+            && !filteredActions.equals(this.lastActions)) {
+
+            this.props.onActionsChange(filteredActions);
+            this.lastActions = filteredActions;
+        }
     }
 
     play(startTime) {
