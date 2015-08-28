@@ -1,13 +1,13 @@
 import React from 'react/addons';
 
-import PaneBase from '../../panes/PaneBase';
+import PaneWithCalendar from './PaneWithCalendar';
 import ActionList from '../../misc/actionlist/ActionList';
 import CampaignSelect from '../../misc/CampaignSelect';
 import ActionCalendar from '../../misc/actioncal/ActionCalendar';
 import ViewSwitch from '../../misc/ViewSwitch';
 
 
-export default class AllActionsPane extends PaneBase {
+export default class AllActionsPane extends PaneWithCalendar {
     constructor(props) {
         super(props);
 
@@ -64,37 +64,6 @@ export default class AllActionsPane extends PaneBase {
         this.setState({
             viewMode: state
         });
-    }
-
-    onCalendarAddAction(date) {
-        // TODO: Pass date to new action somehow
-        this.gotoSubPane('addaction');
-    }
-
-    onCalendarMoveAction(action, date) {
-        const oldStartTime = new Date(action.start_time);
-        const oldEndTime = new Date(action.end_time);
-
-        const startTime = new Date(date);
-        startTime.setHours(oldStartTime.getHours());
-        startTime.setMinutes(oldStartTime.getMinutes());
-        startTime.setSeconds(oldStartTime.getSeconds());
-
-        const endTime = new Date(date);
-        endTime.setHours(oldEndTime.getHours());
-        endTime.setMinutes(oldEndTime.getMinutes());
-        endTime.setSeconds(oldEndTime.getSeconds());
-
-        const values = {
-            start_time: startTime.toISOString(),
-            end_time: endTime.toISOString()
-        };
-
-        this.getActions('action').updateAction(action.id, values);
-    }
-
-    onSelectAction(action) {
-        this.gotoSubPane('editaction', action.id);
     }
 
     onActionOperation(action, operation) {
