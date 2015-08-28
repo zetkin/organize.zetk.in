@@ -51,11 +51,16 @@
     margin-left: 0.1em;
     vertical-align: top;
 
+    h3 {
+        margin: 0.5em 0;
+    }
+
     .date {
         display: block;
-        font-size: 1em;
+        font-size: 0.9em;
         font-weight: bold;
         text-align: center;
+        color: #999;
     }
 
     .weekday {
