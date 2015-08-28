@@ -42,4 +42,10 @@ export default class ActionActions extends Actions {
     highlightActions(actionIds) {
         return actionIds;
     }
+
+    createAction(campId, data) {
+        const orgId = this.flux.getStore('org').getActiveId();
+        const res = Z.resource('orgs', orgId, 'campaigns', campId, 'actions');
+        return res.post(data);
+    }
 }
