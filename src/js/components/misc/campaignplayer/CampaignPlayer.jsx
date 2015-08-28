@@ -84,7 +84,7 @@ export default class CampaignPlayer extends React.Component {
             <div className="campaignplayer">
                 <h1>{ d.toUTCString() }</h1>
                 <div className="heatmap" ref="mapContainer"/>
-                <Transport time={ this.state.time }
+                <Transport time={ this.state.time } playing={ this.state.playing }
                     startTime={ startTime } endTime={ endTime }
                     onPlay={ this.onPlay.bind(this) }
                     onStop={ this.onStop.bind(this) }
