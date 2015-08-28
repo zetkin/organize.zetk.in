@@ -11,17 +11,28 @@ export default class ActionForm extends FluxComponent {
     componentDidMount() {
         this.listenTo('activity', this.forceUpdate);
         this.listenTo('location', this.forceUpdate);
+        this.listenTo('campaign', this.forceUpdate);
         this.getActions('activity').retrieveActivities();
         this.getActions('location').retrieveLocations();
+        this.getActions('campaign').retrieveCampaigns();
     }
 
     render() {
-        var action = this.props.action;
-        var locations = this.getStore('location').getLocations();
-        var activities = this.getStore('activity').getActivities();
+        const action = this.props.action || {
+            campaign: {},
+            location: {},
+            activity: {}
+        };
+
+        const campaigns = this.getStore('campaign').getCampaigns();
+        const locations = this.getStore('location').getLocations();
+        const activities = this.getStore('activity').getActivities();
 
         return (
             <Form ref="form" {...this.props }>
+                <RelSelectInput label="Campaign" name="campaign_id"
+                    objects={ campaigns }
+                    initialValue={ action.campaign.id }/>
                 <TextInput label="Start" name="start_time"
                     initialValue={ action.start_time }/>
                 <TextInput label="End" name="end_time"
