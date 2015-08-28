@@ -1,7 +1,7 @@
 import React from 'react/addons';
 
 import PaneBase from './PaneBase';
-import PersonForm from '../forms/PersonForm';
+import ActionForm from '../forms/ActionForm';
 
 
 export default class AddActionPane extends PaneBase {
@@ -10,7 +10,18 @@ export default class AddActionPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        // TODO: Implement pane content
-        return null;
+        return (
+            <ActionForm ref="actionForm"
+                onSubmit={ this.onSubmit.bind(this) }/>
+        );
+    }
+
+    onSubmit(ev) {
+        ev.preventDefault();
+
+        const values = this.refs.actionForm.getValues();
+        const campaignId = values.campaign_id;
+
+        this.getActions('action').createAction(campaignId, values);
     }
 }
