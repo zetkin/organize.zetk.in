@@ -38,15 +38,23 @@ export default class LocationStore extends Store {
     }
 
     getAverageCenterOfLocations() {
-        var sumOfLat = 0;
-        var sumOfLng = 0;
-        this.state.locations.forEach(function(location) {
-            sumOfLng += location.lng;
-            sumOfLat += location.lat;
-        });
-        return {
-            lat :  sumOfLat/this.state.locations.length,
-            lng :  sumOfLng/this.state.locations.length
+        if (this.state.locations.length) {
+            var sumOfLat = 0;
+            var sumOfLng = 0;
+            this.state.locations.forEach(function(location) {
+                sumOfLng += location.lng;
+                sumOfLat += location.lat;
+            });
+            return {
+                lat :  sumOfLat/this.state.locations.length,
+                lng :  sumOfLng/this.state.locations.length
+            }
+        }
+        else {
+            return {
+                lat: 0,
+                lng: 0
+            }
         }
     }
 
