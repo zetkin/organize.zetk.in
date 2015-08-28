@@ -1,6 +1,7 @@
 import React from 'react/addons';
 
 import SectionBase from '../SectionBase';
+import CampaignLocationsPane from './CampaignLocationsPane';
 import CampaignOverviewPane from './CampaignOverviewPane';
 import CampaignPlannerPane from './CampaignPlannerPane';
 import CampaignPlaybackPane from './CampaignPlaybackPane';
@@ -17,6 +18,8 @@ export default class CampaignSection extends SectionBase {
                 startPane: AllActionsPane },
             { path: 'playback', title: 'Playback',
                 startPane: CampaignPlaybackPane },
+            { path: 'locations', title: 'Campaign locations',
+                startPane: CampaignLocationsPane },
             { path: 'activities', title: 'Activities',
                 startPane: AllActivitiesPane },
             { path: 'planner', title: 'Planner',
