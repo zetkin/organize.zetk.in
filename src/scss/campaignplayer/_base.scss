@@ -1,4 +1,10 @@
 .campaignplayer {
+    .heatmap {
+        width: 100%;
+        height: 70%;
+        min-height: 400px;
+    }
+
     .scrubber {
         background-color: white;
         position: relative;

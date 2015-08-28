@@ -46,6 +46,22 @@ export default class CampaignPlayer extends React.Component {
     }
 
     componentDidMount() {
+        const centerLat = this.props.centerLat;
+        const centerLng = this.props.centerLng;
+        const ctrDOMNode = React.findDOMNode(this.refs.mapContainer);
+        const mapOptions = {
+            center: { lat: centerLat, lng: centerLng },
+            zoom: 11
+        };
+
+        this.map = new google.maps.Map(ctrDOMNode, mapOptions);
+        this.heatmap = new google.maps.visualization.HeatmapLayer({
+            data: [],
+            map: this.map,
+            maxIntensity: 1.5,
+            radius: 50
+        });
+
         if (this.props.actions.length) {
             this.play();
         }
@@ -71,6 +87,7 @@ export default class CampaignPlayer extends React.Component {
                 <input type="button" value="stop"
                     onClick={ this.onStop.bind(this) }/>
                 <h1>{ d.toUTCString() }</h1>
+                <div className="heatmap" ref="mapContainer"/>
                 <Scrubber time={ this.state.time }
                     startTime={ startTime } endTime={ endTime }
                     onScrubBegin={ this.onScrubBegin.bind(this) }
@@ -97,6 +114,8 @@ export default class CampaignPlayer extends React.Component {
         this.setState({
             time: time
         });
+
+        this.redrawHeatMap();
     }
 
     onPlay(ev) {
@@ -118,11 +137,55 @@ export default class CampaignPlayer extends React.Component {
         this.stop();
     }
 
+    redrawHeatMap() {
+        const time = this.state.time;
+        const actions = this.props.actions;
+        const locations = this.props.locations;
+        const cooldown = 8 * 60 * 60 * 1000;
+
+        var i ;
+        var locationWeights = {};
+
+        for (i = 0; i < actions.length; i++) {
+            var action = actions[i];
+            var loc = action.location;
+            var actionStartTime = new Date(action.start_time).getTime();
+            var actionEndTime = new Date(action.end_time).getTime();
+
+            if (time > actionStartTime) {
+                if (time < (actionEndTime + cooldown)) {
+                    locationWeights[loc.id] = 1.0 - (time - actionEndTime) / cooldown;
+                }
+                else {
+                    delete locationWeights[loc.id];
+                }
+            }
+        }
+
+        var points = [];
+        var locId;
+        for (locId in locationWeights) {
+            var n;
+            var loc = locations.find(l => l.id == locId);
+
+            points.push({
+                location: new google.maps.LatLng(loc.lat, loc.lng),
+                weight: locationWeights[locId]
+            });
+        }
+
+        this.heatmap.setData(points);
+    }
+
     play(startTime) {
-        const updateTime = (function() {
+        this.prevStamp = undefined;
+        const updateTime = (function updateTime(stamp) {
+            const ds = this.prevStamp? (stamp - this.prevStamp) : 1/60;
+            const tf = ds / (1000/60);
+            const newTime = this.state.time + (tf * 1000000);
+
             const actions = this.props.actions;
             const endDate = new Date(actions[actions.length-1].end_time);
-            const newTime = this.state.time + 1000000;
 
             if (startTime !== undefined) {
                 this.setState({
@@ -131,6 +194,7 @@ export default class CampaignPlayer extends React.Component {
                 });
 
                 startTime = undefined;
+                this.redrawHeatMap();
                 this.rafId = requestAnimationFrame(updateTime.bind(this));
             }
             else if (newTime < endDate.getTime()) {
@@ -139,6 +203,7 @@ export default class CampaignPlayer extends React.Component {
                     time: newTime
                 });
 
+                this.redrawHeatMap();
                 this.rafId = requestAnimationFrame(updateTime.bind(this));
             }
             else {
@@ -147,6 +212,8 @@ export default class CampaignPlayer extends React.Component {
                     time: endDate.getTime()
                 });
             }
+
+            this.prevStamp = stamp;
         }).bind(this);
 
         updateTime();
