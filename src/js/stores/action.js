@@ -41,7 +41,9 @@ export default class ActionStore extends Store {
 
     onRetrieveAllActionsComplete(res) {
         this.setState({
-            actions: res.data.data
+            actions: res.data.data.sort((a0, a1) =>
+                (new Date(a0.start_time)).getTime() -
+                (new Date(a1.start_time)).getTime())
         });
     }
 
