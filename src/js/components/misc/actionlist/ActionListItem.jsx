@@ -3,7 +3,7 @@ import cx from 'classnames';
 import { DropTarget } from 'react-dnd';
 
 import FluxComponent from '../../FluxComponent';
-import ParticipantItem from './ParticipantItem';
+import ParticipantList from './ParticipantList';
 
 
 const actionTarget = {
@@ -56,25 +56,16 @@ export default class ActionListItem extends FluxComponent {
     render() {
         var action = this.props.action;
         var actionDate = new Date(action.start_time);
-        var participantList;
 
         var classNames = cx({
             'actionlist-item': true,
             'expanded': this.state.expanded
         });
 
-        if (this.props.participants) {
-            participantList = this.props.connectDropTarget(
-                <ul className="participants">
-                {this.props.participants.map(function(person) {
-                    return (
-                        <ParticipantItem key={ person.id }
-                            action={ action } person={ person }/>
-                    );
-                }, this)}
-                </ul>
-            );
-        }
+        const participantList = this.props.connectDropTarget(
+            <ParticipantList action={ action }
+                participants={ this.props.participants }/>
+        );
 
         return (
             <li className={ classNames }
