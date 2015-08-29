@@ -10,8 +10,12 @@ export default class AddCampaignPane extends PaneBase {
     }
 
     renderPaneContent(data) {
+        const initialData = {
+            title: this.getParam(0)
+        };
+
         return (
-            <CampaignForm ref="form"
+            <CampaignForm ref="form" campaign={ initialData }
                 onSubmit={ this.onSubmit.bind(this) }/>
         );
     }
