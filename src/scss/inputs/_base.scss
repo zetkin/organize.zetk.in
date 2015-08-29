@@ -12,6 +12,10 @@
         background-color: white;
         box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
 
+        max-height: 10em;
+        overflow-y: scroll;
+        overflow-x: hidden;
+
         li {
             cursor: pointer;
             padding: 0.5em 2em;
