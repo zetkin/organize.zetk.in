@@ -62,6 +62,15 @@ export default class PaneBase extends FluxComponent {
         return {};
     }
 
+    getParam(idx, defaultValue) {
+        if (this.props.params.length > idx) {
+            return this.props.params[idx];
+        }
+        else {
+            return defaultValue;
+        }
+    }
+
     subPath(path) {
         return this.props.panePath + '/' + path;
     }

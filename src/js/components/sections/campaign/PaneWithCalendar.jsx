@@ -1,12 +1,17 @@
 import React from 'react/addons';
+import moment from 'moment';
 
 import PaneBase from '../../panes/PaneBase';
 
 
 export default class PaneWithCalendar extends PaneBase {
     onCalendarAddAction(date) {
-        // TODO: Pass date to new action somehow
-        this.gotoSubPane('addaction');
+        const campaignStore = this.getStore('campaign');
+        const selectedCampaign = campaignStore.getSelectedCampaign();
+        const campParam = selectedCampaign? selectedCampaign.id : 0;
+        const dateParam = moment(date).format('YYYY-MM-DD');
+
+        this.gotoSubPane('addaction', campParam, dateParam);
     }
 
     onCalendarMoveAction(action, date) {

@@ -14,6 +14,8 @@ export default class ActionStore extends Store {
         });
 
         var actionActions = flux.getActions('action');
+        this.register(actionActions.createAction,
+            this.onCreateActionComplete);
         this.register(actionActions.retrieveAllActions,
             this.onRetrieveAllActionsComplete);
         this.register(actionActions.retrieveAction,
@@ -46,6 +48,16 @@ export default class ActionStore extends Store {
         else {
             return this.state.actions;
         }
+    }
+
+    onCreateActionComplete(res) {
+        const action = res.data.data;
+
+        this.setState({
+            actions: this.state.actions.concat([ action ]).sort((a0, a1) =>
+                (new Date(a0.start_time)).getTime() -
+                (new Date(a1.start_time)).getTime())
+        });
     }
 
     onRetrieveAllActionsComplete(res) {

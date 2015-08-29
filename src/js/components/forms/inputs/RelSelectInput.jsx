@@ -9,6 +9,7 @@ export default class RelSelectInput extends InputBase {
             <select value={ this.props.value }
                 onChange={ this.onChange.bind(this) }>
 
+                <option key="0" value="0">---</option>
                 {this.props.objects.map(function(obj) {
                     var value = obj[this.props.valueField];
                     var label = obj[this.props.labelField];
