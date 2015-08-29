@@ -10,8 +10,12 @@ export default class AddActivityPane extends PaneBase {
     }
 
     renderPaneContent(data) {
+        const initialData = {
+            title: this.getParam(0)
+        };
+
         return (
-            <ActivityForm ref="form"
+            <ActivityForm ref="form" activity={ initialData }
                 onSubmit={ this.onSubmit.bind(this) }/>
         );
     }
