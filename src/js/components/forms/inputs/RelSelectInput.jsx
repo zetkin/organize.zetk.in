@@ -44,6 +44,11 @@ export default class RelSelectInput extends InputBase {
 
         const filteredObjects = this.getFilteredObjects();
 
+        const createOptionClasses = cx({
+            'relselectinput-create': true,
+            'focused': (this.state.focusedIndex == filteredObjects.length)
+        });
+
         return (
             <div className={ classes }>
                 <input type="text" ref="input" value={ inputValue }
@@ -67,6 +72,10 @@ export default class RelSelectInput extends InputBase {
                         </li>
                     );
                 }, this)}
+                    <li key="create" className={ createOptionClasses }
+                        onMouseDown={ this.onClickCreate.bind(this) }>
+                        Create <em>{ this.state.inputValue || 'new' }...</em>
+                    </li>
                 </ul>
             </div>
         );
@@ -90,12 +99,13 @@ export default class RelSelectInput extends InputBase {
 
     onKeyDown(ev) {
         const focusedIndex = this.state.focusedIndex;
-        const objectCount = this.props.objects? this.props.objects.length : 0;
+        const objects = this.getFilteredObjects();
+        const objectCount = objects.length;
 
         if (ev.keyCode == 40) {
             // User pressed down, increment or set to zero if undefined
             this.setState({
-                focusedIndex: Math.min(objectCount - 1,
+                focusedIndex: Math.min(objectCount,
                     (focusedIndex === undefined)? 0 : focusedIndex + 1)
             });
 
@@ -105,15 +115,21 @@ export default class RelSelectInput extends InputBase {
             // User pressed up, decrement or set to last if undefined
             this.setState({
                 focusedIndex: Math.max(0, (focusedIndex === undefined)?
-                    objectCount - 1 : focusedIndex - 1)
+                    objectCount : focusedIndex - 1)
             });
 
             ev.preventDefault();
         }
-        else if (ev.keyCode == 13 && focusedIndex < objectCount) {
-            // User pressed enter and has selected a valid index
-            const objects = this.getFilteredObjects();
-            this.selectObject(objects[focusedIndex]);
+        else if (ev.keyCode == 13) {
+            if (focusedIndex < objectCount) {
+                // User pressed enter and has selected an option index
+                const objects = this.getFilteredObjects();
+                this.selectObject(objects[focusedIndex]);
+            }
+            else if (focusedIndex == objectCount) {
+                // User pressed enter on the "create option"
+                this.createObject();
+            }
 
             // Blur field and prevent form from being submitted
             React.findDOMNode(this.refs.input).blur();
@@ -123,6 +139,10 @@ export default class RelSelectInput extends InputBase {
 
     onClickOption(obj) {
         this.selectObject(obj);
+    }
+
+    onClickCreate() {
+        this.createObject();
     }
 
     onFocus(ev) {
@@ -138,6 +158,12 @@ export default class RelSelectInput extends InputBase {
         });
     }
 
+    createObject() {
+        if (this.props.onCreate) {
+            this.props.onCreate(this.state.inputValue);
+        }
+    }
+
     selectObject(obj) {
         if (this.props.onValueChange) {
             const name = this.props.name;
@@ -151,7 +177,8 @@ export default class RelSelectInput extends InputBase {
 RelSelectInput.propTypes = {
     objects: React.PropTypes.array.isRequired,
     valueField: React.PropTypes.string,
-    labelField: React.PropTypes.string
+    labelField: React.PropTypes.string,
+    onCreate: React.PropTypes.func
 };
 
 RelSelectInput.defaultProps = {
