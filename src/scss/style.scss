@@ -10,6 +10,7 @@
 @import "locations/_base";
 @import "campaignplayer/_base";
 @import "actionlocations/_base";
+@import "peoplelist/_base";
 
 @media screen and (min-width: 720px) {
     @import "_medium";
@@ -21,4 +22,5 @@
     @import "actioncal/_medium";
     @import "forms/_medium";
     @import "actionlocations/_medium";
+    @import "peoplelist/_medium";
 }

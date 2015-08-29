@@ -1,6 +1,7 @@
 import React from 'react/addons';
 
 import PaneBase from '../../panes/PaneBase';
+import PeopleList from '../../misc/peoplelist/PeopleList';
 
 
 export default class PeopleListPane extends PaneBase {
@@ -17,28 +18,15 @@ export default class PeopleListPane extends PaneBase {
         var personStore = this.getStore('person');
         var people = personStore.getPeople();
 
-        return (
-            <div>
-                <input type="button" value="Add"
-                    onClick={ this.onAddClick.bind(this) }/>
-
-                <table>
-                    {people.map(function(p, index) {
-                        return (
-                            <tr key={ p.id}
-                                onClick={ this.onPersonClick.bind(this, p) }>
-                                <td>{ p.first_name }</td>
-                                <td>{ p.last_name }</td>
-                                <td>{ p.email }</td>
-                            </tr>
-                        );
-                    }, this)}
-                </table>
-            </div>
-        );
+        return [
+            <input type="button" value="Add"
+                onClick={ this.onAddClick.bind(this) }/>,
+            <PeopleList people={ people }
+                onSelect={ this.onSelect.bind(this) }/>
+        ];
     }
 
-    onPersonClick(person) {
+    onSelect(person) {
         this.gotoSubPane('person', person.id);
     }
 
