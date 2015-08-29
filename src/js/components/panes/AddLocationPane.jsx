@@ -39,7 +39,7 @@ export default class AddLocationPane extends PaneBase {
 
     onSubmit(ev) {
         ev.preventDefault();
-        var values = this.refs.form.getChangedValues();
+        var values = this.refs.form.getValues();
         var pendingLatLng = this.getStore('location').getPendingLocation();
         if (pendingLatLng) {
             values.lat = pendingLatLng.lat;
