@@ -25,11 +25,11 @@
                 margin-left: -1.5em;
             }
 
-            &:hover {
-                font-weight: bold;
+            &:hover, &.focused {
+                background-color: #eee;
 
                 &::before {
-                    background-color: #eee;
+                    background-color: #ddd;
                 }
             }
 

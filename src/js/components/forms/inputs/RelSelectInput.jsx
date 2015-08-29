@@ -9,7 +9,8 @@ export default class RelSelectInput extends InputBase {
         super(props);
 
         this.state = {
-            focused: false,
+            inputFocused: false,
+            focusedIndex: undefined,
             inputValue: undefined
         };
     }
@@ -17,6 +18,7 @@ export default class RelSelectInput extends InputBase {
     componentWillReceiveProps(newProps) {
         if ('value' in newProps) {
             this.setState({
+                focusedIndex: undefined,
                 inputValue: undefined
             });
         }
@@ -30,34 +32,32 @@ export default class RelSelectInput extends InputBase {
         const selected = (value && objects)?
             objects.find(o => o[valueField] == value) : null;
 
-        // Filter objects based on input value, unless it's undefined or
-        // an empty string in which case all objects should be displayed.
         var inputValue = this.state.inputValue;
-        var filteredObjects = objects.filter(o =>
-            (!inputValue || o[labelField].toLowerCase()
-                .indexOf(inputValue.toLowerCase()) >= 0));
-
         if (inputValue === undefined) {
             inputValue = (selected? selected[labelField] : '');
         }
 
         const classes = cx({
             'relselectinput': true,
-            'focused': this.state.focused
+            'focused': this.state.inputFocused
         });
+
+        const filteredObjects = this.getFilteredObjects();
 
         return (
             <div className={ classes }>
-                <input type="text" value={ inputValue }
+                <input type="text" ref="input" value={ inputValue }
                     onChange={ this.onInputChange.bind(this) }
                     onFocus={ this.onFocus.bind(this) }
+                    onKeyDown={ this.onKeyDown.bind(this) }
                     onBlur={ this.onBlur.bind(this) }/>
                 <ul>
-                {filteredObjects.map(function(obj) {
+                {filteredObjects.map(function(obj, idx) {
                     const value = obj[valueField];
                     const label = obj[labelField];
                     const classes = cx({
-                        'selected': (obj == selected)
+                        'selected': (obj == selected),
+                        'focused': (idx === this.state.focusedIndex)
                     });
 
                     return (
@@ -72,32 +72,79 @@ export default class RelSelectInput extends InputBase {
         );
     }
 
+    getFilteredObjects() {
+        // Filter objects based on input value, unless it's undefined or
+        // an empty string in which case all objects should be displayed.
+        const labelField = this.props.labelField;
+        return this.props.objects.filter(o =>
+            (!this.state.inputValue || o[labelField].toLowerCase()
+                .indexOf(this.state.inputValue.toLowerCase()) >= 0));
+    }
+
     onInputChange(ev) {
         this.setState({
+            focusedIndex: undefined,
             inputValue: ev.target.value
         });
     }
 
+    onKeyDown(ev) {
+        const focusedIndex = this.state.focusedIndex;
+        const objectCount = this.props.objects? this.props.objects.length : 0;
+
+        if (ev.keyCode == 40) {
+            // User pressed down, increment or set to zero if undefined
+            this.setState({
+                focusedIndex: Math.min(objectCount - 1,
+                    (focusedIndex === undefined)? 0 : focusedIndex + 1)
+            });
+
+            ev.preventDefault();
+        }
+        else if (ev.keyCode == 38) {
+            // User pressed up, decrement or set to last if undefined
+            this.setState({
+                focusedIndex: Math.max(0, (focusedIndex === undefined)?
+                    objectCount - 1 : focusedIndex - 1)
+            });
+
+            ev.preventDefault();
+        }
+        else if (ev.keyCode == 13 && focusedIndex < objectCount) {
+            // User pressed enter and has selected a valid index
+            const objects = this.getFilteredObjects();
+            this.selectObject(objects[focusedIndex]);
+
+            // Blur field and prevent form from being submitted
+            React.findDOMNode(this.refs.input).blur();
+            ev.preventDefault();
+        }
+    }
+
     onClickOption(obj) {
+        this.selectObject(obj);
+    }
+
+    onFocus(ev) {
+        this.setState({
+            inputValue: undefined,
+            inputFocused: true
+        });
+    }
+
+    onBlur(ev) {
+        this.setState({
+            inputFocused: false
+        });
+    }
+
+    selectObject(obj) {
         if (this.props.onValueChange) {
             const name = this.props.name;
             const value = obj[this.props.valueField];
 
             this.props.onValueChange(name, value);
         }
-    }
-
-    onFocus(ev) {
-        this.setState({
-            inputValue: undefined,
-            focused: true
-        });
-    }
-
-    onBlur(ev) {
-        this.setState({
-            focused: false
-        });
     }
 }
 
