@@ -62,7 +62,7 @@ export default class ActionDay extends React.Component {
 
     onAddClick() {
         if (this.props.onAddAction) {
-            this.props.onAddAction();
+            this.props.onAddAction(this.props.date);
         }
     }
 }
