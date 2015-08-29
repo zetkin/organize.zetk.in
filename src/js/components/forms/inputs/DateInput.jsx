@@ -5,17 +5,7 @@ import InputBase from './InputBase';
 
 export default class DateInput extends InputBase {
     renderInput() {
-        var value = this.props.value;
-
-        function pad(n) {
-            return (n<10)? '0' + n : n.toString();
-        }
-
-        if (value instanceof Date) {
-            value = value.getFullYear() + '-'
-                + pad(value.getMonth() + 1) + '-'
-                + pad(value.getDate());
-        }
+        const value = this.props.value;
 
         return (
             <input type="date" value={ value }

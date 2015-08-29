@@ -24,6 +24,7 @@
     "flummox": "^3.5.0",
     "flux": "^2.0.3",
     "merge": "^1.2.0",
+    "moment": "^2.10.6",
     "react": "~0.13.0",
     "react-dnd": "^1.1.4",
     "react-router-component": "^0.24.4",

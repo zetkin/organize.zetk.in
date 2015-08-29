@@ -1,4 +1,5 @@
 import React from 'react/addons';
+import moment from 'moment';
 
 import FluxComponent from '../FluxComponent';
 import Form from './Form';
@@ -29,10 +30,14 @@ export default class ActionForm extends FluxComponent {
         const locations = this.getStore('location').getLocations();
         const activities = this.getStore('activity').getActivities();
 
-        const date = action.start_time? new Date(action.start_time) : undefined;
-        const startTime = date? formatTime(date) : undefined;
+        const date = action.start_time?
+            moment(new Date(action.start_time)).format('YYYY-MM-DD') : undefined;
+
+        const startTime = action.start_time?
+            moment(new Date(action.start_time)).format('HH:mm') : undefined;
+
         const endTime = action.end_time?
-            formatTime(new Date(action.end_time)) : undefined;
+            moment(new Date(action.end_time)).format('HH:mm') : undefined;
 
         return (
             <Form ref="form" {...this.props }>
@@ -92,15 +97,6 @@ export default class ActionForm extends FluxComponent {
 
         return values;
     }
-}
-
-function pad(n) {
-    return (n<10)? '0' + n : n.toString();
-}
-
-function formatTime(d) {
-    return pad(d.getUTCHours()) + ':'
-        + pad(d.getUTCMinutes());
 }
 
 function updateTime(values, field, date) {

@@ -5,16 +5,7 @@ import InputBase from './InputBase';
 
 export default class TimeInput extends InputBase {
     renderInput() {
-        var value = this.props.value;
-
-        function pad(n) {
-            return (n<10)? '0' + n : n.toString();
-        }
-
-        if (value instanceof Date) {
-            value = pad(value.getUTCHours()) + ':'
-                + pad(value.getUTCMinutes());
-        }
+        const value = this.props.value;
 
         return (
             <input type="time" value={ value }
