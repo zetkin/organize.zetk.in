@@ -4,6 +4,11 @@ import ParticipantItem from './ParticipantItem';
 
 
 export default class ParticipantList extends React.Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        return (nextProps.participants
+            && nextProps.participants != this.props.participants);
+    }
+
     render() {
         const participants = this.props.participants || [];
         const action = this.props.action;

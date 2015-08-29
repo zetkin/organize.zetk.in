@@ -44,13 +44,31 @@ export default class ActionListItem extends FluxComponent {
     }
 
     componentDidMount() {
-        this.listenTo('participant', this.forceUpdate);
-
         var action = this.props.action;
 
         if (!this.props.participants) {
             this.getActions('participant').retrieveParticipants(action.id);
         }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        for (var key in nextProps.action) {
+            if (nextProps.action[key] != this.props.action[key]) {
+                return true;
+            }
+        }
+
+        for (var key in nextState) {
+            if (nextState[key] != this.state[key]) {
+                return true;
+            }
+        }
+
+        if (nextProps.participants != this.props.participants) {
+            return true;
+        }
+
+        return false;
     }
 
     render() {

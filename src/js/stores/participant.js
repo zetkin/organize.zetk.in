@@ -60,6 +60,10 @@ export default class ParticipantStore extends Store {
 
         this.moveBetweenArrays(payload.personId, oldArray, newArray);
 
+        // TODO: This is just faking immutable data
+        this.state.participants[payload.oldActionId] = oldArray.concat();
+        this.state.participants[payload.newActionId] = newArray.concat();
+
         this.setState({
             participants: this.state.participants,
             moves: this.addMove({
@@ -78,6 +82,10 @@ export default class ParticipantStore extends Store {
             var postMoveArray = this.state.participants[move.to];
 
             this.moveBetweenArrays(move.person, postMoveArray, originalArray);
+
+            // TODO: This is just faking immutable data
+            this.state.participants[move.from] = originalArray.concat();
+            this.state.participants[move.to] = postMoveArray.concat();
         }
 
         this.setState({
