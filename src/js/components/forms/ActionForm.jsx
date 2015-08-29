@@ -44,6 +44,7 @@ export default class ActionForm extends FluxComponent {
             <Form ref="form" {...this.props }>
                 <RelSelectInput label="Campaign" name="campaign_id"
                     objects={ campaigns }
+                    onCreate={ this.props.onCreateCampaign }
                     initialValue={ action.campaign.id }/>
                 <DateInput label="Date" name="date"
                     initialValue={ date }/>
@@ -106,6 +107,7 @@ export default class ActionForm extends FluxComponent {
 }
 
 ActionForm.propTypes = {
+    onCreateCampaign: React.PropTypes.func,
     onCreateLocation: React.PropTypes.func,
     onCreateActivity: React.PropTypes.func
 };
