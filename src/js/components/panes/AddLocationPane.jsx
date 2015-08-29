@@ -23,14 +23,18 @@ export default class AddLocationPane extends PaneBase {
     }
 
     renderPaneContent(data) {
+        const initialData = {
+            title: this.getParam(0)
+        };
+
         return [ 
             <h3>1. Move highlighted marker to the position of location</h3>,
             <h3>2. Enter information about the location and press save</h3>,
-            <LocationForm key="form" ref="form" loc={ data.loc }
+            <LocationForm key="form" ref="form" loc={ initialData }
                 onSubmit={ this.onSubmit.bind(this) }/>,
             <input key="delete" type="button" value="Cancel"
                     onClick={ this.onDeleteClick.bind(this) }/>
-        ]
+        ];
     }
 
     onSubmit(ev) {
