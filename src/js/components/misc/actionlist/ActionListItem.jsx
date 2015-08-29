@@ -97,21 +97,27 @@ export default class ActionListItem extends FluxComponent {
     }
 
     render() {
-        var action = this.props.action;
-        var actionDate = new Date(action.start_time);
+        const action = this.props.action;
+        const contact = action.contact;
+        const participants = this.props.participants || [];
+        const actionDate = new Date(action.start_time);
 
-        var classNames = cx({
+        const classNames = cx({
             'actionlist-item': true,
             'expanded': this.state.expanded
         });
 
+        // Exclude contact person (if one exists) from participants
+        const filteredParticipants = participants.filter(p =>
+            !contact || p.id != contact.id);
+
         const participantList = this.props.connectParticipantDropTarget(
             <ParticipantList action={ action }
-                participants={ this.props.participants }/>
+                participants={ filteredParticipants }/>
         );
 
-        const contact = this.props.connectContactDropTarget(
-            <ContactSlot contact={ action.contact }/>
+        const contactSlot = this.props.connectContactDropTarget(
+            <ContactSlot contact={ contact }/>
         );
 
         return (
@@ -128,7 +134,7 @@ export default class ActionListItem extends FluxComponent {
                     { action.location.title }</span>
 
                 { participantList }
-                { contact }
+                { contactSlot }
 
                 <ul className="operations">
                     <li className="operation">
@@ -185,5 +191,6 @@ export default class ActionListItem extends FluxComponent {
 
 ActionListItem.propTypes = {
     action: React.PropTypes.object.isRequired,
+    participants: React.PropTypes.array,
     onOperation: React.PropTypes.func
 };
