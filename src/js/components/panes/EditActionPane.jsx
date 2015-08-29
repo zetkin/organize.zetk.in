@@ -26,6 +26,8 @@ export default class EditActionPane extends PaneBase {
         if (data.action) {
             return (
                 <ActionForm ref="form" action={ data.action }
+                    onCreateLocation={ this.onCreateLocation.bind(this) }
+                    onCreateActivity={ this.onCreateActivity.bind(this) }
                     onSubmit={ this.onSubmit.bind(this) }/>
             );
         }
@@ -42,5 +44,13 @@ export default class EditActionPane extends PaneBase {
         var actionId = this.props.params[0];
 
         this.getActions('action').updateAction(actionId, values);
+    }
+
+    onCreateLocation(title) {
+        this.gotoSubPane('addlocation', title);
+    }
+
+    onCreateActivity(title) {
+        this.gotoSubPane('addactivity', title);
     }
 }
