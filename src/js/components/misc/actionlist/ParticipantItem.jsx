@@ -20,10 +20,11 @@ const participantSource = {
         const newAction = dropResult.newAction;
         const targetType = dropResult.targetType;
 
-        if (targetType == 'participant' && dropResult.onMoveParticipant) {
+        if (oldAction.id != newAction.id && dropResult.onMoveParticipant) {
             dropResult.onMoveParticipant(person, oldAction);
         }
-        else if (targetType == 'contact' && dropResult.onSetContact) {
+
+        if (targetType == 'contact' && dropResult.onSetContact) {
             dropResult.onSetContact(person, oldAction);
         }
     }

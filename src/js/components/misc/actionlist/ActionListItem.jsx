@@ -42,6 +42,7 @@ const contactTarget = {
     drop(props) {
         return {
             targetType: 'contact',
+            onMoveParticipant: props.onMoveParticipant,
             onSetContact: props.onSetContact,
             newAction: props.action
         }
@@ -117,7 +118,7 @@ export default class ActionListItem extends FluxComponent {
         );
 
         const contactSlot = this.props.connectContactDropTarget(
-            <ContactSlot contact={ contact }/>
+            <ContactSlot contact={ contact } action={ action }/>
         );
 
         return (
