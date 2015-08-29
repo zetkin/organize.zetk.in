@@ -1,24 +1,78 @@
 import React from 'react/addons';
+import cx from 'classnames';
 
 import InputBase from './InputBase';
 
 
 export default class RelSelectInput extends InputBase {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            focused: false
+        };
+    }
+
     renderInput() {
+        const value = this.props.value;
+        const objects = this.props.objects;
+        const valueField = this.props.valueField;
+        const labelField = this.props.labelField;
+        const selected = (value && objects)?
+            objects.find(o => o[valueField] == value) : null;
+        const selectedLabel = selected? selected[labelField] : '';
+
+        const classes = cx({
+            'relselectinput': true,
+            'focused': this.state.focused
+        });
+
         return (
-            <select value={ this.props.value }
-                onChange={ this.onChange.bind(this) }>
+            <div className={ classes }>
+                <input type="text" value={ selectedLabel }
+                    onFocus={ this.onFocus.bind(this) }
+                    onBlur={ this.onBlur.bind(this) }/>
+                <ul>
+                {objects.map(function(obj) {
+                    const value = obj[valueField];
+                    const label = obj[labelField];
+                    const classes = cx({
+                        'selected': (obj == selected)
+                    });
 
-                <option key="0" value="0">---</option>
-                {this.props.objects.map(function(obj) {
-                    var value = obj[this.props.valueField];
-                    var label = obj[this.props.labelField];
-
-                    return <option key={ value } value={ value }>
-                        { label }</option>;
+                    return (
+                        <li key={ value } className={ classes }
+                            onMouseDown={ this.onClickOption.bind(this, obj) }>
+                            { label }
+                        </li>
+                    );
                 }, this)}
-            </select>
+                </ul>
+            </div>
         );
+    }
+
+    onClickOption(obj) {
+        console.log('clicked', obj);
+        if (this.props.onValueChange) {
+            const name = this.props.name;
+            const value = obj[this.props.valueField];
+
+            this.props.onValueChange(name, value);
+        }
+    }
+
+    onFocus(ev) {
+        this.setState({
+            focused: true
+        });
+    }
+
+    onBlur(ev) {
+        console.log('blurred');
+        this.setState({
+            focused: false
+        });
     }
 }
 

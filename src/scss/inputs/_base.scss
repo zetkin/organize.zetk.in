@@ -1,0 +1,57 @@
+.relselectinput {
+    position: relative;
+
+    ul {
+        position: absolute;
+        top: 2em;
+        left: 0;
+        right: 0;
+        z-index: 2000;
+
+        display: none;
+        background-color: white;
+        box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
+
+        li {
+            cursor: pointer;
+            padding: 0.5em 2em;
+            
+            &::before {
+                content: "";
+                display: block;
+                float: left;
+                width: 1em;
+                height: 1em;
+                margin-left: -1.5em;
+            }
+
+            &:hover {
+                font-weight: bold;
+
+                &::before {
+                    background-color: #eee;
+                }
+            }
+
+            &.selected {
+                font-weight: bold;
+
+                &::before {
+                    background-color: red;
+                }
+            }
+        }
+    }
+
+    &.focused {
+        input {
+            // Input over list to obscure top shadow
+            position: relative;
+            z-index: 2001;
+        }
+
+        ul {
+            display: block;
+        }
+    }
+}
