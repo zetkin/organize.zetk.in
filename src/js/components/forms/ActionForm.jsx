@@ -3,6 +3,7 @@ import moment from 'moment';
 
 import FluxComponent from '../FluxComponent';
 import Form from './Form';
+import IntInput from './inputs/IntInput';
 import DateInput from './inputs/DateInput';
 import TextArea from './inputs/TextArea';
 import TimeInput from './inputs/TimeInput';
@@ -50,6 +51,9 @@ export default class ActionForm extends FluxComponent {
                     initialValue={ startTime }/>
                 <TimeInput label="End" name="end_time"
                     initialValue={ endTime }/>
+                <IntInput label="Minimum participants"
+                    name="num_participants_required"
+                    initialValue={ action.num_participants_required || 2 }/>
                 <RelSelectInput label="Location" name="location_id"
                     objects={ locations }
                     initialValue={ action.location.id }/>
