@@ -4,10 +4,7 @@ function updateOrAdd(dataSet, id, newData) {
 
     for (i = 0; i < dataSet.length; i++) {
         if (dataSet[i].id == id) {
-            var attr;
-            for (attr in newData) {
-                dataSet[i][attr] = newData[attr];
-            }
+            dataSet[i] = newData;
             updated = true;
             break;
         }
