@@ -30,7 +30,7 @@ export default class ParticipantActions extends Actions {
         var apiCalls = [];
 
         // TODO: Make some server-side batch executer for this?
-        for (i in moves) {
+        for (i = 0; i < moves.length; i++) {
             var move = moves[i];
             apiCalls.push(Z.resource('orgs', orgId, 'actions',
                 move.from, 'participants', move.person).del());

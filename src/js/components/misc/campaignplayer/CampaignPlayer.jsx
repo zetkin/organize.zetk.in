@@ -68,8 +68,6 @@ export default class CampaignPlayer extends React.Component {
     }
 
     render() {
-        var d = new Date(this.state.time);
-
         const actions = this.props.actions;
         const startTime = actions.length?
             new Date(actions[0].start_time).getTime() : 0;
@@ -78,8 +76,6 @@ export default class CampaignPlayer extends React.Component {
 
         return (
             <div className="campaignplayer">
-                <h1>{ d.toUTCString() }</h1>
-                <div className="heatmap" ref="mapContainer"/>
                 <Transport time={ this.state.time } playing={ this.state.playing }
                     startTime={ startTime } endTime={ endTime }
                     onPlay={ this.onPlay.bind(this) }
@@ -87,6 +83,7 @@ export default class CampaignPlayer extends React.Component {
                     onScrubBegin={ this.onScrubBegin.bind(this) }
                     onScrubEnd={ this.onScrubEnd.bind(this) }
                     onScrub={ this.onScrub.bind(this) }/>
+                <div className="heatmap" ref="mapContainer"/>
             </div>
         );
     }
@@ -139,6 +136,7 @@ export default class CampaignPlayer extends React.Component {
 
         var i ;
         var locationWeights = {};
+        var filteredActions = [];
 
         for (i = 0; i < actions.length; i++) {
             var action = actions[i];
@@ -148,6 +146,7 @@ export default class CampaignPlayer extends React.Component {
 
             if (time > actionStartTime) {
                 if (time < (actionEndTime + cooldown)) {
+                    filteredActions.push(action);
                     locationWeights[loc.id] = 1.0 - (time - actionEndTime) / cooldown;
                 }
                 else {
@@ -169,6 +168,13 @@ export default class CampaignPlayer extends React.Component {
         }
 
         this.heatmap.setData(points);
+
+        if (this.props.onActionsChange
+            && !filteredActions.equals(this.lastActions)) {
+
+            this.props.onActionsChange(filteredActions);
+            this.lastActions = filteredActions;
+        }
     }
 
     play(startTime) {

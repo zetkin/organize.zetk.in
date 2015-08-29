@@ -23,13 +23,36 @@ export default class ActionLocationItem extends React.Component {
         };
 
         return (
-            <li className="actionlocationitem">
+            <li className="actionlocationitem"
+                onMouseOver={ this.onMouseOver.bind(this) }
+                onMouseOut={ this.props.onMouseOut }>
                 <span className="title">{ loc.title }</span>
                 <span style={ countStyle } className="actioncount">
-                    <span>{ totalCount }</span></span>
-                <DayCycleGraph phases={ counts }/>
+                    <span>{ totalCount }</span>
+                </span>
+                <DayCycleGraph phases={ counts }
+                    onMouseOver={ this.onDayCycleMouseOver.bind(this) }
+                    onMouseOut={ this.onDayCycleMouseOut.bind(this) }/>
             </li>
         );
+    }
+
+    onMouseOver(ev) {
+        if (this.props.onMouseOver) {
+            this.props.onMouseOver(this.props.location);
+        }
+    }
+
+    onDayCycleMouseOver(phase) {
+        if (this.props.onMouseOverPhase) {
+            this.props.onMouseOverPhase(this.props.location, phase);
+        }
+    }
+
+    onDayCycleMouseOut() {
+        if (this.props.onMouseOut) {
+            this.props.onMouseOut();
+        }
     }
 }
 
@@ -41,5 +64,8 @@ ActionLocationItem.propTypes = {
     numNightActions: React.PropTypes.number.isRequired,
     location: React.PropTypes.shape({
         title: React.PropTypes.string.isRequired
-    }).isRequired
+    }).isRequired,
+    onMouseOver: React.PropTypes.func,
+    onMouseOverPhase: React.PropTypes.func,
+    onMouseOut: React.PropTypes.func
 };

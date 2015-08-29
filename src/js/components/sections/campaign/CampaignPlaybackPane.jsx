@@ -1,11 +1,12 @@
 import React from 'react/addons';
 
-import PaneBase from '../../panes/PaneBase';
+import PaneWithCalendar from './PaneWithCalendar';
 import CampaignSelect from '../../misc/CampaignSelect';
 import CampaignPlayer from '../../misc/campaignplayer/CampaignPlayer';
+import ActionMiniCalendar from '../../misc/actioncal/ActionMiniCalendar';
 
 
-export default class CampaignPlaybackPane extends PaneBase {
+export default class CampaignPlaybackPane extends PaneWithCalendar {
     getPaneTitle() {
         return 'Campaign playback';
     }
@@ -16,6 +17,16 @@ export default class CampaignPlaybackPane extends PaneBase {
         this.listenTo('location', this.forceUpdate);
         this.getActions('action').retrieveAllActions();
         this.getActions('location').retrieveLocations();
+    }
+
+    renderPaneTop() {
+        const actionStore = this.getStore('action');
+        const actions = actionStore.getActions();
+
+        return <ActionMiniCalendar actions={ actions }
+                    onAddAction={ this.onCalendarAddAction.bind(this) }
+                    onMoveAction={ this.onCalendarMoveAction.bind(this) }
+                    onSelectAction={ this.onSelectAction.bind(this) }/>
     }
 
     renderPaneContent() {
@@ -30,7 +41,16 @@ export default class CampaignPlaybackPane extends PaneBase {
             <CampaignSelect key="select"/>,
             <CampaignPlayer key="player"
                 actions={ actions } locations={ locations }
-                centerLat={ center.lat } centerLng={ center.lng }/>
+                centerLat={ center.lat } centerLng={ center.lng }
+                onActionsChange={ this.onActionsChange.bind(this) }/>
         ];
+    }
+
+    onActionsChange(actions) {
+        const actionActions = this.getActions('action');
+        const actionIds = actions.map(a => a.id);
+
+        actionActions.clearActionHighlights();
+        actionActions.highlightActions(actionIds);
     }
 }

@@ -16,7 +16,7 @@ export default class Dashboard extends FluxComponent {
         var favoriteElements = [];
         var shortcutElements = [];
 
-        for (i in shortcuts) {
+        for (i = 0; i < shortcuts.length; i++) {
             var shortcut = shortcuts[i];
 
             if (i < 4) {
@@ -31,7 +31,7 @@ export default class Dashboard extends FluxComponent {
             }
         }
 
-        for (i in widgets) {
+        for (i = 0; i < widgets.length; i++) {
             var WidgetClass = null;
             var widgetData = widgets[i];
 

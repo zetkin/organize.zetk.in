@@ -23,4 +23,23 @@ export default class ActionActions extends Actions {
         var orgId = this.flux.getStore('org').getActiveId();
         return Z.resource('orgs', orgId, 'actions', id).patch(data);
     }
+
+    clearActionHighlights() {
+        return true;
+    }
+
+    highlightActionPhase(locId, phase) {
+        return {
+            locId,
+            phase
+        };
+    }
+
+    highlightActionLocation(locId) {
+        return locId;
+    }
+
+    highlightActions(actionIds) {
+        return actionIds;
+    }
 }

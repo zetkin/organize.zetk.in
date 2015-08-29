@@ -67,7 +67,7 @@ export default class LocationMap extends React.Component {
             pendingId = this.props.pendingLocation.id;
         }
 
-        for (i in locations) {
+        for (i = 0; i < locations.length; i++) {
             if (pendingId !== locations[i].id) {
                 this.createMarker(locations[i], false, bounds);
             }
@@ -88,7 +88,7 @@ export default class LocationMap extends React.Component {
         var i;
         var bounds = new google.maps.LatLngBounds();
         // create Bounds and  loop through locations and 
-        for (i in locations) {
+        for (i = 0; i < locations.length; i++) {
             var latLng = new google.maps.LatLng(locations[i].lat, locations[i].lng);
             bounds.extend(latLng);
         }

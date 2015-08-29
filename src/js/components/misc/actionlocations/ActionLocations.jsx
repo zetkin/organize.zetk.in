@@ -28,6 +28,7 @@ export default class ActionLocations extends React.Component {
             var startTime = new Date(action.start_time);
             var hour = startTime.getUTCHours();
 
+            // TODO: Don't duplicate these constants in ActionStore
             if (hour <= 4 || hour > 22) {
                 locations[loc.id].numNightActions++;
             }
@@ -60,8 +61,11 @@ export default class ActionLocations extends React.Component {
                             numNoonActions={ counts.numNoonActions }
                             numAfternoonActions={ counts.numAfternoonActions }
                             numEveningActions={ counts.numEveningActions }
-                            numNightActions={ counts.numNightActions }/>
-                })}
+                            numNightActions={ counts.numNightActions }
+                            onMouseOver={ this.props.onMouseOver }
+                            onMouseOut={ this.props.onMouseOut }
+                            onMouseOverPhase={ this.props.onMouseOverPhase }/>
+                }, this)}
             </ul>
         );
     }
