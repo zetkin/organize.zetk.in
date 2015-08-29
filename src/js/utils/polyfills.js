@@ -11,6 +11,9 @@ Array.prototype.equals = function(other) {
     if (!other)
         return false;
 
+    if (other == this)
+        return true;
+
     if (this.length != other.length)
         return false;
 
