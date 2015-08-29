@@ -44,11 +44,23 @@ export default class Form extends React.Component {
     }
 
     getValues() {
-        return this.state.values;
+        var values = {};
+
+        for (var key in this.state.values) {
+            values[key] = this.state.values[key];
+        }
+
+        return values;
     }
 
     getChangedValues() {
-        return this.state.changedValues;
+        var values = {};
+
+        for (var key in this.state.changedValues) {
+            values[key] = this.state.changedValues[key];
+        }
+
+        return values;
     }
 
     onValueChange(name, value) {
