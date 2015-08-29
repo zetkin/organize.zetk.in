@@ -4,6 +4,7 @@ import { DropTarget } from 'react-dnd';
 
 import FluxComponent from '../../FluxComponent';
 import ParticipantList from './ParticipantList';
+import ContactSlot from './ContactSlot';
 
 
 const actionTarget = {
@@ -18,22 +19,46 @@ const actionTarget = {
 
     drop(props) {
         return {
+            targetType: 'participant',
             onMoveParticipant: props.onMoveParticipant,
             newAction: props.action
         };
     }
 };
 
-function collect(connect, monitor) {
+function collectParticipant(connect, monitor) {
     return {
-        connectDropTarget: connect.dropTarget(),
-        isOver: monitor.isOver(),
-        canDrop: monitor.canDrop()
+        connectParticipantDropTarget: connect.dropTarget(),
+        isParticipantOver: monitor.isOver(),
+        canDropParticipant: monitor.canDrop()
+    };
+}
+
+const contactTarget = {
+    canDrop(props, monitor) {
+        return true;
+    },
+
+    drop(props) {
+        return {
+            targetType: 'contact',
+            onSetContact: props.onSetContact,
+            newAction: props.action
+        }
+    }
+};
+
+function collectContact(connect, monitor) {
+    return {
+        connectContactDropTarget: connect.dropTarget(),
+        isContactOver: monitor.isOver(),
+        canDropContact: monitor.canDrop()
     };
 }
 
 
-@DropTarget('person', actionTarget, collect)
+@DropTarget('person', actionTarget, collectParticipant)
+@DropTarget('person', contactTarget, collectContact)
 export default class ActionListItem extends FluxComponent {
     constructor(props) {
         super(props);
@@ -80,9 +105,13 @@ export default class ActionListItem extends FluxComponent {
             'expanded': this.state.expanded
         });
 
-        const participantList = this.props.connectDropTarget(
+        const participantList = this.props.connectParticipantDropTarget(
             <ParticipantList action={ action }
                 participants={ this.props.participants }/>
+        );
+
+        const contact = this.props.connectContactDropTarget(
+            <ContactSlot contact={ action.contact }/>
         );
 
         return (
@@ -99,6 +128,7 @@ export default class ActionListItem extends FluxComponent {
                     { action.location.title }</span>
 
                 { participantList }
+                { contact }
 
                 <ul className="operations">
                     <li className="operation">

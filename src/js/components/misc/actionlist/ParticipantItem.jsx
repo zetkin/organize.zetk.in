@@ -18,9 +18,13 @@ const participantSource = {
         const person = monitor.getItem();
         const oldAction = props.action;
         const newAction = dropResult.newAction;
+        const targetType = dropResult.targetType;
 
-        if (dropResult.onMoveParticipant) {
+        if (targetType == 'participant' && dropResult.onMoveParticipant) {
             dropResult.onMoveParticipant(person, oldAction);
+        }
+        else if (targetType == 'contact' && dropResult.onSetContact) {
+            dropResult.onSetContact(person, oldAction);
         }
     }
 }
