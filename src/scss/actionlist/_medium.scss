@@ -6,28 +6,59 @@
 .actionlist-columns {
     li:nth-child(3) {
         display: block;
-        width: 80px;
-        right: 240px;
+        width: 8em;
+        right: 24em;
     }
 
     li:nth-child(4) {
         display: block;
-        width: 100px;
-        right: 125px;
+        width: 10em;
+        right: 12em;
     }
 }
 
 .actionlist-item {
+    overflow: hidden;
+
+    div.contact {
+        float: right;
+        position: relative;
+        background-color: #eee;
+        width: 5em;
+        height: 5em;
+        margin-right: 4.5em;
+
+        &::before {
+            content: "?";
+            display: block;
+            margin-top: 0.5em;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ccc;
+        }
+    }
+
+    div.contact figure {
+        position: absolute;
+        top: 0;
+        cursor: move;
+    }
+
     ul.participants {
         display: block;
-        position: relative;
+        min-height: 5em;
         float: right;
-        width: 220px;
-        padding-left: 40px;
-        overflow: hidden;
+        width: 22em;
 
-        max-height: 50px;
-        transition: max-height 0.3s;
+        li {
+            float: left;
+            width: 50px;
+            height: 50px;
+            margin: 0 2px 3px 3px;
+        }
 
         &::after {
             content: "";
@@ -36,54 +67,34 @@
         }
     }
 
-    .participants {
-        min-height: 50px;
-    }
-
-    &.expanded ul.participants {
-        max-height: 400px;
-    }
-
-    /* Hide all but first three participants */
-    li.participant:nth-child(1), li.participant:nth-child(2),
-    li.participant:nth-child(3), li.participant:nth-child(3) + li.participant {
-        display: block;
+    &.dragover {
+        box-shadow: 0 0 0.2em rgba(0,0,0,0.2);
     }
 
     li.participant {
-        display: none;
-        position: relative;
-        float: left;
-        width: 50px;
-        height: 50px;
-        margin: 0 2px 3px;
         cursor: move;
-    }
 
-    &.expanded li.participant {
-        display: block;
+        &.hidden {
+            display: none;
+        }
     }
 
     li.more-participants {
-        width: 50px;
-        height: 26px;
-        padding: 13px 2px;
-        background-color: #ddd;
+        padding: 15px 2px;
+        background-color: #eee;
         text-align: center;
-        display: block;
-        float: left;
-        font-size: 22px;
+        font-size: 2em;
         font-weight: bold;
         color: #ccc;
-        cursor: default;
+        cursor: pointer;
+
+        &::before {
+            content: "+";
+        }
     }
 
     li.more-participants:hover {
         color: #aaa;
-    }
-
-    &.expanded li.more-participants {
-        display: none;
     }
 
     li.participant figure, div.contact figure {
@@ -93,37 +104,5 @@
     li.participant img, div.contact img {
         width: 50px;
         height: auto;
-    }
-
-    .participant figcaption {
-        display: none;
-        position: absolute;
-        right: -5px;
-        bottom: -25px;
-        padding: 4px 8px;
-        white-space: nowrap;
-
-        color: white;
-        z-index: 1000;
-        background-color: #333;
-    }
-
-    .participant figcaption:after {
-        bottom: 100%;
-        right: 27px;
-        border: solid transparent;
-        content: " ";
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
-        border-color: rgba(51, 51, 51, 0);
-        border-bottom-color: #333;
-        border-width: 5px;
-        margin-left: -5px;
-    }
-
-    .participant:hover figcaption {
-        display: block;
     }
 }

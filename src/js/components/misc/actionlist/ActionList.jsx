@@ -21,8 +21,9 @@ export default class ActionList extends FluxComponent {
                 </ul>
                 <ul className="actionlist-items">
                     {actions.map(function(action) {
-                        var onOperation = this.onOperation.bind(this, action);
-                        var onMoveParticipant =
+                        const onOperation = this.onOperation.bind(this, action);
+                        const onSetContact = this.onSetContact.bind(this, action);
+                        const onMoveParticipant =
                             this.onMoveParticipant.bind(this, action);
 
                         var participantStore = this.getStore('participant');
@@ -30,6 +31,7 @@ export default class ActionList extends FluxComponent {
 
                         return (
                             <ActionListItem key={ action.id }
+                                onSetContact={ onSetContact }
                                 onMoveParticipant={ onMoveParticipant }
                                 onOperation={ onOperation }
                                 participants={ participants }
@@ -44,6 +46,16 @@ export default class ActionList extends FluxComponent {
     onOperation(action, operation) {
         if (this.props.onActionOperation) {
             this.props.onActionOperation(action, operation);
+        }
+    }
+
+    onSetContact(action, person, oldAction) {
+        this.getActions('action').updateAction(action.id, {
+            contact_id: person.id
+        });
+
+        if (action.id != oldAction.id) {
+            // TODO: Remove from old action
         }
     }
 

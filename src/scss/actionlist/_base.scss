@@ -45,14 +45,12 @@
     .actionlist-item {
         list-style-type: none;
         position: relative;
-        background-color: #eee;
-        margin: 5px 0;
-        padding: 5px;
-        min-height: 50px;
-        border-right-width: 4px;
-        border-right-style: solid;
+        background-color: white;
+        margin: 0.5em 0;
+        padding: 0.5em;
+        box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
 
-        transition: min-height 0.1s;
+        transition: height 0.1s;
 
         &:after {
             content: " ";
@@ -61,8 +59,6 @@
         }
 
         &.expanded {
-            min-height: 90px;
-
             .operations {
                 opacity: 1;
                 visibility: visible;

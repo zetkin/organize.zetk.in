@@ -1,12 +1,12 @@
 import React from 'react/addons';
 import { DragSource } from 'react-dnd';
-import cx from 'classnames';
 
 import Avatar from '../Avatar';
 
-const participantSource = {
+
+const contactSource = {
     beginDrag(props) {
-        return props.person;
+        return props.contact;
     },
 
     endDrag(props, monitor, component) {
@@ -21,11 +21,10 @@ const participantSource = {
         const newAction = dropResult.newAction;
         const targetType = dropResult.targetType;
 
-        if (oldAction.id != newAction.id && dropResult.onMoveParticipant) {
+        if (targetType == 'participant' && dropResult.onMoveParticipant) {
             dropResult.onMoveParticipant(person, oldAction);
         }
-
-        if (targetType == 'contact' && dropResult.onSetContact) {
+        else if (targetType == 'contact' && dropResult.onSetContact) {
             dropResult.onSetContact(person, oldAction);
         }
     }
@@ -38,28 +37,32 @@ function collect(connect, monitor) {
     }
 }
 
-@DragSource('person', participantSource, collect)
-export default class ParticipantItem extends React.Component {
+@DragSource('person', contactSource, collect)
+export default class ContactSlot extends React.Component {
     render() {
-        const visible = this.props.visible;
-        const person = this.props.person;
-        const name = person.first_name + ' ' + person.last_name;
-        const classes = cx({
-            'participant': true,
-            'hidden': !visible
-        });
+        const contact = this.props.contact;
 
-        return this.props.connectDragSource(
-            <li className={ classes }>
+        var figure = null;
+        if (contact) {
+            figure = this.props.connectDragSource(
                 <figure>
-                    <Avatar person={ person }/>
+                    <Avatar person={ contact }/>
                 </figure>
-            </li>
+            );
+        }
+
+
+        return (
+            <div className="contact">
+                { figure }
+            </div>
         );
     }
 }
 
-ParticipantItem.propTypes = {
-    visible: React.PropTypes.bool,
-    person: React.PropTypes.object.isRequired
-}
+ContactSlot.propTypes = {
+    contact: React.PropTypes.shape({
+        id: React.PropTypes.number.isRequired,
+        name: React.PropTypes.string.isRequired
+    })
+};
