@@ -83,7 +83,7 @@ export default class SectionBase extends FluxComponent {
                     paneParams = segmentData[1].split(',');
                 }
 
-                panePath = basePath + '/' + subPathSegments.slice(0, i).join('/');
+                panePath = basePath + '/' + subPathSegments.slice(0, i+1).join('/');
 
                 Pane = PaneUtils.resolve(paneName);
                 panes.push(

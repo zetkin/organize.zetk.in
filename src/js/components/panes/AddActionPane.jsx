@@ -31,6 +31,9 @@ export default class AddActionPane extends PaneBase {
 
         return (
             <ActionForm ref="actionForm" action={ initialData }
+                onCreateCampaign={ this.onCreateCampaign.bind(this) }
+                onCreateLocation={ this.onCreateLocation.bind(this) }
+                onCreateActivity={ this.onCreateActivity.bind(this) }
                 onSubmit={ this.onSubmit.bind(this) }/>
         );
     }
@@ -42,5 +45,17 @@ export default class AddActionPane extends PaneBase {
         const campaignId = values.campaign_id;
 
         this.getActions('action').createAction(campaignId, values);
+    }
+
+    onCreateCampaign(title) {
+        this.gotoSubPane('addcampaign', title);
+    }
+
+    onCreateLocation(title) {
+        this.gotoSubPane('addlocation', title);
+    }
+
+    onCreateActivity(title) {
+        this.gotoSubPane('addactivity', title);
     }
 }

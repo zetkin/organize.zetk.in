@@ -44,6 +44,7 @@ export default class ActionForm extends FluxComponent {
             <Form ref="form" {...this.props }>
                 <RelSelectInput label="Campaign" name="campaign_id"
                     objects={ campaigns }
+                    onCreate={ this.props.onCreateCampaign }
                     initialValue={ action.campaign.id }/>
                 <DateInput label="Date" name="date"
                     initialValue={ date }/>
@@ -56,9 +57,11 @@ export default class ActionForm extends FluxComponent {
                     initialValue={ action.num_participants_required || 2 }/>
                 <RelSelectInput label="Location" name="location_id"
                     objects={ locations }
+                    onCreate={ this.props.onCreateLocation }
                     initialValue={ action.location.id }/>
                 <RelSelectInput label="Activity" name="activity_id"
                     objects={ activities }
+                    onCreate={ this.props.onCreateActivity }
                     initialValue={ action.activity.id }/>
                 <TextArea label="Information" name="info_text"
                     initialValue={ action.info_text }/>
@@ -102,6 +105,12 @@ export default class ActionForm extends FluxComponent {
         return values;
     }
 }
+
+ActionForm.propTypes = {
+    onCreateCampaign: React.PropTypes.func,
+    onCreateLocation: React.PropTypes.func,
+    onCreateActivity: React.PropTypes.func
+};
 
 function updateTime(values, field, date) {
     const val = values[field];
