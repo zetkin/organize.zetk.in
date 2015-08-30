@@ -167,11 +167,28 @@
             background-color: white;
 
             li {
-                padding: 1em;
+                position: relative;
                 list-style-type: none;
+                height: 4em;
+                padding: 0.5em;
+                cursor: pointer;
 
-                &.focused {
+                &.focused, &:hover {
                     background-color: #eee;
+                }
+
+                .title {
+                    position: absolute;
+                    top: 10px;
+                    left: 50px;
+                    right: 20px;
+                    font-weight: bold;
+                    font-size: 1.5em;
+                }
+
+                img {
+                    max-height: 3em;
+                    width: auto;
                 }
             }
         }

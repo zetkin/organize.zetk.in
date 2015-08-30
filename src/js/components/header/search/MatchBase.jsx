@@ -12,7 +12,7 @@ export default class MatchBase extends React.Component {
             <li className={ classes }
                 onClick={ this.props.onSelect }>
                 { this.getImage() }
-                { this.getTitle() }
+                <span className="title">{ this.getTitle() }</span>
             </li>
         );
     }
