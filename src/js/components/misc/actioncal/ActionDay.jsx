@@ -36,7 +36,7 @@ export default class ActionDay extends React.Component {
 
         return this.props.connectDropTarget(
             <div className="actionday">
-                <h3>
+                <h3 onClick={ this.onDayClick.bind(this) }>
                     <span className="date">{ dateLabel }</span>
                     <span className="weekday">{ dayLabel }</span>
                 </h3>
@@ -52,6 +52,12 @@ export default class ActionDay extends React.Component {
                 </ul>
             </div>
         );
+    }
+
+    onDayClick() {
+        if (this.props.onSelect) {
+            this.props.onSelect(this.props.date);
+        }
     }
 
     onActionClick(action) {

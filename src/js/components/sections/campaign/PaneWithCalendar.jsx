@@ -36,6 +36,11 @@ export default class PaneWithCalendar extends PaneBase {
         this.getActions('action').updateAction(action.id, values);
     }
 
+    onSelectDay(date) {
+        const dateStr = moment(date).format('YYYY-MM-DD');
+        this.gotoSubPane('actionday', dateStr);
+    }
+
     onSelectAction(action) {
         this.gotoSubPane('editaction', action.id);
     }
