@@ -14,10 +14,10 @@ export default class CampaignSection extends SectionBase {
                 startPane: CampaignOverviewPane },
             { path: 'actions', title: 'All actions',
                 startPane: AllActionsPane },
-            { path: 'playback', title: 'Playback',
-                startPane: CampaignPlaybackPane },
             { path: 'locations', title: 'Locations',
-                startPane: CampaignLocationsPane }
+                startPane: CampaignLocationsPane },
+            { path: 'playback', title: 'Playback',
+                startPane: CampaignPlaybackPane }
         ];
     }
 }
