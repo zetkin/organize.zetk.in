@@ -1,8 +1,6 @@
 import React from 'react/addons';
 import cx from 'classnames';
 
-import { Link } from 'react-router-component';
-
 
 export default class MatchBase extends React.Component {
     render() {
@@ -11,11 +9,10 @@ export default class MatchBase extends React.Component {
         });
 
         return (
-            <li className={ classes }>
-                <Link href={ this.getLinkTarget() }>
-                    { this.getImage() }
-                    { this.getTitle() }
-                </Link>
+            <li className={ classes }
+                onClick={ this.props.onSelect }>
+                { this.getImage() }
+                { this.getTitle() }
             </li>
         );
     }
@@ -27,6 +24,7 @@ export default class MatchBase extends React.Component {
 
 MatchBase.propTypes = {
     focused: React.PropTypes.bool,
+    onSelect: React.PropTypes.func,
     data: React.PropTypes.object.isRequired
 };
 

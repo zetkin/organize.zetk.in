@@ -63,6 +63,7 @@ export default class Search extends FluxComponent {
                     }
 
                     return <Match key={ key } data={ match.data }
+                        onSelect={ this.onMatchSelect.bind(this, match) }
                         focused={ focused }/>;
                 }, this)}
                 </ul>
@@ -88,6 +89,38 @@ export default class Search extends FluxComponent {
 
     onScopeSelect(scope) {
         this.getActions('search').changeScope(scope);
+    }
+
+    onMatchSelect(match) {
+        var defaultBase;
+        var paneType;
+        var params;
+
+        switch (match.type) {
+            case 'campaign':
+                defaultBase = '/campaign/actions';
+                paneType = 'editcampaign';
+                params = [ match.data.id ];
+                break;
+            case 'location':
+                defaultBase = '/maps/locations';
+                paneType = 'editlocation';
+                params = [ match.data.id ];
+                break;
+            case 'person':
+                defaultBase = '/people/list';
+                paneType = 'person';
+                params = [ match.data.id ];
+                break;
+            default:
+                // TODO: Deal with this? Should never happen
+                console.log('UNKNOWN MATCH TYPE');
+                return;
+        }
+
+        if (this.props.onMatchNavigate) {
+            this.props.onMatchNavigate(paneType, params, defaultBase);
+        }
     }
 
     onKeyDown(ev) {
@@ -121,8 +154,7 @@ export default class Search extends FluxComponent {
         else if (ev.keyCode == 13 && focusedIndex >= 0) {
             const selected = results[focusedIndex];
 
-            // TODO: Navigate
-            console.log(selected);
+            this.onMatchSelect(selected);
 
             ev.preventDefault();
             inputDOMNode.blur();
@@ -149,3 +181,7 @@ export default class Search extends FluxComponent {
         this.getActions('search').endSearch();
     }
 }
+
+Search.propTypes = {
+    onMatchNavigate: React.PropTypes.func
+};

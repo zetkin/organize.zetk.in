@@ -32,7 +32,7 @@ export default class App extends FluxComponent {
                 </head>
                 <body>
                     <div id="app">
-                        <Header />
+                        <Header onSearchNavigate={ this.onSearchNavigate.bind(this) }/>
                         <Router.Locations id="main" ref="router"
                             onNavigation={ this.onNavigation.bind(this) }
                             path={ this.props.path }>
@@ -69,6 +69,11 @@ export default class App extends FluxComponent {
     }
 
     onSectionShortcut(path) {
+        this.refs.router.navigate(path);
+    }
+
+    onSearchNavigate(paneType, params, defaultBase) {
+        const path = defaultBase + '/' + paneType + ':' + params.join(',');
         this.refs.router.navigate(path);
     }
 
