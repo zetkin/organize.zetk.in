@@ -1,6 +1,6 @@
 import React from 'react/addons';
 
-import Avatar from '../Avatar';
+import PeopleListItem from './PeopleListItem';
 
 
 export default class PeopleList extends React.Component {
@@ -10,28 +10,21 @@ export default class PeopleList extends React.Component {
 
         return (
             <div className="peoplelist">
+                <ul className="peoplelist-columns">
+                    <li>First name / last name</li>
+                    <li>E-mail / phone</li>
+                </ul>
                 <ul className="peoplelist-items">
-                    {people.map(function(person, index) {
-                        return (
-                            <li key={ person.id} className="peoplelist-item"
-                                onClick={ this.onPersonClick.bind(this, person) }>
-
-                                <Avatar person={ person }/>
-                                <span className="name">
-                                    { person.first_name } { person.last_name }
-                                </span>
-                                <span className="email">
-                                    <td>{ person.email }</td>
-                                </span>
-                            </li>
-                        );
+                    {people.map(function(person) {
+                        return <PeopleListItem person={ person }
+                            onSelect={ this.onSelect.bind(this, person) }/>;
                     }, this)}
                 </ul>
             </div>
         );
     }
 
-    onPersonClick(person) {
+    onSelect(person) {
         if (this.props.onSelect) {
             this.props.onSelect(person);
         }
