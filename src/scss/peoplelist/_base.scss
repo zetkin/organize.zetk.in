@@ -68,6 +68,12 @@
             white-space: pre;
             content: "\A";
         }
+
+        a {
+            &:hover {
+                color: #666;
+            }
+        }
     }
 
     .phone {
