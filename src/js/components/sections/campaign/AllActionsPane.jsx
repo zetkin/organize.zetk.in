@@ -35,15 +35,21 @@ export default class AllActionsPane extends PaneWithCalendar {
         var actions = actionStore.getActions();
         var viewComponent;
 
-        if (this.state.viewMode == 'cal') {
-            viewComponent = <ActionCalendar actions={ actions }
-                    onAddAction={ this.onCalendarAddAction.bind(this) }
-                    onMoveAction={ this.onCalendarMoveAction.bind(this) }
-                    onSelectAction={ this.onSelectAction.bind(this) }/>
+        if (actions.length) {
+            if (this.state.viewMode == 'cal') {
+                viewComponent = <ActionCalendar actions={ actions }
+                        onAddAction={ this.onCalendarAddAction.bind(this) }
+                        onMoveAction={ this.onCalendarMoveAction.bind(this) }
+                        onSelectAction={ this.onSelectAction.bind(this) }/>
+            }
+            else {
+                viewComponent = <ActionList actions={ actions }
+                        onActionOperation={ this.onActionOperation.bind(this) }/>;
+            }
         }
         else {
-            viewComponent = <ActionList actions={ actions }
-                    onActionOperation={ this.onActionOperation.bind(this) }/>;
+            // TODO: Show loading indicator
+            viewComponent = null;
         }
 
         const viewStates = {
