@@ -8,6 +8,14 @@ import PersonMatch from './PersonMatch';
 
 
 export default class Search extends FluxComponent {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            focusedIndex: undefined
+        };
+    }
+
     componentDidMount() {
         this.listenTo('search', this.forceUpdate);
         document.addEventListener('keydown', this.onKeyDown.bind(this));
@@ -36,9 +44,11 @@ export default class Search extends FluxComponent {
         if (results.length) {
             resultList = (
                 <ul className="search-form-results">
-                {results.map(function(match) {
+                {results.map(function(match, idx) {
+                    const key = match.type + ':' + match.data.id;
+                    const focused = (this.state.focusedIndex === idx);
+
                     var Match;
-                    var key = match.type + ':' + match.data.id;
 
                     switch(match.type) {
                         case 'campaign':
@@ -52,8 +62,10 @@ export default class Search extends FluxComponent {
                             break;
                     }
 
-                    return <Match key={ key } data={ match.data }/>;
-                })}
+                    return <Match key={ key } data={ match.data }
+                        onSelect={ this.onMatchSelect.bind(this, match) }
+                        focused={ focused }/>;
+                }, this)}
                 </ul>
             );
         }
@@ -79,15 +91,82 @@ export default class Search extends FluxComponent {
         this.getActions('search').changeScope(scope);
     }
 
+    onMatchSelect(match) {
+        var defaultBase;
+        var paneType;
+        var params;
+
+        switch (match.type) {
+            case 'campaign':
+                defaultBase = '/campaign/actions';
+                paneType = 'editcampaign';
+                params = [ match.data.id ];
+                break;
+            case 'location':
+                defaultBase = '/maps/locations';
+                paneType = 'editlocation';
+                params = [ match.data.id ];
+                break;
+            case 'person':
+                defaultBase = '/people/list';
+                paneType = 'person';
+                params = [ match.data.id ];
+                break;
+            default:
+                // TODO: Deal with this? Should never happen
+                console.log('UNKNOWN MATCH TYPE');
+                return;
+        }
+
+        if (this.props.onMatchNavigate) {
+            this.props.onMatchNavigate(paneType, params, defaultBase);
+        }
+    }
+
     onKeyDown(ev) {
-        var inputDOMNode = React.findDOMNode(this.refs.searchField);
+        const searchStore = this.getStore('search');
+        const results = searchStore.getResults();
+        const inputDOMNode = React.findDOMNode(this.refs.searchField);
+        const focusedIndex = this.state.focusedIndex;
+
         if (ev.keyCode == 27 && ev.target == inputDOMNode) {
+            inputDOMNode.blur();
+            this.getActions('search').clearSearch();
+        }
+        else if (ev.keyCode == 40) {
+            // Down
+            this.setState({
+                focusedIndex: Math.min(results.length,
+                    (focusedIndex === undefined)? 0 : focusedIndex + 1)
+            });
+
+            ev.preventDefault();
+        }
+        else if (ev.keyCode == 38) {
+            // Up
+            this.setState({
+                focusedIndex: Math.max(0, (focusedIndex === undefined)?
+                    results.length - 1 : focusedIndex - 1)
+            });
+
+            ev.preventDefault();
+        }
+        else if (ev.keyCode == 13 && focusedIndex >= 0) {
+            const selected = results[focusedIndex];
+
+            this.onMatchSelect(selected);
+
+            ev.preventDefault();
             inputDOMNode.blur();
             this.getActions('search').clearSearch();
         }
     }
 
     onChange(ev) {
+        this.setState({
+            focusedIndex: undefined
+        });
+
         this.getActions('search').search(ev.target.value);
     }
 
@@ -102,3 +181,7 @@ export default class Search extends FluxComponent {
         this.getActions('search').endSearch();
     }
 }
+
+Search.propTypes = {
+    onMatchNavigate: React.PropTypes.func
+};

@@ -165,12 +165,31 @@
             left: 0;
             right: 0;
             background-color: white;
-            padding: 1em 0;
 
             li {
-                margin: 0.5em;
-                padding: 0.5em;
+                position: relative;
                 list-style-type: none;
+                height: 4em;
+                padding: 0.5em;
+                cursor: pointer;
+
+                &.focused, &:hover {
+                    background-color: #eee;
+                }
+
+                .title {
+                    position: absolute;
+                    top: 10px;
+                    left: 50px;
+                    right: 20px;
+                    font-weight: bold;
+                    font-size: 1.5em;
+                }
+
+                img {
+                    max-height: 3em;
+                    width: auto;
+                }
             }
         }
     }

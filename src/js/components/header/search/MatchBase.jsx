@@ -1,16 +1,18 @@
 import React from 'react/addons';
-
-import { Link } from 'react-router-component';
+import cx from 'classnames';
 
 
 export default class MatchBase extends React.Component {
     render() {
+        const classes = cx({
+            'focused': this.props.focused
+        });
+
         return (
-            <li>
-                <Link href={ this.getLinkTarget() }>
-                    { this.getImage() }
-                    { this.getTitle() }
-                </Link>
+            <li className={ classes }
+                onClick={ this.props.onSelect }>
+                { this.getImage() }
+                <span className="title">{ this.getTitle() }</span>
             </li>
         );
     }
@@ -21,5 +23,11 @@ export default class MatchBase extends React.Component {
 }
 
 MatchBase.propTypes = {
+    focused: React.PropTypes.bool,
+    onSelect: React.PropTypes.func,
     data: React.PropTypes.object.isRequired
+};
+
+MatchBase.defaultProps = {
+    focused: false
 };

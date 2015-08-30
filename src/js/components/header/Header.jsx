@@ -10,9 +10,13 @@ export default class Header extends React.Component {
         return (
             <header className="appheader">
                 <Logo />
-                <Search />
+                <Search onMatchNavigate={ this.props.onSearchNavigate }/>
                 <UserMenu />
             </header>
         );
     }
 }
+
+Header.propTypes = {
+    onSearchNavigate: React.PropTypes.func
+};

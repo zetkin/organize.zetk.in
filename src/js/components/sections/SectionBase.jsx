@@ -58,6 +58,8 @@ export default class SectionBase extends FluxComponent {
                     paneType={ subSections[0].path } panePath={ panePath }/>);
         }
         else {
+            var subRefIndex = 1;
+            var subStartIndex = 1;
             var subPathSegments = subPath.split('/');
 
             for (i = 0; i < subSections.length; i++) {
@@ -73,7 +75,26 @@ export default class SectionBase extends FluxComponent {
                 }
             }
 
-            for (i = 1; i < subPathSegments.length; i++) {
+            // No base pane could be found. For most sub-sections, the first
+            // URL segment after the section references the sub-section. But
+            // for the start sub-section this might not be defined, e.g. the
+            // sub-section at /people/list can also be found at /people. Since
+            // no sub-section could be found, the segment at 0 probably really
+            // references the next pane, so we should fall back to use the
+            // default/home pane of this sub-section first.
+            if (panes.length == 0) {
+                curSubSectionIndex = 0;
+                section = subSections[0];
+                Pane = section.startPane;
+                panePath = basePath + '/' + section.path;
+                panes.push(
+                    <Pane ref="pane0" key={ section.path }
+                        paneType={ section.path } panePath={ panePath }/>);
+
+                subStartIndex = 0;
+            }
+
+            for (i = subStartIndex; i < subPathSegments.length; i++) {
                 var segment = subPathSegments[i];
                 var segmentData = segment.split(':');
                 var paneName = segmentData[0];
@@ -87,10 +108,12 @@ export default class SectionBase extends FluxComponent {
 
                 Pane = PaneUtils.resolve(paneName);
                 panes.push(
-                    <Pane ref={ 'pane' + i } key={ segment }
+                    <Pane ref={ 'pane' + subRefIndex } key={ segment }
                         paneType={ paneName }
                         panePath={ panePath } params={ paneParams }/>
                 );
+
+                subRefIndex++;
             }
         }
 
