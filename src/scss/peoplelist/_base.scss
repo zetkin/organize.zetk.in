@@ -1,0 +1,83 @@
+.peoplelist {
+    .peoplelist-columns {
+        position: relative;
+        height: 1.5em;
+
+        li {
+            position: absolute;
+            display: block;
+
+            &:nth-child(1) {
+                left: 70px;
+            }
+
+            &:nth-child(2) {
+                display: none;
+            }
+        }
+    }
+}
+
+.peoplelistitem {
+    position: relative;
+    margin: 0.5em 0;
+    padding: 0.5em;
+    height: 6em;
+    background-color: white;
+    box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
+
+    &::after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+
+    span {
+        font-size: 1.1em;
+        line-height: 1.5em;
+    }
+
+    .avatar {
+        width: 5em;
+        height: auto;
+        float: left;
+    }
+
+    .first_name {
+        display: inline;
+        margin-left: 15px;
+        font-weight: bold;
+    }
+
+    .last_name {
+        display: inline;
+        margin-left: 0.5em;
+        font-weight: bold;
+
+        &::after {
+            white-space: pre;
+            content: "\A";
+        }
+    }
+
+    .email {
+        display: inline;
+        margin-left: 15px;
+
+        &::after {
+            white-space: pre;
+            content: "\A";
+        }
+
+        a {
+            &:hover {
+                color: #666;
+            }
+        }
+    }
+
+    .phone {
+        display: inline;
+        margin-left: 15px;
+    }
+}

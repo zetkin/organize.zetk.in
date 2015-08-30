@@ -8,7 +8,7 @@ export default class Avatar extends React.Component {
         const alt = person.first_name + ' ' + person.last_name;
 
         return (
-            <img src={ src } alt={ alt } title={ alt }/>
+            <img className="avatar" src={ src } alt={ alt } title={ alt }/>
         );
     }
 }
