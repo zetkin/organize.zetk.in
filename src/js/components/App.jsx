@@ -73,8 +73,20 @@ export default class App extends FluxComponent {
     }
 
     onSearchNavigate(paneType, params, defaultBase) {
-        const path = defaultBase + '/' + paneType + ':' + params.join(',');
-        this.refs.router.navigate(path);
+        const router = this.refs.router;
+        const curMatch = router.getMatch();
+        const curMatchRef = curMatch.route.ref;
+
+        var path = paneType + ':' + params.join(',');
+
+        if (curMatchRef == 'dashboard') {
+            path = defaultBase + '/' + path;
+        }
+        else {
+            path = curMatch.path + '/' + path;
+        }
+
+        router.navigate(path);
     }
 
     onSubSectionShortcut(index) {
