@@ -16,7 +16,7 @@ export default class CampaignSection extends SectionBase {
                 startPane: AllActionsPane },
             { path: 'playback', title: 'Playback',
                 startPane: CampaignPlaybackPane },
-            { path: 'locations', title: 'Campaign locations',
+            { path: 'locations', title: 'Locations',
                 startPane: CampaignLocationsPane }
         ];
     }
