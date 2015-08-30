@@ -110,6 +110,7 @@ export default class ActionListItem extends FluxComponent {
         const contact = action.contact;
         const participants = this.props.participants || [];
         const actionDate = new Date(action.start_time);
+        const large = (this.state.expanded || this.props.isParticipantOver);
 
         const classNames = cx({
             'actionlist-item': true,
@@ -123,6 +124,8 @@ export default class ActionListItem extends FluxComponent {
 
         const participantList = this.props.connectParticipantDropTarget(
             <ParticipantList action={ action }
+                maxVisible={ large? participants.length : 4 }
+                onShowAll={ this.onShowAllParticipants.bind(this) }
                 participants={ filteredParticipants }/>
         );
 
@@ -131,8 +134,7 @@ export default class ActionListItem extends FluxComponent {
         );
 
         const numParticipantRows = Math.ceil(filteredParticipants.length/4);
-        const height = (this.state.expanded || this.props.isParticipantOver)?
-                Math.max(9, 0.5 + numParticipantRows * 5.25) : 6;
+        const height = large? Math.max(9, 0.5 + numParticipantRows * 5.25) : 6;
 
         const style = {
             height: height + 'em'
@@ -175,6 +177,12 @@ export default class ActionListItem extends FluxComponent {
     onClick(ev) {
         this.setState({
             expanded: !this.state.expanded
+        });
+    }
+
+    onShowAllParticipants(ev) {
+        this.setState({
+            expanded: true
         });
     }
 

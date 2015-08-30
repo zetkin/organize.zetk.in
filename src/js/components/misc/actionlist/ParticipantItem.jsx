@@ -1,5 +1,6 @@
 import React from 'react/addons';
 import { DragSource } from 'react-dnd';
+import cx from 'classnames';
 
 import Avatar from '../Avatar';
 
@@ -40,11 +41,16 @@ function collect(connect, monitor) {
 @DragSource('person', participantSource, collect)
 export default class ParticipantItem extends React.Component {
     render() {
-        var person = this.props.person;
-        var name = person.first_name + ' ' + person.last_name;
+        const visible = this.props.visible;
+        const person = this.props.person;
+        const name = person.first_name + ' ' + person.last_name;
+        const classes = cx({
+            'participant': true,
+            'hidden': !visible
+        });
 
         return this.props.connectDragSource(
-            <li className="participant">
+            <li className={ classes }>
                 <figure>
                     <Avatar person={ person }/>
                 </figure>
@@ -54,5 +60,6 @@ export default class ParticipantItem extends React.Component {
 }
 
 ParticipantItem.propTypes = {
+    visible: React.PropTypes.bool,
     person: React.PropTypes.object.isRequired
 }
