@@ -77,12 +77,22 @@
     }
 }
 
-.actionday-actionitem {
+.actionday-actionitem, .actionday-overflow {
     padding: 0.5em 1em;
     margin: 0 0 0.1em;
     background-color: white;
     box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
     cursor: pointer;
+}
+
+.actionday-overflow {
+    text-align: center;
+    font-weight: bold;
+    color: #aaa;
+
+    &::before {
+        content: "+";
+    }
 }
 
 .actioncalendar .actionday-actionitem {
@@ -109,7 +119,7 @@
     }
 }
 
-.actionminicalendar .actionday-actionitem {
+.actionminicalendar .actionday-actionitem, .actionminicalendar .actionday-overflow {
     height: 2em;
     transition: background-color 1.5s;
 
