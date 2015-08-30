@@ -76,87 +76,100 @@ export default class KeyboardShortcuts extends FluxComponent {
     }
 
     onKeyPress(ev) {
-        if (ev.target == document.body) {
-            if (this.state.keyPrefix === 'g') {
-                switch (ev.keyCode) {
-                    case 49:    // 1 = 1st sub-section
-                        this.navigateToSubSection(0);
-                        break;
-                    case 50:    // 2 = 2nd sub-section
-                        this.navigateToSubSection(1);
-                        break;
-                    case 51:    // 3 = 3rd sub-section
-                        this.navigateToSubSection(2);
-                        break;
-                    case 52:    // 4 = 4th sub-section
-                        this.navigateToSubSection(3);
-                        break;
-                    case 53:    // 5 = 5th sub-section
-                        this.navigateToSubSection(4);
-                        break;
-                    case 54:    // 6 = 6th sub-section
-                        this.navigateToSubSection(5);
-                        break;
-                    case 55:    // 7 = 7th sub-section
-                        this.navigateToSubSection(6);
-                        break;
+        // Bail for some special cases
+        const tagName = ev.target.tagName.toLowerCase();
 
-                    case 99:    // 'c' == campaign
-                        this.navigateToSection('/campaign');
-                        break;
-                    case 104:   // 'h' == home
-                        this.navigateToSection('/');
-                        break;
-                    case 109:   // 'm' == maps
-                        this.navigateToSection('/maps');
-                        break;
-                    case 112:   // 'p' == people
-                        this.navigateToSection('/people');
-                        break;
-                }
+        if (tagName == 'input'
+            && ev.target.type != 'submit'
+            && ev.target.type != 'button') {
+            return;
+        }
+        else if (tagName == 'textarea') {
+            return;
+        }
+        else if (tagName == 'select') {
+            return;
+        }
 
-                this.setKeyPrefix(null);
+        if (this.state.keyPrefix === 'g') {
+            switch (ev.keyCode) {
+                case 49:    // 1 = 1st sub-section
+                    this.navigateToSubSection(0);
+                    break;
+                case 50:    // 2 = 2nd sub-section
+                    this.navigateToSubSection(1);
+                    break;
+                case 51:    // 3 = 3rd sub-section
+                    this.navigateToSubSection(2);
+                    break;
+                case 52:    // 4 = 4th sub-section
+                    this.navigateToSubSection(3);
+                    break;
+                case 53:    // 5 = 5th sub-section
+                    this.navigateToSubSection(4);
+                    break;
+                case 54:    // 6 = 6th sub-section
+                    this.navigateToSubSection(5);
+                    break;
+                case 55:    // 7 = 7th sub-section
+                    this.navigateToSubSection(6);
+                    break;
+
+                case 99:    // 'c' == campaign
+                    this.navigateToSection('/campaign');
+                    break;
+                case 104:   // 'h' == home
+                    this.navigateToSection('/');
+                    break;
+                case 109:   // 'm' == maps
+                    this.navigateToSection('/maps');
+                    break;
+                case 112:   // 'p' == people
+                    this.navigateToSection('/people');
+                    break;
             }
-            else if (this.state.keyPrefix === '/') {
-                // Prevent default, which is to type '/' into the search field
-                ev.preventDefault();
 
-                switch (ev.keyCode) {
-                    case 47:    // '/'
-                        this.closeReference();
-                        this.getActions('search').beginSearch(null);
-                        break;
-                    case 99:    // 'c' == campaign
-                        this.closeReference();
-                        this.getActions('search').beginSearch('campaign');
-                        break;
-                    case 109:   // 'm' == maps
-                        this.closeReference();
-                        this.getActions('search').beginSearch('maps');
-                        break;
-                    case 112:   // 'p' == people
-                        this.closeReference();
-                        this.getActions('search').beginSearch('people');
-                        break;
-                }
+            this.setKeyPrefix(null);
+        }
+        else if (this.state.keyPrefix === '/') {
+            // Prevent default, which is to type '/' into the search field
+            ev.preventDefault();
 
-                this.setKeyPrefix(null);
+            switch (ev.keyCode) {
+                case 47:    // '/'
+                    this.closeReference();
+                    this.getActions('search').beginSearch(null);
+                    break;
+                case 99:    // 'c' == campaign
+                    this.closeReference();
+                    this.getActions('search').beginSearch('campaign');
+                    break;
+                case 109:   // 'm' == maps
+                    this.closeReference();
+                    this.getActions('search').beginSearch('maps');
+                    break;
+                case 112:   // 'p' == people
+                    this.closeReference();
+                    this.getActions('search').beginSearch('people');
+                    break;
             }
-            else if (this.state.keyPrefix === null) {
-                switch (ev.keyCode) {
-                    case 103: // 'g'
-                        this.setKeyPrefix('g');
-                        break;
-                    case 47: // '/'
-                        this.setKeyPrefix('/');
-                        break;
-                    case 63: // '?'
-                        // TODO: Show reference
-                        this.setState({
-                            showMainReference: true
-                        });
-                        break;
-                }
+
+            this.setKeyPrefix(null);
+        }
+        else if (this.state.keyPrefix === null) {
+            switch (ev.keyCode) {
+                case 103: // 'g'
+                    this.setKeyPrefix('g');
+                    break;
+                case 47: // '/'
+                    this.setKeyPrefix('/');
+                    break;
+                case 63: // '?'
+                    // TODO: Show reference
+                    this.setState({
+                        showMainReference: true
+                    });
+                    break;
             }
         }
     }

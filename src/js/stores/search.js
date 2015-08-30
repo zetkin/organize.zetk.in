@@ -65,6 +65,9 @@ export default class SearchStore extends Store {
     }
 
     onEndSearch() {
+        this.ws = null;
+        this.wsOpen = false;
+
         this.setState({
             isActive: false
         });
@@ -92,7 +95,8 @@ export default class SearchStore extends Store {
         });
 
         if (query.length < 3) {
-            // Don't search for really short query strings
+            // String too short, so we treat this as if there was
+            // no search active at all (and remove all results)
             this.setState({
                 results: []
             });
@@ -103,48 +107,51 @@ export default class SearchStore extends Store {
                 results: initialResults
                     .filter(r => searchMatches(query, r.data))
             });
+        }
 
-            var sendQuery = function(query) {
+        var sendQuery = function(query) {
+            // Don't search for really short query strings
+            if (query.length >= 3) {
                 this.ws.send(JSON.stringify({
                     'cmd': 'search',
                     'scope': scope,
                     'org': orgId,
                     'query': query
                 }));
-            }.bind(this);
+            }
+        }.bind(this);
 
-            if (!this.wsOpen) {
-                if (!this.ws) {
-                    var url = 'ws://' + window.location.host + '/search';
+        if (!this.wsOpen) {
+            if (!this.ws) {
+                var url = 'ws://' + window.location.host + '/search';
 
-                    this.ws = new WebSocket(url);
-                    this.ws.onopen = function() {
-                        this.wsOpen = true;
-                        sendQuery(this.state.query);
-                    }.bind(this);
+                this.ws = new WebSocket(url);
+                this.ws.onopen = function() {
+                    this.wsOpen = true;
+                    sendQuery(this.state.query);
+                }.bind(this);
 
-                    this.ws.onmessage = function(ev) {
-                        var msg = JSON.parse(ev.data);
+                this.ws.onmessage = function(ev) {
+                    var msg = JSON.parse(ev.data);
 
-                        if (msg.cmd == 'match' && msg.query == this.state.query) {
-                            var existing = this.state.results.find(
-                                m => (m.type == msg.match.type
-                                        && m.data.id == msg.match.data.id));
+                    if (msg.cmd == 'match' && msg.query == this.state.query) {
+                        var existing = this.state.results.find(
+                            m => (m.type == msg.match.type
+                                    && m.data.id == msg.match.data.id));
 
-                            if (existing === undefined) {
-                                this.state.results.push(msg.match);
-                                this.setState({
-                                    results: this.state.results
-                                });
-                            }
+                        if (existing === undefined) {
+                            this.state.results.push(msg.match);
+                            this.setState({
+                                results: this.state.results
+                            });
                         }
+                    }
 
-                    }.bind(this);
-                }
+                }.bind(this);
             }
-            else {
-                sendQuery(query);
-            }
+        }
+        else {
+            sendQuery(query);
         }
     }
 }
