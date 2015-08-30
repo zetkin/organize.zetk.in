@@ -65,6 +65,9 @@ export default class SearchStore extends Store {
     }
 
     onEndSearch() {
+        this.ws = null;
+        this.wsOpen = false;
+
         this.setState({
             isActive: false
         });
