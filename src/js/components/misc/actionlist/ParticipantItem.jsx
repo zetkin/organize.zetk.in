@@ -47,7 +47,6 @@ export default class ParticipantItem extends React.Component {
             <li className="participant">
                 <figure>
                     <Avatar person={ person }/>
-                    <figcaption>{ name }</figcaption>
                 </figure>
             </li>
         );

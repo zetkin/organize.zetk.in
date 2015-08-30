@@ -47,7 +47,6 @@ export default class ContactSlot extends React.Component {
             figure = this.props.connectDragSource(
                 <figure>
                     <Avatar person={ contact }/>
-                    <figcaption>{ contact.name }</figcaption>
                 </figure>
             );
         }

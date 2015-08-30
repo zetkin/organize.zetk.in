@@ -119,36 +119,4 @@
         width: 50px;
         height: auto;
     }
-
-    .participant figcaption, .contact figcaption {
-        display: none;
-        position: absolute;
-        right: -5px;
-        bottom: -25px;
-        padding: 4px 8px;
-        white-space: nowrap;
-
-        color: white;
-        z-index: 1000;
-        background-color: #333;
-    }
-
-    .participant figcaption:after, .contact figcaption:after {
-        bottom: 100%;
-        right: 27px;
-        border: solid transparent;
-        content: " ";
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
-        border-color: rgba(51, 51, 51, 0);
-        border-bottom-color: #333;
-        border-width: 5px;
-        margin-left: -5px;
-    }
-
-    .participant:hover figcaption, .contact:hover figcaption {
-        display: block;
-    }
 }
