@@ -1,4 +1,49 @@
 .peoplelist {
     width: 60%;
     min-width: 64em;
+
+    .peoplelist-columns {
+        li:nth-child(2) {
+            display: block;
+            width: 200px;
+            right: 100px;
+        }
+    }
+}
+
+.peoplelistitem {
+    span {
+        display: block;
+        width: 200px;
+    }
+
+    .first_name {
+        margin: 0;
+        position: absolute;
+        left: 70px;
+        top: 5px;
+        font-size: 1.2em;
+    }
+
+    .last_name {
+        margin: 0;
+        position: absolute;
+        left: 70px;
+        top: 25px;
+        font-size: 1.4em;
+    }
+
+    .email {
+        margin: 0;
+        position: absolute;
+        right: 100px;
+        top: 5px;
+    }
+
+    .phone {
+        margin: 0;
+        position: absolute;
+        right: 100px;
+        top: 25px;
+    }
 }
