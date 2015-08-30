@@ -20,6 +20,7 @@ const actionTarget = {
     drop(props) {
         return {
             targetType: 'participant',
+            onAddParticipant: props.onAddParticipant,
             onMoveParticipant: props.onMoveParticipant,
             newAction: props.action
         };
