@@ -43,7 +43,8 @@ export default class ActionDay extends React.Component {
         if (actions.length > maxVisible) {
             const overflowActions = actions.slice(maxVisible);
 
-            overflow = <ActionDayOverflow actions={ overflowActions }/>;
+            overflow = <ActionDayOverflow actions={ overflowActions }
+                onClick={ this.onDayClick.bind(this) }/>;
         }
 
 
