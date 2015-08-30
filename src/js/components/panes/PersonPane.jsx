@@ -2,6 +2,7 @@ import React from 'react/addons';
 
 import PaneBase from './PaneBase';
 import PersonForm from '../forms/PersonForm';
+import Avatar from '../misc/Avatar';
 
 
 export default class PersonPane extends PaneBase {
@@ -37,10 +38,11 @@ export default class PersonPane extends PaneBase {
     renderPaneContent(data) {
         if (data.person) {
             return [
+                <Avatar ref="avatar" person={ data.person }/>,
                 <PersonForm ref="personForm"
                     person={ data.person }
                     onSubmit={ this.onSubmit.bind(this) }/>,
-                <input type="button" value="Delete"
+                <input ref="submitButton" type="button" value="Delete"
                     onClick={ this.onDeleteClick.bind(this) }/>
             ];
         }
