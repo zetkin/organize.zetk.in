@@ -18,6 +18,8 @@
 }
 
 .actionlist-item {
+    overflow: hidden;
+
     div.contact {
         float: right;
         position: relative;
@@ -48,11 +50,9 @@
     ul.participants {
         display: block;
         position: relative;
+        min-height: 5em;
         float: right;
         width: 22em;
-
-        max-height: 50px;
-        transition: max-height 0.3s;
 
         &::after {
             content: "";
@@ -61,12 +61,12 @@
         }
     }
 
-    .participants {
-        min-height: 50px;
-    }
+    &.dragover {
+        box-shadow: 0 0 0.2em rgba(0,0,0,0.2);
 
-    &.expanded ul.participants {
-        max-height: 400px;
+        li.participant {
+            display: block;
+        }
     }
 
     /* Hide all but first three participants */
@@ -79,9 +79,9 @@
         display: none;
         position: relative;
         float: left;
-        width: 50px;
-        height: 50px;
-        margin: 0 2px 3px;
+        width: 5em;
+        height: 5em;
+        margin: 0 0.25em 0.25em;
         cursor: move;
     }
 

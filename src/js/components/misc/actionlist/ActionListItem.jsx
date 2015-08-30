@@ -78,13 +78,21 @@ export default class ActionListItem extends FluxComponent {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        for (var key in nextProps.action) {
+        var key;
+
+        for (key in nextProps) {
+            if (key.indexOf('on') !== 0 && nextProps[key] != this.props[key]) {
+                return true;
+            }
+        }
+
+        for (key in nextProps.action) {
             if (nextProps.action[key] != this.props.action[key]) {
                 return true;
             }
         }
 
-        for (var key in nextState) {
+        for (key in nextState) {
             if (nextState[key] != this.state[key]) {
                 return true;
             }
@@ -105,6 +113,7 @@ export default class ActionListItem extends FluxComponent {
 
         const classNames = cx({
             'actionlist-item': true,
+            'dragover': this.props.isParticipantOver,
             'expanded': this.state.expanded
         });
 
@@ -121,8 +130,16 @@ export default class ActionListItem extends FluxComponent {
             <ContactSlot contact={ contact } action={ action }/>
         );
 
+        const numParticipantRows = Math.ceil(filteredParticipants.length/4);
+        const height = (this.state.expanded || this.props.isParticipantOver)?
+                Math.max(9, 0.5 + numParticipantRows * 5.25) : 6;
+
+        const style = {
+            height: height + 'em'
+        };
+
         return (
-            <li className={ classNames }
+            <li className={ classNames } style={ style }
                 onClick={ this.onClick.bind(this) }>
 
                 <span className="time">
