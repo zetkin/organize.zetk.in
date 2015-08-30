@@ -15,6 +15,7 @@ export default class AllActionsPane extends PaneWithCalendar {
         this.listenTo('action', this.forceUpdate);
         this.listenTo('campaign', this.forceUpdate);
         this.getActions('action').retrieveAllActions();
+        this.getActions('campaign').retrieveCampaigns();
     }
 
     renderPaneTop() {

@@ -7,6 +7,13 @@ import PersonForm from '../forms/PersonForm';
 export default class PersonPane extends PaneBase {
     componentDidMount() {
         this.listenTo('person', this.forceUpdate);
+
+        const personId = this.props.params[0];
+        const person = this.getStore('person').getPerson(personId);
+
+        if (!person) {
+            this.getActions('person').retrievePerson(personId);
+        }
     }
 
     getRenderData() {

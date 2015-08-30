@@ -8,9 +8,15 @@ export default class LocationPane extends PaneBase {
     componentDidMount() {
         this.listenTo('location', this.forceUpdate);
 
-        var locationId = this.props.params[0];
-        var loc = this.getStore('location').getLocation(locationId);
-        this.getActions('location').setPendingLocation(loc);
+        const locationId = this.props.params[0];
+        const loc = this.getStore('location').getLocation(locationId);
+
+        if (loc) {
+            this.getActions('location').setPendingLocation(loc);
+        }
+        else {
+            this.getActions('location').retrieveLocation(locationId);
+        }
     }
 
     getRenderData() {
