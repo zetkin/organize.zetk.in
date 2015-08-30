@@ -16,6 +16,14 @@ export default class ParticipantActions extends Actions {
                 .get();
     }
 
+    addParticipant(personId, actionId) {
+        const orgId = this.flux.getStore('org').getActiveId();
+        return Z.resource('orgs', orgId,
+            'actions', actionId, 'participants', personId)
+            .meta('actionId', actionId)
+            .put()
+    }
+
     moveParticipant(personId, oldActionId, newActionId) {
         return {
             personId: personId,

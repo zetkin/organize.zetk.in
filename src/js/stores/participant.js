@@ -16,6 +16,8 @@ export default class ParticipantStore extends Store {
             this.onRetrieveParticipantsBegin,
             this.onRetrieveParticipantsComplete);
 
+        this.register(participantActions.addParticipant,
+            this.onAddParticipantComplete);
         this.register(participantActions.moveParticipant,
             this.onMoveParticipant);
         this.register(participantActions.undoMoves,
@@ -51,6 +53,19 @@ export default class ParticipantStore extends Store {
 
         this.setState({
             participants: this.state.participants
+        });
+    }
+
+    onAddParticipantComplete(res) {
+        const person = res.data.data;
+        const actionId = res.meta.actionId;
+        const allParticipants = this.state.participants;
+        const actionParticipants = allParticipants[actionId] || [];
+
+        allParticipants[actionId] = actionParticipants.concat([ person ]);
+
+        this.setState({
+            participants: allParticipants
         });
     }
 
