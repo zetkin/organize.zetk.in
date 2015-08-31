@@ -49,14 +49,20 @@ function SearchQueue(orgId, query, writeMatch, searchFuncs) {
 
     var _proceed = function() {
         if (_idx < searchFuncs.length) {
-            var searchFunc = searchFuncs[_idx++];
-            searchFunc(orgId, query, writeMatch)
-                .then(function() {
-                    _proceed();
-                })
-                .catch(function(err) {
-                    console.log(err);
-                });
+            const searchFunc = searchFuncs[_idx++];
+            const promise = searchFunc(orgId, query, writeMatch)
+
+            if (promise) {
+                promise.then(function() {
+                        _proceed();
+                    })
+                    .catch(function(err) {
+                        console.log(err);
+                    });
+            }
+            else {
+                _proceed();
+            }
         }
         else {
             // Done!
