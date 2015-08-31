@@ -9,13 +9,14 @@
 }
 
 .actioncalendar .actionweek {
-    margin: 1em 0;
+    display: flex;
+    align-items: stretch;
 
     h2 {
         float: left;
         font-size: 1em;
         font-weight: normal;
-        width: 5%;
+        width: 4%;
     }
     
     &::after {
@@ -27,8 +28,17 @@
 
 .actioncalendar .actionday {
     float: left;
-    width: 13%;
-    margin-left: 0.5%;
+    width: 13.7%;
+    border-left: 1px solid #f4f4f4;
+    padding-bottom: 2em;
+
+    &:last-child {
+        border-right: 1px solid #f4f4f4;
+    }
+
+    &.dragover {
+        background-color: #eee;
+    }
 
     h3 {
         margin: 0 0 0.1em;

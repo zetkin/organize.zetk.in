@@ -1,5 +1,6 @@
 import React from 'react/addons';
 import { DropTarget } from 'react-dnd';
+import cx from 'classnames';
 
 import ActionItem from './ActionItem';
 import ActionDayOverflow from './ActionDayOverflow';
@@ -47,9 +48,13 @@ export default class ActionDay extends React.Component {
                 onClick={ this.onDayClick.bind(this) }/>;
         }
 
+        const classes = cx({
+            'actionday': true,
+            'dragover': this.props.isOver
+        });
 
         return this.props.connectDropTarget(
-            <div className="actionday">
+            <div className={ classes }>
                 <h3 onClick={ this.onDayClick.bind(this) }>
                     <span className="date">{ dateLabel }</span>
                     <span className="weekday">{ dayLabel }</span>
