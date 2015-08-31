@@ -22,9 +22,29 @@ export default class EditActionPane extends PaneBase {
         const actions = actionStore.getActions().filter(a =>
             moment(a.start_time).isSame(date, 'day'));
 
-        return (
-            <ActionList actions={ actions }/>
-        );
+        return [
+            <input key="prevBtn" type="button" value="<"
+                onClick={ this.onClickPrev.bind(this) }/>,
+            <input key="nextBtn" type="button" value=">"
+                onClick={ this.onClickNext.bind(this) }/>,
+            <ActionList key="actionList" actions={ actions }/>
+        ];
+    }
+
+    onClickPrev() {
+        const curDate = Date.create(this.getParam(0));
+        const newDate = curDate.rewind({ days: 1 });
+        const dateStr = newDate.format('{yyyy}-{MM}-{dd}');
+
+        this.gotoPane('actionday', dateStr);
+    }
+
+    onClickNext() {
+        const curDate = Date.create(this.getParam(0));
+        const newDate = curDate.advance({ days: 1 });
+        const dateStr = newDate.format('{yyyy}-{MM}-{dd}');
+
+        this.gotoPane('actionday', dateStr);
     }
 
     onSubmit(ev) {
