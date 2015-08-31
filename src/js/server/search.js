@@ -35,6 +35,7 @@ function search(ws, req) {
         }
 
         if (!msg.scope || msg.scope == 'campaign') {
+            searchFuncs.push(searchActions);
             searchFuncs.push(searchCampaigns);
         }
 
@@ -49,14 +50,20 @@ function SearchQueue(orgId, query, writeMatch, searchFuncs) {
 
     var _proceed = function() {
         if (_idx < searchFuncs.length) {
-            var searchFunc = searchFuncs[_idx++];
-            searchFunc(orgId, query, writeMatch)
-                .then(function() {
-                    _proceed();
-                })
-                .catch(function(err) {
-                    console.log(err);
-                });
+            const searchFunc = searchFuncs[_idx++];
+            const promise = searchFunc(orgId, query, writeMatch)
+
+            if (promise) {
+                promise.then(function() {
+                        _proceed();
+                    })
+                    .catch(function(err) {
+                        console.log(err);
+                    });
+            }
+            else {
+                _proceed();
+            }
         }
         else {
             // Done!
@@ -70,6 +77,43 @@ function SearchQueue(orgId, query, writeMatch, searchFuncs) {
     this.abort = function() {
         _idx = searchFuncs.length;
         _writeMatch = (type, data) => null;
+    }
+}
+
+function searchActions(orgId, q, writeMatch) {
+    var date = Date.utc.create(q);
+    if (date.isValid()) {
+        const dateStr = date.format('{yyyy}-{MM}-{dd}');
+
+        // Searching for date
+        // TODO: Search using backend filtering
+        return Z.resource('orgs', orgId, 'actions').get()
+            .then(function(result) {
+                const actions = result.data.data;
+                const dayActions = [];
+
+                var i;
+                for (i = 0; i < actions.length; i++) {
+                    var action = actions[i];
+                    var actionDate = new Date(action.start_time);
+                    if (actionDate.is(dateStr)) {
+                        dayActions.push(action);
+                    }
+                }
+
+                if (dayActions.length > 0) {
+                    const matchData = {
+                        date: dateStr,
+                        action_count: dayActions.length
+                    };
+
+                    writeMatch(q, 'actionday', matchData);
+                }
+            });
+    }
+    else {
+        // TODO: Implement searching for actions based on loc/activity
+        return null;
     }
 }
 

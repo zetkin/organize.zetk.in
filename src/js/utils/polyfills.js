@@ -1,4 +1,5 @@
 require('array.prototype.find');
+require('sugar-date');
 
 Date.prototype.getWeekNumber = function(){
     var d = new Date(+this);
