@@ -37,15 +37,17 @@ export default class ActionDay extends React.Component {
         const dayLabel = DAY_LABELS[date.getDay()];
 
         const maxVisible = this.props.maxVisible;
-        const actions = this.props.actions;
-        const cappedActions = actions.slice(0, maxVisible);
 
+        var actions = this.props.actions;
         var overflow = null;
+
         if (actions.length > maxVisible) {
-            const overflowActions = actions.slice(maxVisible);
+            const overflowActions = actions.slice(maxVisible - 1);
 
             overflow = <ActionDayOverflow actions={ overflowActions }
                 onClick={ this.onDayClick.bind(this) }/>;
+
+            actions = actions.slice(0, maxVisible - 1);
         }
 
         const classes = cx({
@@ -60,7 +62,7 @@ export default class ActionDay extends React.Component {
                     <span className="weekday">{ dayLabel }</span>
                 </h3>
                 <ul>
-                { cappedActions.map(function(action) {
+                { actions.map(function(action) {
                     return <ActionItem key={ action.id } action={ action }
                             onClick={ this.onActionClick.bind(this, action) }/>
                 }, this) }
