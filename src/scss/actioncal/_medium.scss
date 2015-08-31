@@ -1,11 +1,11 @@
 .actionminicalendar {
     background-color: rgba(0,0,0,0.05);
+    height: 13em;
 
     margin: 0 -2em 2em;
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
-    padding-bottom: 2em;
 }
 
 .actioncalendar .actionweek {
@@ -58,9 +58,13 @@
 .actionminicalendar .actionday {
     display: inline-block;
     width: 5em;
-    min-height: 8em;
+    height: 100%;
     margin-left: 0.1em;
     vertical-align: top;
+
+    &.dragover {
+        background-color: #e6e6e6;
+    }
 
     h3 {
         cursor: pointer;
@@ -193,6 +197,7 @@
 
 .actionminicalendar .actionday-addbutton {
     background-color: #ddd;
+    font-size: 0.8em;
 }
 
 .actionday:hover .actionday-addbutton {
