@@ -2,6 +2,7 @@ import React from 'react/addons';
 import { DropTarget } from 'react-dnd';
 
 import ActionItem from './ActionItem';
+import ActionDayOverflow from './ActionDayOverflow';
 
 
 const dayTarget = {
@@ -34,6 +35,19 @@ export default class ActionDay extends React.Component {
         const dateLabel = date.getDate() + '/' + (date.getMonth() + 1);
         const dayLabel = DAY_LABELS[date.getDay()];
 
+        const maxVisible = this.props.maxVisible;
+        const actions = this.props.actions;
+        const cappedActions = actions.slice(0, maxVisible);
+
+        var overflow = null;
+        if (actions.length > maxVisible) {
+            const overflowActions = actions.slice(maxVisible);
+
+            overflow = <ActionDayOverflow actions={ overflowActions }
+                onClick={ this.onDayClick.bind(this) }/>;
+        }
+
+
         return this.props.connectDropTarget(
             <div className="actionday">
                 <h3 onClick={ this.onDayClick.bind(this) }>
@@ -41,10 +55,11 @@ export default class ActionDay extends React.Component {
                     <span className="weekday">{ dayLabel }</span>
                 </h3>
                 <ul>
-                { this.props.actions.map(function(action) {
+                { cappedActions.map(function(action) {
                     return <ActionItem key={ action.id } action={ action }
                             onClick={ this.onActionClick.bind(this, action) }/>
                 }, this) }
+                    { overflow }
                     <li className="actionday-pseudoitem">
                         <button className="actionday-addbutton"
                             onClick={ this.onAddClick.bind(this) }/>
@@ -74,6 +89,11 @@ export default class ActionDay extends React.Component {
 }
 
 ActionDay.propTypes = {
+    maxVisible: React.PropTypes.number,
     onSelectAction: React.PropTypes.func,
     onAddAction: React.PropTypes.func
+};
+
+ActionDay.defaultProps = {
+    maxVisible: 5
 };
