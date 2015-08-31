@@ -92,6 +92,22 @@ export default class PaneBase extends FluxComponent {
         this.context.router.navigate(this.subPanePath(paneType, ...params));
     }
 
+    gotoPane(paneType, ...params) {
+        var paneSegment = paneType;
+
+        if (params.length) {
+            paneSegment += ':' + params.join(',');
+        }
+
+        const pathSegments = this.props.panePath.split('/');
+        const newPath = pathSegments
+            .slice(0, pathSegments.length - 1)
+            .join('/')
+            .concat('/' + paneSegment);
+
+        this.context.router.navigate(newPath);
+    }
+
     closePane() {
         var pathElements = this.props.panePath.split('/');
         var parentPathElements = pathElements.slice(0, pathElements.length - 1);
