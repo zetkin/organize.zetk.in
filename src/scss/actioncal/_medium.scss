@@ -199,3 +199,24 @@
     visibility: visible;
     opacity: 1;
 }
+
+// Transitions
+.actioncalendar, .actionminicalendar {
+    .actionitem-enter {
+        background-color: #fcc;
+    }
+
+    .actionitem-enter.actionitem-enter-active {
+        background-color: white;
+        transition: background-color 0.4s ease-in;
+    }
+
+    .actionitem-leave {
+        opacity: 1;
+    }
+
+    .actionitem-leave.actionitem-leave-active {
+        opacity: 0.01;
+        transition: opacity 0.1s;
+    }
+}

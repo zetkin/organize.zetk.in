@@ -5,6 +5,7 @@ import cx from 'classnames';
 import ActionItem from './ActionItem';
 import ActionDayOverflow from './ActionDayOverflow';
 
+const CSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 const dayTarget = {
     canDrop(props, monitor) {
@@ -61,7 +62,7 @@ export default class ActionDay extends React.Component {
                     <span className="date">{ dateLabel }</span>
                     <span className="weekday">{ dayLabel }</span>
                 </h3>
-                <ul>
+                <CSSTransitionGroup transitionName="actionitem" component="ul">
                 { actions.map(function(action) {
                     return <ActionItem key={ action.id } action={ action }
                             onClick={ this.onActionClick.bind(this, action) }/>
@@ -71,7 +72,7 @@ export default class ActionDay extends React.Component {
                         <button className="actionday-addbutton"
                             onClick={ this.onAddClick.bind(this) }/>
                     </li>
-                </ul>
+                </CSSTransitionGroup>
             </div>
         );
     }
