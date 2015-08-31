@@ -27,7 +27,8 @@ export default class EditActionPane extends PaneBase {
                 onClick={ this.onClickPrev.bind(this) }/>,
             <input key="nextBtn" type="button" value=">"
                 onClick={ this.onClickNext.bind(this) }/>,
-            <ActionList key="actionList" actions={ actions }/>
+            <ActionList key="actionList" actions={ actions }
+                onActionOperation={ this.onActionOperation.bind(this) }/>
         ];
     }
 
@@ -45,5 +46,11 @@ export default class EditActionPane extends PaneBase {
         const dateStr = newDate.format('{yyyy}-{MM}-{dd}');
 
         this.gotoPane('actionday', dateStr);
+    }
+
+    onActionOperation(action, operation) {
+        if (operation == 'edit') {
+            this.gotoSubPane('editaction', action.id);
+        }
     }
 }
