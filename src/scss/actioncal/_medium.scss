@@ -26,6 +26,14 @@
     }
 }
 
+.actionday {
+    &.dragover {
+        .actionday-addbuton {
+            visibility: hidden;
+        }
+    }
+}
+
 .actioncalendar .actionday {
     float: left;
     width: 13.7%;
