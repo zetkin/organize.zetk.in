@@ -34,19 +34,22 @@ function collect(connect, monitor) {
 export default class ActionItem extends React.Component {
     render() {
         const action = this.props.action;
+        const startDate = Date.utc.create(action.start_time);
+        const timeLabel = startDate.setUTC(true).format('{HH}:{mm}');
         const className = cx({
             'actionday-actionitem': true,
             'highlight': action.highlight
         });
 
-
         return this.props.connectDragSource(
             <li className={ className }
                 onClick={ this.onClick.bind(this) }>
-                <span className="activity">
-                    { action.activity.title }</span>
                 <span className="location">
                     { action.location.title }</span>
+                <span className="time">
+                    { timeLabel }</span>
+                <span className="activity">
+                    { action.activity.title }</span>
             </li>
         );
     }

@@ -129,16 +129,11 @@
 .actioncalendar .actionday-actionitem {
     position: relative;
 
-    .activity {
+    .location {
         display: block;
         font-size: 1.2em;
         font-weight: bold;
         margin: 0 0 0.2em;
-    }
-
-    .location {
-        display: block;
-        font-size: 1.1em;
 
         &::before {
             content: "";
@@ -146,9 +141,21 @@
             float: left;
             background-color: #888;
             width: 0.5em;
-            height: 0.5em;
-            margin: 0.1em;
+            height: 0.8em;
+            margin: 0.2em 0.2em 0 0;
         }
+    }
+
+    .activity {
+        display: inline-block;
+        font-size: 1.1em;
+    }
+
+    .time {
+        display: inline-block;
+        font-size: 1.1em;
+        margin-right: 0.5em;
+        float: left;
     }
 
     &::after {
