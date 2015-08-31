@@ -40,6 +40,10 @@
         background-color: #eee;
     }
 
+    &.today h3 {
+        border: 1px solid #aaa;
+    }
+
     h3 {
         margin: 0 0 0.1em;
         padding: 0.5em 1em;
@@ -64,6 +68,15 @@
 
     &.dragover {
         background-color: #e6e6e6;
+    }
+
+    &.today {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+
+        hr {
+            color: #333;
+        }
     }
 
     h3 {

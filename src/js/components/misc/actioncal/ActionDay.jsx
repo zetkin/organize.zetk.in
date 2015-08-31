@@ -53,6 +53,7 @@ export default class ActionDay extends React.Component {
 
         const classes = cx({
             'actionday': true,
+            'today': date.is('today'),
             'dragover': this.props.isOver
         });
 
