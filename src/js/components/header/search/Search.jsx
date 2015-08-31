@@ -2,6 +2,7 @@ import React from 'react/addons';
 
 import FluxComponent from '../../FluxComponent';
 import ScopeSelect from './ScopeSelect';
+import ActionDayMatch from './ActionDayMatch';
 import CampaignMatch from './CampaignMatch';
 import LocationMatch from './LocationMatch';
 import PersonMatch from './PersonMatch';
@@ -51,6 +52,9 @@ export default class Search extends FluxComponent {
                     var Match;
 
                     switch(match.type) {
+                        case 'actionday':
+                            Match = ActionDayMatch;
+                            break;
                         case 'campaign':
                             Match = CampaignMatch;
                             break;
@@ -97,6 +101,11 @@ export default class Search extends FluxComponent {
         var params;
 
         switch (match.type) {
+            case 'actionday':
+                defaultBase = '/campaign/actions';
+                paneType = 'actionday';
+                params = [ match.data.date ];
+                break;
             case 'campaign':
                 defaultBase = '/campaign/actions';
                 paneType = 'editcampaign';
