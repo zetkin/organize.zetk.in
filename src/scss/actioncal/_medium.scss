@@ -1,21 +1,22 @@
 .actionminicalendar {
     background-color: rgba(0,0,0,0.05);
+    height: 13em;
 
     margin: 0 -2em 2em;
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
-    padding-bottom: 2em;
 }
 
 .actioncalendar .actionweek {
-    margin: 1em 0;
+    display: flex;
+    align-items: stretch;
 
     h2 {
         float: left;
         font-size: 1em;
         font-weight: normal;
-        width: 5%;
+        width: 4%;
     }
     
     &::after {
@@ -25,10 +26,31 @@
     }
 }
 
+.actionday {
+    &.dragover {
+        .actionday-addbuton {
+            visibility: hidden;
+        }
+    }
+}
+
 .actioncalendar .actionday {
     float: left;
-    width: 13%;
-    margin-left: 0.5%;
+    width: 13.7%;
+    border-left: 1px solid #f4f4f4;
+    padding-bottom: 2em;
+
+    &:last-child {
+        border-right: 1px solid #f4f4f4;
+    }
+
+    &.dragover {
+        background-color: #eee;
+    }
+
+    &.today h3 {
+        border: 1px solid #aaa;
+    }
 
     h3 {
         margin: 0 0 0.1em;
@@ -48,9 +70,22 @@
 .actionminicalendar .actionday {
     display: inline-block;
     width: 5em;
-    min-height: 8em;
+    height: 100%;
     margin-left: 0.1em;
     vertical-align: top;
+
+    &.dragover {
+        background-color: #e6e6e6;
+    }
+
+    &.today {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+
+        hr {
+            color: #333;
+        }
+    }
 
     h3 {
         cursor: pointer;
@@ -100,16 +135,13 @@
 }
 
 .actioncalendar .actionday-actionitem {
-    .activity {
+    position: relative;
+
+    .location {
         display: block;
         font-size: 1.2em;
         font-weight: bold;
         margin: 0 0 0.2em;
-    }
-
-    .location {
-        display: block;
-        font-size: 1.1em;
 
         &::before {
             content: "";
@@ -117,9 +149,33 @@
             float: left;
             background-color: #888;
             width: 0.5em;
-            height: 0.5em;
-            margin: 0.1em;
+            height: 0.8em;
+            margin: 0.2em 0.2em 0 0;
         }
+    }
+
+    .activity {
+        display: inline-block;
+        font-size: 1.1em;
+    }
+
+    .time {
+        display: inline-block;
+        font-size: 1.1em;
+        margin-right: 0.5em;
+        float: left;
+    }
+
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 1em;
+        top: 0.5em;
+        right: 0.5em;
+        bottom: 0.5em;
+        background-color: #f0f0f0;
+        cursor: move;
     }
 }
 
@@ -169,9 +225,31 @@
 
 .actionminicalendar .actionday-addbutton {
     background-color: #ddd;
+    font-size: 0.8em;
 }
 
 .actionday:hover .actionday-addbutton {
     visibility: visible;
     opacity: 1;
+}
+
+// Transitions
+.actioncalendar, .actionminicalendar {
+    .actionitem-enter {
+        background-color: #fcc;
+    }
+
+    .actionitem-enter.actionitem-enter-active {
+        background-color: white;
+        transition: background-color 0.4s ease-in;
+    }
+
+    .actionitem-leave {
+        opacity: 1;
+    }
+
+    .actionitem-leave.actionitem-leave-active {
+        opacity: 0.01;
+        transition: opacity 0.1s;
+    }
 }

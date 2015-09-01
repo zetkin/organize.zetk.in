@@ -1,9 +1,11 @@
 import React from 'react/addons';
 import { DropTarget } from 'react-dnd';
+import cx from 'classnames';
 
 import ActionItem from './ActionItem';
 import ActionDayOverflow from './ActionDayOverflow';
 
+const CSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 const dayTarget = {
     canDrop(props, monitor) {
@@ -36,26 +38,33 @@ export default class ActionDay extends React.Component {
         const dayLabel = DAY_LABELS[date.getDay()];
 
         const maxVisible = this.props.maxVisible;
-        const actions = this.props.actions;
-        const cappedActions = actions.slice(0, maxVisible);
 
+        var actions = this.props.actions;
         var overflow = null;
+
         if (actions.length > maxVisible) {
-            const overflowActions = actions.slice(maxVisible);
+            const overflowActions = actions.slice(maxVisible - 1);
 
             overflow = <ActionDayOverflow actions={ overflowActions }
                 onClick={ this.onDayClick.bind(this) }/>;
+
+            actions = actions.slice(0, maxVisible - 1);
         }
 
+        const classes = cx({
+            'actionday': true,
+            'today': date.is('today'),
+            'dragover': this.props.isOver
+        });
 
         return this.props.connectDropTarget(
-            <div className="actionday">
+            <div className={ classes }>
                 <h3 onClick={ this.onDayClick.bind(this) }>
                     <span className="date">{ dateLabel }</span>
                     <span className="weekday">{ dayLabel }</span>
                 </h3>
-                <ul>
-                { cappedActions.map(function(action) {
+                <CSSTransitionGroup transitionName="actionitem" component="ul">
+                { actions.map(function(action) {
                     return <ActionItem key={ action.id } action={ action }
                             onClick={ this.onActionClick.bind(this, action) }/>
                 }, this) }
@@ -64,7 +73,7 @@ export default class ActionDay extends React.Component {
                         <button className="actionday-addbutton"
                             onClick={ this.onAddClick.bind(this) }/>
                     </li>
-                </ul>
+                </CSSTransitionGroup>
             </div>
         );
     }
