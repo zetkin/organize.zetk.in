@@ -12,9 +12,12 @@ const dayTarget = {
         return true;
     },
 
-    drop(props) {
+    drop(props, monitor, component, meta) {
+        const callback = meta.shiftKey?
+            props.onCopyAction : props.onMoveAction;
+
         return {
-            onMoveAction: props.onMoveAction,
+            onMoveAction: callback,
             newDate: props.date
         };
     }
