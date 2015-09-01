@@ -41,6 +41,7 @@ export default class AllActionsPane extends PaneWithCalendar {
                         onSelectDay={ this.onSelectDay.bind(this) }
                         onAddAction={ this.onCalendarAddAction.bind(this) }
                         onMoveAction={ this.onCalendarMoveAction.bind(this) }
+                        onCopyAction={ this.onCalendarCopyAction.bind(this) }
                         onSelectAction={ this.onSelectAction.bind(this) }/>
             }
             else {
