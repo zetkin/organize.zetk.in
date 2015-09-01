@@ -9,7 +9,12 @@ export default class DashboardStore extends Store {
         // TODO: Don't hardcode configuration
 
         this.setState({
-            widgets: [ { type: 'upcoming_campaigns' },{ type: 'upcoming_campaigns' },{ type: 'upcoming_campaigns' },{ type: 'upcoming_campaigns' } ],
+            widgets: [
+                { type: 'today' },
+                { type: 'upcoming_actions' },
+                { type: 'action_response' },
+                { type: 'organizer_notes' }
+            ],
             shortcuts: [ 'people', 'campaign', 'contact', 'maps',
                 'survey', 'resources', 'meetups', 'finance', 'settings' ]
         });

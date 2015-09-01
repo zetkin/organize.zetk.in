@@ -2,7 +2,10 @@ import React from 'react/addons';
 
 import FluxComponent from '../FluxComponent';
 import Shortcut from './Shortcut';
-import UpcomingCampaignsWidget from './widgets/UpcomingCampaignsWidget';
+import ActionResponseWidget from './widgets/ActionResponseWidget';
+import OrganizerNotesWidget from './widgets/OrganizerNotesWidget';
+import TodayWidget from './widgets/TodayWidget';
+import UpcomingActionsWidget from './widgets/UpcomingActionsWidget';
 
 
 export default class Dashboard extends FluxComponent {
@@ -36,8 +39,17 @@ export default class Dashboard extends FluxComponent {
             var widgetData = widgets[i];
 
             switch (widgetData.type) {
-                case 'upcoming_campaigns':
-                    WidgetClass = UpcomingCampaignsWidget;
+                case 'action_response':
+                    WidgetClass = ActionResponseWidget;
+                    break;
+                case 'organizer_notes':
+                    WidgetClass = OrganizerNotesWidget;
+                    break;
+                case 'today':
+                    WidgetClass = TodayWidget;
+                    break;
+                case 'upcoming_actions':
+                    WidgetClass = UpcomingActionsWidget;
                     break;
 
                 default:
