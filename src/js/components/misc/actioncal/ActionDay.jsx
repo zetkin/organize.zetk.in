@@ -60,6 +60,12 @@ export default class ActionDay extends React.Component {
             'dragover': this.props.isOver
         });
 
+        var dropHint = null;
+        if (this.props.isOver) {
+            dropHint = <span className="clonehint">
+                Hold <code>shift</code> to copy action.</span>;
+        }
+
         return this.props.connectDropTarget(
             <div className={ classes }>
                 <h3 onClick={ this.onDayClick.bind(this) }>
@@ -77,6 +83,7 @@ export default class ActionDay extends React.Component {
                             onClick={ this.onAddClick.bind(this) }/>
                     </li>
                 </CSSTransitionGroup>
+                { dropHint }
             </div>
         );
     }

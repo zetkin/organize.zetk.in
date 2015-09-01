@@ -35,6 +35,7 @@
 }
 
 .actioncalendar .actionday {
+    position: relative;
     float: left;
     width: 13.7%;
     border-left: 1px solid #f4f4f4;
@@ -63,6 +64,22 @@
             font-size: 1.3em;
             font-weight: bold;
             padding-right: 0.5em;
+        }
+    }
+
+    .clonehint {
+        position: absolute;
+        left: 1em;
+        right: 1em;
+        bottom: 1em;
+        text-align: center;
+        color: #999;
+
+        code {
+            display: inline-block;
+            background-color: #ddd;
+            border-radius: 0.4em;
+            padding: 0.1em 0.3em;
         }
     }
 }
@@ -108,6 +125,10 @@
     }
 
     .weekday {
+        display: none;
+    }
+
+    .clonehint {
         display: none;
     }
 }
@@ -231,6 +252,10 @@
 .actionday:hover .actionday-addbutton {
     visibility: visible;
     opacity: 1;
+}
+
+.actionday.dragover .actionday-addbutton {
+    visibility: hidden;
 }
 
 // Transitions
