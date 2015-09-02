@@ -2,6 +2,7 @@ import React from 'react/addons';
 
 import FluxComponent from '../FluxComponent';
 import Shortcut from './Shortcut';
+import DraggableWidget from './widgets/DraggableWidget';
 import ActionResponseWidget from './widgets/ActionResponseWidget';
 import OrganizerNotesWidget from './widgets/OrganizerNotesWidget';
 import TodayWidget from './widgets/TodayWidget';
@@ -9,6 +10,10 @@ import UpcomingActionsWidget from './widgets/UpcomingActionsWidget';
 
 
 export default class Dashboard extends FluxComponent {
+    componentDidMount() {
+        this.listenTo('dashboard', this.forceUpdate);
+    }
+
     render() {
         var i;
         var dashboardStore = this.getStore('dashboard');
@@ -58,9 +63,10 @@ export default class Dashboard extends FluxComponent {
             }
 
             widgetElements.push(
-                <li key={ i } className="dashboard-widgetcontainer">
+                <DraggableWidget key={ widgetData.type } data={ widgetData }
+                    onMoveWidget={ this.onMoveWidget.bind(this) }>
                     <WidgetClass data={ widgetData }/>
-                </li>
+                </DraggableWidget>
             );
         }
 
@@ -73,10 +79,14 @@ export default class Dashboard extends FluxComponent {
                 <ul className="dashboard-shortcuts">
                     { shortcutElements }
                 </ul>
-                <ul className="dashboard-widgets">
+                <div className="dashboard-widgets">
                     { widgetElements }
-                </ul>
+                </div>
             </div>
         );
+    }
+
+    onMoveWidget(widget, before) {
+        this.getActions('dashboard').moveWidget(widget.type, before.type);
     }
 }

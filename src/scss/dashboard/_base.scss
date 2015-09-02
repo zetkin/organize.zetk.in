@@ -44,6 +44,13 @@
     .dashboard-widget{
         @include card;
         padding: 1em;
-        margin-bottom: 0.833em;
+    }
+
+    .dashboard-widgetcontainer {
+        padding: 0.5em 0;
+
+        &.dragover {
+            border-top: 1px dashed #666;
+        }
     }
 }
