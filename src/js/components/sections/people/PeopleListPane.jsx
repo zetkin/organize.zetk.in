@@ -40,9 +40,10 @@ export default class PeopleListPane extends PaneBase {
             <input key="addButton" type="button" value="Add"
                 onClick={ this.onAddClick.bind(this) }/>,
             <RelSelectInput name="querySelect" value={ queryId }
-                objects={ queries }
+                objects={ queries } showEditLink={ true }
                 onValueChange={ this.onQueryChange.bind(this) }
-                onCreate={ this.onQueryCreate.bind(this) }/>,
+                onCreate={ this.onQueryCreate.bind(this) }
+                onEdit={ this.onQueryEdit.bind(this) }/>,
             <PeopleList key="peopleList" people={ people }
                 onSelect={ this.onSelect.bind(this) }/>
         ];
@@ -68,5 +69,9 @@ export default class PeopleListPane extends PaneBase {
 
         const queries = this.getStore('query').getQueries();
         this.gotoSubPane('query', queries[queries.length-1].id);
+    }
+
+    onQueryEdit(query) {
+        this.gotoSubPane('query', query.id);
     }
 }
