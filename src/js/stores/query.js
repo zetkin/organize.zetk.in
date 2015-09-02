@@ -25,6 +25,7 @@ export default class QueryStore extends Store {
         });
 
         const queryActions = flux.getActions('query');
+        this.register(queryActions.addFilter, this.onAddFilter);
         this.register(queryActions.updateFilter, this.onUpdateFilter);
     }
 
@@ -39,6 +40,23 @@ export default class QueryStore extends Store {
     executeQuery(queryId, people) {
         const query = this.state.queries.find(q => q.id == queryId);
         return people.filter(p => matchesQuery(p, query));
+    }
+
+    onAddFilter(payload) {
+        const queryId = payload.queryId;
+        const filterType = payload.filterType;
+
+        const query = this.state.queries.find(q => q.id == queryId);
+        const getDefault = defaultConfigs[filterType];
+
+        query.filters.push({
+            type: filterType,
+            config: getDefault()
+        });
+
+        this.setState({
+            queries: this.state.queries
+        });
     }
 
     onUpdateFilter(payload) {
@@ -82,6 +100,15 @@ let filterFunctions = {
                     return true;
                 }
             }
+        }
+    }
+};
+
+let defaultConfigs = {
+    person_data: function getPersonDataDefault() {
+        return {
+            field: undefined,
+            text: ''
         }
     }
 };
