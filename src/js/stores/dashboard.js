@@ -14,11 +14,13 @@ export default class DashboardStore extends Store {
                 { type: 'action_response' },
                 { type: 'organizer_notes' }
             ],
+            widgetData: {},
             shortcuts: [ 'people', 'campaign', 'contact', 'maps',
                 'survey', 'resources', 'meetups', 'finance', 'settings' ]
         });
 
         const dashboardActions = flux.getActions('dashboard');
+        this.register(dashboardActions.loadWidgetData, this.onLoadWidgetData);
         this.register(dashboardActions.moveWidget, this.onMoveWidget);
     }
 
@@ -28,6 +30,19 @@ export default class DashboardStore extends Store {
 
     getWidgets() {
         return this.state.widgets;
+    }
+
+    getWidgetData(type) {
+        return this.state.widgetData[type];
+    }
+
+    onLoadWidgetData(data) {
+        const widgetData = this.state.widgetData;
+        widgetData[data.type] = data;
+
+        this.setState({
+            widgetData: widgetData
+        });
     }
 
     onMoveWidget(move) {
