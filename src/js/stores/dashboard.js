@@ -5,7 +5,6 @@ export default class DashboardStore extends Store {
     constructor(flux) {
         super();
 
-        // TODO: Listen for actions once they exist
         // TODO: Don't hardcode configuration
 
         this.setState({
@@ -18,6 +17,9 @@ export default class DashboardStore extends Store {
             shortcuts: [ 'people', 'campaign', 'contact', 'maps',
                 'survey', 'resources', 'meetups', 'finance', 'settings' ]
         });
+
+        const dashboardActions = flux.getActions('dashboard');
+        this.register(dashboardActions.moveWidget, this.onMoveWidget);
     }
 
     getShortcuts() {
@@ -26,5 +28,26 @@ export default class DashboardStore extends Store {
 
     getWidgets() {
         return this.state.widgets;
+    }
+
+    onMoveWidget(move) {
+        const widgets = this.state.widgets;
+        const moveWidget = widgets.find(w => w.type == move.moveType);
+
+        var newWidgets = [];
+        for (let i = 0; i < widgets.length; i++) {
+            let widget = widgets[i];
+            if (widget.type == move.beforeType) {
+                newWidgets.push(moveWidget);
+            }
+
+            if (widget != moveWidget) {
+                newWidgets.push(widget);
+            }
+        }
+
+        this.setState({
+            widgets: newWidgets
+        });
     }
 }
