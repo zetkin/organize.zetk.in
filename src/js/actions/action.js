@@ -28,15 +28,24 @@ export default class ActionActions extends Actions {
         return true;
     }
 
-    highlightActionPhase(locId, phase) {
-        return {
-            locId,
-            phase
-        };
+    highlightActionActivity(locId) {
+        return locId;
+    }
+
+    highlightActionActivityPhase(activityId, phase) {
+        return { activityId, phase };
     }
 
     highlightActionLocation(locId) {
         return locId;
+    }
+
+    highlightActionLocationPhase(locId, phase) {
+        return { locId, phase };
+    }
+
+    highlightActions(actionIds) {
+        return actionIds;
     }
 
     highlightActions(actionIds) {

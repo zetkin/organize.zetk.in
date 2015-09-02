@@ -29,8 +29,12 @@ export default class ActionStore extends Store {
         this.register(actionActions.updateAction,
             this.onUpdateActionComplete);
 
-        this.register(actionActions.highlightActionPhase,
-            this.onHighlightActionPhase);
+        this.register(actionActions.highlightActionActivityPhase,
+            this.onHighlightActionActivityPhase);
+        this.register(actionActions.highlightActionActivity,
+            this.onHighlightActionActivity);
+        this.register(actionActions.highlightActionLocationPhase,
+            this.onHighlightActionLocationPhase);
         this.register(actionActions.highlightActionLocation,
             this.onHighlightActionLocation);
         this.register(actionActions.highlightActions,
@@ -88,7 +92,28 @@ export default class ActionStore extends Store {
         });
     }
 
-    onHighlightActionPhase(payload) {
+    onHighlightActionActivityPhase(payload) {
+        this.setState({
+            actions: this.state.actions.map(function(action) {
+                action.highlight = (
+                    action.activity.id == payload.activityId &&
+                    actionIsPhase(action, payload.phase));
+
+                return action;
+            })
+        });
+    }
+
+    onHighlightActionActivity(activityId) {
+        this.setState({
+            actions: this.state.actions.map(function(action) {
+                action.highlight = (action.activity.id == activityId);
+                return action;
+            })
+        });
+    }
+
+    onHighlightActionLocationPhase(payload) {
         this.setState({
             actions: this.state.actions.map(function(action) {
                 action.highlight = (
