@@ -5,7 +5,7 @@ import cx from 'classnames';
 
 const widgetSource = {
     beginDrag(props) {
-        return props.data;
+        return props.config;
     },
 
     endDrag(props, monitor, component) {
@@ -17,19 +17,19 @@ const widgetSource = {
         const widgetData = monitor.getItem();
 
         if (props.onMoveWidget) {
-            props.onMoveWidget(props.data, dropResult.widget);
+            props.onMoveWidget(props.config, dropResult.widget);
         }
     }
 };
 
 const widgetTarget = {
     canDrop(props, monitor) {
-        return props.data != monitor.getItem();
+        return props.config != monitor.getItem();
     },
 
     drop(props) {
         return {
-            widget: props.data
+            widget: props.config
         };
     }
 };
@@ -73,5 +73,5 @@ export default class DraggableWidget extends React.Component {
 }
 
 DraggableWidget.propTypes = {
-    data: React.PropTypes.object
+    config: React.PropTypes.object
 };

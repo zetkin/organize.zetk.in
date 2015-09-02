@@ -5,8 +5,8 @@ import FluxComponent from '../../FluxComponent';
 
 export default class WidgetBase extends FluxComponent {
     render() {
-        var type = this.props.data.type;
-        var classes = 'dashboard-widget dashboard-widget-' + type;
+        const type = this.props.config.type;
+        const classes = 'dashboard-widget dashboard-widget-' + type;
 
         return (
             <div className={ classes }>
@@ -22,5 +22,5 @@ export default class WidgetBase extends FluxComponent {
 }
 
 WidgetBase.propTypes = {
-    data: React.PropTypes.object
+    config: React.PropTypes.object
 };

@@ -41,9 +41,9 @@ export default class Dashboard extends FluxComponent {
 
         for (i = 0; i < widgets.length; i++) {
             var WidgetClass = null;
-            var widgetData = widgets[i];
+            var widgetConfig = widgets[i];
 
-            switch (widgetData.type) {
+            switch (widgetConfig.type) {
                 case 'action_response':
                     WidgetClass = ActionResponseWidget;
                     break;
@@ -58,14 +58,14 @@ export default class Dashboard extends FluxComponent {
                     break;
 
                 default:
-                    throw 'Unknown widget type: ' + widgetData.type;
+                    throw 'Unknown widget type: ' + widgetConfig.type;
                     break;
             }
 
             widgetElements.push(
-                <DraggableWidget key={ widgetData.type } data={ widgetData }
+                <DraggableWidget key={ widgetConfig.type } config={ widgetConfig }
                     onMoveWidget={ this.onMoveWidget.bind(this) }>
-                    <WidgetClass data={ widgetData }/>
+                    <WidgetClass config={ widgetConfig }/>
                 </DraggableWidget>
             );
         }
