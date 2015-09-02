@@ -6,7 +6,7 @@ import WidgetBase from './WidgetBase';
 export default class TodayWidget extends WidgetBase {
     renderWidget(data) {
         const tempLabel = Math.round(data.weather.temp) + '°C';
-        const weatherIcon = 'http://openweathermap.org/img/w/'
+        const weatherIcon = '/static/img/weather/'
             .concat(data.weather.forecast.icon + '.png');
 
         const locations = {};
