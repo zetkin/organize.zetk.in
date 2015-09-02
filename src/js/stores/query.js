@@ -79,13 +79,14 @@ function matchesQuery(person, query) {
 
         if (filter.type in filterFunctions) {
             let func = filterFunctions[filter.type];
-            if (func(person, filter.config)) {
-                return true;
+            // TODO: Implement boolean relationships
+            if (!func(person, filter.config)) {
+                return false;
             }
         }
     }
 
-    return false;
+    return true;
 }
 
 let filterFunctions = {
@@ -101,6 +102,8 @@ let filterFunctions = {
                 }
             }
         }
+
+        return false;
     }
 };
 
