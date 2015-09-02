@@ -11,6 +11,7 @@ import dataRouter from './datarouter';
 import authRouter from './authrouter';
 import apiProxy from './apiproxy';
 import search from './search';
+import widgets from './widgets';
 import App from '../components/App';
 import ActivistPage from '../components/fullpages/ActivistPage';
 
@@ -18,6 +19,7 @@ import ActivistPage from '../components/fullpages/ActivistPage';
 var app = express();
 
 app.use('/api', apiProxy);
+app.use('/widgets', widgets);
 app.use(cookieParser());
 app.use(authRouter);
 
