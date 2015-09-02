@@ -3,6 +3,12 @@ import { Store } from 'flummox';
 import StoreUtils from '../utils/StoreUtils';
 
 
+function sortActions(actions) {
+    return actions.sort((a0, a1) =>
+        (new Date(a0.start_time).getTime() + 0.1 * a0.id) -
+        (new Date(a1.start_time).getTime() + 0.1 * a1.id));
+}
+
 export default class ActionStore extends Store {
     constructor(flux) {
         super();
@@ -54,17 +60,13 @@ export default class ActionStore extends Store {
         const action = res.data.data;
 
         this.setState({
-            actions: this.state.actions.concat([ action ]).sort((a0, a1) =>
-                (new Date(a0.start_time)).getTime() -
-                (new Date(a1.start_time)).getTime())
+            actions: sortActions(this.state.actions.concat([ action ]))
         });
     }
 
     onRetrieveAllActionsComplete(res) {
         this.setState({
-            actions: res.data.data.sort((a0, a1) =>
-                (new Date(a0.start_time)).getTime() -
-                (new Date(a1.start_time)).getTime())
+            actions: sortActions(res.data.data)
         });
     }
 
@@ -73,9 +75,7 @@ export default class ActionStore extends Store {
         StoreUtils.updateOrAdd(this.state.actions, action.id, action);
 
         this.setState({
-            actions: this.state.actions.sort((a0, a1) =>
-                (new Date(a0.start_time)).getTime() -
-                (new Date(a1.start_time)).getTime())
+            actions: sortActions(this.state.actions)
         });
     }
 
@@ -84,9 +84,7 @@ export default class ActionStore extends Store {
         StoreUtils.updateOrAdd(this.state.actions, action.id, action);
 
         this.setState({
-            actions: this.state.actions.sort((a0, a1) =>
-                (new Date(a0.start_time)).getTime() -
-                (new Date(a1.start_time)).getTime())
+            actions: sortActions(this.state.actions)
         });
     }
 
