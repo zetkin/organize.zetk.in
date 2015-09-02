@@ -1,0 +1,14 @@
+.filter {
+    @include card;
+    padding: 1em;
+    margin: 1em 0;
+}
+
+.pseudofilter {
+    border: 3px dashed #e8e8e8;
+    padding: 2em;
+
+    select {
+        margin: 0;
+    }
+}
