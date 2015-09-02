@@ -1,7 +1,21 @@
 .filter {
+    position: relative;
     @include card;
-    padding: 1em;
+    padding: 2em 1em 1em;
     margin: 1em 0;
+
+    .filter-remove {
+        display: block;
+        position: absolute;
+        top: 0.5em;
+        left: 1em;
+        overflow: hidden;
+        text-indent: 1000;
+        background-color: red;
+        width: 1em;
+        height: 1em;
+        cursor: pointer;
+    }
 }
 
 .pseudofilter {

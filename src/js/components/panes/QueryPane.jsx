@@ -29,6 +29,7 @@ export default class QueryPane extends PaneBase {
 
             filterElements.push(
                 <FilterComponent key={ i } config={ filter.config }
+                    onFilterRemove={ this.onFilterRemove.bind(this, i) }
                     onFilterChange={ this.onFilterChange.bind(this, i) }/>
             );
         }
@@ -64,5 +65,10 @@ export default class QueryPane extends PaneBase {
     onFilterChange(filterIndex, config) {
         const queryId = this.getParam(0);
         this.getActions('query').updateFilter(queryId, filterIndex, config);
+    }
+
+    onFilterRemove(filterIndex) {
+        const queryId = this.getParam(0);
+        this.getActions('query').removeFilter(queryId, filterIndex);
     }
 }

@@ -8,6 +8,8 @@ export default class FilterBase extends React.Component {
 
         return (
             <div className={ classes }>
+                <a className="filter-remove"
+                    onClick={ this.onClickRemove.bind(this) }>x</a>
                 { this.renderFilterForm(config) }
             </div>
         );
@@ -19,6 +21,12 @@ export default class FilterBase extends React.Component {
 
     getConfig() {
         return this.refs.form.getValues();
+    }
+
+    onClickRemove(ev) {
+        if (this.props.onFilterRemove) {
+            this.props.onFilterRemove();
+        }
     }
 
     onFormSubmit(ev) {
