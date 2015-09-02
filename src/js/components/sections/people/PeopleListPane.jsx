@@ -2,6 +2,7 @@ import React from 'react/addons';
 
 import PaneBase from '../../panes/PaneBase';
 import PeopleList from '../../misc/peoplelist/PeopleList';
+import RelSelectInput from '../../forms/inputs/RelSelectInput';
 
 
 export default class PeopleListPane extends PaneBase {
@@ -38,17 +39,10 @@ export default class PeopleListPane extends PaneBase {
         return [
             <input key="addButton" type="button" value="Add"
                 onClick={ this.onAddClick.bind(this) }/>,
-            <select key="querySelect" value={ queryId }
-                onChange={ this.onQueryChange.bind(this) }>
-                <option value="">----</option>
-                {queries.map(function(query) {
-                    return (
-                        <option key={ query.id } value={ query.id }>
-                            { query.title }
-                        </option>
-                    );
-                })}
-            </select>,
+            <RelSelectInput name="querySelect" value={ queryId }
+                objects={ queries }
+                onValueChange={ this.onQueryChange.bind(this) }
+                onCreate={ this.onQueryCreate.bind(this) }/>,
             <PeopleList key="peopleList" people={ people }
                 onSelect={ this.onSelect.bind(this) }/>
         ];
@@ -62,9 +56,17 @@ export default class PeopleListPane extends PaneBase {
         this.gotoSubPane('addperson');
     }
 
-    onQueryChange(ev) {
+    onQueryChange(name, value) {
         this.setState({
-            selectedQueryId: ev.target.value
+            selectedQueryId: value
         });
+    }
+
+    onQueryCreate(title) {
+        // TODO: Is this the best way?
+        this.getActions('query').createQuery(title);
+
+        const queries = this.getStore('query').getQueries();
+        this.gotoSubPane('query', queries[queries.length-1].id);
     }
 }
