@@ -11,6 +11,34 @@
         padding: 0;
     }
 
+    .section-nav-misc {
+        position: absolute;
+        left: 0.5em;
+        right: 0.5em;
+        bottom: 1.5em;
+
+        text-align: center;
+
+        a {
+            color: #888;
+            padding-left: 1em;
+            padding-right: 1em;
+            border-left: 1px solid #888;
+
+            &:first-child {
+                border-left: 0;
+                padding-left: 0;
+            }
+
+            &:last-child {
+                padding-right: 0;
+            }
+
+            &:hover {
+                color: #ddd;
+            }
+        }
+    }
 }
 
 .section-nav-item a {

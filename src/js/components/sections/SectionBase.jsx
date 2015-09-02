@@ -117,8 +117,10 @@ export default class SectionBase extends FluxComponent {
             }
         }
 
-        var sectionType = this.constructor.name
+        const sectionType = this.constructor.name
             .replace(/Section$/, '').toLowerCase();
+
+        const helpUrl = '/help/sections/' + sectionType;
 
         return (
             <div className={ 'section section-' + sectionType }>
@@ -143,6 +145,10 @@ export default class SectionBase extends FluxComponent {
                             className='section-nav-item section-nav-back'>
                             <Link href="/">Back to <br />Dashboard</Link></li>
                     </ul>
+                    <div className="section-nav-misc">
+                        <a target="_blank" href="http://zetkin.org">About</a>
+                        <a target="_blank" href={ helpUrl }>Help</a>
+                    </div>
                 </nav>
                 <div className="section-content" ref="paneContainer">
                     { panes }
