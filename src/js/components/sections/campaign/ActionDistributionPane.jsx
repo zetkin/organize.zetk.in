@@ -35,20 +35,39 @@ export default class ActionDistributionPane extends PaneWithCalendar {
 
         return [
             <CampaignSelect/>,
-            <ActionDistribution actions={ actions }
-                instanceField="location"
-                onMouseOver={ this.onMouseOver.bind(this) }
-                onMouseOverPhase={ this.onMouseOverPhase.bind(this) }
-                onMouseOut={ this.onMouseOut.bind(this) }/>
+            <div className="locations">
+                <h3>Locations</h3>
+                <ActionDistribution actions={ actions }
+                    instanceField="location"
+                    onMouseOver={ this.onLocMouseOver.bind(this) }
+                    onMouseOverPhase={ this.onLocMouseOverPhase.bind(this) }
+                    onMouseOut={ this.onMouseOut.bind(this) }/>
+            </div>,
+            <div className="activities">
+                <h3>Activities</h3>
+                <ActionDistribution actions={ actions }
+                    instanceField="activity"
+                    onMouseOver={ this.onActivityMouseOver.bind(this) }
+                    onMouseOverPhase={ this.onActivityMouseOverPhase.bind(this) }
+                    onMouseOut={ this.onMouseOut.bind(this) }/>
+            </div>
         ];
     }
 
-    onMouseOver(loc) {
+    onLocMouseOver(loc) {
         this.getActions('action').highlightActionLocation(loc.id);
     }
 
-    onMouseOverPhase(loc, phase) {
-        this.getActions('action').highlightActionPhase(loc.id, phase);
+    onLocMouseOverPhase(loc, phase) {
+        this.getActions('action').highlightActionLocationPhase(loc.id, phase);
+    }
+
+    onActivityMouseOver(activity) {
+        this.getActions('action').highlightActionActivity(activity.id);
+    }
+
+    onActivityMouseOverPhase(activity, phase) {
+        this.getActions('action').highlightActionActivityPhase(activity.id, phase);
     }
 
     onMouseOut() {
