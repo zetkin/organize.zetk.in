@@ -1,10 +1,10 @@
 import React from 'react/addons';
 
 import SectionBase from '../SectionBase';
-import CampaignLocationsPane from './CampaignLocationsPane';
+import ActionDistributionPane from './ActionDistributionPane';
+import AllActionsPane from './AllActionsPane';
 import CampaignOverviewPane from './CampaignOverviewPane';
 import CampaignPlaybackPane from './CampaignPlaybackPane';
-import AllActionsPane from './AllActionsPane';
 
 
 export default class CampaignSection extends SectionBase {
@@ -14,8 +14,8 @@ export default class CampaignSection extends SectionBase {
                 startPane: CampaignOverviewPane },
             { path: 'actions', title: 'All actions',
                 startPane: AllActionsPane },
-            { path: 'locations', title: 'Locations',
-                startPane: CampaignLocationsPane },
+            { path: 'distribution', title: 'Distribution',
+                startPane: ActionDistributionPane },
             { path: 'playback', title: 'Playback',
                 startPane: CampaignPlaybackPane }
         ];

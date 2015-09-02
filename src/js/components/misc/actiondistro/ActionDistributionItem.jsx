@@ -3,7 +3,7 @@ import React from 'react/addons';
 import DayCycleGraph from './DayCycleGraph';
 
 
-export default class ActionLocationItem extends React.Component {
+export default class ActionDistributionItem extends React.Component {
     render() {
         const loc = this.props.location;
         const counts = [
@@ -23,7 +23,7 @@ export default class ActionLocationItem extends React.Component {
         };
 
         return (
-            <li className="actionlocationitem"
+            <li className="actiondistroitem"
                 onMouseOver={ this.onMouseOver.bind(this) }
                 onMouseOut={ this.props.onMouseOut }>
                 <span className="title">{ loc.title }</span>
@@ -56,7 +56,7 @@ export default class ActionLocationItem extends React.Component {
     }
 }
 
-ActionLocationItem.propTypes = {
+ActionDistributionItem.propTypes = {
     numMorningActions: React.PropTypes.number.isRequired,
     numNoonActions: React.PropTypes.number.isRequired,
     numAfternoonActions: React.PropTypes.number.isRequired,

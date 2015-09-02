@@ -2,13 +2,13 @@ import React from 'react/addons';
 
 import PaneWithCalendar from './PaneWithCalendar';
 import CampaignSelect from '../../misc/CampaignSelect';
-import ActionLocations from '../../misc/actionlocations/ActionLocations';
+import ActionDistribution from '../../misc/actiondistro/ActionDistribution';
 import ActionMiniCalendar from '../../misc/actioncal/ActionMiniCalendar';
 
 
-export default class AllActionsPane extends PaneWithCalendar {
+export default class ActionDistributionPane extends PaneWithCalendar {
     getPaneTitle() {
-        return 'Campaign locations';
+        return 'Location and activity distribution';
     }
 
     componentDidMount() {
@@ -35,7 +35,7 @@ export default class AllActionsPane extends PaneWithCalendar {
 
         return [
             <CampaignSelect/>,
-            <ActionLocations actions={ actions }
+            <ActionDistribution actions={ actions }
                 onMouseOver={ this.onMouseOver.bind(this) }
                 onMouseOverPhase={ this.onMouseOverPhase.bind(this) }
                 onMouseOut={ this.onMouseOut.bind(this) }/>

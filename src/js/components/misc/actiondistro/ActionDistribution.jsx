@@ -1,9 +1,9 @@
 import React from 'react/addons';
 
-import ActionLocationItem from './ActionLocationItem';
+import ActionDistributionItem from './ActionDistributionItem';
 
 
-export default class ActionLocations extends React.Component {
+export default class ActionDistribution extends React.Component {
     render() {
         const actions = this.props.actions;
         const locations = {};
@@ -50,12 +50,12 @@ export default class ActionLocations extends React.Component {
         const average = actions.length / numLocations;
 
         return (
-            <ul className="actionlocations">
+            <ul className="actiondistro">
                 {Object.keys(locations).map(function(id) {
                     const loc = locations[id].loc;
                     const counts = locations[id]
 
-                    return <ActionLocationItem key={ id } location={ loc }
+                    return <ActionDistributionItem key={ id } location={ loc }
                             numActionsAverage={ average }
                             numMorningActions={ counts.numMorningActions }
                             numNoonActions={ counts.numNoonActions }
@@ -71,6 +71,6 @@ export default class ActionLocations extends React.Component {
     }
 }
 
-ActionLocations.propTypes = {
+ActionDistribution.propTypes = {
     actions: React.PropTypes.array.isRequired
 };
