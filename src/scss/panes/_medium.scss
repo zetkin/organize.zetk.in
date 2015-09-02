@@ -33,10 +33,12 @@
 }
 
 .section-pane-distribution {
-    h3 {
-        font-size: 1.5em;
-        color: #888;
-        margin: 0 0 0.5em;
+    .section-pane-content {
+        h3 {
+            font-size: 1.5em;
+            color: #888;
+            margin: 0 0 0.5em;
+        }
     }
 
     .locations {
