@@ -19,7 +19,6 @@ import ActivistPage from '../components/fullpages/ActivistPage';
 var app = express();
 
 app.use('/api', apiProxy);
-app.use('/widgets', widgets);
 app.use(cookieParser());
 app.use(authRouter);
 
@@ -42,6 +41,7 @@ app.get('/logout', function(req, res, next) {
 });
 
 app.use(dataRouter);
+app.use('/widgets', widgets);
 
 expressWs(app);
 app.ws('/search', search);
