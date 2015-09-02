@@ -27,6 +27,7 @@ export default class QueryStore extends Store {
         const queryActions = flux.getActions('query');
         this.register(queryActions.addFilter, this.onAddFilter);
         this.register(queryActions.updateFilter, this.onUpdateFilter);
+        this.register(queryActions.removeFilter, this.onRemoveFilter);
     }
 
     getQueries() {
@@ -66,6 +67,18 @@ export default class QueryStore extends Store {
 
         const query = this.state.queries.find(q => q.id == queryId);
         query.filters[filterIndex].config = filterConfig;
+
+        this.setState({
+            queries: this.state.queries
+        });
+    }
+
+    onRemoveFilter(payload) {
+        const queryId = payload.queryId;
+        const filterIndex = payload.filterIndex;
+
+        const query = this.state.queries.find(q => q.id == queryId);
+        query.filters.splice(filterIndex, 1);
 
         this.setState({
             queries: this.state.queries

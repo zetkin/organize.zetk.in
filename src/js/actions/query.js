@@ -9,4 +9,8 @@ export default class QueryActions extends Actions {
     addFilter(queryId, filterType) {
         return { queryId, filterType };
     }
+
+    removeFilter(queryId, filterIndex) {
+        return { queryId, filterIndex };
+    }
 }
