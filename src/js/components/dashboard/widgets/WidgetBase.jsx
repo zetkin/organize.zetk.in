@@ -4,13 +4,30 @@ import FluxComponent from '../../FluxComponent';
 
 
 export default class WidgetBase extends FluxComponent {
+    componentDidMount() {
+        const type = this.props.config.type;
+        const store = this.getStore('dashboard');
+        const data = store.getWidgetData(type);
+
+        if (!data) {
+            this.getActions('dashboard').loadWidgetData(type);
+        }
+    }
+
     render() {
-        var type = this.props.data.type;
-        var classes = 'dashboard-widget dashboard-widget-' + type;
+        const type = this.props.config.type;
+        const classes = 'dashboard-widget dashboard-widget-' + type;
+
+        const store = this.getStore('dashboard');
+        const data = store.getWidgetData(type);
+
+        // TODO: Add loading indicator
+        const content = data?
+            this.renderWidget(data) : "Loading";
 
         return (
             <div className={ classes }>
-                { this.renderWidget() }
+                { content }
             </div>
         );
     }
@@ -22,5 +39,5 @@ export default class WidgetBase extends FluxComponent {
 }
 
 WidgetBase.propTypes = {
-    data: React.PropTypes.object
+    config: React.PropTypes.object
 };

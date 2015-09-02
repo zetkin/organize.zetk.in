@@ -44,6 +44,69 @@
     .dashboard-widget{
         @include card;
         padding: 1em;
-        margin-bottom: 0.833em;
+    }
+
+    .dashboard-widgetcontainer {
+        padding: 0.5em 0;
+
+        &.dragover {
+            border-top: 1px dashed #666;
+        }
+    }
+}
+
+.dashboard-widget-today {
+    .weather {
+        width: 220px;
+        margin: 0 auto 2em auto;
+
+        img {
+            float: left;
+            height: 8em;
+            width: auto;
+        }
+
+        &::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .temperature {
+            display: block;
+            float: left;
+            font-size: 5em;
+            margin-left: 10px;
+            width: 110px;
+        }
+
+        .city {
+            display: block;
+            float: left;
+            margin-left: 14px;
+            font-weight: bold;
+        }
+    }
+
+    .stats {
+        width: 220px;
+        margin: 1em auto;
+        font-size: 1.4em;
+
+        .label {
+            float: left;
+            clear: left;
+        }
+
+        .value {
+            font-weight: bold;
+            float: right;
+        }
+
+        &::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
     }
 }

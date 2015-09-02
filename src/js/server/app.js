@@ -11,6 +11,7 @@ import dataRouter from './datarouter';
 import authRouter from './authrouter';
 import apiProxy from './apiproxy';
 import search from './search';
+import widgets from './widgets';
 import App from '../components/App';
 import ActivistPage from '../components/fullpages/ActivistPage';
 
@@ -40,6 +41,7 @@ app.get('/logout', function(req, res, next) {
 });
 
 app.use(dataRouter);
+app.use('/widgets', widgets);
 
 expressWs(app);
 app.ws('/search', search);
