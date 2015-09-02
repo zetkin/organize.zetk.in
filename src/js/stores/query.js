@@ -117,6 +117,11 @@ let filterFunctions = {
         }
 
         return false;
+    },
+
+    join_date: function matchJoinDate(person, filterConfig) {
+        // TODO: Implement once join date is actually on person object
+        return true;
     }
 };
 
@@ -125,6 +130,15 @@ let defaultConfigs = {
         return {
             field: undefined,
             text: ''
+        }
+    },
+
+    join_date: function getJoinDateDefault() {
+        const jan1 = new Date((new Date()).getFullYear(), 0, 1);
+
+        return {
+            operator: 'gt',
+            date: jan1.format('{yyyy}-{MM}-{dd}')
         }
     }
 };
