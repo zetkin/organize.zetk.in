@@ -54,6 +54,7 @@ export default class ActionCalendar extends React.Component {
                 <ActionDay date={ new Date(d) } actions={ dayActions }
                     onSelect={ this.props.onSelectDay }
                     onAddAction={ this.onAddAction.bind(this) }
+                    onCopyAction={ this.onCopyAction.bind(this) }
                     onMoveAction={ this.onMoveAction.bind(this) }
                     onSelectAction={ this.onSelectAction.bind(this) }/>
             );
@@ -93,6 +94,12 @@ export default class ActionCalendar extends React.Component {
     onMoveAction(action, date) {
         if (this.props.onMoveAction) {
             this.props.onMoveAction(action, date);
+        }
+    }
+
+    onCopyAction(action, date) {
+        if (this.props.onCopyAction) {
+            this.props.onCopyAction(action, date);
         }
     }
 }
