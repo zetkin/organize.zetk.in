@@ -36,6 +36,7 @@ export default class ActionDistributionPane extends PaneWithCalendar {
         return [
             <CampaignSelect/>,
             <ActionDistribution actions={ actions }
+                instanceField="location"
                 onMouseOver={ this.onMouseOver.bind(this) }
                 onMouseOverPhase={ this.onMouseOverPhase.bind(this) }
                 onMouseOut={ this.onMouseOut.bind(this) }/>

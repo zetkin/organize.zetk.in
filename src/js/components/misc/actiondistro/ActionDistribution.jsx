@@ -5,18 +5,19 @@ import ActionDistributionItem from './ActionDistributionItem';
 
 export default class ActionDistribution extends React.Component {
     render() {
+        const field = this.props.instanceField;
         const actions = this.props.actions;
-        const locations = {};
+        const instances = {};
 
         var i;
 
         for (i = 0; i < actions.length; i++) {
             var action = actions[i];
-            var loc = action.location;
+            var inst = action[field];
 
-            if (!locations.hasOwnProperty(loc.id)) {
-                locations[loc.id] = {
-                    loc: loc,
+            if (!instances.hasOwnProperty(inst.id)) {
+                instances[inst.id] = {
+                    inst: inst,
                     numMorningActions: 0,
                     numNoonActions: 0,
                     numAfternoonActions: 0,
@@ -30,32 +31,32 @@ export default class ActionDistribution extends React.Component {
 
             // TODO: Don't duplicate these constants in ActionStore
             if (hour <= 4 || hour > 22) {
-                locations[loc.id].numNightActions++;
+                instances[inst.id].numNightActions++;
             }
             else if (hour <= 9) {
-                locations[loc.id].numMorningActions++;
+                instances[inst.id].numMorningActions++;
             }
             else if (hour <= 13) {
-                locations[loc.id].numNoonActions++;
+                instances[inst.id].numNoonActions++;
             }
             else if (hour <= 17) {
-                locations[loc.id].numAfternoonActions++;
+                instances[inst.id].numAfternoonActions++;
             }
             else if (hour <= 22) {
-                locations[loc.id].numEveningActions++;
+                instances[inst.id].numEveningActions++;
             }
         }
 
-        const numLocations = Object.keys(locations).length;
-        const average = actions.length / numLocations;
+        const numInstances = Object.keys(instances).length;
+        const average = actions.length / numInstances;
 
         return (
             <ul className="actiondistro">
-                {Object.keys(locations).map(function(id) {
-                    const loc = locations[id].loc;
-                    const counts = locations[id]
+                {Object.keys(instances).map(function(id) {
+                    const inst = instances[id].inst;
+                    const counts = instances[id]
 
-                    return <ActionDistributionItem key={ id } location={ loc }
+                    return <ActionDistributionItem key={ id } instance={ inst }
                             numActionsAverage={ average }
                             numMorningActions={ counts.numMorningActions }
                             numNoonActions={ counts.numNoonActions }
@@ -72,5 +73,6 @@ export default class ActionDistribution extends React.Component {
 }
 
 ActionDistribution.propTypes = {
+    instanceField: React.PropTypes.string.isRequired,
     actions: React.PropTypes.array.isRequired
 };

@@ -5,7 +5,7 @@ import DayCycleGraph from './DayCycleGraph';
 
 export default class ActionDistributionItem extends React.Component {
     render() {
-        const loc = this.props.location;
+        const inst = this.props.instance;
         const counts = [
             this.props.numMorningActions,
             this.props.numNoonActions,
@@ -26,7 +26,7 @@ export default class ActionDistributionItem extends React.Component {
             <li className="actiondistroitem"
                 onMouseOver={ this.onMouseOver.bind(this) }
                 onMouseOut={ this.props.onMouseOut }>
-                <span className="title">{ loc.title }</span>
+                <span className="title">{ inst.title }</span>
                 <span style={ countStyle } className="actioncount">
                     <span>{ totalCount }</span>
                 </span>
@@ -39,13 +39,13 @@ export default class ActionDistributionItem extends React.Component {
 
     onMouseOver(ev) {
         if (this.props.onMouseOver) {
-            this.props.onMouseOver(this.props.location);
+            this.props.onMouseOver(this.props.instance);
         }
     }
 
     onDayCycleMouseOver(phase) {
         if (this.props.onMouseOverPhase) {
-            this.props.onMouseOverPhase(this.props.location, phase);
+            this.props.onMouseOverPhase(this.props.instance, phase);
         }
     }
 
@@ -62,7 +62,7 @@ ActionDistributionItem.propTypes = {
     numAfternoonActions: React.PropTypes.number.isRequired,
     numEveningActions: React.PropTypes.number.isRequired,
     numNightActions: React.PropTypes.number.isRequired,
-    location: React.PropTypes.shape({
+    instance: React.PropTypes.shape({
         title: React.PropTypes.string.isRequired
     }).isRequired,
     onMouseOver: React.PropTypes.func,
