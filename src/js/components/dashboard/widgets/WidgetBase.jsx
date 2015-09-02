@@ -18,9 +18,16 @@ export default class WidgetBase extends FluxComponent {
         const type = this.props.config.type;
         const classes = 'dashboard-widget dashboard-widget-' + type;
 
+        const store = this.getStore('dashboard');
+        const data = store.getWidgetData(type);
+
+        // TODO: Add loading indicator
+        const content = data?
+            this.renderWidget(data) : "Loading";
+
         return (
             <div className={ classes }>
-                { this.renderWidget() }
+                { content }
             </div>
         );
     }
