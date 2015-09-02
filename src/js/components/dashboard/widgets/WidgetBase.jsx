@@ -4,6 +4,16 @@ import FluxComponent from '../../FluxComponent';
 
 
 export default class WidgetBase extends FluxComponent {
+    componentDidMount() {
+        const type = this.props.config.type;
+        const store = this.getStore('dashboard');
+        const data = store.getWidgetData(type);
+
+        if (!data) {
+            this.getActions('dashboard').loadWidgetData(type);
+        }
+    }
+
     render() {
         const type = this.props.config.type;
         const classes = 'dashboard-widget dashboard-widget-' + type;
