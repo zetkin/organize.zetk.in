@@ -1,6 +1,7 @@
 import React from 'react/addons';
 
 import FluxComponent from '../FluxComponent';
+import Footer from './Footer';
 import Shortcut from './Shortcut';
 import DraggableWidget from './widgets/DraggableWidget';
 import ActionResponseWidget from './widgets/ActionResponseWidget';
@@ -82,6 +83,7 @@ export default class Dashboard extends FluxComponent {
                 <div className="dashboard-widgets">
                     { widgetElements }
                 </div>
+                <Footer/>
             </div>
         );
     }
