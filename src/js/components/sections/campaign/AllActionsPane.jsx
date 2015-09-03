@@ -77,7 +77,7 @@ export default class AllActionsPane extends PaneWithCalendar {
 
     onActionOperation(action, operation) {
         if (operation == 'edit') {
-            this.gotoSubPane('editaction', action.id);
+            this.openPane('editaction', action.id);
         }
     }
 
@@ -90,7 +90,7 @@ export default class AllActionsPane extends PaneWithCalendar {
         const moves = participantStore.getMoves();
 
         if (moves.length) {
-            this.gotoSubPane('moveparticipants');
+            this.openPane('moveparticipants');
         }
     }
 }

@@ -99,14 +99,14 @@ export default class LocationsPane extends PaneBase {
         }
         
         this.getActions('location').setPendingLocation(loc);
-        this.gotoSubPane('addlocation');
+        this.openPane('addlocation');
         this.setState({
             viewMode: 'map'
         });
     }
 
     onLocationSelect(loc) {
-        this.gotoSubPane('location', loc.id);
+        this.openPane('location', loc.id);
     }
     onLocationChange(loc) {
         this.getActions('location').setPendingLocation(loc);

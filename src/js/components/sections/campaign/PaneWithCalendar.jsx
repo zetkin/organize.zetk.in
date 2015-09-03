@@ -11,7 +11,7 @@ export default class PaneWithCalendar extends PaneBase {
         const campParam = selectedCampaign? selectedCampaign.id : 0;
         const dateParam = moment(date).format('YYYY-MM-DD');
 
-        this.gotoSubPane('addaction', campParam, dateParam);
+        this.openPane('addaction', campParam, dateParam);
     }
 
     onCalendarCopyAction(action, date) {
@@ -66,10 +66,10 @@ export default class PaneWithCalendar extends PaneBase {
 
     onSelectDay(date) {
         const dateStr = moment(date).format('YYYY-MM-DD');
-        this.gotoSubPane('actionday', dateStr);
+        this.openPane('actionday', dateStr);
     }
 
     onSelectAction(action) {
-        this.gotoSubPane('editaction', action.id);
+        this.openPane('editaction', action.id);
     }
 }

@@ -50,11 +50,11 @@ export default class PeopleListPane extends PaneBase {
     }
 
     onSelect(person) {
-        this.gotoSubPane('person', person.id);
+        this.openPane('person', person.id);
     }
 
     onAddClick(person) {
-        this.gotoSubPane('addperson');
+        this.openPane('addperson');
     }
 
     onQueryChange(name, value) {
@@ -68,10 +68,10 @@ export default class PeopleListPane extends PaneBase {
         this.getActions('query').createQuery(title);
 
         const queries = this.getStore('query').getQueries();
-        this.gotoSubPane('editquery', queries[queries.length-1].id);
+        this.openPane('editquery', queries[queries.length-1].id);
     }
 
     onQueryEdit(query) {
-        this.gotoSubPane('editquery', query.id);
+        this.openPane('editquery', query.id);
     }
 }

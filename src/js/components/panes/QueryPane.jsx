@@ -45,10 +45,10 @@ export default class EditQueryPane extends PaneBase {
     }
 
     onPersonSelect(person) {
-        this.gotoSubPane('person', person.id);
+        this.openPane('person', person.id);
     }
 
     onEditClick(ev) {
-        this.gotoSubPane('editquery', this.getParam(0));
+        this.openPane('editquery', this.getParam(0));
     }
 }
