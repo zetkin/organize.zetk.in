@@ -1,7 +1,9 @@
 import React from 'react/addons';
 
+import FluxComponent from '../FluxComponent';
 
-export default class FilterBase extends React.Component {
+
+export default class FilterBase extends FluxComponent {
     render() {
         const config = this.props.config;
         const classes = "filter filter-" + config.type;
