@@ -110,3 +110,38 @@
         }
     }
 }
+
+.dashboard footer {
+    width: 90%;
+    max-width: 60em;
+    margin: 3em auto;
+    text-align: center;
+
+    color: #888;
+
+    &::before {
+        content: "";
+        display: block;
+        width: 70%;
+        height: 1px;
+        margin: 0 auto 1em;
+        background-color: #aaa;
+    }
+
+    ul {
+        margin: 0.5em 0;
+
+        li {
+            display: inline-block;
+            margin: 0 1em;
+
+            a {
+                text-decoration: underline;
+
+                &:hover {
+                    color: #333;
+                }
+            }
+        }
+    }
+}
