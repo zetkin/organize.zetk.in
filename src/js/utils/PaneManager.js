@@ -7,37 +7,49 @@ const VERTICAL = 'v';
 const HORIZONTAL = 'h';
 
 function run(paneElements, container) {
-    document.addEventListener('touchmove', function(ev) {
-        ev.preventDefault();
-    });
-
-    var i;
+    const oldPanes = _panes || [];
 
     _panes = [];
-    for (i = 0; i < paneElements.length; i++) {
-        var isBase = (i == 0);
-        _panes[i] = new Pane(paneElements[i], isBase);
+    for (let i = 0; i < paneElements.length; i++) {
+        let paneElem = paneElements[i];
+
+        let pane = oldPanes.find(p => p.domElement.id == paneElem.id);
+
+        if (!pane) {
+            let isBase = (i == 0);
+            // Use random string as ID
+            paneElem.id = (new Date * Math.random()).toString(36);
+            pane = new Pane(paneElem, isBase);
+        }
+
+        _panes[i] = pane;
     }
 
-    _layout = (window.innerWidth > 720)? HORIZONTAL : VERTICAL;
-    _stackWidth = container.offsetWidth;
-
-    window.addEventListener('resize', function(ev) {
-        var prevLayout = _layout;
+    if (!_running) {
+        document.addEventListener('touchmove', function(ev) {
+            ev.preventDefault();
+        });
 
         _layout = (window.innerWidth > 720)? HORIZONTAL : VERTICAL;
         _stackWidth = container.offsetWidth;
 
-        if (_layout != prevLayout) {
-            // Layout changed! Reset and start new layout
-            if (_layout == VERTICAL) {
-                resetVerticalLayout();
+        window.addEventListener('resize', function(ev) {
+            var prevLayout = _layout;
+
+            _layout = (window.innerWidth > 720)? HORIZONTAL : VERTICAL;
+            _stackWidth = container.offsetWidth;
+
+            if (_layout != prevLayout) {
+                // Layout changed! Reset and start new layout
+                if (_layout == VERTICAL) {
+                    resetVerticalLayout();
+                }
+                else {
+                    resetHorizontalLayout();
+                }
             }
-            else {
-                resetHorizontalLayout();
-            }
-        }
-    });
+        });
+    }
 
     if (_layout == VERTICAL) {
         resetVerticalLayout();
@@ -308,8 +320,6 @@ function Pane(domElement, isBase) {
         this.domElement.style.top = '';
         this.domElement.style.transform = '';
         this.domElement.style.webkitTransform = '';
-        this.contentElement.style.transform = '';
-        this.contentElement.style.webkitTransform = '';
 
         stopDragging();
     }

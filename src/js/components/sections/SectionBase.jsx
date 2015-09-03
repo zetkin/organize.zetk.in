@@ -9,18 +9,15 @@ import { resolvePane } from '../panes';
 
 export default class SectionBase extends FluxComponent {
     runPaneManager() {
-        var panes = [];
-        var containerDOMNode;
-
-        Object.keys(this.refs)
+        const panes = Object.keys(this.refs)
             .filter(key => (key.indexOf('pane') == 0 && key != 'paneContainer'))
             .sort()
             .map(function(key) {
                 var paneDOMNode = React.findDOMNode(this.refs[key]);
-                panes.push(paneDOMNode);
+                return paneDOMNode;
             }, this);
 
-        containerDOMNode = React.findDOMNode(this.refs.paneContainer);
+        const containerDOMNode = React.findDOMNode(this.refs.paneContainer);
         PaneManager.run(panes, containerDOMNode);
     }
 
@@ -33,7 +30,6 @@ export default class SectionBase extends FluxComponent {
     }
 
     componentDidUpdate() {
-        PaneManager.stop();
         this.runPaneManager();
     }
 
