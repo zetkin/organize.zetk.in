@@ -20,7 +20,8 @@ export default class ActionCalendar extends React.Component {
         }
 
         // Always start on previous Monday
-        startDate.setDate(startDate.getDate() - startDate.getDay() + 1);
+        const startDay = startDate.getDay();
+        startDate.setDate(startDate.getDate() + 1 - (startDay? startDay : 7));
 
         // Always end on next Sunday
         endDate.setDate(endDate.getDate() + (7 - endDate.getDay()));
