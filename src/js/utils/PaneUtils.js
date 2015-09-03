@@ -13,6 +13,7 @@ import EditLocationPane from '../components/panes/EditLocationPane';
 import EditQueryPane from '../components/panes/EditQueryPane';
 import MoveParticipantsPane from '../components/panes/MoveParticipantsPane';
 import PersonPane from '../components/panes/PersonPane';
+import QueryPane from '../components/panes/QueryPane';
 
 var _panes = {
     'actionday': ActionDayPane,
@@ -30,7 +31,8 @@ var _panes = {
     'editquery': EditQueryPane,
     'location': EditLocationPane,
     'moveparticipants': MoveParticipantsPane,
-    'person': PersonPane
+    'person': PersonPane,
+    'query': QueryPane
 };
 
 function resolve(name) {
