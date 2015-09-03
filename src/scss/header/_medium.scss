@@ -16,13 +16,51 @@
     }
 
     .usermenu {
+        transition: color 0.1s;
+
+        &::before {
+            z-index: 1000;
+            content: "";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: black;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
         &:hover {
+            &::before {
+                opacity: 0.5;
+                visibility: visible;
+            }
+
             .usermenu-info ul {
                 display: block;
             }
+
+            color: white;
+        }
+
+        .usermenu-avatar {
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 3000;
         }
 
         .usermenu-info{
+            background-color: red;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 3000;
+
             display: block;
             margin-top: 0;
             padding: 0;
