@@ -39,6 +39,7 @@ export default class KeyboardShortcuts extends FluxComponent {
                         <li><code>gh</code> Go home to dashboard</li>
                         <li><code>gp</code> Go to people section</li>
                         <li><code>gc</code> Go to campaign section</li>
+                        <li><code>gd</code> Go to dialog section</li>
                         <li><code>gm</code> Go to maps section</li>
                         <li><code>g{'<N>'}</code> Go to Nth sub-section of current section</li>
                     </ul>
@@ -67,6 +68,7 @@ export default class KeyboardShortcuts extends FluxComponent {
                         <li><code>h</code> home</li>
                         <li><code>p</code> people</li>
                         <li><code>c</code> campaign</li>
+                        <li><code>d</code> dialog</li>
                         <li><code>m</code> maps</li>
                         <li><code>1-7</code> sub-section</li>
                     </ul>
@@ -117,6 +119,9 @@ export default class KeyboardShortcuts extends FluxComponent {
 
                 case 99:    // 'c' == campaign
                     this.navigateToSection('/campaign');
+                    break;
+                case 100:    // 'd' == dialog
+                    this.navigateToSection('/dialog');
                     break;
                 case 104:   // 'h' == home
                     this.navigateToSection('/');

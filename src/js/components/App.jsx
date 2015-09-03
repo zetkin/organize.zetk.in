@@ -10,6 +10,7 @@ import NotFoundPage from './NotFoundPage';
 import KeyboardShortcuts from './KeyboardShortcuts';
 
 import CampaignSection from './sections/campaign/CampaignSection';
+import DialogSection from './sections/dialog/DialogSection';
 import PeopleSection from './sections/people/PeopleSection';
 import MapsSection from './sections/maps/MapsSection';
 
@@ -45,6 +46,9 @@ export default class App extends FluxComponent {
 
                             <Router.Location ref="campaign" path="/campaign(/*)"
                                 handler={ CampaignSection }/>
+
+                            <Router.Location ref="dialog" path="/dialog(/*)"
+                                handler={ DialogSection }/>
 
                             <Router.Location ref="maps" path="/maps(/*)"
                                 handler={ MapsSection }/>
