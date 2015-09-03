@@ -4,7 +4,7 @@ import moment from 'moment';
 import PaneBase from '../../panes/PaneBase';
 
 
-export default class PaneWithCalendar extends PaneBase {
+export default class CampaignSectionPaneBase extends PaneBase {
     onCalendarAddAction(date) {
         const campaignStore = this.getStore('campaign');
         const selectedCampaign = campaignStore.getSelectedCampaign();

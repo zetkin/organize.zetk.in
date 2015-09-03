@@ -1,12 +1,12 @@
 import React from 'react/addons';
 
-import PaneWithCalendar from './PaneWithCalendar';
+import CampaignSectionPaneBase from './CampaignSectionPaneBase';
 import CampaignSelect from '../../misc/CampaignSelect';
 import ActionDistribution from '../../misc/actiondistro/ActionDistribution';
 import ActionMiniCalendar from '../../misc/actioncal/ActionMiniCalendar';
 
 
-export default class ActionDistributionPane extends PaneWithCalendar {
+export default class ActionDistributionPane extends CampaignSectionPaneBase {
     getPaneTitle() {
         return 'Location and activity distribution';
     }
