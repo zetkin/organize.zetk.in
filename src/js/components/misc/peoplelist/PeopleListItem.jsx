@@ -1,6 +1,6 @@
 import React from 'react/addons';
 
-import Avatar from '../Avatar';
+import DraggableAvatar from '../DraggableAvatar';
 
 
 export default class PeopleListItem extends React.Component {
@@ -17,7 +17,7 @@ export default class PeopleListItem extends React.Component {
             <li key={ person.id } className="peoplelistitem"
                 onClick={ this.props.onSelect }>
 
-                <Avatar person={ person }/>
+                <DraggableAvatar person={ person }/>
                 <span className="first_name">{ person.first_name }</span>
                 <span className="last_name">{ person.last_name }</span>
                 <span className="email">{ mailLink }</span>
