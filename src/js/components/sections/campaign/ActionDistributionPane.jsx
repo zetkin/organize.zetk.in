@@ -34,7 +34,9 @@ export default class ActionDistributionPane extends CampaignSectionPaneBase {
         const actions = actionStore.getActions();
 
         return [
-            <CampaignSelect/>,
+            <CampaignSelect
+                onCreate={ this.onCreateCampaign.bind(this) }
+                onEdit={ this.onEditCampaign.bind(this) }/>,
             <div className="locations">
                 <h3>Locations</h3>
                 <ActionDistribution actions={ actions }

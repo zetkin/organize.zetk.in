@@ -72,4 +72,12 @@ export default class CampaignSectionPaneBase extends PaneBase {
     onSelectAction(action) {
         this.openPane('editaction', action.id);
     }
+
+    onEditCampaign(campaign) {
+        this.openPane('editcampaign', campaign.id);
+    }
+
+    onCreateCampaign(title) {
+        this.openPane('addcampaign', title);
+    }
 }

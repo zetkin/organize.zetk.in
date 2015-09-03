@@ -12,7 +12,9 @@ export default class CampaignOverviewPane extends CampaignSectionPaneBase {
 
     renderPaneContent() {
         return [
-            <CampaignSelect/>
+            <CampaignSelect
+                onCreate={ this.onCreateCampaign.bind(this) }
+                onEdit={ this.onEditCampaign.bind(this) }/>
         ];
     }
 }

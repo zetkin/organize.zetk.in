@@ -39,7 +39,9 @@ export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
         const center = locationStore.getAverageCenterOfLocations();
 
         return [
-            <CampaignSelect key="select"/>,
+            <CampaignSelect
+                onCreate={ this.onCreateCampaign.bind(this) }
+                onEdit={ this.onEditCampaign.bind(this) }/>,
             <CampaignPlayer key="player"
                 actions={ actions } locations={ locations }
                 centerLat={ center.lat } centerLng={ center.lng }

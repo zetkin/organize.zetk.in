@@ -64,7 +64,10 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
                 selected={ this.state.viewMode }
                 onSwitch={ this.onViewSwitch.bind(this) }/>,
 
-            <CampaignSelect/>,
+            <CampaignSelect
+                onCreate={ this.onCreateCampaign.bind(this) }
+                onEdit={ this.onEditCampaign.bind(this) }/>,
+
             viewComponent
         ];
     }
