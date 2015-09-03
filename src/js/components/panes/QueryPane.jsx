@@ -35,6 +35,7 @@ export default class QueryPane extends PaneBase {
         }
 
         const filterTypes = {
+            'campaign': 'Campaign participation',
             'join_date': 'Join date',
             'person_data': 'Person data'
         };

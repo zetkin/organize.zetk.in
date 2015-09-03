@@ -138,6 +138,11 @@ let filterFunctions = {
     join_date: function matchJoinDate(person, filterConfig) {
         // TODO: Implement once join date is actually on person object
         return true;
+    },
+
+    campaign: function matchCampaign(person, filterConfig) {
+        // TODO: Implement server-side
+        return true;
     }
 };
 
@@ -155,6 +160,13 @@ let defaultConfigs = {
         return {
             operator: 'gt',
             date: jan1.format('{yyyy}-{MM}-{dd}')
+        }
+    },
+
+    campaign: function getCampaignDefault() {
+        return {
+            operator: 'in',
+            campaign: undefined
         }
     }
 };
