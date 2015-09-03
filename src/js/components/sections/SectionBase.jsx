@@ -2,9 +2,9 @@ import React from 'react/addons';
 import { Link } from 'react-router-component';
 import cx from 'classnames';
 
-import PaneUtils from '../../utils/PaneUtils';
 import PaneManager from '../../utils/PaneManager';
 import FluxComponent from '../FluxComponent';
+import { resolvePane } from '../panes';
 
 
 export default class SectionBase extends FluxComponent {
@@ -106,7 +106,7 @@ export default class SectionBase extends FluxComponent {
 
                 panePath = basePath + '/' + subPathSegments.slice(0, i+1).join('/');
 
-                Pane = PaneUtils.resolve(paneName);
+                Pane = resolvePane(paneName);
                 panes.push(
                     <Pane ref={ 'pane' + subRefIndex } key={ segment }
                         paneType={ paneName }
