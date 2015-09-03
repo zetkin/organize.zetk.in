@@ -4,6 +4,24 @@ import ActionDay from './ActionDay';
 
 
 export default class ActionMiniCalendar extends React.Component {
+    componentDidMount() {
+        const ctrDOMNode = React.findDOMNode(this.refs.container);
+
+        this.scrollListener = function(ev) {
+            ctrDOMNode.scrollLeft -= ev.wheelDelta;
+        };
+
+        ctrDOMNode.addEventListener('mousewheel', this.scrollListener);
+    }
+
+    componentWillUnount() {
+        const ctrDOMNode = React.findDOMNode(this.refs.container);
+
+        ctrDOMNode.removeEventListener('mousewheel', this.scrollListener);
+
+        this.scrollListener = null;
+    }
+
     render() {
         const actions = this.props.actions;
 
@@ -55,7 +73,7 @@ export default class ActionMiniCalendar extends React.Component {
         }
 
         return (
-            <div className="actionminicalendar">
+            <div ref="container" className="actionminicalendar">
                 { days }
             </div>
         );
