@@ -45,10 +45,20 @@ export default class RelSelectInput extends InputBase {
 
         const filteredObjects = this.getFilteredObjects();
 
-        const createOptionClasses = cx({
-            'relselectinput-create': true,
-            'focused': (this.state.focusedIndex == filteredObjects.length)
-        });
+        var createOption = null;
+        if (this.props.showCreateOption) {
+            const createOptionClasses = cx({
+                'relselectinput-create': true,
+                'focused': (this.state.focusedIndex == filteredObjects.length)
+            });
+
+            createOption = (
+                <li key="create" className={ createOptionClasses }
+                    onMouseDown={ this.onClickCreate.bind(this) }>
+                    Create <em>{ this.state.inputValue || 'new' }...</em>
+                </li>
+            );
+        }
 
         return (
             <div className={ classes }>
@@ -81,10 +91,7 @@ export default class RelSelectInput extends InputBase {
                         </li>
                     );
                 }, this)}
-                    <li key="create" className={ createOptionClasses }
-                        onMouseDown={ this.onClickCreate.bind(this) }>
-                        Create <em>{ this.state.inputValue || 'new' }...</em>
-                    </li>
+                    { createOption }
                 </ul>
             </div>
         );
@@ -110,11 +117,13 @@ export default class RelSelectInput extends InputBase {
         const focusedIndex = this.state.focusedIndex;
         const objects = this.getFilteredObjects();
         const objectCount = objects.length;
+        const maxIndex = this.props.showCreateOption?
+            objectCount : objectCount - 1;
 
         if (ev.keyCode == 40) {
             // User pressed down, increment or set to zero if undefined
             this.setState({
-                focusedIndex: Math.min(objectCount,
+                focusedIndex: Math.min(maxIndex,
                     (focusedIndex === undefined)? 0 : focusedIndex + 1)
             });
 
@@ -124,7 +133,7 @@ export default class RelSelectInput extends InputBase {
             // User pressed up, decrement or set to last if undefined
             this.setState({
                 focusedIndex: Math.max(0, (focusedIndex === undefined)?
-                    objectCount : focusedIndex - 1)
+                    maxIndex : focusedIndex - 1)
             });
 
             ev.preventDefault();
@@ -193,6 +202,7 @@ RelSelectInput.propTypes = {
     objects: React.PropTypes.array.isRequired,
     valueField: React.PropTypes.string,
     labelField: React.PropTypes.string,
+    showCreateOption: React.PropTypes.bool,
     showEditLink: React.PropTypes.bool,
     onValueChange: React.PropTypes.func,
     onCreate: React.PropTypes.func,
@@ -200,6 +210,7 @@ RelSelectInput.propTypes = {
 };
 
 RelSelectInput.defaultProps = {
+    showCreateOption: true,
     showEditLink: false,
     valueField: 'id',
     labelField: 'title'
