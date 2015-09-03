@@ -15,7 +15,7 @@ export default class DashboardStore extends Store {
                 { type: 'organizer_notes' }
             ],
             widgetData: {},
-            shortcuts: [ 'people', 'campaign', 'contact', 'maps',
+            shortcuts: [ 'people', 'campaign', 'dialog', 'maps',
                 'survey', 'resources', 'meetups', 'finance', 'settings' ]
         });
 
