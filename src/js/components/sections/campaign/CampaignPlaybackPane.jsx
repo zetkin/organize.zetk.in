@@ -1,12 +1,12 @@
 import React from 'react/addons';
 
-import PaneWithCalendar from './PaneWithCalendar';
+import CampaignSectionPaneBase from './CampaignSectionPaneBase';
 import CampaignSelect from '../../misc/CampaignSelect';
 import CampaignPlayer from '../../misc/campaignplayer/CampaignPlayer';
 import ActionMiniCalendar from '../../misc/actioncal/ActionMiniCalendar';
 
 
-export default class CampaignPlaybackPane extends PaneWithCalendar {
+export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
     getPaneTitle() {
         return 'Campaign playback';
     }
@@ -39,7 +39,9 @@ export default class CampaignPlaybackPane extends PaneWithCalendar {
         const center = locationStore.getAverageCenterOfLocations();
 
         return [
-            <CampaignSelect key="select"/>,
+            <CampaignSelect
+                onCreate={ this.onCreateCampaign.bind(this) }
+                onEdit={ this.onEditCampaign.bind(this) }/>,
             <CampaignPlayer key="player"
                 actions={ actions } locations={ locations }
                 centerLat={ center.lat } centerLng={ center.lng }

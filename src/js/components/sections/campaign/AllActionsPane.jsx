@@ -1,13 +1,13 @@
 import React from 'react/addons';
 
-import PaneWithCalendar from './PaneWithCalendar';
+import CampaignSectionPaneBase from './CampaignSectionPaneBase';
 import ActionList from '../../misc/actionlist/ActionList';
 import CampaignSelect from '../../misc/CampaignSelect';
 import ActionCalendar from '../../misc/actioncal/ActionCalendar';
 import ViewSwitch from '../../misc/ViewSwitch';
 
 
-export default class AllActionsPane extends PaneWithCalendar {
+export default class AllActionsPane extends CampaignSectionPaneBase {
     constructor(props) {
         super(props);
 
@@ -64,7 +64,10 @@ export default class AllActionsPane extends PaneWithCalendar {
                 selected={ this.state.viewMode }
                 onSwitch={ this.onViewSwitch.bind(this) }/>,
 
-            <CampaignSelect/>,
+            <CampaignSelect
+                onCreate={ this.onCreateCampaign.bind(this) }
+                onEdit={ this.onEditCampaign.bind(this) }/>,
+
             viewComponent
         ];
     }

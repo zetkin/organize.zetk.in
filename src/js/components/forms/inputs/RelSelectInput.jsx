@@ -45,11 +45,13 @@ export default class RelSelectInput extends InputBase {
 
         const filteredObjects = this.getFilteredObjects();
 
+        this.values = filteredObjects.map(o => o[valueField]);
+
         var createOption = null;
         if (this.props.showCreateOption) {
             const createOptionClasses = cx({
                 'relselectinput-create': true,
-                'focused': (this.state.focusedIndex == filteredObjects.length)
+                'focused': (this.state.focusedIndex == this.values.length)
             });
 
             createOption = (
@@ -58,6 +60,25 @@ export default class RelSelectInput extends InputBase {
                     Create <em>{ this.state.inputValue || 'new' }...</em>
                 </li>
             );
+
+            this.values.push('+');
+        }
+
+        var nullOption = null;
+        if (this.props.allowNull) {
+            const nullOptionClasses = cx({
+                'relselectinput-null': true,
+                'focused': (this.state.focusedIndex == this.values.length)
+            });
+
+            nullOption = (
+                <li key="null" className={ nullOptionClasses }
+                    onMouseDown={ this.onClickNull.bind(this) }>
+                    { this.props.nullLabel }
+                </li>
+            );
+
+            this.values.push('-');
         }
 
         return (
@@ -91,6 +112,7 @@ export default class RelSelectInput extends InputBase {
                         </li>
                     );
                 }, this)}
+                    { nullOption }
                     { createOption }
                 </ul>
             </div>
@@ -116,9 +138,8 @@ export default class RelSelectInput extends InputBase {
     onKeyDown(ev) {
         const focusedIndex = this.state.focusedIndex;
         const objects = this.getFilteredObjects();
-        const objectCount = objects.length;
-        const maxIndex = this.props.showCreateOption?
-            objectCount : objectCount - 1;
+        const valueCount = this.values.length;
+        const maxIndex = valueCount - 1;
 
         if (ev.keyCode == 40) {
             // User pressed down, increment or set to zero if undefined
@@ -139,14 +160,18 @@ export default class RelSelectInput extends InputBase {
             ev.preventDefault();
         }
         else if (ev.keyCode == 13) {
-            if (focusedIndex < objectCount) {
-                // User pressed enter and has selected an option index
-                const objects = this.getFilteredObjects();
-                this.selectObject(objects[focusedIndex]);
-            }
-            else if (focusedIndex == objectCount) {
-                // User pressed enter on the "create option"
-                this.createObject();
+            if (focusedIndex > 0 && focusedIndex < valueCount) {
+                const value = this.values[focusedIndex];
+                if (value == '+') {
+                    // User pressed enter on the "create option"
+                    this.createObject();
+                }
+                else if (value == '-') {
+                    this.selectNull();
+                }
+                else {
+                    this.selectValue(value);
+                }
             }
 
             // Blur field and prevent form from being submitted
@@ -156,7 +181,8 @@ export default class RelSelectInput extends InputBase {
     }
 
     onClickOption(obj) {
-        this.selectObject(obj);
+        const valueField = this.props.valueField;
+        this.selectValue(obj[valueField]);
     }
 
     onClickEdit(obj) {
@@ -167,6 +193,10 @@ export default class RelSelectInput extends InputBase {
 
     onClickCreate() {
         this.createObject();
+    }
+
+    onClickNull() {
+        this.selectNull();
     }
 
     onFocus(ev) {
@@ -188,12 +218,17 @@ export default class RelSelectInput extends InputBase {
         }
     }
 
-    selectObject(obj) {
+    selectValue(value) {
         if (this.props.onValueChange) {
             const name = this.props.name;
-            const value = obj[this.props.valueField];
 
             this.props.onValueChange(name, value);
+        }
+    }
+
+    selectNull() {
+        if (this.props.onValueChange) {
+            this.props.onValueChange(name, null);
         }
     }
 }
@@ -202,8 +237,10 @@ RelSelectInput.propTypes = {
     objects: React.PropTypes.array.isRequired,
     valueField: React.PropTypes.string,
     labelField: React.PropTypes.string,
+    nullLabel: React.PropTypes.string,
     showCreateOption: React.PropTypes.bool,
     showEditLink: React.PropTypes.bool,
+    allowNull: React.PropTypes.bool,
     onValueChange: React.PropTypes.func,
     onCreate: React.PropTypes.func,
     onEdit: React.PropTypes.func
@@ -213,5 +250,6 @@ RelSelectInput.defaultProps = {
     showCreateOption: true,
     showEditLink: false,
     valueField: 'id',
-    labelField: 'title'
+    labelField: 'title',
+    nullLabel: 'None'
 };

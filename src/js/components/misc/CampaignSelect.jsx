@@ -1,6 +1,7 @@
 import React from 'react/addons';
 
 import FluxComponent from '../FluxComponent';
+import RelSelectInput from '../forms/inputs/RelSelectInput';
 
 
 export default class CampaignSelect extends FluxComponent {
@@ -13,29 +14,21 @@ export default class CampaignSelect extends FluxComponent {
         }
 
         return (
-            <select value={ selected }
-                onChange={ this.onChange.bind(this) }>
-
-                <option key="all" value="all">Any campaign</option>
-
-            {campaigns.map(function(campaign) {
-                return (
-                    <option key={ campaign.id } value={ campaign.id }>
-                        { campaign.title }</option>
-                );
-            })}
-            </select>
+            <RelSelectInput value={ selected } objects={ campaigns }
+                showEditLink={ true } allowNull={ true }
+                nullLabel="Any campaign"
+                onEdit={ this.props.onEdit }
+                onCreate={ this.props.onCreate }
+                onValueChange={ this.onChange.bind(this) }/>
         );
     }
 
-    onChange(ev) {
-        const id = ev.target.value;
-
-        if (id === 'all') {
+    onChange(name, value) {
+        if (!value) {
             this.getActions('campaign').selectCampaign(null);
         }
         else {
-            this.getActions('campaign').selectCampaign(id);
+            this.getActions('campaign').selectCampaign(value);
         }
     }
 }
