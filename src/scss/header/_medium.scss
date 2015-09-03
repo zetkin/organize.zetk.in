@@ -47,10 +47,7 @@
             color: white;
         }
 
-        .usermenu-avatar {
-            position: absolute;
-            right: 0;
-            top: 0;
+        .avatar {
             z-index: 3000;
         }
 
@@ -67,7 +64,8 @@
             background-color: transparent;
 
             .usermenu-user{
-                padding: 0.5em 3em 0.45em 0;
+                width: 14em;
+                padding: 0.5em 3.5em 0.45em 0;
             }
 
             ul {

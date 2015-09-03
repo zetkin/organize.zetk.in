@@ -2,6 +2,7 @@ import React from 'react/addons';
 
 import FluxComponent from '../FluxComponent';
 import OrgPicker from './OrgPicker';
+import Avatar from '../misc/Avatar';
 
 
 export default class UserMenu extends FluxComponent {
@@ -21,7 +22,7 @@ export default class UserMenu extends FluxComponent {
 
         return (
             <nav className="usermenu">
-                <div className="usermenu-avatar"></div>
+                <Avatar person={ profile }/>
                 <div className="usermenu-info">
                     <div className="usermenu-user">
                         <a href={ accountUrl }>

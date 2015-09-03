@@ -201,22 +201,12 @@
         right: 0;
         font-size: 1.6em;
 
-        .usermenu-avatar {
+        .avatar {
             position: absolute;
-            top: 0;
-            right: 0;
-            width: 3em;
-            height: 3em;
-            // Avatar placeholder
-            &::after {
-                content: "";
-                display: block;
-                height: 80%;
-                width: 80%;
-                margin: 10%;
-                background-color: #EEE;
-                border-radius: 50%;
-            }
+            top: 0.3em;
+            right: 0.3em;
+            width: 2.4em;
+            height: 2.4em;
         }
         &:hover {
             .usermenu-info{
