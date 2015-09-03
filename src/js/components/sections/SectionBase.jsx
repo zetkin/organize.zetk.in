@@ -51,6 +51,8 @@ export default class SectionBase extends FluxComponent {
             panePath = basePath + '/' + subSections[0].path;
             panes.push(
                 <Pane ref="pane0" key={ subSections[0].path }
+                    onOpenPane={ this.onOpenPane.bind(this, 0) }
+                    onPushPane={ this.onPushPane.bind(this) }
                     paneType={ subSections[0].path } panePath={ panePath }/>);
         }
         else {
@@ -66,6 +68,8 @@ export default class SectionBase extends FluxComponent {
                     panePath = basePath + '/' + section.path;
                     panes.push(
                         <Pane ref="pane0" key={ section.path }
+                            onOpenPane={ this.onOpenPane.bind(this, 0) }
+                            onPushPane={ this.onPushPane.bind(this) }
                             paneType={ section.path } panePath={ panePath }/>);
                     break;
                 }
@@ -85,6 +89,8 @@ export default class SectionBase extends FluxComponent {
                 panePath = basePath + '/' + section.path;
                 panes.push(
                     <Pane ref="pane0" key={ section.path }
+                        onOpenPane={ this.onOpenPane.bind(this, 0) }
+                        onPushPane={ this.onPushPane.bind(this) }
                         paneType={ section.path } panePath={ panePath }/>);
 
                 subStartIndex = 0;
@@ -105,6 +111,10 @@ export default class SectionBase extends FluxComponent {
                 Pane = resolvePane(paneName);
                 panes.push(
                     <Pane ref={ 'pane' + subRefIndex } key={ segment }
+                        onClose={ this.onClosePane.bind(this, i) }
+                        onReplace={ this.onReplacePane.bind(this, i) }
+                        onOpenPane={ this.onOpenPane.bind(this, i) }
+                        onPushPane={ this.onPushPane.bind(this) }
                         paneType={ paneName }
                         panePath={ panePath } params={ paneParams }/>
                 );
@@ -175,6 +185,56 @@ export default class SectionBase extends FluxComponent {
         else {
             return false;
         }
+    }
+
+    onClosePane(index) {
+        const router = this.context.router;
+        const basePath = router.getMatch().matchedPath;
+        const subPath = router.getMatch().unmatchedPath;
+        const subPathSegments = subPath.split('/');
+
+        // Remove element at index
+        subPathSegments.splice(index, 1);
+        const path = [ basePath ].concat(subPathSegments).join('/');
+
+        router.navigate(path);
+    }
+
+    onReplacePane(index, newSegment) {
+        const router = this.context.router;
+        const basePath = router.getMatch().matchedPath;
+        const subPath = router.getMatch().unmatchedPath;
+        const subPathSegments = subPath.split('/');
+
+        // Replace segment at index
+        subPathSegments[index] = newSegment;
+        const path = [ basePath ].concat(subPathSegments).join('/');
+
+        router.navigate(path);
+    }
+
+    onOpenPane(index, newSegment) {
+        const router = this.context.router;
+        const basePath = router.getMatch().matchedPath;
+        const subPath = router.getMatch().unmatchedPath;
+        const subPathSegments = subPath? subPath.split('/') : [];
+
+        // Add segment after index
+        subPathSegments.splice(index + 1, 0, newSegment);
+        const path = [ basePath ].concat(subPathSegments).join('/');
+
+        router.navigate(path);
+    }
+
+    onPushPane(newSegment) {
+        const router = this.context.router;
+        const basePath = router.getMatch().matchedPath;
+        const subPath = router.getMatch().unmatchedPath || '';
+
+        // Add segment at the end
+        const path = basePath + '/' + subPath + '/' + newSegment;
+
+        router.navigate(path);
     }
 }
 

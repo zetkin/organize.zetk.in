@@ -71,49 +71,31 @@ export default class PaneBase extends FluxComponent {
         }
     }
 
-    subPath(path) {
-        return this.props.panePath + '/' + path;
-    }
-
-    subPanePath(paneType, ...params) {
-        var urlSegment = paneType;
-        if (params.length) {
-            urlSegment += ':' + params.join(',');
-        }
-
-        return this.subPath(urlSegment);
-    }
-
-    gotoSubPath(path) {
-        this.context.router.navigate(this.subPath(path));
-    }
-
     gotoSubPane(paneType, ...params) {
-        this.context.router.navigate(this.subPanePath(paneType, ...params));
+        const paneSegment = panePathSegment(paneType, params);
+        if (this.props.onOpenPane) {
+            this.props.onOpenPane(paneSegment);
+        }
     }
 
     gotoPane(paneType, ...params) {
-        var paneSegment = paneType;
-
-        if (params.length) {
-            paneSegment += ':' + params.join(',');
+        const paneSegment = panePathSegment(paneType, params);
+        if (this.props.onReplace) {
+            this.props.onReplace(paneSegment);
         }
+    }
 
-        const pathSegments = this.props.panePath.split('/');
-        const newPath = pathSegments
-            .slice(0, pathSegments.length - 1)
-            .join('/')
-            .concat('/' + paneSegment);
-
-        this.context.router.navigate(newPath);
+    pushPane(paneType, ...params) {
+        if (this.props.onPushPane) {
+            const pathSegment = panePathSegment(paneType, params);
+            this.props.onPushPane(pathSegment);
+        }
     }
 
     closePane() {
-        var pathElements = this.props.panePath.split('/');
-        var parentPathElements = pathElements.slice(0, pathElements.length - 1);
-        var parentPath = parentPathElements.join('/');
-
-        this.context.router.navigate(parentPath);
+        if (this.props.onClose) {
+            this.props.onClose();
+        }
     }
 
     onCloseClick(ev) {
@@ -121,4 +103,19 @@ export default class PaneBase extends FluxComponent {
     }
 }
 
-PaneBase.contextTypes.router = React.PropTypes.any;
+PaneBase.propTypes = {
+    onClose: React.PropTypes.func,
+    onReplace: React.PropTypes.func,
+    onOpenPane: React.PropTypes.func,
+    onPushPane: React.PropTypes.func
+};
+
+function panePathSegment(paneType, params) {
+    var paneSegment = paneType;
+
+    if (params.length) {
+        paneSegment += ':' + params.join(',');
+    }
+
+    return paneSegment;
+}
