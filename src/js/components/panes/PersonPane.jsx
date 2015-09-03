@@ -1,51 +1,8 @@
 import React from 'react/addons';
-import { DragSource } from 'react-dnd';
 
 import PaneBase from './PaneBase';
 import PersonForm from '../forms/PersonForm';
-import Avatar from '../misc/Avatar';
-
-const personSource = {
-    beginDrag(props) {
-        return props.person;
-    },
-
-    endDrag(props, monitor, component) {
-        const dropResult = monitor.getDropResult();
-        if (!dropResult) {
-            // This was not a successful drag
-            return;
-        }
-
-        const person = monitor.getItem();
-        const newAction = dropResult.newAction;
-        const targetType = dropResult.targetType;
-
-        if (dropResult.onAddParticipant) {
-            dropResult.onAddParticipant(person);
-        }
-
-        if (targetType == 'contact' && dropResult.onSetContact) {
-            dropResult.onSetContact(person);
-        }
-    }
-}
-
-function collect(connect, monitor) {
-    return {
-        connectDragSource: connect.dragSource(),
-        isDragging: monitor.isDragging()
-    }
-}
-
-// Create a draggable version of the Avatar component as
-// a simple decorated sub-class of Avatar.
-@DragSource('person', personSource, collect)
-class DraggableAvatar extends Avatar {
-    render() {
-        return this.props.connectDragSource(super.render());
-    }
-}
+import DraggableAvatar from '../misc/DraggableAvatar';
 
 
 export default class PersonPane extends PaneBase {
