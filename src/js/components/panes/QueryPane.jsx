@@ -25,6 +25,9 @@ export default class EditQueryPane extends PaneBase {
     componentDidMount() {
         this.listenTo('person', this.forceUpdate);
         this.listenTo('query', this.forceUpdate);
+
+        // TODO: Replace with actually executing query
+        this.getActions('person').retrievePeople();
     }
 
     renderPaneContent(data) {
@@ -32,6 +35,7 @@ export default class EditQueryPane extends PaneBase {
         const queryStore = this.getStore('query');
         const people = personStore.getPeople();
 
+        // TODO: Should happen server-side
         const filteredPeople = queryStore.executeQuery(data.id, people);
 
         return [
