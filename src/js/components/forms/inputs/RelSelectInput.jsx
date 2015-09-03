@@ -27,6 +27,7 @@ export default class RelSelectInput extends InputBase {
     renderInput() {
         const value = this.props.value;
         const objects = this.props.objects;
+        const showEditLink = this.props.showEditLink;
         const valueField = this.props.valueField;
         const labelField = this.props.labelField;
         const selected = (value && objects)?
@@ -44,10 +45,20 @@ export default class RelSelectInput extends InputBase {
 
         const filteredObjects = this.getFilteredObjects();
 
-        const createOptionClasses = cx({
-            'relselectinput-create': true,
-            'focused': (this.state.focusedIndex == filteredObjects.length)
-        });
+        var createOption = null;
+        if (this.props.showCreateOption) {
+            const createOptionClasses = cx({
+                'relselectinput-create': true,
+                'focused': (this.state.focusedIndex == filteredObjects.length)
+            });
+
+            createOption = (
+                <li key="create" className={ createOptionClasses }
+                    onMouseDown={ this.onClickCreate.bind(this) }>
+                    Create <em>{ this.state.inputValue || 'new' }...</em>
+                </li>
+            );
+        }
 
         return (
             <div className={ classes }>
@@ -65,17 +76,22 @@ export default class RelSelectInput extends InputBase {
                         'focused': (idx === this.state.focusedIndex)
                     });
 
+                    var editLink = null;
+                    if (showEditLink) {
+                        editLink = <a className="relselectinput-editlink"
+                            onMouseDown={ this.onClickEdit.bind(this, obj) }>
+                            Edit</a>;
+                    }
+
                     return (
                         <li key={ value } className={ classes }
                             onMouseDown={ this.onClickOption.bind(this, obj) }>
                             { label }
+                            { editLink }
                         </li>
                     );
                 }, this)}
-                    <li key="create" className={ createOptionClasses }
-                        onMouseDown={ this.onClickCreate.bind(this) }>
-                        Create <em>{ this.state.inputValue || 'new' }...</em>
-                    </li>
+                    { createOption }
                 </ul>
             </div>
         );
@@ -101,11 +117,13 @@ export default class RelSelectInput extends InputBase {
         const focusedIndex = this.state.focusedIndex;
         const objects = this.getFilteredObjects();
         const objectCount = objects.length;
+        const maxIndex = this.props.showCreateOption?
+            objectCount : objectCount - 1;
 
         if (ev.keyCode == 40) {
             // User pressed down, increment or set to zero if undefined
             this.setState({
-                focusedIndex: Math.min(objectCount,
+                focusedIndex: Math.min(maxIndex,
                     (focusedIndex === undefined)? 0 : focusedIndex + 1)
             });
 
@@ -115,7 +133,7 @@ export default class RelSelectInput extends InputBase {
             // User pressed up, decrement or set to last if undefined
             this.setState({
                 focusedIndex: Math.max(0, (focusedIndex === undefined)?
-                    objectCount : focusedIndex - 1)
+                    maxIndex : focusedIndex - 1)
             });
 
             ev.preventDefault();
@@ -139,6 +157,12 @@ export default class RelSelectInput extends InputBase {
 
     onClickOption(obj) {
         this.selectObject(obj);
+    }
+
+    onClickEdit(obj) {
+        if (this.props.onEdit) {
+            this.props.onEdit(obj);
+        }
     }
 
     onClickCreate() {
@@ -178,10 +202,16 @@ RelSelectInput.propTypes = {
     objects: React.PropTypes.array.isRequired,
     valueField: React.PropTypes.string,
     labelField: React.PropTypes.string,
-    onCreate: React.PropTypes.func
+    showCreateOption: React.PropTypes.bool,
+    showEditLink: React.PropTypes.bool,
+    onValueChange: React.PropTypes.func,
+    onCreate: React.PropTypes.func,
+    onEdit: React.PropTypes.func
 };
 
 RelSelectInput.defaultProps = {
+    showCreateOption: true,
+    showEditLink: false,
     valueField: 'id',
     labelField: 'title'
 };

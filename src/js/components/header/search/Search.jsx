@@ -6,6 +6,7 @@ import ActionDayMatch from './ActionDayMatch';
 import CampaignMatch from './CampaignMatch';
 import LocationMatch from './LocationMatch';
 import PersonMatch from './PersonMatch';
+import QueryMatch from './QueryMatch';
 
 
 export default class Search extends FluxComponent {
@@ -51,6 +52,7 @@ export default class Search extends FluxComponent {
 
                     var Match;
 
+                    // TODO: Move this to separate index.js?
                     switch(match.type) {
                         case 'actionday':
                             Match = ActionDayMatch;
@@ -63,6 +65,9 @@ export default class Search extends FluxComponent {
                             break;
                         case 'person':
                             Match = PersonMatch;
+                            break;
+                        case 'query':
+                            Match = QueryMatch;
                             break;
                     }
 
@@ -119,6 +124,11 @@ export default class Search extends FluxComponent {
             case 'person':
                 defaultBase = '/people/list';
                 paneType = 'person';
+                params = [ match.data.id ];
+                break;
+            case 'query':
+                defaultBase = '/people/list';
+                paneType = 'query';
                 params = [ match.data.id ];
                 break;
             default:

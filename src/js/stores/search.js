@@ -107,6 +107,16 @@ export default class SearchStore extends Store {
                 results: initialResults
                     .filter(r => searchMatches(query, r.data))
             });
+
+            // TODO: When queries are in the platform, move this server-side
+            // Search for person queries (inconveniantly named "queries" like
+            // the search query string that is the input to this function).
+            const queries = this.flux.getStore('query').getQueries();
+            this.setState({
+                results: this.state.results.concat(queries
+                    .filter(q => searchMatches(query, q))
+                    .map(q => ({ type: 'query', data: q })))
+            });
         }
 
         var sendQuery = function(query) {

@@ -3,6 +3,22 @@
     min-width: 400px;
     z-index: 1000;
 
+    header {
+        h2 {
+            margin: 30px 0 30px;
+        }
+
+        small {
+            display: block;
+            margin: -15px 0 30px;
+
+            a {
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
+    }
+
     .section-pane-content::after {
         content: "";
         display: block;
