@@ -12,7 +12,7 @@ export default class QueryPane extends PaneBase {
     }
 
     getPaneTitle(data) {
-        return data.title;
+        return 'Edit query: ' + data.title;
     }
 
     componentDidMount() {

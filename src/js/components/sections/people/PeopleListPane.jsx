@@ -68,10 +68,10 @@ export default class PeopleListPane extends PaneBase {
         this.getActions('query').createQuery(title);
 
         const queries = this.getStore('query').getQueries();
-        this.gotoSubPane('query', queries[queries.length-1].id);
+        this.gotoSubPane('editquery', queries[queries.length-1].id);
     }
 
     onQueryEdit(query) {
-        this.gotoSubPane('query', query.id);
+        this.gotoSubPane('editquery', query.id);
     }
 }
