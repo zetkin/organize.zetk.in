@@ -71,7 +71,7 @@ export default class PaneBase extends FluxComponent {
         }
     }
 
-    gotoSubPane(paneType, ...params) {
+    openPane(paneType, ...params) {
         const paneSegment = panePathSegment(paneType, params);
         if (this.props.onOpenPane) {
             this.props.onOpenPane(paneSegment);

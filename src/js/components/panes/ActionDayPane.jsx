@@ -50,7 +50,7 @@ export default class EditActionPane extends PaneBase {
 
     onActionOperation(action, operation) {
         if (operation == 'edit') {
-            this.gotoSubPane('editaction', action.id);
+            this.openPane('editaction', action.id);
         }
     }
 }

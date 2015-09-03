@@ -48,14 +48,14 @@ export default class AddActionPane extends PaneBase {
     }
 
     onCreateCampaign(title) {
-        this.gotoSubPane('addcampaign', title);
+        this.openPane('addcampaign', title);
     }
 
     onCreateLocation(title) {
-        this.gotoSubPane('addlocation', title);
+        this.openPane('addlocation', title);
     }
 
     onCreateActivity(title) {
-        this.gotoSubPane('addactivity', title);
+        this.openPane('addactivity', title);
     }
 }
