@@ -8,6 +8,11 @@ import ActionList from '../misc/actionlist/ActionList';
 export default class EditActionPane extends PaneBase {
     componentDidMount() {
         this.listenTo('action', this.forceUpdate);
+
+        const actions = this.getStore('action').getActions();
+        if (actions.length == 0) {
+            this.getActions('action').retrieveAllActions();
+        }
     }
 
     getPaneTitle(data) {
