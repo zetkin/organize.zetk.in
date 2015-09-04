@@ -23,7 +23,7 @@
             color: transparent;
             line-height: 1.35;
         }
-        a::after{
+        a::before{
             content: "Z";
             position: absolute;
             color: #fff;
@@ -31,6 +31,22 @@
             left: 0;
             padding: 0 0.362em;;
             display: block;
+        }
+
+        a::after {
+            content: "BETA";
+            display: block;
+            position: absolute;
+            left: 10px;
+            top: 17px;
+
+            padding: 1px 3px;
+            border-radius: 4px;
+
+            background-color: black;
+            font-weight: normal;
+            font-size: 8px;
+            color: white;
         }
     }
 

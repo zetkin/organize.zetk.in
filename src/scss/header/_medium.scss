@@ -5,9 +5,14 @@
         a{
             color: inherit;
         }
-        a::after{
+        a::before{
             content: "";
             display: none;
+        }
+
+        a::after {
+            left: 90px;
+            top: 30px;
         }
     }
 
