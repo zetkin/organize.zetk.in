@@ -28,6 +28,10 @@ export default class MoveParticipantsPane extends PaneBase {
         const peopleStore = this.getStore('person');
 
         return [
+            <input type="button" value="Execute all"
+                onClick={ this.onExecuteClick.bind(this) }/>,
+            <input type="button" value="Reset all and cancel"
+                onClick={ this.onResetClick.bind(this) }/>,
             <ul className="movelist">
             {data.moves.map(function(move) {
                 const key = [move.person, move.from, move.to].join(',');
@@ -49,11 +53,7 @@ export default class MoveParticipantsPane extends PaneBase {
                     </li>
                 );
             }, this)}
-            </ul>,
-            <input type="button" value="Execute"
-                onClick={ this.onExecuteClick.bind(this) }/>,
-            <input type="button" value="Reset and cancel"
-                onClick={ this.onResetClick.bind(this) }/>
+            </ul>
         ];
     }
 
