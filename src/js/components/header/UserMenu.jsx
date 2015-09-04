@@ -2,6 +2,7 @@ import React from 'react/addons';
 
 import FluxComponent from '../FluxComponent';
 import OrgPicker from './OrgPicker';
+import Avatar from '../misc/Avatar';
 
 
 export default class UserMenu extends FluxComponent {
@@ -14,16 +15,21 @@ export default class UserMenu extends FluxComponent {
 
         var accountUrl = '//' + userStore.getAccountsHost();
 
-        var userName = userStore.getUserInfo().email;
-        var activeOrg = userStore.getActiveMembership().organization;
-        var memberships = userStore.getMemberships();
+        const membership = userStore.getActiveMembership();
+        const activeOrg = membership.organization;
+        const profile = membership.profile;
+        const memberships = userStore.getMemberships();
 
         return (
             <nav className="usermenu">
-                <div className="usermenu-avatar"></div>
+                <Avatar person={ profile }/>
                 <div className="usermenu-info">
                     <div className="usermenu-user">
-                        <a href={ accountUrl }><span className="usermenu-info-name">{ userName }</span></a>
+                        <a href={ accountUrl }>
+                            <span className="usermenu-info-name">
+                                { profile.name }
+                            </span>
+                        </a>
                         <span className="usermenu-info-org">{ activeOrg.title }</span>
                     </div>
                     <ul>
