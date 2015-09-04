@@ -10,8 +10,6 @@ import CampaignPlaybackPane from './CampaignPlaybackPane';
 export default class CampaignSection extends SectionBase {
     getSubSections() {
         return [
-            { path: 'dashboard', title: 'Overview',
-                startPane: CampaignOverviewPane },
             { path: 'actions', title: 'All actions',
                 startPane: AllActionsPane },
             { path: 'distribution', title: 'Distribution',
