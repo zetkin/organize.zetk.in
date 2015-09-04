@@ -28,6 +28,7 @@ export default class EditActionPane extends PaneBase {
             <input key="nextBtn" type="button" value=">"
                 onClick={ this.onClickNext.bind(this) }/>,
             <ActionList key="actionList" actions={ actions }
+                onMoveParticipant={ this.onMoveParticipant.bind(this) }
                 onActionOperation={ this.onActionOperation.bind(this) }/>
         ];
     }
@@ -46,6 +47,18 @@ export default class EditActionPane extends PaneBase {
         const dateStr = newDate.format('{yyyy}-{MM}-{dd}');
 
         this.gotoPane('actionday', dateStr);
+    }
+
+    onMoveParticipant(action, person, oldAction) {
+        this.getActions('participant').moveParticipant(
+            person.id, oldAction.id, action.id);
+
+        const participantStore = this.getStore('participant');
+        const moves = participantStore.getMoves();
+
+        if (moves.length) {
+            this.pushPane('moveparticipants');
+        }
     }
 
     onActionOperation(action, operation) {
