@@ -37,7 +37,8 @@ export default class MoveParticipantsPane extends PaneBase {
 
                 return (
                     <li key={ key }>
-                        <Person person={ person }/>
+                        <Person person={ person }
+                            onClick={ this.onPersonClick.bind(this, person) }/>
                         <Action action={ fromAction }/>
                         <Action action={ toAction }/>
                     </li>
@@ -49,6 +50,10 @@ export default class MoveParticipantsPane extends PaneBase {
             <input type="button" value="Reset and cancel"
                 onClick={ this.onResetClick.bind(this) }/>
         ];
+    }
+
+    onPersonClick(person) {
+        this.openPane('person', person.id);
     }
 
     onExecuteClick(ev) {
