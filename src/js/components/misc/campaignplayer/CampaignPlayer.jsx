@@ -51,7 +51,12 @@ export default class CampaignPlayer extends React.Component {
         const ctrDOMNode = React.findDOMNode(this.refs.mapContainer);
         const mapOptions = {
             center: { lat: centerLat, lng: centerLng },
-            zoom: 11
+            zoom: 11,
+            disableDefaultUI: true,
+            zoomControl: true,
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.LEFT_CENTER
+            }
         };
 
         this.map = new google.maps.Map(ctrDOMNode, mapOptions);
