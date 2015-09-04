@@ -4,6 +4,11 @@ import DraggableAvatar from '../DraggableAvatar';
 
 
 export default class PeopleListItem extends React.Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        return (nextProps.person !== this.props.person
+            || nextProps.onSelect !== this.props.onSelect);
+    }
+
     render() {
         const person = this.props.person;
 

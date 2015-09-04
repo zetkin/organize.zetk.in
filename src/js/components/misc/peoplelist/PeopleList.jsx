@@ -4,6 +4,10 @@ import PeopleListItem from './PeopleListItem';
 
 
 export default class PeopleList extends React.Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        return (nextProps.people !== this.props.people);
+    }
+
     render() {
         const people = this.props.people;
 
