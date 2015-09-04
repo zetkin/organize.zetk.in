@@ -25,17 +25,34 @@ export default class Dashboard extends FluxComponent {
         var favoriteElements = [];
         var shortcutElements = [];
 
+        // TODO: Move to localization
+        const labels = {
+            'people': 'People',
+            'campaign': 'Campaign',
+            'dialog': 'Dialog',
+            'maps': 'Maps',
+            'survey': 'Survey',
+            'resources': 'Resources',
+            'meetups': 'Meetups',
+            'finance': 'Finance',
+            'settings': 'Settings'
+        };
+
         for (i = 0; i < shortcuts.length; i++) {
-            var shortcut = shortcuts[i];
+            let shortcut = shortcuts[i];
+            let classes = 'shortcut shortcut-' + shortcut;
+            let label = labels[shortcut];
 
             if (i < 4) {
                 favoriteElements.push(
-                    <li key={ shortcut }><Shortcut target={ shortcut }/></li>
+                    <li className={ classes } key={ shortcut }>
+                        <Shortcut target={ shortcut } label={ label }/></li>
                 );
             }
             else {
                 shortcutElements.push(
-                    <li key={ shortcut }><Shortcut target={ shortcut }/></li>
+                    <li key={ shortcut }>
+                        <Shortcut target={ shortcut } label={ label }/></li>
                 );
             }
         }

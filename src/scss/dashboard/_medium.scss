@@ -10,10 +10,15 @@
 }
 
 .dashboard-favorites{
-    padding: 1em;
+    .shortcut {
+        float: left;
+        width: 23%;
+    }
 
-    li{
-        margin: 0 1em;
+    &::after {
+        content: "";
+        display: block;
+        clear: both;
     }
 }
 .dashboard-shortcuts {
