@@ -12,12 +12,17 @@ export default class Transport extends React.Component {
             'stop-btn': this.props.playing
         });
 
+        const d = Date.utc.create(this.props.time);
+        const timeLabel = d.setUTC(true).format('{yyyy}-{MM}-{dd} {HH}:{mm}');
+
         return (
             <div className="transport">
                 <button className={ btnClass }
                     onClick={ this.onPlayStopClick.bind(this) }/>
+                <span className="transport-time">{ timeLabel }</span>
                 <Scrubber time={ this.props.time }
-                    startTime={ this.props.startTime } endTime={ this.props.endTime }
+                    startTime={ this.props.startTime }
+                    endTime={ this.props.endTime }
                     onScrubBegin={ this.props.onScrubBegin }
                     onScrubEnd={ this.props.onScrubEnd }
                     onScrub={ this.props.onScrub }/>
