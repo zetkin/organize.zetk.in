@@ -59,14 +59,14 @@ export default class PersonStore extends Store {
         StoreUtils.updateOrAdd(people, person.id, person);
 
         this.setState({
-            people: people
+            people: people.concat()
         });
     }
 
     onCreatePersonComplete(res) {
         this.state.people.push(res.data.data);
         this.setState({
-            people: this.state.people
+            people: this.state.people.concat()
         });
     }
 
@@ -77,14 +77,14 @@ export default class PersonStore extends Store {
         StoreUtils.updateOrAdd(people, person.id, person);
 
         this.setState({
-            people: people
+            people: people.concat()
         });
     }
 
     onDeletePersonBegin(personId) {
         StoreUtils.remove(this.state.people, personId);
         this.setState({
-            people: this.state.people
+            people: this.state.people.concat()
         });
     }
 
