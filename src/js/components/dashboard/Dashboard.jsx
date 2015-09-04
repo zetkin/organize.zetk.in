@@ -26,11 +26,13 @@ export default class Dashboard extends FluxComponent {
         var shortcutElements = [];
 
         for (i = 0; i < shortcuts.length; i++) {
-            var shortcut = shortcuts[i];
+            let shortcut = shortcuts[i];
+            let classes = 'shortcut shortcut-' + shortcut;
 
             if (i < 4) {
                 favoriteElements.push(
-                    <li key={ shortcut }><Shortcut target={ shortcut }/></li>
+                    <li className={ classes } key={ shortcut }>
+                        <Shortcut target={ shortcut }/></li>
                 );
             }
             else {
