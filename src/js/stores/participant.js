@@ -22,6 +22,8 @@ export default class ParticipantStore extends Store {
             this.onMoveParticipant);
         this.register(participantActions.undoMoves,
             this.onUndoMoves);
+        this.register(participantActions.executeMoves,
+            this.onExecuteMovesComplete);
         this.register(participantActions.clearMoves,
             this.onClearMoves);
     }
@@ -89,12 +91,24 @@ export default class ParticipantStore extends Store {
         });
     }
 
-    onUndoMoves(moves) {
-        var move;
+    onExecuteMovesComplete(res) {
+        // Keep every other result (two requests per move) and
+        // make a list of the move data from the request meta.
+        const moves = res
+            .filter((r, i) => (i%2 == 0))
+            .map(r => r.meta.move);
 
-        while (move = moves.pop()) {
-            var originalArray = this.state.participants[move.from];
-            var postMoveArray = this.state.participants[move.to];
+        this.setState({
+            // Only keep moves that were not executed
+            moves: this.state.moves.filter(m => moves.indexOf(m) < 0)
+        });
+    }
+
+    onUndoMoves(moves) {
+        for (let i = 0; i < moves.length; i++) {
+            let move = moves[i];
+            let originalArray = this.state.participants[move.from];
+            let postMoveArray = this.state.participants[move.to];
 
             this.moveBetweenArrays(move.person, postMoveArray, originalArray);
 
@@ -104,6 +118,8 @@ export default class ParticipantStore extends Store {
         }
 
         this.setState({
+            // Only keep moves that were not undone
+            moves: this.state.moves.filter(m => moves.indexOf(m) < 0),
             participants: this.state.participants
         });
     }

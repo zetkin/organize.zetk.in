@@ -56,11 +56,7 @@ export default class MoveParticipantsPane extends PaneBase {
         const participantStore = this.getStore('participant');
         const moves = participantStore.getMoves();
 
-        participantActions.executeMoves(moves)
-            .then(function() {
-                participantActions.clearMoves();
-                this.closePane();
-            }.bind(this));
+        participantActions.executeMoves(moves);
     }
 
     onResetClick(ev) {
@@ -69,7 +65,6 @@ export default class MoveParticipantsPane extends PaneBase {
         const moves = participantStore.getMoves();
 
         participantActions.undoMoves(moves);
-        participantActions.clearMoves();
 
         this.closePane();
     }
