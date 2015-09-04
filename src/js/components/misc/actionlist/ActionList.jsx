@@ -68,12 +68,14 @@ export default class ActionList extends FluxComponent {
     }
 
     onMoveParticipant(action, person, oldAction) {
-        this.getActions('participant').moveParticipant(
-            person.id, oldAction.id, action.id);
+        if (this.props.onMoveParticipant) {
+            this.props.onMoveParticipant(action, person, oldAction);
+        }
     }
 }
 
 ActionList.propTypes = {
     actions: React.PropTypes.array.isRequired,
+    onMoveParticipant: React.PropTypes.func,
     onActionOperation: React.PropTypes.func
 };

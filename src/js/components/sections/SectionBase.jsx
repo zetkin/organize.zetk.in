@@ -230,9 +230,14 @@ export default class SectionBase extends FluxComponent {
         const router = this.context.router;
         const basePath = router.getMatch().matchedPath;
         const subPath = router.getMatch().unmatchedPath || '';
+        const subPathSegments = subPath? subPath.split('/') : [];
+
+        // Make sure that newSegment is unique
+        const subPathFiltered = subPathSegments.filter(s => s != newSegment);
 
         // Add segment at the end
-        const path = basePath + '/' + subPath + '/' + newSegment;
+        subPathFiltered.push(newSegment);
+        const path = [ basePath ].concat(subPathFiltered).join('/');
 
         router.navigate(path);
     }

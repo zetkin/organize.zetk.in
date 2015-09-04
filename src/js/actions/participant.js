@@ -41,7 +41,8 @@ export default class ParticipantActions extends Actions {
         for (i = 0; i < moves.length; i++) {
             var move = moves[i];
             apiCalls.push(Z.resource('orgs', orgId, 'actions',
-                move.from, 'participants', move.person).del());
+                move.from, 'participants', move.person)
+                .meta('move', move).del());
             apiCalls.push(Z.resource('orgs', orgId, 'actions',
                 move.to, 'participants', move.person).put());
         }

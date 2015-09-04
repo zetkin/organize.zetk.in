@@ -23,11 +23,8 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
     componentDidMount() {
         this.listenTo('action', this.forceUpdate);
         this.listenTo('campaign', this.forceUpdate);
-        this.listenTo('participant', this.onParticipantStoreUpdate);
         this.getActions('action').retrieveAllActions();
         this.getActions('campaign').retrieveCampaigns();
-
-        this.openMovePane();
     }
 
     renderPaneContent() {
@@ -46,7 +43,8 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
             }
             else {
                 viewComponent = <ActionList actions={ actions }
-                        onActionOperation={ this.onActionOperation.bind(this) }/>;
+                    onMoveParticipant={ this.onMoveParticipant.bind(this) }
+                    onActionOperation={ this.onActionOperation.bind(this) }/>;
             }
         }
         else {
@@ -84,16 +82,15 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         }
     }
 
-    onParticipantStoreUpdate() {
-        this.openMovePane();
-    }
+    onMoveParticipant(action, person, oldAction) {
+        this.getActions('participant').moveParticipant(
+            person.id, oldAction.id, action.id);
 
-    openMovePane() {
         const participantStore = this.getStore('participant');
         const moves = participantStore.getMoves();
 
         if (moves.length) {
-            this.openPane('moveparticipants');
+            this.pushPane('moveparticipants');
         }
     }
 }

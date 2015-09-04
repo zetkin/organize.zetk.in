@@ -28,27 +28,49 @@ export default class MoveParticipantsPane extends PaneBase {
         const peopleStore = this.getStore('person');
 
         return [
+            <input type="button" value="Execute all"
+                onClick={ this.onExecuteClick.bind(this) }/>,
+            <input type="button" value="Reset all and cancel"
+                onClick={ this.onResetClick.bind(this) }/>,
             <ul className="movelist">
             {data.moves.map(function(move) {
-                var key = [move.person, move.from, move.to].join(',');
-                var person = peopleStore.getPerson(move.person);
-                var fromAction = actionStore.getAction(move.from);
-                var toAction = actionStore.getAction(move.to);
+                const key = [move.person, move.from, move.to].join(',');
+                const person = peopleStore.getPerson(move.person);
+                const fromAction = actionStore.getAction(move.from);
+                const toAction = actionStore.getAction(move.to);
 
                 return (
                     <li key={ key }>
-                        <Person person={ person }/>
+                        <Person person={ person }
+                            onClick={ this.onPersonClick.bind(this, person) }/>
                         <Action action={ fromAction }/>
                         <Action action={ toAction }/>
+
+                        <input type="button" value="Execute"
+                            onClick={ this.onMoveExecute.bind(this, move) }/>
+                        <input type="button" value="Cancel"
+                            onClick={ this.onMoveCancel.bind(this, move) }/>
                     </li>
                 );
             }, this)}
-            </ul>,
-            <input type="button" value="Execute"
-                onClick={ this.onExecuteClick.bind(this) }/>,
-            <input type="button" value="Reset and cancel"
-                onClick={ this.onResetClick.bind(this) }/>
+            </ul>
         ];
+    }
+
+    onPersonClick(person) {
+        this.openPane('person', person.id);
+    }
+
+    onMoveExecute(move) {
+        const participantActions = this.getActions('participant');
+
+        participantActions.executeMoves([ move ]);
+    }
+
+    onMoveCancel(move) {
+        const participantActions = this.getActions('participant');
+
+        participantActions.undoMoves([ move ]);
     }
 
     onExecuteClick(ev) {
@@ -56,11 +78,7 @@ export default class MoveParticipantsPane extends PaneBase {
         const participantStore = this.getStore('participant');
         const moves = participantStore.getMoves();
 
-        participantActions.executeMoves(moves)
-            .then(function() {
-                participantActions.clearMoves();
-                this.closePane();
-            }.bind(this));
+        participantActions.executeMoves(moves);
     }
 
     onResetClick(ev) {
@@ -69,7 +87,6 @@ export default class MoveParticipantsPane extends PaneBase {
         const moves = participantStore.getMoves();
 
         participantActions.undoMoves(moves);
-        participantActions.clearMoves();
 
         this.closePane();
     }

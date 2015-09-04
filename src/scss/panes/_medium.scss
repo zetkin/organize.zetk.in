@@ -121,10 +121,18 @@
     }
 
     li {
+        @include card;
+
         list-style-type: none;
-        padding-left: 0;
+        padding: 1em;
         margin: 1em 0;
         font-size: 1.1em;
+
+        input[type=button] {
+            width: 48%;
+            float: left;
+            margin: 1em 1% 0.5em;
+        }
 
         &::after {
             content: "";
@@ -135,6 +143,7 @@
         .person {
             display: block;
             font-weight: bold;
+            cursor: pointer;
         }
 
         .action {
@@ -144,7 +153,6 @@
 
             padding: 0.5em;
             padding: 0.5em;
-            background-color: #eee;
 
             .date, .activity, .location {
                 display: block;
