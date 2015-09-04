@@ -14,6 +14,14 @@
 
         box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
 
+        .transport-time {
+            position: absolute;
+            left: 77px;
+            top: 14px;
+            font-size: 1.2em;
+            color: #aaa;
+        }
+
         .btn {
             width: 5em;
             height: 5em;
@@ -41,7 +49,7 @@
     .scrubber {
         position: absolute;
         top: 1.25em;
-        left: 8em;
+        left: 180px;
         right: 1em;
 
         &::before {

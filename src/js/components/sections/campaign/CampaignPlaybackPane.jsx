@@ -44,16 +44,7 @@ export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
                 onEdit={ this.onEditCampaign.bind(this) }/>,
             <CampaignPlayer key="player"
                 actions={ actions } locations={ locations }
-                centerLat={ center.lat } centerLng={ center.lng }
-                onActionsChange={ this.onActionsChange.bind(this) }/>
+                centerLat={ center.lat } centerLng={ center.lng }/>
         ];
-    }
-
-    onActionsChange(actions) {
-        const actionActions = this.getActions('action');
-        const actionIds = actions.map(a => a.id);
-
-        actionActions.clearActionHighlights();
-        actionActions.highlightActions(actionIds);
     }
 }

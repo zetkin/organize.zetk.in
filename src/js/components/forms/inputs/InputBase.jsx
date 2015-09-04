@@ -8,7 +8,7 @@ export default class InputBase extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className={ this.props.className }>
                 <label>{ this.props.label }</label>
                 { this.renderInput() }
             </div>
@@ -23,5 +23,6 @@ export default class InputBase extends React.Component {
 InputBase.propTypes = {
     name: React.PropTypes.string.isRequired,
     label: React.PropTypes.string.isRequired,
-    initialValue: React.PropTypes.string
+    initialValue: React.PropTypes.string,
+    className: React.PropTypes.string
 }

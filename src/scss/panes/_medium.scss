@@ -172,6 +172,39 @@
     }
 }
 
+.section-pane-playback {
+    header {
+        position: relative;
+        z-index: 2;
+    }
+
+    .campaignselect {
+        position: relative;
+        z-index: 2;
+    }
+
+    .campaignplayer {
+        .heatmap {
+            position: absolute;
+            z-index: 1;
+            top: 130px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: auto;
+        }
+
+        .transport {
+            position: absolute;
+            z-index: 2;
+            bottom: 20px;
+            left: 40px;
+            right: 40px;
+            width: auto;
+        }
+    }
+}
+
 .section-pane-editcampaign {
     min-width: 400px;
 }
