@@ -1,20 +1,47 @@
 .dashboard-favorites {
-    @include list-unstyled ;
-    display: flex;
+    @include list-unstyled;
     padding: 0.417em;
     font-size: 1.2em;
+    margin: 2em;
 
-    li{
-        @include card;
-        flex: 1;
-        margin: 0 0.417em;
-        line-height: 8em;
+    .shortcut {
+        width: 98%;
+        margin: 20px 1%;
         text-align: center;
-        font-weight: 700;
 
-        a{
-            display: inline-block;
-            width: 100%;
+        a {
+            display: block;
+
+            &:hover {
+                font-weight: bold;
+            }
+
+            &::before {
+                content: "";
+                display: block;
+                width: 100%;
+                height: 120px;
+                background-position: center center;
+                background-size: contain;
+                background-repeat: no-repeat;
+                margin-bottom: 20px;
+            }
+        }
+
+        &.shortcut-people a::before {
+            background-image: url('../img/sections/people.png');
+        }
+
+        &.shortcut-campaign a::before {
+            background-image: url('../img/sections/campaign.png');
+        }
+
+        &.shortcut-dialog a::before {
+            background-image: url('../img/sections/dialog.png');
+        }
+
+        &.shortcut-maps a::before {
+            background-image: url('../img/sections/maps.png');
         }
     }
 }
