@@ -32,24 +32,30 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         var actions = actionStore.getActions();
         var viewComponent;
 
-        if (actions.length) {
-            if (this.state.viewMode == 'cal') {
-                viewComponent = <ActionCalendar actions={ actions }
-                        onSelectDay={ this.onSelectDay.bind(this) }
-                        onAddAction={ this.onCalendarAddAction.bind(this) }
-                        onMoveAction={ this.onCalendarMoveAction.bind(this) }
-                        onCopyAction={ this.onCalendarCopyAction.bind(this) }
-                        onSelectAction={ this.onSelectAction.bind(this) }/>
-            }
-            else {
-                viewComponent = <ActionList actions={ actions }
-                    onMoveParticipant={ this.onMoveParticipant.bind(this) }
-                    onActionOperation={ this.onActionOperation.bind(this) }/>;
-            }
+        var startDate, endDate;
+        if (actions.length == 0) {
+            // Use this week and the next month by default
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const date = now.getDate();
+            startDate = new Date(year, month, date - 5);
+            endDate = new Date(year, month, date + 30);
+        }
+
+        if (this.state.viewMode == 'cal') {
+            viewComponent = <ActionCalendar actions={ actions }
+                    startDate={ startDate } endDate={ endDate }
+                    onSelectDay={ this.onSelectDay.bind(this) }
+                    onAddAction={ this.onCalendarAddAction.bind(this) }
+                    onMoveAction={ this.onCalendarMoveAction.bind(this) }
+                    onCopyAction={ this.onCalendarCopyAction.bind(this) }
+                    onSelectAction={ this.onSelectAction.bind(this) }/>
         }
         else {
-            // TODO: Show loading indicator
-            viewComponent = null;
+            viewComponent = <ActionList actions={ actions }
+                onMoveParticipant={ this.onMoveParticipant.bind(this) }
+                onActionOperation={ this.onActionOperation.bind(this) }/>;
         }
 
         const viewStates = {
