@@ -5,7 +5,7 @@ import PaneBase from './PaneBase';
 import ActionList from '../misc/actionlist/ActionList';
 
 
-export default class EditActionPane extends PaneBase {
+export default class ActionDayPane extends PaneBase {
     componentDidMount() {
         this.listenTo('action', this.forceUpdate);
 
