@@ -121,9 +121,9 @@ function updateTime(values, field, date) {
     const minutes = parseInt(fields[1]);
     const tmp = new Date(date);
 
-    tmp.setHours(hours);
-    tmp.setMinutes(minutes);
-    tmp.setSeconds(0);
+    tmp.setUTCHours(hours);
+    tmp.setUTCMinutes(minutes);
+    tmp.setUTCSeconds(0);
 
     values[field] = tmp.toISOString();
 }
