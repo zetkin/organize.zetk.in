@@ -152,12 +152,23 @@ let filterFunctions = {
 
     join_date: function matchJoinDate(person, filterConfig) {
         // TODO: Implement once join date is actually on person object
-        return true;
+        // Mock an actual query, for demo purposes
+        const date = Date.create(filterConfig.date);
+        const dateStr = date.format('{yyyy}{MM}{dd}');
+        const dateSum = dateStr.split('')
+            .reduce((x,y) => (parseInt(x) + parseInt(y)));
+        const pid = Math.floor(person.id/10);
+        return ((pid % 3) == (dateSum % 3));
     },
 
     campaign: function matchCampaign(person, filterConfig) {
+        if (!filterConfig.campaign)
+            return true;
+
         // TODO: Implement server-side
-        return true;
+        // Mock an actual query, for demo purposes
+        const pid = Math.floor(person.id/10);
+        return ((pid % 5) == (filterConfig.campaign % 5));
     }
 };
 
