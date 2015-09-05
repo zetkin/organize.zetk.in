@@ -68,10 +68,10 @@ export default class ActionDay extends React.Component {
 
         return this.props.connectDropTarget(
             <div className={ classes }>
-                <h3 onClick={ this.onDayClick.bind(this) }>
+                <h4 onClick={ this.onDayClick.bind(this) }>
                     <span className="date">{ dateLabel }</span>
                     <span className="weekday">{ dayLabel }</span>
-                </h3>
+                </h4>
                 <CSSTransitionGroup transitionName="actionitem" component="ul">
                 { actions.map(function(action) {
                     return <ActionItem key={ action.id } action={ action }
