@@ -24,6 +24,16 @@ export default class RelSelectInput extends InputBase {
         }
     }
 
+    componentDidMount() {
+        const listDOMNode = React.findDOMNode(this.refs.objectList);
+        listDOMNode.addEventListener('mousewheel', onWheelStopPropagation);
+    }
+
+    componentWillUnmount() {
+        const listDOMNode = React.findDOMNode(this.refs.objectList);
+        listDOMNode.removeEventListener('mousewheel', onWheelStopPropagation);
+    }
+
     renderInput() {
         const value = this.props.value;
         const objects = this.props.objects;
@@ -88,7 +98,7 @@ export default class RelSelectInput extends InputBase {
                     onFocus={ this.onFocus.bind(this) }
                     onKeyDown={ this.onKeyDown.bind(this) }
                     onBlur={ this.onBlur.bind(this) }/>
-                <ul>
+                <ul ref="objectList">
                 {filteredObjects.map(function(obj, idx) {
                     const value = obj[valueField];
                     const label = obj[labelField];
@@ -133,6 +143,9 @@ export default class RelSelectInput extends InputBase {
             focusedIndex: undefined,
             inputValue: ev.target.value
         });
+
+        const listDOMNode = React.findDOMNode(this.refs.objectList);
+        listDOMNode.scrollTop = 0;
     }
 
     onKeyDown(ev) {
@@ -178,6 +191,10 @@ export default class RelSelectInput extends InputBase {
             React.findDOMNode(this.refs.input).blur();
             ev.preventDefault();
         }
+        else if (ev.keyCode == 27) {
+            const inputDOMNode = React.findDOMNode(this.refs.input);
+            inputDOMNode.blur();
+        }
     }
 
     onClickOption(obj) {
@@ -207,6 +224,9 @@ export default class RelSelectInput extends InputBase {
     }
 
     onBlur(ev) {
+        const listDOMNode = React.findDOMNode(this.refs.objectList);
+        listDOMNode.scrollTop = 0;
+
         this.setState({
             inputFocused: false
         });
@@ -253,3 +273,8 @@ RelSelectInput.defaultProps = {
     labelField: 'title',
     nullLabel: 'None'
 };
+
+
+function onWheelStopPropagation(ev) {
+    ev.stopPropagation();
+}
