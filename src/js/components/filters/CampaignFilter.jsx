@@ -32,7 +32,8 @@ export default class CampaignFilter extends FilterBase {
                     options={ operatorOptions }
                     initialValue={ config.operator }/>
                 <RelSelectInput label="Which campaign?" name="campaign"
-                    showCreateOption={ false } objects={ campaigns }/>
+                    objects={ campaigns } initialValue={ config.campaign }
+                    showCreateOption={ false }/>
                 <input type="submit"/>
             </Form>
         );
