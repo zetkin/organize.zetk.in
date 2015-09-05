@@ -191,6 +191,10 @@ export default class RelSelectInput extends InputBase {
             React.findDOMNode(this.refs.input).blur();
             ev.preventDefault();
         }
+        else if (ev.keyCode == 27) {
+            const inputDOMNode = React.findDOMNode(this.refs.input);
+            inputDOMNode.blur();
+        }
     }
 
     onClickOption(obj) {
