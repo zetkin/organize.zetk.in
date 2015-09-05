@@ -31,6 +31,9 @@ export default class AddActionPane extends PaneBase {
 
         return (
             <ActionForm ref="actionForm" action={ initialData }
+                onEditCampaign={ this.onEditCampaign.bind(this) }
+                onEditLocation={ this.onEditLocation.bind(this) }
+                onEditActivity={ this.onEditActivity.bind(this) }
                 onCreateCampaign={ this.onCreateCampaign.bind(this) }
                 onCreateLocation={ this.onCreateLocation.bind(this) }
                 onCreateActivity={ this.onCreateActivity.bind(this) }
@@ -44,7 +47,21 @@ export default class AddActionPane extends PaneBase {
         const values = this.refs.actionForm.getValues();
         const campaignId = values.campaign_id;
 
-        this.getActions('action').createAction(campaignId, values);
+        this.getActions('action')
+            .createAction(campaignId, values)
+            .then(this.closePane.bind(this));
+    }
+
+    onEditCampaign(campaign) {
+        this.openPane('editcampaign', campaign.id);
+    }
+
+    onEditLocation(loc) {
+        this.openPane('editlocation', loc.id);
+    }
+
+    onEditActivity(activity) {
+        this.openPane('editactivity', activity.id);
     }
 
     onCreateCampaign(title) {

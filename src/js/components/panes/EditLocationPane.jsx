@@ -63,7 +63,9 @@ export default class LocationPane extends PaneBase {
             values.lat = pendingLatLng.lat;
             values.lng = pendingLatLng.lng;
         }
-        this.getActions('location').updateLocation(locationId, values);
+        this.getActions('location')
+            .updateLocation(locationId, values)
+            .then(this.closePane.bind(this));
     }
 
 

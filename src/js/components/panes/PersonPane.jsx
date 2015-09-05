@@ -59,7 +59,9 @@ export default class PersonPane extends PaneBase {
         var values = form.getChangedValues();
         var personId = this.props.params[0];
 
-        this.getActions('person').updatePerson(personId, values);
+        this.getActions('person')
+            .updatePerson(personId, values)
+            .then(this.closePane.bind(this));
     }
 
     onDeleteClick(ev) {

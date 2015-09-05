@@ -26,6 +26,9 @@ export default class EditActionPane extends PaneBase {
         if (data.action) {
             return (
                 <ActionForm ref="form" action={ data.action }
+                    onEditCampaign={ this.onEditCampaign.bind(this) }
+                    onEditLocation={ this.onEditLocation.bind(this) }
+                    onEditActivity={ this.onEditActivity.bind(this) }
                     onCreateCampaign={ this.onCreateCampaign.bind(this) }
                     onCreateLocation={ this.onCreateLocation.bind(this) }
                     onCreateActivity={ this.onCreateActivity.bind(this) }
@@ -44,7 +47,21 @@ export default class EditActionPane extends PaneBase {
         var values = this.refs.form.getChangedValues();
         var actionId = this.props.params[0];
 
-        this.getActions('action').updateAction(actionId, values);
+        this.getActions('action')
+            .updateAction(actionId, values)
+            .then(this.closePane.bind(this));
+    }
+
+    onEditCampaign(campaign) {
+        this.openPane('editcampaign', campaign.id);
+    }
+
+    onEditLocation(loc) {
+        this.openPane('editlocation', loc.id);
+    }
+
+    onEditActivity(activity) {
+        this.openPane('editactivity', activity.id);
     }
 
     onCreateCampaign(title) {

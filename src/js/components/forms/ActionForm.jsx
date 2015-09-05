@@ -44,8 +44,9 @@ export default class ActionForm extends FluxComponent {
         return (
             <Form ref="form" {...this.props }>
                 <RelSelectInput label="Campaign" name="campaign_id"
-                    objects={ campaigns }
+                    objects={ campaigns } showEditLink={ true }
                     onCreate={ this.props.onCreateCampaign }
+                    onEdit={ this.props.onEditCampaign }
                     initialValue={ action.campaign.id }/>
                 <DateInput label="Date" name="date"
                     initialValue={ date }/>
@@ -57,12 +58,14 @@ export default class ActionForm extends FluxComponent {
                     name="num_participants_required"
                     initialValue={ action.num_participants_required || 2 }/>
                 <RelSelectInput label="Location" name="location_id"
-                    objects={ locations }
+                    objects={ locations } showEditLink={ true }
                     onCreate={ this.props.onCreateLocation }
+                    onEdit={ this.props.onEditLocation }
                     initialValue={ action.location.id }/>
                 <RelSelectInput label="Activity" name="activity_id"
-                    objects={ activities }
+                    objects={ activities } showEditLink={ true }
                     onCreate={ this.props.onCreateActivity }
+                    onEdit={ this.props.onEditActivity }
                     initialValue={ action.activity.id }/>
                 <TextArea label="Information" name="info_text"
                     initialValue={ action.info_text }/>
@@ -108,6 +111,9 @@ export default class ActionForm extends FluxComponent {
 }
 
 ActionForm.propTypes = {
+    onEditCampaign: React.PropTypes.func,
+    onEditLocation: React.PropTypes.func,
+    onEditActivity: React.PropTypes.func,
     onCreateCampaign: React.PropTypes.func,
     onCreateLocation: React.PropTypes.func,
     onCreateActivity: React.PropTypes.func

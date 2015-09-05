@@ -43,7 +43,9 @@ export default class EditCampaignPane extends PaneBase {
         const values = this.refs.form.getChangedValues();
         const campaignId = this.props.params[0];
 
-        this.getActions('campaign').updateCampaign(campaignId, values);
+        this.getActions('campaign')
+            .updateCampaign(campaignId, values)
+            .then(this.closePane.bind(this));
     }
 
     onDeleteClick(ev) {

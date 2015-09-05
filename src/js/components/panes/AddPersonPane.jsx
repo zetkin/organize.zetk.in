@@ -22,6 +22,8 @@ export default class AddPersonPane extends PaneBase {
         var form = this.refs.personForm;
         var values = form.getValues();
 
-        this.getActions('person').createPerson(values);
+        this.getActions('person')
+            .createPerson(values)
+            .then(this.closePane.bind(this));
     }
 }
