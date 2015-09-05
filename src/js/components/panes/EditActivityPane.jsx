@@ -44,7 +44,9 @@ export default class EditActivityPane extends PaneBase {
         const values = this.refs.form.getChangedValues();
         const activityId = this.props.params[0];
 
-        this.getActions('activity').updateActivity(activityId, values);
+        this.getActions('activity')
+            .updateActivity(activityId, values)
+            .then(this.closePane.bind(this));
     }
 
     onDeleteClick(ev) {

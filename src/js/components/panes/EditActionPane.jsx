@@ -44,7 +44,9 @@ export default class EditActionPane extends PaneBase {
         var values = this.refs.form.getChangedValues();
         var actionId = this.props.params[0];
 
-        this.getActions('action').updateAction(actionId, values);
+        this.getActions('action')
+            .updateAction(actionId, values)
+            .then(this.closePane.bind(this));
     }
 
     onCreateCampaign(title) {

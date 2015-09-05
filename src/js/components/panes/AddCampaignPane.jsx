@@ -25,14 +25,8 @@ export default class AddCampaignPane extends PaneBase {
 
         const values = this.refs.form.getValues();
 
-        // Show indicator
         this.getActions('campaign')
             .createCampaign(values)
-            .then(this.onCreateCampaignComplete.bind(this));
-    }
-
-    onCreateCampaignComplete () {
-        // Todo: Go to edit pane? close?
-        this.closePane();
+            .then(this.closePane.bind(this));
     }
 }

@@ -27,6 +27,8 @@ export default class AddActivityPane extends PaneBase {
         const activityId = this.props.params[0];
 
         // TODO: Go to edit pane when done?
-        this.getActions('activity').createActivity(values);
+        this.getActions('activity')
+            .createActivity(values)
+            .then(this.closePane.bind(this));
     }
 }

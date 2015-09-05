@@ -44,7 +44,9 @@ export default class AddActionPane extends PaneBase {
         const values = this.refs.actionForm.getValues();
         const campaignId = values.campaign_id;
 
-        this.getActions('action').createAction(campaignId, values);
+        this.getActions('action')
+            .createAction(campaignId, values)
+            .then(this.closePane.bind(this));
     }
 
     onCreateCampaign(title) {
