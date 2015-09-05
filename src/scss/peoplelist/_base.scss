@@ -14,6 +14,18 @@
             &:nth-child(2) {
                 display: none;
             }
+
+            a {
+                cursor: pointer;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+
+                &.selected {
+                    font-weight: bold;
+                }
+            }
         }
     }
 }
