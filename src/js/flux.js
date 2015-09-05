@@ -18,6 +18,7 @@ import PersonActions from './actions/person';
 import PersonStore from './stores/person';
 import QueryActions from './actions/query';
 import QueryStore from './stores/query';
+import ReminderActions from './actions/reminder';
 import SearchActions from './actions/search';
 import SearchStore from './stores/search';
 import UserActions from './actions/user';
@@ -69,6 +70,7 @@ export default class Flux extends Flummox {
         this.createActions('participant', ParticipantActions, this);
         this.createActions('person', PersonActions, this);
         this.createActions('query', QueryActions);
+        this.createActions('reminder', ReminderActions, this);
         this.createActions('search', SearchActions);
         this.createActions('user', UserActions);
 

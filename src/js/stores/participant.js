@@ -11,7 +11,9 @@ export default class ParticipantStore extends Store {
             moves: []
         });
 
-        var participantActions = this.flux.getActions('participant');
+        const participantActions = this.flux.getActions('participant');
+        const reminderActions = this.flux.getActions('reminder');
+
         this.registerAsync(participantActions.retrieveParticipants,
             this.onRetrieveParticipantsBegin,
             this.onRetrieveParticipantsComplete);
@@ -26,6 +28,9 @@ export default class ParticipantStore extends Store {
             this.onExecuteMovesComplete);
         this.register(participantActions.clearMoves,
             this.onClearMoves);
+
+        this.register(reminderActions.sendAllActionReminders,
+            this.onSendAllActionRemindersComplete);
     }
 
     getParticipants(actionId) {
@@ -69,6 +74,25 @@ export default class ParticipantStore extends Store {
         this.setState({
             participants: allParticipants
         });
+    }
+
+    onSendAllActionRemindersComplete(res) {
+        const actionId = res.meta.actionId;
+        const reminders = res.data.data;
+        const participants = this.state.participants[actionId];
+
+        for (let i = 0; i < participants.length; i++) {
+            let participant = participants[i];
+            let reminder = reminders.find(r => r.person.id == participant.id);
+
+            if (reminder) {
+                participant.reminder_sent = reminder.sent;
+            }
+        }
+
+        this.setState({
+            participants: this.state.participants
+        })
     }
 
     onMoveParticipant(payload) {
