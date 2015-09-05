@@ -1,23 +1,51 @@
 import React from 'react/addons';
 
 import PeopleListItem from './PeopleListItem';
+import PeopleListHeader from './PeopleListHeader';
 
 
 export default class PeopleList extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            sortField: undefined
+        };
+    }
+
     shouldComponentUpdate(nextProps, nextState) {
-        return (nextProps.people !== this.props.people);
+        return (nextProps.people !== this.props.people
+            || nextState.sortField !== this.state.sortField);
     }
 
     render() {
-        const people = this.props.people;
+        const sortField = this.state.sortField;
 
+        const columns = [
+            {
+                'first_name': 'First name',
+                'last_name': 'Last name',
+            },
+            {
+                'email': 'E-mail address',
+                'phone': 'Phone number',
+            }
+        ];
+
+        var people = this.props.people;
+
+        if (sortField) {
+            people = people.concat().sort(function(p0, p1) {
+                if (p0[sortField] < p1[sortField]) return -1;
+                if (p1[sortField] > p1[sortField]) return 1;
+                return 0;
+            });
+        }
 
         return (
             <div className="peoplelist">
-                <ul className="peoplelist-columns">
-                    <li>First name / last name</li>
-                    <li>E-mail / phone</li>
-                </ul>
+                <PeopleListHeader columns={ columns } sortField={ sortField }
+                    onFieldClick={ this.onFieldClick.bind(this) }/>
                 <ul className="peoplelist-items">
                     {people.map(function(person) {
                         return <PeopleListItem person={ person }
@@ -32,6 +60,17 @@ export default class PeopleList extends React.Component {
         if (this.props.onSelect) {
             this.props.onSelect(person);
         }
+    }
+
+    onFieldClick(field) {
+        if (field == this.state.sortField) {
+            // Click the same twice? Reset
+            field = undefined;
+        }
+
+        this.setState({
+            sortField: field
+        });
     }
 }
 
