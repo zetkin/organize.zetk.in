@@ -70,5 +70,8 @@ export default class EditActionPane extends PaneBase {
         if (operation == 'edit') {
             this.openPane('editaction', action.id);
         }
+        else if (operation == 'sendreminders') {
+            this.openPane('reminder', action.id);
+        }
     }
 }
