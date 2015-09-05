@@ -19,6 +19,10 @@
         }
     }
 
+    h3 {
+        font-size: 1.5em;
+    }
+
     .section-pane-content::after {
         content: "";
         display: block;
@@ -201,6 +205,67 @@
             left: 40px;
             right: 40px;
             width: auto;
+        }
+    }
+}
+
+.section-pane-reminder {
+    header small {
+        span {
+            margin-right: 0.5em;
+        }
+    }
+
+    .actionreminderpane-newparticipants {
+        li {
+            float: left;
+            margin: 0.2em;
+        }
+
+        .avatar {
+            width: 3em;
+            height: auto;
+        }
+
+        &::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    }
+
+    form {
+        margin: 2em 0 3em;
+    }
+
+    .actionreminderpane-reminded {
+        li {
+            @include card;
+            position: relative;
+            margin: 1em 0;
+            padding: 0.5em;
+            height: 6em;
+
+            .avatar {
+                width: 5em;
+                height: auto;
+            }
+
+            .person {
+                position: absolute;
+                top: 10px;
+                left: 60px;
+
+                cursor: pointer;
+                font-size: 1.1em;
+                font-weight: bold;
+            }
+
+            .timestamp {
+                position: absolute;
+                top: 25px;
+                left: 60px;
+            }
         }
     }
 }

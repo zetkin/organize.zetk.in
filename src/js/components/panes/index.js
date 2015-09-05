@@ -1,4 +1,5 @@
 import ActionDayPane from './ActionDayPane';
+import ActionReminderPane from './ActionReminderPane';
 import AddActionPane from './AddActionPane';
 import AddActivityPane from './AddActivityPane';
 import AddCampaignPane from './AddCampaignPane';
@@ -32,7 +33,8 @@ var _panes = {
     'location': EditLocationPane,
     'moveparticipants': MoveParticipantsPane,
     'person': PersonPane,
-    'query': QueryPane
+    'query': QueryPane,
+    'reminder': ActionReminderPane
 };
 
 export function resolvePane(name) {

@@ -80,6 +80,9 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         if (operation == 'edit') {
             this.openPane('editaction', action.id);
         }
+        else if (operation == 'sendreminders') {
+            this.openPane('reminder', action.id);
+        }
     }
 
     onMoveParticipant(action, person, oldAction) {
