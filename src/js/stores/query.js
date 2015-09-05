@@ -7,21 +7,9 @@ export default class QueryStore extends Store {
 
         this.flux = flux;
 
-        // TODO: Get rid of dummy data
-        this.setState({
-            queries: [
-                {
-                    id: 1,
-                    title: 'My Query',
-                    filters: [{
-                        type: 'person_data',
-                        config: {
-                            text: 'larsson',
-                            fields: null // All fields
-                        }
-                    }]
-                }
-            ]
+        // TODO: Call directly on this
+        super.setState({
+            queries: []
         });
 
         const queryActions = flux.getActions('query');
@@ -29,6 +17,10 @@ export default class QueryStore extends Store {
         this.register(queryActions.addFilter, this.onAddFilter);
         this.register(queryActions.updateFilter, this.onUpdateFilter);
         this.register(queryActions.removeFilter, this.onRemoveFilter);
+
+        // TODO: Remove once platform supports queries
+        this.register(queryActions.loadQueriesFromLocalStorage,
+            this.onLoadQueriesFromLocalStorage);
     }
 
     getQueries() {
@@ -99,6 +91,29 @@ export default class QueryStore extends Store {
         this.setState({
             queries: this.state.queries
         });
+    }
+
+    // TODO: Remove once platform supports queries
+    onLoadQueriesFromLocalStorage() {
+        // TODO: Don't get from local storage
+        if (typeof window !== 'undefined') {
+            const json = localStorage.getItem('storedPersonQueries');
+            if (json) {
+                this.setState({
+                    queries: JSON.parse(json) || []
+                });
+            }
+        }
+    }
+
+    // TODO: Remove once server is implemented
+    setState(newState) {
+        if (newState.queries && typeof window !== 'undefined') {
+            const json = JSON.stringify(newState.queries);
+            window.localStorage.setItem('storedPersonQueries', json);
+        }
+
+        super.setState(newState);
     }
 }
 

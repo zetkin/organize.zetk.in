@@ -2,6 +2,11 @@ import { Actions } from 'flummox';
 
 
 export default class QueryActions extends Actions {
+    // TODO: Remove once platform supports queries
+    loadQueriesFromLocalStorage() {
+        return true;
+    }
+
     createQuery(title) {
         return title;
     }
