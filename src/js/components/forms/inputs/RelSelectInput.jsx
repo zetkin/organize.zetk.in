@@ -24,6 +24,16 @@ export default class RelSelectInput extends InputBase {
         }
     }
 
+    componentDidMount() {
+        const listDOMNode = React.findDOMNode(this.refs.objectList);
+        listDOMNode.addEventListener('mousewheel', onWheelStopPropagation);
+    }
+
+    componentWillUnmount() {
+        const listDOMNode = React.findDOMNode(this.refs.objectList);
+        listDOMNode.removeEventListener('mousewheel', onWheelStopPropagation);
+    }
+
     renderInput() {
         const value = this.props.value;
         const objects = this.props.objects;
@@ -88,7 +98,7 @@ export default class RelSelectInput extends InputBase {
                     onFocus={ this.onFocus.bind(this) }
                     onKeyDown={ this.onKeyDown.bind(this) }
                     onBlur={ this.onBlur.bind(this) }/>
-                <ul>
+                <ul ref="objectList">
                 {filteredObjects.map(function(obj, idx) {
                     const value = obj[valueField];
                     const label = obj[labelField];
@@ -253,3 +263,8 @@ RelSelectInput.defaultProps = {
     labelField: 'title',
     nullLabel: 'None'
 };
+
+
+function onWheelStopPropagation(ev) {
+    ev.stopPropagation();
+}
