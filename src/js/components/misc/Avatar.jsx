@@ -5,7 +5,9 @@ export default class Avatar extends React.Component {
     render() {
         const person = this.props.person;
         const src = '//avatars.zetk.in/avatar/' + person.id;
-        const alt = person.first_name + ' ' + person.last_name;
+        const alt = (person.first_name && person.last_name)?
+            person.first_name + ' ' + person.last_name :
+            person.name? person.name : '';
 
         return (
             <img className="avatar" src={ src } alt={ alt } title={ alt }/>
