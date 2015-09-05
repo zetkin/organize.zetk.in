@@ -160,7 +160,7 @@ export default class RelSelectInput extends InputBase {
             ev.preventDefault();
         }
         else if (ev.keyCode == 13) {
-            if (focusedIndex > 0 && focusedIndex < valueCount) {
+            if (focusedIndex >= 0 && focusedIndex < valueCount) {
                 const value = this.values[focusedIndex];
                 if (value == '+') {
                     // User pressed enter on the "create option"
