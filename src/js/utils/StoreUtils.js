@@ -1,10 +1,13 @@
+import merge from 'merge';
+
+
 function updateOrAdd(dataSet, id, newData) {
     var i;
     var updated = false;
 
     for (i = 0; i < dataSet.length; i++) {
         if (dataSet[i].id == id) {
-            dataSet[i] = newData;
+            dataSet[i] = merge(true, dataSet[i], newData);
             updated = true;
             break;
         }
