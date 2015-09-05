@@ -143,6 +143,9 @@ export default class RelSelectInput extends InputBase {
             focusedIndex: undefined,
             inputValue: ev.target.value
         });
+
+        const listDOMNode = React.findDOMNode(this.refs.objectList);
+        listDOMNode.scrollTop = 0;
     }
 
     onKeyDown(ev) {
@@ -217,6 +220,9 @@ export default class RelSelectInput extends InputBase {
     }
 
     onBlur(ev) {
+        const listDOMNode = React.findDOMNode(this.refs.objectList);
+        listDOMNode.scrollTop = 0;
+
         this.setState({
             inputFocused: false
         });
