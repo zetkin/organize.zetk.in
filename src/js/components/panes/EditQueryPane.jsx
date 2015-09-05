@@ -7,12 +7,13 @@ import { resolveFilterComponent } from '../filters';
 export default class QueryPane extends PaneBase {
     getRenderData() {
         const queryStore = this.getStore('query');
+        const query = queryStore.getQuery(this.getParam(0));
 
-        return queryStore.getQuery(this.getParam(0));
+        return query || { filters: [] };
     }
 
     getPaneTitle(data) {
-        return 'Edit query: ' + data.title;
+        return data.title? ('Edit query: ' + data.title) : 'Edit query';
     }
 
     componentDidMount() {
