@@ -170,7 +170,7 @@ export default class Search extends FluxComponent {
 
             ev.preventDefault();
         }
-        else if (ev.keyCode == 13 && focusedIndex >= 0) {
+        else if (results.length && ev.keyCode == 13 && focusedIndex >= 0) {
             const selected = results[focusedIndex];
 
             this.onMatchSelect(selected);
