@@ -37,7 +37,7 @@ export default class PeopleList extends React.Component {
         if (sortField) {
             people = people.concat().sort(function(p0, p1) {
                 if (p0[sortField] < p1[sortField]) return -1;
-                if (p1[sortField] > p1[sortField]) return 1;
+                if (p0[sortField] > p1[sortField]) return 1;
                 return 0;
             });
         }
