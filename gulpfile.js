@@ -79,7 +79,7 @@ gulp.task('minifyImages', [ 'cleanImages' ], function() {
 });
 
 gulp.task('restartDevServer', shell.task([
-    'docker exec organize.zetk.in sv restart organize.zetk.in'
+    'docker exec environment_zetkinorganize_1 sv restart organize.zetk.in'
 ]));
 
 gulp.task('minify', function() {
