@@ -24,3 +24,19 @@ select{
         padding: calc(0.25em - 1px);
     }
 }
+
+.actionform {
+    .forminput-start_time {
+        width: 30%;
+        float: left;
+    }
+
+    .forminput-end_time {
+        width: 30%;
+        float: left;
+    }
+
+    .forminput-num_participants_required {
+        clear: left;
+    }
+}
