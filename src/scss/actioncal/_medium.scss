@@ -78,10 +78,7 @@
         color: #999;
 
         code {
-            display: inline-block;
-            background-color: #ddd;
-            border-radius: 0.4em;
-            padding: 0.1em 0.3em;
+            @include key-reference
         }
     }
 }
