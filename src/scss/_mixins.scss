@@ -59,3 +59,17 @@
     line-height: 1.6;
     content: $fa-character;
 }
+
+@mixin icon-button($fa-character) {
+    width: 3em;
+    padding: .35em 1em .25em;
+    text-align: center;
+    display: inline-block;
+    color: transparent;
+    overflow: hidden;
+    &::before{
+        @include icon($fa-character);
+        display: inline;
+        color: $c-ui-darker;
+    }
+}
