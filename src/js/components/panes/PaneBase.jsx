@@ -33,12 +33,17 @@ export default class PaneBase extends FluxComponent {
             );
         }
 
+        var title = null;
+        var subTitle = null;
         var closeButton = null;
         if (!this.props.isBase) {
             closeButton = (
                 <a className="section-pane-closelink"
                     onClick={ this.onCloseClick.bind(this) }/>
             );
+
+            title = <h2>{ this.getPaneTitle(data) }</h2>;
+            subTitle = <small>{ this.getPaneSubTitle(data) }</small>;
         }
 
         return (
@@ -51,8 +56,8 @@ export default class PaneBase extends FluxComponent {
                     { toolbar }
                 </header>
                 <div className="section-pane-content">
-                    <h2>{ this.getPaneTitle(data) }</h2>
-                    <small>{ this.getPaneSubTitle(data) }</small>
+                    { title }
+                    { subTitle }
                     { this.renderPaneContent(data) }
                 </div>
             </div>
