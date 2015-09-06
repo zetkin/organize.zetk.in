@@ -9,8 +9,8 @@ export default class ViewSwitch extends React.Component {
             <div className="viewswitch">
             {stateNames.map(function(state) {
                 var label = this.props.states[state];
-                return <input key={ state } type="button" value={ label }
-                    onClick={ this.onLabelClick.bind(this, state) }/>;
+                var className = label.toLowerCase();
+                return <button key={ state } className={className} onClick={ this.onLabelClick.bind(this, state) }>{ label }</button>;
             }, this)}
             </div>
         );

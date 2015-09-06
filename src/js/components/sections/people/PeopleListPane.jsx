@@ -37,8 +37,8 @@ export default class PeopleListPane extends PaneBase {
         }
 
         return [
-            <input key="addButton" type="button" value="Add"
-                onClick={ this.onAddClick.bind(this) }/>,
+            <button key="addButton" className="add-person"
+            onClick={ this.onAddClick.bind(this) }>Add</button>,
             <RelSelectInput name="querySelect" value={ queryId }
                 objects={ queries } showEditLink={ true }
                 allowNull={ true } nullLabel="(Show all people)"
