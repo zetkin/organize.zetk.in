@@ -16,7 +16,6 @@
             display: block;
             width: 1em;
             height: 1em;
-            background-color: #ccc;
             float: left;
             margin-right: 0.2em;
         }
@@ -61,6 +60,18 @@
             font-weight: bold;
             text-align: center;
         }
+    }
+}
+.section-pane-distribution .locations .title{
+    &::before {
+        @include icon($fa-var-map-marker);
+        font-size: .8em;
+    }
+}
+.section-pane-distribution .activities .title{
+    &::before {
+        @include icon($fa-var-calendar);
+        font-size: .8em;
     }
 }
 
