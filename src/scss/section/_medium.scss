@@ -130,9 +130,10 @@
             top: 1em;
             left: 1em;
             right: auto;
-            background-color: red;
-            width: 1em;
-            height: 1em;
+            &::before{
+                color: inherit;
+                font-size: inherit;
+            }
         }
 
         .section-pane-content {

@@ -25,10 +25,16 @@
     .section-pane-closelink {
         background: transparent;
         position: absolute;
+        cursor: pointer;
         top: -40px;
         left: 0;
         right: 0;
         height: 40px;
+        &::before{
+            @include icon($fa-var-close);
+            color: #ddd;
+            font-size: 2.4em;
+        }
     }
 
     &::before {
