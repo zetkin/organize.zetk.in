@@ -64,3 +64,17 @@
         }
     }
 }
+
+.timeinput {
+    input[type=text] {
+        display: inline-block;
+        width: 3em;
+        text-align: center;
+    }
+
+    &::after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+}

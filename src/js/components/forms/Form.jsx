@@ -1,4 +1,5 @@
 import React from 'react/addons';
+import cx from 'classnames';
 
 
 export default class Form extends React.Component {
@@ -19,10 +20,16 @@ export default class Form extends React.Component {
         }
 
         return (
-            <form onSubmit={ this.onSubmit.bind(this) }>
+            <form className={ this.props.className }
+                onSubmit={ this.onSubmit.bind(this) }>
                 <ul>
                 {inputs.map(function(input, index) {
-                    var props = input.props;
+                    const props = input.props;
+
+                    const classes = cx(
+                        props.className,
+                        'forminput-' + props.name
+                    );
 
                     if (props.name !== undefined
                         && !this.state.values.hasOwnProperty(props.name)) {
@@ -32,11 +39,16 @@ export default class Form extends React.Component {
 
                     props.value = this.state.values[props.name]
                     props.onValueChange = this.onValueChange.bind(this);
+
                     delete props.initialValue;
+                    delete props.className;
 
                     var elem = React.cloneElement(input, props);
 
-                    return <li key={ index }>{ elem }</li>;
+                    return (
+                        <li className={ classes } key={ index }>
+                            { elem }</li>
+                    );
                 }, this)}
                 </ul>
             </form>
@@ -87,5 +99,6 @@ export default class Form extends React.Component {
 }
 
 Form.propTypes = {
+    className: React.PropTypes.string,
     onSubmit: React.PropTypes.func
 };
