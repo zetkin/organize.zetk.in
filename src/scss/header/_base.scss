@@ -107,18 +107,22 @@
             }
 
             .search-form-scopeselect-value {
-                width: 3em;
-                height: 2em;
+                position: relative;
+                width: 3.2em !important;
+                height: 2em !important;
                 background-color: #ddd;
-                margin-bottom: 0.5em;
+                margin-bottom: 0.4em;
 
                 // Value icon
                 &::before {
-                    content: "";
-                    display: block;
-                    margin: 0.1em;
-                    width: 1.6em;
-                    height: 1.6em;
+                    margin: 0.2em;
+                    float: left;
+                }
+                &::after {
+                    position: absolute;
+                    right: 0;
+                    top: 0.2em;
+                    @include icon($fa-var-caret-down);
                 }
             }
 
@@ -127,13 +131,13 @@
                 background-color: white;
                 display: none;
                 font-size: 1.2em;
-                padding: 0.3em 0.3em 0.3em 3em;
+                padding: 0.3em 1em 0.3em 3em;
 
                 // Item icon
                 &::before {
                     position: absolute;
                     top: 0;
-                    left: 0;
+                    left: .5em;
                     content: "";
                     display: block;
                     margin: 0.1em;
@@ -142,31 +146,40 @@
                 }
             }
 
+            .search-form-scopeselect-item-selected {
+                font-weight: 700;
+            }
+
             .search-form-scopeselect-all {
                 &::before {
-                    background-color: black;
+                     @include icon($fa-var-search);
                 }
             }
 
             .search-form-scopeselect-people {
                 &::before {
-                    background-color: red;
+                    @include icon($fa-var-users);
                 }
             }
 
             .search-form-scopeselect-campaign {
                 &::before {
-                    background-color: blue;
+                    @include icon($fa-var-calendar);
                 }
             }
 
             .search-form-scopeselect-maps {
                 &::before {
-                    background-color: green;
+                    @include icon($fa-var-map-marker);
                 }
             }
 
             &.open {
+                .search-form-scopeselect-value {
+                    &::after {
+                        @include icon($fa-var-caret-up);
+                    }
+                }
                 .search-form-scopeselect-item {
                     display: block;
                 }
