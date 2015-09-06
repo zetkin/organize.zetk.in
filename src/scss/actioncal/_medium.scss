@@ -165,13 +165,14 @@
         margin: 0 0 0.2em;
 
         &::before {
-            content: "";
+            @include icon($fa-var-map-marker);
             display: block;
             float: left;
-            background-color: #888;
             width: 0.5em;
             height: 0.8em;
-            margin: 0.2em 0.2em 0 0;
+            margin: 0.2em 0.4em 0 0;
+            font-size: .8em;
+            line-height: 0.9;
         }
     }
 
