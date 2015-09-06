@@ -19,6 +19,11 @@
         }
     }
 
+    .pane-top {
+        position: relative;
+        z-index: 3000;
+    }
+
     .section-pane-toolbar {
         padding: 20px 0;
         margin: 0 0 30px;
@@ -89,6 +94,16 @@
 }
 
 .section-pane-distribution {
+    .campaignselect {
+        width: 300px;
+    }
+
+    &.scrolled {
+        .section-pane-toolbar {
+            top: 130px;
+        }
+    }
+
     .section-pane-content {
         h3 {
             font-size: 1.5em;
