@@ -21,11 +21,33 @@
 
     .section-pane-toolbar {
         padding: 20px 0;
-        margin-bottom: 20px;
+        margin: 0 0 30px;
+        height: 50px;
+
+        transition: height 0.2s, padding-top 0.2s, background-color 0.1s;
 
         & > * {
             display: inline-block;
             margin-right: 20px;
+        }
+    }
+
+    &.scrolled {
+        .section-pane-toolbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 3000;
+
+            padding: 5px 20px;
+            height: 35px;
+            background-color: white;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .section-pane-content {
+            padding-top: 80px;
         }
     }
 
