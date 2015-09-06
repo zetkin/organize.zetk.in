@@ -21,6 +21,8 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
     }
 
     componentDidMount() {
+        super.componentDidMount();
+
         this.listenTo('action', this.forceUpdate);
         this.listenTo('campaign', this.forceUpdate);
         this.getActions('action').retrieveAllActions();
