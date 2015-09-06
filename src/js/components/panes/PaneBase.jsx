@@ -24,18 +24,35 @@ export default class PaneBase extends FluxComponent {
             classNames.push('section-pane-' + this.props.paneType);
         }
 
+        var toolbar = this.getPaneTools();
+        if (toolbar) {
+            toolbar = (
+                <div className="section-pane-toolbar">
+                    { toolbar }
+                </div>
+            );
+        }
+
+        var closeButton = null;
+        if (!this.props.isBase) {
+            closeButton = (
+                <a className="section-pane-closelink"
+                    onClick={ this.onCloseClick.bind(this) }/>
+            );
+        }
+
         return (
             <div className={ classNames.join(' ') }>
                 <header>
                     <div className="pane-top">
                     { this.renderPaneTop(data) }
                     </div>
-                    <a className="section-pane-closelink"
-                        onClick={ this.onCloseClick.bind(this) }/>
-                    <h2>{ this.getPaneTitle(data) }</h2>
-                    <small>{ this.getPaneSubTitle(data) }</small>
+                    { closeButton }
+                    { toolbar }
                 </header>
                 <div className="section-pane-content">
+                    <h2>{ this.getPaneTitle(data) }</h2>
+                    <small>{ this.getPaneSubTitle(data) }</small>
                     { this.renderPaneContent(data) }
                 </div>
             </div>
@@ -43,6 +60,10 @@ export default class PaneBase extends FluxComponent {
     }
 
     renderPaneTop(data) {
+        return null;
+    }
+
+    getPaneTools(data) {
         return null;
     }
 
@@ -104,10 +125,15 @@ export default class PaneBase extends FluxComponent {
 }
 
 PaneBase.propTypes = {
+    isBase: React.PropTypes.bool,
     onClose: React.PropTypes.func,
     onReplace: React.PropTypes.func,
     onOpenPane: React.PropTypes.func,
     onPushPane: React.PropTypes.func
+};
+
+PaneBase.defaultProps = {
+    isBase: false
 };
 
 function panePathSegment(paneType, params) {
