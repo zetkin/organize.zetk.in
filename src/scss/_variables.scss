@@ -6,3 +6,7 @@ $c-text: #000;
 $c-text-contrast: #FFF;
 
 $c-ui-focus: #FFC400;
+
+$c-ui-bg: rgb(248, 248, 248);
+$c-ui-dark: darken($c-ui-bg, 25);
+$c-ui-darker: darken($c-ui-bg, 50);
