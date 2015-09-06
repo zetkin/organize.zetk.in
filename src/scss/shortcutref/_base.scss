@@ -6,9 +6,11 @@
     right: 0;
     bottom: 0;
     left: 0;
+    display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+    display: -ms-flexbox;  /* TWEENER - IE 10 */
+    display: -webkit-flex;
     display: flex;
-    justify-content: space-around;
-    flex-direction: row;
+    -webkit-align-items: center;
     align-items: center;
 
     & > div {
@@ -96,6 +98,7 @@
         }
 
         .shortcutref-main {
+            margin: 0 auto;
             z-index: 1;
             visibility: visible;
             width: 32em;
