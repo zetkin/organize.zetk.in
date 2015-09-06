@@ -50,3 +50,12 @@
     line-height: 1.4;
     text-align: center;
 }
+
+@mixin icon($fa-character) {
+    @include fa-icon;
+    text-align: center;
+    height: 1.6em;
+    width: 1.6em;
+    line-height: 1.6;
+    content: $fa-character;
+}
