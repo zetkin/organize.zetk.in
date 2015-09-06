@@ -29,19 +29,27 @@
             border-radius: 50%;
             border: none;
             cursor: pointer;
-
-            transition: background-color 0.2s;
+            background-color: $c-ui-darker;
 
             &:focus {
                 outline: 0;
             }
-
-            &.play-btn {
-                background-color: black;
+            &.play-btn{
+                &::before{
+                    @include icon($fa-var-play);
+                        margin-left: .25em;
+                }
             }
-
-            &.stop-btn {
-                background-color: red;
+            &.stop-btn{
+                &::before{
+                    @include icon($fa-var-stop);
+                }
+            }
+            &.stop-btn, &.play-btn{
+                &::before {
+                    color: $c-text-contrast;
+                    font-size: 2em;
+                }
             }
         }
     }
