@@ -43,16 +43,26 @@ button{
     background-color: $c-ui-bg;
     padding: .25em .5em;
     cursor: pointer;
+    &.add{
+        @include icon-button($fa-var-plus);
+    }
     &.add-person{
-        @include icon-button($fa-var-user-plus)
+        @include icon-button($fa-var-user-plus);
+    }
+    &.add-map-marker{
+        @include icon-button-add($fa-var-map-marker)
     }
     &.calendar{
-        @include icon-button($fa-var-calendar)
+        @include icon-button($fa-var-calendar);
     }
     &.list{
-        @include icon-button($fa-var-list-alt)
+        @include icon-button($fa-var-list-alt);
+    }
+    &.map{
+        @include icon-button($fa-var-map-o);
     }
 }
+
 .viewswitch{
     button:first-of-type{
         border-right-width: 0;
