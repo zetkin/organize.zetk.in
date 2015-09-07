@@ -14,18 +14,26 @@ export default class PaneBase extends FluxComponent {
     }
 
     componentDidMount() {
-        const paneDOMNode = React.findDOMNode(this.refs.pane);
-
-        paneDOMNode.onPaneScroll = (function onPaneScroll(scrollTop) {
+        this.onPaneScroll = (function onPaneScroll(ev) {
             this.setState({
-                scrolled: (scrollTop != 0)
+                scrolled: (ev.target.scrollTop > 2)
             });
         }).bind(this);
+
+        const contentDOMNode = React.findDOMNode(this.refs.content);
+        contentDOMNode.addEventListener('scroll', this.onPaneScroll);
+
+        const scrolled = (contentDOMNode.scrollTop > 2);
+        if (scrolled != this.state.scrolled) {
+            this.setState({
+                scrolled: scrolled
+            });
+        }
     }
 
     componentWillUnmount() {
-        const paneDOMNode = React.findDOMNode(this.refs.pane);
-        paneDOMNode.onPaneScroll = null;
+        const contentDOMNode = React.findDOMNode(this.refs.content);
+        contentDOMNode.removeEventListener('scroll', this.onPaneScroll);
     }
 
     render() {
@@ -68,7 +76,7 @@ export default class PaneBase extends FluxComponent {
                     { closeButton }
                     { toolbar }
                 </header>
-                <div className="section-pane-content">
+                <div ref="content" className="section-pane-content">
                     { title }
                     { subTitle }
                     { this.renderPaneContent(data) }

@@ -186,12 +186,10 @@ function Pane(domElement, isBase) {
     this.dragging = false;
     this.isBase = isBase;
 
-    var startX, startY,
-        originalX, originalY,
+    var startX, originalX,
         dragging = false,
         section = this,
         prevX, speedX,
-        prevY, speedY,
         axis;
 
     var x = 0;
@@ -227,45 +225,17 @@ function Pane(domElement, isBase) {
         return w;
     }
 
-    var scroll = 0;
-    this.getScroll = function() {
-        return scroll;
-    }
-    this.setScroll = function(val) {
-        val = Math.min(0, Math.max(val,
-                this.domElement.offsetHeight - this.contentElement.offsetHeight - 200));
-        scroll = val;
-        this.contentElement.style.transform = 'translate3d(0,'+scroll+'px,0)';
-        this.contentElement.style.webkitTransform = 'translate3d(0,'+scroll+'px,0)';
-
-        if (this.domElement.onPaneScroll) {
-            this.domElement.onPaneScroll(scroll);
-        }
-    }
-
-
     function startDragging(data) {
         axis = null;
         dragging = true;
         startX = data.pageX;
-        startY = data.pageY;
         prevX = startX;
-        prevY = startY;
         speedX = 0;
-        speedY = 0;
         originalX = section.getX();
-        originalY = section.getScroll();
     }
 
     function stopDragging() {
         dragging = false;
-    }
-
-    this.domElement.addEventListener('mousewheel', onDomElementMouseWheel);
-    function onDomElementMouseWheel(ev) {
-        if (_layout == HORIZONTAL) {
-            section.setScroll(section.getScroll() + ev.wheelDeltaY/2);
-        }
     }
 
     this.domElement.addEventListener('touchstart', onDomElementTouchStart);
@@ -298,22 +268,9 @@ function Pane(domElement, isBase) {
     function onDomElementTouchMove(ev) {
         if (dragging) {
             var touch = ev.changedTouches[0],
-                dx = touch.pageX - startX,
-                dy = touch.pageY - startY,
-                tmpAxis = null;
+                dx = touch.pageX - startX;
 
-            tmpAxis = axis || ((dx*dx > dy*dy)? 'x' : 'y');
-
-            if (!axis && (dx*dx+dy*dy) > 400) {
-                axis = tmpAxis;
-            }
-
-            if (tmpAxis=='x') {
-                speedX = (originalX + dx) - section.getX();
-            }
-            else if (tmpAxis=='y') {
-                speedY = (originalY + dy) - section.getScroll();
-            }
+            speedX = (originalX + dx) - section.getX();
         }
     }
 
@@ -329,10 +286,6 @@ function Pane(domElement, isBase) {
     }
 
     this.update = function() {
-        if (speedY*speedY > 0.01) {
-            section.setScroll(section.getScroll() + speedY);
-            speedY *= 0.95;
-        }
         if (speedX*speedX > 0.01) {
             section.setX(section.getX() + speedX);
             speedX *= 0.8;
@@ -345,7 +298,6 @@ function Pane(domElement, isBase) {
         this.domElement.removeEventListener('mousemove', onDomElementMouseMove);
         this.domElement.removeEventListener('mousedown', onDomElementMouseDown);
         this.domElement.removeEventListener('touchstart', onDomElementTouchStart);
-        this.domElement.removeEventListener('mousewheel', onDomElementMouseWheel);
 
         document.removeEventListener('touchend', stopDragging);
         document.removeEventListener('mouseup', stopDragging);
