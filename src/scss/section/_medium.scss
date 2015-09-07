@@ -142,7 +142,7 @@
 
         .section-pane-content {
             display: block;
-            padding: 70px 20px;
+            padding: 70px 30px;
             position: absolute;
             top: 0;
             left: 0;
@@ -168,6 +168,15 @@
             background-color: rgba(0,0,0,0);
             pointer-events: none;
         }
+
+        // Use smaller padding on base pane, which does not have a close
+        // button that needs to be avoided
+        &:first-child {
+            .section-pane-content {
+                padding-left: 20px;
+            }
+        }
+
     }
 
     // TODO: Should 
