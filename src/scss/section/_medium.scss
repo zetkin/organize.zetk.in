@@ -123,12 +123,16 @@
         }
 
         header {
-            margin: 50px 0px 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1200;
         }
 
         .section-pane-closelink {
-            top: 1em;
-            left: 1em;
+            top: 10px;
+            left: 10px;
             right: auto;
             &::before{
                 color: inherit;
@@ -138,6 +142,19 @@
 
         .section-pane-content {
             display: block;
+            padding: 70px 30px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: -20px;
+            bottom: 0;
+            z-index: 1100;
+            overflow-y: scroll;
+            overflow-x: hidden;
+
+            h2 {
+                margin-top: 0;
+            }
         }
 
         .section-pane-shader {
@@ -151,6 +168,15 @@
             background-color: rgba(0,0,0,0);
             pointer-events: none;
         }
+
+        // Use smaller padding on base pane, which does not have a close
+        // button that needs to be avoided
+        &:first-child {
+            .section-pane-content {
+                padding-left: 20px;
+            }
+        }
+
     }
 
     // TODO: Should 
