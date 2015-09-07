@@ -12,7 +12,7 @@ export default class EditQueryPane extends PaneBase {
     }
 
     getPaneTitle(data) {
-        return data.title;
+        return data? data.title : '';
     }
 
     getPaneSubTitle(data) {
@@ -31,6 +31,10 @@ export default class EditQueryPane extends PaneBase {
     }
 
     renderPaneContent(data) {
+        if (!data) {
+            return null;
+        }
+
         const personStore = this.getStore('person');
         const queryStore = this.getStore('query');
         const people = personStore.getPeople();
