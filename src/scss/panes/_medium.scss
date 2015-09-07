@@ -4,19 +4,17 @@
     z-index: 1000;
     padding: 0;
 
-    header {
-        h2 {
-            margin: 30px 0 30px;
-        }
+    h2 {
+        margin: 30px 0 30px;
+    }
 
-        small {
-            display: block;
-            margin: -15px 0 30px;
+    small {
+        display: block;
+        margin: -25px 0 30px;
 
-            a {
-                cursor: pointer;
-                text-decoration: underline;
-            }
+        a {
+            cursor: pointer;
+            text-decoration: underline;
         }
     }
 
@@ -69,6 +67,10 @@
     }
 }
 
+.section-pane-actionday {
+    min-width: 680px;
+}
+
 .section-pane-actions {
     background-color: #fafafa;
 
@@ -95,6 +97,7 @@
     min-width: 400px;
 }
 
+.section-content
 .section-pane-distribution {
     .campaignselect {
         width: 300px;
@@ -107,6 +110,8 @@
     }
 
     .section-pane-content {
+        top: 130px;
+
         h3 {
             font-size: 1.5em;
             color: #888;
@@ -292,7 +297,7 @@
 }
 
 .section-pane-reminder {
-    header small {
+    small {
         span {
             margin-right: 0.5em;
         }

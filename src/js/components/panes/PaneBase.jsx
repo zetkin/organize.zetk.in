@@ -15,9 +15,13 @@ export default class PaneBase extends FluxComponent {
 
     componentDidMount() {
         this.onPaneScroll = (function onPaneScroll(ev) {
-            this.setState({
-                scrolled: (ev.target.scrollTop > 2)
-            });
+            const scrolled = (ev.target.scrollTop > 2);
+
+            if (scrolled != this.state.scrolled) {
+                this.setState({
+                    scrolled: scrolled
+                });
+            }
         }).bind(this);
 
         const contentDOMNode = React.findDOMNode(this.refs.content);
