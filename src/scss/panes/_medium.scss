@@ -95,6 +95,7 @@
     min-width: 400px;
 }
 
+.section-content
 .section-pane-distribution {
     .campaignselect {
         width: 300px;
@@ -107,6 +108,8 @@
     }
 
     .section-pane-content {
+        top: 130px;
+
         h3 {
             font-size: 1.5em;
             color: #888;
