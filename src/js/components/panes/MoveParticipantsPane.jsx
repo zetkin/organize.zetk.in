@@ -28,10 +28,10 @@ export default class MoveParticipantsPane extends PaneBase {
         const peopleStore = this.getStore('person');
 
         return [
-            <input type="button" value="Execute all"
-                onClick={ this.onExecuteClick.bind(this) }/>,
-            <input type="button" value="Reset all and cancel"
-                onClick={ this.onResetClick.bind(this) }/>,
+            <button onClick={ this.onExecuteClick.bind(this) }>
+                Confirm all</button>,
+            <button onClick={ this.onResetClick.bind(this) }>
+                Cancel all</button>,
             <ul className="movelist">
             {data.moves.map(function(move) {
                 const key = [move.person, move.from, move.to].join(',');
@@ -46,10 +46,10 @@ export default class MoveParticipantsPane extends PaneBase {
                         <Action action={ fromAction }/>
                         <Action action={ toAction }/>
 
-                        <input type="button" value="Execute"
-                            onClick={ this.onMoveExecute.bind(this, move) }/>
-                        <input type="button" value="Cancel"
-                            onClick={ this.onMoveCancel.bind(this, move) }/>
+                        <button onClick={ this.onMoveConfirm.bind(this, move) }>
+                            Confirm</button>
+                        <button onClick={ this.onMoveCancel.bind(this, move) }>
+                            Cancel</button>
                     </li>
                 );
             }, this)}
@@ -61,7 +61,7 @@ export default class MoveParticipantsPane extends PaneBase {
         this.openPane('person', person.id);
     }
 
-    onMoveExecute(move) {
+    onMoveConfirm(move) {
         const participantActions = this.getActions('participant');
 
         participantActions.executeMoves([ move ]);
