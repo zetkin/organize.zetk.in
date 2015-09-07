@@ -175,6 +175,11 @@
 .section-pane-moveparticipants {
     min-width: 400px;
 
+    button {
+        width: 100%;
+        margin: 0.5em 0;
+    }
+
     ul {
         margin: 0;
         padding: 0;
@@ -188,10 +193,17 @@
         margin: 1em 0;
         font-size: 1.1em;
 
-        input[type=button] {
-            width: 48%;
+        button {
+            display: block;
+            width: 46%;
             float: left;
-            margin: 1em 1% 0.5em;
+            clear: both;
+            margin: 1em 0 0;
+
+            & + button {
+                clear: none;
+                float: right;
+            }
         }
 
         &::after {
