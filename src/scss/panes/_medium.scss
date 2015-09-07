@@ -154,6 +154,13 @@
     min-width: 400px;
 }
 
+// Person list (will get better name after SCSS refactor)
+.section-pane-list {
+    .relselectinput {
+        width: 300px;
+    }
+}
+
 .section-pane-location {
     min-width: 400px;
 }

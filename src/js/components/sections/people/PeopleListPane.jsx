@@ -19,6 +19,8 @@ export default class PeopleListPane extends PaneBase {
     }
 
     componentDidMount() {
+        super.componentDidMount();
+
         this.listenTo('query', this.forceUpdate);
         this.listenTo('person', this.forceUpdate);
         this.getActions('person').retrievePeople();
@@ -30,23 +32,31 @@ export default class PeopleListPane extends PaneBase {
 
         const queryId = this.state.selectedQueryId;
         const queryStore = this.getStore('query');
-        const queries = queryStore.getQueries();
 
         if (queryId) {
             people = queryStore.executeQuery(queryId, people);
         }
 
+        return (
+            <PeopleList key="peopleList" people={ people }
+                onSelect={ this.onSelect.bind(this) }/>
+        );
+    }
+
+    getPaneTools(data) {
+        const queryId = this.state.selectedQueryId;
+        const queryStore = this.getStore('query');
+        const queries = queryStore.getQueries();
+
         return [
-            <button key="addButton" className="add-person"
-            onClick={ this.onAddClick.bind(this) }>Add</button>,
             <RelSelectInput name="querySelect" value={ queryId }
                 objects={ queries } showEditLink={ true }
                 allowNull={ true } nullLabel="(Show all people)"
                 onValueChange={ this.onQueryChange.bind(this) }
                 onCreate={ this.onQueryCreate.bind(this) }
                 onEdit={ this.onQueryEdit.bind(this) }/>,
-            <PeopleList key="peopleList" people={ people }
-                onSelect={ this.onSelect.bind(this) }/>
+            <button key="addButton" className="add-person"
+                onClick={ this.onAddClick.bind(this) }>Add</button>
         ];
     }
 
