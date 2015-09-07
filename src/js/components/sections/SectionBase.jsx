@@ -50,7 +50,7 @@ export default class SectionBase extends FluxComponent {
             Pane = subSections[0].startPane;
             panePath = basePath + '/' + subSections[0].path;
             panes.push(
-                <Pane ref="pane0" key={ subSections[0].path }
+                <Pane ref="pane0" key={ subSections[0].path } isBase={ true }
                     onOpenPane={ this.onOpenPane.bind(this, 0) }
                     onPushPane={ this.onPushPane.bind(this) }
                     paneType={ subSections[0].path } panePath={ panePath }/>);
@@ -67,7 +67,7 @@ export default class SectionBase extends FluxComponent {
                     Pane = section.startPane;
                     panePath = basePath + '/' + section.path;
                     panes.push(
-                        <Pane ref="pane0" key={ section.path }
+                        <Pane ref="pane0" key={ section.path } isBase={ true }
                             onOpenPane={ this.onOpenPane.bind(this, 0) }
                             onPushPane={ this.onPushPane.bind(this) }
                             paneType={ section.path } panePath={ panePath }/>);
@@ -88,7 +88,7 @@ export default class SectionBase extends FluxComponent {
                 Pane = section.startPane;
                 panePath = basePath + '/' + section.path;
                 panes.push(
-                    <Pane ref="pane0" key={ section.path }
+                    <Pane ref="pane0" key={ section.path } isBase={ true }
                         onOpenPane={ this.onOpenPane.bind(this, 0) }
                         onPushPane={ this.onPushPane.bind(this) }
                         paneType={ section.path } panePath={ panePath }/>);

@@ -21,6 +21,8 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
     }
 
     componentDidMount() {
+        super.componentDidMount();
+
         this.listenTo('action', this.forceUpdate);
         this.listenTo('campaign', this.forceUpdate);
         this.getActions('action').retrieveAllActions();
@@ -58,21 +60,22 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
                 onActionOperation={ this.onActionOperation.bind(this) }/>;
         }
 
+        return viewComponent;
+    }
+
+    getPaneTools(data) {
         const viewStates = {
             'cal': 'Calendar',
             'list': 'List'
         };
 
         return [
-            <ViewSwitch states={ viewStates }
-                selected={ this.state.viewMode }
-                onSwitch={ this.onViewSwitch.bind(this) }/>,
-
             <CampaignSelect
                 onCreate={ this.onCreateCampaign.bind(this) }
                 onEdit={ this.onEditCampaign.bind(this) }/>,
-
-            viewComponent
+            <ViewSwitch states={ viewStates }
+                selected={ this.state.viewMode }
+                onSwitch={ this.onViewSwitch.bind(this) }/>
         ];
     }
 

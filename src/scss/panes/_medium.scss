@@ -19,6 +19,43 @@
         }
     }
 
+    .pane-top {
+        position: relative;
+        z-index: 2000;
+    }
+
+    .section-pane-toolbar {
+        padding: 20px 0;
+        margin: 0 0 30px;
+        height: 50px;
+
+        transition: height 0.2s, padding-top 0.2s, background-color 0.1s;
+
+        & > * {
+            display: inline-block;
+            margin-right: 20px;
+        }
+    }
+
+    &.scrolled {
+        .section-pane-toolbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 2000;
+
+            padding: 5px 20px;
+            height: 35px;
+            background-color: white;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .section-pane-content {
+            padding-top: 80px;
+        }
+    }
+
     h3 {
         font-size: 1.5em;
     }
@@ -32,6 +69,10 @@
 
 .section-pane-actions {
     background-color: #fafafa;
+
+    .campaignselect {
+        width: 300px;
+    }
 }
 
 .section-pane-person {
@@ -53,6 +94,16 @@
 }
 
 .section-pane-distribution {
+    .campaignselect {
+        width: 300px;
+    }
+
+    &.scrolled {
+        .section-pane-toolbar {
+            top: 130px;
+        }
+    }
+
     .section-pane-content {
         h3 {
             font-size: 1.5em;
@@ -103,16 +154,21 @@
     min-width: 400px;
 }
 
+// Person list (will get better name after SCSS refactor)
+.section-pane-list {
+    .relselectinput {
+        width: 300px;
+    }
+}
+
 .section-pane-location {
     min-width: 400px;
 }
 
 .section-pane-locations {
-    .viewswitch {
-        position: absolute;
+    .section-pane-toolbar {
+        position: relative;
         z-index: 2000;
-        bottom: 20px;
-        left: 20px;
     }
 }
 
@@ -177,14 +233,22 @@
 }
 
 .section-pane-playback {
-    header {
-        position: relative;
-        z-index: 2;
+    .section-pane-toolbar {
+        position: absolute;
+        top: 130px;
+        left: 0;
+        right: 0;
+        z-index: 2000;
+        margin: 0;
+
+        padding: 5px 20px;
+        height: 35px;
+        background-color: white;
+        border-bottom: 1px solid #ddd;
     }
 
     .campaignselect {
-        position: relative;
-        z-index: 2;
+        width: 300px;
     }
 
     .campaignplayer {

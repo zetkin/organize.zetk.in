@@ -38,33 +38,52 @@ a {
 ul {
     @include list-unstyled;
 }
+
 button{
     border: 1px solid $c-ui-dark;
     background-color: $c-ui-bg;
-    padding: .25em .5em;
+    padding: 5px;
     cursor: pointer;
     &.add{
         @include icon-button($fa-var-plus);
     }
     &.add-person{
+        position: relative;
         @include icon-button($fa-var-user-plus);
     }
     &.add-map-marker{
+        position: relative;
         @include icon-button-add($fa-var-map-marker)
-    }
-    &.calendar{
-        @include icon-button($fa-var-calendar);
-    }
-    &.list{
-        @include icon-button($fa-var-list-alt);
-    }
-    &.map{
-        @include icon-button($fa-var-map-o);
     }
 }
 
-.viewswitch{
-    button:first-of-type{
-        border-right-width: 0;
+.viewswitch {
+    button {
+        height: 25px;
+        padding: 5px;
+
+        &:focus {
+            outline: 0;
+        }
+
+        &:first-child {
+            border-right-width: 0;
+        }
+
+        &.selected {
+            background-color: #eee;
+        }
+    }
+
+    &.viewswitch-state-calendar{
+        @include icon-button($fa-var-calendar);
+    }
+
+    &.viewswitch-state-list{
+        @include icon-button($fa-var-list-alt);
+    }
+
+    &.viewswitch-state-map{
+        @include icon-button($fa-var-map-o);
     }
 }

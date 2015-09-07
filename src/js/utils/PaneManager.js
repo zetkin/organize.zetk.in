@@ -237,6 +237,10 @@ function Pane(domElement, isBase) {
         scroll = val;
         this.contentElement.style.transform = 'translate3d(0,'+scroll+'px,0)';
         this.contentElement.style.webkitTransform = 'translate3d(0,'+scroll+'px,0)';
+
+        if (this.domElement.onPaneScroll) {
+            this.domElement.onPaneScroll(scroll);
+        }
     }
 
 

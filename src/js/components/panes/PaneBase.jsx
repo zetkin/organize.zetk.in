@@ -1,41 +1,76 @@
 import React from 'react/addons';
+import cx from 'classnames';
 
 import FluxComponent from '../FluxComponent';
 
 
-class EmptyIndex extends React.Component {
-    render() {
-        return null;
-    }
-}
-
-class EmptyNotFound extends React.Component {
-    render() {
-        return null;
-    }
-}
-
 export default class PaneBase extends FluxComponent {
-    render() {
-        var data = this.getRenderData();
-        var classNames = ['section-pane'];
+    constructor(props) {
+        super(props);
 
-        if (this.props.paneType) {
-            classNames.push('section-pane-' + this.props.paneType);
+        this.state = {
+            scrolled: false
+        };
+    }
+
+    componentDidMount() {
+        const paneDOMNode = React.findDOMNode(this.refs.pane);
+
+        paneDOMNode.onPaneScroll = (function onPaneScroll(scrollTop) {
+            this.setState({
+                scrolled: (scrollTop != 0)
+            });
+        }).bind(this);
+    }
+
+    componentWillUnmount() {
+        const paneDOMNode = React.findDOMNode(this.refs.pane);
+        paneDOMNode.onPaneScroll = null;
+    }
+
+    render() {
+        const data = this.getRenderData();
+        const paneType = this.props.paneType;
+
+        const classes = cx('section-pane-' + paneType, {
+            'section-pane': true,
+            'scrolled': this.state.scrolled
+        });
+
+        var toolbar = this.getPaneTools();
+        if (toolbar) {
+            toolbar = (
+                <div className="section-pane-toolbar">
+                    { toolbar }
+                </div>
+            );
+        }
+
+        var title = null;
+        var subTitle = null;
+        var closeButton = null;
+        if (!this.props.isBase) {
+            closeButton = (
+                <a className="section-pane-closelink"
+                    onClick={ this.onCloseClick.bind(this) }/>
+            );
+
+            title = <h2>{ this.getPaneTitle(data) }</h2>;
+            subTitle = <small>{ this.getPaneSubTitle(data) }</small>;
         }
 
         return (
-            <div className={ classNames.join(' ') }>
+            <div ref="pane" className={ classes }>
                 <header>
                     <div className="pane-top">
                     { this.renderPaneTop(data) }
                     </div>
-                    <a className="section-pane-closelink"
-                        onClick={ this.onCloseClick.bind(this) }/>
-                    <h2>{ this.getPaneTitle(data) }</h2>
-                    <small>{ this.getPaneSubTitle(data) }</small>
+                    { closeButton }
+                    { toolbar }
                 </header>
                 <div className="section-pane-content">
+                    { title }
+                    { subTitle }
                     { this.renderPaneContent(data) }
                 </div>
             </div>
@@ -43,6 +78,10 @@ export default class PaneBase extends FluxComponent {
     }
 
     renderPaneTop(data) {
+        return null;
+    }
+
+    getPaneTools(data) {
         return null;
     }
 
@@ -104,10 +143,15 @@ export default class PaneBase extends FluxComponent {
 }
 
 PaneBase.propTypes = {
+    isBase: React.PropTypes.bool,
     onClose: React.PropTypes.func,
     onReplace: React.PropTypes.func,
     onOpenPane: React.PropTypes.func,
     onPushPane: React.PropTypes.func
+};
+
+PaneBase.defaultProps = {
+    isBase: false
 };
 
 function panePathSegment(paneType, params) {

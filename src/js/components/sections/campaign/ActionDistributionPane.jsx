@@ -12,6 +12,8 @@ export default class ActionDistributionPane extends CampaignSectionPaneBase {
     }
 
     componentDidMount() {
+        super.componentDidMount();
+
         this.listenTo('action', this.forceUpdate);
         this.listenTo('campaign', this.forceUpdate);
         this.getActions('action').retrieveAllActions();
@@ -34,9 +36,6 @@ export default class ActionDistributionPane extends CampaignSectionPaneBase {
         const actions = actionStore.getActions();
 
         return [
-            <CampaignSelect
-                onCreate={ this.onCreateCampaign.bind(this) }
-                onEdit={ this.onEditCampaign.bind(this) }/>,
             <div className="locations">
                 <h3>Locations</h3>
                 <ActionDistribution actions={ actions }
@@ -54,6 +53,14 @@ export default class ActionDistributionPane extends CampaignSectionPaneBase {
                     onMouseOut={ this.onMouseOut.bind(this) }/>
             </div>
         ];
+    }
+
+    getPaneTools(data) {
+        return (
+            <CampaignSelect
+                onCreate={ this.onCreateCampaign.bind(this) }
+                onEdit={ this.onEditCampaign.bind(this) }/>
+        );
     }
 
     onLocMouseOver(loc) {

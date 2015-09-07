@@ -12,6 +12,8 @@ export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
     }
 
     componentDidMount() {
+        super.componentDidMount();
+
         this.listenTo('action', this.forceUpdate);
         this.listenTo('campaign', this.forceUpdate);
         this.listenTo('location', this.forceUpdate);
@@ -38,13 +40,18 @@ export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
 
         const center = locationStore.getAverageCenterOfLocations();
 
-        return [
-            <CampaignSelect
-                onCreate={ this.onCreateCampaign.bind(this) }
-                onEdit={ this.onEditCampaign.bind(this) }/>,
+        return (
             <CampaignPlayer key="player"
                 actions={ actions } locations={ locations }
                 centerLat={ center.lat } centerLng={ center.lng }/>
-        ];
+        );
+    }
+
+    getPaneTools() {
+        return (
+            <CampaignSelect
+                onCreate={ this.onCreateCampaign.bind(this) }
+                onEdit={ this.onEditCampaign.bind(this) }/>
+        );
     }
 }

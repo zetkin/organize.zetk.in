@@ -30,11 +30,6 @@ export default class LocationsPane extends PaneBase {
         // add pending to location list
         var pendingLocation = locationStore.getPendingLocation();
 
-        var switchStates = {
-            'map': 'Map',
-            'list': 'List'
-        };
-
         if (this.state.viewMode == 'map') {
             var style = {
                 position: 'absolute',
@@ -45,10 +40,6 @@ export default class LocationsPane extends PaneBase {
             };
 
             content = (
-                <div>
-                <button type="button"
-                    className={ 'locations-map-button add-map-marker' }
-                    onClick={ this.onAddClick.bind(this) } >Add</button>
                 <LocationMap style={ style } 
                     locations={ locations }
                     locationsForBounds={ locations }
@@ -56,15 +47,11 @@ export default class LocationsPane extends PaneBase {
                     ref="locationMap"
                     onLocationChange={ this.onLocationChange.bind(this) }
                     onLocationSelect={ this.onLocationSelect.bind(this) }/>
-                </div>
             );
         }
         else if (this.state.viewMode == 'list') {
             content = (
                 <div>
-                    <button type="button"
-                    className={ 'add-map-marker' }
-                    onClick={ this.onAddClick.bind(this) } >Add</button>
                     <ul>
                     {locations.map(function(loc) {
                         return (
@@ -80,14 +67,27 @@ export default class LocationsPane extends PaneBase {
 
         return (
             <div>
-                <ViewSwitch states={ switchStates }
-                    selected={ this.state.viewMode }
-                    onSwitch={ this.onViewSwitch.bind(this) }/>
-
                 { content }
             </div>
         );
     }
+
+    getPaneTools(data) {
+        const switchStates = {
+            'map': 'Map',
+            'list': 'List'
+        };
+
+        return [
+            <ViewSwitch states={ switchStates }
+                selected={ this.state.viewMode }
+                onSwitch={ this.onViewSwitch.bind(this) }/>,
+            <button type="button"
+                className={ 'add-map-marker' }
+                onClick={ this.onAddClick.bind(this) } >Add</button>
+        ];
+    }
+
     onAddClick() {
         // TODO: when in list mode what to use as center?
         var loc = {
