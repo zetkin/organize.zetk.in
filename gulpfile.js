@@ -40,8 +40,14 @@ gulp.task('cleanSass', function(cb) {
     ], cb);
 });
 
+gulp.task('cleanFonts', function(cb) {
+    return del([
+        'dist/static/fonts',
+    ], cb);
+});
+
 gulp.task('clean', function(cb) {
-    return runSequence('cleanJs', 'cleanImages', 'cleanTemplates', 'cleanSass', cb);
+    return runSequence('cleanJs', 'cleanImages', 'cleanSass', 'cleanFonts', cb);
 });
 
 gulp.task('buildPlainJs', [ 'cleanJs' ], function() {
@@ -78,8 +84,14 @@ gulp.task('minifyImages', [ 'cleanImages' ], function() {
         .pipe(gulp.dest('dist/static/img'));
 });
 
+gulp.task('moveFonts', [ 'cleanFonts' ], function() {
+    return gulp.src('assets/fonts/**/*.@(otf|eot|svg|ttf|woff|woff2)')
+        .pipe(imagemin())
+        .pipe(gulp.dest('dist/static/fonts'));
+});
+
 gulp.task('restartDevServer', shell.task([
-    'docker exec organize.zetk.in sv restart organize.zetk.in'
+    'docker exec environment_zetkinorganize_1 sv restart organize.zetk.in'
 ]));
 
 gulp.task('minify', function() {
@@ -89,7 +101,7 @@ gulp.task('minify', function() {
 });
 
 gulp.task('default', [ 'clean' ], function(cb) {
-    return runSequence('bundleJs', 'buildSass', 'minifyImages', 'copyTemplates', cb);
+    return runSequence('bundleJs', 'buildSass', 'minifyImages', 'moveFonts', cb);
 });
 
 
@@ -113,6 +125,10 @@ gulp.task('watch', function() {
 
     watch('assets/images/**/*', function() {
         return runSequence('minifyImages');
+    });
+
+    watch('assets/fonts/**/*', function() {
+        return runSequence('moveFonts');
     });
 });
 

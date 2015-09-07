@@ -50,3 +50,37 @@
     line-height: 1.4;
     text-align: center;
 }
+
+@mixin icon($fa-character) {
+    @include fa-icon;
+    text-align: center;
+    height: 1.6em;
+    width: 1.6em;
+    line-height: 1.6;
+    content: $fa-character;
+}
+
+@mixin icon-button($fa-character) {
+    width: 3em;
+    padding: .35em 1em .25em;
+    text-align: center;
+    display: inline-block;
+    color: transparent;
+    overflow: hidden;
+    &::before{
+        @include icon($fa-character);
+        display: inline;
+        color: $c-ui-darker;
+    }
+}
+@mixin icon-button-add($fa-character) {
+    @include icon-button($fa-character);
+    padding: .35em .75em .25em;
+    &::after{
+        @include icon($fa-var-plus);
+        color: $c-ui-darker;
+        position: absolute;
+        right: .25em;
+        top: .4em;
+    }
+}

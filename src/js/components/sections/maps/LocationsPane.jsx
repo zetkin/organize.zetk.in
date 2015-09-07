@@ -46,9 +46,9 @@ export default class LocationsPane extends PaneBase {
 
             content = (
                 <div>
-                <input value="Add" type="button"
-                    className={ 'locations-map-button' }
-                    onClick={ this.onAddClick.bind(this) } />
+                <button type="button"
+                    className={ 'locations-map-button add-map-marker' }
+                    onClick={ this.onAddClick.bind(this) } >Add</button>
                 <LocationMap style={ style } 
                     locations={ locations }
                     locationsForBounds={ locations }
@@ -62,7 +62,9 @@ export default class LocationsPane extends PaneBase {
         else if (this.state.viewMode == 'list') {
             content = (
                 <div>
-                    <input type="button" value="Add" onClick={ this.onAddClick.bind(this) }/>
+                    <button type="button"
+                    className={ 'add-map-marker' }
+                    onClick={ this.onAddClick.bind(this) } >Add</button>
                     <ul>
                     {locations.map(function(loc) {
                         return (
