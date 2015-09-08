@@ -1,0 +1,43 @@
+.locationlist {
+    max-width: 640px;
+
+    .listheader {
+        position: relative;
+        height: 15px;
+
+        li {
+            position: absolute;
+
+            &:first-child {
+                left: 140px;
+            }
+
+            a {
+                cursor: pointer;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+
+                &.selected {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    .locationlistitem {
+        position: relative;
+        box-shadow: 0 0 1px rgba(0,0,0,0.1);
+        margin: 5px 0;
+        background-color: white;
+        padding: 5px;
+
+        .title {
+            position: absolute;
+            top: 10px;
+            left: 140px;
+            font-size: 1.2em;
+        }
+    }
+}
