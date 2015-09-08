@@ -1,7 +1,7 @@
 import React from 'react/addons';
 
 import PeopleListItem from './PeopleListItem';
-import PeopleListHeader from './PeopleListHeader';
+import ListHeader from '../list/ListHeader';
 
 
 export default class PeopleList extends React.Component {
@@ -44,7 +44,7 @@ export default class PeopleList extends React.Component {
 
         return (
             <div className="peoplelist">
-                <PeopleListHeader columns={ columns } sortField={ sortField }
+                <ListHeader columns={ columns } sortField={ sortField }
                     onFieldClick={ this.onFieldClick.bind(this) }/>
                 <ul className="peoplelist-items">
                     {people.map(function(person) {

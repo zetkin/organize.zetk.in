@@ -2,13 +2,13 @@ import React from 'react/addons';
 import cx from 'classnames';
 
 
-export default class PeopleListColumns extends React.Component {
+export default class ListHeader extends React.Component {
     render() {
         const columns = this.props.columns;
         const sortField = this.props.sortField;
 
         return (
-            <ul className="peoplelist-columns">
+            <ul className="listheader">
             {columns.map(function(column, index) {
                 const links = [];
                 const keys = Object.keys(column);
@@ -48,7 +48,7 @@ export default class PeopleListColumns extends React.Component {
     }
 }
 
-PeopleListColumns.propTypes = {
+ListHeader.propTypes = {
     columns: React.PropTypes.object.isRequired,
     sortField: React.PropTypes.string,
     onFieldClick: React.PropTypes.func
