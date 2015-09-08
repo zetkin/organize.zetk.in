@@ -10,11 +10,17 @@
         top: 0.5em;
         left: 1em;
         overflow: hidden;
-        text-indent: 1000;
-        background-color: red;
         width: 1em;
         height: 1em;
         cursor: pointer;
+
+        &::before {
+            content: "\f00d";
+            display: inline-block;
+            font: normal normal normal 10px FontAwesome;
+            height: 15px;
+            width: 15px;
+        }
     }
 }
 
