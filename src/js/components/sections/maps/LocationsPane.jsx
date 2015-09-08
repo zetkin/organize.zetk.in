@@ -3,6 +3,8 @@ import React from 'react/addons';
 import PaneBase from '../../panes/PaneBase';
 import LocationMap from '../../misc/LocationMap';
 import ViewSwitch from '../../misc/ViewSwitch';
+import LocationList from '../../misc/loclist/LocationList';
+
 
 export default class LocationsPane extends PaneBase {
     constructor(props) {
@@ -51,17 +53,8 @@ export default class LocationsPane extends PaneBase {
         }
         else if (this.state.viewMode == 'list') {
             content = (
-                <div>
-                    <ul>
-                    {locations.map(function(loc) {
-                        return (
-                            <li onClick={ this.onLocationSelect.bind(this, loc) }>
-                                { loc.title }
-                            </li>
-                        );
-                    }, this)}
-                    </ul>
-                </div>
+                <LocationList locations={ locations }
+                    onSelect={ this.onLocationSelect.bind(this) }/>
             );
         }
 
