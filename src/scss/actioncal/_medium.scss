@@ -90,6 +90,14 @@
     margin-left: 0.1em;
     vertical-align: top;
 
+    &.actionday-sat, &.actionday-sun {
+        background-color: #eaeaea;
+    }
+
+    &.actionday-monthbegin {
+        border-left: 1px solid #ccc;
+    }
+
     &.dragover {
         background-color: #e6e6e6;
     }
