@@ -54,8 +54,9 @@ export default class ActionDay extends React.Component {
             actions = actions.slice(0, maxVisible - 1);
         }
 
-        const classes = cx({
-            'actionday': true,
+        const dayClass = 'actionday-' + DAY_LABELS[date.getDay()].toLowerCase();
+        const classes = cx('actionday', dayClass, {
+            'actionday-monthbegin': (date.getDate() == 1),
             'today': date.is('today'),
             'dragover': this.props.isOver
         });
