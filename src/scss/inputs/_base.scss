@@ -44,7 +44,9 @@
                 background-color: #eee;
 
                 &::before {
-                    background-color: #ddd;
+                    color: #ddd;
+                    content: "\f00c";
+                    font: normal normal normal 10px FontAwesome;
                 }
             }
 
@@ -52,7 +54,9 @@
                 font-weight: bold;
 
                 &::before {
-                    background-color: red;
+                    color: #2a0;
+                    content: "\f00c";
+                    font: normal normal normal 10px FontAwesome;
                 }
             }
 
