@@ -4,9 +4,6 @@ input[type="email"],
 textarea,
 input[type="password"] {
     @include input-base;
-    margin: 0.25em auto 1.5em;
-    border-bottom-width: 1px;
-    border-color: black;
 }
 
 input[type="submit"] {
