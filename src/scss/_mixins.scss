@@ -16,12 +16,13 @@
 
 @mixin input-base {
     font-size: 1.25em;
-    border-width: 0;
-    margin: 0 auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+    margin: 0 auto 10px;
     width: 100%;
     &:focus{
         outline: none;
-        border-color: $c-ui-focus;
+        border-color: #ccc;
     }
 }
 
