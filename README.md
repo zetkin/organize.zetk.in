@@ -21,5 +21,5 @@ up and running with Docker in the [`env`](./env) folder.
     npm install
     npm config set prefix /usr/local
     npm install -g gulp
+    gulp
     gulp watch
-    # make a change in a js and a css file
