@@ -15,3 +15,11 @@ up and running with Docker in the [`env`](./env) folder.
 - `package.json`: NPM package configuration (dependencies et c)
 - `src`: All application code resides within this directory
 - `tests`: Test suite (currently not set up properly)
+
+## Install
+    brew install npm
+    npm install
+    npm config set prefix /usr/local
+    npm install -g gulp
+    gulp
+    gulp watch
