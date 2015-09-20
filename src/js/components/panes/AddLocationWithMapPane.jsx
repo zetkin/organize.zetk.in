@@ -24,7 +24,7 @@ export default class AddLocationPane extends PaneBase {
             width: '100%'
         }
         return [ 
-            <h3>1. Click on map add position of location</h3>,
+            <h3>1. Click on map to add location position</h3>,
             <LocationMap 
                     style={ style } 
                     pendingLocation={ pendingLocation }
