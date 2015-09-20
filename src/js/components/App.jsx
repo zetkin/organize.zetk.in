@@ -32,9 +32,9 @@ export default class App extends FluxComponent {
                           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCih1zeZELzFJxP2SFkNJVDLs2ZCT_y3gY&libraries=visualization"/>
                 </head>
                 <body>
-                    <div id="app">
+                    <div className="App">
                         <Header onSearchNavigate={ this.onSearchNavigate.bind(this) }/>
-                        <Router.Locations id="main" ref="router"
+                        <Router.Locations className="App-main" ref="router"
                             onNavigation={ this.onNavigation.bind(this) }
                             path={ this.props.path }>
 
