@@ -37,6 +37,7 @@
     "del": "^1.1.1",
     "gulp": "^3.8.10",
     "gulp-babel": "^5.0.0",
+    "gulp-concat": "^2.6.0",
     "gulp-jsxcs": "^0.1.8",
     "gulp-react": "^2.0.0",
     "gulp-rename": "^1.2.2",

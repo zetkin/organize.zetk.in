@@ -1,30 +1,70 @@
-@import "_variables";
-@import "font-awesome/_font-awesome";
-@import "_mixins";
-@import "_base";
-@import "inputs/_base";
-@import "filters/_base";
-@import "header/_base";
-@import "section/_base";
-@import "dashboard/_base";
-@import "actionlist/_base";
-@import "forms/_base";
-@import "locations/_base";
-@import "loclist/_base";
-@import "campaignplayer/_base";
-@import "actiondistro/_base";
-@import "peoplelist/_base";
-@import "shortcutref/_base";
+html {
+    box-sizing: border-box;
+}
 
-@media screen and (min-width: 720px) {
-    @import "_medium";
-    @import "header/_medium";
-    @import "section/_medium";
-    @import "dashboard/_medium";
-    @import "panes/_medium";
-    @import "actionlist/_medium";
-    @import "actioncal/_medium";
-    @import "forms/_medium";
-    @import "actiondistro/_medium";
-    @import "peoplelist/_medium";
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    background-color: #ddd;
+    font-size: 62.5%;
+    font-family: Arial, sans-serif;
+}
+
+#main {
+    position: absolute;
+    top: 4.8em;
+    right: 0;
+    left: 0;
+}
+h1 {
+    // todo: define vertical rythm
+}
+h2 {
+    // todo: define vertical rythm
+    font-size: 1.5rem;
+}
+h2, h3, h4 {
+    font-weight: normal;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+// Not good but here for now
+ul {
+    @include list-unstyled;
+}
+button{
+    border: 1px solid $c-ui-dark;
+    background-color: $c-ui-bg;
+    padding: .25em .5em;
+    cursor: pointer;
+    &.add{
+        @include icon-button($fa-var-plus);
+    }
+    &.add-person{
+        @include icon-button($fa-var-user-plus);
+    }
+    &.add-map-marker{
+        @include icon-button-add($fa-var-map-marker)
+    }
+    &.calendar{
+        @include icon-button($fa-var-calendar);
+    }
+    &.list{
+        @include icon-button($fa-var-list-alt);
+    }
+    &.map{
+        @include icon-button($fa-var-map-o);
+    }
+}
+
+.viewswitch{
+    button:first-of-type{
+        border-right-width: 0;
+    }
 }

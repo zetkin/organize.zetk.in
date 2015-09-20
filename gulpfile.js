@@ -15,6 +15,7 @@ var imagemin = require('gulp-imagemin');
 var jsxcs = require('gulp-jsxcs');
 var babel = require('gulp-babel');
 var rename = require('gulp-rename');
+var concat = require('gulp-concat');
 
 
 var babelConfig = {
@@ -73,7 +74,14 @@ gulp.task('bundleJs', [ 'buildJsx' ], function() {
 });
 
 gulp.task('buildSass', [ 'cleanSass' ], function() {
-    return gulp.src('src/scss/**/*.scss')
+    return gulp.src([
+            'src/scss/_variables.scss',
+            'src/scss/font-awesome/zetkin-font-awesome.scss',
+            'src/scss/_mixins.scss',
+            'src/scss/style.scss',
+            'src/js/**/*.scss'
+        ])
+        .pipe(concat('style.scss'))
         .pipe(sass())
         .pipe(gulp.dest('dist/static/css'));
 });
@@ -115,11 +123,11 @@ gulp.task('lint', function() {
 });
 
 gulp.task('watch', function() {
-    watch('src/js/**/*', function() {
+    watch('src/js/**/*.@(js|jsx)', function() {
         return runSequence('bundleJs', 'restartDevServer');
     });
 
-    watch('src/scss/**/*.scss', function() {
+    watch('src/**/*.scss', function() {
         return runSequence('buildSass');
     });
 
