@@ -1,0 +1,52 @@
+.UserMenu {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.6em;
+
+    &:hover {
+        .usermenu-info{
+            display: block;
+        }
+    }
+}
+.UserMenu .avatar {
+    position: absolute;
+    top: 0.3em;
+    right: 0.3em;
+    width: 2.4em;
+    height: 2.4em;
+}
+.UserMenu-info{
+    display: none;
+    margin-top: 3em;
+    padding: 0.5em;
+    background-color: white;
+
+    ul {
+        margin-top: 0;
+        text-align: right;
+    }
+    li {
+        list-style-type: none;
+        margin: 0.5em;
+
+    }
+    li a {
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+    }
+}
+.UserMenu-name,
+.UserMenu-org{
+    text-align: right;
+    display: block;
+}
+.UserMenu-name{
+    font-weight: bold;
+}
+.UserMenu-org{
+    font-size: 0.8em;
+}
