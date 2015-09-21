@@ -37,7 +37,7 @@ export default class Search extends FluxComponent {
         var results = searchStore.getResults();
         var scope = searchStore.getScope();
         var resultList;
-        var classes = ['search-form'];
+        var classes = ['Search'];
 
         if (searchStore.isSearchActive()) {
             classes.push('focused');
@@ -45,7 +45,7 @@ export default class Search extends FluxComponent {
 
         if (results.length) {
             resultList = (
-                <ul className="search-form-results">
+                <ul className="Search-results">
                 {results.map(function(match, idx) {
                     const key = match.type + ':' + match.data.id;
                     const focused = (this.state.focusedIndex === idx);
