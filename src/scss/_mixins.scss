@@ -85,3 +85,15 @@
         top: .4em;
     }
 }
+
+@mixin medium-screen {
+  @media (min-width: #{$medium-width}) {
+    @content;
+  }
+}
+
+@mixin large-screen {
+  @media only screen and (min-width: #{$large-width}) {
+    @content;
+  }
+}
