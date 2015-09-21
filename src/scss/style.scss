@@ -56,9 +56,3 @@ button{
         @include icon-button($fa-var-map-o);
     }
 }
-
-.viewswitch{
-    button:first-of-type{
-        border-right-width: 0;
-    }
-}
