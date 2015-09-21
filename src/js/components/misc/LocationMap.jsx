@@ -67,9 +67,11 @@ export default class LocationMap extends React.Component {
             pendingId = this.props.pendingLocation.id;
         }
 
-        for (i = 0; i < locations.length; i++) {
-            if (pendingId !== locations[i].id) {
-                this.createMarker(locations[i], false, bounds);
+        if (locations) {
+            for (i = 0; i < locations.length; i++) {
+                if (pendingId !== locations[i].id) {
+                    this.createMarker(locations[i], false, bounds);
+                }
             }
         }
         // Use special locations for calculating bounds
