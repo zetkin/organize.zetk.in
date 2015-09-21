@@ -4,15 +4,16 @@ import cx from 'classnames';
 
 export default class MatchBase extends React.Component {
     render() {
-        const classes = cx({
-            'focused': this.props.focused
-        });
+        const classes = cx(
+            'MatchBase',
+            { 'focused': this.props.focused }
+        );
 
         return (
             <li className={ classes }
                 onClick={ this.props.onSelect }>
                 { this.getImage() }
-                <span className="title">{ this.getTitle() }</span>
+                <span className="MatchBase-title">{ this.getTitle() }</span>
             </li>
         );
     }
