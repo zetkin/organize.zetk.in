@@ -16,12 +16,12 @@ export default class ScopeSelect extends React.Component {
     render() {
         var selectedScope = this.props.value || 'all';
         var selectedClassNames = cx(
-            'search-form-scopeselect-value',
-            'search-form-scopeselect-' + selectedScope
+            'ScopeSelect-value',
+            selectedScope
         );
 
         var listClassNames = cx({
-            'search-form-scopeselect': true,
+            'ScopeSelect': true,
             'open': this.state.open
         });
 
@@ -33,9 +33,9 @@ export default class ScopeSelect extends React.Component {
 
                 {SCOPES.map(function(scope) {
                     var classNames = cx(
-                        'search-form-scopeselect-item',
-                        'search-form-scopeselect-' + scope,
-                        {'search-form-scopeselect-item-selected': scope == selectedScope}
+                        'ScopeSelect-item',
+                        scope,
+                        {'selected': scope == selectedScope}
                     );
 
                     return (
