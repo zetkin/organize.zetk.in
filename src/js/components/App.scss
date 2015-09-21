@@ -4,3 +4,11 @@
     right: 0;
     left: 0;
 }
+
+@include medium-screen {
+    .App-main {
+        position: fixed;
+        overflow: hidden;
+        bottom: 0;
+    }
+}
