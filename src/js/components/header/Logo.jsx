@@ -5,7 +5,7 @@ export default class Logo extends React.Component {
     render() {
         let href = '/'
         return (
-            <h1 className="logo"><Link href={ href }>Zetkin</Link></h1>
+            <h1 className="Logo"><Link href={ href }>Zetkin</Link></h1>
         );
     }
 }

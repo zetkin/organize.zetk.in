@@ -1,0 +1,42 @@
+.Logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    color: #fff;
+    
+    a{
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: 1.8em;
+        color: transparent;
+        line-height: 1.35;
+    }
+    a::before{
+        content: "Z";
+        position: absolute;
+        color: #fff;
+        top: 0;
+        left: 0;
+        padding: 0 0.362em;;
+        display: block;
+    }
+
+    a::after {
+        content: "BETA";
+        display: block;
+        position: absolute;
+        left: 10px;
+        top: 17px;
+
+        padding: 1px 3px;
+        border-radius: 4px;
+
+        background-color: black;
+        font-weight: normal;
+        font-size: 8px;
+        color: white;
+    }
+}
