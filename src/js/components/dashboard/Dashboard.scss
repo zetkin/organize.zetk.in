@@ -1,0 +1,132 @@
+.Dashboard-favorites {
+    @include list-unstyled;
+    padding: 0.417em;
+    font-size: 1.2em;
+    margin: 2em;
+
+}
+
+.Dashboard-shortcuts {
+    @include list-unstyled;
+    background-color: #333;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.25);
+    margin: 0 0.833em;
+    font-size: 1.2em;
+
+    li{
+        display: inline-block;
+        color: #fff;
+        font-weight: 700;
+        margin-left: 0.833em;
+        line-height: 2.667em;
+
+        a{
+            display: inline-block;
+        }
+    }
+}
+
+.Dashboard-shortcut {
+    width: 98%;
+    margin: 20px 1%;
+    text-align: center;
+
+    a {
+        display: block;
+
+        &:hover {
+            font-weight: bold;
+        }
+
+        &::before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 120px;
+            background-position: center center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-bottom: 20px;
+        }
+    }
+}
+.Dashboard-shortcut-people a::before {
+    background-image: url('../img/sections/people.png');
+}
+
+.Dashboard-shortcut-campaign a::before {
+    background-image: url('../img/sections/campaign.png');
+}
+
+.Dashboard-shortcut-dialog a::before {
+    background-image: url('../img/sections/dialog.png');
+}
+
+.Dashboard-shortcut-maps a::before {
+    background-image: url('../img/sections/maps.png');
+}
+
+.Dashboard-widgets{
+    @include list-unstyled;
+    margin: 0.833em;
+
+}
+
+.Dashboard .WidgetBase-widget{
+    @include card;
+    padding: 1em;
+}
+
+.Dashboard-widgets .DraggableWidget-widgetcontainer {
+    padding: 0.5em 0;
+
+    &.dragover {
+        border-top: 1px dashed #666;
+    }
+}
+
+@include medium-screen {
+    .Dashboard {
+        max-width: 120em;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .Dashboard-favorites,
+    .Dashboard-shortcuts {
+        font-size: 1.6em;
+    }
+
+    .Dashboard-favorites{
+        &::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    }
+
+    .Dashboard-shortcuts {
+        margin: 0 2em;
+
+        li{
+            margin-left: 1em;
+        }
+    }
+
+    .Dashboard-shortcut {
+        float: left;
+        width: 23%;
+    }
+
+    .Dashboard-widgets{
+        margin: 0.833em 3.2em;
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
+
+    }
+    .Dashboard-widgets .DraggableWidget-widgetcontainer {
+        display: inline-block;
+        width: 100%;
+    }
+}

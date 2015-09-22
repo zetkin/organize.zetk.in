@@ -40,7 +40,7 @@ export default class Dashboard extends FluxComponent {
 
         for (i = 0; i < shortcuts.length; i++) {
             let shortcut = shortcuts[i];
-            let classes = 'shortcut shortcut-' + shortcut;
+            let classes = 'Dashboard-shortcut Dashboard-shortcut-' + shortcut;
             let label = labels[shortcut];
 
             if (i < 4) {
@@ -90,14 +90,14 @@ export default class Dashboard extends FluxComponent {
 
 
         return (
-            <div className="dashboard">
-                <ul className="dashboard-favorites">
+            <div className="Dashboard">
+                <ul className="Dashboard-favorites">
                     { favoriteElements }
                 </ul>
-                <ul className="dashboard-shortcuts">
+                <ul className="Dashboard-shortcuts">
                     { shortcutElements }
                 </ul>
-                <div className="dashboard-widgets">
+                <div className="Dashboard-widgets">
                     { widgetElements }
                 </div>
                 <Footer/>

@@ -60,7 +60,7 @@ export default class DraggableWidget extends React.Component {
         );
 
         const classes = cx({
-            'dashboard-widgetcontainer': true,
+            'DraggableWidget-widgetcontainer': true,
             'dragover': this.props.isOver && this.props.canDrop
         });
 
