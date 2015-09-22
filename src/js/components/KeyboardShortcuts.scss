@@ -1,0 +1,129 @@
+.KeyboardShortcuts {
+    visibility: hidden;
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+    display: -ms-flexbox;  /* TWEENER - IE 10 */
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+
+    code {
+        @include key-reference;
+    }
+
+    &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+}
+
+// Main shortcut reference. Shown when user presses '?'. This needs to be
+// styled after the nav reference, since the background styling of this
+// must have precedence for the shader to be right.
+.KeyboardShortcuts-main {
+    margin: 0 auto;
+    z-index: 1;
+    visibility: hidden;
+    width: 32em;
+    padding: 1em;
+    background-color: white;
+    h1{
+        margin: 0;
+        font-size: 1.5em;
+    }
+    h2{
+        font-size: 1em;
+        font-weight: 700;
+    }
+    ul{
+        li{
+            margin-bottom: .5em;
+            code{
+                float: left;
+            }
+            & > span{
+                display: block;
+                margin-left: 4em;
+                padding-top: .3em;
+            }
+        }
+    }
+}
+.KeyboardShortcuts-mainvisible {
+    visibility: visible;
+    .KeyboardShortcuts-main{
+        visibility: visible;
+    }
+
+    // Shader should be solid, semi-transparent and fullscreen
+    &::before {
+        background-color: black;
+        opacity: 0.7;
+    }
+
+    .KeyboardShortcuts-nav{
+        //display: none;
+    }
+}
+
+// Navigation reference, shown when user is in navigation mode, i.e. when
+// they have first pressed 'g'. Could potentially be visible at the same
+// time as the main shortcut reference.
+.KeyboardShortcuts-nav {
+    visibility: hidden;
+    position: absolute;
+    bottom: 1em;
+    left: 1em;
+    width: 30em;
+    padding: 1em;
+    background-color: rgba(0,0,0,0.7);
+    border-radius: 4px;
+    color: white;
+
+    font-size: 1.1em;
+
+    p {
+        margin: 0 0 1em;
+    }
+
+    a {
+        position: absolute;
+        top: 1em;
+        right: 1em;
+        text-decoration: underline;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+
+        -webkit-column-count: 3;
+
+        li {
+            margin: 0 0 0.5em;
+            padding: 0;
+            list-style-type: none;
+        }
+    }
+}
+.KeyboardShortcuts-navvisible {
+    visibility: visible;
+
+    .KeyboardShortcuts-nav{
+        visibility: visible;
+    }
+}

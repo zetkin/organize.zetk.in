@@ -25,14 +25,14 @@ export default class KeyboardShortcuts extends FluxComponent {
     render() {
         var reference;
         var classNames = cx({
-            'shortcutref': true,
-            'shortcutref-mainvisible': this.state.showMainReference,
-            'shortcutref-navvisible': this.state.keyPrefix === 'g'
+            'KeyboardShortcuts': true,
+            'KeyboardShortcuts-mainvisible': this.state.showMainReference,
+            'KeyboardShortcuts-navvisible': this.state.keyPrefix === 'g'
         });
 
         return (
             <div className={ classNames }>
-                <div className="shortcutref-main">
+                <div className="KeyboardShortcuts-main">
                     <h1>Shortcut reference</h1>
                     <h2>Navigation shortcuts</h2>
                     <ul>
@@ -59,7 +59,7 @@ export default class KeyboardShortcuts extends FluxComponent {
                     </ul>
                 </div>
 
-                <div className="shortcutref-nav">
+                <div className="KeyboardShortcuts-nav">
                     <p>
                         Quickly press another key to navigate.
                     </p>
