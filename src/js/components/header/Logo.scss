@@ -4,7 +4,7 @@
     left: 0;
     margin: 0;
     color: #fff;
-    
+
     a{
         display: block;
         position: absolute;
@@ -38,5 +38,24 @@
         font-weight: normal;
         font-size: 8px;
         color: white;
+    }
+}
+
+@include medium-screen {
+    .Logo {
+        left: 0.4em;
+
+        a{
+            color: inherit;
+        }
+        a::before{
+            content: "";
+            display: none;
+        }
+
+        a::after {
+            left: 90px;
+            top: 30px;
+        }
     }
 }
