@@ -9,7 +9,7 @@ export default class Footer extends React.Component {
         ].join(' ');
 
         return (
-            <footer>
+            <footer className="Footer">
                 { info }
                 <ul>
                     <li><a href="http://zetkin.org" target="_blank">
