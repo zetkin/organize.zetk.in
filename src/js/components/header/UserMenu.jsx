@@ -24,7 +24,7 @@ export default class UserMenu extends FluxComponent {
             <nav className="UserMenu">
                 <Avatar person={ profile }/>
                 <div className="UserMenu-info">
-                    <div>
+                    <div className="UserMenu-user">
                         <a href={ accountUrl }>
                             <span className="UserMenu-name">
                                 { profile.name }
