@@ -53,3 +53,9 @@
     right: 0;
     background-color: white;
 }
+
+@include medium-screen {
+    .Search {
+        max-width: 500px;
+    }
+}
