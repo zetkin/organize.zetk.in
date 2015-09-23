@@ -72,11 +72,6 @@
 
 }
 
-.Dashboard .WidgetBase-widget{
-    @include card;
-    padding: 1em;
-}
-
 .Dashboard-widgets .DraggableWidget-widgetcontainer {
     padding: 0.5em 0;
     border-top: 1px dashed transparent;
