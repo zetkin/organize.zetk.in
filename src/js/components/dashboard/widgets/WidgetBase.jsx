@@ -1,6 +1,8 @@
 import React from 'react/addons';
+import cx from 'classnames';
 
 import FluxComponent from '../../FluxComponent';
+import { componentClassNames } from '../../';
 
 
 export default class WidgetBase extends FluxComponent {
@@ -16,7 +18,7 @@ export default class WidgetBase extends FluxComponent {
 
     render() {
         const type = this.props.config.type;
-        const classes = 'WidgetBase-widget WidgetBase-widget-' + type;
+        const classes = cx(componentClassNames(this));
 
         const store = this.getStore('dashboard');
         const data = store.getWidgetData(type);
