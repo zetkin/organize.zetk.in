@@ -1,0 +1,158 @@
+.SectionBase-nav {
+    background-color: black;
+    width: 100%;
+}
+.SectionBase-nav{
+    @include flex-container;
+    min-height: 4.8em;
+    ul{
+        @include flex(4);
+        @include flex-container;
+        @include align-items(flex-end);
+    }
+}
+.SectionBase-navMisc{
+    @include flex(2);
+    @include flex-container;
+    @include align-items(flex-end);
+    text-align: center;
+}
+.SectionBase-navMisc a{
+    @include flex(1);
+    color: white;
+    padding: 1em 0;
+}
+.SectionBase-navItem{
+    @include flex;
+    text-align: center;
+    color: white;
+    padding: 1em 0;
+    a{
+        padding: 1em 0;
+    }
+}
+.SectionBase-container {
+    left: 0;
+    right: 0;
+    position: absolute;
+}
+
+
+
+@include medium-screen {
+    .SectionBase-nav {
+        @include flex-container(column);
+        position: fixed;
+        width: 10em;
+        top: 4.8em;
+        left: 0;
+        bottom: 0;
+
+        ul{
+            margin: 1em 0;
+            padding: 0;
+            @include flex(none);
+            @include flex-container(column);
+        }
+    }
+    .SectionBase-navMisc a {
+        color: #888;
+        padding: 0.5em 1em;
+        border-left: 0.1em solid #888;
+
+        &:first-child {
+            border-left: 0;
+            padding-left: 0;
+        }
+
+        &:last-child {
+            padding-right: 0;
+        }
+
+        &:hover {
+            color: #ddd;
+        }
+    }
+
+    .SectionBase-navItem{
+        @include flex(none);
+        width: 100%;
+        padding: 0;
+    }
+
+    .SectionBase-navItem a {
+        display: block;
+        position: relative;
+        list-style-type: none;
+        cursor: pointer;
+        margin-bottom: 1em;
+        padding: 0;
+
+        font-size: 1.1em;
+        text-align: center;
+
+        opacity: 0.9;
+        transition: opacity 0.3s;
+
+        color: white;
+
+        &::before {
+            content: "";
+            display: block;
+            width: 6.4em;
+            height: 4.8em;
+            background-color: #888;
+            margin: 0 auto 0.5em auto;
+        }
+
+        &:hover {
+            opacity: 1.0;
+
+            font-weight: bold;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            background-color: $c-brand-main;
+            width: 0.5em;
+            height: 4.8em;
+            right: 0;
+            top: 0;
+
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+    }
+
+    .SectionBase-navItem.selected a::after {
+        opacity: 1;
+    }
+
+    .SectionBase-navItem.selected a::before {
+        background-color: #FFF;// Should highlight icon
+    }
+
+    .SectionBase-container {
+        position: absolute;
+        top: 0;
+        left: 10em;
+        right: 0;
+        bottom: 0;
+        background-color: white;
+    }
+
+    .PaneBase:last-child .PaneBase-shader {
+        display: none;
+    }
+
+    .SectionBase .PaneBase:first-child {
+        // Base pane, always full-width and not interactive
+        left: 0;
+        right: 0;
+        header {
+            margin-top: 0;
+        }
+
+    }
+}

@@ -5,6 +5,7 @@ import cx from 'classnames';
 import PaneManager from '../../utils/PaneManager';
 import FluxComponent from '../FluxComponent';
 import { resolvePane } from '../panes';
+import { componentClassNames } from '../';
 
 
 export default class SectionBase extends FluxComponent {
@@ -127,15 +128,16 @@ export default class SectionBase extends FluxComponent {
             .replace(/Section$/, '').toLowerCase();
 
         const helpUrl = '/help/sections/' + sectionType;
+        const classes = cx(componentClassNames(this));
 
         return (
-            <div className={ 'section section-' + sectionType }>
-                <nav className="section-nav">
+            <div className={ classes }>
+                <nav className="SectionBase-nav">
                     <ul>
                         { subSections.map(function(subData, index) {
                             var path = basePath + '/' + subData.path;
-                            var classes = cx('section-nav-item',
-                                'section-nav-item-' + subData.path, {
+                            var classes = cx('SectionBase-navItem',
+                                'SectionBase-navItem-' + subData.path, {
                                     'selected': (index === curSubSectionIndex)
                                 });
 
@@ -148,15 +150,15 @@ export default class SectionBase extends FluxComponent {
                             );
                         }, this)}
                         <li key="back"
-                            className='section-nav-item section-nav-back'>
+                            className='SectionBase-navItem SectionBase-navBack'>
                             <Link href="/">Back to <br />Dashboard</Link></li>
                     </ul>
-                    <div className="section-nav-misc">
+                    <div className="SectionBase-navMisc">
                         <a target="_blank" href="http://zetkin.org">About</a>
                         <a target="_blank" href={ helpUrl }>Help</a>
                     </div>
                 </nav>
-                <div className="section-content" ref="paneContainer">
+                <div className="SectionBase-container" ref="paneContainer">
                     { panes }
                 </div>
             </div>
