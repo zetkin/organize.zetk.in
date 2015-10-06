@@ -16,7 +16,7 @@ var redirectToLogin = function(req, res) {
     }
 
     var redir = encodeURI(url.format(reqUrlObj));
-    var host = process.env.ZETKIN_ACCOUNTS_HOST
+    var host = 'accounts.' + process.env.ZETKIN_DOMAIN;
     var loginUrl = '//' + host + '/login?redir=' + redir;
 
     res.redirect(303, loginUrl);
