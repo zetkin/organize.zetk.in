@@ -9,7 +9,7 @@ export default class UserStore extends Store {
             user: null,
             memberships: null,
             activeMembership: null,
-            accountsHost: process.env.ZETKIN_ACCOUNTS_HOST
+            accountsHost: 'accounts.' + process.env.ZETKIN_DOMAIN
         });
 
         var userActions = flux.getActions('user');
