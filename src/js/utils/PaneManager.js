@@ -179,9 +179,9 @@ function updateStack() {
 
 function Pane(domElement, isBase) {
     this.domElement = domElement;
-    this.contentElement = domElement.getElementsByClassName('section-pane-content')[0];
+    this.contentElement = domElement.getElementsByClassName('PaneBase-content')[0];
     this.shaderElement = document.createElement('div');
-    this.shaderElement.className = 'section-pane-shader';
+    this.shaderElement.className = 'PaneBase-shader';
     this.domElement.appendChild(this.shaderElement);
     this.dragging = false;
     this.isBase = isBase;
