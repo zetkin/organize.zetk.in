@@ -22,6 +22,7 @@ widgets.get('/today', function(req, res) {
         const url = 'http://api.openweathermap.org/data/2.5/forecast/daily'
             .concat('?lat=' + lat)
             .concat('&lon=' + lng)
+            .concat('&APPID=' + process.env.OPENWEATHERMAP_APIKEY)
             .concat('&cnt=1&units=metric');
 
         http.get(url, function(res) {
