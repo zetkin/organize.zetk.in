@@ -49,7 +49,7 @@ export default class RelSelectInput extends InputBase {
         }
 
         const classes = cx({
-            'relselectinput': true,
+            'RelSelectInput': true,
             'focused': this.state.inputFocused
         });
 
@@ -60,7 +60,7 @@ export default class RelSelectInput extends InputBase {
         var createOption = null;
         if (this.props.showCreateOption) {
             const createOptionClasses = cx({
-                'relselectinput-create': true,
+                'RelSelectInput-create': true,
                 'focused': (this.state.focusedIndex == this.values.length)
             });
 
@@ -77,7 +77,7 @@ export default class RelSelectInput extends InputBase {
         var nullOption = null;
         if (this.props.allowNull) {
             const nullOptionClasses = cx({
-                'relselectinput-null': true,
+                'RelSelectInput-null': true,
                 'focused': (this.state.focusedIndex == this.values.length)
             });
 
@@ -109,7 +109,7 @@ export default class RelSelectInput extends InputBase {
 
                     var editLink = null;
                     if (showEditLink) {
-                        editLink = <a className="relselectinput-editlink"
+                        editLink = <a className="RelSelectInput-editLink"
                             onMouseDown={ this.onClickEdit.bind(this, obj) }>
                             Edit</a>;
                     }
