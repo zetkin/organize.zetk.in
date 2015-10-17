@@ -1,0 +1,12 @@
+.CampaignSelect{
+    @include flex;
+    margin-right: 2em;
+}
+@include medium-screen {
+    .CampaignSelect{
+        @include flex(none);
+        .RelSelectInput {
+            width: 300px;
+        }
+    }
+}
