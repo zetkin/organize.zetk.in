@@ -54,16 +54,16 @@ export default class ActionDay extends React.Component {
             actions = actions.slice(0, maxVisible - 1);
         }
 
-        const dayClass = 'actionday-' + DAY_LABELS[date.getDay()].toLowerCase();
-        const classes = cx('actionday', dayClass, {
-            'actionday-monthbegin': (date.getDate() == 1),
+        const dayClass = 'ActionDay-' + DAY_LABELS[date.getDay()].toLowerCase();
+        const classes = cx('ActionDay', dayClass, {
+            'ActionDay-monthBegin': (date.getDate() == 1),
             'today': date.is('today'),
-            'dragover': this.props.isOver
+            'dragOver': this.props.isOver
         });
 
         var dropHint = null;
         if (this.props.isOver) {
-            dropHint = <span className="clonehint">
+            dropHint = <span className="cloneHint">
                 Hold <code>shift</code> to copy action.</span>;
         }
 
@@ -79,8 +79,8 @@ export default class ActionDay extends React.Component {
                             onClick={ this.onActionClick.bind(this, action) }/>
                 }, this) }
                     { overflow }
-                    <li className="actionday-pseudoitem">
-                        <button className="actionday-addbutton"
+                    <li className="ActionDay-pseudoItem">
+                        <button className="ActionDay-addButton"
                             onClick={ this.onAddClick.bind(this) }/>
                     </li>
                 </CSSTransitionGroup>

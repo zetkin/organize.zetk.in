@@ -3,11 +3,9 @@ import React from 'react/addons';
 
 export default class ActionWeek extends React.Component {
     render() {
-        const week = this.props.firstDate.getWeekNumber();
-
         return (
-            <div className="actionweek">
-                <h2>v. { week }</h2>
+            <div className="ActionWeek">
+                <h2>v. { this.props.week }</h2>
                 { this.props.children }
             </div>
         );

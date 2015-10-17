@@ -1,0 +1,99 @@
+.ActionMiniCalendar {
+    background-color: #eee;
+    height: 13em;
+
+    margin: 0;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+
+    .ActionDay {
+        display: inline-block;
+        width: 5em;
+        height: 100%;
+        margin-left: 0.1em;
+        vertical-align: top;
+
+        &.today {
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+
+            hr {
+                color: #333;
+            }
+        }
+
+        h4 {
+            margin: 0.5em 0;
+            color: #999;
+            transition: color 0.3s;
+
+            &:hover {
+                color: #666;
+                transition: color 0.1s;
+            }
+        }
+
+        .date {
+            display: block;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        .weekday {
+            display: none;
+        }
+
+        .cloneHint {
+            display: none;
+        }
+    }
+    .ActionDay-sat,
+    .ActionDay-sun {
+        background-color: #eaeaea;
+    }
+
+    .ActionDay-monthBegin {
+        border-left: 1px solid #ccc;
+    }
+    .ActionItem,
+    .ActionDayOverflow {
+        position: relative;
+        height: 2em;
+
+        span {
+            display: none;
+        }
+
+        &.highlight {
+            &::after{
+                opacity: 1;
+            }
+        }
+
+        &:hover {
+            &::after{
+                opacity: 0.5;
+            }
+        }
+        &::after{
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            opacity: 0;
+            background-color: #A1D490;
+            transition: opacity 0.4s ease-in;
+        }
+    }
+    .ActionDay-pseudoitem {
+        height: 2em;
+    }
+
+    .ActionDay-addButton {
+        background-color: #ddd;
+        font-size: 0.8em;
+    }
+}

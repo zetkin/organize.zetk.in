@@ -58,7 +58,7 @@ export default class ActionCalendar extends React.Component {
             }
 
             days.push(
-                <ActionDay date={ new Date(d) } actions={ dayActions }
+                <ActionDay key={ d.ISO8601_DATE } date={ new Date(d) } actions={ dayActions }
                     onSelect={ this.props.onSelectDay }
                     onAddAction={ this.onAddAction.bind(this) }
                     onCopyAction={ this.onCopyAction.bind(this) }
@@ -67,8 +67,9 @@ export default class ActionCalendar extends React.Component {
             );
 
             if (d.getDay() == 0) {
+                const week = d.getWeekNumber();
                 weeks.push(
-                    <ActionWeek firstDate={ new Date(d) }>
+                    <ActionWeek key={ week } week={ week }>
                         { days }
                     </ActionWeek>
                 );
@@ -80,7 +81,7 @@ export default class ActionCalendar extends React.Component {
         }
 
         return (
-            <div className="actioncalendar">
+            <div className="ActionCalendar">
                 { weeks }
             </div>
         );

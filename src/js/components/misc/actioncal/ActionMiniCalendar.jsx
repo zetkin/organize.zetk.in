@@ -73,7 +73,7 @@ export default class ActionMiniCalendar extends React.Component {
         }
 
         return (
-            <div ref="container" className="actionminicalendar">
+            <div ref="container" className="ActionMiniCalendar">
                 { days }
             </div>
         );

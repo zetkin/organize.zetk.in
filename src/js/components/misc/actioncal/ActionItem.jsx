@@ -37,7 +37,7 @@ export default class ActionItem extends React.Component {
         const startDate = Date.utc.create(action.start_time);
         const timeLabel = startDate.setUTC(true).format('{HH}:{mm}');
         const className = cx({
-            'actionday-actionitem': true,
+            'ActionItem': true,
             'highlight': action.highlight
         });
 
