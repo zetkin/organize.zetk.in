@@ -1,3 +1,7 @@
+.SectionBase{
+    height: 100%;
+    background-color: #f8f8f8;
+}
 .SectionBase-nav {
     background-color: black;
     width: 100%;
@@ -34,8 +38,26 @@
 .SectionBase-container {
     left: 0;
     right: 0;
+    // bottom: 0;
     position: absolute;
 }
+
+.SectionBase .PaneBase:first-child::before {
+    display: none;
+}
+
+.SectionBase .PaneBase header,
+.SectionBase .PaneBase-content {
+    display: none;
+}
+
+.SectionBase .PaneBase:last-child header,
+.SectionBase .PaneBase:last-child .PaneBase-content {
+    display: block;
+}
+
+
+
 
 
 
@@ -142,8 +164,17 @@
         background-color: white;
     }
 
+    .PaneBase:first-child .PaneBase-shader {
+        left: 10em;
+    }
+
     .PaneBase:last-child .PaneBase-shader {
         display: none;
+    }
+
+    .SectionBase .PaneBase header,
+    .SectionBase .PaneBase-content {
+        display: block;
     }
 
     .SectionBase .PaneBase:first-child {
