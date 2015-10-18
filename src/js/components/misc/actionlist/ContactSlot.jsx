@@ -53,7 +53,7 @@ export default class ContactSlot extends React.Component {
 
 
         return (
-            <div className="contact">
+            <div className="ContactSlot">
                 { figure }
             </div>
         );

@@ -20,7 +20,7 @@ export default class ParticipantList extends React.Component {
             const numAdditional = participants.length - (maxVisible - 1);
 
             moreItem = (
-                <li className="more-participants"
+                <li className="ParticipantList-moreParticipants"
                     onClick={ this.props.onShowAll }>
                     { numAdditional }
                 </li>
@@ -28,7 +28,7 @@ export default class ParticipantList extends React.Component {
         }
 
         return (
-            <ul className="participants">
+            <ul className="ParticipantList">
             {participants.map(function(person, idx) {
                 const visible = (!moreItem || (idx < maxVisible - 1));
 

@@ -45,7 +45,7 @@ export default class ParticipantItem extends React.Component {
         const person = this.props.person;
         const name = person.first_name + ' ' + person.last_name;
         const classes = cx({
-            'participant': true,
+            'ParticipantItem': true,
             'hidden': !visible
         });
 

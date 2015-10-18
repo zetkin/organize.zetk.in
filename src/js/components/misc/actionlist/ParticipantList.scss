@@ -1,0 +1,41 @@
+.ParticipantList {
+    display: none;
+}
+@include medium-screen {
+    .ParticipantList {
+        display: block;
+        min-height: 5em;
+        float: right;
+        width: 22em;
+
+        li {
+            float: left;
+            width: 50px;
+            height: 50px;
+            margin: 0 2px 3px 3px;
+        }
+
+        &::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    }
+    .ParticipantList .moreMarticipants {
+        padding: 15px 2px;
+        background-color: #eee;
+        text-align: center;
+        font-size: 2em;
+        font-weight: bold;
+        color: #ccc;
+        cursor: pointer;
+
+        &::before {
+            content: "+";
+        }
+    }
+
+    .ParticipantList .moreMarticipants {
+        color: #aaa;
+    }
+}

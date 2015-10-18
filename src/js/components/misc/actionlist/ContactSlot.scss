@@ -1,0 +1,41 @@
+.ContactSlot{
+    display: none;
+}
+
+.ContactSlot {
+    float: right;
+    position: relative;
+    background-color: #eee;
+    width: 5em;
+    height: 5em;
+    margin-right: 4.5em;
+
+    &::before {
+        content: "?";
+        display: block;
+        margin-top: 0.5em;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 2.5em;
+        font-weight: bold;
+        color: #ccc;
+    }
+}
+
+.ContactSlot figure {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    cursor: move;
+}
+
+.ContactSlot img {
+    width: 50px;
+    height: auto;
+}
+@include medium-screen {
+    .ContactSlot{
+        display: block;
+    }
+}
