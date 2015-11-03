@@ -11,6 +11,7 @@ import EditActionPane from './EditActionPane';
 import EditActivityPane from './EditActivityPane';
 import EditCampaignPane from './EditCampaignPane';
 import EditLocationPane from './EditLocationPane';
+import EditLocationWithMapPane from './EditLocationWithMapPane';
 import EditQueryPane from './EditQueryPane';
 import MoveParticipantsPane from './MoveParticipantsPane';
 import PersonPane from './PersonPane';
@@ -29,6 +30,7 @@ var _panes = {
     'editactivity': EditActivityPane,
     'editcampaign': EditCampaignPane,
     'editlocation': EditLocationPane,
+    'editlocationwithmap': EditLocationWithMapPane,
     'editquery': EditQueryPane,
     'location': EditLocationPane,
     'moveparticipants': MoveParticipantsPane,

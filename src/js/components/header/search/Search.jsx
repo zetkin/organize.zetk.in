@@ -118,7 +118,7 @@ export default class Search extends FluxComponent {
                 break;
             case 'location':
                 defaultBase = '/maps/locations';
-                paneType = 'editlocation';
+                paneType = 'editlocationwithmap';
                 params = [ match.data.id ];
                 break;
             case 'person':
