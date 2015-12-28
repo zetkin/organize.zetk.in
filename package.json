@@ -27,6 +27,7 @@
     "moment": "^2.10.6",
     "react": "~0.13.0",
     "react-dnd": "git://github.com/zetkin/react-dnd.git#gitinstall",
+    "react-async": "~2.1.0",
     "react-router-component": "^0.24.4",
     "sugar-date": "^1.5.1",
     "ws": "^0.7.2",
