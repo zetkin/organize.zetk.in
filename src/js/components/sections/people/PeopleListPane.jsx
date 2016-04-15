@@ -55,7 +55,7 @@ export default class PeopleListPane extends PaneBase {
                 onValueChange={ this.onQueryChange.bind(this) }
                 onCreate={ this.onQueryCreate.bind(this) }
                 onEdit={ this.onQueryEdit.bind(this) }/>,
-            <button key="addButton" className="add-person"
+            <button key="addButton" className="PeopleListPane-addButton"
                 onClick={ this.onAddClick.bind(this) }>Add</button>
         ];
     }
