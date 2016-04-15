@@ -6,22 +6,8 @@
         height: 15px;
 
         li {
-            position: absolute;
-
             &:first-child {
                 left: 140px;
-            }
-
-            a {
-                cursor: pointer;
-
-                &:hover {
-                    text-decoration: underline;
-                }
-
-                &.selected {
-                    font-weight: bold;
-                }
             }
         }
     }

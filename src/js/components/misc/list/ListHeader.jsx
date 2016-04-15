@@ -1,6 +1,8 @@
 import React from 'react';
 import cx from 'classnames';
 
+import { componentClassNames } from '../..';
+
 
 export default class ListHeader extends React.Component {
     render() {
@@ -8,7 +10,7 @@ export default class ListHeader extends React.Component {
         const sortField = this.props.sortField;
 
         return (
-            <ul className="listheader">
+            <ul className={ cx(componentClassNames(this)) }>
             {columns.map(function(column, index) {
                 const links = [];
                 const keys = Object.keys(column);
