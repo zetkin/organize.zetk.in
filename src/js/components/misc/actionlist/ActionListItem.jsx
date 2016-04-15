@@ -124,14 +124,18 @@ export default class ActionListItem extends FluxComponent {
             !contact || p.id != contact.id);
 
         const participantList = this.props.connectParticipantDropTarget(
-            <ParticipantList action={ action }
-                maxVisible={ large? participants.length : 4 }
-                onShowAll={ this.onShowAllParticipants.bind(this) }
-                participants={ filteredParticipants }/>
+            <div>
+                <ParticipantList action={ action }
+                    maxVisible={ large? participants.length : 4 }
+                    onShowAll={ this.onShowAllParticipants.bind(this) }
+                    participants={ filteredParticipants }/>
+            </div>
         );
 
         const contactSlot = this.props.connectContactDropTarget(
-            <ContactSlot contact={ contact } action={ action }/>
+            <div>
+                <ContactSlot contact={ contact } action={ action }/>
+            </div>
         );
 
         const numParticipantRows = Math.ceil(filteredParticipants.length/4);
