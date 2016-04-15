@@ -1,5 +1,7 @@
 import React from 'react';
+import cx from 'classnames';
 
+import { componentClassNames } from '../..';
 import PeopleListItem from './PeopleListItem';
 import ListHeader from '../list/ListHeader';
 
@@ -43,10 +45,10 @@ export default class PeopleList extends React.Component {
         }
 
         return (
-            <div className="peoplelist">
+            <div className={ cx(componentClassNames(this)) }>
                 <ListHeader columns={ columns } sortField={ sortField }
                     onFieldClick={ this.onFieldClick.bind(this) }/>
-                <ul className="peoplelist-items">
+                <ul className="PeopleList-items">
                     {people.map(function(person) {
                         let key = person.id;
                         return <PeopleListItem key={ key } person={ person }

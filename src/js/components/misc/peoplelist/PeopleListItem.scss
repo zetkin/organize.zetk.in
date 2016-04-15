@@ -1,36 +1,4 @@
-.peoplelist {
-    .listheader {
-        position: relative;
-        height: 1.5em;
-
-        li {
-            position: absolute;
-            display: block;
-
-            &:nth-child(1) {
-                left: 70px;
-            }
-
-            &:nth-child(2) {
-                display: none;
-            }
-
-            a {
-                cursor: pointer;
-
-                &:hover {
-                    text-decoration: underline;
-                }
-
-                &.selected {
-                    font-weight: bold;
-                }
-            }
-        }
-    }
-}
-
-.peoplelistitem {
+.PeopleListItem {
     position: relative;
     margin: 0.5em 0;
     padding: 0.5em;
@@ -55,13 +23,13 @@
         float: left;
     }
 
-    .first_name {
+    .PeopleListItem-firstName {
         display: inline;
         margin-left: 15px;
         font-weight: bold;
     }
 
-    .last_name {
+    .PeopleListItem-lastName {
         display: inline;
         margin-left: 0.5em;
         font-weight: bold;
@@ -72,7 +40,7 @@
         }
     }
 
-    .email {
+    .PeopleListItem-email {
         display: inline;
         margin-left: 15px;
 
@@ -88,8 +56,45 @@
         }
     }
 
-    .phone {
+    .PeopleListItem-phone {
         display: inline;
         margin-left: 15px;
+    }
+
+    @include medium-screen {
+        span {
+            display: block;
+            width: 200px;
+        }
+
+        .PeopleListItem-firstName {
+            margin: 0;
+            position: absolute;
+            left: 70px;
+            top: 5px;
+            font-size: 1.2em;
+        }
+
+        .PeopleListItem-lastName {
+            margin: 0;
+            position: absolute;
+            left: 70px;
+            top: 25px;
+            font-size: 1.4em;
+        }
+
+        .PeopleListItem-email {
+            margin: 0;
+            position: absolute;
+            right: 100px;
+            top: 5px;
+        }
+
+        .PeopleListItem-phone {
+            margin: 0;
+            position: absolute;
+            right: 100px;
+            top: 25px;
+        }
     }
 }
