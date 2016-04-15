@@ -13,8 +13,12 @@ const dayTarget = {
     },
 
     drop(props, monitor, component, meta) {
+        const callback = props.onMoveAction;
+        // TODO: Change back after implementing meta in new version of react-dnd
+        /*
         const callback = meta.shiftKey?
             props.onCopyAction : props.onMoveAction;
+            */
 
         return {
             onMoveAction: callback,
