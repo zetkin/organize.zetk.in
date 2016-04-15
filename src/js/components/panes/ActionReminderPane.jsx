@@ -45,7 +45,7 @@ export default class ActionReminderPane extends PaneBase {
             reminderForm = [
                 <h3>Rend reminders to participants</h3>,
                 <ul key="newParticipantsList"
-                    className="actionreminderpane-newparticipants">
+                    className="ActionReminderPane-newParticipants">
                 {data.newParticipants.map(function(participant) {
                     return <li><Avatar person={ participant }/></li>;
                 })}
@@ -62,7 +62,7 @@ export default class ActionReminderPane extends PaneBase {
         if (data.remindedParticipants.length) {
             remindedList = [
                 <h3>Reminders sent</h3>,
-                <ul key="remindedList" className="actionreminderpane-reminded">
+                <ul key="remindedList" className="ActionReminderPane-reminded">
                 {data.remindedParticipants.map(function(participant) {
                     const timeLabel = Date.utc.create(participant.reminder_sent)
                         .format('{yyyy}-{MM}-{dd} {HH}:{mm}:{ss}');
@@ -73,7 +73,7 @@ export default class ActionReminderPane extends PaneBase {
                         <li>
                             <Avatar person={ participant }/>
                             <Person person={ participant } onClick={ onClick }/>
-                            <span className="timestamp">
+                            <span className="ActionReminderPane-timestamp">
                                 { timeLabel }</span>
                         </li>
                     );
