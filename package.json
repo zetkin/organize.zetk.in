@@ -38,13 +38,13 @@
     "zetkin": "^0.5.0"
   },
   "devDependencies": {
-    "browserify": "^7.0.3",
     "del": "^1.1.1",
     "gulp": "^3.8.10",
     "gulp-babel": "^5.0.0",
     "gulp-concat": "^2.6.0",
     "gulp-imagemin": "^1.0.1",
     "gulp-jsxcs": "^0.1.8",
+    "gulp-newer": "^1.1.0",
     "gulp-react": "^2.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.2.0",
@@ -53,6 +53,7 @@
     "gulp-uglify": "^1.1.0",
     "gulp-watch": "^4.2.2",
     "run-sequence": "^1.0.2",
-    "vinyl-source-stream": "~1.1.0"
+    "vinyl-source-stream": "~1.1.0",
+    "webpack": "^1.12.15"
   }
 }

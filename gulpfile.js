@@ -1,33 +1,31 @@
 'use strict';
 
+var babel = require('gulp-babel');
+var concat = require('gulp-concat');
 var del = require('del');
 var gulp = require('gulp');
-var react = require('gulp-react');
-var uglify = require('gulp-uglify');
-var streamify = require('gulp-streamify');
-var source = require('vinyl-source-stream');
-var browserify = require('browserify');
-var runSequence = require('run-sequence');
-var watch = require('gulp-watch');
-var shell = require('gulp-shell');
-var sass = require('gulp-sass');
 var imagemin = require('gulp-imagemin');
 var jsxcs = require('gulp-jsxcs');
-var babel = require('gulp-babel');
+var newer = require('gulp-newer');
+var react = require('gulp-react');
+var sass = require('gulp-sass');
+var shell = require('gulp-shell');
 var rename = require('gulp-rename');
-var concat = require('gulp-concat');
+var runSequence = require('run-sequence');
+var source = require('vinyl-source-stream');
+var streamify = require('gulp-streamify');
+var uglify = require('gulp-uglify');
+var watch = require('gulp-watch');
+var webpack = require('webpack');
+var webpackConfig = require('./webpack.config.js');
 
 
-var babelConfig = {
-    stage: 1
+const babelConfig = {
+    stage: 1,
 };
 
-
-gulp.task('cleanJs', function(cb) {
-    return del([
-        'dist/organize.zetk.in',
-    ], cb);
-});
+const jsSrc = 'src/js/**/*.@(js|jsx)';
+const jsDest = 'dist/organize.zetk.in';
 
 gulp.task('cleanImages', function(cb) {
     return del([
@@ -41,45 +39,49 @@ gulp.task('cleanSass', function(cb) {
     ], cb);
 });
 
-gulp.task('cleanFonts', function(cb) {
+gulp.task('cleanTemplates', function(cb) {
     return del([
-        'dist/static/fonts',
+        'dist/templates',
     ], cb);
 });
 
 gulp.task('clean', function(cb) {
-    return runSequence('cleanJs', 'cleanImages', 'cleanSass', 'cleanFonts', cb);
+    return runSequence('cleanImages', 'cleanTemplates', 'cleanSass', cb);
 });
 
-gulp.task('buildPlainJs', [ 'cleanJs' ], function() {
-    return gulp.src('./src/js/**/*.js')
+gulp.task('copyTemplates', function() {
+    return gulp.src('./templates/**/*.html')
+        .pipe(gulp.dest('./dist/templates'));
+});
+
+gulp.task('js', function() {
+    const newerConfig = {
+        dest: jsDest,
+        ext: '.js'
+    };
+
+    return gulp.src(jsSrc)
+        .pipe(newer(newerConfig))
         .pipe(babel(babelConfig))
-        .pipe(gulp.dest('./dist/organize.zetk.in'));
+        .pipe(gulp.dest(jsDest));
 });
 
-gulp.task('buildJsx', [ 'buildPlainJs' ], function() {
-    return gulp.src('./src/js/components/**/*.jsx')
-        .pipe(babel(babelConfig))
-        .pipe(rename(function(path) {
-            path.extname = '.js'
-        }))
-        .pipe(gulp.dest('./dist/organize.zetk.in/components'));
-});
+gulp.task('bundleJs', [ 'js' ], function(cb) {
+    webpack(webpackConfig, function(err, stats) {
+        if (err) {
+            console.log('WEBPACK ERROR: ' + err);
+        }
 
-gulp.task('bundleJs', [ 'buildJsx' ], function() {
-    return browserify('./dist/organize.zetk.in/client/main.js')
-        .bundle()
-        .pipe(source('main.js'))
-        .pipe(gulp.dest('./dist/static/js'));
+        cb();
+    });
 });
 
 gulp.task('buildSass', [ 'cleanSass' ], function() {
     return gulp.src([
             'src/scss/_variables.scss',
-            'src/scss/font-awesome/zetkin-font-awesome.scss',
-            'src/scss/_mixins.scss',
-            'src/scss/style.scss',
-            'src/js/**/*.scss'
+            'src/scss/_helpers.scss',
+            'src/scss/_global.scss',
+            'src/!(scss)/**/*.scss'
         ])
         .pipe(concat('style.scss'))
         .pipe(sass())
@@ -87,15 +89,9 @@ gulp.task('buildSass', [ 'cleanSass' ], function() {
 });
 
 gulp.task('minifyImages', [ 'cleanImages' ], function() {
-    return gulp.src('assets/images/**/*.@(png|jpg|gif)')
+    return gulp.src('assets/images/*')
         .pipe(imagemin())
         .pipe(gulp.dest('dist/static/img'));
-});
-
-gulp.task('moveFonts', [ 'cleanFonts' ], function() {
-    return gulp.src('assets/fonts/**/*.@(otf|eot|svg|ttf|woff|woff2)')
-        .pipe(imagemin())
-        .pipe(gulp.dest('dist/static/fonts'));
 });
 
 gulp.task('restartDevServer', shell.task([
@@ -109,12 +105,12 @@ gulp.task('minify', function() {
 });
 
 gulp.task('default', [ 'clean' ], function(cb) {
-    return runSequence('bundleJs', 'buildSass', 'minifyImages', 'moveFonts', cb);
+    return runSequence('bundleJs', 'buildSass', 'minifyImages', 'copyTemplates', cb);
 });
 
 
 gulp.task('lint', function() {
-    return gulp.src('src/js/**/*.@(js|jsx)')
+    return gulp.src('src/**/*.@(js|jsx)')
         .pipe(jsxcs())
         .on('error', function(err) {
             console.log(err.message);
@@ -123,7 +119,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('watch', function() {
-    watch('src/js/**/*.@(js|jsx)', function() {
+    watch('src/**/*.@(js|jsx)', function() {
         return runSequence('bundleJs', 'restartDevServer');
     });
 
@@ -135,8 +131,8 @@ gulp.task('watch', function() {
         return runSequence('minifyImages');
     });
 
-    watch('assets/fonts/**/*', function() {
-        return runSequence('moveFonts');
+    watch('templates/**/*', function() {
+        return runSequence('copyTemplates');
     });
 });
 
