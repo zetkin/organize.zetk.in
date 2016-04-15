@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
 
+import { componentClassNames } from '..';
 import FluxComponent from '../FluxComponent';
 
 
@@ -45,15 +46,14 @@ export default class PaneBase extends FluxComponent {
         const data = this.getRenderData();
         const paneType = this.props.paneType;
 
-        const classes = cx('section-pane-' + paneType, {
-            'section-pane': true,
-            'scrolled': this.state.scrolled
+        const classes = cx(componentClassNames(this), {
+            'PaneBase-scrolled': this.state.scrolled
         });
 
         var toolbar = this.getPaneTools();
         if (toolbar) {
             toolbar = (
-                <div className="section-pane-toolbar">
+                <div className="PaneBase-toolbar">
                     { toolbar }
                 </div>
             );
@@ -64,7 +64,7 @@ export default class PaneBase extends FluxComponent {
         var closeButton = null;
         if (!this.props.isBase) {
             closeButton = (
-                <a className="section-pane-closelink"
+                <a className="PaneBase-closelink"
                     onClick={ this.onCloseClick.bind(this) }/>
             );
 
@@ -75,13 +75,13 @@ export default class PaneBase extends FluxComponent {
         return (
             <div ref="pane" className={ classes }>
                 <header>
-                    <div className="pane-top">
+                    <div className="PaneBase-top">
                     { this.renderPaneTop(data) }
                     </div>
                     { closeButton }
                     { toolbar }
                 </header>
-                <div ref="content" className="section-pane-content">
+                <div ref="content" className="PaneBase-content">
                     { title }
                     { subTitle }
                     { this.renderPaneContent(data) }
