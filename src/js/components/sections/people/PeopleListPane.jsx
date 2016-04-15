@@ -49,8 +49,8 @@ export default class PeopleListPane extends PaneBase {
         const queries = queryStore.getQueries();
 
         return [
-            <RelSelectInput name="querySelect" value={ queryId }
-                objects={ queries } showEditLink={ true }
+            <RelSelectInput key="querySelect" name="querySelect"
+                value={ queryId } objects={ queries } showEditLink={ true }
                 allowNull={ true } nullLabel="(Show all people)"
                 onValueChange={ this.onQueryChange.bind(this) }
                 onCreate={ this.onQueryCreate.bind(this) }

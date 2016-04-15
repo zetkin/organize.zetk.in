@@ -48,7 +48,8 @@ export default class PeopleList extends React.Component {
                     onFieldClick={ this.onFieldClick.bind(this) }/>
                 <ul className="peoplelist-items">
                     {people.map(function(person) {
-                        return <PeopleListItem person={ person }
+                        let key = person.id;
+                        return <PeopleListItem key={ key } person={ person }
                             onSelect={ this.onSelect.bind(this, person) }/>;
                     }, this)}
                 </ul>

@@ -49,7 +49,7 @@ export default class ListHeader extends React.Component {
 }
 
 ListHeader.propTypes = {
-    columns: React.PropTypes.object.isRequired,
+    columns: React.PropTypes.array.isRequired,
     sortField: React.PropTypes.string,
     onFieldClick: React.PropTypes.func
 };
