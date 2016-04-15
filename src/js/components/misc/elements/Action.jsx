@@ -11,10 +11,10 @@ export default class Action extends React.Component {
             .concat('-' + endDate.setUTC(true).format('{HH}:{mm}'));
 
         return (
-            <span className="action">
-                <span className="activity">{ action.activity.title }</span>
-                <span className="location">{ action.location.title }</span>
-                <span className="date">{ timeLabel }</span>
+            <span className="Action">
+                <span className="Action-activity">{ action.activity.title }</span>
+                <span className="Action-location">{ action.location.title }</span>
+                <span className="Action-date">{ timeLabel }</span>
             </span>
         );
     }

@@ -9,7 +9,7 @@ export default class Person extends React.Component {
             person.name? person.name : '';
 
         return (
-            <span className="person" onClick={ this.props.onClick }>
+            <span className="Person" onClick={ this.props.onClick }>
                 { fullName }
             </span>
         );
