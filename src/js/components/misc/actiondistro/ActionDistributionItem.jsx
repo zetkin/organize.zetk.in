@@ -1,6 +1,8 @@
+import cx from 'classnames';
 import React from 'react';
 
 import DayCycleGraph from './DayCycleGraph';
+import { componentClassNames } from '../..';
 
 
 export default class ActionDistributionItem extends React.Component {
@@ -21,13 +23,14 @@ export default class ActionDistributionItem extends React.Component {
             width: ballSize,
             height: ballSize
         };
+        const classes = cx(componentClassNames(this));
 
         return (
-            <li className="actiondistroitem"
+            <li className={ classes }
                 onMouseOver={ this.onMouseOver.bind(this) }
                 onMouseOut={ this.props.onMouseOut }>
-                <span className="title">{ inst.title }</span>
-                <span style={ countStyle } className="actioncount">
+                <span className="ActionDistributionItem-title">{ inst.title }</span>
+                <span style={ countStyle } className="ActionDistributionItem-count">
                     <span>{ totalCount }</span>
                 </span>
                 <DayCycleGraph phases={ counts }

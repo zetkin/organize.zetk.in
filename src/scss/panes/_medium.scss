@@ -28,62 +28,6 @@
     min-width: 400px;
 }
 
-.section-content
-.section-pane-distribution {
-    .campaignselect {
-        width: 300px;
-    }
-
-    &.scrolled {
-        .section-pane-toolbar {
-            top: 130px;
-        }
-    }
-
-    .section-pane-content {
-        top: 130px;
-
-        h3 {
-            font-size: 1.5em;
-            color: #888;
-            margin: 0 0 0.5em;
-        }
-    }
-
-    .locations {
-        float: left;
-        width: 74%;
-
-        .actiondistroitem {
-            width: 32%;
-        }
-
-        &::after {
-            content: "";
-            display: block;
-            clear: both;
-        }
-    }
-
-    .activities {
-        float: right;
-        width: 25%;
-        min-height: 50%;
-        padding: 0 1% 10em;
-        border-left: 1px solid #ddd;
-
-        .actiondistroitem {
-            width: 100%;
-        }
-
-        &::after {
-            content: "";
-            display: block;
-            clear: both;
-        }
-    }
-}
-
 .section-pane-editaction {
     min-width: 400px;
 }

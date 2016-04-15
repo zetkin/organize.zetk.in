@@ -36,7 +36,7 @@ export default class ActionDistributionPane extends CampaignSectionPaneBase {
         const actions = actionStore.getActions();
 
         return [
-            <div className="locations">
+            <div className="ActionDistributionPane-locations">
                 <h3>Locations</h3>
                 <ActionDistribution actions={ actions }
                     instanceField="location"
@@ -44,7 +44,7 @@ export default class ActionDistributionPane extends CampaignSectionPaneBase {
                     onMouseOverPhase={ this.onLocMouseOverPhase.bind(this) }
                     onMouseOut={ this.onMouseOut.bind(this) }/>
             </div>,
-            <div className="activities">
+            <div className="ActionDistributionPane-activities">
                 <h3>Activities</h3>
                 <ActionDistribution actions={ actions }
                     instanceField="activity"

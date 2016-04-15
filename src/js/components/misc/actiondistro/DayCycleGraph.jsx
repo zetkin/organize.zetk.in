@@ -1,4 +1,7 @@
+import cx from 'classnames';
 import React from 'react';
+
+import { componentClassNames } from '../..';
 
 
 export default class DayCycleGraph extends React.Component {
@@ -19,7 +22,7 @@ export default class DayCycleGraph extends React.Component {
                 minWidth : dynWidth * count/dynSum);
 
             content = phases.map(function(count, idx) {
-                const className = 'phase' + idx;
+                const className = 'DayCycleGraph-phase' + idx;
                 const style = {
                     width: (widths[idx] * 100) + '%'
                 };
@@ -34,7 +37,7 @@ export default class DayCycleGraph extends React.Component {
         }
 
         return (
-            <ul className="daycyclegraph">
+            <ul className={ cx(componentClassNames(this)) }>
                 { content }
             </ul>
         );
