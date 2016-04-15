@@ -1,69 +1,136 @@
 .PaneBase {
-    background-color: #f8f8f8;
+    left: 0;
+    right: 0;
+    position: absolute;
     min-width: 400px;
-    z-index: 1000;
-    padding: 0;
+    background-color: white;
 
-    h2 {
-        margin: 30px 0 30px;
+    .PaneBase-content {
+        margin-top: 1em;
+        padding: 0 2em 2em;
     }
 
-    small {
+    .PaneBase-shader {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+    }
+
+    &:first-child {
+        .PaneBase-closeLink {
+            display: none;
+        }
+    }
+
+    // Completely transparent link placed just over the pane (where the header
+    // of the underlying pane shows). The user will be tapping the underlying
+    // header, but actually hitting this to close the overlying pane.
+    .PaneBase-closelink {
+        background: transparent;
+        position: absolute;
+        cursor: pointer;
+        top: -40px;
+        left: 0;
+        right: 0;
+        height: 40px;
+    }
+
+    &::before {
+        content: "";
         display: block;
-        margin: -25px 0 30px;
+        position: absolute;
+        top: -40px;
+        left: 0;
+        width: 100%;
+        height: 40px;
+        background: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.1) 80%, rgba(0,0,0,0.2));
+    }
 
-        a {
-            cursor: pointer;
-            text-decoration: underline;
+    @include medium-screen {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: auto;
+        display: block;
+
+        &::before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: -10px;
+            width: 10px;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0,0,0,0.0), rgba(0,0,0,0.02));
         }
-    }
 
-    .PaneBase-top {
-        position: relative;
-        z-index: 2000;
-    }
-
-    .PaneBase-toolbar {
-        padding: 20px 0;
-        margin: 0 20px;
-        height: 50px;
-
-        transition: height 0.2s, padding-top 0.2s, background-color 0.1s;
-
-        & > * {
-            display: inline-block;
-            margin-right: 20px;
-        }
-    }
-
-    &.PaneBase-scrolled {
-        .section-pane-toolbar {
+        .PaneBase-header {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            z-index: 2000;
-
-            margin: 0;
-            padding: 5px 20px;
-            height: 35px;
-            background-color: white;
-            border-bottom: 1px solid #ddd;
         }
 
-        .section-pane-content {
-            padding-top: 80px;
+        .PaneBase-closeLink {
+            top: 10px;
+            left: 10px;
+            right: auto;
+
+            &::before{
+                @include icon($fa-var-close);
+                color: #ddd;
+                font-size: 2.4em;
+            }
         }
-    }
 
-    h3 {
-        font-size: 1.5em;
-    }
+        .PaneBase-content {
+            display: block;
+            margin-top: 70px;
+            padding: 0 30px 30px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: -20px;
+            bottom: 0;
+            overflow-y: scroll;
+            overflow-x: hidden;
 
-    .PaneBase-content::after {
-        content: "";
-        display: block;
-        clear: both;
+            h2 {
+                margin-top: 0;
+            }
+        }
+
+        .PaneBase-shader {
+            display: block;
+        }
+
+        // Use smaller padding on base pane, which does not have a close
+        // button that needs to be avoided
+        &:first-child {
+            // Base pane, always full-width and not interactive
+            left: 0;
+            right: 0;
+
+            .PaneBase-content {
+                padding-left: 20px;
+            }
+
+            header {
+                margin-top: 0;
+            }
+        }
+
+        &:last-child {
+            position: absolute;
+            top: 0;
+
+            .PaneBase-shader {
+                display: none;
+            }
+        }
     }
 }
-

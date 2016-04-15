@@ -74,7 +74,7 @@ export default class PaneBase extends FluxComponent {
 
         return (
             <div ref="pane" className={ classes }>
-                <header>
+                <header className="PaneBase-header">
                     <div className="PaneBase-top">
                     { this.renderPaneTop(data) }
                     </div>
