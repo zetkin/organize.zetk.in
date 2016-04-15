@@ -10,7 +10,7 @@ export default class Avatar extends React.Component {
             person.name? person.name : '';
 
         return (
-            <img className="avatar" src={ src } alt={ alt } title={ alt }/>
+            <img className="Avatar" src={ src } alt={ alt } title={ alt }/>
         );
     }
 }

@@ -39,9 +39,13 @@ function collect(connect, monitor) {
 
 
 @DragSource('person', personSource, collect)
-export default class DraggableAvatar extends Avatar {
+export default class DraggableAvatar extends React.Component {
     render() {
-        return this.props.connectDragSource(super.render());
+        return this.props.connectDragSource(
+            <div className="DraggableAvatar">
+                <Avatar person={ this.props.person }/>
+            </div>
+        );
     }
 }
 
