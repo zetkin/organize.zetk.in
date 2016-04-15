@@ -32,7 +32,7 @@ export default class MoveParticipantsPane extends PaneBase {
                 Confirm all</button>,
             <button onClick={ this.onResetClick.bind(this) }>
                 Cancel all</button>,
-            <ul className="movelist">
+            <ul className="MoveParticipantsPane-moveList">
             {data.moves.map(function(move) {
                 const key = [move.person, move.from, move.to].join(',');
                 const person = peopleStore.getPerson(move.person);
