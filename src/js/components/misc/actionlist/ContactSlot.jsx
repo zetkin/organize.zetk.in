@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import { DragSource } from 'react-dnd';
 
 import Avatar from '../Avatar';

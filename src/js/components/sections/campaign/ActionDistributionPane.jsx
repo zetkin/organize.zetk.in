@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 import CampaignSectionPaneBase from './CampaignSectionPaneBase';
 import CampaignSelect from '../../misc/CampaignSelect';

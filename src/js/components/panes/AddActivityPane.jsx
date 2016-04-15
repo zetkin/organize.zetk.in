@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 import PaneBase from './PaneBase';
 import ActivityForm from '../forms/ActivityForm';

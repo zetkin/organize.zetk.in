@@ -1,4 +1,5 @@
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import cx from 'classnames';
 
 import FluxComponent from '../FluxComponent';
@@ -24,7 +25,7 @@ export default class PaneBase extends FluxComponent {
             }
         }).bind(this);
 
-        const contentDOMNode = React.findDOMNode(this.refs.content);
+        const contentDOMNode = ReactDOM.findDOMNode(this.refs.content);
         contentDOMNode.addEventListener('scroll', this.onPaneScroll);
 
         const scrolled = (contentDOMNode.scrollTop > 2);
@@ -36,7 +37,7 @@ export default class PaneBase extends FluxComponent {
     }
 
     componentWillUnmount() {
-        const contentDOMNode = React.findDOMNode(this.refs.content);
+        const contentDOMNode = ReactDOM.findDOMNode(this.refs.content);
         contentDOMNode.removeEventListener('scroll', this.onPaneScroll);
     }
 

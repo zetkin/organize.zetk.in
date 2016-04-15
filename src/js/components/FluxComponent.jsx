@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 // Polyfill for Array.find()
 require('array.prototype.find');

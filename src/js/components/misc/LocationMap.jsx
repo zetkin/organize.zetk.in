@@ -1,9 +1,10 @@
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 
 export default class LocationMap extends React.Component {
     componentDidMount() {
-        var ctrDOMNode = React.findDOMNode(this.refs.mapContainer);
+        var ctrDOMNode = ReactDOM.findDOMNode(this.refs.mapContainer);
         var mapOptions = {
             // TODO: Derive center from something?
             center: { lat: 55.6, lng: 13.04 },

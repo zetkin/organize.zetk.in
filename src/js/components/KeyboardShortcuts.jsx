@@ -1,5 +1,5 @@
 import { Link } from 'react-router-component';
-import React from 'react/addons';
+import React from 'react';
 import cx from 'classnames';
 
 import FluxComponent from './FluxComponent';

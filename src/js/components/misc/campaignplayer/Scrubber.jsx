@@ -1,4 +1,5 @@
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 
 export default class Scrubber extends React.Component {
@@ -32,7 +33,7 @@ export default class Scrubber extends React.Component {
     }
 
     onThumbDown(ev) {
-        const scrubber = React.findDOMNode(this.refs.scrubber);
+        const scrubber = ReactDOM.findDOMNode(this.refs.scrubber);
         const startTime = this.props.startTime;
         const endTime = this.props.endTime;
         const time = this.props.time;

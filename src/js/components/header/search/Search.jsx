@@ -1,4 +1,5 @@
-import React from 'react/addons';
+import ReactDOM from 'react-dom';
+import React from 'react';
 
 import FluxComponent from '../../FluxComponent';
 import ScopeSelect from './ScopeSelect';
@@ -27,7 +28,7 @@ export default class Search extends FluxComponent {
         var searchStore = this.getStore('search');
 
         if (searchStore.isSearchActive()) {
-            var inputDOMNode = React.findDOMNode(this.refs.searchField);
+            var inputDOMNode = ReactDOM.findDOMNode(this.refs.searchField);
             inputDOMNode.focus();
         }
     }
@@ -145,7 +146,7 @@ export default class Search extends FluxComponent {
     onKeyDown(ev) {
         const searchStore = this.getStore('search');
         const results = searchStore.getResults();
-        const inputDOMNode = React.findDOMNode(this.refs.searchField);
+        const inputDOMNode = ReactDOM.findDOMNode(this.refs.searchField);
         const focusedIndex = this.state.focusedIndex;
 
         if (ev.keyCode == 27 && ev.target == inputDOMNode) {

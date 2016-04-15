@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 import FluxComponent from '../FluxComponent';
 import OrgPicker from './OrgPicker';

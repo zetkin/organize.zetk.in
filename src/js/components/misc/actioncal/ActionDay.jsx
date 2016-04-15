@@ -1,11 +1,11 @@
-import React from 'react/addons';
+import CSSTransitionGroup from 'react-addons-css-transition-group';
+import React from 'react';
 import { DropTarget } from 'react-dnd';
 import cx from 'classnames';
 
 import ActionItem from './ActionItem';
 import ActionDayOverflow from './ActionDayOverflow';
 
-const CSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 const dayTarget = {
     canDrop(props, monitor) {

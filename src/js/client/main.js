@@ -5,7 +5,8 @@
 */
 import FluxComponent from 'flummox/component';
 import cookie from 'cookie-cutter';
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import Z from 'zetkin';
 
 import polyfills from '../utils/polyfills';
@@ -30,7 +31,7 @@ window.onload = function() {
     var dataElement = document.getElementById('bootstrap-data');
     flux.deserialize(dataElement.innerText || dataElement.textContent);
 
-    React.render(React.createElement(FluxComponent, { flux: flux },
+    ReactDOM.render(React.createElement(FluxComponent, { flux: flux },
         React.createElement(App)), document);
 
     // TODO: Remove once stored queries are on server

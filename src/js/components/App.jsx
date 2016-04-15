@@ -1,7 +1,7 @@
-import React from 'react/addons';
+import React from 'react';
 import Router from 'react-router-component';
 import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd/modules/backends/HTML5';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 import FluxComponent from './FluxComponent';
 import Header from './header/Header';

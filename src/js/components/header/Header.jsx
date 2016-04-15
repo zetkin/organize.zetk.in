@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 import Logo from './Logo';
 import Search from './search/Search';

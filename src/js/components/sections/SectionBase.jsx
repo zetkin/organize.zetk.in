@@ -1,4 +1,5 @@
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import { Link } from 'react-router-component';
 import cx from 'classnames';
 
@@ -14,11 +15,11 @@ export default class SectionBase extends FluxComponent {
             .filter(key => (key.indexOf('pane') == 0 && key != 'paneContainer'))
             .sort()
             .map(function(key) {
-                var paneDOMNode = React.findDOMNode(this.refs[key]);
+                var paneDOMNode = ReactDOM.findDOMNode(this.refs[key]);
                 return paneDOMNode;
             }, this);
 
-        const containerDOMNode = React.findDOMNode(this.refs.paneContainer);
+        const containerDOMNode = ReactDOM.findDOMNode(this.refs.paneContainer);
         PaneManager.run(panes, containerDOMNode);
     }
 

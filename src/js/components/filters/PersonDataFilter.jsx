@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 import FilterBase from './FilterBase';
 import Form from '../forms/Form';

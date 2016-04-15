@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 import SectionBase from '../SectionBase';
 import PeopleListPane from './PeopleListPane';

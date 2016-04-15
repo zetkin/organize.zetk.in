@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 import ListHeader from '../list/ListHeader';
 import LocationListItem from '../loclist/LocationListItem';

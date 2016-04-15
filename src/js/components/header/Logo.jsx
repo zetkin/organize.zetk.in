@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import { Link } from 'react-router-component';
 
 export default class Logo extends React.Component {

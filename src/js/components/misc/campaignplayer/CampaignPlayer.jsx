@@ -1,4 +1,5 @@
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 import Transport from './Transport';
 
@@ -48,7 +49,7 @@ export default class CampaignPlayer extends React.Component {
     componentDidMount() {
         const centerLat = this.props.centerLat;
         const centerLng = this.props.centerLng;
-        const ctrDOMNode = React.findDOMNode(this.refs.mapContainer);
+        const ctrDOMNode = ReactDOM.findDOMNode(this.refs.mapContainer);
         const mapOptions = {
             center: { lat: centerLat, lng: centerLng },
             zoom: 11,
