@@ -4,7 +4,7 @@ import PaneBase from './PaneBase';
 import PeopleList from '../misc/peoplelist/PeopleList';
 
 
-export default class EditQueryPane extends PaneBase {
+export default class QueryPane extends PaneBase {
     getRenderData() {
         const queryStore = this.getStore('query');
 
