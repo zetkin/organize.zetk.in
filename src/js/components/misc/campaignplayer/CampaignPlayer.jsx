@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Transport from './Transport';
+import CampaignPlayerTransport from './CampaignPlayerTransport';
 
 
 export default class CampaignPlayer extends React.Component {
@@ -81,15 +81,16 @@ export default class CampaignPlayer extends React.Component {
             new Date(actions[actions.length-1].end_time).getTime() : 0;
 
         return (
-            <div className="campaignplayer">
-                <Transport time={ this.state.time } playing={ this.state.playing }
+            <div className="CampaignPlayer">
+                <CampaignPlayerTransport
+                    time={ this.state.time } playing={ this.state.playing }
                     startTime={ startTime } endTime={ endTime }
                     onPlay={ this.onPlay.bind(this) }
                     onStop={ this.onStop.bind(this) }
                     onScrubBegin={ this.onScrubBegin.bind(this) }
                     onScrubEnd={ this.onScrubEnd.bind(this) }
                     onScrub={ this.onScrub.bind(this) }/>
-                <div className="heatmap" ref="mapContainer"/>
+                <div className="CampaignPlayer-heatmap" ref="mapContainer"/>
             </div>
         );
     }

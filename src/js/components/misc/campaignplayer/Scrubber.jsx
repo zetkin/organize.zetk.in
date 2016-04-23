@@ -25,8 +25,8 @@ export default class Scrubber extends React.Component {
         }
 
         return (
-            <div className="scrubber" ref="scrubber">
-                <button className="thumb" style={ thumbStyle }
+            <div className="Scrubber" ref="scrubber">
+                <button className="Scrubber-thumb" style={ thumbStyle }
                     onMouseDown={ this.onThumbDown.bind(this) }/>
             </div>
         );

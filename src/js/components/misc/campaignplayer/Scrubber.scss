@@ -1,0 +1,20 @@
+.Scrubber {
+    position: absolute;
+    top: 1.25em;
+    left: 180px;
+    right: 1em;
+
+    &::before {
+        position: absolute;
+        top: 0.5em;
+        width: 100%;
+        content: "";
+        display: block;
+        background-color: #eee;
+        height: 0.5em;
+    }
+
+    .Scrubber-thumb {
+        position: absolute;
+    }
+}

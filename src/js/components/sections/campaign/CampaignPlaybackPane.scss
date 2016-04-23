@@ -1,0 +1,29 @@
+.CampaignPlaybackPane {
+    .PaneBase-toolbar {
+        position: absolute;
+        top: 130px;
+        left: 0;
+        right: 0;
+        z-index: 2000;
+        margin: 0;
+
+        padding: 5px 20px;
+        height: 35px;
+        background-color: white;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .campaignselect {
+        width: 300px;
+    }
+
+    .CampaignPlayer {
+        position: absolute;
+        z-index: 1;
+        top: 95px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+

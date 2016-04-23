@@ -1,0 +1,47 @@
+.CampaignPlayerTransport {
+    background-color: white;
+    width: 100%;
+    height: 4em;
+    margin: 1.5em 0;
+
+    box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
+
+    .CampaignPlayerTransport-time {
+        position: absolute;
+        left: 77px;
+        top: 14px;
+        font-size: 1.2em;
+        color: #aaa;
+    }
+
+    .CampaignPlayerTransport-button {
+        width: 5em;
+        height: 5em;
+        margin: -0.5em 0 0 1em;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        background-color: $c-ui-darker;
+
+        &:focus {
+            outline: 0;
+        }
+        &.CampaignPlayerTransport-playButton {
+            &::before{
+                @include icon($fa-var-play);
+                    margin-left: .25em;
+            }
+        }
+        &.CampaignPlayerTransport-stopButton {
+            &::before{
+                @include icon($fa-var-stop);
+            }
+        }
+        &.CampaignPlayerTransport-playButton, &.CampaignPlayerTransport-stopButton {
+            &::before {
+                color: $c-text-contrast;
+                font-size: 2em;
+            }
+        }
+    }
+}
