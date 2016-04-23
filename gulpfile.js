@@ -93,7 +93,7 @@ gulp.task('buildSass', [ 'cleanSass' ], function() {
 });
 
 gulp.task('minifyImages', [ 'cleanImages' ], function() {
-    return gulp.src('assets/images/*')
+    return gulp.src('assets/images/**/*')
         .pipe(imagemin())
         .pipe(gulp.dest('dist/static/img'));
 });
