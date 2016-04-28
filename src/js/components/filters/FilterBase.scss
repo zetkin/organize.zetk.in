@@ -1,10 +1,10 @@
-.filter {
+.FilterBase {
     position: relative;
     @include card;
     padding: 2em 1em 1em;
     margin: 1em 0;
 
-    .filter-remove {
+    .FilterBase-removeButton {
         display: block;
         position: absolute;
         top: 0.5em;
@@ -21,14 +21,5 @@
             height: 15px;
             width: 15px;
         }
-    }
-}
-
-.pseudofilter {
-    border: 3px dashed #e8e8e8;
-    padding: 2em;
-
-    select {
-        margin: 0;
     }
 }

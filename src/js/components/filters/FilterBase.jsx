@@ -1,16 +1,18 @@
 import React from 'react';
+import cx from 'classnames';
 
+import { componentClassNames } from '../';
 import FluxComponent from '../FluxComponent';
 
 
 export default class FilterBase extends FluxComponent {
     render() {
         const config = this.props.config;
-        const classes = "filter filter-" + config.type;
+        const classes = cx(componentClassNames(this));
 
         return (
             <div className={ classes }>
-                <a className="filter-remove"
+                <a className="FilterBase-removeButton"
                     onClick={ this.onClickRemove.bind(this) }>x</a>
                 { this.renderFilterForm(config) }
             </div>
