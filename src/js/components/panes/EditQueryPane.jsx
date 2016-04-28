@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 import PaneBase from './PaneBase';
 import { resolveFilterComponent } from '../filters';
@@ -42,10 +42,10 @@ export default class QueryPane extends PaneBase {
         };
 
         return [
-            <div className="filters">
+            <div className="EditQueryPane-filters">
                 { filterElements }
             </div>,
-            <div className="pseudofilter">
+            <div className="EditQueryPane-pseudoFilter">
                 <select key="filterTypeSelect" value=""
                     onChange={ this.onFilterTypeSelect.bind(this) }>
                     <option value="">Add filter</option>

@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 import Logo from './Logo';
 import Search from './search/Search';
@@ -8,7 +8,7 @@ import UserMenu from './UserMenu';
 export default class Header extends React.Component {
     render() {
         return (
-            <header className="appheader">
+            <header className="Header">
                 <Logo />
                 <Search onMatchNavigate={ this.props.onSearchNavigate }/>
                 <UserMenu />

@@ -1,0 +1,113 @@
+
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    background-color: #ddd;
+    font-size: 62.5%;
+    font-family: Arial, sans-serif;
+}
+
+#main {
+    position: absolute;
+    top: 4.8em;
+    right: 0;
+    left: 0;
+}
+h1 {
+    // todo: define vertical rythm
+}
+h2 {
+    // todo: define vertical rythm
+    font-size: 1.5rem;
+}
+h2, h3, h4 {
+    font-weight: normal;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+// Not good but here for now
+ul {
+    @include list-unstyled;
+}
+
+button{
+    border: 1px solid $c-ui-dark;
+    background-color: $c-ui-bg;
+    padding: 5px;
+    cursor: pointer;
+    &.add{
+        @include icon-button($fa-var-plus);
+    }
+    &.add-person{
+        position: relative;
+        @include icon-button($fa-var-user-plus);
+    }
+    &.add-map-marker{
+        position: relative;
+        @include icon-button-add($fa-var-map-marker)
+    }
+}
+
+.viewswitch {
+    button {
+        height: 25px;
+        padding: 5px;
+
+        &:focus {
+            outline: 0;
+        }
+
+        &:first-child {
+            border-right-width: 0;
+        }
+
+        &.selected {
+            background-color: #eee;
+        }
+    }
+
+    &.viewswitch-state-calendar{
+        @include icon-button($fa-var-calendar);
+    }
+
+    &.viewswitch-state-list{
+        @include icon-button($fa-var-list-alt);
+    }
+
+    &.viewswitch-state-map{
+        @include icon-button($fa-var-map-o);
+    }
+}
+
+@include medium-screen {
+    html {
+        overflow: hidden;
+    }
+
+    body {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    #main {
+        position: fixed;
+        overflow: hidden;
+        top: 4.8em;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}

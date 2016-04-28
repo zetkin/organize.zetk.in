@@ -1,6 +1,7 @@
 import FluxComponent from 'flummox/component';
 import cookieParser from 'cookie-parser';
-import React from 'react/addons';
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 import express from 'express';
 import expressWs from 'express-ws';
 import http from 'http';
@@ -50,17 +51,16 @@ function renderReactPage(Component, req, res) {
     try {
         var PageFactory = React.createFactory(Component);
         var props = {
-            path: req.path
+            path: req.path,
         };
 
-        var html = React.renderToString(
+        var html = ReactDOMServer.renderToString(
             React.createElement(FluxComponent, { flux: req.flux },
                 PageFactory(props)));
 
         res.send(html);
     }
     catch (err) {
-        res.send('ERROR!')
         throw err; // TODO: Better error handling
     }
 }

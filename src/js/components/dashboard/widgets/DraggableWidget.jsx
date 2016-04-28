@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
 import cx from 'classnames';
 
@@ -60,7 +60,7 @@ export default class DraggableWidget extends React.Component {
         );
 
         const classes = cx({
-            'dashboard-widgetcontainer': true,
+            'DraggableWidget-widgetcontainer': true,
             'dragover': this.props.isOver && this.props.canDrop
         });
 

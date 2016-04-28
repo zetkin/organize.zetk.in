@@ -1,6 +1,8 @@
-import React from 'react/addons';
+import cx from 'classnames';
+import React from 'react';
 
 import ActionDistributionItem from './ActionDistributionItem';
+import { componentClassNames } from '../..';
 
 
 export default class ActionDistribution extends React.Component {
@@ -49,9 +51,10 @@ export default class ActionDistribution extends React.Component {
 
         const numInstances = Object.keys(instances).length;
         const average = actions.length / numInstances;
+        const classes = cx(componentClassNames(this));
 
         return (
-            <ul className="actiondistro">
+            <ul className={ classes }>
                 {Object.keys(instances).map(function(id) {
                     const inst = instances[id].inst;
                     const counts = instances[id]

@@ -1,0 +1,14 @@
+.App-main {
+    position: absolute;
+    top: 4.8em;
+    right: 0;
+    left: 0;
+}
+
+@include medium-screen {
+    .App-main {
+        position: fixed;
+        overflow: hidden;
+        bottom: 0;
+    }
+}

@@ -1,0 +1,82 @@
+.RelSelectInput {
+    position: relative;
+
+    input[type=text] {
+        width: 100%;
+        height: 25px;
+        margin: 0;
+        border: 1px solid #eee;
+        background-color: white;
+
+        &:focus {
+            border: 1px solid #ddd;
+        }
+    }
+
+    ul {
+        position: absolute;
+        top: 25px;
+        left: 0;
+        right: 0;
+        z-index: 2000;
+
+        display: none;
+        background-color: white;
+        box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
+
+        max-height: 10em;
+        overflow-y: scroll;
+        overflow-x: hidden;
+
+        li {
+            cursor: pointer;
+            padding: 0.5em 2em;
+
+            &::before {
+                content: "";
+                display: block;
+                float: left;
+                width: 1em;
+                height: 1em;
+                margin-left: -1.5em;
+            }
+
+            &:hover, &.focused {
+                background-color: #eee;
+
+                &::before {
+                    color: #ddd;
+                    content: "\f00c";
+                    font: normal normal normal 10px FontAwesome;
+                }
+            }
+
+            &.selected {
+                font-weight: bold;
+
+                &::before {
+                    color: #2a0;
+                    content: "\f00c";
+                    font: normal normal normal 10px FontAwesome;
+                }
+            }
+
+            .RelSelectInput-editLink {
+                float: right;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &.focused {
+        input {
+            // Input over list to obscure top shadow
+            position: relative;
+            z-index: 2001;
+        }
+
+        ul {
+            display: block;
+        }
+    }
+}

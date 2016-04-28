@@ -1,0 +1,17 @@
+.ListHeader {
+    li {
+        position: absolute;
+
+        a {
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+
+            &.selected {
+                font-weight: bold;
+            }
+        }
+    }
+}

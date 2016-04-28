@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 import Form from './Form';
 import TextInput from './inputs/TextInput';

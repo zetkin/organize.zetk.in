@@ -1,0 +1,32 @@
+.PeopleList {
+    .ListHeader {
+        position: relative;
+        height: 1.5em;
+
+        li {
+            position: absolute;
+            display: block;
+
+            &:nth-child(1) {
+                left: 70px;
+            }
+
+            &:nth-child(2) {
+                display: none;
+            }
+        }
+    }
+
+    @include medium-screen {
+        width: 60%;
+        min-width: 640px;
+
+        .listheader {
+            li:nth-child(2) {
+                display: block;
+                width: 200px;
+                right: 100px;
+            }
+        }
+    }
+}

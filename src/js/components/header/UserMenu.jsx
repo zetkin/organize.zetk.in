@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 import FluxComponent from '../FluxComponent';
 import OrgPicker from './OrgPicker';
@@ -21,16 +21,16 @@ export default class UserMenu extends FluxComponent {
         const memberships = userStore.getMemberships();
 
         return (
-            <nav className="usermenu">
+            <nav className="UserMenu">
                 <Avatar person={ profile }/>
-                <div className="usermenu-info">
-                    <div className="usermenu-user">
+                <div className="UserMenu-info">
+                    <div className="UserMenu-user">
                         <a href={ accountUrl }>
-                            <span className="usermenu-info-name">
+                            <span className="UserMenu-name">
                                 { profile.name }
                             </span>
                         </a>
-                        <span className="usermenu-info-org">{ activeOrg.title }</span>
+                        <span className="UserMenu-org">{ activeOrg.title }</span>
                     </div>
                     <ul>
                         <li><a href="/logout">Log out</a></li>

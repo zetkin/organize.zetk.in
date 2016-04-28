@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import cx from 'classnames';
 
 
@@ -24,11 +24,11 @@ export default class Form extends React.Component {
                 onSubmit={ this.onSubmit.bind(this) }>
                 <ul>
                 {inputs.map(function(input, index) {
-                    const props = input.props;
+                    const props = Object.assign({}, input.props);
 
                     const classes = cx(
                         props.className,
-                        'forminput-' + props.name
+                        'Form-' + props.name
                     );
 
                     if (props.name !== undefined

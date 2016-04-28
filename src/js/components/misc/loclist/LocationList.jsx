@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 import ListHeader from '../list/ListHeader';
 import LocationListItem from '../loclist/LocationListItem';
@@ -30,10 +30,10 @@ export default class LocationList extends React.Component {
         }
 
         return (
-            <div className="locationlist">
+            <div className="LocationList">
                 <ListHeader columns={ columns } sortField={ sortField }
                     onFieldClick={ this.onFieldClick.bind(this) }/>
-                <ul className="locationlist-items">
+                <ul className="LocationList-items">
                     {locations.map(function(loc) {
                         return (
                             <LocationListItem location={ loc }

@@ -1,11 +1,12 @@
-import React from 'react/addons';
+import ReactDOM from 'react-dom';
+import React from 'react';
 
 import ActionDay from './ActionDay';
 
 
 export default class ActionMiniCalendar extends React.Component {
     componentDidMount() {
-        const ctrDOMNode = React.findDOMNode(this.refs.container);
+        const ctrDOMNode = ReactDOM.findDOMNode(this.refs.container);
 
         this.scrollListener = function(ev) {
             ctrDOMNode.scrollLeft -= ev.wheelDelta;
@@ -15,7 +16,7 @@ export default class ActionMiniCalendar extends React.Component {
     }
 
     componentWillUnount() {
-        const ctrDOMNode = React.findDOMNode(this.refs.container);
+        const ctrDOMNode = ReactDOM.findDOMNode(this.refs.container);
 
         ctrDOMNode.removeEventListener('mousewheel', this.scrollListener);
 
@@ -73,7 +74,7 @@ export default class ActionMiniCalendar extends React.Component {
         }
 
         return (
-            <div ref="container" className="actionminicalendar">
+            <div ref="container" className="ActionMiniCalendar">
                 { days }
             </div>
         );

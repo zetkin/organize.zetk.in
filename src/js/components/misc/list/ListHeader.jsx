@@ -1,5 +1,7 @@
-import React from 'react/addons';
+import React from 'react';
 import cx from 'classnames';
+
+import { componentClassNames } from '../..';
 
 
 export default class ListHeader extends React.Component {
@@ -8,7 +10,7 @@ export default class ListHeader extends React.Component {
         const sortField = this.props.sortField;
 
         return (
-            <ul className="listheader">
+            <ul className={ cx(componentClassNames(this)) }>
             {columns.map(function(column, index) {
                 const links = [];
                 const keys = Object.keys(column);
@@ -49,7 +51,7 @@ export default class ListHeader extends React.Component {
 }
 
 ListHeader.propTypes = {
-    columns: React.PropTypes.object.isRequired,
+    columns: React.PropTypes.array.isRequired,
     sortField: React.PropTypes.string,
     onFieldClick: React.PropTypes.func
 };

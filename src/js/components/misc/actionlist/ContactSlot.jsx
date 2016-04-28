@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import { DragSource } from 'react-dnd';
 
 import Avatar from '../Avatar';
@@ -53,7 +53,7 @@ export default class ContactSlot extends React.Component {
 
 
         return (
-            <div className="contact">
+            <div className="ContactSlot">
                 { figure }
             </div>
         );

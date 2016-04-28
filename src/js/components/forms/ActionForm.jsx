@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 import FluxComponent from '../FluxComponent';
 import Form from './Form';
@@ -42,7 +42,7 @@ export default class ActionForm extends FluxComponent {
             endDate.setUTC(true).format('{HH}:{mm}') : undefined;
 
         return (
-            <Form className="actionform" ref="form" {...this.props }>
+            <Form className="ActionForm" ref="form" {...this.props }>
                 <RelSelectInput label="Campaign" name="campaign_id"
                     objects={ campaigns } showEditLink={ true }
                     onCreate={ this.props.onCreateCampaign }

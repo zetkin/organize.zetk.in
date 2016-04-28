@@ -1,5 +1,7 @@
-import React from 'react/addons';
+import React from 'react';
+import cx from 'classnames';
 
+import { componentClassNames } from '../..';
 import DraggableAvatar from '../DraggableAvatar';
 
 
@@ -19,14 +21,18 @@ export default class PeopleListItem extends React.Component {
         }
 
         return (
-            <li key={ person.id } className="peoplelistitem"
+            <li className={ cx(componentClassNames(this)) }
                 onClick={ this.props.onSelect }>
 
                 <DraggableAvatar person={ person }/>
-                <span className="first_name">{ person.first_name }</span>
-                <span className="last_name">{ person.last_name }</span>
-                <span className="email">{ mailLink }</span>
-                <span className="phone">{ person.phone }</span>
+                <span className="PeopleListItem-firstName">
+                    { person.first_name }</span>
+                <span className="PeopleListItem-lastName">
+                    { person.last_name }</span>
+                <span className="PeopleListItem-email">
+                    { mailLink }</span>
+                <span className="PeopleListItem-phone">
+                    { person.phone }</span>
             </li>
         );
     }

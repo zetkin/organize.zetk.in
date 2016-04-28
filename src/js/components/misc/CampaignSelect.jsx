@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 import FluxComponent from '../FluxComponent';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
@@ -15,7 +15,7 @@ export default class CampaignSelect extends FluxComponent {
 
         return (
             <RelSelectInput value={ selected } objects={ campaigns }
-                className='campaignselect'
+                className='CampaignSelect'
                 showEditLink={ true } allowNull={ true }
                 nullLabel="Any campaign"
                 onEdit={ this.props.onEdit }

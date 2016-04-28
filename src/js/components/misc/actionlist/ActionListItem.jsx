@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import cx from 'classnames';
 import { DropTarget } from 'react-dnd';
 
@@ -114,8 +114,8 @@ export default class ActionListItem extends FluxComponent {
         const large = (this.state.expanded || this.props.isParticipantOver);
 
         const classNames = cx({
-            'actionlist-item': true,
-            'dragover': this.props.isParticipantOver,
+            'ActionListItem': true,
+            'dragOver': this.props.isParticipantOver,
             'expanded': this.state.expanded
         });
 
@@ -124,14 +124,18 @@ export default class ActionListItem extends FluxComponent {
             !contact || p.id != contact.id);
 
         const participantList = this.props.connectParticipantDropTarget(
-            <ParticipantList action={ action }
-                maxVisible={ large? participants.length : 4 }
-                onShowAll={ this.onShowAllParticipants.bind(this) }
-                participants={ filteredParticipants }/>
+            <div>
+                <ParticipantList action={ action }
+                    maxVisible={ large? participants.length : 4 }
+                    onShowAll={ this.onShowAllParticipants.bind(this) }
+                    participants={ filteredParticipants }/>
+            </div>
         );
 
         const contactSlot = this.props.connectContactDropTarget(
-            <ContactSlot contact={ contact } action={ action }/>
+            <div>
+                <ContactSlot contact={ contact } action={ action }/>
+            </div>
         );
 
         const numParticipantRows = Math.ceil(filteredParticipants.length/4);
@@ -157,17 +161,17 @@ export default class ActionListItem extends FluxComponent {
                 { participantList }
                 { contactSlot }
 
-                <ul className="operations">
-                    <li className="operation">
+                <ul className="ActionListItem-operations">
+                    <li className="ActionListItem-operation">
                         <a onClick={ this.onEditClick.bind(this) }>
                             Edit</a></li>
-                    <li className="operation">
+                        <li className="ActionListItem-operation">
                         <a onClick={ this.onSendClick.bind(this) }>
                             Send reminders</a></li>
-                    <li className="operation">
+                        <li className="ActionListItem-operation">
                         <a onClick={ this.onBookClick.bind(this) }>
                             Book all available activists</a></li>
-                    <li className="operation">
+                        <li className="ActionListItem-operation">
                         <a onClick={ this.onCancelClick.bind(this) }>
                             Cancel action</a></li>
                 </ul>

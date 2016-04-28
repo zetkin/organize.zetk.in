@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 import FluxComponent from '../../FluxComponent';
 import ActionListItem from './ActionListItem';
@@ -12,14 +12,14 @@ export default class ActionList extends FluxComponent {
     render() {
         var actions = this.props.actions;
         return (
-            <div className="actionlist">
-                <ul className="actionlist-columns">
+            <div className="ActionList">
+                <ul className="ActionList-columns">
                     <li>Time</li>
                     <li>Activity / Location</li>
                     <li>Contact</li>
                     <li>Participants</li>
                 </ul>
-                <ul className="actionlist-items">
+                <ul className="ActionList-items">
                     {actions.map(function(action) {
                         const onOperation = this.onOperation.bind(this, action);
                         const onSetContact = this.onSetContact.bind(this, action);

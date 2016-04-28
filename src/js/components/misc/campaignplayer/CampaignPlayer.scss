@@ -1,0 +1,17 @@
+.CampaignPlayer {
+    .CampaignPlayerTransport {
+        position: absolute;
+        z-index: 2;
+        bottom: 20px;
+        left: 40px;
+        right: 40px;
+    }
+
+    .CampaignPlayer-heatmap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}

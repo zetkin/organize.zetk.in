@@ -1,4 +1,5 @@
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 
 export default class Scrubber extends React.Component {
@@ -24,15 +25,15 @@ export default class Scrubber extends React.Component {
         }
 
         return (
-            <div className="scrubber" ref="scrubber">
-                <button className="thumb" style={ thumbStyle }
+            <div className="Scrubber" ref="scrubber">
+                <button className="Scrubber-thumb" style={ thumbStyle }
                     onMouseDown={ this.onThumbDown.bind(this) }/>
             </div>
         );
     }
 
     onThumbDown(ev) {
-        const scrubber = React.findDOMNode(this.refs.scrubber);
+        const scrubber = ReactDOM.findDOMNode(this.refs.scrubber);
         const startTime = this.props.startTime;
         const endTime = this.props.endTime;
         const time = this.props.time;

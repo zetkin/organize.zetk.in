@@ -1,4 +1,5 @@
-import React from 'react/addons';
+import ReactDOM from 'react-dom';
+import React from 'react';
 import cx from 'classnames';
 
 import InputBase from './InputBase';
@@ -25,12 +26,12 @@ export default class RelSelectInput extends InputBase {
     }
 
     componentDidMount() {
-        const listDOMNode = React.findDOMNode(this.refs.objectList);
+        const listDOMNode = ReactDOM.findDOMNode(this.refs.objectList);
         listDOMNode.addEventListener('mousewheel', onWheelStopPropagation);
     }
 
     componentWillUnmount() {
-        const listDOMNode = React.findDOMNode(this.refs.objectList);
+        const listDOMNode = ReactDOM.findDOMNode(this.refs.objectList);
         listDOMNode.removeEventListener('mousewheel', onWheelStopPropagation);
     }
 
@@ -49,7 +50,7 @@ export default class RelSelectInput extends InputBase {
         }
 
         const classes = cx({
-            'relselectinput': true,
+            'RelSelectInput': true,
             'focused': this.state.inputFocused
         });
 
@@ -60,7 +61,7 @@ export default class RelSelectInput extends InputBase {
         var createOption = null;
         if (this.props.showCreateOption) {
             const createOptionClasses = cx({
-                'relselectinput-create': true,
+                'RelSelectInput-create': true,
                 'focused': (this.state.focusedIndex == this.values.length)
             });
 
@@ -77,7 +78,7 @@ export default class RelSelectInput extends InputBase {
         var nullOption = null;
         if (this.props.allowNull) {
             const nullOptionClasses = cx({
-                'relselectinput-null': true,
+                'RelSelectInput-null': true,
                 'focused': (this.state.focusedIndex == this.values.length)
             });
 
@@ -109,7 +110,7 @@ export default class RelSelectInput extends InputBase {
 
                     var editLink = null;
                     if (showEditLink) {
-                        editLink = <a className="relselectinput-editlink"
+                        editLink = <a className="RelSelectInput-editLink"
                             onMouseDown={ this.onClickEdit.bind(this, obj) }>
                             Edit</a>;
                     }
@@ -144,7 +145,7 @@ export default class RelSelectInput extends InputBase {
             inputValue: ev.target.value
         });
 
-        const listDOMNode = React.findDOMNode(this.refs.objectList);
+        const listDOMNode = ReactDOM.findDOMNode(this.refs.objectList);
         listDOMNode.scrollTop = 0;
     }
 
@@ -188,11 +189,11 @@ export default class RelSelectInput extends InputBase {
             }
 
             // Blur field and prevent form from being submitted
-            React.findDOMNode(this.refs.input).blur();
+            ReactDOM.findDOMNode(this.refs.input).blur();
             ev.preventDefault();
         }
         else if (ev.keyCode == 27) {
-            const inputDOMNode = React.findDOMNode(this.refs.input);
+            const inputDOMNode = ReactDOM.findDOMNode(this.refs.input);
             inputDOMNode.blur();
         }
     }
@@ -224,7 +225,7 @@ export default class RelSelectInput extends InputBase {
     }
 
     onBlur(ev) {
-        const listDOMNode = React.findDOMNode(this.refs.objectList);
+        const listDOMNode = ReactDOM.findDOMNode(this.refs.objectList);
         listDOMNode.scrollTop = 0;
 
         this.setState({

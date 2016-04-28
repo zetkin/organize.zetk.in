@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 import FluxComponent from '../FluxComponent';
 
@@ -9,17 +9,17 @@ export default class OrgPicker extends FluxComponent {
 
         if(memberships.length > 1){
             return (
-                <div className="orgpicker">
-                    <span className="orgpicker-label">
+                <div className="OrgPicker">
+                    <span className="OrgPicker-label">
                         Switch organization</span>
-                    <ul className="orgpicker-list">
+                    <ul className="OrgPicker-list">
                         {memberships.map(function(ms) {
                             if(ms.organization.id === activeOrg.id){
                                 return
                             }
                             return (
                                 <li key={ ms.organization.id }
-                                    className="orgpicker-item"
+                                    className="OrgPicker-item"
                                     onClick={ this.onOrgClick.bind(this, ms) }>
                                     { ms.organization.title }
                                 </li>

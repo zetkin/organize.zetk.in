@@ -1,0 +1,108 @@
+.ScopeSelect {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0.5em;
+    left: 0.5em;
+    z-index: 4000;
+
+    &.open {
+        .ScopeSelect-value {
+            &::after {
+                @include icon($fa-var-caret-up);
+            }
+        }
+        .ScopeSelect-item {
+            display: block;
+        }
+    }
+}
+.ScopeSelect-value {
+    position: relative;
+    width: 3.2em !important;
+    height: 2em !important;
+    background-color: #ddd;
+    margin-bottom: 0.4em;
+
+    // Value icon
+    &::before {
+        margin: 0.2em;
+        float: left;
+    }
+
+    &::after {
+        position: absolute;
+        right: 0;
+        top: 0.2em;
+        @include icon($fa-var-caret-down);
+    }
+
+    &.all {
+        &::before {
+             @include icon($fa-var-search);
+        }
+    }
+
+    &.people {
+        &::before {
+            @include icon($fa-var-users);
+        }
+    }
+
+    &.campaign {
+        &::before {
+            @include icon($fa-var-calendar);
+        }
+    }
+
+    &.maps {
+        &::before {
+            @include icon($fa-var-map-marker);
+        }
+    }
+}
+.ScopeSelect-item {
+    position: relative;
+    background-color: white;
+    display: none;
+    font-size: 1.2em;
+    padding: 0.3em 1em 0.3em 3em;
+
+    // Item icon
+    &::before {
+        position: absolute;
+        top: 0;
+        left: .5em;
+        content: "";
+        display: block;
+        margin: 0.1em;
+        width: 1.6em;
+        height: 1.6em;
+    }
+    &.all {
+        &::before {
+             @include icon($fa-var-search);
+        }
+    }
+
+    &.people {
+        &::before {
+            @include icon($fa-var-users);
+        }
+    }
+
+    &.campaign {
+        &::before {
+            @include icon($fa-var-calendar);
+        }
+    }
+
+    &.maps {
+        &::before {
+            @include icon($fa-var-map-marker);
+        }
+    }
+    &.selected {
+        font-weight: 700;
+    }
+}

@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import cx from 'classnames';
 
 
@@ -12,7 +12,7 @@ export default class ActionDayOverflow extends React.Component {
         const label = highlightCount || actionCount;
 
         const classes = cx({
-            'actionday-overflow': true,
+            'ActionDayOverflow': true,
             'highlight': (highlightCount > 0)
         });
 

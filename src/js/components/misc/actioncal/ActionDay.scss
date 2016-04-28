@@ -1,0 +1,43 @@
+.ActionDay {
+    h4{
+        font-size: 11px;
+        cursor: pointer;
+    }
+    h4 .date{
+        font-weight: bold;
+    }
+    &.dragOver{
+        background-color: #eee;
+
+        .ActionDay-addButton {
+            visibility: hidden;
+        }
+    }
+}
+.ActionDay-addButton {
+    display: block;
+    width: 100%;
+    background-color: #eee;
+    border-width: 0;
+    cursor: pointer;
+    text-align: center;
+
+    transition: opacity 0.3s 0.1s;
+
+    &::before {
+        content: "+";
+        color: #aaa;
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+}
+@include medium-screen {
+    .ActionDay-addButton {
+        visibility: hidden;
+        opacity: 0;
+    }
+    .ActionDay:hover .ActionDay-addButton  {
+        visibility: visible;
+        opacity: 1;
+    }
+}

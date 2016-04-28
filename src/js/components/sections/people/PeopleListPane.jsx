@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 import PaneBase from '../../panes/PaneBase';
 import PeopleList from '../../misc/peoplelist/PeopleList';
@@ -49,13 +49,13 @@ export default class PeopleListPane extends PaneBase {
         const queries = queryStore.getQueries();
 
         return [
-            <RelSelectInput name="querySelect" value={ queryId }
-                objects={ queries } showEditLink={ true }
+            <RelSelectInput key="querySelect" name="querySelect"
+                value={ queryId } objects={ queries } showEditLink={ true }
                 allowNull={ true } nullLabel="(Show all people)"
                 onValueChange={ this.onQueryChange.bind(this) }
                 onCreate={ this.onQueryCreate.bind(this) }
                 onEdit={ this.onQueryEdit.bind(this) }/>,
-            <button key="addButton" className="add-person"
+            <button key="addButton" className="PeopleListPane-addButton"
                 onClick={ this.onAddClick.bind(this) }>Add</button>
         ];
     }

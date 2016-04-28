@@ -1,0 +1,60 @@
+.ActionReminderPane {
+    small {
+        span {
+            margin-right: 0.5em;
+        }
+    }
+
+    .ActionReminderPane-newParticipants {
+        li {
+            float: left;
+            margin: 0.2em;
+        }
+
+        .avatar {
+            width: 3em;
+            height: auto;
+        }
+
+        &::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    }
+
+    form {
+        margin: 2em 0 3em;
+    }
+
+    .ActionReminderPane-reminded {
+        li {
+            @include card;
+            position: relative;
+            margin: 1em 0;
+            padding: 0.5em;
+            height: 6em;
+
+            .Avatar {
+                width: 5em;
+                height: auto;
+            }
+
+            .Person {
+                position: absolute;
+                top: 10px;
+                left: 60px;
+
+                cursor: pointer;
+                font-size: 1.1em;
+                font-weight: bold;
+            }
+
+            .ActionReminderPane-timestamp {
+                position: absolute;
+                top: 25px;
+                left: 60px;
+            }
+        }
+    }
+}

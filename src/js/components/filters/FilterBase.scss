@@ -1,0 +1,25 @@
+.FilterBase {
+    position: relative;
+    @include card;
+    padding: 2em 1em 1em;
+    margin: 1em 0;
+
+    .FilterBase-removeButton {
+        display: block;
+        position: absolute;
+        top: 0.5em;
+        left: 1em;
+        overflow: hidden;
+        width: 1em;
+        height: 1em;
+        cursor: pointer;
+
+        &::before {
+            content: "\f00d";
+            display: inline-block;
+            font: normal normal normal 10px FontAwesome;
+            height: 15px;
+            width: 15px;
+        }
+    }
+}

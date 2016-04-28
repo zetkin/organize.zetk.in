@@ -1,0 +1,100 @@
+.PeopleListItem {
+    position: relative;
+    margin: 0.5em 0;
+    padding: 0.5em;
+    height: 6em;
+    background-color: white;
+    box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
+
+    &::after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+
+    span {
+        font-size: 1.1em;
+        line-height: 1.5em;
+    }
+
+    .DraggableAvatar {
+        width: 5em;
+        height: auto;
+        float: left;
+    }
+
+    .PeopleListItem-firstName {
+        display: inline;
+        margin-left: 15px;
+        font-weight: bold;
+    }
+
+    .PeopleListItem-lastName {
+        display: inline;
+        margin-left: 0.5em;
+        font-weight: bold;
+
+        &::after {
+            white-space: pre;
+            content: "\A";
+        }
+    }
+
+    .PeopleListItem-email {
+        display: inline;
+        margin-left: 15px;
+
+        &::after {
+            white-space: pre;
+            content: "\A";
+        }
+
+        a {
+            &:hover {
+                color: #666;
+            }
+        }
+    }
+
+    .PeopleListItem-phone {
+        display: inline;
+        margin-left: 15px;
+    }
+
+    @include medium-screen {
+        span {
+            display: block;
+            width: 200px;
+        }
+
+        .PeopleListItem-firstName {
+            margin: 0;
+            position: absolute;
+            left: 70px;
+            top: 5px;
+            font-size: 1.2em;
+        }
+
+        .PeopleListItem-lastName {
+            margin: 0;
+            position: absolute;
+            left: 70px;
+            top: 25px;
+            font-size: 1.4em;
+        }
+
+        .PeopleListItem-email {
+            margin: 0;
+            position: absolute;
+            right: 100px;
+            top: 5px;
+        }
+
+        .PeopleListItem-phone {
+            margin: 0;
+            position: absolute;
+            right: 100px;
+            top: 25px;
+        }
+    }
+}

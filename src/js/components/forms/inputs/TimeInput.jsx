@@ -1,4 +1,5 @@
-import React from 'react/addons';
+import ReactDOM from 'react-dom';
+import React from 'react';
 
 import InputBase from './InputBase';
 
@@ -22,7 +23,7 @@ export default class TimeInput extends InputBase {
         if (!this.state.minuteFocused) minute = zeroPad(minute);
 
         return (
-            <div className="timeinput">
+            <div className="TimeInput">
                 <input type="text" pattern="[0-9]{1,2}"
                     ref="hourInput" value={ hour }
                     onFocus={ this.onHourFocus.bind(this) }
@@ -42,7 +43,7 @@ export default class TimeInput extends InputBase {
 
     onHourFocus(ev) {
         console.log('focus hour!');
-        const hourDOMNode = React.findDOMNode(this.refs.hourInput);
+        const hourDOMNode = ReactDOM.findDOMNode(this.refs.hourInput);
         hourDOMNode.select();
     }
 
@@ -53,7 +54,7 @@ export default class TimeInput extends InputBase {
     }
 
     onMinuteFocus(ev) {
-        const minuteDOMNode = React.findDOMNode(this.refs.minuteInput);
+        const minuteDOMNode = ReactDOM.findDOMNode(this.refs.minuteInput);
         minuteDOMNode.select();
     }
 
@@ -68,7 +69,7 @@ export default class TimeInput extends InputBase {
         this.setHour(value);
 
         if (ev.target.value.toString().length > 1) {
-            const minDOMNode = React.findDOMNode(this.refs.minuteInput);
+            const minDOMNode = ReactDOM.findDOMNode(this.refs.minuteInput);
             minDOMNode.focus();
         }
         else {

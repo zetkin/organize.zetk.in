@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import url from 'url';
 
 
@@ -21,10 +21,11 @@ export default class LocationListItem extends React.Component {
         });
 
         return (
-            <li className="locationlistitem"
+            <li className="LocationListItem"
                 onClick={ this.onClick.bind(this) }>
                 <img src={ imgSrc }/>
-                <span className="title">{ loc.title }</span>
+                <span className="LocationListItem-title">
+                    { loc.title }</span>
             </li>
         );
     }

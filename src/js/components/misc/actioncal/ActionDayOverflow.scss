@@ -1,0 +1,22 @@
+.ActionDayOverflow {
+    margin: 0 0 0.1em;
+    padding: 0.5em 1em;
+    color: #aaa;
+    background-color: white;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
+    cursor: pointer;
+
+    &::before {
+        content: "+";
+    }
+
+    &.highlight {
+        color: #FFF;
+        z-index: 1;
+        &::after{
+            z-index: -1;
+        }
+    }
+}
