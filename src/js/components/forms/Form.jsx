@@ -28,7 +28,7 @@ export default class Form extends React.Component {
 
                     const classes = cx(
                         props.className,
-                        'forminput-' + props.name
+                        'Form-' + props.name
                     );
 
                     if (props.name !== undefined
