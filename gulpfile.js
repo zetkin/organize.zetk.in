@@ -24,7 +24,7 @@ const babelConfig = {
     stage: 1,
 };
 
-const jsSrc = 'src/js/**/*.@(js|jsx)';
+const jsSrc = 'src/**/*.@(js|jsx)';
 const jsDest = 'dist/organize.zetk.in';
 
 gulp.task('cleanImages', function(cb) {
