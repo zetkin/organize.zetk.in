@@ -23,7 +23,7 @@ export default class TimeInput extends InputBase {
         if (!this.state.minuteFocused) minute = zeroPad(minute);
 
         return (
-            <div className="timeinput">
+            <div className="TimeInput">
                 <input type="text" pattern="[0-9]{1,2}"
                     ref="hourInput" value={ hour }
                     onFocus={ this.onHourFocus.bind(this) }
