@@ -1,0 +1,14 @@
+.LocationListItem {
+    position: relative;
+    box-shadow: 0 0 1px rgba(0,0,0,0.1);
+    margin: 5px 0;
+    background-color: white;
+    padding: 5px;
+
+    .LocationListItem-title {
+        position: absolute;
+        top: 10px;
+        left: 140px;
+        font-size: 1.2em;
+    }
+}

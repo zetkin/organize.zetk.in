@@ -30,10 +30,10 @@ export default class LocationList extends React.Component {
         }
 
         return (
-            <div className="locationlist">
+            <div className="LocationList">
                 <ListHeader columns={ columns } sortField={ sortField }
                     onFieldClick={ this.onFieldClick.bind(this) }/>
-                <ul className="locationlist-items">
+                <ul className="LocationList-items">
                     {locations.map(function(loc) {
                         return (
                             <LocationListItem location={ loc }
