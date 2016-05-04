@@ -1,10 +1,14 @@
+import { connect } from 'react-redux';
 import React from 'react';
+
+import { retrievePeople } from '../../../actions/person';
 
 import PaneBase from '../../panes/PaneBase';
 import PeopleList from '../../misc/peoplelist/PeopleList';
 import RelSelectInput from '../../forms/inputs/RelSelectInput';
 
 
+@connect(state => state)
 export default class PeopleListPane extends PaneBase {
     constructor(props) {
         super(props);
@@ -21,24 +25,16 @@ export default class PeopleListPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        this.listenTo('query', this.forceUpdate);
-        this.listenTo('person', this.forceUpdate);
-        this.getActions('person').retrievePeople();
+        // TODO: Do this only if data is old or does not exist
+        this.props.dispatch(retrievePeople());
     }
 
     renderPaneContent() {
-        var personStore = this.getStore('person');
-        var people = personStore.getPeople();
-
-        const queryId = this.state.selectedQueryId;
-        const queryStore = this.getStore('query');
-
-        if (queryId) {
-            people = queryStore.executeQuery(queryId, people);
-        }
+        // TODO: Handle queries correctly
+        let people = this.props.people.personList.items;
 
         return (
-            <PeopleList key="peopleList" people={ people }
+            <PeopleList key="personList" people={ people }
                 onSelect={ this.onSelect.bind(this) }/>
         );
     }

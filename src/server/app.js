@@ -6,6 +6,7 @@ import express from 'express';
 import expressWs from 'express-ws';
 import http from 'http';
 import path from 'path';
+import { Provider } from 'react-redux';
 import Z from 'zetkin';
 
 import dataRouter from './datarouter';
@@ -51,12 +52,15 @@ function renderReactPage(Component, req, res) {
     try {
         var PageFactory = React.createFactory(Component);
         var props = {
+            initialState: req.store.getState(),
             path: req.path,
         };
 
+        // TODO: Get rid of FluxComponent
         var html = ReactDOMServer.renderToString(
-            React.createElement(FluxComponent, { flux: req.flux },
-                PageFactory(props)));
+            React.createElement(Provider, { store: req.store },
+                React.createElement(FluxComponent, { flux: req.flux },
+                    PageFactory(props))));
 
         res.send(html);
     }

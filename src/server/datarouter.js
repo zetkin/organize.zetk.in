@@ -1,13 +1,16 @@
 import express from 'express';
 import Z from 'zetkin';
 
+import { appReducer, configureStore } from '../store';
+import { retrievePeople, retrievePerson } from '../actions/person';
 import Flux from '../flux';
 
 
 var router = express.Router();
 
 router.all(/.*/, function(req, res, next) {
-    req.flux = new Flux();
+    req.flux = new Flux(); // TODO: Remove
+    req.store = configureStore(appReducer);
 
     req.flux.getActions('user').getUserInfo()
         .then(req.flux.getActions('user').getUserMemberships)
@@ -31,18 +34,35 @@ router.all(/.*/, function(req, res, next) {
 
 function waitForActions(execActions) {
     return function(req, res, next) {
-        var promises = execActions(req);
+        let thunksOrActions = execActions(req);
+        let promises = [];
 
-        Promise.all(promises).then(() => next());
+        for (let i = 0; i < thunksOrActions.length; i++) {
+            let thunkOrAction = thunksOrActions[i];
+            if (typeof thunkOrAction === 'function') {
+                thunkOrAction(function(action) {
+                    thunkOrAction = action;
+                }, req.store.getState);
+            }
+
+            req.store.dispatch(thunkOrAction);
+            if (thunkOrAction.payload && thunkOrAction.payload.promise) {
+                promises.push(thunkOrAction.payload.promise);
+            }
+        }
+
+        Promise.all(promises).then(function() {
+            next();
+        });
     }
 }
 
 router.get([/people$/, /people\/list$/], waitForActions(req => [
-    req.flux.getActions('person').retrievePeople()
+    retrievePeople()
 ]));
 
 router.get(/person:(\d+)$/, waitForActions(req => [
-    req.flux.getActions('person').retrievePerson(req.params[0])
+    retrievePerson(req.params[0])
 ]));
 
 router.get([/maps$/, /maps\/locations$/], waitForActions(req => [

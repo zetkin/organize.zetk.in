@@ -22,6 +22,8 @@ export default class App extends FluxComponent {
             __html: this.context.flux.serialize()
         };
 
+        let stateJson = JSON.stringify(this.props.initialState);
+
         return (
             <html>
                 <head>
@@ -63,6 +65,9 @@ export default class App extends FluxComponent {
                     <script type="text/json"
                         id="bootstrap-data"
                         dangerouslySetInnerHTML={ json }/>
+                    <script type="text/json"
+                        id="App-initialState"
+                        dangerouslySetInnerHTML={{ __html: stateJson }}/>
                 </body>
             </html>
         );

@@ -26,8 +26,7 @@ export default class QueryPane extends PaneBase {
         this.listenTo('person', this.forceUpdate);
         this.listenTo('query', this.forceUpdate);
 
-        // TODO: Replace with actually executing query
-        this.getActions('person').retrievePeople();
+        // TODO: Execute query on server
     }
 
     renderPaneContent(data) {
@@ -35,12 +34,8 @@ export default class QueryPane extends PaneBase {
             return null;
         }
 
-        const personStore = this.getStore('person');
-        const queryStore = this.getStore('query');
-        const people = personStore.getPeople();
-
-        // TODO: Should happen server-side
-        const filteredPeople = queryStore.executeQuery(data.id, people);
+        // TODO: Use result of server-side query
+        const filteredPeople = [];
 
         return [
             <PeopleList key="peopleList" people={ filteredPeople }
