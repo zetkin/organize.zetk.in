@@ -42,10 +42,10 @@ function waitForActions(execActions) {
             if (typeof thunkOrAction === 'function') {
                 thunkOrAction(function(action) {
                     thunkOrAction = action;
+                    req.store.dispatch(action);
                 }, req.store.getState);
             }
 
-            req.store.dispatch(thunkOrAction);
             if (thunkOrAction.payload && thunkOrAction.payload.promise) {
                 promises.push(thunkOrAction.payload.promise);
             }
