@@ -37,6 +37,7 @@ export default class LocationList extends React.Component {
                     {locations.map(function(loc) {
                         return (
                             <LocationListItem location={ loc }
+                                key={ loc.data.id }
                                 onSelect={ this.onSelect.bind(this, loc) }/>
                         );
                     }, this)}

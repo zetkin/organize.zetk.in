@@ -4,9 +4,10 @@ import thunk from 'redux-thunk';
 
 import org from './org';
 import people from './people';
+import locations from './locations';
 
 export const appReducer = combineReducers({
-    org, people
+    locations, org, people
 });
 
 let middleware = [

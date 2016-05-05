@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import FluxComponent from '../FluxComponent';
 import Form from './Form';
@@ -7,16 +8,18 @@ import DateInput from './inputs/DateInput';
 import TextArea from './inputs/TextArea';
 import TimeInput from './inputs/TimeInput';
 import RelSelectInput from './inputs/RelSelectInput';
+import { retrieveLocations } from '../../actions/location';
 
 
+@connect(state => state)
 export default class ActionForm extends FluxComponent {
     componentDidMount() {
         this.listenTo('activity', this.forceUpdate);
-        this.listenTo('location', this.forceUpdate);
         this.listenTo('campaign', this.forceUpdate);
         this.getActions('activity').retrieveActivities();
-        this.getActions('location').retrieveLocations();
         this.getActions('campaign').retrieveCampaigns();
+
+        this.props.dispatch(retrieveLocations());
     }
 
     render() {
@@ -27,7 +30,7 @@ export default class ActionForm extends FluxComponent {
         };
 
         const campaigns = this.getStore('campaign').getCampaigns();
-        const locations = this.getStore('location').getLocations();
+        const locations = this.props.locations.locationList.items.map(i => i.data);
         const activities = this.getStore('activity').getActivities();
         const startDate = Date.utc.create(action.start_time);
         const endDate = Date.utc.create(action.end_time);

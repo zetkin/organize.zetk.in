@@ -9,8 +9,6 @@ import CampaignActions from './actions/campaign';
 import CampaignStore from './stores/campaign';
 import DashboardActions from './actions/dashboard';
 import DashboardStore from './stores/dashboard';
-import LocationActions from './actions/location';
-import LocationStore from './stores/location';
 import OrgStore from './stores/org';
 import ParticipantActions from './actions/participant';
 import ParticipantStore from './stores/participant';
@@ -64,7 +62,6 @@ export default class Flux extends Flummox {
         this.createActions('activity', ActivityActions, this);
         this.createActions('campaign', CampaignActions, this);
         this.createActions('dashboard', DashboardActions);
-        this.createActions('location', LocationActions, this);
         this.createActions('participant', ParticipantActions, this);
         this.createActions('query', QueryActions);
         this.createActions('reminder', ReminderActions, this);
@@ -75,7 +72,6 @@ export default class Flux extends Flummox {
         this.createStore('activity', ActivityStore, this);
         this.createStore('campaign', CampaignStore, this);
         this.createStore('dashboard', DashboardStore, this);
-        this.createStore('location', LocationStore, this);
         this.createStore('org', OrgStore, this);
         this.createStore('participant', ParticipantStore, this);
         this.createStore('query', QueryStore, this);

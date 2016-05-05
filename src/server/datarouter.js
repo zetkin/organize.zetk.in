@@ -3,6 +3,7 @@ import Z from 'zetkin';
 
 import { appReducer, configureStore } from '../store';
 import { retrievePeople, retrievePerson } from '../actions/person';
+import { retrieveLocations, retrieveLocation } from '../actions/location';
 import Flux from '../flux';
 
 
@@ -66,18 +67,19 @@ router.get(/person:(\d+)$/, waitForActions(req => [
 ]));
 
 router.get([/maps$/, /maps\/locations$/], waitForActions(req => [
-    req.flux.getActions('location').retrieveLocations()
+    retrieveLocations()
 ]));
 
 router.get(/addlocationwithmap$/, waitForActions(req => [
-    req.flux.getActions('location').retrieveLocations()
+    retrieveLocations()
 ]));
+
 router.get(/addlocation$/, waitForActions(req => [
-    req.flux.getActions('location').retrieveLocations()
+    retrieveLocations()
 ]));
 
 router.get(/location:(\d+)$/, waitForActions(req => [
-    req.flux.getActions('location').retrieveLocation(req.params[0])
+    retrieveLocation(req.params[0])
 ]));
 
 router.get(/campaigns$/, waitForActions(req => [
@@ -100,7 +102,7 @@ router.get(/campaign\/dashboard$/, waitForActions(req => [
 router.get(/campaign\/playback$/, waitForActions(req => [
     req.flux.getActions('campaign').retrieveCampaigns(),
     req.flux.getActions('action').retrieveAllActions(),
-    req.flux.getActions('location').retrieveLocations()
+    retrieveLocations()
 ]));
 
 router.get(/campaign\/actions$/, waitForActions(req => [
@@ -115,7 +117,7 @@ router.get(/campaign\/activities$/, waitForActions(req => [
 router.get(/editaction:(\d+)$/, waitForActions(req => [
     req.flux.getActions('action').retrieveAction(req.params[0]),
     req.flux.getActions('activity').retrieveActivities(),
-    req.flux.getActions('location').retrieveLocations()
+    retrieveLocations()
 ]));
 
 export default router;

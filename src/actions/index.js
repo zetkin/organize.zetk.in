@@ -5,6 +5,14 @@ export const RETRIEVE_PERSON = 'RETRIEVE_PERSON';
 export const UPDATE_PERSON = 'UPDATE_PERSON';
 export const DELETE_PERSON = 'DELETE_PERSON';
 
+// Redux actions related to locations
+export const CREATE_LOCATION = 'CREATE_LOCATION';
+export const RETRIEVE_LOCATIONS = 'RETRIEVE_LOCATIONS';
+export const RETRIEVE_LOCATION = 'RETRIEVE_LOCATION';
+export const UPDATE_LOCATION = 'UPDATE_LOCATION';
+export const DELETE_LOCATION = 'DELETE_LOCATION';
+export const SET_PENDING_LOCATION = 'SET_PENDING_LOCATION';
+export const CLEAR_PENDING_LOCATION = 'CLEAR_PENDING_LOCATION';
 
 // Redux actions related to campaign actions
 export const RETRIEVE_ACTIONS = 'RETRIEVE_ACTIONS';

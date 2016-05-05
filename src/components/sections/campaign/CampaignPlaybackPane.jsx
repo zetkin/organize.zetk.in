@@ -1,11 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import CampaignSectionPaneBase from './CampaignSectionPaneBase';
 import CampaignSelect from '../../misc/CampaignSelect';
 import CampaignPlayer from '../../misc/campaignplayer/CampaignPlayer';
 import ActionMiniCalendar from '../../misc/actioncal/ActionMiniCalendar';
+import { getLocationAverage } from '../../../utils/location';
+import { retrieveLocations } from '../../../actions/location';
 
 
+@connect(state => state)
 export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
     getPaneTitle() {
         return 'Campaign playback';
@@ -16,9 +20,9 @@ export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
 
         this.listenTo('action', this.forceUpdate);
         this.listenTo('campaign', this.forceUpdate);
-        this.listenTo('location', this.forceUpdate);
         this.getActions('action').retrieveAllActions();
-        this.getActions('location').retrieveLocations();
+
+        this.props.dispatch(retrieveLocations());
     }
 
     renderPaneTop() {
@@ -34,11 +38,11 @@ export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
 
     renderPaneContent() {
         const actionStore = this.getStore('action');
-        const locationStore = this.getStore('location');
         const actions = actionStore.getActions();
-        const locations = locationStore.getLocations();
 
-        const center = locationStore.getAverageCenterOfLocations();
+        const locList = this.props.locations.locationList;
+        const locations = locList.items.map(i => i.data);
+        const center = getLocationAverage(locList);
 
         return (
             <CampaignPlayer key="player"
