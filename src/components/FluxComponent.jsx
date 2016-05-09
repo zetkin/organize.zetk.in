@@ -57,5 +57,12 @@ export default class FluxComponent extends React.Component {
 }
 
 FluxComponent.contextTypes = {
-    flux: React.PropTypes.object.isRequired
+    flux: React.PropTypes.object.isRequired,
+    dragDropManager: React.PropTypes.object.isRequired,
+};
+
+FluxComponent.childContextTypes = {
+    flux: React.PropTypes.object.isRequired,
+    dragDropManager: React.PropTypes.object.isRequired,
+    router: React.PropTypes.object.isRequired,
 };

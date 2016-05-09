@@ -17,9 +17,16 @@ import MapsSection from './sections/maps/MapsSection';
 
 @DragDropContext(HTML5Backend)
 export default class App extends FluxComponent {
+    getChildContext() {
+        return {
+            ...this.context,
+            flux: this.props.flux,
+        };
+    }
+
     render() {
         var json = {
-            __html: this.context.flux.serialize()
+            __html: this.props.flux.serialize()
         };
 
         return (
@@ -106,3 +113,13 @@ export default class App extends FluxComponent {
         }
     }
 }
+
+App.contextTypes = {
+    flux: React.PropTypes.object.isRequired,
+    dragDropManager: React.PropTypes.object.isRequired
+};
+
+App.childContextTypes = {
+    flux: React.PropTypes.object.isRequired,
+    dragDropManager: React.PropTypes.object.isRequired
+};

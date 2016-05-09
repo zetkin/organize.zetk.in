@@ -32,7 +32,7 @@ window.onload = function() {
     flux.deserialize(dataElement.innerText || dataElement.textContent);
 
     ReactDOM.render(React.createElement(FluxComponent, { flux: flux },
-        React.createElement(App)), document);
+        React.createElement(App, { flux: flux })), document);
 
     // TODO: Remove once stored queries are on server
     flux.getActions('query').loadQueriesFromLocalStorage();
