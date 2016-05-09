@@ -22,6 +22,13 @@ export const UPDATE_CAMPAIGN = 'UPDATE_CAMPAIGN';
 export const DELETE_CAMPAIGN = 'DELETE_CAMPAIGN';
 export const SELECT_CAMPAIGN = 'SELECT_CAMPAIGN';
 
+// Redux actions related to activity
+export const CREATE_ACTIVITY = 'CREATE_ACTIVITY';
+export const RETRIEVE_ACTIVITY = 'RETRIEVE_ACTIVITY';
+export const RETRIEVE_ACTIVITIES = 'RETRIEVE_ACTIVITIES';
+export const UPDATE_ACTIVITY = 'UPDATE_ACTIVITY';
+export const DELETE_ACTIVITY = 'DELETE_ACTIVITY';
+
 // Redux actions related to campaign actions
 export const RETRIEVE_ACTIONS = 'RETRIEVE_ACTIONS';
 export const RETRIEVE_ACTION = 'RETRIEVE_ACTION';

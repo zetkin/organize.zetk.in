@@ -2,6 +2,7 @@ import express from 'express';
 import Z from 'zetkin';
 
 import { appReducer, configureStore } from '../store';
+import { retrieveActivities } from '../actions/activity';
 import { retrieveCampaigns, retrieveCampaign } from '../actions/campaign';
 import { retrieveLocations, retrieveLocation } from '../actions/location';
 import { retrievePeople, retrievePerson } from '../actions/person';
@@ -111,13 +112,9 @@ router.get(/campaign\/actions$/, waitForActions(req => [
     req.flux.getActions('action').retrieveAllActions()
 ]));
 
-router.get(/campaign\/activities$/, waitForActions(req => [
-    req.flux.getActions('activity').retrieveActivities()
-]));
-
 router.get(/editaction:(\d+)$/, waitForActions(req => [
     req.flux.getActions('action').retrieveAction(req.params[0]),
-    req.flux.getActions('activity').retrieveActivities(),
+    retrieveActivities(),
     retrieveLocations()
 ]));
 

@@ -10,16 +10,15 @@ import TimeInput from './inputs/TimeInput';
 import RelSelectInput from './inputs/RelSelectInput';
 import { retrieveLocations } from '../../actions/location';
 import { retrieveCampaigns } from '../../actions/campaign';
+import { retrieveActivities } from '../../actions/activity';
 
 
 @connect(state => state)
 export default class ActionForm extends FluxComponent {
     componentDidMount() {
-        this.listenTo('activity', this.forceUpdate);
-        this.getActions('activity').retrieveActivities();
-
         this.props.dispatch(retrieveCampaigns());
         this.props.dispatch(retrieveLocations());
+        this.props.dispatch(retrieveActivities());
     }
 
     render() {
@@ -31,7 +30,7 @@ export default class ActionForm extends FluxComponent {
 
         const campaigns = this.props.campaigns.campaignList.items.map(i => i.data);
         const locations = this.props.locations.locationList.items.map(i => i.data);
-        const activities = this.getStore('activity').getActivities();
+        const activities = this.props.activities.activityList.items.map(i => i.data);
         const startDate = Date.utc.create(action.start_time);
         const endDate = Date.utc.create(action.end_time);
 

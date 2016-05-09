@@ -1,39 +1,66 @@
-import { Actions } from 'flummox';
 import Z from 'zetkin'
+import * as types from '.';
 
 
-export default class ActivityActions extends Actions {
-    constructor(flux) {
-        super();
+export function createActivity(data) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.CREATE_ACTIVITY,
+            payload: {
+                promise: Z.resource('orgs', orgId, 'activities').post(data),
+            }
+        });
+    };
+}
 
-        this.flux = flux;
-    }
+export function retrieveActivities() {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_ACTIVITIES,
+            payload: {
+                promise: Z.resource('orgs', orgId, 'activities').get(),
+            }
+        });
+    };
+}
 
-    createActivity(data) {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'activities').post(data);
-    }
+export function retrieveActivity(id) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_ACTIVITY,
+            payload: {
+                promise: Z.resource('orgs', orgId, 'activities', id).get(),
+            }
+        });
+    };
+}
 
-    retrieveActivities() {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'activities').get();
-    }
+export function updateActivity(id, data) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.UPDATE_ACTIVITY,
+            meta: { id },
+            payload: {
+                promise: Z.resource(
+                    'orgs', orgId, 'activities', id).patch(data),
+            }
+        });
+    };
+}
 
-    updateActivity(id, data) {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'activities', id).patch(data);
-    }
-
-    deleteActivity(id) {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'activities', id).del();
-    }
-
-    static serialize(state) {
-        return JSON.stringify(state);
-    }
-
-    static deserialize(stateStr) {
-        return JSON.parse(statestr);
-    }
+export function deleteActivity(id) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.DELETE_ACTIVITY,
+            meta: { id },
+            payload: {
+                promise: Z.resource('orgs', orgId, 'activities', id).del(),
+            }
+        });
+    };
 }
