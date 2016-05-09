@@ -55,7 +55,7 @@ function renderReactPage(Component, req, res) {
 
         var html = React.renderToString(
             React.createElement(FluxComponent, { flux: req.flux },
-                PageFactory(props)));
+                PageFactory(props, { flux: req.flux })));
 
         res.send(html);
     }
