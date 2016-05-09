@@ -1,14 +1,13 @@
-import React from 'react';
 import moment from 'moment';
+import React from 'react';
 
 import PaneBase from '../../panes/PaneBase';
 
 
 export default class CampaignSectionPaneBase extends PaneBase {
     onCalendarAddAction(date) {
-        const campaignStore = this.getStore('campaign');
-        const selectedCampaign = campaignStore.getSelectedCampaign();
-        const campParam = selectedCampaign? selectedCampaign.id : 0;
+        const selectedId = this.props.campaigns.selectedId;
+        const campParam = selectedId || 0;
         const dateParam = moment(date).format('YYYY-MM-DD');
 
         this.openPane('addaction', campParam, dateParam);

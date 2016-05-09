@@ -19,7 +19,6 @@ export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
         super.componentDidMount();
 
         this.listenTo('action', this.forceUpdate);
-        this.listenTo('campaign', this.forceUpdate);
         this.getActions('action').retrieveAllActions();
 
         this.props.dispatch(retrieveLocations());

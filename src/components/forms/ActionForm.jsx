@@ -9,16 +9,16 @@ import TextArea from './inputs/TextArea';
 import TimeInput from './inputs/TimeInput';
 import RelSelectInput from './inputs/RelSelectInput';
 import { retrieveLocations } from '../../actions/location';
+import { retrieveCampaigns } from '../../actions/campaign';
 
 
 @connect(state => state)
 export default class ActionForm extends FluxComponent {
     componentDidMount() {
         this.listenTo('activity', this.forceUpdate);
-        this.listenTo('campaign', this.forceUpdate);
         this.getActions('activity').retrieveActivities();
-        this.getActions('campaign').retrieveCampaigns();
 
+        this.props.dispatch(retrieveCampaigns());
         this.props.dispatch(retrieveLocations());
     }
 
@@ -29,7 +29,7 @@ export default class ActionForm extends FluxComponent {
             activity: {}
         };
 
-        const campaigns = this.getStore('campaign').getCampaigns();
+        const campaigns = this.props.campaigns.campaignList.items.map(i => i.data);
         const locations = this.props.locations.locationList.items.map(i => i.data);
         const activities = this.getStore('activity').getActivities();
         const startDate = Date.utc.create(action.start_time);

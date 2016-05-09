@@ -1,19 +1,31 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import CampaignForm from '../forms/CampaignForm';
+import { getListItemById } from '../../utils/store';
+import { retrieveCampaign, updateCampaign, deleteCampaign }
+    from '../../actions/campaign';
 
 
+@connect(state => state)
 export default class EditCampaignPane extends PaneBase {
     componentDidMount() {
-        this.listenTo('campaign', this.forceUpdate);
+        let campaignId = this.props.params[0];
+        let campaignItem = getListItemById(
+            this.props.campaigns.campaignList, campaignId);
+
+        if (!campaignItem) {
+            this.props.dispatch(retrieveCampaign(campaignId));
+        }
     }
 
     getRenderData() {
-        const campaignId = this.props.params[0];
-        const campaignStore = this.getStore('campaign');
+        let campaignList = this.props.campaigns.campaignList;
+        var campaignId = this.props.params[0];
+
         return {
-            campaign: campaignStore.getCampaign(campaignId)
+            campaignItem: getListItemById(campaignList, campaignId),
         }
     }
 
@@ -22,9 +34,10 @@ export default class EditCampaignPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        if (data.campaign) {
+        if (data.campaignItem) {
             return [
-                <CampaignForm key="form" ref="form" campaign={ data.campaign }
+                <CampaignForm key="form" ref="form"
+                    campaign={ data.campaignItem.data }
                     onSubmit={ this.onSubmit.bind(this) }/>,
 
                 <input key="delete" type="button" value="Delete"
@@ -43,15 +56,13 @@ export default class EditCampaignPane extends PaneBase {
         const values = this.refs.form.getChangedValues();
         const campaignId = this.props.params[0];
 
-        this.getActions('campaign')
-            .updateCampaign(campaignId, values)
-            .then(this.closePane.bind(this));
+        this.props.dispatch(updateCampaign(campaignId, values));
     }
 
     onDeleteClick(ev) {
         const campaignId = this.props.params[0];
 
-        this.getActions('campaign').deleteCampaign(campaignId);
+        this.props.dispatch(deleteCampaign(campaignId));
         this.closePane();
     }
 }

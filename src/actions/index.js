@@ -14,6 +14,14 @@ export const DELETE_LOCATION = 'DELETE_LOCATION';
 export const SET_PENDING_LOCATION = 'SET_PENDING_LOCATION';
 export const CLEAR_PENDING_LOCATION = 'CLEAR_PENDING_LOCATION';
 
+// Redux actions related to campaigns
+export const CREATE_CAMPAIGN = 'CREATE_CAMPAIGN';
+export const RETRIEVE_CAMPAIGNS = 'RETRIEVE_CAMPAIGNS';
+export const RETRIEVE_CAMPAIGN = 'RETRIEVE_CAMPAIGN';
+export const UPDATE_CAMPAIGN = 'UPDATE_CAMPAIGN';
+export const DELETE_CAMPAIGN = 'DELETE_CAMPAIGN';
+export const SELECT_CAMPAIGN = 'SELECT_CAMPAIGN';
+
 // Redux actions related to campaign actions
 export const RETRIEVE_ACTIONS = 'RETRIEVE_ACTIONS';
 export const RETRIEVE_ACTION = 'RETRIEVE_ACTION';

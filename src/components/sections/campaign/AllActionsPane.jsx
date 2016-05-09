@@ -1,12 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import CampaignSectionPaneBase from './CampaignSectionPaneBase';
 import ActionList from '../../misc/actionlist/ActionList';
 import CampaignSelect from '../../misc/CampaignSelect';
 import ActionCalendar from '../../misc/actioncal/ActionCalendar';
 import ViewSwitch from '../../misc/ViewSwitch';
+import { retrieveCampaigns } from '../../../actions/campaign';
 
 
+@connect(state => state)
 export default class AllActionsPane extends CampaignSectionPaneBase {
     constructor(props) {
         super(props);
@@ -24,9 +27,9 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         super.componentDidMount();
 
         this.listenTo('action', this.forceUpdate);
-        this.listenTo('campaign', this.forceUpdate);
         this.getActions('action').retrieveAllActions();
-        this.getActions('campaign').retrieveCampaigns();
+
+        this.props.dispatch(retrieveCampaigns());
     }
 
     renderPaneContent() {

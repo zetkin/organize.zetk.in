@@ -1,20 +1,19 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-import FluxComponent from '../FluxComponent';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
+import { selectCampaign } from '../../actions/campaign';
 
 
-export default class CampaignSelect extends FluxComponent {
+@connect(state => state)
+export default class CampaignSelect extends React.Component {
     render() {
-        const campaigns = this.getStore('campaign').getCampaigns();
-        var selected = this.getStore('campaign').getSelectedCampaign();
-
-        if (selected) {
-            selected = selected.id;
-        }
+        let campaignStore = this.props.campaigns;
+        let campaigns = campaignStore.campaignList.items.map(i => i.data);
+        let selectedId = campaignStore.selectedCampaign;
 
         return (
-            <RelSelectInput value={ selected } objects={ campaigns }
+            <RelSelectInput value={ selectedId } objects={ campaigns }
                 className='CampaignSelect'
                 showEditLink={ true } allowNull={ true }
                 nullLabel="Any campaign"
@@ -26,10 +25,10 @@ export default class CampaignSelect extends FluxComponent {
 
     onChange(name, value) {
         if (!value) {
-            this.getActions('campaign').selectCampaign(null);
+            this.props.dispatch(selectCampaign(null));
         }
         else {
-            this.getActions('campaign').selectCampaign(value);
+            this.props.dispatch(selectCampaign(value));
         }
     }
 }

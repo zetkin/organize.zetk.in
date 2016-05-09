@@ -1,11 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import CampaignSectionPaneBase from './CampaignSectionPaneBase';
 import CampaignSelect from '../../misc/CampaignSelect';
 import ActionDistribution from '../../misc/actiondistro/ActionDistribution';
 import ActionMiniCalendar from '../../misc/actioncal/ActionMiniCalendar';
+import { retrieveCampaigns } from '../../../actions/campaign';
 
 
+@connect(state => state)
 export default class ActionDistributionPane extends CampaignSectionPaneBase {
     getPaneTitle() {
         return 'Location and activity distribution';
@@ -15,9 +18,9 @@ export default class ActionDistributionPane extends CampaignSectionPaneBase {
         super.componentDidMount();
 
         this.listenTo('action', this.forceUpdate);
-        this.listenTo('campaign', this.forceUpdate);
         this.getActions('action').retrieveAllActions();
-        this.getActions('campaign').retrieveCampaigns();
+
+        this.props.dispatch(retrieveCampaigns());
     }
 
     renderPaneTop() {

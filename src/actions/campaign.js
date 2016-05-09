@@ -1,42 +1,76 @@
-import { Actions } from 'flummox';
 import Z from 'zetkin';
 
+import * as types from './';
 
-export default class CampaignActions extends Actions {
-    constructor(flux) {
-        super();
 
-        this.flux = flux;
-    }
+export function createCampaign(data) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.CREATE_CAMPAIGN,
+            payload: {
+                promise: Z.resource('orgs', orgId, 'campaigns').post(data),
+            }
+        });
+    };
+}
 
-    createCampaign(data) {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'campaigns').post(data);
-    }
+export function retrieveCampaigns() {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_CAMPAIGNS,
+            payload: {
+                promise: Z.resource('orgs', orgId, 'campaigns').get(),
+            }
+        });
+    };
+}
 
-    deleteCampaign(id) {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'campaigns', id)
-                .meta('campaignId', id)
-                .del();
-    }
+export function retrieveCampaign(id) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_CAMPAIGN,
+            meta: { id },
+            payload: {
+                promise: Z.resource('orgs', orgId, 'campaigns', id).get(),
+            }
+        });
+    };
+}
 
-    retrieveCampaigns() {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'campaigns').get();
-    }
+export function updateCampaign(id, data) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.UPDATE_CAMPAIGN,
+            meta: { id },
+            payload: {
+                promise: Z.resource('orgs', orgId, 'campaigns', id).patch(data),
+            }
+        });
+    };
+}
 
-    updateCampaign(id, data) {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'campaigns', id).patch(data);
-    }
+export function deleteCampaign(id) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.DELETE_CAMPAIGN,
+            meta: { id },
+            payload: {
+                promise: Z.resource('orgs', orgId, 'campaigns', id).del(),
+            }
+        });
+    };
+}
 
-    retrieveCampaign(campaignId) {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'campaigns', campaignId).get();
-    }
-
-    selectCampaign(campaignId) {
-        return campaignId;
-    }
+export function selectCampaign(id) {
+    return {
+        type: types.SELECT_CAMPAIGN,
+        payload: {
+            id: id,
+        }
+    };
 }

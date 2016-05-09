@@ -1,9 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import CampaignForm from '../forms/CampaignForm';
+import { createCampaign } from '../../actions/campaign';
 
 
+@connect(state => state)
 export default class AddCampaignPane extends PaneBase {
     getPaneTitle(data) {
         return 'Add campagin';
@@ -25,8 +28,6 @@ export default class AddCampaignPane extends PaneBase {
 
         const values = this.refs.form.getValues();
 
-        this.getActions('campaign')
-            .createCampaign(values)
-            .then(this.closePane.bind(this));
+        this.props.dispatch(createCampaign(values));
     }
 }

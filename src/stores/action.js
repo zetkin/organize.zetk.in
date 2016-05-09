@@ -48,6 +48,7 @@ export default class ActionStore extends Store {
     }
 
     getActions() {
+        /* TODO: Re-implement in Redux version
         const campaignStore = this.flux.getStore('campaign');
         const campaign = campaignStore.getSelectedCampaign();
 
@@ -58,6 +59,8 @@ export default class ActionStore extends Store {
         else {
             return this.state.actions;
         }
+        */
+        return this.state.actions;
     }
 
     onCreateActionComplete(res) {
