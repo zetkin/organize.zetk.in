@@ -19,8 +19,10 @@ export default class Form extends React.Component {
             inputs = [inputs];
         }
 
+        let classes = cx('Form', this.props.className);
+
         return (
-            <form className={ this.props.className }
+            <form className={ classes }
                 onSubmit={ this.onSubmit.bind(this) }>
                 <ul>
                 {inputs.map(function(input, index) {
