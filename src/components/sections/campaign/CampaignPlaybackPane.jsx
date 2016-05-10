@@ -6,6 +6,7 @@ import CampaignSelect from '../../misc/CampaignSelect';
 import CampaignPlayer from '../../misc/campaignplayer/CampaignPlayer';
 import ActionMiniCalendar from '../../misc/actioncal/ActionMiniCalendar';
 import { getLocationAverage } from '../../../utils/location';
+import { retrieveActions } from '../../../actions/action';
 import { retrieveLocations } from '../../../actions/location';
 
 
@@ -18,15 +19,13 @@ export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        this.listenTo('action', this.forceUpdate);
-        this.getActions('action').retrieveAllActions();
-
+        this.props.dispatch(retrieveActions());
         this.props.dispatch(retrieveLocations());
     }
 
     renderPaneTop() {
-        const actionStore = this.getStore('action');
-        const actions = actionStore.getActions();
+        let actionList = this.props.actions.actionList;
+        let actions = actionList.items.map(i => i.data);
 
         return <ActionMiniCalendar actions={ actions }
                     onSelectDay={ this.onSelectDay.bind(this) }
@@ -36,12 +35,12 @@ export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
     }
 
     renderPaneContent() {
-        const actionStore = this.getStore('action');
-        const actions = actionStore.getActions();
+        let actionList = this.props.actions.actionList;
+        let actions = actionList.items.map(i => i.data);
 
-        const locList = this.props.locations.locationList;
-        const locations = locList.items.map(i => i.data);
-        const center = getLocationAverage(locList);
+        let locList = this.props.locations.locationList;
+        let locations = locList.items.map(i => i.data);
+        let center = getLocationAverage(locList);
 
         return (
             <CampaignPlayer key="player"

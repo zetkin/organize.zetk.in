@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import Form from '../forms/Form';
@@ -6,25 +7,27 @@ import TextArea from '../forms/inputs/TextArea';
 import Avatar from '../misc/Avatar';
 import Person from '../misc/elements/Person';
 import Action from '../misc/elements/Action';
+import { retrieveAction } from '../../actions/action';
+import { getListItemById } from '../../utils/store';
 
 
+@connect(state => state)
 export default class ActionReminderPane extends PaneBase {
     getPaneTitle() {
         return 'Action reminders';
     }
 
     getPaneSubTitle(data) {
-        return data.action?
-            <Action action={ data.action }/> : null;
+        return data.actionItem?
+            <Action action={ data.actionItem.data }/> : null;
     }
 
     componentDidMount() {
         this.listenTo('participant', this.forceUpdate);
-        this.listenTo('action', this.forceUpdate);
 
         const actionId = this.getParam(0);
         this.getActions('participant').retrieveParticipants(actionId);
-        this.getActions('action').retrieveAction(actionId);
+        this.props.dispatch(retrieveAction(actionId));
     }
 
     getRenderData() {
@@ -33,7 +36,7 @@ export default class ActionReminderPane extends PaneBase {
         const participants = participantStore.getParticipants(aid) || [];
 
         return {
-            action: this.getStore('action').getAction(aid),
+            actionItem: getListItemById(this.props.actions.actionList, aid),
             remindedParticipants: participants.filter(p => p.reminder_sent),
             newParticipants: participants.filter(p => !p.reminder_sent)
         };

@@ -6,6 +6,14 @@ import CampaignSelect from '../../misc/CampaignSelect';
 import ActionDistribution from '../../misc/actiondistro/ActionDistribution';
 import ActionMiniCalendar from '../../misc/actioncal/ActionMiniCalendar';
 import { retrieveCampaigns } from '../../../actions/campaign';
+import {
+    clearActionHighlights,
+    highlightActionActivity,
+    highlightActionActivityPhase,
+    highlightActionLocation,
+    highlightActionLocationPhase,
+    retrieveActions,
+} from '../../../actions/action';
 
 
 @connect(state => state)
@@ -17,15 +25,13 @@ export default class ActionDistributionPane extends CampaignSectionPaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        this.listenTo('action', this.forceUpdate);
-        this.getActions('action').retrieveAllActions();
-
+        this.props.dispatch(retrieveActions());
         this.props.dispatch(retrieveCampaigns());
     }
 
     renderPaneTop() {
-        const actionStore = this.getStore('action');
-        const actions = actionStore.getActions();
+        let actionList = this.props.actions.actionList;
+        let actions = actionList.items.map(i => i.data);
 
         return <ActionMiniCalendar actions={ actions }
                     onSelectDay={ this.onSelectDay.bind(this) }
@@ -35,8 +41,8 @@ export default class ActionDistributionPane extends CampaignSectionPaneBase {
     }
 
     renderPaneContent() {
-        const actionStore = this.getStore('action');
-        const actions = actionStore.getActions();
+        let actionList = this.props.actions.actionList;
+        let actions = actionList.items.map(i => i.data);
 
         return [
             <div className="ActionDistributionPane-locations">
@@ -67,22 +73,22 @@ export default class ActionDistributionPane extends CampaignSectionPaneBase {
     }
 
     onLocMouseOver(loc) {
-        this.getActions('action').highlightActionLocation(loc.id);
+        this.props.dispatch(highlightActionLocation(loc.id));
     }
 
     onLocMouseOverPhase(loc, phase) {
-        this.getActions('action').highlightActionLocationPhase(loc.id, phase);
+        this.props.dispatch(highlightActionLocationPhase(loc.id, phase));
     }
 
     onActivityMouseOver(activity) {
-        this.getActions('action').highlightActionActivity(activity.id);
+        this.props.dispatch(highlightActionActivity(activity.id));
     }
 
     onActivityMouseOverPhase(activity, phase) {
-        this.getActions('action').highlightActionActivityPhase(activity.id, phase);
+        this.props.dispatch(highlightActionActivityPhase(activity.id, phase));
     }
 
     onMouseOut() {
-        this.getActions('action').clearActionHighlights();
+        this.props.dispatch(clearActionHighlights());
     }
 }

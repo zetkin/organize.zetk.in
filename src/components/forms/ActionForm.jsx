@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import FluxComponent from '../FluxComponent';
 import Form from './Form';
@@ -13,7 +12,6 @@ import { retrieveCampaigns } from '../../actions/campaign';
 import { retrieveActivities } from '../../actions/activity';
 
 
-@connect(state => state)
 export default class ActionForm extends FluxComponent {
     componentDidMount() {
         this.props.dispatch(retrieveCampaigns());

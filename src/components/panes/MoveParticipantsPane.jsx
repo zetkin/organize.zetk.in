@@ -1,11 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import PersonForm from '../forms/PersonForm';
 import Person from '../misc/elements/Person';
 import Action from '../misc/elements/Action';
+import { getListItemById } from '../../utils/store';
 
 
+@connect(state => state)
 export default class MoveParticipantsPane extends PaneBase {
     componentDidMount() {
         this.listenTo('participant', this.forceUpdate);
@@ -24,8 +27,8 @@ export default class MoveParticipantsPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        const actionStore = this.getStore('action');
-        const peopleStore = this.getStore('person');
+        let actionList = this.props.actions.actionList;
+        let personList = this.props.people.personList;
 
         return [
             <button onClick={ this.onExecuteClick.bind(this) }>
@@ -35,9 +38,9 @@ export default class MoveParticipantsPane extends PaneBase {
             <ul className="MoveParticipantsPane-moveList">
             {data.moves.map(function(move) {
                 const key = [move.person, move.from, move.to].join(',');
-                const person = peopleStore.getPerson(move.person);
-                const fromAction = actionStore.getAction(move.from);
-                const toAction = actionStore.getAction(move.to);
+                const person = getListItemById(personList, move.person).data;
+                const fromAction = getListItemById(actionList, move.from).data;
+                const toAction = getListItemById(actionList, move.to).data;
 
                 return (
                     <li key={ key }>

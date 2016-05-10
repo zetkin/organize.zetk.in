@@ -2,6 +2,7 @@ import React from 'react';
 
 import FluxComponent from '../../FluxComponent';
 import ActionListItem from './ActionListItem';
+import { updateAction } from '../../../actions/action';
 
 
 export default class ActionList extends FluxComponent {
@@ -53,9 +54,9 @@ export default class ActionList extends FluxComponent {
     }
 
     onSetContact(action, person, oldAction) {
-        this.getActions('action').updateAction(action.id, {
+        this.props.dispatch(updateAction(action.id, {
             contact_id: person.id
-        });
+        }));
 
         if (action.id != oldAction.id) {
             // TODO: Remove from old action
