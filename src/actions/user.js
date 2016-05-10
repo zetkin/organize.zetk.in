@@ -1,17 +1,28 @@
-import { Actions } from 'flummox';
 import Z from 'zetkin';
+import * as types from '.';
 
 
-export default class UserActions extends Actions {
-    getUserInfo() {
-        return Z.resource('/users/me').get()
-    }
+export function getUserInfo() {
+    return {
+        type: types.GET_USER_INFO,
+        payload: {
+            promise: Z.resource('/users/me').get(),
+        }
+    };
+}
 
-    getUserMemberships() {
-        return Z.resource('/users/me/memberships').get()
-    }
+export function getUserMemberships() {
+    return {
+        type: types.GET_USER_MEMBERSHIPS,
+        payload: {
+            promise: Z.resource('/users/me/memberships').get(),
+        }
+    };
+}
 
-    setActiveMembership(membership) {
-        return membership;
-    }
+export function setActiveMembership(membership) {
+    return {
+        type: types.SET_ACTIVE_MEMBERSHIP,
+        payload: { membership },
+    };
 }

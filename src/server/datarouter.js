@@ -7,6 +7,7 @@ import { retrieveActivities } from '../actions/activity';
 import { retrieveCampaigns, retrieveCampaign } from '../actions/campaign';
 import { retrieveLocations, retrieveLocation } from '../actions/location';
 import { retrievePeople, retrievePerson } from '../actions/person';
+import { getUserInfo, getUserMemberships } from '../actions/user';
 import Flux from '../flux';
 
 
@@ -16,12 +17,19 @@ router.all(/.*/, function(req, res, next) {
     req.flux = new Flux(); // TODO: Remove
     req.store = configureStore(appReducer);
 
-    req.flux.getActions('user').getUserInfo()
-        .then(req.flux.getActions('user').getUserMemberships)
-        .then(function(result) {
-            var userStore = req.flux.getStore('user');
+    let a0 = getUserInfo();
+    req.store.dispatch(a0);
 
-            if (userStore.isOfficial() == 0 && req.url != '/activist') {
+    a0.payload.promise
+        .then(function(result) {
+            let a1 = getUserMemberships();
+            req.store.dispatch(a1);
+            return a1.payload.promise;
+        })
+        .then(function(result) {
+            let userStore = req.store.getState().user;
+
+            if (!userStore.memberships.length && req.url != '/activist') {
                 // This user does not have any official roles. Redirect to
                 // page which explains why they can't use organizer app.
                 res.redirect(303, '/activist');

@@ -1,3 +1,8 @@
+// Flux actions related to users
+export const GET_USER_INFO = 'GET_USER_INFO';
+export const GET_USER_MEMBERSHIPS = 'GET_USER_MEMBERSHIPS';
+export const SET_ACTIVE_MEMBERSHIP = 'SET_ACTIVE_MEMBERSHIP';
+
 // Redux actions related to people
 export const CREATE_PERSON = 'CREATE_PERSON';
 export const RETRIEVE_PEOPLE = 'RETRIEVE_PEOPLE';

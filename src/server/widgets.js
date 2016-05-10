@@ -13,7 +13,7 @@ widgets.get('/organizer_notes', function(req, res) {
 });
 
 widgets.get('/today', function(req, res) {
-    const orgId = req.flux.getStore('org').getActiveId();
+    let orgId = req.store.getState().org.activeId;
 
     const weatherPromise = new Promise(function(resolve, reject) {
         // TODO: Don't hardcode to Malmo

@@ -70,7 +70,7 @@ function renderReactPage(Component, req, res) {
 }
 
 app.get('/activist', function(req, res, next) {
-    if (req.flux.getStore('user').isOfficial()) {
+    if (req.store.getState().user.memberships.length) {
         // Officials should not be able to see the message to non-officials,
         // which would be very confusing.
         res.redirect(303, '/');

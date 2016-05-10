@@ -10,6 +10,7 @@ import locations from './locations';
 import org from './org';
 import people from './people';
 import search from './search';
+import user from './user';
 
 
 export const appReducer = combineReducers({
@@ -21,6 +22,7 @@ export const appReducer = combineReducers({
     org,
     people,
     search,
+    user,
 });
 
 let middleware = [

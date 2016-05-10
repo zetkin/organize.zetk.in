@@ -1,14 +1,11 @@
 import Flummox from 'flummox';
 import { Dispatcher } from 'flux';
 
-import OrgStore from './stores/org';
 import ParticipantActions from './actions/participant';
 import ParticipantStore from './stores/participant';
 import QueryActions from './actions/query';
 import QueryStore from './stores/query';
 import ReminderActions from './actions/reminder';
-import UserActions from './actions/user';
-import UserStore from './stores/user';
 
 
 export default class QueuedDispatcher extends Dispatcher {
@@ -51,11 +48,8 @@ export default class Flux extends Flummox {
         this.createActions('participant', ParticipantActions, this);
         this.createActions('query', QueryActions);
         this.createActions('reminder', ReminderActions, this);
-        this.createActions('user', UserActions);
 
-        this.createStore('org', OrgStore, this);
         this.createStore('participant', ParticipantStore, this);
         this.createStore('query', QueryStore, this);
-        this.createStore('user', UserStore, this);
     }
 }
