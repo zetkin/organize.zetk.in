@@ -1,13 +1,15 @@
 import React from 'react';
-import Router from 'react-router-component';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { connect } from 'react-redux';
+import Router from 'react-router-component';
 
 import FluxComponent from './FluxComponent';
 import Header from './header/Header';
 import Dashboard from './dashboard/Dashboard';
 import NotFoundPage from './NotFoundPage';
 import KeyboardShortcuts from './KeyboardShortcuts';
+import { clearSearch } from '../actions/search';
 
 import CampaignSection from './sections/campaign/CampaignSection';
 import DialogSection from './sections/dialog/DialogSection';
@@ -15,6 +17,7 @@ import PeopleSection from './sections/people/PeopleSection';
 import MapsSection from './sections/maps/MapsSection';
 
 
+@connect(state => state)
 @DragDropContext(HTML5Backend)
 export default class App extends FluxComponent {
     render() {
@@ -74,7 +77,7 @@ export default class App extends FluxComponent {
     }
 
     onNavigation() {
-        this.getActions('search').clearSearch();
+        this.props.dispatch(clearSearch());
     }
 
     onSectionShortcut(path) {

@@ -44,3 +44,11 @@ export const HIGHLIGHT_ACTION_LOCATION_PHASE = 'HIGHLIGHT_ACTION_LOCATION_PHASE'
 // Flux actions related to dashboard
 export const LOAD_WIDGET_DATA = 'LOAD_WIDGET_DATA';
 export const MOVE_WIDGET = 'MOVE_WIDGET';
+
+// Flux actions related to search
+export const SEARCH = 'SEARCH';
+export const BEGIN_SEARCH = 'BEGIN_SEARCH';
+export const SEARCH_MATCH_FOUND = 'SEARCH_MATCH_FOUND';
+export const CHANGE_SEARCH_SCOPE = 'CHANGE_SEARCH_SCOPE';
+export const END_SEARCH = 'END_SEARCH';
+export const CLEAR_SEARCH = 'CLEAR_SEARCH';

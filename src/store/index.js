@@ -8,6 +8,7 @@ import dashboard from './dashboard';
 import locations from './locations';
 import org from './org';
 import people from './people';
+import search from './search';
 
 
 export const appReducer = combineReducers({
@@ -17,6 +18,7 @@ export const appReducer = combineReducers({
     locations,
     org,
     people,
+    search,
 });
 
 let middleware = [
