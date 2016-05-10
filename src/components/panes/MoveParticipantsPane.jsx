@@ -6,19 +6,19 @@ import PersonForm from '../forms/PersonForm';
 import Person from '../misc/elements/Person';
 import Action from '../misc/elements/Action';
 import { getListItemById } from '../../utils/store';
+import {
+    executeActionParticipantMoves,
+    undoActionParticipantMoves,
+} from '../../actions/participant';
 
 
 @connect(state => state)
 export default class MoveParticipantsPane extends PaneBase {
-    componentDidMount() {
-        this.listenTo('participant', this.forceUpdate);
-    }
-
     getRenderData() {
-        var participantStore = this.getStore('participant');
+        var participantStore = this.props.participants;
 
         return {
-            moves: participantStore.getMoves()
+            moves: participantStore.moves,
         };
     }
 
@@ -65,31 +65,25 @@ export default class MoveParticipantsPane extends PaneBase {
     }
 
     onMoveConfirm(move) {
-        const participantActions = this.getActions('participant');
-
-        participantActions.executeMoves([ move ]);
+        this.props.dispatch(executeActionParticipantMoves([ move ]));
     }
 
     onMoveCancel(move) {
-        const participantActions = this.getActions('participant');
-
-        participantActions.undoMoves([ move ]);
+        this.props.dispatch(undoActionParticipantMoves([ move ]));
     }
 
     onExecuteClick(ev) {
-        const participantActions = this.getActions('participant');
-        const participantStore = this.getStore('participant');
-        const moves = participantStore.getMoves();
+        let participantStore = this.props.participants;
+        let moves = participantStore.moves;
 
-        participantActions.executeMoves(moves);
+        this.props.dispatch(executeActionParticipantMoves(moves));
     }
 
     onResetClick(ev) {
-        const participantActions = this.getActions('participant');
-        const participantStore = this.getStore('participant');
-        const moves = participantStore.getMoves();
+        let participantStore = this.props.participants;
+        let moves = participantStore.moves;
 
-        participantActions.undoMoves(moves);
+        this.props.dispatch(undoActionParticipantMoves(moves));
 
         this.closePane();
     }

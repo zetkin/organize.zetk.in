@@ -8,6 +8,7 @@ import Avatar from '../misc/Avatar';
 import Person from '../misc/elements/Person';
 import Action from '../misc/elements/Action';
 import { retrieveAction } from '../../actions/action';
+import { retrieveActionParticipants } from '../../actions/participant';
 import { getListItemById } from '../../utils/store';
 
 
@@ -23,17 +24,15 @@ export default class ActionReminderPane extends PaneBase {
     }
 
     componentDidMount() {
-        this.listenTo('participant', this.forceUpdate);
-
-        const actionId = this.getParam(0);
-        this.getActions('participant').retrieveParticipants(actionId);
+        let actionId = this.getParam(0);
+        this.props.dispatch(retrieveActionParticipants(actionId));
         this.props.dispatch(retrieveAction(actionId));
     }
 
     getRenderData() {
-        const aid = this.getParam(0);
-        const participantStore = this.getStore('participant');
-        const participants = participantStore.getParticipants(aid) || [];
+        let aid = this.getParam(0);
+        let participantStore = this.props.participants;
+        let participants = participantStore.byAction[aid] || [];
 
         return {
             actionItem: getListItemById(this.props.actions.actionList, aid),

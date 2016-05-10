@@ -2,23 +2,18 @@ import {
     createList,
     createListItems,
     updateOrAddListItem,
+    updateOrAddListItems,
     removeListItem,
 } from '../utils/store';
 
-import {
-    CREATE_PERSON,
-    RETRIEVE_PEOPLE,
-    RETRIEVE_PERSON,
-    UPDATE_PERSON,
-    DELETE_PERSON,
-} from '../actions';
+import * as types from '../actions';
 
 
 export default function people(state = null, action) {
     let person;
 
     switch (action.type) {
-        case RETRIEVE_PEOPLE + '_PENDING':
+        case types.RETRIEVE_PEOPLE + '_PENDING':
             return Object.assign({}, state, {
                 personList: Object.assign({}, state.personList, {
                     isPending: true,
@@ -26,7 +21,7 @@ export default function people(state = null, action) {
                 }),
             });
 
-        case RETRIEVE_PEOPLE + '_FULFILLED':
+        case types.RETRIEVE_PEOPLE + '_FULFILLED':
             return Object.assign({}, state, {
                 personList: {
                     isPending: false,
@@ -35,7 +30,7 @@ export default function people(state = null, action) {
                 }
             });
 
-        case RETRIEVE_PEOPLE + '_REJECTED':
+        case types.RETRIEVE_PEOPLE + '_REJECTED':
             return Object.assign({}, state, {
                 personList: {
                     isPending: false,
@@ -44,23 +39,30 @@ export default function people(state = null, action) {
                 }
             });
 
-        case RETRIEVE_PERSON + '_PENDING':
+        case types.RETRIEVE_ACTION_PARTICIPANTS + '_FULFILLED':
+            let people = action.payload.data.data;
+            return Object.assign({}, state, {
+                personList: updateOrAddListItems(state.personList,
+                    people, { isPending: false, error: null }),
+            });
+
+        case types.RETRIEVE_PERSON + '_PENDING':
             person = { id: action.meta.id };
             return Object.assign({}, state, {
                 personList: updateOrAddListItem(state.personList,
                         person.id, person, { pending: true }),
             });
 
-        case CREATE_PERSON + '_FULFILLED':
-        case UPDATE_PERSON + '_FULFILLED':
-        case RETRIEVE_PERSON + '_FULFILLED':
+        case types.CREATE_PERSON + '_FULFILLED':
+        case types.UPDATE_PERSON + '_FULFILLED':
+        case types.RETRIEVE_PERSON + '_FULFILLED':
             person = action.payload.data.data;
             return Object.assign({}, state, {
                 personList: updateOrAddListItem(state.personList,
                         person.id, person, { pending: false, error: null }),
             });
 
-        case DELETE_PERSON + '_FULFILLED':
+        case types.DELETE_PERSON + '_FULFILLED':
             return Object.assign({}, state, {
                 personList: removeListItem(state.personList, action.meta.id),
             });

@@ -5,6 +5,7 @@ import { DropTarget } from 'react-dnd';
 import FluxComponent from '../../FluxComponent';
 import ParticipantList from './ParticipantList';
 import ContactSlot from './ContactSlot';
+import { retrieveActionParticipants } from '../../../actions/participant';
 
 
 const actionTarget = {
@@ -74,7 +75,7 @@ export default class ActionListItem extends FluxComponent {
         var action = this.props.action;
 
         if (!this.props.participants) {
-            this.getActions('participant').retrieveParticipants(action.id);
+            this.props.dispatch(retrieveActionParticipants(action.id));
         }
     }
 

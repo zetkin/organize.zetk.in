@@ -43,6 +43,17 @@ export function updateOrAddListItem(list, id, newData, meta) {
     });
 }
 
+export function updateOrAddListItems(list, newItems, meta) {
+    // TODO: This can be more efficient
+    let newList = list;
+    for (let i = 0; i < newItems.length; i++) {
+        newList = updateOrAddListItem(list,
+            newItems[i].id, newItems[i], meta);
+    }
+
+    return newList;
+}
+
 
 export function getListItemById(list, id) {
     if (!list.items)

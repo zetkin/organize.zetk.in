@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import PaneBase from './PaneBase';
 import ActionList from '../misc/actionlist/ActionList';
 import { retrieveActions } from '../../actions/action';
+import { moveActionParticipant } from '../../actions/participant';
 
 
 @connect(state => state)
@@ -34,6 +35,7 @@ export default class ActionDayPane extends PaneBase {
                 onClick={ this.onClickNext.bind(this) }/>,
             <ActionList key="actionList" actions={ actions }
                 dispatch={ this.props.dispatch }
+                participants={ this.props.participants }
                 onMoveParticipant={ this.onMoveParticipant.bind(this) }
                 onActionOperation={ this.onActionOperation.bind(this) }/>
         ];
@@ -56,13 +58,10 @@ export default class ActionDayPane extends PaneBase {
     }
 
     onMoveParticipant(action, person, oldAction) {
-        this.getActions('participant').moveParticipant(
-            person.id, oldAction.id, action.id);
+        this.props.dispatch(moveActionParticipant(
+            person.id, oldAction.id, action.id));
 
-        const participantStore = this.getStore('participant');
-        const moves = participantStore.getMoves();
-
-        if (moves.length) {
+        if (this.props.participants.moves.length) {
             this.pushPane('moveparticipants');
         }
     }
