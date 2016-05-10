@@ -7,7 +7,7 @@ import TextArea from '../forms/inputs/TextArea';
 import Avatar from '../misc/Avatar';
 import Person from '../misc/elements/Person';
 import Action from '../misc/elements/Action';
-import { retrieveAction } from '../../actions/action';
+import { retrieveAction, sendActionReminders } from '../../actions/action';
 import { retrieveActionParticipants } from '../../actions/participant';
 import { getListItemById } from '../../utils/store';
 
@@ -92,8 +92,8 @@ export default class ActionReminderPane extends PaneBase {
 
     onRemindersSubmit(ev) {
         ev.preventDefault();
-        const actionId = this.getParam(0);
-        this.getActions('reminder').sendAllActionReminders(actionId);
+        let actionId = this.getParam(0);
+        this.props.dispatch(sendActionReminders(actionId));
     }
 
     onPersonClick(person) {

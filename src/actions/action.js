@@ -55,6 +55,20 @@ export function createAction(campaignId, data) {
     }
 }
 
+export function sendActionReminders(actionId) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.SEND_ACTION_REMINDERS,
+            meta: { actionId },
+            payload: {
+                promise: Z.resource('orgs', orgId,
+                    'actions', actionId, 'reminders').post()
+            }
+        });
+    };
+}
+
 export function highlightActions(actionIds) {
     return {
         type: types.HIGHLIGHT_ACTIONS,

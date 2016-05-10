@@ -1,8 +1,6 @@
 import Flummox from 'flummox';
 import { Dispatcher } from 'flux';
 
-import ReminderActions from './actions/reminder';
-
 
 export default class QueuedDispatcher extends Dispatcher {
     constructor() {
@@ -40,7 +38,5 @@ export default class Flux extends Flummox {
         super();
 
         this.dispatcher = new QueuedDispatcher();
-
-        this.createActions('reminder', ReminderActions, this);
     }
 }

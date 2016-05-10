@@ -52,6 +52,13 @@ export default function participants(state = null, action) {
                 byAction: byAction,
             });
 
+        case types.SEND_ACTION_REMINDERS + '_FULFILLED':
+            actionId = action.meta.actionId;
+            byAction = Object.assign({}, state.byAction);
+            byAction[actionId] = byAction[actionId].map(p =>
+                Object.assign({}, p, { reminder_sent: true }));
+            return Object.assign({}, state, { byAction });
+
         default:
             return state || {
                 byAction: {},
