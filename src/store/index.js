@@ -4,13 +4,19 @@ import thunk from 'redux-thunk';
 
 import activities from './activities';
 import campaigns from './campaigns';
+import dashboard from './dashboard';
 import locations from './locations';
 import org from './org';
 import people from './people';
 
 
 export const appReducer = combineReducers({
-    activities, campaigns, locations, org, people
+    activities,
+    campaigns,
+    dashboard,
+    locations,
+    org,
+    people,
 });
 
 let middleware = [

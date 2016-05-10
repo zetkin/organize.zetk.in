@@ -1,29 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import FluxComponent from '../FluxComponent';
 import Footer from './Footer';
 import Shortcut from './Shortcut';
 import DraggableWidget from './widgets/DraggableWidget';
-import ActionResponseWidget from './widgets/ActionResponseWidget';
-import OrganizerNotesWidget from './widgets/OrganizerNotesWidget';
-import TodayWidget from './widgets/TodayWidget';
-import UpcomingActionsWidget from './widgets/UpcomingActionsWidget';
+import Widget from './widgets/Widget';
+import { moveWidget } from '../../actions/dashboard';
 
 
+@connect(state => state)
 export default class Dashboard extends FluxComponent {
-    componentDidMount() {
-        this.listenTo('dashboard', this.forceUpdate);
-    }
-
     render() {
-        var i;
-        var dashboardStore = this.getStore('dashboard');
-        var shortcuts = dashboardStore.getShortcuts();
-        var widgets = dashboardStore.getWidgets();
+        let dashboardStore = this.props.dashboard;
+        let shortcuts = dashboardStore.shortcuts;
+        let widgets = dashboardStore.widgets;
 
-        var widgetElements = [];
-        var favoriteElements = [];
-        var shortcutElements = [];
+        let widgetElements = [];
+        let favoriteElements = [];
+        let shortcutElements = [];
 
         // TODO: Move to localization
         const labels = {
@@ -38,7 +33,7 @@ export default class Dashboard extends FluxComponent {
             'settings': 'Settings'
         };
 
-        for (i = 0; i < shortcuts.length; i++) {
+        for (let i = 0; i < shortcuts.length; i++) {
             let shortcut = shortcuts[i];
             let classes = 'Dashboard-shortcut Dashboard-shortcut-' + shortcut;
             let label = labels[shortcut];
@@ -57,33 +52,13 @@ export default class Dashboard extends FluxComponent {
             }
         }
 
-        for (i = 0; i < widgets.length; i++) {
-            var WidgetClass = null;
+        for (let i = 0; i < widgets.length; i++) {
             var widgetConfig = widgets[i];
-
-            switch (widgetConfig.type) {
-                case 'action_response':
-                    WidgetClass = ActionResponseWidget;
-                    break;
-                case 'organizer_notes':
-                    WidgetClass = OrganizerNotesWidget;
-                    break;
-                case 'today':
-                    WidgetClass = TodayWidget;
-                    break;
-                case 'upcoming_actions':
-                    WidgetClass = UpcomingActionsWidget;
-                    break;
-
-                default:
-                    throw 'Unknown widget type: ' + widgetConfig.type;
-                    break;
-            }
 
             widgetElements.push(
                 <DraggableWidget key={ widgetConfig.type } config={ widgetConfig }
                     onMoveWidget={ this.onMoveWidget.bind(this) }>
-                    <WidgetClass config={ widgetConfig }/>
+                    <Widget config={ widgetConfig }/>
                 </DraggableWidget>
             );
         }
@@ -106,6 +81,6 @@ export default class Dashboard extends FluxComponent {
     }
 
     onMoveWidget(widget, before) {
-        this.getActions('dashboard').moveWidget(widget.type, before.type);
+        this.props.dispatch(moveWidget(widget.type, before.type));
     }
 }

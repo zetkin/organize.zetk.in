@@ -3,8 +3,6 @@ import { Dispatcher } from 'flux';
 
 import ActionActions from './actions/action';
 import ActionStore from './stores/action';
-import DashboardActions from './actions/dashboard';
-import DashboardStore from './stores/dashboard';
 import OrgStore from './stores/org';
 import ParticipantActions from './actions/participant';
 import ParticipantStore from './stores/participant';
@@ -55,7 +53,6 @@ export default class Flux extends Flummox {
         this.dispatcher = new QueuedDispatcher();
 
         this.createActions('action', ActionActions, this);
-        this.createActions('dashboard', DashboardActions);
         this.createActions('participant', ParticipantActions, this);
         this.createActions('query', QueryActions);
         this.createActions('reminder', ReminderActions, this);
@@ -63,7 +60,6 @@ export default class Flux extends Flummox {
         this.createActions('user', UserActions);
 
         this.createStore('action', ActionStore, this);
-        this.createStore('dashboard', DashboardStore, this);
         this.createStore('org', OrgStore, this);
         this.createStore('participant', ParticipantStore, this);
         this.createStore('query', QueryStore, this);
