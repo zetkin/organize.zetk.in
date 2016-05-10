@@ -4,7 +4,6 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux';
 import Router from 'react-router-component';
 
-import FluxComponent from './FluxComponent';
 import Header from './header/Header';
 import Dashboard from './dashboard/Dashboard';
 import NotFoundPage from './NotFoundPage';
@@ -19,12 +18,8 @@ import MapsSection from './sections/maps/MapsSection';
 
 @connect(state => state)
 @DragDropContext(HTML5Backend)
-export default class App extends FluxComponent {
+export default class App extends React.Component {
     render() {
-        var json = {
-            __html: this.context.flux.serialize()
-        };
-
         let stateJson = JSON.stringify(this.props.initialState);
 
         return (
@@ -65,9 +60,6 @@ export default class App extends FluxComponent {
                             onSectionShortcut={ this.onSectionShortcut.bind(this) }
                             onSubSectionShortcut={ this.onSubSectionShortcut.bind(this) }/>
                     </div>
-                    <script type="text/json"
-                        id="bootstrap-data"
-                        dangerouslySetInnerHTML={ json }/>
                     <script type="text/json"
                         id="App-initialState"
                         dangerouslySetInnerHTML={{ __html: stateJson }}/>

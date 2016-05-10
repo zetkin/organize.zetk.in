@@ -1,6 +1,5 @@
 import React from 'react';
 
-import FluxComponent from '../FluxComponent';
 import Form from './Form';
 import IntInput from './inputs/IntInput';
 import DateInput from './inputs/DateInput';
@@ -12,7 +11,7 @@ import { retrieveCampaigns } from '../../actions/campaign';
 import { retrieveActivities } from '../../actions/activity';
 
 
-export default class ActionForm extends FluxComponent {
+export default class ActionForm extends React.Component {
     componentDidMount() {
         this.props.dispatch(retrieveCampaigns());
         this.props.dispatch(retrieveLocations());

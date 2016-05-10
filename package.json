@@ -22,8 +22,6 @@
     "eventemitter3": "^0.1.6",
     "express": "^4.12.3",
     "express-ws": "^0.2.6",
-    "flummox": "^3.5.0",
-    "flux": "^2.0.3",
     "merge": "^1.2.0",
     "moment": "^2.10.6",
     "react": "^15.0.1",

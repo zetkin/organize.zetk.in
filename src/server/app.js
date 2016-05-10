@@ -1,4 +1,3 @@
-import FluxComponent from 'flummox/component';
 import cookieParser from 'cookie-parser';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
@@ -56,11 +55,9 @@ function renderReactPage(Component, req, res) {
             path: req.path,
         };
 
-        // TODO: Get rid of FluxComponent
         var html = ReactDOMServer.renderToString(
             React.createElement(Provider, { store: req.store },
-                React.createElement(FluxComponent, { flux: req.flux },
-                    PageFactory(props))));
+                PageFactory(props)));
 
         res.send(html);
     }

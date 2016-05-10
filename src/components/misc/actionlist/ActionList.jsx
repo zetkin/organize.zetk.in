@@ -1,7 +1,6 @@
 import React from 'react';
 
 
-import FluxComponent from '../../FluxComponent';
 import ActionListItem from './ActionListItem';
 import { updateAction } from '../../../actions/action';
 import { addActionParticipant } from '../../../actions/participant';

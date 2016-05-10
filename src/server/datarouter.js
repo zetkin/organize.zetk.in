@@ -8,13 +8,11 @@ import { retrieveCampaigns, retrieveCampaign } from '../actions/campaign';
 import { retrieveLocations, retrieveLocation } from '../actions/location';
 import { retrievePeople, retrievePerson } from '../actions/person';
 import { getUserInfo, getUserMemberships } from '../actions/user';
-import Flux from '../flux';
 
 
 var router = express.Router();
 
 router.all(/.*/, function(req, res, next) {
-    req.flux = new Flux(); // TODO: Remove
     req.store = configureStore(appReducer);
 
     let a0 = getUserInfo();

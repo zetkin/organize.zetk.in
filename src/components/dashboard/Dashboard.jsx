@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import FluxComponent from '../FluxComponent';
 import Footer from './Footer';
 import Shortcut from './Shortcut';
 import DraggableWidget from './widgets/DraggableWidget';
@@ -10,7 +9,7 @@ import { moveWidget } from '../../actions/dashboard';
 
 
 @connect(state => state)
-export default class Dashboard extends FluxComponent {
+export default class Dashboard extends React.Component {
     render() {
         let dashboardStore = this.props.dashboard;
         let shortcuts = dashboardStore.shortcuts;

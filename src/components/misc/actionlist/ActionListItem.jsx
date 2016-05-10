@@ -2,7 +2,6 @@ import React from 'react';
 import cx from 'classnames';
 import { DropTarget } from 'react-dnd';
 
-import FluxComponent from '../../FluxComponent';
 import ParticipantList from './ParticipantList';
 import ContactSlot from './ContactSlot';
 import { retrieveActionParticipants } from '../../../actions/participant';
@@ -62,7 +61,7 @@ function collectContact(connect, monitor) {
 
 @DropTarget('person', actionTarget, collectParticipant)
 @DropTarget('person', contactTarget, collectContact)
-export default class ActionListItem extends FluxComponent {
+export default class ActionListItem extends React.Component {
     constructor(props) {
         super(props);
 

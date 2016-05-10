@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import FluxComponent from '../FluxComponent';
 import OrgPicker from './OrgPicker';
 import Avatar from '../misc/Avatar';
 
 
 @connect(state => state)
-export default class UserMenu extends FluxComponent {
+export default class UserMenu extends React.Component {
     render() {
         let userStore = this.props.user;
 

@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 
-import FluxComponent from '../../FluxComponent';
 import ScopeSelect from './ScopeSelect';
 import ActionDayMatch from './ActionDayMatch';
 import CampaignMatch from './CampaignMatch';
@@ -15,7 +14,7 @@ import { beginSearch, changeSearchScope, clearSearch, endSearch, search
 
 
 @connect(state => state)
-export default class Search extends FluxComponent {
+export default class Search extends React.Component {
     constructor(props) {
         super(props);
 
