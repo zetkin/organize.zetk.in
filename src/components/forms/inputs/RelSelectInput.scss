@@ -22,7 +22,7 @@
 
         li {
             cursor: pointer;
-            padding: 0.5em 2em;
+            padding: 0.5em 1em 0.5em 2em;
             font-size: 1.1em;
 
             &::before {
@@ -42,6 +42,9 @@
                     content: "\f00c";
                     font: normal normal normal 10px FontAwesome;
                 }
+                .RelSelectInput-editLink {
+                    display: block;
+                }
             }
 
             &.selected {
@@ -55,6 +58,13 @@
             .RelSelectInput-editLink {
                 float: right;
                 text-decoration: underline;
+                color: #888;
+                text-align: right;
+                width: 30px;
+                display: none;
+                &:hover {
+                    color: darken(#888, 30)
+                }
             }
         }
     }
