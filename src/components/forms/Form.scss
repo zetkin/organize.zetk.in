@@ -1,5 +1,7 @@
 .Form {
     // TODO: This should all probably be moved to Input classes
+    color: lighten($c-text, 40);
+
     input,
     input[type="text"],
     input[type="email"],
@@ -22,5 +24,11 @@
             border: 1px solid $c-ui-focus;
             padding: calc(0.25em - 1px);
         }
+    }
+
+    label {
+        margin: 0 0 8px 0;
+        display: inline-block;
+        font-size: 1.25em;
     }
 }
