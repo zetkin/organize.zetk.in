@@ -1,25 +1,37 @@
-import { Actions } from 'flummox';
+import * as types from '.';
 
 
-export default class QueryActions extends Actions {
-    // TODO: Remove once platform supports queries
-    loadQueriesFromLocalStorage() {
-        return true;
-    }
+// TODO: Implement API calls for all of these
 
-    createQuery(title) {
-        return title;
-    }
+export function retrieveQueries() {
+    return {
+        type: types.RETRIEVE_QUERIES,
+    };
+}
 
-    updateFilter(queryId, filterIndex, filterConfig) {
-        return { queryId, filterIndex, filterConfig };
-    }
+export function createQuery(title) {
+    return {
+        type: types.CREATE_QUERY,
+    };
+}
 
-    addFilter(queryId, filterType) {
-        return { queryId, filterType };
-    }
+export function addQueryFilter(queryId, filterType) {
+    return {
+        type: types.ADD_QUERY_FILTER,
+        payload: { filterType },
+    };
+}
 
-    removeFilter(queryId, filterIndex) {
-        return { queryId, filterIndex };
-    }
+export function updateQueryFilter(queryId, filterIndex, filterConfig) {
+    return {
+        type: types.UPDATE_QUERY_FILTER,
+        payload: { queryId, filterIndex, filterConfig },
+    };
+}
+
+export function removeQueryFilter(queryId, filterIndex) {
+    return {
+        type: types.REMOVE_QUERY_FILTER,
+        payload: { queryId, filterIndex }
+    };
 }

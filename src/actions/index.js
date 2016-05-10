@@ -65,3 +65,10 @@ export const SEARCH_MATCH_FOUND = 'SEARCH_MATCH_FOUND';
 export const CHANGE_SEARCH_SCOPE = 'CHANGE_SEARCH_SCOPE';
 export const END_SEARCH = 'END_SEARCH';
 export const CLEAR_SEARCH = 'CLEAR_SEARCH';
+
+// Flux actions related to queries
+export const RETRIEVE_QUERIES = 'RETRIEVE_QUERIES';
+export const CREATE_QUERY = 'CREATE_QUERY';
+export const UPDATE_QUERY_FILTER = 'UPDATE_FILTER';
+export const ADD_QUERY_FILTER = 'ADD_QUERY_FILTER';
+export const REMOVE_QUERY_FILTER = 'REMOVE_QUERY_FILTER';

@@ -1,8 +1,6 @@
 import Flummox from 'flummox';
 import { Dispatcher } from 'flux';
 
-import QueryActions from './actions/query';
-import QueryStore from './stores/query';
 import ReminderActions from './actions/reminder';
 
 
@@ -43,9 +41,6 @@ export default class Flux extends Flummox {
 
         this.dispatcher = new QueuedDispatcher();
 
-        this.createActions('query', QueryActions);
         this.createActions('reminder', ReminderActions, this);
-
-        this.createStore('query', QueryStore, this);
     }
 }

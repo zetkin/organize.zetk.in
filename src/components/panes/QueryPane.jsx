@@ -6,13 +6,16 @@ import PeopleList from '../misc/peoplelist/PeopleList';
 
 export default class QueryPane extends PaneBase {
     getRenderData() {
-        const queryStore = this.getStore('query');
+        let queryList = this.props.queries.queryList;
+        let queryId = this.getParam(0);
 
-        return queryStore.getQuery(this.getParam(0));
+        return {
+            queryItem: getListItemById(queryList, queryId)
+        };
     }
 
     getPaneTitle(data) {
-        return data? data.title : '';
+        return data.queryItem? data.queryItem.data.title : '';
     }
 
     getPaneSubTitle(data) {
@@ -22,15 +25,8 @@ export default class QueryPane extends PaneBase {
         );
     }
 
-    componentDidMount() {
-        this.listenTo('person', this.forceUpdate);
-        this.listenTo('query', this.forceUpdate);
-
-        // TODO: Execute query on server
-    }
-
     renderPaneContent(data) {
-        if (!data) {
+        if (!data.queryItem) {
             return null;
         }
 

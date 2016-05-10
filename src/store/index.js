@@ -10,6 +10,7 @@ import locations from './locations';
 import org from './org';
 import participants from './participants';
 import people from './people';
+import queries from './queries';
 import search from './search';
 import user from './user';
 
@@ -23,6 +24,7 @@ export const appReducer = combineReducers({
     org,
     participants,
     people,
+    queries,
     search,
     user,
 });

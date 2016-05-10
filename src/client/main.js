@@ -46,7 +46,4 @@ window.onload = function() {
     ReactDOM.render(React.createElement(Provider, { store: store },
         React.createElement(FluxComponent, { flux: flux },
             React.createElement(App, props))), document);
-
-    // TODO: Remove once stored queries are on server
-    flux.getActions('query').loadQueriesFromLocalStorage();
 };

@@ -1,27 +1,31 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import { resolveFilterComponent } from '../filters';
+import { getListItemById } from '../../utils/store';
+import { addQueryFilter, updateQueryFilter, removeQueryFilter
+    } from '../../actions/query';
 
 
+@connect(state => state)
 export default class QueryPane extends PaneBase {
     getRenderData() {
-        const queryStore = this.getStore('query');
-        const query = queryStore.getQuery(this.getParam(0));
+        let queryList = this.props.queries.queryList;
+        let queryId = this.getParam(0);
 
-        return query || { filters: [] };
+        return {
+            queryItem: getListItemById(queryList, queryId)
+        };
     }
 
     getPaneTitle(data) {
-        return data.title? ('Edit query: ' + data.title) : 'Edit query';
-    }
-
-    componentDidMount() {
-        this.listenTo('query', this.forceUpdate);
+        return data.queryItem?
+            ('Edit query: ' + data.queryItem.data.title) : 'Edit query';
     }
 
     renderPaneContent(data) {
-        const filters = data.filters;
+        const filters = data.queryItem? data.queryItem.data.filters : [];
         const filterElements = [];
 
         for (let i = 0; i < filters.length; i++) {
@@ -59,19 +63,18 @@ export default class QueryPane extends PaneBase {
     }
 
     onFilterTypeSelect(ev) {
-        const filterType = ev.target.value;
-        const queryId = this.getParam(0);
-
-        this.getActions('query').addFilter(queryId, filterType);
+        let filterType = ev.target.value;
+        let queryId = this.getParam(0);
+        this.props.dispatch(addQueryFilter(queryId, filterType));
     }
 
     onFilterChange(filterIndex, config) {
-        const queryId = this.getParam(0);
-        this.getActions('query').updateFilter(queryId, filterIndex, config);
+        let queryId = this.getParam(0);
+        this.props.dispatch(updateQueryFilter(queryId, filterIndex, config));
     }
 
     onFilterRemove(filterIndex) {
-        const queryId = this.getParam(0);
-        this.getActions('query').removeFilter(queryId, filterIndex);
+        let queryId = this.getParam(0);
+        this.props.dispatch(removeQueryFilter(queryId, filterIndex));
     }
 }
