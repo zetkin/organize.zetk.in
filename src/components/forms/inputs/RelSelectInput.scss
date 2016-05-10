@@ -2,28 +2,20 @@
     position: relative;
 
     input[type=text] {
-        width: 100%;
-        height: 25px;
-        margin: 0;
-        border: 1px solid #eee;
-        background-color: white;
-
-        &:focus {
-            border: 1px solid #ddd;
-        }
+        @include input-base;
     }
 
     ul {
         position: absolute;
-        top: 25px;
+        top: 32px;
         left: 0;
         right: 0;
         z-index: 2000;
 
         display: none;
         background-color: white;
-        box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
-
+        border: 1px solid #eaeaea;
+        border-radius: 0 0 2px 2px;
         max-height: 10em;
         overflow-y: scroll;
         overflow-x: hidden;
@@ -31,6 +23,7 @@
         li {
             cursor: pointer;
             padding: 0.5em 2em;
+            font-size: 1.1em;
 
             &::before {
                 content: "";
@@ -42,7 +35,7 @@
             }
 
             &:hover, &.focused {
-                background-color: #eee;
+                background-color: darken(white, 5);
 
                 &::before {
                     color: #ddd;
@@ -52,8 +45,6 @@
             }
 
             &.selected {
-                font-weight: bold;
-
                 &::before {
                     color: #2a0;
                     content: "\f00c";
@@ -69,14 +60,31 @@
     }
 
     &.focused {
-        input {
-            // Input over list to obscure top shadow
-            position: relative;
-            z-index: 2001;
-        }
-
         ul {
             display: block;
         }
+    }
+
+    &:hover, &.focused {
+        &:after {
+            background-color: darken(#eee, 3);
+        }
+    }
+
+    &:after {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-color: #eee;
+        top: 1px;
+        right: 1px;
+        content: "\f0d7";
+        font: normal normal normal 10px FontAwesome;
+        color: #888;
+        text-align: center;
+        border-radius: 0 2px 2px 0;
+        padding: 11px;
+        z-index: inherit;
+        pointer-events: none
     }
 }
