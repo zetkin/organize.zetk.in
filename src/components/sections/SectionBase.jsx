@@ -245,4 +245,6 @@ export default class SectionBase extends React.Component {
     }
 }
 
-SectionBase.contextTypes.router = React.PropTypes.any
+SectionBase.contextTypes = {
+    router: React.PropTypes.any
+};
