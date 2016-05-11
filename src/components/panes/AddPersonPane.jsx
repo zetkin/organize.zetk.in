@@ -1,9 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import PersonForm from '../forms/PersonForm';
+import { createPerson } from '../../actions/person';
 
 
+@connect(state => state)
 export default class AddPersonPane extends PaneBase {
     getPaneTitle(data) {
         return "Add person";
@@ -22,8 +25,8 @@ export default class AddPersonPane extends PaneBase {
         var form = this.refs.personForm;
         var values = form.getValues();
 
-        this.getActions('person')
-            .createPerson(values)
-            .then(this.closePane.bind(this));
+        this.props.dispatch(createPerson(values));
+
+        // TODO: Somehow navigate to new person
     }
 }

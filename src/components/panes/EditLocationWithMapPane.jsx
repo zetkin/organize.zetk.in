@@ -1,37 +1,39 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import LocationForm from '../forms/LocationForm';
 import LocationMap from '../misc/LocationMap';
+import { getListItemById } from '../../utils/store';
+import { retrieveLocation, updateLocation, deleteLocation,
+    setPendingLocation, clearPendingLocation } from '../../actions/location';
 
 
+@connect(state => state)
 export default class LocationPane extends PaneBase {
     componentDidMount() {
-        this.listenTo('location', this.forceUpdate);
+        let locId = this.props.params[0];
+        let locItem = getListItemById(this.props.locations.locationList, locId);
 
-        const locationId = this.props.params[0];
-        const loc = this.getStore('location').getLocation(locationId);
-
-        if (loc) {
-            this.getActions('location').setPendingLocation(loc);
+        if (locItem) {
+            this.props.dispatch(setPendingLocation(locItem.data));
         }
         else {
-            this.getActions('location').retrieveLocation(locationId);
+            this.props.dispatch(retrieveLocation(locId));
         }
     }
 
     getRenderData() {
-        var locationStore = this.getStore('location');
-        var locationId = this.props.params[0];
+        let locId = this.props.params[0];
 
         return {
-            loc: this.getStore('location').getLocation(locationId)
+            locItem: getListItemById(this.props.locations.locationList, locId),
         }
     }
 
     getPaneTitle(data) {
-        if (data.loc) {
-            return data.loc.title;
+        if (data.locItem) {
+            return data.locItem.data.title;
         }
         else {
             return null;
@@ -39,24 +41,25 @@ export default class LocationPane extends PaneBase {
     }
 
     renderPaneContent(data) {
+        if (data.locItem) {
+            let locationStore = this.props.locations;
+            let pendingLocation = data.locItem.data;
+            let locations = locationStore.locationList.items.map(i => i.data);
 
-        if (data.loc) {
-            var locationStore = this.getStore('location');
-            var pendingLocation = locationStore.getPendingLocation();
-            var style = {
+            let style = {
                 position: 'relative',
                 height: '300px',
                 width: '100%'
             }
-            return [
 
+            return [
                 <LocationMap
                         style={ style }
                         pendingLocation={ pendingLocation }
                         onLocationChange={ this.onUpdatePosition.bind(this) }
-                        locationsForBounds={locationStore.getLocations()}
+                        locationsForBounds={ locations }
                         onMapClick={ this.onUpdatePosition.bind(this) } />,
-                <LocationForm key="form" ref="form" loc={ data.loc }
+                <LocationForm key="form" ref="form" loc={ data.locItem.data }
                     onSubmit={ this.onSubmit.bind(this) }/>,
                 <input key="delete" type="button" value="Delete"
                     onClick={ this.onDeleteClick.bind(this) }/>
@@ -69,33 +72,34 @@ export default class LocationPane extends PaneBase {
     }
 
     onUpdatePosition (position) {
-        this.getActions('location').setPendingLocation(position);
+        this.props.dispatch(setPendingLocation(position));
     }
 
     onSubmit(ev) {
         ev.preventDefault();
 
-        var locationId = this.props.params[0];
-        var values = this.refs.form.getChangedValues();
-        var pendingLatLng = this.getStore('location').getPendingLocation();
+        let locId = this.props.params[0];
+        let values = this.refs.form.getChangedValues();
+        let pendingLatLng = this.props.locations.pendingLocation;
+
         if (pendingLatLng) {
             values.lat = pendingLatLng.lat;
             values.lng = pendingLatLng.lng;
         }
-        this.getActions('location')
-            .updateLocation(locationId, values)
-            .then(this.closePane.bind(this));
+
+        this.props.dispatch(updateLocation(locId, values));
     }
 
 
     onDeleteClick(ev) {
-        var locationId = this.props.params[0];
-        this.getActions('location').deleteLocation(locationId);
-        this.getActions('location').clearPendingLocation();
+        var locId = this.props.params[0];
+        this.props.dispatch(clearPendingLocation());
+        this.props.dispatch(deleteLocation(locationId));
         this.closePane();
     }
+
     onCloseClick() {
+        this.props.dispatch(clearPendingLocation());
         this.closePane();
-        this.getActions('location').clearPendingLocation();
     }
 }

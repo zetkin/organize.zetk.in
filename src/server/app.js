@@ -1,4 +1,3 @@
-import FluxComponent from 'flummox/component';
 import cookieParser from 'cookie-parser';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
@@ -6,6 +5,7 @@ import express from 'express';
 import expressWs from 'express-ws';
 import http from 'http';
 import path from 'path';
+import { Provider } from 'react-redux';
 import Z from 'zetkin';
 
 import dataRouter from './datarouter';
@@ -51,11 +51,12 @@ function renderReactPage(Component, req, res) {
     try {
         var PageFactory = React.createFactory(Component);
         var props = {
+            initialState: req.store.getState(),
             path: req.path,
         };
 
         var html = ReactDOMServer.renderToString(
-            React.createElement(FluxComponent, { flux: req.flux },
+            React.createElement(Provider, { store: req.store },
                 PageFactory(props)));
 
         res.send(html);
@@ -66,7 +67,7 @@ function renderReactPage(Component, req, res) {
 }
 
 app.get('/activist', function(req, res, next) {
-    if (req.flux.getStore('user').isOfficial()) {
+    if (req.store.getState().user.memberships.length) {
         // Officials should not be able to see the message to non-officials,
         // which would be very confusing.
         res.redirect(303, '/');

@@ -1,12 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import CampaignSectionPaneBase from './CampaignSectionPaneBase';
 import ActionList from '../../misc/actionlist/ActionList';
 import CampaignSelect from '../../misc/CampaignSelect';
 import ActionCalendar from '../../misc/actioncal/ActionCalendar';
 import ViewSwitch from '../../misc/ViewSwitch';
+import { retrieveCampaigns } from '../../../actions/campaign';
+import { retrieveActions } from '../../../actions/action';
+import { moveActionParticipant } from '../../../actions/participant';
 
 
+@connect(state => state)
 export default class AllActionsPane extends CampaignSectionPaneBase {
     constructor(props) {
         super(props);
@@ -23,18 +28,17 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        this.listenTo('action', this.forceUpdate);
-        this.listenTo('campaign', this.forceUpdate);
-        this.getActions('action').retrieveAllActions();
-        this.getActions('campaign').retrieveCampaigns();
+        this.props.dispatch(retrieveActions());
+        this.props.dispatch(retrieveCampaigns());
     }
 
     renderPaneContent() {
-        var actionStore = this.getStore('action');
-        var actions = actionStore.getActions();
-        var viewComponent;
+        let actionList = this.props.actions.actionList;
+        let actions = actionList.items.map(i => i.data);
+        let viewComponent;
 
-        var startDate, endDate;
+        let startDate, endDate;
+
         if (actions.length == 0) {
             // Use this week and the next month by default
             const now = new Date();
@@ -56,6 +60,8 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         }
         else {
             viewComponent = <ActionList actions={ actions }
+                dispatch={ this.props.dispatch }
+                participants={ this.props.participants }
                 onMoveParticipant={ this.onMoveParticipant.bind(this) }
                 onActionOperation={ this.onActionOperation.bind(this) }/>;
         }
@@ -95,11 +101,11 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
     }
 
     onMoveParticipant(action, person, oldAction) {
-        this.getActions('participant').moveParticipant(
-            person.id, oldAction.id, action.id);
+        this.props.dispatch(moveActionParticipant(
+            person.id, oldAction.id, action.id));
 
-        const participantStore = this.getStore('participant');
-        const moves = participantStore.getMoves();
+        let participantStore = this.props.participants;
+        let moves = participantStore.moves;
 
         if (moves.length) {
             this.pushPane('moveparticipants');

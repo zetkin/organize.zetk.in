@@ -1,26 +1,28 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import FilterBase from './FilterBase';
 import Form from '../forms/Form';
 import SelectInput from '../forms/inputs/SelectInput';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
+import { retrieveCampaigns } from '../../actions/campaign';
 
 
+@connect(state => state)
 export default class CampaignFilter extends FilterBase {
     componentDidMount() {
-        this.listenTo('campaign', this.forceUpdate);
-
-        const campaignStore = this.getStore('campaign');
-        const campaigns = campaignStore.getCampaigns();
+        const campaignStore = this.props.campaigns;
+        const campaigns = campaignStore.campaignList.items;
 
         if (campaigns.length == 0) {
-            this.getActions('campaign').retrieveCampaigns();
+            this.props.dispatch(retrieveCampaigns());
         }
     }
 
     renderFilterForm(config) {
-        const campaignStore = this.getStore('campaign');
-        const campaigns = campaignStore.getCampaigns();
+        const campaignStore = this.props.campaigns;
+        const campaigns = campaignStore.campaignList.items.map(i => i.data);
+
         const operatorOptions = {
             'in': 'Participated in',
             'notin': 'Did not participate in'

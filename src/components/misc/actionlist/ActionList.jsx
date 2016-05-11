@@ -1,14 +1,12 @@
 import React from 'react';
 
-import FluxComponent from '../../FluxComponent';
+
 import ActionListItem from './ActionListItem';
+import { updateAction } from '../../../actions/action';
+import { addActionParticipant } from '../../../actions/participant';
 
 
-export default class ActionList extends FluxComponent {
-    componentDidMount() {
-        this.listenTo('participant', this.forceUpdate);
-    }
-
+export default class ActionList extends React.Component {
     render() {
         var actions = this.props.actions;
         return (
@@ -28,11 +26,12 @@ export default class ActionList extends FluxComponent {
                         const onMoveParticipant =
                             this.onMoveParticipant.bind(this, action);
 
-                        var participantStore = this.getStore('participant');
-                        var participants = participantStore.getParticipants(action.id);
+                        let participantStore = this.props.participants;
+                        let participants = participantStore.byAction[action.id];
 
                         return (
                             <ActionListItem key={ action.id }
+                                dispatch={ this.props.dispatch }
                                 onSetContact={ onSetContact }
                                 onAddParticipant={ onAddParticipant }
                                 onMoveParticipant={ onMoveParticipant }
@@ -53,9 +52,9 @@ export default class ActionList extends FluxComponent {
     }
 
     onSetContact(action, person, oldAction) {
-        this.getActions('action').updateAction(action.id, {
+        this.props.dispatch(updateAction(action.id, {
             contact_id: person.id
-        });
+        }));
 
         if (action.id != oldAction.id) {
             // TODO: Remove from old action
@@ -63,8 +62,7 @@ export default class ActionList extends FluxComponent {
     }
 
     onAddParticipant(action, person) {
-        this.getActions('participant').addParticipant(
-            person.id, action.id);
+        this.props.dispatch(addActionParticipant(person.id, action.id));
     }
 
     onMoveParticipant(action, person, oldAction) {

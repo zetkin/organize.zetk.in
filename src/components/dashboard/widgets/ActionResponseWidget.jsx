@@ -1,10 +1,8 @@
 import React from 'react';
 
-import WidgetBase from './WidgetBase';
 
-
-export default class ActionResponseWidget extends WidgetBase {
-    renderWidget() {
+export default class ActionResponseWidget extends React.Component {
+    render() {
         return <h1>Action response inbox</h1>;
     }
 }

@@ -4,7 +4,7 @@ import url from 'url';
 
 export default class LocationListItem extends React.Component {
     render() {
-        const loc = this.props.location;
+        const loc = this.props.location.data;
         const lat = loc.lat;
         const lng = loc.lng;
 

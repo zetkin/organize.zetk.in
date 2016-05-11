@@ -1,17 +1,18 @@
-import React from 'react';
 import moment from 'moment';
+import React from 'react';
+import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import ActionList from '../misc/actionlist/ActionList';
+import { retrieveActions } from '../../actions/action';
+import { moveActionParticipant } from '../../actions/participant';
 
 
+@connect(state => state)
 export default class ActionDayPane extends PaneBase {
     componentDidMount() {
-        this.listenTo('action', this.forceUpdate);
-
-        const actions = this.getStore('action').getActions();
-        if (actions.length == 0) {
-            this.getActions('action').retrieveAllActions();
+        if (this.props.actions.actionList.items.length == 0) {
+            this.props.dispatch(retrieveActions());
         }
     }
 
@@ -22,9 +23,9 @@ export default class ActionDayPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        const date = moment(this.getParam(0));
-        const actionStore = this.getStore('action');
-        const actions = actionStore.getActions().filter(a =>
+        let date = moment(this.getParam(0));
+        let actionList = this.props.actions.actionList;
+        let actions = actionList.items.map(i => i.data).filter(a =>
             moment(a.start_time).isSame(date, 'day'));
 
         return [
@@ -33,6 +34,8 @@ export default class ActionDayPane extends PaneBase {
             <input key="nextBtn" type="button" value=">"
                 onClick={ this.onClickNext.bind(this) }/>,
             <ActionList key="actionList" actions={ actions }
+                dispatch={ this.props.dispatch }
+                participants={ this.props.participants }
                 onMoveParticipant={ this.onMoveParticipant.bind(this) }
                 onActionOperation={ this.onActionOperation.bind(this) }/>
         ];
@@ -55,13 +58,10 @@ export default class ActionDayPane extends PaneBase {
     }
 
     onMoveParticipant(action, person, oldAction) {
-        this.getActions('participant').moveParticipant(
-            person.id, oldAction.id, action.id);
+        this.props.dispatch(moveActionParticipant(
+            person.id, oldAction.id, action.id));
 
-        const participantStore = this.getStore('participant');
-        const moves = participantStore.getMoves();
-
-        if (moves.length) {
+        if (this.props.participants.moves.length) {
             this.pushPane('moveparticipants');
         }
     }

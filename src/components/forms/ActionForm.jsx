@@ -1,22 +1,21 @@
 import React from 'react';
 
-import FluxComponent from '../FluxComponent';
 import Form from './Form';
 import IntInput from './inputs/IntInput';
 import DateInput from './inputs/DateInput';
 import TextArea from './inputs/TextArea';
 import TimeInput from './inputs/TimeInput';
 import RelSelectInput from './inputs/RelSelectInput';
+import { retrieveLocations } from '../../actions/location';
+import { retrieveCampaigns } from '../../actions/campaign';
+import { retrieveActivities } from '../../actions/activity';
 
 
-export default class ActionForm extends FluxComponent {
+export default class ActionForm extends React.Component {
     componentDidMount() {
-        this.listenTo('activity', this.forceUpdate);
-        this.listenTo('location', this.forceUpdate);
-        this.listenTo('campaign', this.forceUpdate);
-        this.getActions('activity').retrieveActivities();
-        this.getActions('location').retrieveLocations();
-        this.getActions('campaign').retrieveCampaigns();
+        this.props.dispatch(retrieveCampaigns());
+        this.props.dispatch(retrieveLocations());
+        this.props.dispatch(retrieveActivities());
     }
 
     render() {
@@ -26,9 +25,9 @@ export default class ActionForm extends FluxComponent {
             activity: {}
         };
 
-        const campaigns = this.getStore('campaign').getCampaigns();
-        const locations = this.getStore('location').getLocations();
-        const activities = this.getStore('activity').getActivities();
+        const campaigns = this.props.campaigns.campaignList.items.map(i => i.data);
+        const locations = this.props.locations.locationList.items.map(i => i.data);
+        const activities = this.props.activities.activityList.items.map(i => i.data);
         const startDate = Date.utc.create(action.start_time);
         const endDate = Date.utc.create(action.end_time);
 

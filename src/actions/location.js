@@ -1,44 +1,84 @@
-import { Actions } from 'flummox';
 import Z from 'zetkin';
 
+import * as types from './';
 
-export default class LocationActions extends Actions {
-    constructor(flux) {
-        super();
 
-        this.flux = flux;
-    }
+export function createLocation(data) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.CREATE_LOCATION,
+            payload: {
+                promise: Z.resource('orgs', orgId, 'locations').post(data),
+            }
+        });
+    };
+}
 
-    retrieveLocations() {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'locations').get();
-    }
+export function retrieveLocations() {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_LOCATIONS,
+            payload: {
+                promise: Z.resource('orgs', orgId, 'locations').get(),
+            }
+        });
+    };
+}
 
-    retrieveLocation(locationId) {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'locations', locationId).get();
-    }
+export function retrieveLocation(id) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_LOCATION,
+            meta: { id },
+            payload: {
+                promise: Z.resource('orgs', orgId, 'locations', id).get(),
+            }
+        });
+    };
+}
 
-    updateLocation(locationId, data) {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'locations', locationId).patch(data);
-    }
-    createLocation(data) {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'locations').post(data);
-    }
+export function updateLocation(id, data) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.UPDATE_LOCATION,
+            meta: { id },
+            payload: {
+                promise: Z.resource('orgs', orgId, 'locations', id).patch(data),
+            }
+        });
+    };
+}
 
-    deleteLocation(locationId) {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'locations', locationId).del();
-    }
-    setPendingLatLng(loc) {
-        return loc;
-    }
-    setPendingLocation(loc) {
-        return loc;
-    }
-    clearPendingLocation() {
-        return true;
-    }
+export function deleteLocation(id) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.DELETE_LOCATION,
+            meta: { id },
+            payload: {
+                promise: Z.resource('orgs', orgId, 'locations', id).del(),
+            }
+        });
+    };
+}
+
+export function setPendingLocation(data) {
+    return {
+        type: types.SET_PENDING_LOCATION,
+        payload: {
+            id: data.id,
+            lat: data.lat,
+            lng: data.lng,
+        }
+    };
+}
+
+export function clearPendingLocation(data) {
+    return {
+        type: types.CLEAR_PENDING_LOCATION,
+    };
 }

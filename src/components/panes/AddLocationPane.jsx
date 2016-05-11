@@ -1,20 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import LocationForm from '../forms/LocationForm';
+import { getLocationAverage } from '../../utils/location';
+import { setPendingLocation, clearPendingLocation, createLocation }
+    from '../../actions/location';
 
-// Component is depening om misc/locationMap is rendered (/locations)
-// otherwise there is no UI for editing lat lng.
 
+@connect(state => state)
 export default class AddLocationPane extends PaneBase {
     componentDidMount() {
-        this.listenTo('location', this.forceUpdate);
-        var locationStore = this.getStore('location');
+        let pendingLocation = this.props.locations.pendingLocation;
+
         // When mounting pane from page reload set pendinglocation 
-        // sloppy
-        if (locationStore.getPendingLocation() === false) {
-            this.getActions('location')
-                .setPendingLocation(locationStore.getAverageCenterOfLocations());
+        if (pendingLocation === false) {
+            let locList = this.props.locations.locationList;
+            let locCenter = getLocationAverage(locList);
+
+            this.props.dispatch(setPendingLocation(locCenter));
         }
     }
 
@@ -40,21 +44,26 @@ export default class AddLocationPane extends PaneBase {
     onSubmit(ev) {
         ev.preventDefault();
         var values = this.refs.form.getValues();
-        var pendingLatLng = this.getStore('location').getPendingLocation();
+
+        var pendingLatLng = this.props.locations.pendingLocation;
+
         if (pendingLatLng) {
             values.lat = pendingLatLng.lat;
             values.lng = pendingLatLng.lng;
         }
-        this.getActions('location').createLocation(values);
-        this.getActions('location').clearPendingLocation();
+
+        this.props.dispatch(createLocation(values));
+        this.props.dispatch(clearPendingLocation());
         this.closePane();
     }
+
     onDeleteClick(ev) {
+        this.props.dispatch(clearPendingLocation());
         this.closePane();
-        this.getActions('location').clearPendingLocation();
     }
+
     onCloseClick() {
+        this.props.dispatch(clearPendingLocation());
         this.closePane();
-        this.getActions('location').clearPendingLocation();
     }
 }

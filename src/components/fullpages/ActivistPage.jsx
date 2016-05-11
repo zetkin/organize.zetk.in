@@ -1,9 +1,7 @@
 import React from 'react';
 
-import FluxComponent from '../FluxComponent';
 
-
-export default class ActivistPage extends FluxComponent {
+export default class ActivistPage extends React.Component {
     render() {
         return (
             <html>

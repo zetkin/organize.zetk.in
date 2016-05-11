@@ -1,8 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-import FluxComponent from '../FluxComponent';
+import { setActiveMembership } from '../../actions/user';
 
-export default class OrgPicker extends FluxComponent {
+
+@connect(state => state)
+export default class OrgPicker extends React.Component {
     render() {
         let memberships = this.props.memberships;
         let activeOrg = this.props.activeOrg;
@@ -37,6 +40,6 @@ export default class OrgPicker extends FluxComponent {
     }
 
     onOrgClick(membership) {
-        this.getActions('user').setActiveMembership(membership);
+        this.props.dispatch(setActiveMembership(membership));
     }
 }

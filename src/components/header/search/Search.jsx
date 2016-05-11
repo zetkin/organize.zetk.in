@@ -1,16 +1,20 @@
-import ReactDOM from 'react-dom';
 import React from 'react';
+import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 
-import FluxComponent from '../../FluxComponent';
 import ScopeSelect from './ScopeSelect';
 import ActionDayMatch from './ActionDayMatch';
 import CampaignMatch from './CampaignMatch';
 import LocationMatch from './LocationMatch';
 import PersonMatch from './PersonMatch';
 import QueryMatch from './QueryMatch';
+import { beginSearch, changeSearchScope, clearSearch, endSearch, search
+    } from '../../../actions/search';
 
 
-export default class Search extends FluxComponent {
+
+@connect(state => state)
+export default class Search extends React.Component {
     constructor(props) {
         super(props);
 
@@ -20,27 +24,26 @@ export default class Search extends FluxComponent {
     }
 
     componentDidMount() {
-        this.listenTo('search', this.forceUpdate);
         document.addEventListener('keydown', this.onKeyDown.bind(this));
     }
 
     componentDidUpdate() {
-        var searchStore = this.getStore('search');
+        let searchStore = this.props.search;
 
-        if (searchStore.isSearchActive()) {
+        if (searchStore.isActive) {
             var inputDOMNode = ReactDOM.findDOMNode(this.refs.searchField);
             inputDOMNode.focus();
         }
     }
 
     render() {
-        var searchStore = this.getStore('search');
-        var results = searchStore.getResults();
-        var scope = searchStore.getScope();
+        let searchStore = this.props.search;
+        var results = searchStore.results;
+        var scope = searchStore.scope;
         var resultList;
         var classes = ['Search'];
 
-        if (searchStore.isSearchActive()) {
+        if (searchStore.isActive) {
             classes.push('focused');
         }
 
@@ -87,7 +90,7 @@ export default class Search extends FluxComponent {
 
                 <input type="search" ref="searchField"
                     placeholder="Start typing to search"
-                    value={ searchStore.getQuery() }
+                    value={ searchStore.query }
                     onChange={ this.onChange.bind(this) }
                     onFocus={ this.onFocus.bind(this) }
                     onBlur={ this.onBlur.bind(this) }/>
@@ -98,7 +101,7 @@ export default class Search extends FluxComponent {
     }
 
     onScopeSelect(scope) {
-        this.getActions('search').changeScope(scope);
+        this.props.dispatch(changeSearchScope(scope));
     }
 
     onMatchSelect(match) {
@@ -144,14 +147,14 @@ export default class Search extends FluxComponent {
     }
 
     onKeyDown(ev) {
-        const searchStore = this.getStore('search');
-        const results = searchStore.getResults();
+        const searchStore = this.props.search;
+        const results = searchStore.results;
         const inputDOMNode = ReactDOM.findDOMNode(this.refs.searchField);
         const focusedIndex = this.state.focusedIndex;
 
         if (ev.keyCode == 27 && ev.target == inputDOMNode) {
             inputDOMNode.blur();
-            this.getActions('search').clearSearch();
+            this.props.dispatch(clearSearch());
         }
         else if (ev.keyCode == 40) {
             // Down
@@ -178,7 +181,7 @@ export default class Search extends FluxComponent {
 
             ev.preventDefault();
             inputDOMNode.blur();
-            this.getActions('search').clearSearch();
+            this.props.dispatch(clearSearch);
         }
     }
 
@@ -187,18 +190,18 @@ export default class Search extends FluxComponent {
             focusedIndex: undefined
         });
 
-        this.getActions('search').search(ev.target.value);
+        this.props.dispatch(search(ev.target.value));
     }
 
     onFocus(ev) {
-        var searchStore = this.getStore('search');
-        if (!searchStore.isSearchActive()) {
-            this.getActions('search').beginSearch();
+        var searchStore = this.props.search;
+        if (!searchStore.isActive) {
+            this.props.dispatch(beginSearch());
         }
     }
 
     onBlur(ev) {
-        this.getActions('search').endSearch();
+        this.props.dispatch(endSearch());
     }
 }
 

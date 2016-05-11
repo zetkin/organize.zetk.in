@@ -1,36 +1,66 @@
-import { Actions } from 'flummox';
 import Z from 'zetkin';
 
+import * as types from './';
 
-export default class PersonActions extends Actions {
-    constructor(flux) {
-        super();
 
-        this.flux = flux;
-    }
+export function createPerson(data) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.CREATE_PERSON,
+            payload: {
+                promise: Z.resource('orgs', orgId, 'people').post(data)
+            }
+        });
+    };
+}
 
-    retrievePeople() {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'people').get();
-    }
+export function retrievePeople() {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_PEOPLE,
+            payload: {
+                promise: Z.resource('orgs', orgId, 'people').get()
+            }
+        });
+    };
+}
 
-    retrievePerson(personId) {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'people', personId).get();
-    }
+export function retrievePerson(id) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_PERSON,
+            meta: { id },
+            payload: {
+                promise: Z.resource('orgs', orgId, 'people', id).get()
+            }
+        });
+    };
+}
 
-    updatePerson(personId, data) {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'people', personId).patch(data);
-    }
+export function updatePerson(id, data) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.UPDATE_PERSON,
+            payload: {
+                promise: Z.resource('orgs', orgId, 'people', id).patch(data)
+            }
+        });
+    };
+}
 
-    createPerson(data) {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'people').post(data);
-    }
-
-    deletePerson(personId) {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'people', personId).del();
-    }
+export function deletePerson(id) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.DELETE_PERSON,
+            meta: { id },
+            payload: {
+                promise: Z.resource('orgs', orgId, 'people', id).del()
+            }
+        });
+    };
 }

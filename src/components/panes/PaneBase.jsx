@@ -3,10 +3,9 @@ import ReactDOM from 'react-dom';
 import cx from 'classnames';
 
 import { componentClassNames } from '..';
-import FluxComponent from '../FluxComponent';
 
 
-export default class PaneBase extends FluxComponent {
+export default class PaneBase extends React.Component {
     constructor(props) {
         super(props);
 

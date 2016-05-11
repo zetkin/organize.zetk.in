@@ -4,12 +4,11 @@ import { Link } from 'react-router-component';
 import cx from 'classnames';
 
 import PaneManager from '../../utils/PaneManager';
-import FluxComponent from '../FluxComponent';
 import { resolvePane } from '../panes';
 import { componentClassNames } from '../';
 
 
-export default class SectionBase extends FluxComponent {
+export default class SectionBase extends React.Component {
     runPaneManager() {
         const panes = Object.keys(this.refs)
             .filter(key => (key.indexOf('pane') == 0 && key != 'paneContainer'))

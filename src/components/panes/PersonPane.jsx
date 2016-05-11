@@ -1,28 +1,30 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import PersonForm from '../forms/PersonForm';
 import DraggableAvatar from '../misc/DraggableAvatar';
+import { retrievePerson, updatePerson, deletePerson }
+    from '../../actions/person';
+import { getListItemById } from '../../utils/store';
 
 
+@connect(state => state)
 export default class PersonPane extends PaneBase {
     componentDidMount() {
-        this.listenTo('person', this.forceUpdate);
-
-        const personId = this.props.params[0];
-        const person = this.getStore('person').getPerson(personId);
+        let personId = this.props.params[0];
+        let person = getListItemById(this.props.people.personList, personId);
 
         if (!person) {
-            this.getActions('person').retrievePerson(personId);
+            this.props.dispatch(retrievePerson(personId));
         }
     }
 
     getRenderData() {
-        var personId = this.props.params[0];
-        var personStore = this.getStore('person');
+        let personId = this.props.params[0];
 
         return {
-            person: personStore.getPerson(personId)
+            personItem: getListItemById(this.props.people.personList, personId)
         }
     }
 
@@ -36,18 +38,28 @@ export default class PersonPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        if (data.person) {
-            return [
-                <DraggableAvatar ref="avatar" person={ data.person }/>,
-                <PersonForm ref="personForm"
-                    person={ data.person }
-                    onSubmit={ this.onSubmit.bind(this) }/>,
-                <input ref="submitButton" type="button" value="Delete"
-                    onClick={ this.onDeleteClick.bind(this) }/>
-            ];
+        if (data.personItem) {
+            if (data.personItem.isPending) {
+                // TODO: Show proper loading indicator?
+                return <h1>Loading</h1>;
+            }
+            else {
+                return [
+                    <DraggableAvatar ref="avatar"
+                        person={ data.personItem.data }/>,
+
+                    <PersonForm ref="personForm"
+                        person={ data.personItem.data }
+                        onSubmit={ this.onSubmit.bind(this) }/>,
+
+                    <input ref="submitButton" type="button" value="Delete"
+                        onClick={ this.onDeleteClick.bind(this) }/>
+                ];
+            }
         }
         else {
-            // TODO: Show loading indicator?
+            // TODO: Show error?
+            return <h1>HELO</h1>;
             return null;
         }
     }
@@ -55,19 +67,17 @@ export default class PersonPane extends PaneBase {
     onSubmit(ev) {
         ev.preventDefault();
 
-        var form = this.refs.personForm;
-        var values = form.getChangedValues();
-        var personId = this.props.params[0];
+        let form = this.refs.personForm;
+        let values = form.getChangedValues();
+        let personId = this.props.params[0];
 
-        this.getActions('person')
-            .updatePerson(personId, values)
-            .then(this.closePane.bind(this));
+        this.props.dispatch(updatePerson(personId, values));
     }
 
     onDeleteClick(ev) {
         var personId = this.props.params[0];
 
-        this.getActions('person').deletePerson(personId);
+        this.props.dispatch(deletePerson(personId));
         this.closePane();
     }
 }

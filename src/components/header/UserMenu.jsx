@@ -1,24 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-import FluxComponent from '../FluxComponent';
 import OrgPicker from './OrgPicker';
 import Avatar from '../misc/Avatar';
 
 
-export default class UserMenu extends FluxComponent {
-    componentDidMount() {
-        this.listenTo('user', this.forceUpdate);
-    }
-
+@connect(state => state)
+export default class UserMenu extends React.Component {
     render() {
-        var userStore = this.getStore('user');
+        let userStore = this.props.user;
 
-        var accountUrl = '//' + userStore.getAccountsHost();
+        var accountUrl = '//accounts.zetkin'; //TODO: Use env var ZETKIN_DOMAIN;
 
-        const membership = userStore.getActiveMembership();
+        const membership = userStore.activeMembership;
         const activeOrg = membership.organization;
         const profile = membership.profile;
-        const memberships = userStore.getMemberships();
+        const memberships = userStore.memberships;
 
         return (
             <nav className="UserMenu">

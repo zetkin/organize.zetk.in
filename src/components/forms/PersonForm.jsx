@@ -14,7 +14,6 @@ export default class PersonForm extends React.Component {
             'o': 'Other'
         };
 
-
         return (
             <Form ref="form" {...this.props }>
                 <TextInput label="First name" name="first_name"

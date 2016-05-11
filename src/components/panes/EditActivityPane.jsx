@@ -1,20 +1,20 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import ActivityForm from '../forms/ActivityForm';
+import { updateActivity, deleteActivity } from '../../actions/activity';
+import { getListItemById } from '../../utils/store';
 
 
+@connect(state => state)
 export default class EditActivityPane extends PaneBase {
-    componentDidMount() {
-        this.listenTo('activity', this.forceUpdate);
-    }
-
     getRenderData() {
-        const activityId = this.props.params[0];
-        const activityStore = this.getStore('activity');
+        let activityList = this.props.activities.activityList;
+        let activityId = this.props.params[0];
 
         return {
-            activity: activityStore.getActivity(activityId)
+            activityItem: getListItemById(activityList, activityId),
         }
     }
 
@@ -23,9 +23,10 @@ export default class EditActivityPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        if (data.activity) {
+        if (data.activityItem) {
             return [
-                <ActivityForm key="form" ref="form" activity={ data.activity }
+                <ActivityForm key="form" ref="form"
+                    activity={ data.activityItem.data }
                     onSubmit={ this.onSubmit.bind(this) }/>,
 
                 <input key="delete" type="button" value="Delete"
@@ -44,15 +45,13 @@ export default class EditActivityPane extends PaneBase {
         const values = this.refs.form.getChangedValues();
         const activityId = this.props.params[0];
 
-        this.getActions('activity')
-            .updateActivity(activityId, values)
-            .then(this.closePane.bind(this));
+        this.props.dispatch(updateActivity(activityId, values));
     }
 
     onDeleteClick(ev) {
         const activityId = this.props.params[0];
 
-        this.getActions('activity').deleteActivity(activityId);
+        this.props.dispatch(deleteActivity(activityId));
         this.closePane();
     }
 }

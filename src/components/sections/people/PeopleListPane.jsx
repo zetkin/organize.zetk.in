@@ -1,10 +1,16 @@
+import { connect } from 'react-redux';
 import React from 'react';
+
+import { retrievePeople } from '../../../actions/person';
+import { retrieveQueries, createQuery } from '../../../actions/query';
+import { getListItemById } from '../../../utils/store';
 
 import PaneBase from '../../panes/PaneBase';
 import PeopleList from '../../misc/peoplelist/PeopleList';
 import RelSelectInput from '../../forms/inputs/RelSelectInput';
 
 
+@connect(state => state)
 export default class PeopleListPane extends PaneBase {
     constructor(props) {
         super(props);
@@ -21,32 +27,26 @@ export default class PeopleListPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        this.listenTo('query', this.forceUpdate);
-        this.listenTo('person', this.forceUpdate);
-        this.getActions('person').retrievePeople();
+        // TODO: Do this only if data is old or does not exist
+        this.props.dispatch(retrievePeople());
+        this.props.dispatch(retrieveQueries());
     }
 
     renderPaneContent() {
-        var personStore = this.getStore('person');
-        var people = personStore.getPeople();
-
-        const queryId = this.state.selectedQueryId;
-        const queryStore = this.getStore('query');
-
-        if (queryId) {
-            people = queryStore.executeQuery(queryId, people);
-        }
+        // TODO: Handle queries correctly
+        let people = this.props.people.personList.items;
 
         return (
-            <PeopleList key="peopleList" people={ people }
+            <PeopleList key="personList" people={ people }
                 onSelect={ this.onSelect.bind(this) }/>
         );
     }
 
     getPaneTools(data) {
-        const queryId = this.state.selectedQueryId;
-        const queryStore = this.getStore('query');
-        const queries = queryStore.getQueries();
+        let queryId = this.state.selectedQueryId;
+        let queryList = this.props.queries.queryList;
+        let query = getListItemById(queryList, queryId);
+        let queries = queryList.items.map(i => i.data);
 
         return [
             <RelSelectInput key="querySelect" name="querySelect"
@@ -75,11 +75,8 @@ export default class PeopleListPane extends PaneBase {
     }
 
     onQueryCreate(title) {
-        // TODO: Is this the best way?
-        this.getActions('query').createQuery(title);
-
-        const queries = this.getStore('query').getQueries();
-        this.openPane('editquery', queries[queries.length-1].id);
+        this.props.dispatch(createQuery(title));
+        // TODO: Open pane with new query
     }
 
     onQueryEdit(query) {

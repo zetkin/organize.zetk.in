@@ -1,44 +1,56 @@
-import { Actions } from 'flummox';
 import Z from 'zetkin';
 
+import * as types from '.';
 
-export default class ParticipantActions extends Actions {
-    constructor(flux) {
-        super();
 
-        this.flux = flux;
-    }
+export function retrieveActionParticipants(actionId) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_ACTION_PARTICIPANTS,
+            meta: { actionId },
+            payload: {
+                promise: Z.resource('orgs', orgId, 'actions', actionId,
+                    'participants').get(),
+            }
+        });
+    };
+}
 
-    retrieveParticipants(actionId) {
-        var orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId, 'actions', actionId, 'participants')
-                .meta('actionId', actionId)
-                .get();
-    }
+export function addActionParticipant(personId, actionId) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.ADD_ACTION_PARTICIPANT,
+            meta: { actionId, personId },
+            payload: {
+                promise: Z.resource('orgs', orgId, 'actions', actionId,
+                    'participants', personId).put()
+            }
+        });
+    };
+}
 
-    addParticipant(personId, actionId) {
-        const orgId = this.flux.getStore('org').getActiveId();
-        return Z.resource('orgs', orgId,
-            'actions', actionId, 'participants', personId)
-            .meta('actionId', actionId)
-            .put()
-    }
+export function moveActionParticipant(personId, oldActionId, newActionId) {
+    return {
+        type: types.MOVE_ACTION_PARTICIPANT,
+        payload: {
+            move: {
+                person: personId,
+                to: newActionId,
+                from: oldActionId
+            }
+        }
+    };
+}
 
-    moveParticipant(personId, oldActionId, newActionId) {
-        return {
-            personId: personId,
-            oldActionId: oldActionId,
-            newActionId: newActionId
-        };
-    }
-
-    executeMoves(moves) {
-        var i;
-        var orgId = this.flux.getStore('org').getActiveId();
-        var apiCalls = [];
+export function executeActionParticipantMoves(moves) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        let apiCalls = [];
 
         // TODO: Make some server-side batch executer for this?
-        for (i = 0; i < moves.length; i++) {
+        for (let i = 0; i < moves.length; i++) {
             var move = moves[i];
             apiCalls.push(Z.resource('orgs', orgId, 'actions',
                 move.from, 'participants', move.person)
@@ -47,14 +59,25 @@ export default class ParticipantActions extends Actions {
                 move.to, 'participants', move.person).put());
         }
 
-        return Promise.all(apiCalls);
+        dispatch({
+            type: types.EXECUTE_ACTION_PARTICIPANT_MOVES,
+            meta: { moves },
+            payload: {
+                promise: Promise.all(apiCalls),
+            }
+        });
     }
+}
 
-    undoMoves(moves) {
-        return moves;
-    }
+export function undoActionParticipantMoves(moves) {
+    return {
+        type: types.UNDO_ACTION_PARTICIPANT_MOVES,
+        payload: { moves },
+    };
+}
 
-    clearMoves() {
-        return true;
+export function clearActionParticipantMoves() {
+    return {
+        type: types.CLEAR_ACTION_PARTICIPANT_MOVES,
     }
 }

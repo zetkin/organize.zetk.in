@@ -49,19 +49,20 @@ export default class PeopleList extends React.Component {
                 <ListHeader columns={ columns } sortField={ sortField }
                     onFieldClick={ this.onFieldClick.bind(this) }/>
                 <ul className="PeopleList-items">
-                    {people.map(function(person) {
-                        let key = person.id;
-                        return <PeopleListItem key={ key } person={ person }
-                            onSelect={ this.onSelect.bind(this, person) }/>;
+                    {people.map(function(personItem) {
+                        let data = personItem.data;
+                        let key = data.id;
+                        return <PeopleListItem key={ key } person={ data }
+                            onSelect={ this.onSelect.bind(this, data) }/>;
                     }, this)}
                 </ul>
             </div>
         );
     }
 
-    onSelect(person) {
+    onSelect(personData) {
         if (this.props.onSelect) {
-            this.props.onSelect(person);
+            this.props.onSelect(personData);
         }
     }
 

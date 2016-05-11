@@ -1,20 +1,33 @@
 import express from 'express';
 import Z from 'zetkin';
 
-import Flux from '../flux';
+import { appReducer, configureStore } from '../store';
+import { retrieveActions, retrieveAction } from '../actions/action';
+import { retrieveActivities } from '../actions/activity';
+import { retrieveCampaigns, retrieveCampaign } from '../actions/campaign';
+import { retrieveLocations, retrieveLocation } from '../actions/location';
+import { retrievePeople, retrievePerson } from '../actions/person';
+import { getUserInfo, getUserMemberships } from '../actions/user';
 
 
 var router = express.Router();
 
 router.all(/.*/, function(req, res, next) {
-    req.flux = new Flux();
+    req.store = configureStore(appReducer);
 
-    req.flux.getActions('user').getUserInfo()
-        .then(req.flux.getActions('user').getUserMemberships)
+    let a0 = getUserInfo();
+    req.store.dispatch(a0);
+
+    a0.payload.promise
         .then(function(result) {
-            var userStore = req.flux.getStore('user');
+            let a1 = getUserMemberships();
+            req.store.dispatch(a1);
+            return a1.payload.promise;
+        })
+        .then(function(result) {
+            let userStore = req.store.getState().user;
 
-            if (userStore.isOfficial() == 0 && req.url != '/activist') {
+            if (!userStore.memberships.length && req.url != '/activist') {
                 // This user does not have any official roles. Redirect to
                 // page which explains why they can't use organizer app.
                 res.redirect(303, '/activist');
@@ -31,71 +44,85 @@ router.all(/.*/, function(req, res, next) {
 
 function waitForActions(execActions) {
     return function(req, res, next) {
-        var promises = execActions(req);
+        let thunksOrActions = execActions(req);
+        let promises = [];
 
-        Promise.all(promises).then(() => next());
+        for (let i = 0; i < thunksOrActions.length; i++) {
+            let thunkOrAction = thunksOrActions[i];
+            if (typeof thunkOrAction === 'function') {
+                thunkOrAction(function(action) {
+                    thunkOrAction = action;
+                    req.store.dispatch(action);
+                }, req.store.getState);
+            }
+
+            if (thunkOrAction.payload && thunkOrAction.payload.promise) {
+                promises.push(thunkOrAction.payload.promise);
+            }
+        }
+
+        Promise.all(promises).then(function() {
+            next();
+        });
     }
 }
 
 router.get([/people$/, /people\/list$/], waitForActions(req => [
-    req.flux.getActions('person').retrievePeople()
+    retrievePeople()
 ]));
 
 router.get(/person:(\d+)$/, waitForActions(req => [
-    req.flux.getActions('person').retrievePerson(req.params[0])
+    retrievePerson(req.params[0])
 ]));
 
 router.get([/maps$/, /maps\/locations$/], waitForActions(req => [
-    req.flux.getActions('location').retrieveLocations()
+    retrieveLocations()
 ]));
 
 router.get(/addlocationwithmap$/, waitForActions(req => [
-    req.flux.getActions('location').retrieveLocations()
+    retrieveLocations()
 ]));
+
 router.get(/addlocation$/, waitForActions(req => [
-    req.flux.getActions('location').retrieveLocations()
+    retrieveLocations()
 ]));
 
 router.get(/location:(\d+)$/, waitForActions(req => [
-    req.flux.getActions('location').retrieveLocation(req.params[0])
+    retrieveLocation(req.params[0])
 ]));
 
 router.get(/campaigns$/, waitForActions(req => [
-    req.flux.getActions('campaign').retrieveCampaigns()
+    retrieveCampaigns(),
 ]));
 
 router.get(/campaign\/locations$/, waitForActions(req => [
-    req.flux.getActions('campaign').retrieveCampaigns(),
-    req.flux.getActions('action').retrieveAllActions()
+    retrieveActions(),
+    retrieveCampaigns(),
 ]));
 
 router.get(/campaign:(\d+)$/, waitForActions(req => [
-    req.flux.getActions('campaign').retrieveCampaign(req.params[0])
+    retrieveCampaign(req.params[0])
 ]));
 
 router.get(/campaign\/dashboard$/, waitForActions(req => [
-    req.flux.getActions('campaign').retrieveCampaigns()
+    retrieveCampaigns()
 ]));
 
 router.get(/campaign\/playback$/, waitForActions(req => [
-    req.flux.getActions('campaign').retrieveCampaigns(),
-    req.flux.getActions('action').retrieveAllActions(),
-    req.flux.getActions('location').retrieveLocations()
+    retrieveActions(),
+    retrieveCampaigns(),
+    retrieveLocations()
 ]));
 
 router.get(/campaign\/actions$/, waitForActions(req => [
-    req.flux.getActions('campaign').retrieveCampaigns(),
-    req.flux.getActions('action').retrieveAllActions()
-]));
-
-router.get(/campaign\/activities$/, waitForActions(req => [
-    req.flux.getActions('activity').retrieveActivities()
+    retrieveActions(),
+    retrieveCampaigns(),
 ]));
 
 router.get(/editaction:(\d+)$/, waitForActions(req => [
-    req.flux.getActions('action').retrieveAction(req.params[0]),
-    req.flux.getActions('activity').retrieveActivities(),
-    req.flux.getActions('location').retrieveLocations()
+    retrieveAction(req.params[0]),
+    retrieveActivities(),
+    retrieveLocations()
 ]));
 
 export default router;

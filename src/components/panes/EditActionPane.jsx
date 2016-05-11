@@ -1,20 +1,25 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import ActionForm from '../forms/ActionForm';
+import { getListItemById } from '../../utils/store';
+import { retrieveAction, updateAction } from '../../actions/action';
 
 
+@connect(state => state)
 export default class EditActionPane extends PaneBase {
-    componentDidMount() {
-        this.listenTo('action', this.forceUpdate);
-    }
-
     getRenderData() {
-        var actionId = this.props.params[0];
-        var actionStore = this.getStore('action');
+        let actionId = this.props.params[0];
+        let actionList = this.props.actions.actionList;
+        let actionItem = getListItemById(actionList, actionId);
+
+        if (!actionItem) {
+            retrieveAction(actionId);
+        }
 
         return {
-            action: actionStore.getAction(actionId)
+            actionItem: actionItem
         }
     }
 
@@ -23,9 +28,13 @@ export default class EditActionPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        if (data.action) {
+        if (data.actionItem) {
             return (
-                <ActionForm ref="form" action={ data.action }
+                <ActionForm ref="form" action={ data.actionItem.data }
+                    activities={ this.props.activities }
+                    campaigns={ this.props.campaigns }
+                    locations={ this.props.locations }
+                    dispatch={ this.props.dispatch }
                     onEditCampaign={ this.onEditCampaign.bind(this) }
                     onEditLocation={ this.onEditLocation.bind(this) }
                     onEditActivity={ this.onEditActivity.bind(this) }
@@ -47,9 +56,7 @@ export default class EditActionPane extends PaneBase {
         var values = this.refs.form.getChangedValues();
         var actionId = this.props.params[0];
 
-        this.getActions('action')
-            .updateAction(actionId, values)
-            .then(this.closePane.bind(this));
+        this.props.dispatch(updateAction(actionId, values));
     }
 
     onEditCampaign(campaign) {

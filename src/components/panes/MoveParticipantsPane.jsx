@@ -1,21 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import PersonForm from '../forms/PersonForm';
 import Person from '../misc/elements/Person';
 import Action from '../misc/elements/Action';
+import { getListItemById } from '../../utils/store';
+import {
+    executeActionParticipantMoves,
+    undoActionParticipantMoves,
+} from '../../actions/participant';
 
 
+@connect(state => state)
 export default class MoveParticipantsPane extends PaneBase {
-    componentDidMount() {
-        this.listenTo('participant', this.forceUpdate);
-    }
-
     getRenderData() {
-        var participantStore = this.getStore('participant');
+        var participantStore = this.props.participants;
 
         return {
-            moves: participantStore.getMoves()
+            moves: participantStore.moves,
         };
     }
 
@@ -24,8 +27,8 @@ export default class MoveParticipantsPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        const actionStore = this.getStore('action');
-        const peopleStore = this.getStore('person');
+        let actionList = this.props.actions.actionList;
+        let personList = this.props.people.personList;
 
         return [
             <button onClick={ this.onExecuteClick.bind(this) }>
@@ -35,9 +38,9 @@ export default class MoveParticipantsPane extends PaneBase {
             <ul className="MoveParticipantsPane-moveList">
             {data.moves.map(function(move) {
                 const key = [move.person, move.from, move.to].join(',');
-                const person = peopleStore.getPerson(move.person);
-                const fromAction = actionStore.getAction(move.from);
-                const toAction = actionStore.getAction(move.to);
+                const person = getListItemById(personList, move.person).data;
+                const fromAction = getListItemById(actionList, move.from).data;
+                const toAction = getListItemById(actionList, move.to).data;
 
                 return (
                     <li key={ key }>
@@ -62,31 +65,25 @@ export default class MoveParticipantsPane extends PaneBase {
     }
 
     onMoveConfirm(move) {
-        const participantActions = this.getActions('participant');
-
-        participantActions.executeMoves([ move ]);
+        this.props.dispatch(executeActionParticipantMoves([ move ]));
     }
 
     onMoveCancel(move) {
-        const participantActions = this.getActions('participant');
-
-        participantActions.undoMoves([ move ]);
+        this.props.dispatch(undoActionParticipantMoves([ move ]));
     }
 
     onExecuteClick(ev) {
-        const participantActions = this.getActions('participant');
-        const participantStore = this.getStore('participant');
-        const moves = participantStore.getMoves();
+        let participantStore = this.props.participants;
+        let moves = participantStore.moves;
 
-        participantActions.executeMoves(moves);
+        this.props.dispatch(executeActionParticipantMoves(moves));
     }
 
     onResetClick(ev) {
-        const participantActions = this.getActions('participant');
-        const participantStore = this.getStore('participant');
-        const moves = participantStore.getMoves();
+        let participantStore = this.props.participants;
+        let moves = participantStore.moves;
 
-        participantActions.undoMoves(moves);
+        this.props.dispatch(undoActionParticipantMoves(moves));
 
         this.closePane();
     }

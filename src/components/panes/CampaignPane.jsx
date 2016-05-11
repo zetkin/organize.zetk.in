@@ -1,26 +1,25 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import LocationForm from '../forms/LocationForm';
+import { getListItemById } from '../../utils/store';
 
 
+@connect(state => state)
 export default class CampaignPane extends PaneBase {
-    componentDidMount() {
-        this.listenTo('campaign', this.forceUpdate);
-    }
-
     getRenderData() {
-        var campaignStore = this.getStore('campaign');
+        let campaignList = this.props.campaigns.campaignList;
         var campaignId = this.props.params[0];
 
         return {
-            campaign: campaignStore.getCampaign(campaignId)
+            campaignItem: getListItemById(campaignList, campaignId),
         }
     }
 
     getPaneTitle(data) {
-        if (data.campaign) {
-            return data.campaign.title;
+        if (data.campaignItem) {
+            return data.campaignItem.data.title;
         }
         else {
             return null;
@@ -29,7 +28,7 @@ export default class CampaignPane extends PaneBase {
 
     renderPaneContent(data) {
         if (data.campaign) {
-            return data.campaign.title;
+            return data.campaignItem.data.title;
         }
         else {
             // TODO: Show loading indicator?

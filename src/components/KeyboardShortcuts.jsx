@@ -1,11 +1,13 @@
-import { Link } from 'react-router-component';
-import React from 'react';
 import cx from 'classnames';
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-component';
 
-import FluxComponent from './FluxComponent';
+import { beginSearch } from '../actions/search';
 
 
-export default class KeyboardShortcuts extends FluxComponent {
+@connect(state => state)
+export default class KeyboardShortcuts extends React.Component {
     constructor(props) {
         super(props);
 
@@ -143,19 +145,19 @@ export default class KeyboardShortcuts extends FluxComponent {
             switch (ev.keyCode) {
                 case 47:    // '/'
                     this.closeReference();
-                    this.getActions('search').beginSearch(null);
+                    this.props.dispatch(beginSearch(null));
                     break;
                 case 99:    // 'c' == campaign
                     this.closeReference();
-                    this.getActions('search').beginSearch('campaign');
+                    this.props.dispatch(beginSearch('campaign'));
                     break;
                 case 109:   // 'm' == maps
                     this.closeReference();
-                    this.getActions('search').beginSearch('maps');
+                    this.props.dispatch(beginSearch('maps'));
                     break;
                 case 112:   // 'p' == people
                     this.closeReference();
-                    this.getActions('search').beginSearch('people');
+                    this.props.dispatch(beginSearch('people'));
                     break;
             }
 

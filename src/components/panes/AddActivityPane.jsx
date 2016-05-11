@@ -1,9 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import ActivityForm from '../forms/ActivityForm';
+import { createActivity } from '../../actions/activity';
 
 
+@connect(state => state)
 export default class AddActivityPane extends PaneBase {
     getPaneTitle(data) {
         return 'Add activity';
@@ -27,8 +30,6 @@ export default class AddActivityPane extends PaneBase {
         const activityId = this.props.params[0];
 
         // TODO: Go to edit pane when done?
-        this.getActions('activity')
-            .createActivity(values)
-            .then(this.closePane.bind(this));
+        this.props.dispatch(createActivity(values));
     }
 }

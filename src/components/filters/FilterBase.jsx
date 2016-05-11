@@ -2,10 +2,9 @@ import React from 'react';
 import cx from 'classnames';
 
 import { componentClassNames } from '../';
-import FluxComponent from '../FluxComponent';
 
 
-export default class FilterBase extends FluxComponent {
+export default class FilterBase extends React.Component {
     render() {
         const config = this.props.config;
         const classes = cx(componentClassNames(this));

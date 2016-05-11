@@ -1,14 +1,14 @@
-import React from 'react';
 import moment from 'moment';
+import React from 'react';
 
 import PaneBase from '../../panes/PaneBase';
+import { createAction, updateAction } from '../../../actions/action';
 
 
 export default class CampaignSectionPaneBase extends PaneBase {
     onCalendarAddAction(date) {
-        const campaignStore = this.getStore('campaign');
-        const selectedCampaign = campaignStore.getSelectedCampaign();
-        const campParam = selectedCampaign? selectedCampaign.id : 0;
+        const selectedId = this.props.campaigns.selectedId;
+        const campParam = selectedId || 0;
         const dateParam = moment(date).format('YYYY-MM-DD');
 
         this.openPane('addaction', campParam, dateParam);
@@ -39,7 +39,7 @@ export default class CampaignSectionPaneBase extends PaneBase {
             end_time: endTime.toISOString()
         };
 
-        this.getActions('action').createAction(action.campaign.id, newAction);
+        this.props.dispatch(createAction(action.campaign.id, newAction));
     }
 
     onCalendarMoveAction(action, date) {
@@ -61,7 +61,7 @@ export default class CampaignSectionPaneBase extends PaneBase {
             end_time: endTime.toISOString()
         };
 
-        this.getActions('action').updateAction(action.id, values);
+        this.props.dispatch(updateAction(action.id, values));
     }
 
     onSelectDay(date) {

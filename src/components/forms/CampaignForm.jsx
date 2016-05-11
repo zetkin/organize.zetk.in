@@ -1,12 +1,11 @@
 import React from 'react';
 
-import FluxComponent from '../FluxComponent';
 import Form from './Form';
 import TextArea from './inputs/TextArea';
 import TextInput from './inputs/TextInput';
 
 
-export default class ActivityForm extends FluxComponent {
+export default class ActivityForm extends React.Component {
     render() {
         var campaign = this.props.campaign || {};
 

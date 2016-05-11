@@ -6,13 +6,16 @@ import PeopleList from '../misc/peoplelist/PeopleList';
 
 export default class QueryPane extends PaneBase {
     getRenderData() {
-        const queryStore = this.getStore('query');
+        let queryList = this.props.queries.queryList;
+        let queryId = this.getParam(0);
 
-        return queryStore.getQuery(this.getParam(0));
+        return {
+            queryItem: getListItemById(queryList, queryId)
+        };
     }
 
     getPaneTitle(data) {
-        return data? data.title : '';
+        return data.queryItem? data.queryItem.data.title : '';
     }
 
     getPaneSubTitle(data) {
@@ -22,25 +25,13 @@ export default class QueryPane extends PaneBase {
         );
     }
 
-    componentDidMount() {
-        this.listenTo('person', this.forceUpdate);
-        this.listenTo('query', this.forceUpdate);
-
-        // TODO: Replace with actually executing query
-        this.getActions('person').retrievePeople();
-    }
-
     renderPaneContent(data) {
-        if (!data) {
+        if (!data.queryItem) {
             return null;
         }
 
-        const personStore = this.getStore('person');
-        const queryStore = this.getStore('query');
-        const people = personStore.getPeople();
-
-        // TODO: Should happen server-side
-        const filteredPeople = queryStore.executeQuery(data.id, people);
+        // TODO: Use result of server-side query
+        const filteredPeople = [];
 
         return [
             <PeopleList key="peopleList" people={ filteredPeople }

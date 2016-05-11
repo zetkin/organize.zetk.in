@@ -1,9 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import ActionForm from '../forms/ActionForm';
+import { createAction } from '../../actions/action';
 
 
+@connect(state => state)
 export default class AddActionPane extends PaneBase {
     getPaneTitle(data) {
         return "Add action";
@@ -31,6 +34,10 @@ export default class AddActionPane extends PaneBase {
 
         return (
             <ActionForm ref="actionForm" action={ initialData }
+                activities={ this.props.activities }
+                campaigns={ this.props.campaigns }
+                locations={ this.props.locations }
+                dispatch={ this.props.dispatch }
                 onEditCampaign={ this.onEditCampaign.bind(this) }
                 onEditLocation={ this.onEditLocation.bind(this) }
                 onEditActivity={ this.onEditActivity.bind(this) }
@@ -47,9 +54,7 @@ export default class AddActionPane extends PaneBase {
         const values = this.refs.actionForm.getValues();
         const campaignId = values.campaign_id;
 
-        this.getActions('action')
-            .createAction(campaignId, values)
-            .then(this.closePane.bind(this));
+        this.props.dispatch(createAction(campaignId, values));
     }
 
     onEditCampaign(campaign) {
