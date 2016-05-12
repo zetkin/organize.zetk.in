@@ -1,9 +1,38 @@
-import { createList, updateOrAddListItem } from '../utils/store';
 import * as types from '../actions';
+import {
+    createList,
+    createListItems,
+    updateOrAddListItem,
+} from '../utils/store';
 
 
 export default function callAssignments(state = null, action) {
     switch (action.type) {
+        case types.RETRIEVE_CALL_ASSIGNMENTS + '_PENDING':
+            return Object.assign({}, state, {
+                assignmentList: Object.assign({}, state.assignmentList, {
+                    isPending: true,
+                    error:null,
+                })
+            });
+
+        case types.RETRIEVE_CALL_ASSIGNMENTS + '_FULFILLED':
+            return Object.assign({}, state, {
+                assignmentList: {
+                    isPending: false,
+                    error: null,
+                    items: createListItems(action.payload.data.data)
+                }
+            });
+
+        case types.RETRIEVE_CALL_ASSIGNMENTS + '_REJECTED':
+            return Object.assign({}, state, {
+                assignmentList: {
+                    isPending: false,
+                    error: action.payload,
+                }
+            });
+
         case types.CREATE_CALL_ASSIGNMENT_DRAFT:
             let assignment = action.payload.assignment;
             return Object.assign({}, state, {

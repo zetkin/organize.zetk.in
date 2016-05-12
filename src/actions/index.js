@@ -76,6 +76,7 @@ export const REMOVE_QUERY_FILTER = 'REMOVE_QUERY_FILTER';
 
 // Flux actions related to call assignments
 export const CREATE_CALL_ASSIGNMENT_DRAFT = 'CREATE_CALL_ASSIGNMENT_DRAFT';
+export const RETRIEVE_CALL_ASSIGNMENTS = 'RETRIEVE_CALL_ASSIGNMENTS';
 
 // Flux actions related to text documents
 export const CREATE_TEXT_DOCUMENT = 'CREATE_TEXT_DOCUMENT';

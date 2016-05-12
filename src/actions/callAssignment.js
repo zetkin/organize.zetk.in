@@ -1,7 +1,21 @@
-import * as types from '.';
+import Z from 'zetkin';
 
+import * as types from '.';
 import makeRandomString from '../utils/makeRandomString';
 
+
+export function retrieveCallAssignments() {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_CALL_ASSIGNMENTS,
+            payload: {
+                promise: Z.resource('orgs', orgId, 'call_assignments').get(),
+            },
+        });
+    };
+}
 
 export function createCallAssignmentDraft(type, config) {
     let assignment = {
