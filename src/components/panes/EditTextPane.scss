@@ -1,0 +1,9 @@
+.EditTextPane {
+    width: 600px;
+
+    .EditTextPane-editor {
+        @include card;
+        background-color: white;
+        padding: 0.5em;
+    }
+}

@@ -13,6 +13,7 @@ import CallAssignmentPane from './CallAssignmentPane';
 import EditCampaignPane from './EditCampaignPane';
 import EditLocationPane from './EditLocationPane';
 import EditLocationWithMapPane from './EditLocationWithMapPane';
+import EditTextPane from './EditTextPane';
 import EditQueryPane from './EditQueryPane';
 import MoveParticipantsPane from './MoveParticipantsPane';
 import PersonPane from './PersonPane';
@@ -34,6 +35,7 @@ var _panes = {
     'editlocation': EditLocationPane,
     'editlocationwithmap': EditLocationWithMapPane,
     'editquery': EditQueryPane,
+    'edittext': EditTextPane,
     'location': EditLocationPane,
     'moveparticipants': MoveParticipantsPane,
     'person': PersonPane,
