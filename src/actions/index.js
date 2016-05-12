@@ -73,3 +73,6 @@ export const CREATE_QUERY = 'CREATE_QUERY';
 export const UPDATE_QUERY_FILTER = 'UPDATE_FILTER';
 export const ADD_QUERY_FILTER = 'ADD_QUERY_FILTER';
 export const REMOVE_QUERY_FILTER = 'REMOVE_QUERY_FILTER';
+
+// Flux actions related to call assignments
+export const CREATE_CALL_ASSIGNMENT_DRAFT = 'CREATE_CALL_ASSIGNMENT_DRAFT';

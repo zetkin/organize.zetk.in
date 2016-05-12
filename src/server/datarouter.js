@@ -119,6 +119,10 @@ router.get(/campaign\/actions$/, waitForActions(req => [
     retrieveCampaigns(),
 ]));
 
+router.get(/dialog\/startassignment$/, waitForActions(req => [
+    retrieveCampaigns(),
+]));
+
 router.get(/editaction:(\d+)$/, waitForActions(req => [
     retrieveAction(req.params[0]),
     retrieveActivities(),

@@ -4,6 +4,7 @@ import thunk from 'redux-thunk';
 
 import actions from './actions';
 import activities from './activities';
+import callAssignments from './callAssignments';
 import campaigns from './campaigns';
 import dashboard from './dashboard';
 import locations from './locations';
@@ -18,6 +19,7 @@ import user from './user';
 export const appReducer = combineReducers({
     actions,
     activities,
+    callAssignments,
     campaigns,
     dashboard,
     locations,
