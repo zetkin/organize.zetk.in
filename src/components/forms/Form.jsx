@@ -13,17 +13,24 @@ export default class Form extends React.Component {
     }
 
     render() {
-        var inputs = this.props.children;
+        let inputs = this.props.children;
+        let classes = cx('Form', this.props.className);
 
         if (!Array.isArray(inputs)) {
             inputs = [inputs];
         }
 
         return (
-            <form className={ this.props.className }
+            <form className={ classes }
                 onSubmit={ this.onSubmit.bind(this) }>
                 <ul>
                 {inputs.map(function(input, index) {
+                    if (typeof input === 'string') {
+                        // Don't modify strings, just add them.
+                        let key = 'str' + index;
+                        return <li key={ key }>{ input }</li>;
+                    }
+
                     const props = Object.assign({}, input.props);
 
                     const classes = cx(
