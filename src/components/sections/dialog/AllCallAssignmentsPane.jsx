@@ -19,11 +19,12 @@ export default class AllCallAssignmentsPane extends PaneBase {
 
     renderPaneContent(data) {
         return (
-            <ul key="assignmentList">
+            <ul>
                 { data.assignments.items.map(item => {
-                    let a= item.data;
+                    let a = item.data;
                     return (
-                        <li onClick={ this.onClickAssignment.bind(this, a) }>
+                        <li key={ a.id }
+                            onClick={ this.onClickAssignment.bind(this, a) }>
                             { a.title }</li>
                     );
                 })}
