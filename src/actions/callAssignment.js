@@ -17,6 +17,20 @@ export function retrieveCallAssignments() {
     };
 }
 
+export function updateCallAssignment(id, data) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.UPDATE_CALL_ASSIGNMENT,
+            payload: {
+                promise: Z.resource(
+                    'orgs', orgId, 'call_assignments', id).patch(data),
+            },
+        });
+    }
+}
+
 export function createCallAssignmentDraft(type, config) {
     let assignment = {
         // Prepend ID with $ to designate draft

@@ -7,6 +7,8 @@ import {
 
 
 export default function callAssignments(state = null, action) {
+    let assignment;
+
     switch (action.type) {
         case types.RETRIEVE_CALL_ASSIGNMENTS + '_PENDING':
             return Object.assign({}, state, {
@@ -33,8 +35,15 @@ export default function callAssignments(state = null, action) {
                 }
             });
 
+        case types.UPDATE_CALL_ASSIGNMENT + '_FULFILLED':
+            assignment = action.payload.data.data
+            return Object.assign({}, state, {
+                assignmentList: updateOrAddListItem(state.assignmentList,
+                    assignment.id, assignment, { isPending: false, error: null }),
+            });
+
         case types.CREATE_CALL_ASSIGNMENT_DRAFT:
-            let assignment = action.payload.assignment;
+            assignment = action.payload.assignment;
             return Object.assign({}, state, {
                 assignmentList: updateOrAddListItem(state.assignmentList,
                     assignment.id, assignment, { isDraft: true }),
