@@ -1,6 +1,31 @@
 .ViewSwitch{
     font-size: 1.4em;
-    button:first-of-type{
-        border-right-width: 0;
+    button {
+        height: 25px;
+        padding: 5px;
+
+        &:focus {
+            outline: 0;
+        }
+
+        &:first-child {
+            border-right-width: 0;
+        }
+
+        &.selected {
+            background-color: #eee;
+        }
+    }
+
+    .viewswitch-state-cal{
+        @include icon-button($fa-var-calendar);
+    }
+
+    .viewswitch-state-list{
+        @include icon-button($fa-var-list-alt);
+    }
+
+    .viewswitch-state-map{
+        @include icon-button($fa-var-map-o);
     }
 }
