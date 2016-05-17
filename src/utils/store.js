@@ -2,7 +2,7 @@ export function createList(items, meta = {}) {
     return {
         isPending: meta.isPending || false,
         error: meta.error || null,
-        items: items || [],
+        items: createListItems(items || []),
     };
 }
 
