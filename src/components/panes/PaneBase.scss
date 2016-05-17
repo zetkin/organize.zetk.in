@@ -73,6 +73,10 @@
             top: 0;
             left: 0;
             right: 0;
+            .PaneBase-toolbar {
+                margin: 1em;
+                color: #666666;
+            }
         }
 
         .PaneBase-closeLink {
