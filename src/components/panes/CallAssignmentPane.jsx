@@ -2,10 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
+import CallerList from '../misc/callerlist/CallerList';
 import { getListItemById } from '../../utils/store';
 import { createTextDocument } from '../../actions/document';
-import { updateCallAssignment } from '../../actions/callAssignment';
 import { retrieveQueryMatches } from '../../actions/query';
+import { createSelection } from '../../actions/selection';
+import {
+    updateCallAssignment,
+    addCallAssignmentCallers,
+    retrieveCallAssignmentCallers,
+} from '../../actions/callAssignment';
 
 
 @connect(state => state)
@@ -19,6 +25,8 @@ export default class CallAssignmentPane extends PaneBase {
             let queryId = assignmentItem.data.target.id;
             this.props.dispatch(retrieveQueryMatches(queryId));
         }
+
+        this.props.dispatch(retrieveCallAssignmentCallers(assignmentId));
     }
 
     getRenderData() {
@@ -59,6 +67,12 @@ export default class CallAssignmentPane extends PaneBase {
                 targetContent = <h1>{ data.queryItem.data.matchList.items.length }</h1>;
             }
 
+            let callerContent = null;
+            if (assignment.callerList) {
+                let callers = assignment.callerList.items.map(i => i.data);
+                callerContent = <CallerList callers={ callers }/>;
+            }
+
             return [
                 <div key="summary"
                     className="CallAssignmentPane-summary">
@@ -87,12 +101,28 @@ export default class CallAssignmentPane extends PaneBase {
                 <div key="callers"
                     className="CallAssignmentPane-callers">
                     <h3>Callers</h3>
+                    { callerContent }
+                    <a onClick={ this.onClickAddCallers.bind(this) }>
+                        Add callers</a>
                 </div>
             ];
         }
         else {
             return 'Loading';
         }
+    }
+
+    onClickAddCallers(ev) {
+        let assignmentId = this.getParam(0);
+        let instructions = 'Select people to be added as callers';
+
+        // TODO: Add existing callers as pre-selection
+        let action = createSelection('person', null, instructions, ids => {
+            this.props.dispatch(addCallAssignmentCallers(assignmentId, ids));
+        });
+
+        this.props.dispatch(action);
+        this.openPane('selectpeople', action.payload.id);
     }
 
     onClickEditTarget(ev) {
@@ -114,7 +144,6 @@ export default class CallAssignmentPane extends PaneBase {
                 instructions: content,
             };
 
-            // TODO: Update assignment
             this.props.dispatch(updateCallAssignment(assignmentId, values));
         });
 

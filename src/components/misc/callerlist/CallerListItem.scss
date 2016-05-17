@@ -1,0 +1,21 @@
+.CallerListItem {
+    @include card;
+
+    position: relative;
+    padding: 10px;
+    margin: 0 0 10px;
+
+    .CallerListItem-name {
+        position: absolute;
+        left: 70px;
+        top: 10px;
+
+        font-size: 20px;
+    }
+
+    .Avatar {
+        margin: 0;
+        width: 50px;
+        height: 50px;
+    }
+}

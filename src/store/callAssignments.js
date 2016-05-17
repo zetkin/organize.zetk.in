@@ -2,7 +2,9 @@ import * as types from '../actions';
 import {
     createList,
     createListItems,
+    getListItemById,
     updateOrAddListItem,
+    updateOrAddListItems,
 } from '../utils/store';
 
 
@@ -33,6 +35,30 @@ export default function callAssignments(state = null, action) {
                     isPending: false,
                     error: action.payload,
                 }
+            });
+
+        case types.RETRIEVE_CALL_ASSIGNMENT_CALLERS + '_FULFILLED':
+            assignment = {
+                id: action.meta.id,
+                callerList: createList(action.payload.data.data)
+            };
+
+            return Object.assign({}, state, {
+                assignmentList: updateOrAddListItem(state.assignmentList,
+                    assignment.id, assignment),
+            });
+
+        case types.ADD_CALL_ASSIGNMENT_CALLERS + '_FULFILLED':
+            let addedCallers = action.payload.map(p => p.data.data);
+            assignment = getListItemById(state.assignmentList,
+                action.meta.id).data;
+
+            assignment.callerList = updateOrAddListItems(assignment.callerList,
+                addedCallers, { isPending: false, error: null });
+
+            return Object.assign({}, state, {
+                assignmentList: updateOrAddListItem(state.assignmentList,
+                    assignment.id, assignment)
             });
 
         case types.UPDATE_CALL_ASSIGNMENT + '_FULFILLED':

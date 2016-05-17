@@ -17,6 +17,21 @@ export function retrieveCallAssignments() {
     };
 }
 
+export function retrieveCallAssignmentCallers(id) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_CALL_ASSIGNMENT_CALLERS,
+            meta: { id },
+            payload: {
+                promise: Z.resource('orgs', orgId, 'call_assignments', id,
+                    'callers').get(),
+            }
+        });
+    };
+}
+
 export function updateCallAssignment(id, data) {
     return function(dispatch, getState) {
         let orgId = getState().org.activeId;
@@ -30,6 +45,38 @@ export function updateCallAssignment(id, data) {
         });
     }
 }
+
+export function retrieveCallAssignmentCallers(id) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_CALL_ASSIGNMENT_CALLERS,
+            meta: { id },
+            payload: {
+                promise: Z.resource('orgs', orgId, 'call_assignments', id,
+                    'callers').get(),
+            }
+        });
+    };
+}
+
+export function addCallAssignmentCallers(id, callerIds) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        let promises = callerIds.map(callerId => Z.resource('orgs', orgId,
+            'call_assignments', id, 'callers', callerId).put());
+
+        dispatch({
+            type: types.ADD_CALL_ASSIGNMENT_CALLERS,
+            meta: { id, callerIds },
+            payload: {
+                promise: Promise.all(promises),
+            }
+        });
+    };
+};
 
 export function createCallAssignmentDraft(type, config) {
     let assignment = {
