@@ -13,6 +13,24 @@
         font-size: 20px;
     }
 
+    .CallerListItem-tags {
+        position: absolute;
+        lefT: 70px;
+        top: 25px;
+
+        dt {
+            padding: 0;
+            float: left;
+            clear: left;
+            width: 70px;
+        }
+
+        dd {
+            padding: 0;
+            float: left;
+        }
+    }
+
     .Avatar {
         margin: 0;
         width: 50px;

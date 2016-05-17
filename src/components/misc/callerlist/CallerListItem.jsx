@@ -26,6 +26,12 @@ export default class CallerListItem extends React.Component {
 
                 <Avatar person={ caller }/>
                 <span className="CallerListItem-name">{ name }</span>
+                <dl className="CallerListItem-tags">
+                    <dt>Prioritized tags</dt>
+                    <dd>{ caller.prioritized_tags.length }</dd>
+                    <dt>Excluded tags</dt>
+                    <dd>{ caller.excluded_tags.length }</dd>
+                </dl>
             </li>
         );
     }
