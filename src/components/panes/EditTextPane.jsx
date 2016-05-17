@@ -55,6 +55,11 @@ export default class EditTextPane extends PaneBase {
 
     onChange(text, medium) {
         let docId = this.getParam(0);
+
+        // TODO: Remove saveSelection/restoreSelection once bug is fixed in the
+        //       react-medium-editor component library.
+        medium.saveSelection();
         this.props.dispatch(saveTextDocument(docId, text));
+        medium.restoreSelection();
     }
 }
