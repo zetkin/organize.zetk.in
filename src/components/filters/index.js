@@ -3,7 +3,7 @@ import JoinDateFilter from './JoinDateFilter';
 import PersonDataFilter from './PersonDataFilter';
 
 const filterComponents = {
-    'campaign': CampaignFilter,
+    'campaign_participation': CampaignFilter,
     'join_date': JoinDateFilter,
     'person_data': PersonDataFilter
 };
