@@ -8,6 +8,7 @@ export default class CallerList extends React.Component {
     static propTypes = {
         callers: React.PropTypes.array.isRequired,
         onSelect: React.PropTypes.func.isRequired,
+        onRemove: React.PropTypes.func.isRequired,
     };
 
     render() {
@@ -15,7 +16,8 @@ export default class CallerList extends React.Component {
             <ul className="CallerList">
             { this.props.callers.map(c => (
                 <CallerListItem key={ c.id } caller={ c }
-                    onSelect={ this.props.onSelect.bind(this) }/>
+                    onSelect={ this.props.onSelect.bind(this) }
+                    onRemove={ this.props.onRemove.bind(this) }/>
             )) }
             </ul>
         );

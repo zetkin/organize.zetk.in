@@ -6,6 +6,7 @@ import Avatar from '../Avatar';
 export default class CallerListItem extends React.Component {
     static propTypes = {
         onSelect: React.PropTypes.func.isRequired,
+        onRemove: React.PropTypes.func,
         caller: React.PropTypes.shape({
             id: React.PropTypes.any.isRequired, // TODO: Use string
             first_name: React.PropTypes.string.isRequired,
@@ -32,7 +33,17 @@ export default class CallerListItem extends React.Component {
                     <dt>Excluded tags</dt>
                     <dd>{ caller.excluded_tags.length }</dd>
                 </dl>
+
+                <a className="CallerListItem-removeButton"
+                    onClick={ this.onRemove.bind(this) }>x</a>
             </li>
         );
+    }
+
+    onRemove(ev) {
+        ev.stopPropagation();
+        if (this.props.onRemove) {
+            this.props.onRemove(this.props.caller);
+        }
     }
 }

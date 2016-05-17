@@ -77,6 +77,21 @@ export function addCallAssignmentCallers(id, callerIds) {
     };
 };
 
+export function removeCallAssignmentCaller(id, callerId) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.REMOVE_CALL_ASSIGNMENT_CALLER,
+            meta: { id, callerId },
+            payload: {
+                promise: Z.resource('orgs', orgId, 'call_assignments', id,
+                    'callers', callerId).del(),
+            }
+        });
+    }
+}
+
 export function addCallerPrioritizedTags(assignmentId, callerId, tagIds) {
     return function(dispatch, getState) {
         let orgId = getState().org.activeId;

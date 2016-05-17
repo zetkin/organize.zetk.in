@@ -3,6 +3,7 @@ import {
     createList,
     createListItems,
     getListItemById,
+    removeListItem,
     updateOrAddListItem,
     updateOrAddListItems,
 } from '../utils/store';
@@ -71,6 +72,18 @@ export default function callAssignments(state = null, action) {
 
             assignment.callerList = updateOrAddListItems(assignment.callerList,
                 addedCallers, { isPending: false, error: null });
+
+            return Object.assign({}, state, {
+                assignmentList: updateOrAddListItem(state.assignmentList,
+                    assignment.id, assignment)
+            });
+
+        case types.REMOVE_CALL_ASSIGNMENT_CALLER + '_FULFILLED':
+            assignment = getListItemById(state.assignmentList,
+                action.meta.id).data;
+
+            assignment.callerList = removeListItem(assignment.callerList,
+                action.meta.callerId);
 
             return Object.assign({}, state, {
                 assignmentList: updateOrAddListItem(state.assignmentList,

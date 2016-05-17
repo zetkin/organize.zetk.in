@@ -31,6 +31,22 @@
         }
     }
 
+    .CallerListItem-removeButton {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+
+    &:hover {
+        .CallerListItem-removeButton {
+            opacity: 1.0;
+            cursor: pointer;
+        }
+    }
+
     .Avatar {
         margin: 0;
         width: 50px;

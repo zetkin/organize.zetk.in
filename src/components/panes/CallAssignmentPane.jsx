@@ -10,6 +10,7 @@ import { createSelection } from '../../actions/selection';
 import {
     updateCallAssignment,
     addCallAssignmentCallers,
+    removeCallAssignmentCaller,
     retrieveCallAssignmentCallers,
 } from '../../actions/callAssignment';
 
@@ -72,7 +73,8 @@ export default class CallAssignmentPane extends PaneBase {
                 let callers = assignment.callerList.items.map(i => i.data);
                 callerContent = (
                     <CallerList callers={ callers }
-                        onSelect={ this.onSelectCaller.bind(this) }/>
+                        onSelect={ this.onSelectCaller.bind(this) }
+                        onRemove={ this.onRemoveCaller.bind(this) }/>
                 );
             }
 
@@ -119,6 +121,12 @@ export default class CallAssignmentPane extends PaneBase {
         let assignmentId = this.getParam(0);
 
         this.openPane('editcaller', assignmentId, caller.id);
+    }
+
+    onRemoveCaller(caller) {
+        let assignmentId = this.getParam(0);
+        this.props.dispatch(removeCallAssignmentCaller(
+            assignmentId, caller.id));
     }
 
     onClickAddCallers(ev) {
