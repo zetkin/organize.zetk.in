@@ -18,6 +18,7 @@ import EditQueryPane from './EditQueryPane';
 import MoveParticipantsPane from './MoveParticipantsPane';
 import PersonPane from './PersonPane';
 import QueryPane from './QueryPane';
+import SelectPeoplePane from './SelectPeoplePane';
 
 var _panes = {
     'actionday': ActionDayPane,
@@ -40,7 +41,8 @@ var _panes = {
     'moveparticipants': MoveParticipantsPane,
     'person': PersonPane,
     'query': QueryPane,
-    'reminder': ActionReminderPane
+    'reminder': ActionReminderPane,
+    'selectpeople': SelectPeoplePane,
 };
 
 export function resolvePane(name) {
