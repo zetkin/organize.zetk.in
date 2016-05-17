@@ -10,6 +10,9 @@ export const RETRIEVE_PERSON = 'RETRIEVE_PERSON';
 export const UPDATE_PERSON = 'UPDATE_PERSON';
 export const DELETE_PERSON = 'DELETE_PERSON';
 
+// Flux actions related to person tags
+export const RETRIEVE_PERSON_TAGS = 'RETRIEVE_PERSON_TAGS';
+
 // Redux actions related to locations
 export const CREATE_LOCATION = 'CREATE_LOCATION';
 export const RETRIEVE_LOCATIONS = 'RETRIEVE_LOCATIONS';
