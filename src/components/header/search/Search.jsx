@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import ScopeSelect from './ScopeSelect';
 import ActionDayMatch from './ActionDayMatch';
+import CallAssignmentMatch from './CallAssignmentMatch';
 import CampaignMatch from './CampaignMatch';
 import LocationMatch from './LocationMatch';
 import PersonMatch from './PersonMatch';
@@ -61,6 +62,9 @@ export default class Search extends React.Component {
                         case 'actionday':
                             Match = ActionDayMatch;
                             break;
+                        case 'call_assignment':
+                            Match = CallAssignmentMatch;
+                            break;
                         case 'campaign':
                             Match = CampaignMatch;
                             break;
@@ -114,6 +118,11 @@ export default class Search extends React.Component {
                 defaultBase = '/campaign/actions';
                 paneType = 'actionday';
                 params = [ match.data.date ];
+                break;
+            case 'call_assignment':
+                defaultBase = '/dialog/assignments';
+                paneType = 'callassignment';
+                params = [ match.data.id ];
                 break;
             case 'campaign':
                 defaultBase = '/campaign/actions';
