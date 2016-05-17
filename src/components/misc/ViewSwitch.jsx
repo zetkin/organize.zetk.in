@@ -11,7 +11,7 @@ export default class ViewSwitch extends React.Component {
             <div className="ViewSwitch">
             {stateNames.map(function(state) {
                 const label = states[state];
-                const classes = cx('viewswitch-state-' + state, {
+                const classes = cx('ViewSwitch-state-' + state, {
                     'selected': (state == this.props.selected)
                 });
 
