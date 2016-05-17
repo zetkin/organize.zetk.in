@@ -8,8 +8,10 @@ export default class DateInput extends InputBase {
         const value = this.props.value;
 
         return (
+        	<div className="DateInput">
             <input type="date" value={ value }
                 onChange={ this.onChange.bind(this) }/>
+          </div>
         );
     }
 }
