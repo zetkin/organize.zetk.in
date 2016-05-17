@@ -5,6 +5,7 @@ import Avatar from '../Avatar';
 
 export default class CallerListItem extends React.Component {
     static propTypes = {
+        onSelect: React.PropTypes.func.isRequired,
         caller: React.PropTypes.shape({
             id: React.PropTypes.any.isRequired, // TODO: Use string
             first_name: React.PropTypes.string.isRequired,
@@ -20,7 +21,9 @@ export default class CallerListItem extends React.Component {
 
         // TODO: Add buttons to edit or remove from list
         return (
-            <li className="CallerListItem">
+            <li className="CallerListItem"
+                onClick={ this.props.onSelect.bind(this, caller) }>
+
                 <Avatar person={ caller }/>
                 <span className="CallerListItem-name">{ name }</span>
             </li>

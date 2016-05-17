@@ -35,7 +35,7 @@ export default class CallAssignmentPane extends PaneBase {
         let assignmentItem = getListItemById(assignmentList, assignmentId);
 
         let queryItem = null;
-        if (assignmentItem) {
+        if (assignmentItem && assignmentItem.data.target) {
             let queryList = this.props.queries.queryList;
             let queryId = assignmentItem.data.target.id;
             queryItem = getListItemById(queryList, queryId);
@@ -70,7 +70,10 @@ export default class CallAssignmentPane extends PaneBase {
             let callerContent = null;
             if (assignment.callerList) {
                 let callers = assignment.callerList.items.map(i => i.data);
-                callerContent = <CallerList callers={ callers }/>;
+                callerContent = (
+                    <CallerList callers={ callers }
+                        onSelect={ this.onSelectCaller.bind(this) }/>
+                );
             }
 
             return [
@@ -110,6 +113,12 @@ export default class CallAssignmentPane extends PaneBase {
         else {
             return 'Loading';
         }
+    }
+
+    onSelectCaller(caller) {
+        let assignmentId = this.getParam(0);
+
+        this.openPane('editcaller', assignmentId, caller.id);
     }
 
     onClickAddCallers(ev) {

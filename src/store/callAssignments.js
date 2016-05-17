@@ -10,6 +10,8 @@ import {
 
 export default function callAssignments(state = null, action) {
     let assignment;
+    let caller;
+    let tags;
 
     switch (action.type) {
         case types.RETRIEVE_CALL_ASSIGNMENTS + '_PENDING':
@@ -37,6 +39,20 @@ export default function callAssignments(state = null, action) {
                 }
             });
 
+        case types.RETRIEVE_CALL_ASSIGNMENT + '_PENDING':
+            assignment = { id: action.meta.id };
+            return Object.assign({}, state, {
+                assignmentList: updateOrAddListItem(state.assignmentList,
+                    assignment.id, assignment, { isPending: true })
+            });
+
+        case types.RETRIEVE_CALL_ASSIGNMENT + '_FULFILLED':
+            assignment = action.payload.data.data;
+            return Object.assign({}, state, {
+                assignmentList: updateOrAddListItem(state.assignmentList,
+                    assignment.id, assignment, { isPending: false })
+            });
+
         case types.RETRIEVE_CALL_ASSIGNMENT_CALLERS + '_FULFILLED':
             assignment = {
                 id: action.meta.id,
@@ -59,6 +75,96 @@ export default function callAssignments(state = null, action) {
             return Object.assign({}, state, {
                 assignmentList: updateOrAddListItem(state.assignmentList,
                     assignment.id, assignment)
+            });
+
+        case types.ADD_CALLER_PRIORITIZED_TAGS + '_FULFILLED':
+            assignment = getListItemById(state.assignmentList,
+                action.meta.assignmentId).data;
+
+            caller = getListItemById(assignment.callerList,
+                action.meta.callerId).data;
+
+            tags = action.payload.map(p => p.data.data);
+
+            caller = Object.assign({}, caller, {
+                prioritized_tags: caller.prioritized_tags.concat(tags),
+            });
+
+            assignment = Object.assign({}, assignment, {
+                callerList: updateOrAddListItem(assignment.callerList,
+                    caller.id, caller),
+            });
+
+            return Object.assign({}, state, {
+                assignmentList: updateOrAddListItem(state.assignmentList,
+                    assignment.id, assignment),
+            });
+
+        case types.ADD_CALLER_EXCLUDED_TAGS + '_FULFILLED':
+            assignment = getListItemById(state.assignmentList,
+                action.meta.assignmentId).data;
+
+            caller = getListItemById(assignment.callerList,
+                action.meta.callerId).data;
+
+            tags = action.payload.map(p => p.data.data);
+
+            caller = Object.assign({}, caller, {
+                excluded_tags: caller.excluded_tags.concat(tags),
+            });
+
+            assignment = Object.assign({}, assignment, {
+                callerList: updateOrAddListItem(assignment.callerList,
+                    caller.id, caller),
+            });
+
+            return Object.assign({}, state, {
+                assignmentList: updateOrAddListItem(state.assignmentList,
+                    assignment.id, assignment),
+            });
+
+        case types.REMOVE_CALLER_PRIORITIZED_TAGS + '_FULFILLED':
+            assignment = getListItemById(state.assignmentList,
+                action.meta.assignmentId).data;
+
+            caller = getListItemById(assignment.callerList,
+                action.meta.callerId).data;
+
+            caller = Object.assign({}, caller, {
+                prioritized_tags: caller.prioritized_tags.filter(t =>
+                    action.meta.tagIds.indexOf(t.id) < 0)
+            });
+
+            assignment = Object.assign({}, assignment, {
+                callerList: updateOrAddListItem(assignment.callerList,
+                    caller.id, caller),
+            });
+
+            return Object.assign({}, state, {
+                assignmentList: updateOrAddListItem(state.assignmentList,
+                    assignment.id, assignment),
+            });
+
+        case types.REMOVE_CALLER_EXCLUDED_TAGS + '_FULFILLED':
+            assignment = getListItemById(state.assignmentList,
+                action.meta.assignmentId).data;
+
+            caller = getListItemById(assignment.callerList,
+                action.meta.callerId).data;
+
+            caller = Object.assign({}, caller, {
+                excluded_tags: caller.excluded_tags.filter(t =>
+                    action.meta.tagIds.indexOf(t.id) < 0)
+            });
+
+            assignment = Object.assign({}, assignment, {
+                callerList: updateOrAddListItem(assignment.callerList,
+                    caller.id, caller),
+            });
+
+            return Object.assign({}, state, {
+                assignmentList: updateOrAddListItem(state.assignmentList,
+                    assignment.id, assignment),
             });
 
         case types.UPDATE_CALL_ASSIGNMENT + '_FULFILLED':

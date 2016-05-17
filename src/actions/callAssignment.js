@@ -17,16 +17,15 @@ export function retrieveCallAssignments() {
     };
 }
 
-export function retrieveCallAssignmentCallers(id) {
+export function retrieveCallAssignment(id) {
     return function(dispatch, getState) {
         let orgId = getState().org.activeId;
 
         dispatch({
-            type: types.RETRIEVE_CALL_ASSIGNMENT_CALLERS,
+            type: types.RETRIEVE_CALL_ASSIGNMENT,
             meta: { id },
             payload: {
-                promise: Z.resource('orgs', orgId, 'call_assignments', id,
-                    'callers').get(),
+                promise: Z.resource('orgs', orgId, 'call_assignments', id).get()
             }
         });
     };
@@ -77,6 +76,78 @@ export function addCallAssignmentCallers(id, callerIds) {
         });
     };
 };
+
+export function addCallerPrioritizedTags(assignmentId, callerId, tagIds) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        let promises = tagIds.map(tagId => Z.resource('orgs', orgId,
+            'call_assignments', assignmentId, 'callers', callerId,
+            'prioritized_tags', tagId).put());
+
+        dispatch({
+            type: types.ADD_CALLER_PRIORITIZED_TAGS,
+            meta: { assignmentId, callerId, tagIds },
+            payload: {
+                promise: Promise.all(promises),
+            }
+        });
+    };
+}
+
+export function removeCallerPrioritizedTags(assignmentId, callerId, tagIds) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        let promises = tagIds.map(tagId => Z.resource('orgs', orgId,
+            'call_assignments', assignmentId, 'callers', callerId,
+            'prioritized_tags', tagId).del());
+
+        dispatch({
+            type: types.REMOVE_CALLER_PRIORITIZED_TAGS,
+            meta: { assignmentId, callerId, tagIds },
+            payload: {
+                promise: Promise.all(promises),
+            }
+        });
+    };
+}
+
+export function addCallerExcludedTags(assignmentId, callerId, tagIds) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        let promises = tagIds.map(tagId => Z.resource('orgs', orgId,
+            'call_assignments', assignmentId, 'callers', callerId,
+            'excluded_tags', tagId).put());
+
+        dispatch({
+            type: types.ADD_CALLER_EXCLUDED_TAGS,
+            meta: { assignmentId, callerId, tagIds },
+            payload: {
+                promise: Promise.all(promises),
+            }
+        });
+    };
+}
+
+export function removeCallerExcludedTags(assignmentId, callerId, tagIds) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        let promises = tagIds.map(tagId => Z.resource('orgs', orgId,
+            'call_assignments', assignmentId, 'callers', callerId,
+            'excluded_tags', tagId).del());
+
+        dispatch({
+            type: types.REMOVE_CALLER_EXCLUDED_TAGS,
+            meta: { assignmentId, callerId, tagIds },
+            payload: {
+                promise: Promise.all(promises),
+            }
+        });
+    };
+}
 
 export function createCallAssignmentDraft(type, config) {
     let assignment = {
