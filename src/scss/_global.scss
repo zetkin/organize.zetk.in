@@ -58,7 +58,7 @@ button{
     }
 }
 
-.viewswitch {
+.ViewSwitch {
     button {
         height: 25px;
         padding: 5px;
@@ -76,15 +76,15 @@ button{
         }
     }
 
-    &.viewswitch-state-calendar{
+    .viewswitch-state-cal{
         @include icon-button($fa-var-calendar);
     }
 
-    &.viewswitch-state-list{
+    .viewswitch-state-list{
         @include icon-button($fa-var-list-alt);
     }
 
-    &.viewswitch-state-map{
+    .viewswitch-state-map{
         @include icon-button($fa-var-map-o);
     }
 }
