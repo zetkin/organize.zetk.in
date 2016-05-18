@@ -1,0 +1,38 @@
+.CallerList {
+    .CallerList-addItem {
+        border: 2px dashed $c-ui-dark;
+        text-align: center;
+        padding: 15px 10px;
+        margin: 0 0 10px;
+
+        transition: border-color 0.3s;
+
+        p {
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+
+        a {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+
+    .CallerListItem {
+        transition: opacity 0.2s;
+    }
+
+    &.CallerList-isPersonOver {
+        .CallerList-addItem {
+            border-color: $c-ui-darker;
+
+            p {
+                opacity: 0;
+            }
+        }
+
+        .CallerListItem {
+            opacity: 0.5;
+        }
+    }
+}

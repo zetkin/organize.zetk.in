@@ -73,6 +73,7 @@ export default class CallAssignmentPane extends PaneBase {
                 let callers = assignment.callerList.items.map(i => i.data);
                 callerContent = (
                     <CallerList callers={ callers }
+                        onAdd={ this.onAddCaller.bind(this) }
                         onSelect={ this.onSelectCaller.bind(this) }
                         onRemove={ this.onRemoveCaller.bind(this) }/>
                 );
@@ -107,8 +108,6 @@ export default class CallAssignmentPane extends PaneBase {
                     className="CallAssignmentPane-callers">
                     <h3>Callers</h3>
                     { callerContent }
-                    <a onClick={ this.onClickAddCallers.bind(this) }>
-                        Add callers</a>
                 </div>
             ];
         }
@@ -129,17 +128,24 @@ export default class CallAssignmentPane extends PaneBase {
             assignmentId, caller.id));
     }
 
-    onClickAddCallers(ev) {
+    onAddCaller(caller) {
         let assignmentId = this.getParam(0);
-        let instructions = 'Select people to be added as callers';
 
-        // TODO: Add existing callers as pre-selection
-        let action = createSelection('person', null, instructions, ids => {
+        if (caller) {
+            let ids = [ caller.id ];
             this.props.dispatch(addCallAssignmentCallers(assignmentId, ids));
-        });
+        }
+        else {
+            let instructions = 'Select people to be added as callers';
 
-        this.props.dispatch(action);
-        this.openPane('selectpeople', action.payload.id);
+            // TODO: Add existing callers as pre-selection
+            let action = createSelection('person', null, instructions, ids => {
+                this.props.dispatch(addCallAssignmentCallers(assignmentId, ids));
+            });
+
+            this.props.dispatch(action);
+            this.openPane('selectpeople', action.payload.id);
+        }
     }
 
     onClickEditTarget(ev) {

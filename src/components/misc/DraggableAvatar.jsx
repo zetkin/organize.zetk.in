@@ -27,6 +27,11 @@ const personSource = {
         if (targetType == 'contact' && dropResult.onSetContact) {
             dropResult.onSetContact(person);
         }
+
+        // TODO: Use a more generalized interface like this everywhere?
+        if (dropResult.onDropPerson) {
+            dropResult.onDropPerson(person, targetType);
+        }
     }
 }
 
