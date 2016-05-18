@@ -1,0 +1,15 @@
+.TagCloud {
+    .TagCloud-addButton {
+        display: block;
+        padding-top: 10px;
+        float: left;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    &:after {
+        display: block;
+        content: "";
+        clear: both;
+    }
+}

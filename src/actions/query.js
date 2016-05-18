@@ -1,3 +1,5 @@
+import Z from 'zetkin';
+
 import * as types from '.';
 
 
@@ -6,6 +8,20 @@ import * as types from '.';
 export function retrieveQueries() {
     return {
         type: types.RETRIEVE_QUERIES,
+    };
+}
+
+export function retrieveQueryMatches(id) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_QUERY_MATCHES,
+            meta: { id },
+            payload: {
+                promise: Z.resource('orgs', orgId,
+                    'people', 'queries', id, 'matches').get(),
+            }
+        });
     };
 }
 

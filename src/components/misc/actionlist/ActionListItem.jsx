@@ -18,6 +18,7 @@ const actionTarget = {
     },
 
     drop(props) {
+        // TODO: Use generalized onDropPerson instead
         return {
             targetType: 'participant',
             onAddParticipant: props.onAddParticipant,
@@ -41,6 +42,7 @@ const contactTarget = {
     },
 
     drop(props) {
+        // TODO: Use generalized onDropPerson instead
         return {
             targetType: 'contact',
             onMoveParticipant: props.onMoveParticipant,

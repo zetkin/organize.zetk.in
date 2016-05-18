@@ -1,0 +1,55 @@
+.CallerListItem {
+    @include card;
+
+    position: relative;
+    padding: 10px;
+    margin: 0 0 10px;
+
+    .CallerListItem-name {
+        position: absolute;
+        left: 70px;
+        top: 10px;
+
+        font-size: 20px;
+    }
+
+    .CallerListItem-tags {
+        position: absolute;
+        lefT: 70px;
+        top: 25px;
+
+        dt {
+            padding: 0;
+            float: left;
+            clear: left;
+            width: 70px;
+        }
+
+        dd {
+            padding: 0;
+            float: left;
+        }
+    }
+
+    .CallerListItem-removeButton {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+
+    &:hover {
+        .CallerListItem-removeButton {
+            opacity: 1.0;
+            cursor: pointer;
+        }
+    }
+
+    .Avatar {
+        margin: 0;
+        width: 50px;
+        height: 50px;
+    }
+}

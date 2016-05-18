@@ -83,6 +83,10 @@ gulp.task('buildSass', [ 'cleanSass' ], function() {
             'src/scss/font-awesome/zetkin-font-awesome.scss',
             'src/scss/_global.scss',
             'src/!(scss)/**/*.scss',
+
+            // TODO: Replace with webpack loading
+            'node_modules/medium-editor/dist/css/medium-editor.css',
+            'node_modules/medium-editor/dist/css/themes/default.css',
         ])
         .pipe(concat('style.scss'))
         .pipe(sass())

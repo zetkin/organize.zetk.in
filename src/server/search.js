@@ -39,6 +39,10 @@ function search(ws, req) {
             searchFuncs.push(searchCampaigns);
         }
 
+        if (!msg.scope || msg.scope == 'dialog') {
+            searchFuncs.push(searchCallAssignments);
+        }
+
         queue = new SearchQueue(msg.org, msg.query, writeFunc, searchFuncs);
         queue.run();
     });
@@ -146,6 +150,20 @@ function searchLocations(orgId, q, writeMatch) {
                 }
             }
         })
+}
+
+function searchCallAssignments(orgId, q, writeMatch) {
+    return Z.resource('orgs', orgId, 'call_assignments').get()
+        .then(function(result) {
+            let assignments = result.data.data;
+
+            for (let i = 0; i < assignments.length; i++) {
+                let assignment = assignments[i];
+                if (searchMatches(q, assignment)) {
+                    writeMatch(q, 'call_assignment', assignment);
+                };
+            }
+        });
 }
 
 function searchCampaigns(orgId, q, writeMatch) {

@@ -17,7 +17,7 @@ export default class Avatar extends React.Component {
 
 Avatar.propTypes = {
     person: React.PropTypes.shape({
-        id: React.PropTypes.number,
+        id: React.PropTypes.any, // TODO: Use string
         first_name: React.PropTypes.string,
         last_name: React.PropTypes.string
     })

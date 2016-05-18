@@ -25,7 +25,7 @@ export default class QueryPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        const filters = data.queryItem? data.queryItem.data.filters : [];
+        const filters = data.queryItem? data.queryItem.data.filter_spec : [];
         const filterElements = [];
 
         for (let i = 0; i < filters.length; i++) {
@@ -33,14 +33,14 @@ export default class QueryPane extends PaneBase {
             let FilterComponent = resolveFilterComponent(filter.type);
 
             filterElements.push(
-                <FilterComponent key={ i } config={ filter.config }
+                <FilterComponent key={ i } config={ filter }
                     onFilterRemove={ this.onFilterRemove.bind(this, i) }
                     onFilterChange={ this.onFilterChange.bind(this, i) }/>
             );
         }
 
         const filterTypes = {
-            'campaign': 'Campaign participation',
+            'campaign_participation': 'Campaign participation',
             'join_date': 'Join date',
             'person_data': 'Person data'
         };
