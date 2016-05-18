@@ -1,6 +1,40 @@
 .ViewSwitch{
-    font-size: 1.4em;
-    button:first-of-type{
-        border-right-width: 0;
+    display: inline-block;
+    button {
+    	@include input-base;
+
+        width: auto;
+        padding: 8px 10px;
+
+        &:focus {
+            outline: 0;
+            border-color: #eaeaea;
+        }
+
+        &:first-child {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        &:last-child {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        &.selected {
+            background-color: #eee;
+        }
+    }
+
+    .ViewSwitch-state-cal{
+        @include icon-button($fa-var-calendar);
+        //@include icon-button-only();
+    }
+
+    .ViewSwitch-state-list{
+        @include icon-button($fa-var-list-alt);
+    }
+
+    .ViewSwitch-state-map{
+        @include icon-button($fa-var-map-o);
     }
 }

@@ -112,7 +112,7 @@ export default class RelSelectInput extends InputBase {
                     if (showEditLink) {
                         editLink = <a className="RelSelectInput-editLink"
                             onMouseDown={ this.onClickEdit.bind(this, obj) }>
-                            Edit</a>;
+                            <i className="fa fa-pencil"></i></a>;
                     }
 
                     return (

@@ -21,7 +21,6 @@ import MapsSection from './sections/maps/MapsSection';
 export default class App extends React.Component {
     render() {
         let stateJson = JSON.stringify(this.props.initialState);
-
         return (
             <html>
                 <head>

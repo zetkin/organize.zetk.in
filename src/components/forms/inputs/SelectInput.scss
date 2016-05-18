@@ -1,0 +1,10 @@
+select{
+    @include input-base;
+    background: inherit;
+    font-family: inherit;
+    height: 33px;
+
+    &:focus{
+        padding: calc(0.25em - 1px);
+    }
+}

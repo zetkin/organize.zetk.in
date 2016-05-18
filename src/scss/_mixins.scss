@@ -16,28 +16,45 @@
 
 @mixin input-base {
     font-size: 1.25em;
-    border: 1px solid #ddd;
-    padding: 5px;
-    margin: 0 auto 10px;
+    border: 1px solid #eaeaea;
+    padding: 8px 5px;
+    margin: 0 auto 15px;
     width: 100%;
+    border-radius: 2px;
+    color: inherit;
     &:focus{
         outline: none;
         border-color: #ccc;
     }
 }
 
+@mixin button-color($color) {
+    background-color: $color;
+    border-color: darken($color, 10);
+    &:hover {
+        @include button-active($color, 10);
+    }
+    &:focus {
+        border-color: darken($color, 15);
+        background-color: darken($color, 15);
+    }
+}
+
+@mixin button-active($color, $amount) {
+    background-color: darken($color, $amount);
+    border-color: darken($color, $amount*2);
+}
+
 @mixin button {
-    font-size: 1.25em;
+    font-size: 1.4em;
+    font-weight: 500;
     border-width: 0;
     display: inline-block;
-    padding: 0.5em;
-    background-color: $c-brand-complement;
+    padding: 1.2em 1em 0.9em;
     color: $c-text-contrast;
-    &:hover,
-    &:focus{
-        outline: none;
-        color: $c-ui-focus;
-    }
+    border-bottom: 3px solid;
+    border-radius: 3px;
+    @include button-color($c-brand-complement);
 }
 
 @mixin key-reference {
@@ -62,18 +79,25 @@
 }
 
 @mixin icon-button($fa-character) {
-    width: 3em;
     padding: .35em 1em .25em;
     text-align: center;
     display: inline-block;
-    color: transparent;
     overflow: hidden;
     &::before{
         @include icon($fa-character);
         display: inline;
+        margin-right: .5em;
+    }
+}
+
+@mixin icon-button-only() {
+    width: 3em;
+    color: transparent;
+    &::before{
         color: $c-ui-darker;
     }
 }
+
 @mixin icon-button-add($fa-character) {
     @include icon-button($fa-character);
     padding: .35em .75em .25em;
