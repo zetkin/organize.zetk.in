@@ -84,6 +84,8 @@ export default class CallAssignmentPane extends PaneBase {
                     className="CallAssignmentPane-summary">
                     <h3>Assignment summary</h3>
                     <p>{ assignment.description }</p>
+                    <a onClick={ this.onClickEditSettings.bind(this) }>
+                        Edit basic settings</a>
                 </div>,
 
                 <div key="instructions"
@@ -146,6 +148,11 @@ export default class CallAssignmentPane extends PaneBase {
             this.props.dispatch(action);
             this.openPane('selectpeople', action.payload.id);
         }
+    }
+
+    onClickEditSettings(ev) {
+        let assignmentId = this.getParam(0);
+        this.openPane('editcallassignment', assignmentId);
     }
 
     onClickEditTarget(ev) {
