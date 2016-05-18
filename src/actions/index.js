@@ -95,6 +95,7 @@ export const REMOVE_CALLER_EXCLUDED_TAGS = 'REMOVE_CALLER_EXCLUDED_TAGS';
 
 // Flux actions related to calls
 export const RETRIEVE_CALLS = 'RETRIEVE_CALLS';
+export const RETRIEVE_CALL = 'RETRIEVE_CALL';
 
 // Flux actions related to text documents
 export const CREATE_TEXT_DOCUMENT = 'CREATE_TEXT_DOCUMENT';

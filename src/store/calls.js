@@ -1,5 +1,5 @@
 import * as types from '../actions';
-import { createList } from '../utils/store';
+import { createList, updateOrAddListItem } from '../utils/store';
 
 
 export default function calls(state = null, action) {
@@ -11,7 +11,21 @@ export default function calls(state = null, action) {
 
         case types.RETRIEVE_CALLS + '_FULFILLED':
             return Object.assign({
-                callList: createList(action.payload.data.data, { isPending: false })
+                callList: createList(action.payload.data.data,
+                    { isPending: false })
+            });
+
+        case types.RETRIEVE_CALL + '_PENDING':
+            return Object.assign({
+                callList: updateOrAddListItem(state.callList,
+                    action.meta.id, null, { isPending: true }),
+            });
+
+        case types.RETRIEVE_CALL + '_FULFILLED':
+            let call = action.payload.data.data;
+            return Object.assign({
+                callList: updateOrAddListItem(state.callList,
+                    call.id, call, { isPending: false, error: null }),
             });
 
         default:
