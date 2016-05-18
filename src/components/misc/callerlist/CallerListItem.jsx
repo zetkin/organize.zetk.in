@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Avatar from '../Avatar';
+import DraggableAvatar from '../DraggableAvatar';
 
 
 export default class CallerListItem extends React.Component {
@@ -25,7 +25,7 @@ export default class CallerListItem extends React.Component {
             <li className="CallerListItem"
                 onClick={ this.props.onSelect.bind(this, caller) }>
 
-                <Avatar person={ caller }/>
+                <DraggableAvatar person={ caller }/>
                 <span className="CallerListItem-name">{ name }</span>
                 <dl className="CallerListItem-tags">
                     <dt>Prioritized tags</dt>
