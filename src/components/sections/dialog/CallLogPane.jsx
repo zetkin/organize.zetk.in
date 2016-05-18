@@ -22,9 +22,17 @@ export default class CallLogPane extends PaneBase {
             <ul key="list">
             { data.callList.items.map(i => {
                 let c = i.data;
-                return <li key={ c.id }>{ c.target.name }</li>;
+                if (c) {
+                    return <li key={ c.id }
+                        onClick={ this.onClickCall.bind(this, c) }>
+                            { c.target.name }</li>;
+                }
             }) }
             </ul>
         ];
+    }
+
+    onClickCall(call) {
+        this.openPane('call', call.id);
     }
 }
