@@ -2,6 +2,7 @@ import ActionDayPane from './ActionDayPane';
 import ActionReminderPane from './ActionReminderPane';
 import AddActionPane from './AddActionPane';
 import AddActivityPane from './AddActivityPane';
+import AddCallAssignmentPane from './AddCallAssignmentPane';
 import AddCampaignPane from './AddCampaignPane';
 import AddPersonPane from './AddPersonPane';
 import AddLocationPane from './AddLocationPane';
@@ -27,10 +28,11 @@ var _panes = {
     'actionday': ActionDayPane,
     'addaction': AddActionPane,
     'addactivity': AddActivityPane,
-    'addperson': AddPersonPane,
+    'addcallassignment': AddCallAssignmentPane,
     'addcampaign': AddCampaignPane,
     'addlocationwithmap': AddLocationWithMapPane,
     'addlocation': AddLocationPane,
+    'addperson': AddPersonPane,
     'callassignment': CallAssignmentPane,
     'campaign': CampaignPane,
     'editaction': EditActionPane,

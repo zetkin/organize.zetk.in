@@ -4,6 +4,21 @@ import * as types from '.';
 import makeRandomString from '../utils/makeRandomString';
 
 
+export function createCallAssignment(data, draftId) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.CREATE_CALL_ASSIGNMENT,
+            meta: { draftId },
+            payload: {
+                promise: Z.resource('orgs', orgId,
+                    'call_assignments').post(data)
+            },
+        });
+    };
+}
+
 export function retrieveCallAssignments() {
     return function(dispatch, getState) {
         let orgId = getState().org.activeId;
@@ -165,10 +180,16 @@ export function removeCallerExcludedTags(assignmentId, callerId, tagIds) {
 }
 
 export function createCallAssignmentDraft(type, config) {
+    let startDate = Date.utc.create();
+    let endDate = (30).daysAfter(startDate);
+
     let assignment = {
         // Prepend ID with $ to designate draft
         id: '$' + makeRandomString(6),
+        start_date: startDate.format('{yyyy}-{MM}-{dd}'),
+        end_date: endDate.format('{yyyy}-{MM}-{dd}'),
         filter_spec: [],
+        cooldown: 3,
     };
 
     // TODO: Improve these suggestions
@@ -188,6 +209,11 @@ export function createCallAssignmentDraft(type, config) {
             assignment.title = config.campaign.title;
             assignment.description = 'Mobilize activists for campaign "' +
                 config.campaign.title + '"';
+            assignment.filter_spec.push({
+                type: 'campaign_participation',
+                operator: 'notin',
+                campaign: config.campaign.id,
+            });
             break;
 
         case 'survey':

@@ -15,11 +15,11 @@ export default class CallAssignmentForm extends React.Component {
             start_date: React.PropTypes.string.isRequired,
             end_date: React.PropTypes.string.isRequired,
             cooldown: React.PropTypes.number.isRequired,
-        }).isRequired,
+        }),
     }
 
     render() {
-        let assignment = this.props.assignment;
+        let assignment = this.props.assignment || {};
 
         return (
             <Form className="CallAssignmentForm" ref="form" { ...this.props }>

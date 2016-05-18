@@ -15,6 +15,13 @@ export default function callAssignments(state = null, action) {
     let tags;
 
     switch (action.type) {
+        case types.CREATE_CALL_ASSIGNMENT + '_FULFILLED':
+            assignment = action.payload.data.data;
+            return Object.assign({}, state, {
+                assignmentList: updateOrAddListItem(state.assignmentList,
+                    action.meta.draftId || assignment.id, assignment),
+            });
+
         case types.RETRIEVE_CALL_ASSIGNMENTS + '_PENDING':
             return Object.assign({}, state, {
                 assignmentList: Object.assign({}, state.assignmentList, {

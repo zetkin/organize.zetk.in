@@ -44,6 +44,6 @@ export default class CallAssignmentTemplatePane extends PaneBase {
     onCreate(type, values) {
         let action = createCallAssignmentDraft(type, values);
         this.props.dispatch(action);
-        this.openPane('callassignment', action.payload.assignment.id);
+        this.openPane('addcallassignment', action.payload.assignment.id);
     }
 }
