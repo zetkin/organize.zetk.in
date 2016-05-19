@@ -17,9 +17,8 @@ export default class MobilizeTemplate extends React.Component {
 
         return (
             <AssignmentTemplate type="mobilize"
-                title="Mobilize" image=""
-                onCreate={ this.onCreate.bind(this) }>
-                Call to mobilize people to the campaign
+                title="Mobilize" onCreate={ this.onCreate.bind(this) }>
+                Call to mobilize people to participate in the campaign
                 <SelectInput name="campaign"
                     initialValue={ initialValue }
                     options={ options }/>
