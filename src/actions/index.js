@@ -73,6 +73,7 @@ export const CLEAR_SEARCH = 'CLEAR_SEARCH';
 
 // Flux actions related to queries
 export const RETRIEVE_QUERIES = 'RETRIEVE_QUERIES';
+export const RETRIEVE_QUERY = 'RETRIEVE_QUERY';
 export const RETRIEVE_QUERY_MATCHES = 'RETRIEVE_QUERY_MATCHES';
 export const CREATE_QUERY = 'CREATE_QUERY';
 export const UPDATE_QUERY_FILTER = 'UPDATE_FILTER';

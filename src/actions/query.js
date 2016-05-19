@@ -3,11 +3,30 @@ import Z from 'zetkin';
 import * as types from '.';
 
 
-// TODO: Implement API calls for all of these
-
 export function retrieveQueries() {
-    return {
-        type: types.RETRIEVE_QUERIES,
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_QUERIES,
+            payload: {
+                promise: Z.resource('orgs', orgId, 'people', 'queries').get(),
+            }
+        });
+    }
+}
+
+export function retrieveQuery(id) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_QUERY,
+            meta: { id },
+            payload: {
+                promise: Z.resource('orgs', orgId, 'people', 'queries',
+                    id).get()
+            },
+        });
     };
 }
 
