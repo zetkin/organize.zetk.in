@@ -46,7 +46,11 @@ export default class PeopleListPane extends PaneBase {
         let queryId = this.state.selectedQueryId;
         let queryList = this.props.queries.queryList;
         let query = getListItemById(queryList, queryId);
-        let queries = queryList.items.map(i => i.data);
+
+        // Only include queries that have a title
+        // TODO: Find some better way to filter out call assignment queries,
+        //       e.g. a proper type attribute on the query
+        let queries = queryList.items.map(i => i.data).filter(q => q.title);
 
         return [
             <RelSelectInput key="querySelect" name="querySelect"
