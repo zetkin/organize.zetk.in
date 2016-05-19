@@ -1,0 +1,49 @@
+.CallListItem {
+    position: relative;
+    margin: 0.5em 0;
+    padding: 0.5em;
+    height: 6em;
+    background-color: white;
+    box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
+
+    &::after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+
+    .Avatar {
+        width: 50px;
+        height: 50px;
+    }
+
+    .CallListItem-callIcon {
+        padding: 0 5px;
+        position: relative;
+        top: -20px;
+    }
+
+    .CallListItem-target {
+        position: absolute;
+        left: 140px;
+        top: 10px;
+    }
+
+    .CallListItem-caller {
+        position: absolute;
+        left: 140px;
+        top: 30px;
+    }
+
+    .CallListItem-time {
+        position: absolute;
+        left: 300px;
+        top: 10px;
+    }
+
+    .CallListItem-status {
+        position: absolute;
+        left: 300px;
+        top: 30px;
+    }
+}

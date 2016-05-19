@@ -1,0 +1,11 @@
+.CallList {
+    .ListHeader {
+        li:nth-child(1) {
+            left: 140px;
+        }
+
+        li:nth-child(2) {
+            left: 300px;
+        }
+    }
+}

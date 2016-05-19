@@ -7,6 +7,7 @@ import AddCampaignPane from './AddCampaignPane';
 import AddPersonPane from './AddPersonPane';
 import AddLocationPane from './AddLocationPane';
 import AddLocationWithMapPane from './AddLocationWithMapPane';
+import CallPane from './CallPane';
 import CallAssignmentPane from './CallAssignmentPane';
 import CampaignPane from './CampaignPane';
 import EditActionPane from './EditActionPane';
@@ -33,6 +34,7 @@ var _panes = {
     'addlocationwithmap': AddLocationWithMapPane,
     'addlocation': AddLocationPane,
     'addperson': AddPersonPane,
+    'call': CallPane,
     'callassignment': CallAssignmentPane,
     'campaign': CampaignPane,
     'editaction': EditActionPane,
