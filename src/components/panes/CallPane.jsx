@@ -40,6 +40,17 @@ export default class CallPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        return [];
+        if (data.callItem) {
+            return [
+                <h3 key="notesHeader">Caller notes</h3>,
+                <p key="notes">
+                    { data.callItem.data.notes }
+                </p>
+            ];
+        }
+        else {
+            // TODO: Loading indicator?
+            return null;
+        }
     }
 }
