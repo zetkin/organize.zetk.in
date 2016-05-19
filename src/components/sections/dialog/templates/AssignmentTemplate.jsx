@@ -8,18 +8,18 @@ export default class AssignmentTemplate extends React.Component {
     static propTypes = {
         type: React.PropTypes.string.isRequired,
         title: React.PropTypes.string.isRequired,
-        image: React.PropTypes.string.isRequired,
     };
 
     render() {
         let type = this.props.type;
         let classes = cx('AssignmentTemplate', 'AssignmentTemplate-' + type);
+        let imgSrc = '/static/img/assignments/' + type + '.png';
 
         return (
             <div className={ classes }>
                 <h2>{ this.props.title }</h2>
                 <img className="AssignmentTemplate-image"
-                    src={ this.props.image }/>
+                    src={ imgSrc }/>
 
                 <div className="AssignmentTemplate-config">
                     <Form ref="form">
