@@ -28,6 +28,7 @@ function search(ws, req) {
 
         if (!msg.scope || msg.scope == 'people') {
             searchFuncs.push(searchPeople);
+            searchFuncs.push(searchPersonQueries);
         }
 
         if (!msg.scope || msg.scope == 'maps') {
@@ -135,6 +136,19 @@ function searchPeople(orgId, q, writeMatch) {
                 }
             }
         })
+}
+
+function searchPersonQueries(orgId, q, writeMatch) {
+    return Z.resource('orgs', orgId, 'people', 'queries').get()
+        .then(function(result) {
+            let queries = result.data.data;
+
+            for (let i = 0; i < queries.length; i++) {
+                if (searchMatches(q, queries[i])) {
+                    writeMatch(q, 'query', queries[i]);
+                }
+            }
+        });
 }
 
 function searchLocations(orgId, q, writeMatch) {
