@@ -36,6 +36,17 @@ export default function queries(state = null, action) {
                     query.id, query, { isPending: false, error: null }),
             });
 
+        case types.RETRIEVE_QUERY_MATCHES + '_PENDING':
+            query = {
+                id: action.meta.id,
+                matchList: createList(null, { isPending: true }),
+            };
+
+            return Object.assign({}, state, {
+                queryList: updateOrAddListItem(state.queryList,
+                    query.id, query)
+            });
+
         case types.RETRIEVE_QUERY_MATCHES + '_FULFILLED':
             query = {
                 id: action.meta.id,
