@@ -13,13 +13,12 @@ export default function StayInTouchTemplate(props) {
 
     return (
         <AssignmentTemplate type="stayintouch"
-            title="Stay in touch" image=""
-            onCreate={ props.onCreate }>
+            title="Stay in touch" onCreate={ props.onCreate }>
             Call everyone once every
             <SelectInput name="interval"
                 initialValue="6"
                 options={ options }/>
-            months.
+            months, just to stay in touch.
         </AssignmentTemplate>
     );
 }
