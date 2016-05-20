@@ -4,12 +4,21 @@ import { connect } from 'react-redux';
 import PaneBase from './PaneBase';
 import FilterList from '../filters/FilterList';
 import { getListItemById } from '../../utils/store';
-import { addQueryFilter, updateQueryFilter, removeQueryFilter
-    } from '../../actions/query';
+import {
+    addQueryFilter,
+    updateQueryFilter,
+    removeQueryFilter,
+    retrieveQuery,
+} from '../../actions/query';
 
 
 @connect(state => state)
-export default class QueryPane extends PaneBase {
+export default class EditQueryPane extends PaneBase {
+    componentDidMount() {
+        let queryId = this.getParam(0);
+        this.props.dispatch(retrieveQuery(queryId));
+    }
+
     getRenderData() {
         let queryList = this.props.queries.queryList;
         let queryId = this.getParam(0);
