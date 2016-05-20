@@ -1,8 +1,14 @@
-.FilterList-pseudoFilter {
-    border: 3px dashed #e8e8e8;
-    padding: 2em;
+.FilterList {
+    .DropContainer {
+        padding: 7px 0 8px;
+    }
 
-    select {
-        margin: 0;
+    .FilterList-pseudoFilter {
+        border: 3px dashed #e8e8e8;
+        padding: 2em;
+
+        select {
+            margin: 0;
+        }
     }
 }

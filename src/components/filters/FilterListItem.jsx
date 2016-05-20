@@ -1,9 +1,24 @@
 import React from 'react';
+import { DragSource } from 'react-dnd';
 
 import FilterOpSwitch from './FilterOpSwitch';
 import { resolveFilterComponent } from '.';
 
+const filterSource = {
+    beginDrag(props) {
+        return props.filter;
+    },
+};
 
+function collectSource(connect, monitor) {
+    return {
+        connectDragSource: connect.dragSource(),
+        isDragging: monitor.isDragging(),
+    };
+}
+
+
+@DragSource('filter', filterSource, collectSource)
 export default class FilterListItem extends React.Component {
     static propTypes = {
         filter: React.PropTypes.shape({
@@ -22,8 +37,16 @@ export default class FilterListItem extends React.Component {
     };
 
     render() {
-        let filter = this.props.filter;
-        let FilterComponent = resolveFilterComponent(filter.type);
+        let filterData = this.props.filter;
+
+        let FilterComponent = resolveFilterComponent(filterData.type);
+        let filter = this.props.connectDragSource(
+            <div className="FilterListItem-filter">
+                <FilterComponent config={ filterData.config }
+                    onFilterRemove={ this.onRemove.bind(this) }
+                    onConfigChange={ this.onChangeConfig.bind(this) }/>
+            </div>
+        );
 
         let opSwitch = null;
         if (this.props.showOpSwitch) {
@@ -36,9 +59,7 @@ export default class FilterListItem extends React.Component {
         return (
             <li className="FilterListItem">
                 { opSwitch }
-                <FilterComponent config={ filter.config }
-                    onFilterRemove={ this.onRemove.bind(this) }
-                    onConfigChange={ this.onChangeConfig.bind(this) }/>
+                { filter }
             </li>
         );
     }

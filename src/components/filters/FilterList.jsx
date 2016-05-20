@@ -1,9 +1,30 @@
+import cx from 'classnames';
 import React from 'react';
+import { DropTarget } from 'react-dnd';
 
 import FilterListItem from './FilterListItem';
+import DropContainer from '../misc/DropContainer';
 import makeRandomString from '../../utils/makeRandomString';
 
 
+const filterTarget = {
+    canDrop(props, monitor) {
+        // A filter can never be dropped onto the list. It must be dropped
+        // onto one of the DropContainers that are added between list items
+        // while isDraggingOver.
+        return false;
+    }
+}
+
+
+function collectTarget(connect, monitor) {
+    return {
+        connectDropTarget: connect.dropTarget(),
+        isDraggingOver: monitor.isOver(),
+    };
+}
+
+@DropTarget('filter', filterTarget, collectTarget)
 export default class FilterList extends React.Component {
     static propTypes = {
         filters: React.PropTypes.array.isRequired,
@@ -42,16 +63,38 @@ export default class FilterList extends React.Component {
             'person_data': 'Person data'
         };
 
-        return (
-            <div className="FilterList">
+        let items = [];
+        for (let i = 0; i < filters.length; i++) {
+            let filter = filters[i];
+
+            items.push(
+                <FilterListItem key={ filter.id } filter={ filter }
+                    showOpSwitch={ i > 0 && !this.props.isDraggingOver }
+                    onChangeConfig={ this.onChangeConfig.bind(this, i) }
+                    onChangeOp={ this.onChangeOp.bind(this, i) }
+                    onRemove={ this.onFilterRemove.bind(this, i) }/>
+            );
+
+            if (this.props.isDraggingOver) {
+                let key = 'dropAfter-' + filter.id;
+                items.push(
+                    <li key={ key }>
+                        <DropContainer type="filter"
+                            instructions="Drop here to move filter"
+                            onDrop={ this.onDrop.bind(this, i+1) }/>
+                    </li>
+                );
+            }
+        }
+
+        let classes = cx('FilterList', {
+            'FilterList-isDraggingOver': this.props.isDraggingOver,
+        });
+
+        return this.props.connectDropTarget(
+            <div className={ classes }>
                 <ul className="FilterList-items">
-                { filters.map((filter, idx) => {
-                    return <FilterListItem key={ filter.id } filter={ filter }
-                        showOpSwitch={ idx > 0 }
-                        onChangeConfig={ this.onChangeConfig.bind(this, idx) }
-                        onChangeOp={ this.onChangeOp.bind(this, idx) }
-                        onRemove={ this.onFilterRemove.bind(this, idx) }/>
-                }) }
+                { items }
                 </ul>
 
                 <div className="FilterList-pseudoFilter">
@@ -108,5 +151,23 @@ export default class FilterList extends React.Component {
         this.setState({
             filters: filters.filter((f, idx) => idx != filterIndex),
         });
+    }
+
+    onDrop(targetIdx, item) {
+        let filters = this.state.filters.concat();
+        let filter = filters.find(f => f.id == item.id);
+        let idx = filters.indexOf(filter);
+
+        // Remove old filter
+        filters.splice(idx, 1);
+
+        // If the new position is later in the array, it will now have
+        // been moved back by one, since an earlier filter was removed
+        if (targetIdx > idx) targetIdx--;
+
+        // Insert into it's new position
+        filters.splice(targetIdx, 0, item);
+
+        this.setState({ filters });
     }
 }
