@@ -29,6 +29,7 @@ export default function queries(state = null, action) {
                     query.id, query, { isPending: true }),
             });
 
+        case types.CREATE_QUERY + '_FULFILLED':
         case types.RETRIEVE_QUERY + '_FULFILLED':
             query = action.payload.data.data;
             return Object.assign({}, state, {

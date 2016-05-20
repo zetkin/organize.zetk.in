@@ -45,8 +45,21 @@ export function retrieveQueryMatches(id) {
 }
 
 export function createQuery(title) {
-    return {
-        type: types.CREATE_QUERY,
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        let data = {
+            title: title,
+            filter_spec: [],
+        };
+
+        dispatch({
+            type: types.CREATE_QUERY,
+            meta: { title },
+            payload: {
+                promise: Z.resource('orgs', orgId,
+                    'people', 'queries').post(data),
+            },
+        });
     };
 }
 
