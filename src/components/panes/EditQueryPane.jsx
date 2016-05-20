@@ -2,10 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
+import QueryForm from '../forms/QueryForm';
 import FilterList from '../filters/FilterList';
 import { getListItemById } from '../../utils/store';
 import {
     addQueryFilter,
+    updateQuery,
     updateQueryFilter,
     removeQueryFilter,
     retrieveQuery,
@@ -35,9 +37,13 @@ export default class EditQueryPane extends PaneBase {
 
     renderPaneContent(data) {
         if (data.queryItem && !data.queryItem.isPending) {
-            const filters = data.queryItem? data.queryItem.data.filter_spec : [];
+            let query = data.queryItem.data;
+            let filters = query.filter_spec;
 
             return [
+                <QueryForm key="form" ref="form" query={ query }
+                    onSubmit={ this.onSubmit.bind(this) }/>,
+                <h3 key="filterHeader">Filters</h3>,
                 <FilterList key="filters" filters={ filters }
                     onAppendFilter={ this.onAppendFilter.bind(this) }
                     onRemoveFilter={ this.onRemoveFilter.bind(this) }
@@ -48,6 +54,13 @@ export default class EditQueryPane extends PaneBase {
             // TODO: Show loading indicator
             return null;
         }
+    }
+
+    renderPaneFooter(data) {
+        return (
+            <button onClick={ this.onSubmit.bind(this) }>
+                Submit</button>
+        );
     }
 
     onAppendFilter(type) {
@@ -63,5 +76,16 @@ export default class EditQueryPane extends PaneBase {
     onRemoveFilter(filterIndex) {
         let queryId = this.getParam(0);
         this.props.dispatch(removeQueryFilter(queryId, filterIndex));
+    }
+
+    onSubmit(ev) {
+        ev.preventDefault();
+
+        let queryId = this.getParam(0);
+        let values = this.refs.form.getValues();
+
+        // TODO: Include filter spec
+
+        this.props.dispatch(updateQuery(queryId, values));
     }
 }
