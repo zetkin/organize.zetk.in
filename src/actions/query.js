@@ -1,6 +1,7 @@
 import Z from 'zetkin';
 
 import * as types from '.';
+import { getListItemById } from '../utils/store';
 
 
 export function retrieveQueries() {
@@ -63,11 +64,26 @@ export function createQuery(title) {
     };
 }
 
-export function addQueryFilter(queryId, filterType) {
-    return {
-        type: types.ADD_QUERY_FILTER,
-        payload: { filterType },
-    };
+export function addQueryFilter(id, filterType) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        let queryList = getState().queries.queryList;
+        let queryItem = getListItemById(queryList, id);
+
+        let data = {
+            filter_spec: queryItem.data.filter_spec.concat([{
+                type: filterType,
+            }])
+        };
+
+        dispatch({
+            type: types.ADD_QUERY_FILTER,
+            payload: {
+                promise: Z.resource('orgs', orgId,
+                    'people', 'queries', id).patch(data)
+            },
+        });
+    }
 }
 
 export function updateQueryFilter(queryId, filterIndex, filterConfig) {
