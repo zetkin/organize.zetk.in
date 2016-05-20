@@ -22,7 +22,7 @@ export default class FilterListItem extends React.Component {
             <li className="FilterListItem">
                 <FilterComponent config={ filter.config }
                     onFilterRemove={ this.onRemove.bind(this) }
-                    onFilterChange={ this.onChangeConfig.bind(this) }/>
+                    onConfigChange={ this.onChangeConfig.bind(this) }/>
             </li>
         );
     }

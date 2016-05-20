@@ -21,13 +21,12 @@ export default class PersonDataFilter extends FilterBase {
         };
 
         return (
-            <Form ref="form" onSubmit={ this.onFormSubmit.bind(this) }>
+            <Form ref="form" onValueChange={ this.onConfigChange.bind(this) }>
                 <SelectInput label="Match" name="field"
                     options={ fieldOptions }
                     initialValue={ config.field }/>
-                <TextInput label="Against" name="text"
-                    initialValue={ config.text }/>
-                <input type="submit"/>
+                <TextInput label="Against" name="content"
+                    initialValue={ config.content }/>
             </Form>
         );
     }

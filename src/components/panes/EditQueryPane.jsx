@@ -44,10 +44,7 @@ export default class EditQueryPane extends PaneBase {
                 <QueryForm key="form" ref="form" query={ query }
                     onSubmit={ this.onSubmit.bind(this) }/>,
                 <h3 key="filterHeader">Filters</h3>,
-                <FilterList ref="filters" key="filters" filters={ filters }
-                    onAppendFilter={ this.onAppendFilter.bind(this) }
-                    onRemoveFilter={ this.onRemoveFilter.bind(this) }
-                    onChangeFilter={ this.onChangeFilter.bind(this) }/>
+                <FilterList ref="filters" key="filters" filters={ filters }/>
             ];
         }
         else {
@@ -61,21 +58,6 @@ export default class EditQueryPane extends PaneBase {
             <button onClick={ this.onSubmit.bind(this) }>
                 Submit</button>
         );
-    }
-
-    onAppendFilter(type) {
-        let queryId = this.getParam(0);
-        this.props.dispatch(addQueryFilter(queryId, type));
-    }
-
-    onChangeFilter(filterIndex, config) {
-        let queryId = this.getParam(0);
-        this.props.dispatch(updateQueryFilter(queryId, filterIndex, config));
-    }
-
-    onRemoveFilter(filterIndex) {
-        let queryId = this.getParam(0);
-        this.props.dispatch(removeQueryFilter(queryId, filterIndex));
     }
 
     onSubmit(ev) {

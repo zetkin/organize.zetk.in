@@ -28,14 +28,13 @@ export default class CampaignFilter extends FilterBase {
         };
 
         return (
-            <Form ref="form" onSubmit={ this.onFormSubmit.bind(this) }>
+            <Form ref="form" onValueChange={ this.onConfigChange.bind(this) }>
                 <SelectInput label="People who" name="operator"
                     options={ operatorOptions }
                     initialValue={ config.operator }/>
                 <RelSelectInput label="Which campaign?" name="campaign"
                     objects={ campaigns } initialValue={ config.campaign }
                     showCreateOption={ false }/>
-                <input type="submit"/>
             </Form>
         );
     }

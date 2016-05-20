@@ -15,13 +15,12 @@ export default class JoinDateFilter extends FilterBase {
         };
 
         return (
-            <Form ref="form" onSubmit={ this.onFormSubmit.bind(this) }>
+            <Form ref="form" onValueChange={ this.onConfigChange.bind(this) }>
                 <SelectInput label="People who joined" name="operator"
                     options={ operatorOptions }
                     initialValue={ config.operator }/>
                 <DateInput label="Date" name="date"
                     initialValue={ config.date }/>
-                <input type="submit"/>
             </Form>
         );
     }

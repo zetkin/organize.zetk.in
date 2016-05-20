@@ -1,6 +1,7 @@
 import React from 'react';
 
 import FilterListItem from './FilterListItem';
+import makeRandomString from '../../utils/makeRandomString';
 
 
 export default class FilterList extends React.Component {
@@ -15,14 +16,18 @@ export default class FilterList extends React.Component {
         super(props);
 
         this.state = {
-            filters: props.filters,
+            filters: props.filters.map(f => Object.assign({}, f, {
+                id: makeRandomString(10),
+            })),
         };
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.filters != this.props.filters) {
             this.setState({
-                filters: nextProps.filters,
+                filters: nextProps.filters.map(f => Object.assign({}, f, {
+                    id: makeRandomString(10),
+                })),
             });
         }
     }
@@ -41,8 +46,7 @@ export default class FilterList extends React.Component {
             <div className="FilterList">
                 <ul className="FilterList-items">
                 { filters.map((filter, idx) => {
-                    let key = idx.toString() + '-' + JSON.stringify(filter);
-                    return <FilterListItem key={ key } filter={ filter }
+                    return <FilterListItem key={ filter.id } filter={ filter }
                         onChangeConfig={ this.onFilterChange.bind(this, idx) }
                         onRemove={ this.onFilterRemove.bind(this, idx) }/>
                 }) }
