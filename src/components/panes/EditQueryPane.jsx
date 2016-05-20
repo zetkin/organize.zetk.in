@@ -65,9 +65,10 @@ export default class EditQueryPane extends PaneBase {
 
         let queryId = this.getParam(0);
         let values = this.refs.form.getValues();
+        let listComponent = this.refs.filters.decoratedComponentInstance;
 
         values = Object.assign({}, values, {
-            filter_spec: this.refs.filters.getFilterSpec(),
+            filter_spec: listComponent.getFilterSpec(),
         });
 
         this.props.dispatch(updateQuery(queryId, values));
