@@ -4,28 +4,24 @@
         height: 1.5em;
 
         li {
-            position: absolute;
             display: block;
 
             &:nth-child(1) {
-                left: 70px;
+                @include col(4, 12);
+                @include col-offset(2,12);
+
             }
 
             &:nth-child(2) {
-                display: none;
+                @include col(6, 12);
             }
         }
     }
 
     @include medium-screen {
-        width: 60%;
-        min-width: 640px;
-
+        max-width: 420px;
         .listheader {
             li:nth-child(2) {
-                display: block;
-                width: 200px;
-                right: 100px;
             }
         }
     }

@@ -4,7 +4,7 @@
     padding: 0.5em;
     height: 6em;
     background-color: white;
-    box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
+    box-shadow: 0 0 0.2em rgba(0,0,0,0.1);
 
     &::after {
         content: "";
@@ -13,88 +13,39 @@
     }
 
     span {
-        font-size: 1.1em;
-        line-height: 1.5em;
+        font-size: 1.4em;   
+        line-height: 1.7em;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .DraggableAvatar {
-        width: 5em;
-        height: auto;
-        float: left;
+        @include col(2, 12, $first:true);
+    }
+
+    .PeopleListItem-col {
+        @include col(4, 12);
+        &:last-child {
+            @include col(6, 12, $last:true);
+        }
     }
 
     .PeopleListItem-firstName {
-        display: inline;
-        margin-left: 15px;
-        font-weight: bold;
+
     }
 
     .PeopleListItem-lastName {
-        display: inline;
-        margin-left: 0.5em;
-        font-weight: bold;
 
-        &::after {
-            white-space: pre;
-            content: "\A";
-        }
     }
 
-    .PeopleListItem-email {
-        display: inline;
-        margin-left: 15px;
-
-        &::after {
-            white-space: pre;
-            content: "\A";
-        }
+    .PeopleListItem-email, .PeopleListItem-phone {
+        font-size: 1.0em;
 
         a {
             &:hover {
                 color: #666;
             }
-        }
-    }
-
-    .PeopleListItem-phone {
-        display: inline;
-        margin-left: 15px;
-    }
-
-    @include medium-screen {
-        span {
-            display: block;
-            width: 200px;
-        }
-
-        .PeopleListItem-firstName {
-            margin: 0;
-            position: absolute;
-            left: 70px;
-            top: 5px;
-            font-size: 1.2em;
-        }
-
-        .PeopleListItem-lastName {
-            margin: 0;
-            position: absolute;
-            left: 70px;
-            top: 25px;
-            font-size: 1.4em;
-        }
-
-        .PeopleListItem-email {
-            margin: 0;
-            position: absolute;
-            right: 100px;
-            top: 5px;
-        }
-
-        .PeopleListItem-phone {
-            margin: 0;
-            position: absolute;
-            right: 100px;
-            top: 25px;
         }
     }
 }

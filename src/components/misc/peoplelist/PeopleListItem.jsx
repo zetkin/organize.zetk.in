@@ -25,14 +25,18 @@ export default class PeopleListItem extends React.Component {
                 onClick={ this.props.onSelect }>
 
                 <DraggableAvatar person={ person }/>
-                <span className="PeopleListItem-firstName">
-                    { person.first_name }</span>
-                <span className="PeopleListItem-lastName">
-                    { person.last_name }</span>
-                <span className="PeopleListItem-email">
-                    { mailLink }</span>
-                <span className="PeopleListItem-phone">
-                    { person.phone }</span>
+                <div className="PeopleListItem-col">
+                    <span className="PeopleListItem-firstName">
+                        { person.first_name }</span>
+                    <span className="PeopleListItem-lastName">
+                        { person.last_name }</span>
+                </div>
+                <div className="PeopleListItem-col">
+                    <span className="PeopleListItem-email">
+                        { mailLink }</span>
+                    <span className="PeopleListItem-phone">
+                        { person.phone }</span>
+                </div>
             </li>
         );
     }
