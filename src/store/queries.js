@@ -31,6 +31,7 @@ export default function queries(state = null, action) {
 
         case types.CREATE_QUERY + '_FULFILLED':
         case types.ADD_QUERY_FILTER + '_FULFILLED':
+        case types.UPDATE_QUERY_FILTER + '_FULFILLED':
         case types.RETRIEVE_QUERY + '_FULFILLED':
             query = action.payload.data.data;
             return Object.assign({}, state, {
