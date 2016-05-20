@@ -8,13 +8,12 @@ import RelSelectInput from '../forms/inputs/RelSelectInput';
 import { retrieveCampaigns } from '../../actions/campaign';
 
 
-@connect(state => state)
+@connect(state => ({ campaigns: state.campaigns }))
 export default class CampaignFilter extends FilterBase {
     componentDidMount() {
-        const campaignStore = this.props.campaigns;
-        const campaigns = campaignStore.campaignList.items;
+        let campaignList = this.props.campaigns.campaignList;
 
-        if (campaigns.length == 0) {
+        if (campaignList.items.length == 0 && !campaignList.isPending) {
             this.props.dispatch(retrieveCampaigns());
         }
     }
