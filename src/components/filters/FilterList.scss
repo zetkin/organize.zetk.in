@@ -3,8 +3,8 @@
         padding: 7px 0 8px;
     }
 
-    .FilterList-pseudoFilter {
-        border: 3px dashed #e8e8e8;
+    .FilterList-addSection {
+        border: 2px dashed $c-ui-dark;
         padding: 2em;
 
         select {

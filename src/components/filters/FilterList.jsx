@@ -87,17 +87,10 @@ export default class FilterList extends React.Component {
             }
         }
 
-        let classes = cx('FilterList', {
-            'FilterList-isDraggingOver': this.props.isDraggingOver,
-        });
-
-        return this.props.connectDropTarget(
-            <div className={ classes }>
-                <ul className="FilterList-items">
-                { items }
-                </ul>
-
-                <div className="FilterList-pseudoFilter">
+        let addSection = null;
+        if (!this.props.isDraggingOver) {
+            addSection = (
+                <div className="FilterList-addSection">
                     <select value=""
                         onChange={ this.onFilterTypeSelect.bind(this) }>
                         <option value="">Add filter</option>
@@ -107,6 +100,19 @@ export default class FilterList extends React.Component {
                         })}
                     </select>
                 </div>
+            );
+        }
+
+        let classes = cx('FilterList', {
+            'FilterList-isDraggingOver': this.props.isDraggingOver,
+        });
+
+        return this.props.connectDropTarget(
+            <div className={ classes }>
+                <ul className="FilterList-items">
+                    { items }
+                </ul>
+                { addSection }
             </div>
         );
     }
