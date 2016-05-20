@@ -72,6 +72,8 @@ export function addQueryFilter(id, filterType) {
 
         let data = {
             filter_spec: queryItem.data.filter_spec.concat([{
+                op: 'add',
+                config: {},
                 type: filterType,
             }])
         };
@@ -93,8 +95,9 @@ export function updateQueryFilter(id, filterIndex, filterConfig) {
         let queryItem = getListItemById(queryList, id);
         let filterSpec = queryItem.data.filter_spec.concat();
 
-        filterSpec[filterIndex] = Object.assign({},
-            filterSpec[filterIndex], filterConfig);
+        filterSpec[filterIndex] = Object.assign({}, filterSpec[filterIndex], {
+            config: filterConfig
+        });
 
         let data = {
             filter_spec: filterSpec,
