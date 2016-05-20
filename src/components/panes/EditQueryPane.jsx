@@ -44,7 +44,7 @@ export default class EditQueryPane extends PaneBase {
                 <QueryForm key="form" ref="form" query={ query }
                     onSubmit={ this.onSubmit.bind(this) }/>,
                 <h3 key="filterHeader">Filters</h3>,
-                <FilterList key="filters" filters={ filters }
+                <FilterList ref="filters" key="filters" filters={ filters }
                     onAppendFilter={ this.onAppendFilter.bind(this) }
                     onRemoveFilter={ this.onRemoveFilter.bind(this) }
                     onChangeFilter={ this.onChangeFilter.bind(this) }/>
@@ -84,7 +84,9 @@ export default class EditQueryPane extends PaneBase {
         let queryId = this.getParam(0);
         let values = this.refs.form.getValues();
 
-        // TODO: Include filter spec
+        values = Object.assign({}, values, {
+            filter_spec: this.refs.filters.getFilterSpec(),
+        });
 
         this.props.dispatch(updateQuery(queryId, values));
     }

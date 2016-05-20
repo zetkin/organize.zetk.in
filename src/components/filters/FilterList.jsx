@@ -11,8 +11,24 @@ export default class FilterList extends React.Component {
         onChangeFilter: React.PropTypes.func,
     };
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            filters: props.filters,
+        };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.filters != this.props.filters) {
+            this.setState({
+                filters: nextProps.filters,
+            });
+        }
+    }
+
     render() {
-        let filters = this.props.filters;
+        let filters = this.state.filters;
         let filterElements = [];
 
         const filterTypes = {
@@ -46,22 +62,35 @@ export default class FilterList extends React.Component {
         );
     }
 
+    getFilterSpec() {
+        return this.state.filters;
+    }
+
     onFilterTypeSelect(ev) {
         let filterType = ev.target.value;
-        if (this.props.onAppendFilter) {
-            this.props.onAppendFilter(filterType);
-        }
+
+        this.setState({
+            filters: this.state.filters.concat([{
+                op: 'add',
+                type: filterType,
+                config: {},
+            }]),
+        })
     }
 
     onFilterChange(filterIndex, config) {
-        if (this.props.onChangeFilter) {
-            this.props.onChangeFilter(filterIndex, config);
-        }
+        let filters = this.state.filters.concat();
+
+        filters[filterIndex].config = config;
+        this.setState({
+            filters: filters,
+        });
     }
 
     onFilterRemove(filterIndex) {
-        if (this.props.onRemoveFilter) {
-            this.props.onRemoveFilter(filterIndex);
-        }
+        let filters = this.state.filters;
+        this.setState({
+            filters: filters.filter((f, idx) => idx != filterIndex),
+        });
     }
 }
