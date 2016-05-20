@@ -51,7 +51,7 @@ export default class FilterListItem extends React.Component {
         let opSwitch = null;
         if (this.props.showOpSwitch) {
             opSwitch = (
-                <FilterOpSwitch selected={ filter.op }
+                <FilterOpSwitch selected={ filterData.op }
                     onSelect={ this.onChangeOp.bind(this) }/>
             );
         }

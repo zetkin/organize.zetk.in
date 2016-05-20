@@ -146,7 +146,7 @@ export default class FilterList extends React.Component {
     onChangeOp(filterIndex, op) {
         let filters = this.state.filters.concat();
 
-        filters[filterIndex].op = op;
+        filters[filterIndex] = Object.assign({}, filters[filterIndex], { op });
         this.setState({
             filters: filters,
         });
