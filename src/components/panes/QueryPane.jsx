@@ -1,13 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import PeopleList from '../misc/peoplelist/PeopleList';
+import { getListItemById } from '../../utils/store';
+import { retrieveQuery, retrieveQueryMatches } from '../../actions/query';
 
 
+@connect(state => ({ queries: state.queries }))
 export default class QueryPane extends PaneBase {
-    getRenderData() {
-        let queryList = this.props.queries.queryList;
+    componentDidMount() {
         let queryId = this.getParam(0);
+        this.props.dispatch(retrieveQuery(queryId));
+        this.props.dispatch(retrieveQueryMatches(queryId));
+    }
+
+    getRenderData() {
+        let queryId = this.getParam(0);
+        let queryList = this.props.queries.queryList;
 
         return {
             queryItem: getListItemById(queryList, queryId)
@@ -26,17 +36,15 @@ export default class QueryPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        if (!data.queryItem) {
-            return null;
+        let item = data.queryItem;
+        if (item && item.data && item.data.matchList) {
+            let people = item.data.matchList.items;
+
+            return [
+                <PeopleList key="peopleList" people={ people }
+                    onSelect={ this.onPersonSelect.bind(this) }/>
+            ];
         }
-
-        // TODO: Use result of server-side query
-        const filteredPeople = [];
-
-        return [
-            <PeopleList key="peopleList" people={ filteredPeople }
-                onSelect={ this.onPersonSelect.bind(this) }/>
-        ];
     }
 
     onPersonSelect(person) {
