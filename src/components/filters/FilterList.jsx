@@ -47,7 +47,9 @@ export default class FilterList extends React.Component {
                 <ul className="FilterList-items">
                 { filters.map((filter, idx) => {
                     return <FilterListItem key={ filter.id } filter={ filter }
-                        onChangeConfig={ this.onFilterChange.bind(this, idx) }
+                        showOpSwitch={ idx > 0 }
+                        onChangeConfig={ this.onChangeConfig.bind(this, idx) }
+                        onChangeOp={ this.onChangeOp.bind(this, idx) }
                         onRemove={ this.onFilterRemove.bind(this, idx) }/>
                 }) }
                 </ul>
@@ -82,10 +84,19 @@ export default class FilterList extends React.Component {
         })
     }
 
-    onFilterChange(filterIndex, config) {
+    onChangeConfig(filterIndex, config) {
         let filters = this.state.filters.concat();
 
         filters[filterIndex].config = config;
+        this.setState({
+            filters: filters,
+        });
+    }
+
+    onChangeOp(filterIndex, op) {
+        let filters = this.state.filters.concat();
+
+        filters[filterIndex].op = op;
         this.setState({
             filters: filters,
         });

@@ -1,0 +1,73 @@
+.FilterOpSwitch {
+    position: relative;
+    width: 100px;
+    height: 30px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    li {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-color: red;
+        border-radius: 50%;
+
+        transition: left 0.3s, right 0.3s, opacity 0.2s;
+        cursor: pointer;
+
+        color: white;
+        font-size: 26px;
+        text-align: center;
+
+        &:hover {
+            opacity: 1.0;
+        }
+    }
+
+    .FilterOpSwitch-addOption {
+        left: 33px;
+    }
+
+    .FilterOpSwitch-subOption {
+        right: 33px;
+    }
+
+    &:hover {
+        li {
+            opacity: 0.8;
+        }
+
+        .FilterOpSwitch-addOption {
+            left: 16px;
+        }
+
+        .FilterOpSwitch-subOption {
+            right: 16px;
+        }
+    }
+
+    &.FilterOpSwitch-isAddState {
+        .FilterOpSwitch-addOption {
+            z-index: 2;
+            background-color: $c-brand-main;
+        }
+
+        .FilterOpSwitch-subOption {
+            z-index: 1;
+            background-color: $c-ui-darker;
+        }
+    }
+
+    &.FilterOpSwitch-isSubState {
+        .FilterOpSwitch-addOption {
+            z-index: 1;
+            background-color: $c-ui-darker;
+        }
+
+        .FilterOpSwitch-subOption {
+            z-index: 2;
+            background-color: $c-brand-main;
+        }
+    }
+}
