@@ -96,7 +96,10 @@ export default class FilterList extends React.Component {
                         <option value="">Add filter</option>
                         {Object.keys(filterTypes).map(function(type) {
                             const label = filterTypes[type];
-                            return <option value={ type }>{ label }</option>;
+                            return (
+                                <option key={ type } value={ type }>
+                                    { label }</option>
+                            );
                         })}
                     </select>
                 </div>
