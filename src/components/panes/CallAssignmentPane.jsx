@@ -49,10 +49,10 @@ export default class CallAssignmentPane extends PaneBase {
     }
 
     getPaneTitle(data) {
-        let title = 'Call assignment';
+        let title = '';
 
         if (data.assignmentItem) {
-            title += ': ' + data.assignmentItem.data.title;
+            title += data.assignmentItem.data.title;
         }
 
         return title;
@@ -82,8 +82,9 @@ export default class CallAssignmentPane extends PaneBase {
             return [
                 <div key="summary"
                     className="CallAssignmentPane-summary">
-                    <h3>Assignment summary</h3>
-                    <p>{ assignment.description }</p>
+                    <span className="CallAssignmentPane-summaryDesc">{ assignment.description }</span>
+                    <span className="CallAssignmentPane-summaryDate">{ assignment.start_date } - { assignment.end_date }</span>
+                    <span className="CallAssignmentPane-summaryCooldown">{ assignment.cooldown } hours</span>
                     <a onClick={ this.onClickEditSettings.bind(this) }>
                         Edit basic settings</a>
                 </div>,

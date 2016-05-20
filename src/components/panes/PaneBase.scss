@@ -3,7 +3,8 @@
     right: 0;
     position: absolute;
     min-width: 400px;
-    background-color: white;
+    background-color: #f9f9f9;
+    color: lighten($c-text, .3);
 
     .PaneBase-content {
         margin-top: 1em;
@@ -109,6 +110,14 @@
 
             h2 {
                 margin-top: 0;
+                font-size: 2.0em;
+            }
+            h3 {
+                font-size: 1.7em;
+            }
+            p {
+                font-size: 1.4em;
+                line-height: 1.8em
             }
         }
 
