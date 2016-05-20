@@ -83,6 +83,17 @@
             }
         }
 
+        .PaneBase-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
         .PaneBase-closeLink {
             top: 10px;
             left: 10px;
@@ -98,7 +109,7 @@
         .PaneBase-content {
             display: block;
             margin-top: 70px;
-            padding: 0 30px 30px;
+            padding: 0 30px 80px;
             position: absolute;
             top: 0;
             left: 0;

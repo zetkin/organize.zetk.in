@@ -71,6 +71,16 @@ export default class PaneBase extends React.Component {
             subTitle = <small>{ this.getPaneSubTitle(data) }</small>;
         }
 
+        let footer = null;
+        let footerContent = this.renderPaneFooter(data);
+        if (footerContent) {
+            footer = (
+                <footer className="PaneBase-footer">
+                    { footerContent }
+                </footer>
+            );
+        }
+
         return (
             <div ref="pane" className={ classes }>
                 <header className="PaneBase-header">
@@ -85,11 +95,16 @@ export default class PaneBase extends React.Component {
                     { subTitle }
                     { this.renderPaneContent(data) }
                 </div>
+                { footer }
             </div>
         );
     }
 
     renderPaneTop(data) {
+        return null;
+    }
+
+    renderPaneFooter(data) {
         return null;
     }
 
