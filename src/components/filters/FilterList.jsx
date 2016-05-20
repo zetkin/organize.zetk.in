@@ -78,6 +78,7 @@ export default class FilterList extends React.Component {
         this.setState({
             filters: this.state.filters.concat([{
                 op: 'add',
+                id: makeRandomString(10),
                 type: filterType,
                 config: {},
             }]),
