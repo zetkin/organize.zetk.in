@@ -1,0 +1,25 @@
+.PersonDataFilter {
+    .Form {
+        label {
+            float: left;
+            clear: both;
+            width: 30%;
+            margin: 10px 0;
+        }
+
+        input[type=text] {
+            float: right;
+            width: 65%;
+        }
+
+        select {
+            clear: both;
+        }
+
+        &:after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+    }
+}
