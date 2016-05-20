@@ -31,9 +31,10 @@ export default class QueryPane extends PaneBase {
         for (let i = 0; i < filters.length; i++) {
             let filter = filters[i];
             let FilterComponent = resolveFilterComponent(filter.type);
+            let key = i.toString() + '-' + JSON.stringify(filter);
 
             filterElements.push(
-                <FilterComponent key={ i } config={ filter }
+                <FilterComponent key={ key } config={ filter }
                     onFilterRemove={ this.onFilterRemove.bind(this, i) }
                     onFilterChange={ this.onFilterChange.bind(this, i) }/>
             );

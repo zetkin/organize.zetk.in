@@ -110,9 +110,25 @@ export function updateQueryFilter(id, filterIndex, filterConfig) {
     }
 }
 
-export function removeQueryFilter(queryId, filterIndex) {
-    return {
-        type: types.REMOVE_QUERY_FILTER,
-        payload: { queryId, filterIndex }
-    };
+export function removeQueryFilter(id, filterIndex) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+        let queryList = getState().queries.queryList;
+        let queryItem = getListItemById(queryList, id);
+        let filterSpec = queryItem.data.filter_spec.concat();
+
+        filterSpec.splice(filterIndex, 1);
+
+        let data = {
+            filter_spec: filterSpec,
+        };
+
+        dispatch({
+            type: types.REMOVE_QUERY_FILTER,
+            payload: {
+                promise: Z.resource('orgs', orgId,
+                    'people', 'queries', id).patch(data)
+            },
+        });
+    }
 }
