@@ -31,11 +31,12 @@ export default function queries(state = null, action) {
 
         case types.CREATE_QUERY + '_FULFILLED':
         case types.UPDATE_QUERY + '_FULFILLED':
-        case types.ADD_QUERY_FILTER + '_FULFILLED':
-        case types.UPDATE_QUERY_FILTER + '_FULFILLED':
-        case types.REMOVE_QUERY_FILTER + '_FULFILLED':
         case types.RETRIEVE_QUERY + '_FULFILLED':
             query = action.payload.data.data;
+
+            // Clear match list since the query changed
+            query.matchList = null;
+
             return Object.assign({}, state, {
                 queryList: updateOrAddListItem(state.queryList,
                     query.id, query, { isPending: false, error: null }),

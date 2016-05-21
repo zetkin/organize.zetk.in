@@ -15,6 +15,19 @@ export default class QueryPane extends PaneBase {
         this.props.dispatch(retrieveQueryMatches(queryId));
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.queries != nextProps.queries) {
+            let queryId = this.getParam(0);
+            let queryList = this.props.queries.queryList;
+            let queryItem = getListItemById(queryList, queryId);
+
+            // Load query matches if not already loaded (or loading)
+            if (queryItem && queryItem.data && !queryItem.data.matchList) {
+                this.props.dispatch(retrieveQueryMatches(queryId));
+            }
+        }
+    }
+
     getRenderData() {
         let queryId = this.getParam(0);
         let queryList = this.props.queries.queryList;
