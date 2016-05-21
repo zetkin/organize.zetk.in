@@ -1,0 +1,33 @@
+.CallHistoryFilter {
+    &:after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+
+    .CallHistoryFilter-days {
+        float: left;
+
+        input {
+            width: 50px;
+        }
+    }
+
+    .CallHistoryFilter-daysLabel {
+        float: left;
+        padding: 3px 5px;
+    }
+
+    .DateInput {
+        float: left;
+    }
+
+    .CallHistoryFilter-after + .CallHistoryFilter-before {
+        &:before {
+            float: left;
+            display: block;
+            padding: 0 10px;
+            content: "-";
+        }
+    }
+}
