@@ -58,9 +58,10 @@ export default class FilterList extends React.Component {
         let filterElements = [];
 
         const filterTypes = {
+            'call_history': 'Call history',
             'campaign_participation': 'Campaign participation',
             'join_date': 'Join date',
-            'person_data': 'Person data'
+            'person_data': 'Person data',
         };
 
         let items = [];

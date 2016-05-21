@@ -96,7 +96,7 @@ export default class CallHistoryFilter extends FilterBase {
 
         return [
             <SelectInput key="operator" name="operator"
-                label="Match people who"
+                label="Match people who have been"
                 options={ OPERATOR_OPTIONS } value={ this.state.op }
                 onValueChange={ this.onSelectOperator.bind(this) }/>,
 
