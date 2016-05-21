@@ -1,0 +1,20 @@
+.CampaignFilter {
+    &:after {
+        display: block;
+        content: "";
+        clear: both;
+    }
+
+    .DateInput {
+        float: left;
+    }
+
+    .CampaignFilter-after + .CampaignFilter-before {
+        &:before {
+            float: left;
+            display: block;
+            padding: 0 10px;
+            content: "-";
+        }
+    }
+}
