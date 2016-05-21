@@ -7,9 +7,18 @@ import TextInput from '../forms/inputs/TextInput';
 
 
 export default class PersonDataFilter extends FilterBase {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            // Show first_name field if there are no fields in config
+            nextField: (Object.keys(props.config).length == 0)?
+                'first_name' : undefined,
+        };
+    }
+
     renderFilterForm(config) {
-        const fieldOptions = {
-            '*': 'Any field',
+        const fieldLabels = {
             'first_name': 'First name',
             'last_name': 'Last name',
             'email': 'E-mail address',
@@ -20,15 +29,59 @@ export default class PersonDataFilter extends FilterBase {
             'city': 'City'
         };
 
-        return (
-            <Form ref="form" onSubmit={ this.onFormSubmit.bind(this) }>
-                <SelectInput label="Match" name="field"
-                    options={ fieldOptions }
-                    initialValue={ config.field }/>
-                <TextInput label="Against" name="text"
-                    initialValue={ config.text }/>
-                <input type="submit"/>
-            </Form>
-        );
+        let fields = config.fields || {};
+        let fieldInputs = Object.keys(fields).map(field => (
+            <TextInput key={ field } name={ field }
+                label={ fieldLabels[field] }
+                initialValue={ fields[field] }/>
+        ));
+
+        // If there is a next field defined (and it has not already been added
+        // by the user) add it to the end of the fields.
+        if (this.state.nextField && !(this.state.nextField in fields)) {
+            let field = this.state.nextField;
+            fieldInputs.push(
+                <TextInput key={ field } name={ field }
+                    label={ fieldLabels[field] }
+                    initialValue={ fields[field] }/>
+            );
+        }
+
+        let remainingOptions = {
+            '_': 'Select more fields to search for',
+        };
+
+        Object.keys(fieldLabels).forEach(field => {
+            if (!(field in fields))
+                remainingOptions[field] = fieldLabels[field];
+        });
+
+        return [
+            <Form key="form" ref="form"
+                onValueChange={ this.onConfigChange.bind(this) }>
+                { fieldInputs }
+            </Form>,
+            <SelectInput key="newField" name={ 'new_field' }
+                options={ remainingOptions } value="_"
+                onValueChange={ this.onAddNewField.bind(this) }/>
+        ];
+    }
+
+    getConfig() {
+        // Only return fields that actually have a value
+        let values = this.refs.form.getValues();
+        let fields = Object.keys(values).reduce((o, f) => {
+            if (values[f])
+                o[f] = values[f];
+            return o;
+        }, {});
+
+        return { fields };
+    }
+
+    onAddNewField(name, value) {
+        this.setState({
+            nextField: value,
+        });
     }
 }

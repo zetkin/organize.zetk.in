@@ -1,0 +1,14 @@
+.FilterList {
+    .DropContainer {
+        padding: 7px 0 8px;
+    }
+
+    .FilterList-addSection {
+        border: 2px dashed $c-ui-dark;
+        padding: 2em;
+
+        select {
+            margin: 0;
+        }
+    }
+}

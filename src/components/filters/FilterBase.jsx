@@ -5,6 +5,11 @@ import { componentClassNames } from '../';
 
 
 export default class FilterBase extends React.Component {
+    static propTypes = {
+        config: React.PropTypes.object.isRequired,
+        onConfigChange: React.PropTypes.func,
+    };
+
     render() {
         const config = this.props.config;
         const classes = cx(componentClassNames(this));
@@ -32,16 +37,10 @@ export default class FilterBase extends React.Component {
         }
     }
 
-    onFormSubmit(ev) {
-        ev.preventDefault();
-
-        if (this.props.onFilterChange) {
-            const config = this.getConfig();
-            this.props.onFilterChange(config);
+    onConfigChange() {
+        if (this.props.onConfigChange) {
+            let config = this.getConfig();
+            this.props.onConfigChange(config);
         }
     }
 }
-
-FilterBase.propTypes = {
-    config: React.PropTypes.object.isRequired
-};

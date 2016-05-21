@@ -2,14 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
-import { resolveFilterComponent } from '../filters';
+import QueryForm from '../forms/QueryForm';
+import FilterList from '../filters/FilterList';
 import { getListItemById } from '../../utils/store';
-import { addQueryFilter, updateQueryFilter, removeQueryFilter
-    } from '../../actions/query';
+import {
+    addQueryFilter,
+    updateQuery,
+    updateQueryFilter,
+    removeQueryFilter,
+    retrieveQuery,
+} from '../../actions/query';
 
 
 @connect(state => state)
-export default class QueryPane extends PaneBase {
+export default class EditQueryPane extends PaneBase {
+    componentDidMount() {
+        let queryId = this.getParam(0);
+        this.props.dispatch(retrieveQuery(queryId));
+    }
+
     getRenderData() {
         let queryList = this.props.queries.queryList;
         let queryId = this.getParam(0);
@@ -25,57 +36,41 @@ export default class QueryPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        const filters = data.queryItem? data.queryItem.data.filter_spec : [];
-        const filterElements = [];
+        if (data.queryItem && !data.queryItem.isPending) {
+            let query = data.queryItem.data;
+            let filters = query.filter_spec;
 
-        for (let i = 0; i < filters.length; i++) {
-            let filter = filters[i];
-            let FilterComponent = resolveFilterComponent(filter.type);
-            let key = i.toString() + '-' + JSON.stringify(filter);
-
-            filterElements.push(
-                <FilterComponent key={ key } config={ filter }
-                    onFilterRemove={ this.onFilterRemove.bind(this, i) }
-                    onFilterChange={ this.onFilterChange.bind(this, i) }/>
-            );
+            return [
+                <QueryForm key="form" ref="form" query={ query }
+                    onSubmit={ this.onSubmit.bind(this) }/>,
+                <h3 key="filterHeader">Filters</h3>,
+                <FilterList ref="filters" key="filters" filters={ filters }/>
+            ];
         }
-
-        const filterTypes = {
-            'campaign_participation': 'Campaign participation',
-            'join_date': 'Join date',
-            'person_data': 'Person data'
-        };
-
-        return [
-            <div className="EditQueryPane-filters">
-                { filterElements }
-            </div>,
-            <div className="EditQueryPane-pseudoFilter">
-                <select key="filterTypeSelect" value=""
-                    onChange={ this.onFilterTypeSelect.bind(this) }>
-                    <option value="">Add filter</option>
-                    {Object.keys(filterTypes).map(function(type) {
-                        const label = filterTypes[type];
-                        return <option value={ type }>{ label }</option>;
-                    })}
-                </select>
-            </div>
-        ];
+        else {
+            // TODO: Show loading indicator
+            return null;
+        }
     }
 
-    onFilterTypeSelect(ev) {
-        let filterType = ev.target.value;
-        let queryId = this.getParam(0);
-        this.props.dispatch(addQueryFilter(queryId, filterType));
+    renderPaneFooter(data) {
+        return (
+            <button onClick={ this.onSubmit.bind(this) }>
+                Submit</button>
+        );
     }
 
-    onFilterChange(filterIndex, config) {
-        let queryId = this.getParam(0);
-        this.props.dispatch(updateQueryFilter(queryId, filterIndex, config));
-    }
+    onSubmit(ev) {
+        ev.preventDefault();
 
-    onFilterRemove(filterIndex) {
         let queryId = this.getParam(0);
-        this.props.dispatch(removeQueryFilter(queryId, filterIndex));
+        let values = this.refs.form.getValues();
+        let listComponent = this.refs.filters.decoratedComponentInstance;
+
+        values = Object.assign({}, values, {
+            filter_spec: listComponent.getFilterSpec(),
+        });
+
+        this.props.dispatch(updateQuery(queryId, values));
     }
 }

@@ -3,6 +3,12 @@ import cx from 'classnames';
 
 
 export default class Form extends React.Component {
+    static propTypes = {
+        className: React.PropTypes.string,
+        onValueChange: React.PropTypes.func,
+        onSubmit: React.PropTypes.func,
+    };
+
     constructor(props) {
         super(props);
 
@@ -93,6 +99,10 @@ export default class Form extends React.Component {
             values: values,
             changedValues: changedValues
         });
+
+        if (this.props.onValueChange) {
+            this.props.onValueChange(name, value);
+        }
     }
 
     onSubmit(ev) {
@@ -104,8 +114,3 @@ export default class Form extends React.Component {
         });
     }
 }
-
-Form.propTypes = {
-    className: React.PropTypes.string,
-    onSubmit: React.PropTypes.func
-};

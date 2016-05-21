@@ -64,6 +64,21 @@ export function createQuery(title) {
     };
 }
 
+export function updateQuery(id, data) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.UPDATE_QUERY,
+            meta: { id },
+            payload: {
+                promise: Z.resource('orgs', orgId,
+                    'people', 'queries', id).patch(data),
+            },
+        });
+    };
+}
+
 export function addQueryFilter(id, filterType) {
     return function(dispatch, getState) {
         let orgId = getState().org.activeId;
@@ -72,6 +87,8 @@ export function addQueryFilter(id, filterType) {
 
         let data = {
             filter_spec: queryItem.data.filter_spec.concat([{
+                op: 'add',
+                config: {},
                 type: filterType,
             }])
         };
@@ -93,8 +110,9 @@ export function updateQueryFilter(id, filterIndex, filterConfig) {
         let queryItem = getListItemById(queryList, id);
         let filterSpec = queryItem.data.filter_spec.concat();
 
-        filterSpec[filterIndex] = Object.assign({},
-            filterSpec[filterIndex], filterConfig);
+        filterSpec[filterIndex] = Object.assign({}, filterSpec[filterIndex], {
+            config: filterConfig
+        });
 
         let data = {
             filter_spec: filterSpec,

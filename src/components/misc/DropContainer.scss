@@ -1,0 +1,12 @@
+.DropContainer {
+    padding: 1em;
+    text-align: center;
+    border: 2px dashed $c-ui-dark;
+
+    transition: padding 0.2s, border-color 0.2s;
+
+    &.DropContainer-isDraggingOver {
+        border-color: $c-ui-darker;
+        padding-bottom: 3em;
+    }
+}
