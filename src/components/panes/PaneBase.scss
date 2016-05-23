@@ -93,6 +93,11 @@
             padding: 20px;
             box-shadow: 0 0 5px rgba(0,0,0,0.1);
             text-align: center;
+            button { // TODO: Need to add classes to btns to set colors etc
+                @include button;
+                @include button-color($c-brand-confirm);
+                width: 100%;
+            }
         }
 
         .PaneBase-closeLink {
