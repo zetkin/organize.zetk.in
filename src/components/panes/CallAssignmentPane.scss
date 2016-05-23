@@ -45,7 +45,7 @@
             position: relative;
             border-left: 3px solid #555;
             padding-left: 10px;
-            height: 190px;
+            max-height: 120px;
             overflow: hidden;
             margin-bottom: 20px;
 
@@ -56,7 +56,7 @@
                 position:absolute;
                 left:0;
                 top:0;
-                background:linear-gradient(transparent 150px, #f9f9f9);
+                background:linear-gradient(transparent 80px, #f9f9f9);
             }
 
             p {
