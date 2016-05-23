@@ -1,7 +1,7 @@
 .FilterBase {
     position: relative;
     @include card;
-    padding: 2.5em 1em 1em;
+    padding: 3em 1em 1em;
     margin: 1em 0;
 
     label {
@@ -10,18 +10,34 @@
         font-size: 1.2em;
     }
 
-    .FilterBase-removeButton {
+    a {
         display: block;
         position: absolute;
         top: 0.5em;
-        right: 1em;
         overflow: hidden;
         cursor: pointer;
         color: lighten($c-text, 50);
+        font-size: 1.5em;
 
-        &::before {
-            @include icon($fa-var-remove);
-            font-size: 1.5em;
+        &.FilterBase-removeButton {
+            right: 0.5em;
+            &::before {
+                @include icon($fa-var-remove);
+            }
+        }
+
+        &.FilterBase-moveButton {
+            left: 0.5em;
+            opacity: 0;
+            &::before {
+                @include icon($fa-var-arrows);
+            }
+        }
+
+    }
+    &:hover {
+        .FilterBase-moveButton {
+            opacity: 1;
         }
     }
 }
