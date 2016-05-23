@@ -63,9 +63,39 @@
                 margin-top: 0;
             }
         }
-
-
     }
 
-    
+    .CallAssignmentPane-target {
+        &:after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+
+        a {
+            display: block;
+            float: left;
+            clear: both;
+        }
+
+        .CallAssignmentPane-stats {
+            margin-bottom: 10px;
+
+            &:after {
+                display: block;
+                content: "";
+                clear: both;
+            }
+
+            .CallAssignmentPane-targetStats {
+                float: left;
+                width: 150px;
+            }
+
+            .CallAssignmentPane-goalStats {
+                float: right;
+                width: 150px;
+            }
+        }
+    }
 }
