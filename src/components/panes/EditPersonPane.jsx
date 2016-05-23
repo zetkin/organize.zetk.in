@@ -29,8 +29,9 @@ export default class EditPersonPane extends PaneBase {
     }
 
     getPaneTitle(data) {
-        if (data.person) {
-            return data.person.first_name + ' ' + data.person.last_name;
+        if (data.personItem) {
+            let person = data.personItem.data;
+            return person.first_name + ' ' + person.last_name;
         }
         else {
             return null;
@@ -45,9 +46,6 @@ export default class EditPersonPane extends PaneBase {
             }
             else {
                 return [
-                    <DraggableAvatar ref="avatar"
-                        person={ data.personItem.data }/>,
-
                     <PersonForm ref="personForm"
                         person={ data.personItem.data }
                         onSubmit={ this.onSubmit.bind(this) }/>,
