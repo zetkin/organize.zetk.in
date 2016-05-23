@@ -23,6 +23,20 @@ export default class CallAssignmentPane extends PaneBase {
         this.props.dispatch(retrieveCallAssignmentCallers(assignmentId));
     }
 
+    componentWillReceiveProps(nextProps) {
+        let assignmentId = this.getParam(0);
+        let assignmentList = nextProps.callAssignments.assignmentList;
+        let assignmentItem = getListItemById(assignmentList, assignmentId);
+
+        if (assignmentItem && assignmentItem.data
+            && !assignmentItem.data.statsItem) {
+            // If there are now stats for this assignment, e.g. because they
+            // were removed by some operation that invalidated them, retrieve
+            // call assignment statistics anew.
+            this.props.dispatch(retrieveCallAssignmentStats(assignmentId));
+        }
+    }
+
     getRenderData() {
         let assignmentId = this.getParam(0);
         let assignmentList = this.props.callAssignments.assignmentList;

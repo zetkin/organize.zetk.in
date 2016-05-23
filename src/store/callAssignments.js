@@ -84,6 +84,24 @@ export default function callAssignments(state = null, action) {
                     assignment.id, assignment),
             });
 
+        case types.UPDATE_QUERY + '_FULFILLED':
+            // Check if there is an assignment that uses this query
+            let queryId = action.payload.data.data.id;
+            let assignmentItem = state.assignmentList.items.find(i => i.data &&
+                (i.data.target.id === queryId || i.data.goal.id === queryId));
+
+            // If the query that was updated affects an assignment,
+            // remove the stats to indicate that they were invalidated
+            if (assignmentItem) {
+                return Object.assign({}, state, {
+                    assignmentList: updateOrAddListItem(state.assignmentList,
+                        assignmentItem.data.id, { statsItem: null }),
+                });
+            }
+            else {
+                return state;
+            }
+
         case types.RETRIEVE_CALL_ASSIGNMENT_CALLERS + '_FULFILLED':
             assignment = {
                 id: action.meta.id,
