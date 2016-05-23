@@ -27,15 +27,13 @@ export default class CallerListItem extends React.Component {
 
                 <DraggableAvatar person={ caller }/>
                 <span className="CallerListItem-name">{ name }</span>
-                <dl className="CallerListItem-tags">
-                    <dt>Prioritized tags</dt>
-                    <dd>{ caller.prioritized_tags.length }</dd>
-                    <dt>Excluded tags</dt>
-                    <dd>{ caller.excluded_tags.length }</dd>
-                </dl>
-
+                <ul className="CallerListItem-tags">
+                    <li><i className="fa fa-star"></i> { caller.prioritized_tags.length }</li>
+                    <li><i className="fa fa-ban"></i> { caller.excluded_tags.length }</li>
+                </ul>
                 <a className="CallerListItem-removeButton"
-                    onClick={ this.onRemove.bind(this) }>x</a>
+                    onClick={ this.onRemove.bind(this) }><i className="fa fa-remove"></i></a>
+                <a className="CallerListItem-editButton"><i className="fa fa-pencil"></i></a>
             </li>
         );
     }

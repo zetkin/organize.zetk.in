@@ -4,6 +4,7 @@ import Form from './Form';
 import DateInput from './inputs/DateInput';
 import TextArea from './inputs/TextArea';
 import TextInput from './inputs/TextInput';
+import IntInput from './inputs/IntInput';
 
 
 export default class CallAssignmentForm extends React.Component {
@@ -32,6 +33,9 @@ export default class CallAssignmentForm extends React.Component {
                     initialValue={ assignment.start_date }/>
                 <DateInput label="End date" name="end_date"
                     initialValue={ assignment.end_date }/>
+                <IntInput label="Cooldown"
+                    name="cooldown"
+                    initialValue={ assignment.cooldown }/>
 
                 <input type="submit" value="Submit"/>
             </Form>

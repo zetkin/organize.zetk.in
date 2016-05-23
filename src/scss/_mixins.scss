@@ -5,8 +5,9 @@
 }
 @mixin card {
     color: #333;
-    background-color: #fff;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.25);
+    background-color: #fefefe;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    border-radius: 2px;
 }
 
 @mixin page {
@@ -110,6 +111,25 @@
     }
 }
 
+@mixin ghost-placeholder() {
+    border: 2px dashed $c-ui-dark;
+    text-align: center;
+    padding: 15px 10px;
+    margin: 0 0 10px;
+
+    transition: border-color 0.3s;
+
+    p {
+        opacity: 1;
+        transition: opacity 0.3s;
+    }
+
+    a {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+}
+
 @mixin flex-container($direction: row, $wrapping: none){
     display: -webkit-box;
     display: -moz-box;
@@ -152,4 +172,18 @@
   @media only screen and (min-width: #{$large-width}) {
     @content;
   }
+}
+
+@mixin col ($col, $sum, $gap: 0.5em, $align: top, $first: false, $last: false) {
+    width: percentage($col/$sum);
+    vertical-align: $align;
+    display: inline-block;
+    padding-left: if($first, 0, $gap);
+    padding-right: if($last, 0, $gap);
+
+    &.fluid { width: percentage($col/$sum); }
+}
+
+@mixin col-offset($col, $sum) {
+    margin-left: percentage($col/$sum);
 }
