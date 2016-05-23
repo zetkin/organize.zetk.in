@@ -8,8 +8,6 @@
 
     li {
         position: absolute;
-        width: 30px;
-        height: 30px;
         background-color: red;
         border-radius: 50%;
 
@@ -19,7 +17,7 @@
         color: white;
         font-size: 26px;
         text-align: center;
-
+        font-size: 2em;
         &:hover {
             opacity: 1.0;
         }
@@ -27,10 +25,16 @@
 
     .FilterOpSwitch-addOption {
         left: 33px;
+        &::after {
+            @include icon($fa-var-plus);
+        }
     }
 
     .FilterOpSwitch-subOption {
         right: 33px;
+        &::after {
+            @include icon($fa-var-minus);
+        }
     }
 
     &:hover {

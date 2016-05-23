@@ -18,13 +18,9 @@ export default class FilterOpSwitch extends React.Component {
         return (
             <ul className={ classes }>
                 <li className="FilterOpSwitch-addOption"
-                    onClick={ this.onSelect.bind(this, 'add') }>
-                    +
-                </li>
+                    onClick={ this.onSelect.bind(this, 'add') }/>
                 <li className="FilterOpSwitch-subOption"
-                    onClick={ this.onSelect.bind(this, 'sub') }>
-                    -
-                </li>
+                    onClick={ this.onSelect.bind(this, 'sub') }/>
             </ul>
         );
     }
