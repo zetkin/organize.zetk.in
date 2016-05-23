@@ -1,0 +1,78 @@
+import React from 'react';
+import { connect } from 'react-redux';
+
+import PaneBase from './PaneBase';
+import DraggableAvatar from '../misc/DraggableAvatar';
+import { getListItemById } from '../../utils/store';
+import { retrievePerson } from '../../actions/person';
+
+
+const FIELDS = {
+    'email': 'E-mail address',
+    'phone': 'Phone number',
+    'co_address': 'C/o address',
+    'street_address': 'Street address',
+    'zip_code': 'Zip code',
+    'city': 'City',
+};
+
+@connect(state => ({ people: state.people }))
+export default class PersonPane extends PaneBase {
+    componentDidMount() {
+        let personId = this.getParam(0);
+        this.props.dispatch(retrievePerson(personId));
+    }
+
+    getRenderData() {
+        let personId = this.getParam(0);
+        let personList = this.props.people.personList;
+
+        return {
+            personItem: getListItemById(personList, personId),
+        }
+    }
+
+    getPaneTitle(data) {
+        if (data.personItem && data.personItem.data) {
+            let person = data.personItem.data;
+            return person.first_name + ' ' + person.last_name;
+        }
+        else {
+            return 'Person';
+        }
+    }
+
+    renderPaneContent(data) {
+        if (data.personItem) {
+            let person = data.personItem.data;
+
+            return [
+                <DraggableAvatar key="avatar" ref="avatar" person={ person }/>,
+                <ul key="info" className="PersonPane-info">
+                    { Object.keys(FIELDS).map(name => {
+                        let className = 'PersonPane-' + name;
+                        return (
+                            <li key={ name } className={ className }>
+                                <span className="PersonPane-infoLabel">
+                                    { FIELDS[name] }</span>
+                                <span className="PersonPane-infoValue">
+                                    { person[name] }</span>
+                            </li>
+                        );
+                    } ) }
+                </ul>,
+                <a onClick={ this.onClickEdit.bind(this) }>
+                    Edit basic information</a>,
+            ];
+        }
+        else {
+            // TODO: Loading indicator
+            return null;
+        }
+    }
+
+    onClickEdit(ev) {
+        let personId = this.getParam(0);
+        this.openPane('editperson', personId);
+    }
+}

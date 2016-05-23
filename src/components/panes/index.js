@@ -17,10 +17,11 @@ import EditCallerPane from './EditCallerPane';
 import EditCampaignPane from './EditCampaignPane';
 import EditLocationPane from './EditLocationPane';
 import EditLocationWithMapPane from './EditLocationWithMapPane';
+import EditPersonPane from './EditPersonPane';
 import EditTextPane from './EditTextPane';
 import EditQueryPane from './EditQueryPane';
 import MoveParticipantsPane from './MoveParticipantsPane';
-import EditPersonPane from './EditPersonPane';
+import PersonPane from './PersonPane';
 import QueryPane from './QueryPane';
 import SelectPeoplePane from './SelectPeoplePane';
 import SelectPersonTagsPane from './SelectPersonTagsPane';
@@ -49,7 +50,7 @@ var _panes = {
     'location': EditLocationPane,
     'moveparticipants': MoveParticipantsPane,
     'editperson': EditPersonPane,
-    'person': EditPersonPane, // Use separate (simpler) pane
+    'person': PersonPane,
     'query': QueryPane,
     'reminder': ActionReminderPane,
     'selectpeople': SelectPeoplePane,
