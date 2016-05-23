@@ -5,8 +5,9 @@
 }
 @mixin card {
     color: #333;
-    background-color: #fff;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.25);
+    background-color: #fefefe;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    border-radius: 2px;
 }
 
 @mixin page {
@@ -107,6 +108,25 @@
         position: absolute;
         right: .25em;
         top: .4em;
+    }
+}
+
+@mixin ghost-placeholder() {
+    border: 2px dashed $c-ui-dark;
+    text-align: center;
+    padding: 15px 10px;
+    margin: 0 0 10px;
+
+    transition: border-color 0.3s;
+
+    p {
+        opacity: 1;
+        transition: opacity 0.3s;
+    }
+
+    a {
+        cursor: pointer;
+        text-decoration: underline;
     }
 }
 

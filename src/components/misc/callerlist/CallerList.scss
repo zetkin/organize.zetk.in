@@ -1,21 +1,6 @@
 .CallerList {
     .CallerList-addItem {
-        border: 2px dashed $c-ui-dark;
-        text-align: center;
-        padding: 15px 10px;
-        margin: 0 0 10px;
-
-        transition: border-color 0.3s;
-
-        p {
-            opacity: 1;
-            transition: opacity 0.3s;
-        }
-
-        a {
-            cursor: pointer;
-            text-decoration: underline;
-        }
+        @include ghost-placeholder();
     }
 
     .CallerListItem {
