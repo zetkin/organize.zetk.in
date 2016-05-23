@@ -10,7 +10,7 @@ import { getListItemById } from '../../utils/store';
 
 
 @connect(state => state)
-export default class PersonPane extends PaneBase {
+export default class EditPersonPane extends PaneBase {
     componentDidMount() {
         let personId = this.props.params[0];
         let person = getListItemById(this.props.people.personList, personId);

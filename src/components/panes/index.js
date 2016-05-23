@@ -20,7 +20,7 @@ import EditLocationWithMapPane from './EditLocationWithMapPane';
 import EditTextPane from './EditTextPane';
 import EditQueryPane from './EditQueryPane';
 import MoveParticipantsPane from './MoveParticipantsPane';
-import PersonPane from './PersonPane';
+import EditPersonPane from './EditPersonPane';
 import QueryPane from './QueryPane';
 import SelectPeoplePane from './SelectPeoplePane';
 import SelectPersonTagsPane from './SelectPersonTagsPane';
@@ -48,7 +48,8 @@ var _panes = {
     'edittext': EditTextPane,
     'location': EditLocationPane,
     'moveparticipants': MoveParticipantsPane,
-    'person': PersonPane,
+    'editperson': EditPersonPane,
+    'person': EditPersonPane, // Use separate (simpler) pane
     'query': QueryPane,
     'reminder': ActionReminderPane,
     'selectpeople': SelectPeoplePane,
