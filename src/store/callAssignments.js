@@ -1,6 +1,7 @@
 import * as types from '../actions';
 import {
     createList,
+    createListItem,
     createListItems,
     getListItemById,
     removeListItem,
@@ -59,6 +60,28 @@ export default function callAssignments(state = null, action) {
             return Object.assign({}, state, {
                 assignmentList: updateOrAddListItem(state.assignmentList,
                     assignment.id, assignment, { isPending: false })
+            });
+
+        case types.RETRIEVE_CALL_ASSIGNMENT_STATS + '_PENDING':
+            assignment = {
+                id: action.meta.id,
+                statsItem: createListItem(null, { isPending: true }),
+            };
+
+            return Object.assign({}, state, {
+                assignmentList: updateOrAddListItem(state.assignmentList,
+                    assignment.id, assignment),
+            });
+
+        case types.RETRIEVE_CALL_ASSIGNMENT_STATS + '_FULFILLED':
+            assignment = {
+                id: action.meta.id,
+                statsItem: createListItem(action.payload.data.data),
+            };
+
+            return Object.assign({}, state, {
+                assignmentList: updateOrAddListItem(state.assignmentList,
+                    assignment.id, assignment),
             });
 
         case types.RETRIEVE_CALL_ASSIGNMENT_CALLERS + '_FULFILLED':
