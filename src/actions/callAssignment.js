@@ -180,39 +180,62 @@ export function removeCallerExcludedTags(assignmentId, callerId, tagIds) {
 }
 
 export function createCallAssignmentDraft(type, config) {
+    // Prepend ID with $ to denote draft
+    let id = '$' + makeRandomString(6);
+    let title = '';
+    let description = '';
     let startDate = Date.utc.create();
     let endDate = (30).daysAfter(startDate);
+    let targetFilters = [];
+    let goalFilters = [];
 
-    let assignment = {
-        // Prepend ID with $ to designate draft
-        id: '$' + makeRandomString(6),
-        start_date: startDate.format('{yyyy}-{MM}-{dd}'),
-        end_date: endDate.format('{yyyy}-{MM}-{dd}'),
-        filter_spec: [],
-        cooldown: 3,
-    };
-
-    // TODO: Improve these suggestions
     switch (type) {
         case 'stayintouch':
-            assignment.title = 'Stay in touch';
-            assignment.description = 'Stay in touch every ' +
-                config.interval + ' months';
+            let months = Math.round(config.interval/30);
+            title = 'Stay in touch';
+            description = 'Stay in touch every ' + months + ' months';
+
+            // Add filter to find people who have not been contacted in the
+            // selected number of months.
+            goalFilters.push({
+                type: 'call_history',
+                config: {
+                    operator: 'notreached',
+                    after: '-' + config.interval + 'd',
+                }
+            });
             break;
 
         case 'inform':
-            assignment.title = 'Inform';
-            assignment.description = '(No description)';
+            title = 'Inform';
+            description = '(No description)';
+
+            // Add filter to find all who have not already been reached in this
+            // particular call assignment. The $self expression is replaced by
+            // the API with the ID of the newly created assignment.
+            goalFilters.push({
+                type: 'call_history',
+                config: {
+                    operator: 'notreached',
+                    assignment: '$self',
+                }
+            });
             break;
 
         case 'mobilize':
-            assignment.title = config.campaign.title;
-            assignment.description = 'Mobilize activists for campaign "' +
+            title = 'Mobilize: ' + config.campaign.title;
+            description = 'Mobilize activists for campaign "' +
                 config.campaign.title + '"';
-            assignment.filter_spec.push({
+
+            // Add filter to find all who do not have future bookings
+            // in the concerned campaign.
+            goalFilters.push({
                 type: 'campaign_participation',
-                operator: 'notin',
-                campaign: config.campaign.id,
+                config: {
+                    operator: 'notin',
+                    campaign: config.campaign.id,
+                    after: 'now',
+                }
             });
             break;
 
@@ -220,6 +243,15 @@ export function createCallAssignmentDraft(type, config) {
             // TODO: Implement this
             break;
     }
+
+    let assignment = {
+        id, title, description,
+        start_date: startDate.format('{yyyy}-{MM}-{dd}'),
+        end_date: endDate.format('{yyyy}-{MM}-{dd}'),
+        target_filters: targetFilters,
+        goal_filters: goalFilters,
+        cooldown: 3,
+    };
 
     return {
         type: types.CREATE_CALL_ASSIGNMENT_DRAFT,
