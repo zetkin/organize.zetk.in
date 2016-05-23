@@ -6,9 +6,9 @@ import AssignmentTemplate from './AssignmentTemplate';
 
 export default function StayInTouchTemplate(props) {
     let options = {
-        '3': 'three',
-        '6': 'six',
-        '12': 'twelve'
+        '90': 'three',
+        '180': 'six',
+        '365': 'twelve'
     };
 
     return (
@@ -16,7 +16,7 @@ export default function StayInTouchTemplate(props) {
             title="Stay in touch" onCreate={ props.onCreate }>
             Call everyone once every
             <SelectInput name="interval"
-                initialValue="6"
+                initialValue="180"
                 options={ options }/>
             months, just to stay in touch.
         </AssignmentTemplate>

@@ -54,7 +54,8 @@ export default class AddCallAssignmentPane extends PaneBase {
         let assignmentItem = getListItemById(assignmentList, assignmentId);
 
         if (assignmentItem) {
-            values.filter_spec = assignmentItem.data.filter_spec;
+            values.target_filters = assignmentItem.data.target_filters;
+            values.goal_filters = assignmentItem.data.goal_filters;
         }
 
         this.props.dispatch(createCallAssignment(values, assignmentId));
