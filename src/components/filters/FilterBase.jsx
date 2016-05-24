@@ -16,8 +16,10 @@ export default class FilterBase extends React.Component {
 
         return (
             <div className={ classes }>
+                <a className="FilterBase-moveButton"
+                    />
                 <a className="FilterBase-removeButton"
-                    onClick={ this.onClickRemove.bind(this) }>x</a>
+                    onClick={ this.onClickRemove.bind(this) }/>
                 { this.renderFilterForm(config) }
             </div>
         );

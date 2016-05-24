@@ -4,9 +4,7 @@
     }
 
     .FilterList-addSection {
-        border: 2px dashed $c-ui-dark;
-        padding: 2em;
-
+        @include ghost-placeholder();
         select {
             margin: 0;
         }

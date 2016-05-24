@@ -7,14 +7,18 @@
 
     .DateInput {
         float: left;
+        input {
+            @include input-base();
+        }
     }
 
     .CampaignFilter-after + .CampaignFilter-before {
+
         &:before {
+            @include icon($fa-var-minus);
             float: left;
-            display: block;
-            padding: 0 10px;
-            content: "-";
+            width: 10%;
+            margin: 10px 0;
         }
     }
 }

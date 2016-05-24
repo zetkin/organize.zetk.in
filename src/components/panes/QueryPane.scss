@@ -1,3 +1,11 @@
 .PaneBase.QueryPane {
-    min-width: 680px;
+    min-width: 480px;
+    small a {
+        display: block;
+        margin-bottom: 2em;
+        cursor:pointer;
+        &::before {
+            @include icon($fa-var-pencil);
+        }
+    }
 }

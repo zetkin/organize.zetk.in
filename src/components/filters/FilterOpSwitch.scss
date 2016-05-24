@@ -8,9 +8,7 @@
 
     li {
         position: absolute;
-        width: 30px;
-        height: 30px;
-        background-color: red;
+        background-color: $c-ui-dark;
         border-radius: 50%;
 
         transition: left 0.3s, right 0.3s, opacity 0.2s;
@@ -19,23 +17,28 @@
         color: white;
         font-size: 26px;
         text-align: center;
-
+        font-size: 2em;
         &:hover {
             opacity: 1.0;
         }
     }
 
     .FilterOpSwitch-addOption {
-        left: 33px;
+        left: 34px;
+        &::after {
+            @include icon($fa-var-plus);
+        }
     }
 
     .FilterOpSwitch-subOption {
-        right: 33px;
+        right: 34px;
+        &::after {
+            @include icon($fa-var-minus);
+        }
     }
 
     &:hover {
         li {
-            opacity: 0.8;
         }
 
         .FilterOpSwitch-addOption {
@@ -45,29 +48,39 @@
         .FilterOpSwitch-subOption {
             right: 16px;
         }
+        &::after{ 
+            opacity: 0;
+        }
     }
 
     &.FilterOpSwitch-isAddState {
         .FilterOpSwitch-addOption {
             z-index: 2;
-            background-color: $c-brand-main;
         }
 
         .FilterOpSwitch-subOption {
             z-index: 1;
-            background-color: $c-ui-darker;
+            opacity: 0.4;
         }
     }
 
     &.FilterOpSwitch-isSubState {
         .FilterOpSwitch-addOption {
             z-index: 1;
-            background-color: $c-ui-darker;
+            opacity: 0.4;
         }
 
         .FilterOpSwitch-subOption {
             z-index: 2;
-            background-color: $c-brand-main;
         }
+    }
+
+    &::after {
+        @include icon($fa-var-caret-down);
+        position: absolute;
+        right: 16px;
+        top: 0;
+        font-size: 1.2em;
+        transition: opacity .2s;
     }
 }
