@@ -65,15 +65,19 @@ export default class CallAssignmentPane extends PaneBase {
             if (assignment.statsItem && !assignment.statsItem.isPending) {
                 let stats = assignment.statsItem.data;
                 targetContent = [
-                    <div key="targetStats"
-                        className="CallAssignmentPane-targetStats">
-                        <h1>{ stats.num_target_matches }</h1>
-                        <span>people make up the target</span>
+                    <div>
+                        <div key="targetStats"
+                            className="CallAssignmentPane-targetStats">
+                            <h1>{ stats.num_target_matches }</h1>
+                            <span>people make up the target</span>
+                        </div>
                     </div>,
-                    <div key="goalStats"
-                        className="CallAssignmentPane-goalStats">
-                        <h1>{ stats.num_remaining_targets }</h1>
-                        <span>do not yet meet the goal</span>
+                    <div>
+                        <div key="goalStats"
+                            className="CallAssignmentPane-goalStats">
+                            <h1>{ stats.num_remaining_targets }</h1>
+                            <span>do not yet meet the goal</span>
+                        </div>
                     </div>
                 ];
             }
