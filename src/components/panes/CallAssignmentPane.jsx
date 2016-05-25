@@ -124,6 +124,9 @@ export default class CallAssignmentPane extends PaneBase {
                         Edit target filters</a>
                     <a onClick={ this.onClickEditGoal.bind(this) }>
                         Edit goal filters</a>
+                    <div className="CallAssignmentPane-progress">
+                        <div className="CallAssignmentPane-progressContent"/>
+                    </div>
                 </div>,
 
                 <div key="callers"
