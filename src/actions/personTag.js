@@ -15,3 +15,50 @@ export function retrievePersonTags() {
         });
     };
 }
+
+export function retrieveTagsForPerson(id) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_TAGS_FOR_PERSON,
+            meta: { id },
+            payload: {
+                promise: Z.resource('orgs', orgId,
+                    'people', id, 'tags').get()
+            }
+        });
+    };
+}
+
+export function addTagsToPerson(id, tagIds) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        let promises = tagIds.map(tagId =>
+            Z.resource('orgs', orgId, 'people', id, 'tags', tagId).put());
+
+        dispatch({
+            type: types.ADD_TAGS_TO_PERSON,
+            meta: { id, tagIds },
+            payload: {
+                promise: Promise.all(promises),
+            }
+        });
+    };
+}
+
+export function removeTagFromPerson(id, tagId) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.REMOVE_TAG_FROM_PERSON,
+            meta: { id, tagId },
+            payload: {
+                promise: Z.resource('orgs', orgId,
+                    'people', id, 'tags', tagId).del(),
+            }
+        });
+    };
+}
