@@ -147,8 +147,8 @@
                 border-bottom: 2px solid darken($c-brand-main, 15);
                 background-color: $c-brand-main;
                 height: 100%;
-                width: 30%;
-
+                width: 10%;
+                transition: width 0.4s;
             }
         }
 
