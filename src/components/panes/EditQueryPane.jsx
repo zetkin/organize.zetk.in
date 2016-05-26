@@ -14,7 +14,7 @@ import {
 } from '../../actions/query';
 
 
-@connect(state => state)
+@connect(state => ({ queries: state.queries }))
 export default class EditQueryPane extends PaneBase {
     componentDidMount() {
         let queryId = this.getParam(0);
