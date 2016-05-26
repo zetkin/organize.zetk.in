@@ -56,6 +56,8 @@ export default class SelectPersonTagsPane extends PaneBase {
             <a key="createLink" onClick={ this.onClickCreate.bind(this) }>
                 Create a new tag</a>,
             <TagCloud key="availableTags" tags={ tagsAvailable }
+                showEditButtons={ true }
+                onEdit={ this.onEdit.bind(this) }
                 onSelect={ this.onSelect.bind(this) }/>,
         ];
     }
@@ -68,6 +70,10 @@ export default class SelectPersonTagsPane extends PaneBase {
 
     onClickCreate() {
         this.openPane('addpersontag');
+    }
+
+    onEdit(tag) {
+        this.openPane('editpersontag', tag.id);
     }
 
     onSelect(tag) {
