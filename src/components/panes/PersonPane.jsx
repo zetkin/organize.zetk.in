@@ -74,15 +74,18 @@ export default class PersonPane extends PaneBase {
                 <DraggableAvatar key="avatar" ref="avatar" person={ person }/>,
                 <ul key="info" className="PersonPane-info">
                     { Object.keys(FIELDS).map(name => {
-                        let className = 'PersonPane-' + name;
-                        return (
-                            <li key={ name } className={ className }>
-                                <span className="PersonPane-infoLabel">
-                                    { FIELDS[name] }</span>
-                                <span className="PersonPane-infoValue">
-                                    { person[name] }</span>
-                            </li>
-                        );
+                        if (person[name]) {
+                            let className = 'PersonPane-' + name;
+
+                            return (
+                                <li key={ name } className={ className }>
+                                    <span className="PersonPane-infoLabel">
+                                        { FIELDS[name] }</span>
+                                    <span className="PersonPane-infoValue">
+                                        { person[name] }</span>
+                                </li>
+                            );
+                        }
                     } ) }
                 </ul>,
                 <a onClick={ this.onClickEdit.bind(this) }>
