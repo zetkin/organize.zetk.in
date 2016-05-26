@@ -3,6 +3,19 @@ import Z from 'zetkin';
 import * as types from '.';
 
 
+export function createPersonTag(data) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.CREATE_PERSON_TAG,
+            payload: {
+                promise: Z.resource('orgs', orgId, 'people', 'tags').post(data)
+            }
+        });
+    };
+}
+
 export function retrievePersonTags() {
     return function(dispatch, getState) {
         let orgId = getState().org.activeId;
