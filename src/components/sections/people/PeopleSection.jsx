@@ -1,9 +1,10 @@
 import React from 'react';
 
-import SectionBase from '../SectionBase';
-import PeopleListPane from './PeopleListPane';
-import JoinRequestsPane from './JoinRequestsPane';
+import ImportPane from './ImportPane';
 import InvitePane from './InvitePane';
+import JoinRequestsPane from './JoinRequestsPane';
+import PeopleListPane from './PeopleListPane';
+import SectionBase from '../SectionBase';
 
 
 export default class PeopleSection extends SectionBase {
@@ -17,6 +18,9 @@ export default class PeopleSection extends SectionBase {
 
             { path: 'invite', title: 'Invite',
                 startPane: InvitePane },
+
+            { path: 'import', title: 'Import',
+                startPane: ImportPane },
         ];
     }
 }

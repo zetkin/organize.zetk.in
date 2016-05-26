@@ -30,6 +30,7 @@
     "react-dnd": "^2.1.4",
     "react-dnd-html5-backend": "^2.1.2",
     "react-dom": "^15.0.1",
+    "react-dropzone": "^3.4.0",
     "react-medium-editor": "^1.7.1",
     "react-redux": "^4.4.5",
     "react-router-component": "^0.32.0",
@@ -38,6 +39,7 @@
     "redux-thunk": "^2.0.1",
     "sugar-date": "^1.5.1",
     "ws": "^0.7.2",
+    "xlsx": "^0.8.0",
     "zetkin": "^0.5.0"
   },
   "devDependencies": {
