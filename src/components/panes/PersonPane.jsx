@@ -102,7 +102,6 @@ export default class PersonPane extends PaneBase {
     onAddTag() {
         let personId = this.getParam(0);
         let action = createSelection('persontag', null, null, ids => {
-            // TODO: Execute action
             this.props.dispatch(addTagsToPerson(personId, ids));
         });
 
