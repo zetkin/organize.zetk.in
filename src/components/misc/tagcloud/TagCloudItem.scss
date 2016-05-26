@@ -10,7 +10,7 @@
     color: black;
     transition: color 0.2s;
 
-    .TagCloudItem-removeButton {
+    .TagCloudItem-removeButton, .TagCloudItem-editButton {
         position: absolute;
         top: 4px;
         right: 4px;
@@ -27,7 +27,7 @@
     &:hover {
         color: $c-ui-darker;
 
-        .TagCloudItem-removeButton {
+        .TagCloudItem-removeButton, .TagCloudItem-editButton {
             cursor: pointer;
             opacity: 1;
             background: linear-gradient(90deg, rgba($c-ui-dark,0), rgba($c-ui-dark, 1) 70%, rgba($c-ui-dark,1));

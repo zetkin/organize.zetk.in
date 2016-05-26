@@ -6,15 +6,18 @@ import TagCloudItem from './TagCloudItem';
 export default class TagCloud extends React.Component {
     static propTypes = {
         tags: React.PropTypes.array.isRequired,
-        onSelect: React.PropTypes.func,
-        onRemove: React.PropTypes.func,
         onAdd: React.PropTypes.func,
+        onEdit: React.PropTypes.func,
+        onRemove: React.PropTypes.func,
+        onSelect: React.PropTypes.func,
         showAddButton: React.PropTypes.bool,
+        showEditButtons: React.PropTypes.bool,
         showRemoveButtons: React.PropTypes.bool,
     };
 
     static defaultProps = {
         showAddButton: false,
+        showEditButtons: false,
         showRemoveButtons: false,
     };
 
@@ -33,7 +36,9 @@ export default class TagCloud extends React.Component {
             <ul className="TagCloud">
             { this.props.tags.map(tag => (
                 <TagCloudItem key={ tag.id } tag={ tag }
+                    showEditButton={ this.props.showEditButtons }
                     showRemoveButton={ this.props.showRemoveButtons }
+                    onEdit={ this.props.onEdit }
                     onSelect={ this.props.onSelect }
                     onRemove={ this.props.onRemove }/>
             )) }
