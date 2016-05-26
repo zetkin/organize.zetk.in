@@ -5,16 +5,23 @@ import TextArea from './inputs/TextArea';
 import TextInput from './inputs/TextInput';
 
 
-export default class PersonTagFors extends React.Component {
+export default class PersonTagForm extends React.Component {
+    static propTypes = {
+        tag: React.PropTypes.shape({
+            title: React.PropTypes.string.isRequired,
+            info_text: React.PropTypes.string,
+        }),
+    };
+
     render() {
-        var activity = this.props.activity || {};
+        var tag = this.props.tag || {};
 
         return (
             <Form ref="form" {...this.props }>
                 <TextInput label="Title" name="title"
-                    initialValue={ activity.title }/>
+                    initialValue={ tag.title }/>
                 <TextArea label="Information" name="info_text"
-                    initialValue={ activity.info_text }/>
+                    initialValue={ tag.info_text }/>
 
                 <input key="submit" type="submit"/>
             </Form>

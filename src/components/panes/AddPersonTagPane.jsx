@@ -18,7 +18,7 @@ export default class AddPersonTagPane extends PaneBase {
         };
 
         return (
-            <PersonTagForm ref="form" activity={ initialData }
+            <PersonTagForm ref="form" tag={ initialData }
                 onSubmit={ this.onSubmit.bind(this) }/>
         );
     }
@@ -26,8 +26,7 @@ export default class AddPersonTagPane extends PaneBase {
     onSubmit(ev) {
         ev.preventDefault();
 
-        const values = this.refs.form.getValues();
-        const activityId = this.props.params[0];
+        let values = this.refs.form.getValues();
 
         this.props.dispatch(createPersonTag(values));
         this.closePane();
