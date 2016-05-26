@@ -16,6 +16,19 @@ export function createPersonTag(data) {
     };
 }
 
+export function retrievePersonTag(id) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_PERSON_TAG,
+            payload: {
+                promise: Z.resource('orgs', orgId, 'people', 'tags', id).get()
+            }
+        });
+    };
+}
+
 export function retrievePersonTags() {
     return function(dispatch, getState) {
         let orgId = getState().org.activeId;
@@ -39,6 +52,20 @@ export function retrieveTagsForPerson(id) {
             payload: {
                 promise: Z.resource('orgs', orgId,
                     'people', id, 'tags').get()
+            }
+        });
+    };
+}
+
+export function updatePersonTag(id, data) {
+    return function(dispatch, getState) {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.UPDATE_PERSON_TAG,
+            payload: {
+                promise: Z.resource('orgs', orgId,
+                    'people', 'tags', id).patch(data)
             }
         });
     };

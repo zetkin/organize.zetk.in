@@ -20,6 +20,8 @@ export default function personTags(state = null, action) {
                     action.payload.data.data)
             });
 
+        case types.RETRIEVE_PERSON_TAG + '_FULFILLED':
+        case types.UPDATE_PERSON_TAG + '_FULFILLED':
         case types.CREATE_PERSON_TAG + '_FULFILLED':
             let tag = action.payload.data.data;
             return Object.assign({}, state, {
