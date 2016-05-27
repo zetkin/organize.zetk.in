@@ -28,3 +28,10 @@ export function useImportTableFirstRowAsHeader(tableId, useFirstAsHeader) {
         payload: { tableId, useFirstAsHeader },
     };
 }
+
+export function updateImportColumn(tableId, columnId, props) {
+    return {
+        type: types.UPDATE_IMPORT_COLUMN,
+        payload: { tableId, columnId, props },
+    };
+}

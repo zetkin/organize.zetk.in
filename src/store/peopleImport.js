@@ -55,6 +55,26 @@ export default function peopleImport(state = null, action) {
             return state;
         }
     }
+    else if (action.type == types.UPDATE_IMPORT_COLUMN) {
+        let tableId = action.payload.tableId;
+        let tableItem = getListItemById(state.tableSet.tableList, tableId);
+
+        let columnId = action.payload.columnId;
+        let columnItem = getListItemById(tableItem.data.columnList, columnId);
+        let column = Object.assign({}, columnItem.data, action.payload.props);
+
+        let table = Object.assign({}, tableItem.data, {
+            columnList: updateOrAddListItem(tableItem.data.columnList,
+                column.id, column),
+        });
+
+        return Object.assign({}, state, {
+            tableSet: Object.assign({}, state.tableSet, {
+                tableList: updateOrAddListItem(state.tableSet.tableList,
+                    table.id, table),
+            }),
+        });
+    }
     else {
         return state || {
             tableSet: null,
