@@ -5,7 +5,7 @@ import { createList, createListItem } from './store';
 
 
 export function parseWorkbook(data) {
-    let wb = xlsx.read(data, { type: 'binary' });
+    let wb = xlsx.read(data, { type: 'binary', cellStyles: true });
 
     let tableSet = {
         tableList: createList(),
@@ -43,6 +43,39 @@ export function parseWorkbook(data) {
                     included: true,
                     values: rowValues,
                 });
+            }
+
+            // If there are more than one row in the sheet, analyze whether
+            // first row was likely intended as a header, and set default.
+            if ((range.e.r - range.s.r) > 1) {
+                let numDifferentFormats = 0;
+
+                for (let c = range.s.c; c < range.e.c; c++) {
+                    let addr0 = xlsx.utils.encode_cell({ r: 0, c });
+                    let addr1 = xlsx.utils.encode_cell({ r: 1, c });
+                    let cell0 = sheet[addr0];
+                    let cell1 = sheet[addr1];
+
+                    if (cell0 && cell1 && cell0.ixfe !== cell1.ixfe) {
+                        // Cells in first and second row have different
+                        // formats, likely because first is header
+                        numDifferentFormats++;
+                    }
+                }
+
+                // If more than 80% of the columns had different styles on the
+                // first and second rows, assume that the first row is intended
+                // as a header. Remove the first row, moving it's values to the
+                // name field of each column.
+                let threshold = 0.8 * (range.e.c - range.s.c);
+                if (numDifferentFormats > threshold) {
+                    table.useFirstRowAsHeader = true;
+                    table.columns.forEach((col, idx) => {
+                        col.name = table.rows[0].values[idx];
+                    });
+
+                    table.rows.splice(0, 1);
+                }
             }
 
             tableSet.tableList.items.push(createListItem(table));

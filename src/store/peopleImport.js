@@ -7,7 +7,6 @@ import {
 
 
 export default function peopleImport(state = null, action) {
-    console.log(action);
     if (action.type == types.PARSE_IMPORT_FILE + '_FULFILLED') {
         return Object.assign({}, state, {
             tableSet: action.payload.tableSet,
