@@ -1,6 +1,7 @@
 import * as types from '../actions';
 
 import {
+    createList,
     getListItemById,
     updateOrAddListItem,
 } from '../utils/store';
@@ -24,25 +25,25 @@ export default function peopleImport(state = null, action) {
             });
 
             if (value) {
-                table.rows = tableItem.data.rows.slice(1);
-                table.columns = tableItem.data.columns.map((col, idx) => (
-                    Object.assign({}, col, {
+                let oldTable = tableItem.data;
+                table.rows = oldTable.rows.slice(1);
+                table.columnList = createList(oldTable.columnList.items.map(
+                    (colItem, idx) => Object.assign({}, colItem.data, {
                         name: tableItem.data.rows[0].values[idx],
-                    })
-                ));
+                    })));
             }
             else {
                 let firstRow = {
-                    values: tableItem.data.columns.map(col => col.name)
+                    values: tableItem.data.columnList.items.map(colItem =>
+                        colItem.data.name)
                 };
 
                 table.rows = [ firstRow ].concat(tableItem.data.rows);
-                table.columns = tableItem.data.columns.map(col =>
-                    Object.assign({}, col, { name: undefined }));
-
+                table.columnList = createList(
+                    tableItem.data.columnList.items.map(colItem =>
+                        Object.assign({}, colItem.data, { name: undefined })));
             }
 
-            console.log(table);
             return Object.assign({}, state, {
                 tableSet: Object.assign({}, state.tableSet, {
                     tableList: updateOrAddListItem(state.tableSet.tableList,

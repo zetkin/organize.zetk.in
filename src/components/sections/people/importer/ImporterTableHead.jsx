@@ -5,11 +5,14 @@ import ImporterColumnHead from './ImporterColumnHead';
 
 export default class ImporterTableHead extends React.Component {
     static propTypes = {
-        columns: React.PropTypes.array.isRequired,
+        columnList: React.PropTypes.shape({
+            items: React.PropTypes.array.isRequired,
+        }).isRequired,
+        onChangeColumn: React.PropTypes.func,
     };
 
     render() {
-        let columns = this.props.columns;
+        let columns = this.props.columnList.items.map(i => i.data);
 
         return (
             <thead className="ImporterTableHead">

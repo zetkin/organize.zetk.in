@@ -19,21 +19,24 @@ export function parseWorkbook(data) {
             let table = {
                 id: '$' + makeRandomString(6),
                 name: name,
-                columns: [],
+                // Columns are often operated on by ID and will benefit from
+                // being stored as a standardized list structure. Rows are
+                // rarely operated upon individually and can be kept simple.
+                columnList: createList(),
                 rows: [],
             };
 
             for (let c = range.s.c; c < range.e.c; c++) {
-                table.columns.push({
+                table.columnList.items.push(createListItem({
                     id: '$' + makeRandomString(6),
                     name: '',
                     included: true,
                     type: 'unknown',
-                });
+                }));
             }
 
             for (let r = range.s.r; r < range.e.r; r++) {
-                let rowValues = table.columns.map((col, idx) => {
+                let rowValues = table.columnList.items.map((col, idx) => {
                     let addr = xlsx.utils.encode_cell({ r, c: idx });
                     let cell = sheet[addr];
                     return cell? cell.v : undefined;
@@ -70,8 +73,8 @@ export function parseWorkbook(data) {
                 let threshold = 0.8 * (range.e.c - range.s.c);
                 if (numDifferentFormats > threshold) {
                     table.useFirstRowAsHeader = true;
-                    table.columns.forEach((col, idx) => {
-                        col.name = table.rows[0].values[idx];
+                    table.columnList.items.forEach((colItem, idx) => {
+                        colItem.data.name = table.rows[0].values[idx];
                     });
 
                     table.rows.splice(0, 1);

@@ -21,7 +21,7 @@ export default class ImporterTable extends React.Component {
                 <input type="checkbox" checked={ table.useFirstRowAsHeader }
                     onChange={ this.onChangeFirstRow.bind(this) }/>
                 <table>
-                    <ImporterTableHead columns={ table.columns }/>
+                    <ImporterTableHead columnList={ table.columnList }/>
                     <ImporterTableBody table={ table }/>
                 </table>
             </div>

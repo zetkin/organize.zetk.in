@@ -10,13 +10,15 @@ export default class ImporterTableBody extends React.Component {
 
     render() {
         let table = this.props.table;
+        let rows = table.rows;
+        let columns = table.columnList.items.map(i => i.data);
 
         return (
             <tbody className="ImporterTableBody">
-            { table.rows.map((row, index) => (
+            { rows.map((row, index) => (
                 <ImporterTableRow key={ index }
                     values={ row.values }
-                    columns={ table.columns }/>
+                    columns={ columns }/>
             )) }
             </tbody>
         );
