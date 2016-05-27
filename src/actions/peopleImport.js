@@ -21,3 +21,10 @@ export function parseImportFile(file) {
         payload: { promise },
     };
 }
+
+export function useImportTableFirstRowAsHeader(tableId, useFirstAsHeader) {
+    return {
+        type: types.USE_IMPORT_TABLE_FIRST_AS_HEADER,
+        payload: { tableId, useFirstAsHeader },
+    };
+}

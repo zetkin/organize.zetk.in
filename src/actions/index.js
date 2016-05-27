@@ -113,3 +113,4 @@ export const FINISH_SELECTION = 'FINISH_SELECTION';
 
 // Flux actions related to import
 export const PARSE_IMPORT_FILE = 'PARSE_IMPORT_FILE';
+export const USE_IMPORT_TABLE_FIRST_AS_HEADER = 'USE_IMPORT_TABLE_FIRST_AS_HEADER';
