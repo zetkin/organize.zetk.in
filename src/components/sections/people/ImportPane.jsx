@@ -1,11 +1,14 @@
 import cx from 'classnames';
-import DropZone from 'react-dropzone';
 import React from 'react';
-import xlsx from 'xlsx';
+import DropZone from 'react-dropzone';
+import { connect } from 'react-redux';
 
 import PaneBase from '../../panes/PaneBase';
+import ImporterTableSet from './importer/ImporterTableSet';
+import { parseImportFile } from '../../../actions/peopleImport';
 
 
+@connect(state => ({ peopleImport: state.peopleImport }))
 export default class ImportPane extends PaneBase {
     constructor(props) {
         super(props);
@@ -20,12 +23,21 @@ export default class ImportPane extends PaneBase {
             'ImportPane-dropZone-isDragging': this.state.isDragging,
         });
 
-        return [
-            <DropZone key="dropZone" className={ classes }
-                onDragEnter={ this.onDragEnter.bind(this) }
-                onDragLeave={ this.onDragLeave.bind(this) }
-                onDrop={ this.onDrop.bind(this) }/>
-        ];
+        let tableSet = this.props.peopleImport.tableSet;
+
+        if (tableSet) {
+            return (
+                <ImporterTableSet tableSet={ tableSet }/>
+            );
+        }
+        else {
+            return [
+                <DropZone key="dropZone" className={ classes }
+                    onDragEnter={ this.onDragEnter.bind(this) }
+                    onDragLeave={ this.onDragLeave.bind(this) }
+                    onDrop={ this.onDrop.bind(this) }/>
+            ];
+        }
     }
 
     onDragEnter(ev) {
