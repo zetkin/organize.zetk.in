@@ -7,6 +7,7 @@ import { getListItemById } from '../../../../utils/store';
 export default class ImporterTableSet extends React.Component {
     static propTypes = {
         tableSet: React.PropTypes.object.isRequired,
+        dispatch: React.PropTypes.func.isRequired,
     };
 
     constructor(props) {
@@ -29,7 +30,8 @@ export default class ImporterTableSet extends React.Component {
             let tableItem = getListItemById(tableSet.tableList, tableId);
 
             table = (
-                <ImporterTable table={ tableItem.data }/>
+                <ImporterTable table={ tableItem.data }
+                    dispatch={ this.props.dispatch }/>
             );
         }
 

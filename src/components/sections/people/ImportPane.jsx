@@ -27,7 +27,8 @@ export default class ImportPane extends PaneBase {
 
         if (tableSet) {
             return (
-                <ImporterTableSet tableSet={ tableSet }/>
+                <ImporterTableSet tableSet={ tableSet }
+                    dispatch={ this.props.dispatch }/>
             );
         }
         else {
