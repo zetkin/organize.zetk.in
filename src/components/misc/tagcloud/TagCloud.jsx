@@ -25,9 +25,9 @@ export default class TagCloud extends React.Component {
         let addButton = null;
         if (this.props.showAddButton) {
             addButton = (
-                <li className="TagCloud-addButton">
-                    <a onClick={ this.props.onAdd }>
-                        Add tag</a>
+                <li className="TagCloud-addButton"
+                    onClick={ this.props.onAdd }>
+                    Add
                 </li>
             );
         }

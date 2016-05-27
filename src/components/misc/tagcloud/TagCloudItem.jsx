@@ -20,7 +20,7 @@ export default class TagCloudItem extends React.Component {
         if (this.props.showEditButton) {
             editButton = (
                 <a className="TagCloudItem-editButton"
-                    onClick={ this.onEdit.bind(this, tag) }>Edit</a>
+                    onClick={ this.onEdit.bind(this, tag) }></a>
             );
         }
 
@@ -28,7 +28,7 @@ export default class TagCloudItem extends React.Component {
         if (this.props.showRemoveButton) {
             removeButton = (
                 <a className="TagCloudItem-removeButton"
-                    onClick={ this.onRemove.bind(this, tag) }>x</a>
+                    onClick={ this.onRemove.bind(this, tag) }></a>
             );
         }
 
