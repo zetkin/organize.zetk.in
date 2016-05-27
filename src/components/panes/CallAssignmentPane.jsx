@@ -63,6 +63,7 @@ export default class CallAssignmentPane extends PaneBase {
             let instructions = assignment.instructions;
 
             let targetContent = null;
+            let progressSum = 5;
             if (assignment.statsItem.isPending) {
                 targetContent = [ <LoadingIndicator height={92}/> ];
             }
@@ -84,6 +85,7 @@ export default class CallAssignmentPane extends PaneBase {
                         </div>
                     </div>
                 ];
+                progressSum = ( stats.num_calls_reached / stats.num_remaining_targets * 100 );
             }
             if (data.queryItem && data.queryItem.data.matchList) {
                 targetContent = <h1>{ data.queryItem.data.matchList.items.length }</h1>;
@@ -129,7 +131,8 @@ export default class CallAssignmentPane extends PaneBase {
                     <a onClick={ this.onClickEditGoal.bind(this) }>
                         Edit goal filters</a>
                     <div className="CallAssignmentPane-progress">
-                        <div className="CallAssignmentPane-progressContent"/>
+                        <div style={{ width: progressSum }} 
+                            className="CallAssignmentPane-progressContent"/>
                     </div>
                 </div>,
 
