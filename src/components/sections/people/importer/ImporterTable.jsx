@@ -2,7 +2,10 @@ import React from 'react';
 
 import ImporterTableHead from './ImporterTableHead';
 import ImporterTableBody from './ImporterTableBody';
-import { useImportTableFirstRowAsHeader } from '../../../../actions/peopleImport';
+import {
+    updateImportColumn,
+    useImportTableFirstRowAsHeader,
+} from '../../../../actions/peopleImport';
 
 
 export default class ImporterTable extends React.Component {
@@ -21,11 +24,18 @@ export default class ImporterTable extends React.Component {
                 <input type="checkbox" checked={ table.useFirstRowAsHeader }
                     onChange={ this.onChangeFirstRow.bind(this) }/>
                 <table>
-                    <ImporterTableHead columnList={ table.columnList }/>
+                    <ImporterTableHead columnList={ table.columnList }
+                        onChangeColumn={ this.onChangeColumn.bind(this) }/>
                     <ImporterTableBody table={ table }/>
                 </table>
             </div>
         );
+    }
+
+    onChangeColumn(columnId, props) {
+        let tableId = this.props.table.id;
+        this.props.dispatch(
+            updateImportColumn(tableId, columnId, props));
     }
 
     onChangeFirstRow(ev) {

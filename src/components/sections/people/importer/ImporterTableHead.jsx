@@ -18,7 +18,8 @@ export default class ImporterTableHead extends React.Component {
             <thead className="ImporterTableHead">
                 <tr>
                 { columns.map((col, idx) => (
-                    <ImporterColumnHead key={ col.id } column={ col }/>
+                    <ImporterColumnHead key={ col.id } column={ col }
+                        onChangeColumn={ this.props.onChangeColumn }/>
                 )) }
                 </tr>
             </thead>
