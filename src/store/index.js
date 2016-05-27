@@ -13,6 +13,7 @@ import locations from './locations';
 import org from './org';
 import participants from './participants';
 import people from './people';
+import peopleImport from './peopleImport';
 import personTags from './personTags';
 import queries from './queries';
 import search from './search';
@@ -32,6 +33,7 @@ export const appReducer = combineReducers({
     org,
     participants,
     people,
+    peopleImport,
     personTags,
     queries,
     search,

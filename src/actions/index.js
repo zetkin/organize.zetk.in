@@ -110,3 +110,6 @@ export const CREATE_SELECTION = 'CREATE_SELECTION';
 export const ADD_TO_SELECTION = 'ADD_TO_SELECTION';
 export const REMOVE_FROM_SELECTION = 'REMOVE_FROM_SELECTION';
 export const FINISH_SELECTION = 'FINISH_SELECTION';
+
+// Flux actions related to import
+export const PARSE_IMPORT_FILE = 'PARSE_IMPORT_FILE';

@@ -48,16 +48,6 @@ export default class ImportPane extends PaneBase {
         // TODO: Check file count, format et c
 
         let file = files[0];
-        let reader = new FileReader();
-
-        // TODO: Do this async operation in action instead?
-        reader.onload = e => {
-            let data = e.target.result;
-            let wb = xlsx.read(data, { type: 'binary' });
-
-            console.log(wb);
-        };
-
-        reader.readAsBinaryString(file);
+        this.props.dispatch(parseImportFile(file));
     }
 }
