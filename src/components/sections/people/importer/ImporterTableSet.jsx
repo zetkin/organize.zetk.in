@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ImporterTable from './ImporterTable';
+import { getListItemById } from '../../../../utils/store';
 
 
 export default class ImporterTableSet extends React.Component {
@@ -12,9 +13,9 @@ export default class ImporterTableSet extends React.Component {
         super(props);
 
         let tableSet = props.tableSet;
-        if (tableSet && tableSet.tables && tableSet.tables.length > 0) {
+        if (tableSet && tableSet.tableList.items.length > 0) {
             this.state = {
-                selectedTableId: tableSet.tables[0].id,
+                selectedTableId: tableSet.tableList.items[0].data.id,
             };
         }
     }
@@ -24,21 +25,21 @@ export default class ImporterTableSet extends React.Component {
 
         let table = null;
         if (this.state.selectedTableId) {
-            let tableData = tableSet.tables.find(table =>
-                table.id == this.state.selectedTableId);
+            let tableId = this.state.selectedTableId;
+            let tableItem = getListItemById(tableSet.tableList, tableId);
 
             table = (
-                <ImporterTable key={ tableData.id } table={ tableData }/>
+                <ImporterTable table={ tableItem.data }/>
             );
         }
 
         return (
             <div className="ImporterTableSet">
                 <ul className="ImporterTableSet-tabs">
-                { tableSet.tables.map(table => (
-                    <li key={ table.id } className="ImporterTableSet-tab"
-                        onClick={ this.onClickTab.bind(this, table) }>
-                        { table.name }
+                { tableSet.tableList.items.map(item => (
+                    <li key={ item.data.id } className="ImporterTableSet-tab"
+                        onClick={ this.onClickTab.bind(this, item.data) }>
+                        { item.data.name }
                     </li>
                 )) }
                 </ul>

@@ -1,13 +1,14 @@
 import xlsx from 'xlsx';
 
 import makeRandomString from './makeRandomString';
+import { createList, createListItem } from './store';
 
 
 export function parseWorkbook(data) {
     let wb = xlsx.read(data, { type: 'binary' });
 
     let tableSet = {
-        tables: [],
+        tableList: createList(),
     };
 
     wb.SheetNames.forEach(name => {
@@ -44,7 +45,7 @@ export function parseWorkbook(data) {
                 });
             }
 
-            tableSet.tables.push(table);
+            tableSet.tableList.items.push(createListItem(table));
         }
     });
 
