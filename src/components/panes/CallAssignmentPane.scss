@@ -78,12 +78,14 @@
         }
 
         .CallAssignmentPane-stats {
+            min-height: 92px;
             margin-bottom: 10px;
             & > div {
                 @include col(6,12);
             }
             div > div {
                 position: relative;
+                min-height: 90px;
                 background-color: lighten($c-ui-bg, 1);
                 border: 1px solid darken($c-ui-bg, 3);
                 border-radius: 4px;
@@ -131,6 +133,10 @@
                         @include icon($fa-var-flag-checkered);
                     }
                 }
+            }
+
+            .LoadingIndicator {
+                margin-top: 10px;
             }
         }
 

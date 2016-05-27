@@ -62,31 +62,32 @@ export default class CallAssignmentPane extends PaneBase {
             let assignment = data.assignmentItem.data;
             let instructions = assignment.instructions;
 
-            let targetContent = null;
+            let targetStats = null;
+            let goalStats = null;
             let progressSum = 5;
-            if (assignment.statsItem.isPending) {
-                targetContent = [ <LoadingIndicator height={92}/> ];
+            if (!assignment.statsItem || assignment.statsItem.isPending) {
+                targetStats = <LoadingIndicator/>;
+                goalStats = <LoadingIndicator/>;
             }
-            else if (assignment.statsItem && !assignment.statsItem.isPending) {
+            else {
                 let stats = assignment.statsItem.data;
-                targetContent = [
-                    <div>
-                        <div key="targetStats"
-                            className="CallAssignmentPane-targetStats">
-                            <h1>{ stats.num_target_matches }</h1>
-                            <span>people make up the target</span>
-                        </div>
-                    </div>,
-                    <div>
-                        <div key="goalStats"
-                            className="CallAssignmentPane-goalStats">
-                            <h1>{ stats.num_remaining_targets }</h1>
-                            <span>do not yet meet the goal</span>
-                        </div>
-                    </div>
+                targetStats = [
+                    <h1 key="targetStatsHeader">
+                        { stats.num_target_matches }</h1>,
+                    <span key="targetStatsInfo">
+                        people make up the target</span>
                 ];
+
+                goalStats = [
+                    <h1 key="goalStatsHeader">
+                        { stats.num_remaining_targets }</h1>,
+                    <span key="goalStatsInfo">
+                        do not yet meet the goal</span>
+                ];
+
                 progressSum = ( stats.num_calls_reached / stats.num_remaining_targets * 100 );
             }
+
             if (data.queryItem && data.queryItem.data.matchList) {
                 targetContent = <h1>{ data.queryItem.data.matchList.items.length }</h1>;
             }
@@ -124,7 +125,18 @@ export default class CallAssignmentPane extends PaneBase {
                     className="CallAssignmentPane-target">
                     <h3>Targets</h3>
                     <div className="CallAssignmentPane-stats">
-                        { targetContent }
+                        <div>
+                            <div key="targetStats"
+                                className="CallAssignmentPane-targetStats">
+                                { targetStats }
+                            </div>
+                        </div>
+                        <div>
+                            <div key="goalStats"
+                                className="CallAssignmentPane-goalStats">
+                                { goalStats }
+                            </div>
+                        </div>
                     </div>
                     <a onClick={ this.onClickEditTarget.bind(this) }>
                         Edit target filters</a>
