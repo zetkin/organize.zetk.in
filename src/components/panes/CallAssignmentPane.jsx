@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import CallerList from '../misc/callerlist/CallerList';
+import LoadingIndicator from '../misc/LoadingIndicator';
 import { getListItemById } from '../../utils/store';
 import { createTextDocument } from '../../actions/document';
 import { createSelection } from '../../actions/selection';
@@ -62,7 +63,10 @@ export default class CallAssignmentPane extends PaneBase {
             let instructions = assignment.instructions;
 
             let targetContent = null;
-            if (assignment.statsItem && !assignment.statsItem.isPending) {
+            if (assignment.statsItem.isPending) {
+                targetContent = [ <LoadingIndicator height={92}/> ];
+            }
+            else if (assignment.statsItem && !assignment.statsItem.isPending) {
                 let stats = assignment.statsItem.data;
                 targetContent = [
                     <div>
