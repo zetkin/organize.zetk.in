@@ -79,6 +79,11 @@
     content: $fa-character;
 }
 
+@mixin icon-spin {
+    -webkit-animation: fa-spin 1s infinite steps(24);
+        animation: fa-spin 1s infinite steps(24);
+}
+
 @mixin icon-button($fa-character) {
     padding: .35em 1em .25em;
     text-align: center;
