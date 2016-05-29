@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { resolveSummaryComponent } from './summary';
+
 
 const PERSON_OPTIONS = {
     'person.id': 'Zetkin ID',
@@ -42,6 +44,12 @@ export default class ImporterColumnHead extends React.Component {
             || COMPLEX_OPTIONS[type]
             || 'n/a';
 
+        let summary = null;
+        let SummaryComponent = resolveSummaryComponent(column.type);
+        if (SummaryComponent) {
+            summary = <SummaryComponent column={ column }/>;
+        }
+
         return (
             <th className="ImporterColumnHead">
                 <h3 className="ImporterColumnHead-name">{ name }</h3>
@@ -61,6 +69,9 @@ export default class ImporterColumnHead extends React.Component {
                     )) }
                     </optgroup>
                 </select>
+                <div className="ImporterColumnHead-summary">
+                    { summary }
+                </div>
                 <a className="ImporterColumnHead-editLink"
                     onClick={ this.onClickEdit.bind(this) }>
                     Edit column settings</a>

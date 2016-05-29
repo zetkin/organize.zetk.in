@@ -7,6 +7,14 @@
         margin: 0 0 5px;
     }
 
+    .ImporterColumnHead-summary {
+        p {
+            font-size: 11px;
+            font-style: italic;
+            font-weight: normal;
+        }
+    }
+
     .ImporterColumnHead-editLink {
         font-size: 11px;
         cursor: pointer;
