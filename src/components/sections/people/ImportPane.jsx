@@ -4,7 +4,7 @@ import DropZone from 'react-dropzone';
 import { connect } from 'react-redux';
 
 import PaneBase from '../../panes/PaneBase';
-import ImporterTableSet from './importer/ImporterTableSet';
+import ImporterTableSet from '../../misc/importer/ImporterTableSet';
 import { parseImportFile } from '../../../actions/importer';
 
 

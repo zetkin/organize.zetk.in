@@ -1,7 +1,5 @@
 import React from 'react';
 
-import SelectInput from '../../../forms/inputs/SelectInput';
-
 
 const PERSON_OPTIONS = {
     'person.id': 'Zetkin ID',

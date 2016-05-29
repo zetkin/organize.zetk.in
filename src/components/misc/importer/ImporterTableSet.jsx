@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ImporterTable from './ImporterTable';
-import { getListItemById } from '../../../../utils/store';
+import { getListItemById } from '../../../utils/store';
 
 
 export default class ImporterTableSet extends React.Component {
