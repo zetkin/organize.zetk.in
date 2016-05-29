@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { resolveValueComponent } from './values';
+
 
 export default class ImporterTableRow extends React.Component {
     static propTypes = {
@@ -13,9 +15,16 @@ export default class ImporterTableRow extends React.Component {
 
         return (
             <tr className="ImporterTableRow">
-            { values.map((val, idx) => (
-                <td key={ columns[idx].id }>{ val }</td>
-            )) }
+            { values.map((val, idx) => {
+                let column = columns[idx];
+                let ValueComponent = resolveValueComponent(column);
+
+                return (
+                    <td key={ columns[idx].id }>
+                        <ValueComponent value={ val } column={ column }/>
+                    </td>
+                );
+            }) }
             </tr>
         );
     }
