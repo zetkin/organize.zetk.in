@@ -7,6 +7,7 @@ import { retrieveActivities } from '../actions/activity';
 import { retrieveCampaigns, retrieveCampaign } from '../actions/campaign';
 import { retrieveLocations, retrieveLocation } from '../actions/location';
 import { retrievePeople, retrievePerson } from '../actions/person';
+import { retrievePersonTags } from '../actions/personTag';
 import { getUserInfo, getUserMemberships } from '../actions/user';
 
 
@@ -69,6 +70,10 @@ function waitForActions(execActions) {
 
 router.get([/people$/, /people\/list$/], waitForActions(req => [
     retrievePeople()
+]));
+
+router.get(/people\/import$/, waitForActions(req => [
+    retrievePersonTags(),
 ]));
 
 router.get(/person:(\d+)$/, waitForActions(req => [
