@@ -62,6 +62,12 @@ export function getListItemById(list, id) {
     return list.items.find(i => i.data && i.data.id == id);
 }
 
+export function getListItemsByIds(list, ids) {
+    return ids
+        .map(id => getListItemById(list, id))
+        .filter(item => item !== null);
+}
+
 export function removeListItem(list, id) {
     if (!list.items)
         return null;
