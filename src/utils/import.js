@@ -48,6 +48,29 @@ export function parseWorkbook(data) {
                 });
             }
 
+            // Iterate from right to left, finding completely empty columns
+            // and removing them, storing the number of removed columns.
+            table.numEmptyColumnsRemoved = 0;
+            for (let c = (range.e.c - range.s.c); c >= 0; c--) {
+                let empty = true;
+                for (let r = 0; r < table.rows.length; r++) {
+                    let val = table.rows[r].values[c];
+                    if (val !== undefined) {
+                        empty = false;
+                        break;
+                    }
+                }
+
+                if (empty) {
+                    // Remove empty column, including values from all rows
+                    table.numEmptyColumnsRemoved++;
+                    table.columnList.items.splice(c, 1);
+                    for (let r = 0; r < table.rows.length; r++) {
+                        table.rows[r].values.splice(c, 1);
+                    }
+                }
+            }
+
             // If there are more than one row in the sheet, analyze whether
             // first row was likely intended as a header, and set default.
             if ((range.e.r - range.s.r) > 1) {
