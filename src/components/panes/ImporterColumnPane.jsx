@@ -47,8 +47,10 @@ export default class ImporterColumnPane extends PaneBase {
         let settings = null;
 
         if (SettingsComponent) {
+            // TODO: Remove openPane attribute after pane refactor
             settings = (
                 <SettingsComponent config={ column.config }
+                    openPane={ this.openPane.bind(this) }
                     onChangeConfig={ this.onChangeConfig.bind(this) }/>
             );
         }

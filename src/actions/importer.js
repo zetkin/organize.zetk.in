@@ -61,8 +61,8 @@ export function updateImportColumn(tableId, columnId, props) {
                         let tagItem = tagList.items.find(i =>
                             (i.data.title.toLowerCase() === lcValue));
 
-                        let tag = tagItem? tagItem.data.id : null;
-                        mappings.push({ value, tag });
+                        let tags = tagItem? [ tagItem.data.id ] : [];
+                        mappings.push({ value, tags });
                     }
                 }
 
