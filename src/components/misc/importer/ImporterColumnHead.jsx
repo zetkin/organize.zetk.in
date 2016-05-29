@@ -44,7 +44,7 @@ export default class ImporterColumnHead extends React.Component {
 
         return (
             <th className="ImporterColumnHead">
-                <h3>{ name }</h3>
+                <h3 className="ImporterColumnHead-name">{ name }</h3>
                 <select value={ type }
                     onChange={ this.onChangeColumn.bind(this) }>
                     <option value="unknown" disabled={ true }>Column type</option>
