@@ -19,6 +19,7 @@ import EditLocationPane from './EditLocationPane';
 import EditLocationWithMapPane from './EditLocationWithMapPane';
 import EditTextPane from './EditTextPane';
 import EditQueryPane from './EditQueryPane';
+import ImporterColumnPane from './ImporterColumnPane';
 import MoveParticipantsPane from './MoveParticipantsPane';
 import PersonPane from './PersonPane';
 import QueryPane from './QueryPane';
@@ -46,6 +47,7 @@ var _panes = {
     'editlocationwithmap': EditLocationWithMapPane,
     'editquery': EditQueryPane,
     'edittext': EditTextPane,
+    'importercolumn': ImporterColumnPane,
     'location': EditLocationPane,
     'moveparticipants': MoveParticipantsPane,
     'person': PersonPane,
