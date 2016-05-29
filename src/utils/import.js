@@ -19,6 +19,8 @@ export function parseWorkbook(data) {
             let table = {
                 id: '$' + makeRandomString(6),
                 name: name,
+                numEmptyColumnsRemoved: 0,
+                useFirstRowAsHeader: false,
                 // Columns are often operated on by ID and will benefit from
                 // being stored as a standardized list structure. Rows are
                 // rarely operated upon individually and can be kept simple.
@@ -50,7 +52,6 @@ export function parseWorkbook(data) {
 
             // Iterate from right to left, finding completely empty columns
             // and removing them, storing the number of removed columns.
-            table.numEmptyColumnsRemoved = 0;
             for (let c = (range.e.c - range.s.c); c >= 0; c--) {
                 let empty = true;
                 for (let r = 0; r < table.rows.length; r++) {
