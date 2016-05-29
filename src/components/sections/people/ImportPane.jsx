@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 
 import PaneBase from '../../panes/PaneBase';
 import ImporterTableSet from './importer/ImporterTableSet';
-import { parseImportFile } from '../../../actions/peopleImport';
+import { parseImportFile } from '../../../actions/importer';
 
 
-@connect(state => ({ peopleImport: state.peopleImport }))
+@connect(state => ({ importer: state.importer }))
 export default class ImportPane extends PaneBase {
     constructor(props) {
         super(props);
@@ -23,7 +23,7 @@ export default class ImportPane extends PaneBase {
             'ImportPane-dropZone-isDragging': this.state.isDragging,
         });
 
-        let tableSet = this.props.peopleImport.tableSet;
+        let tableSet = this.props.importer.tableSet;
 
         if (tableSet) {
             return (

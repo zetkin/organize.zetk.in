@@ -7,7 +7,7 @@ import {
 } from '../utils/store';
 
 
-export default function peopleImport(state = null, action) {
+export default function importer(state = null, action) {
     if (action.type == types.PARSE_IMPORT_FILE + '_FULFILLED') {
         return Object.assign({}, state, {
             tableSet: action.payload.tableSet,

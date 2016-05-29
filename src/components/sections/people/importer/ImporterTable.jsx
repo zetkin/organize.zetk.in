@@ -5,7 +5,7 @@ import ImporterTableBody from './ImporterTableBody';
 import {
     updateImportColumn,
     useImportTableFirstRowAsHeader,
-} from '../../../../actions/peopleImport';
+} from '../../../../actions/importer';
 
 
 export default class ImporterTable extends React.Component {
