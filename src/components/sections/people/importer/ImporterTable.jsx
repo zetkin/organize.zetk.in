@@ -17,9 +17,22 @@ export default class ImporterTable extends React.Component {
     render() {
         let table = this.props.table;
 
+        let removedInfo = null;
+        if (table.numEmptyColumnsRemoved > 0) {
+            let removedLabel = 'Empty columns removed: '
+                + table.numEmptyColumnsRemoved;
+
+            removedInfo = (
+                <p>{ removedLabel }</p>
+            );
+        }
+
         return (
             <div className="ImporterTable">
                 <h1>{ table.name }</h1>
+
+                { removedInfo }
+
                 Use first row as header:
                 <input type="checkbox" checked={ table.useFirstRowAsHeader }
                     onChange={ this.onChangeFirstRow.bind(this) }/>
