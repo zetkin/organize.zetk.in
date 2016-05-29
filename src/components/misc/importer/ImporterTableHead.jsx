@@ -9,6 +9,7 @@ export default class ImporterTableHead extends React.Component {
             items: React.PropTypes.array.isRequired,
         }).isRequired,
         onChangeColumn: React.PropTypes.func,
+        onEditColumn: React.PropTypes.func,
     };
 
     render() {
@@ -19,7 +20,8 @@ export default class ImporterTableHead extends React.Component {
                 <tr>
                 { columns.map((col, idx) => (
                     <ImporterColumnHead key={ col.id } column={ col }
-                        onChangeColumn={ this.props.onChangeColumn }/>
+                        onChangeColumn={ this.props.onChangeColumn }
+                        onEditColumn={ this.props.onEditColumn }/>
                 )) }
                 </tr>
             </thead>

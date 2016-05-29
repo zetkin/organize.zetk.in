@@ -28,6 +28,7 @@ export default class ImportPane extends PaneBase {
         if (tableSet) {
             return (
                 <ImporterTableSet tableSet={ tableSet }
+                    onEditColumn={ this.onEditColumn.bind(this) }
                     dispatch={ this.props.dispatch }/>
             );
         }
@@ -39,6 +40,10 @@ export default class ImportPane extends PaneBase {
                     onDrop={ this.onDrop.bind(this) }/>
             ];
         }
+    }
+
+    onEditColumn(table, col) {
+        this.openPane('importercolumn', table.id, col.id);
     }
 
     onDragEnter(ev) {

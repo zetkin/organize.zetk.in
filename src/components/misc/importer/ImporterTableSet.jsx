@@ -8,6 +8,7 @@ export default class ImporterTableSet extends React.Component {
     static propTypes = {
         tableSet: React.PropTypes.object.isRequired,
         dispatch: React.PropTypes.func.isRequired,
+        onEditColumn: React.PropTypes.func,
     };
 
     constructor(props) {
@@ -31,6 +32,7 @@ export default class ImporterTableSet extends React.Component {
 
             table = (
                 <ImporterTable table={ tableItem.data }
+                    onEditColumn={ this.props.onEditColumn }
                     dispatch={ this.props.dispatch }/>
             );
         }

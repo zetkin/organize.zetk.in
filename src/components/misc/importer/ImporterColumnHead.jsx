@@ -22,6 +22,7 @@ export default class ImporterColumnHead extends React.Component {
     static propTypes = {
         column: React.PropTypes.object.isRequired,
         onChangeColumn: React.PropTypes.func,
+        onEditColumn: React.PropTypes.func,
     };
 
     render() {
@@ -60,8 +61,17 @@ export default class ImporterColumnHead extends React.Component {
                     )) }
                     </optgroup>
                 </select>
+                <a className="ImporterColumnHead-editLink"
+                    onClick={ this.onClickEdit.bind(this) }>
+                    Edit column settings</a>
             </th>
         );
+    }
+
+    onClickEdit() {
+        if (this.props.onEditColumn) {
+            this.props.onEditColumn(this.props.column);
+        }
     }
 
     onChangeColumn(ev) {

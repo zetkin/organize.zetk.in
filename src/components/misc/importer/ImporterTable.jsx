@@ -12,6 +12,7 @@ export default class ImporterTable extends React.Component {
     static propTypes = {
         table: React.PropTypes.object.isRequired,
         dispatch: React.PropTypes.func.isRequired,
+        onEditColumn: React.PropTypes.func,
     };
 
     render() {
@@ -38,7 +39,8 @@ export default class ImporterTable extends React.Component {
                     onChange={ this.onChangeFirstRow.bind(this) }/>
                 <table>
                     <ImporterTableHead columnList={ table.columnList }
-                        onChangeColumn={ this.onChangeColumn.bind(this) }/>
+                        onChangeColumn={ this.onChangeColumn.bind(this) }
+                        onEditColumn={ this.onEditColumn.bind(this) }/>
                     <ImporterTableBody table={ table }/>
                 </table>
             </div>
@@ -49,6 +51,13 @@ export default class ImporterTable extends React.Component {
         let tableId = this.props.table.id;
         this.props.dispatch(
             updateImportColumn(tableId, columnId, props));
+    }
+
+    onEditColumn(column) {
+        // TODO: After pane refactor, dispatch open action here
+        if (this.props.onEditColumn) {
+            this.props.onEditColumn(this.props.table, column);
+        }
     }
 
     onChangeFirstRow(ev) {
