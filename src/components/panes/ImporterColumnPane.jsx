@@ -6,6 +6,8 @@ import SelectInput from '../forms/inputs/SelectInput';
 import { getListItemById } from '../../utils/store';
 import { updateImportColumn } from '../../actions/importer';
 
+import { resolveSettingsComponent } from '../misc/importer/settings';
+
 
 const TYPE_OPTIONS = {
     'unknown': 'Select column type',
@@ -41,12 +43,25 @@ export default class ImporterColumnPane extends PaneBase {
     renderPaneContent(data) {
         let column = data.columnItem.data;
 
+        let SettingsComponent = resolveSettingsComponent(column.type);
+        let settings = null;
+
+        if (SettingsComponent) {
+            settings = (
+                <SettingsComponent config={ column.config }
+                    onChangeConfig={ this.onChangeConfig.bind(this) }/>
+            );
+        }
+        else {
+            settings = "Select a column type and edit it's settings here";
+        }
+
         return [
             <SelectInput key="type" name="type"
                 options={ TYPE_OPTIONS } value={ column.type }
                 onValueChange={ this.onChangeType.bind(this) }/>,
-            <div key="typeSettings">
-                Type-specific settings go here
+            <div key="typeSettings" className="ImporterColumnPane-settings">
+                { settings }
             </div>
         ];
     }
@@ -60,5 +75,12 @@ export default class ImporterColumnPane extends PaneBase {
 
         this.props.dispatch(
             updateImportColumn(tableId, columnId, props));
+    }
+
+    onChangeConfig(config) {
+        let tableId = this.getParam(0);
+        let columnId = this.getParam(1);
+        this.props.dispatch(
+            updateImportColumn(tableId, columnId, { config }));
     }
 }
