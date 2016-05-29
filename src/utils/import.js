@@ -26,7 +26,7 @@ export function parseWorkbook(data) {
                 rows: [],
             };
 
-            for (let c = range.s.c; c < range.e.c; c++) {
+            for (let c = range.s.c; c <= range.e.c; c++) {
                 table.columnList.items.push(createListItem({
                     id: '$' + makeRandomString(6),
                     name: '',
@@ -35,7 +35,7 @@ export function parseWorkbook(data) {
                 }));
             }
 
-            for (let r = range.s.r; r < range.e.r; r++) {
+            for (let r = range.s.r; r <= range.e.r; r++) {
                 let rowValues = table.columnList.items.map((col, idx) => {
                     let addr = xlsx.utils.encode_cell({ r, c: idx });
                     let cell = sheet[addr];
@@ -53,7 +53,7 @@ export function parseWorkbook(data) {
             if ((range.e.r - range.s.r) > 1) {
                 let numDifferentFormats = 0;
 
-                for (let c = range.s.c; c < range.e.c; c++) {
+                for (let c = range.s.c; c <= range.e.c; c++) {
                     let addr0 = xlsx.utils.encode_cell({ r: 0, c });
                     let addr1 = xlsx.utils.encode_cell({ r: 1, c });
                     let cell0 = sheet[addr0];
