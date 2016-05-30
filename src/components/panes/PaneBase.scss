@@ -125,10 +125,14 @@
             position: absolute;
             top: 0;
             left: 0;
-            right: -20px;
+            right: 0;
             bottom: 0;
             overflow-y: scroll;
             overflow-x: hidden;
+            &::-webkit-scrollbar { // hides scrollbar in webkit browsers.
+                width: 0px;
+                background: transparent;
+            }
 
             h2 {
                 margin-top: 0;
