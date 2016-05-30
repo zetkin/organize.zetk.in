@@ -1,7 +1,7 @@
 @mixin tag {
     position: relative;
     float: left;
-    background-color: darken($c-ui-bg, 10);
+    background-color: darken($c-ui-bg, 6);
     border-radius: 4px;
     padding: .5em 1.5em .5em .7em;
     margin: 0 4px 4px 0;
