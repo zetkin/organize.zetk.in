@@ -64,7 +64,7 @@ export default class PersonPane extends PaneBase {
                 );
             }
 
-            let addrFields = ADDR_FIELDS.map(field => (
+            let addrFields = ADDR_FIELDS.filter(f => person[f]).map(field => (
                 <span key={ field } className="PersonPane-infoValue">
                     { person[field] }
                 </span>
@@ -92,7 +92,8 @@ export default class PersonPane extends PaneBase {
                     { BASIC_FIELDS.map(field => (
                         createInfoItem(field, person[field])
                     )) }
-                    { createInfoItem('address', addrFields) }
+                    { createInfoItem('address',
+                        addrFields.length? addrFields : null) }
                 </ul>,
                 <a onClick={ this.onClickEdit.bind(this) }>
                     Edit basic information</a>,
