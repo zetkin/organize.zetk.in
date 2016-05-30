@@ -15,12 +15,8 @@
             margin-bottom: 0.8em;
             @include col(12,12, $first:true);
             &:before {
-            margin-right: 0.5em;
-        }
-            span:first-child:before {
                 margin-right: 0.5em;
             }
-
         }
         
         .PersonPane-email {
