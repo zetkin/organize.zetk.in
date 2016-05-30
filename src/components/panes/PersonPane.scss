@@ -1,15 +1,80 @@
 .PersonPane {
+    color: lighten($c-text, 30);
+
     .DraggableAvatar {
-        width: 12em;
+        float: left;
         height: 12em;
+        @include col(4,12, $first:true);
+    }
+
+    .PersonPane-info {
         margin: 1em 0 2em;
+        font-size: 1.4em;
+        display: inline;
+
+        li {
+            margin-bottom: 1em;
+            @include col(12,12, $first:true);
+            span:first-child:before {
+                margin-right: 0.5em;
+            }
+        }
+        
+        .PersonPane-email {
+            margin-top: 1em;
+            span:first-child:before {
+                @include icon($fa-var-envelope-o);
+            }
+        }
+
+        .PersonPane-phone {
+            span:first-child:before {
+                @include icon($fa-var-phone);
+            }
+        }
+        
+        .PersonPane-street_address {
+            span:first-child:before {
+                @include icon($fa-var-home);
+            }
+        }
+
+        .PersonPane-co_address {
+            span:first-child:before {
+                @include icon($fa-var-user);
+            }
+        }
+
+        .PersonPane-zip_code {
+            @include col(4,12, $first:true);
+            span:first-child:before {
+                @include icon($fa-var-map-marker);
+            }
+        }
+
+        .PersonPane-city {
+            @include col(8,12, $last:true);
+            span:first-child:before {
+                @include icon($fa-var-building);
+            }
+        }
+
     }
 
     .PersonPane-infoLabel {
-        font-weight: bold;
-
-        &:after {
-            content: ": ";
-        }
+        display: block;
+        width: 100%;
+        margin-bottom: 0.3em;
+        font-size: 0.9em;
     }
+    
+    .PersonPane-infoValue {
+        margin-left:2em;
+    }
+
+    a:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
 }
