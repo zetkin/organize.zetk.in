@@ -19,6 +19,10 @@
             }
         }
         
+        .PersonPane-emptyField {
+            color: lighten($c-text, 60);
+        }
+
         .PersonPane-email {
             margin-top: 1em;
             &::before {
