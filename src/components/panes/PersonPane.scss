@@ -8,70 +8,50 @@
     }
 
     .PersonPane-info {
-        margin: 1em 0 2em;
-        font-size: 1.4em;
-        display: inline;
+        margin: 1em 0 0;
+        font-size: 1.4em;        
 
         li {
-            margin-bottom: 1em;
+            margin-bottom: 0.8em;
             @include col(12,12, $first:true);
+            &:before {
+            margin-right: 0.5em;
+        }
             span:first-child:before {
                 margin-right: 0.5em;
             }
+
         }
         
         .PersonPane-email {
             margin-top: 1em;
-            span:first-child:before {
+            &::before {
                 @include icon($fa-var-envelope-o);
             }
         }
 
         .PersonPane-phone {
-            span:first-child:before {
+            &::before {
                 @include icon($fa-var-phone);
             }
         }
         
-        .PersonPane-street_address {
-            span:first-child:before {
+        .PersonPane-address {
+            &:before {
                 @include icon($fa-var-home);
             }
-        }
-
-        .PersonPane-co_address {
-            span:first-child:before {
-                @include icon($fa-var-user);
+            span {
+                display: block;
+                margin-left: 2em;
+                margin-bottom: 0.5em;
+                &:first-child {
+                    margin-top: -1.4em;
+                }
             }
         }
 
-        .PersonPane-zip_code {
-            @include col(4,12, $first:true);
-            span:first-child:before {
-                @include icon($fa-var-map-marker);
-            }
-        }
-
-        .PersonPane-city {
-            @include col(8,12, $last:true);
-            span:first-child:before {
-                @include icon($fa-var-building);
-            }
-        }
-
-    }
-
-    .PersonPane-infoLabel {
-        display: block;
-        width: 100%;
-        margin-bottom: 0.3em;
-        font-size: 0.9em;
     }
     
-    .PersonPane-infoValue {
-        margin-left:2em;
-    }
-
     a:hover {
         cursor: pointer;
         text-decoration: underline;
