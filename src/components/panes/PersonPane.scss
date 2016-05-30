@@ -1,7 +1,60 @@
 .PersonPane {
+    color: lighten($c-text, 30);
+
     .DraggableAvatar {
-        width: 12em;
+        float: left;
         height: 12em;
-        margin: 1em 0 2em;
+        @include col(4,12, $first:true);
     }
+
+    .PersonPane-info {
+        margin: 1em 0 0;
+        font-size: 1.4em;        
+
+        li {
+            margin-bottom: 0.8em;
+            @include col(12,12, $first:true);
+            &:before {
+                margin-right: 0.5em;
+            }
+        }
+        
+        .PersonPane-emptyField {
+            color: lighten($c-text, 60);
+        }
+
+        .PersonPane-email {
+            margin-top: 1em;
+            &::before {
+                @include icon($fa-var-envelope-o);
+            }
+        }
+
+        .PersonPane-phone {
+            &::before {
+                @include icon($fa-var-phone);
+            }
+        }
+        
+        .PersonPane-address {
+            &:before {
+                @include icon($fa-var-home);
+            }
+            span {
+                display: block;
+                margin-left: 2em;
+                margin-bottom: 0.5em;
+                &:first-child {
+                    margin-top: -1.4em;
+                }
+            }
+        }
+
+    }
+    
+    a:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
 }

@@ -11,7 +11,13 @@ export const UPDATE_PERSON = 'UPDATE_PERSON';
 export const DELETE_PERSON = 'DELETE_PERSON';
 
 // Flux actions related to person tags
+export const CREATE_PERSON_TAG = 'CREATE_PERSON_TAG';
+export const RETRIEVE_PERSON_TAG = 'RETRIEVE_PERSON_TAG';
 export const RETRIEVE_PERSON_TAGS = 'RETRIEVE_PERSON_TAGS';
+export const RETRIEVE_TAGS_FOR_PERSON = 'RETRIEVE_TAGS_FOR_PERSON';
+export const UPDATE_PERSON_TAG = 'UPDATE_PERSON_TAG';
+export const ADD_TAGS_TO_PERSON = 'ADD_TAGS_TO_PERSON';
+export const REMOVE_TAG_FROM_PERSON = 'REMOVE_TAG_FROM_PERSON';
 
 // Redux actions related to locations
 export const CREATE_LOCATION = 'CREATE_LOCATION';
