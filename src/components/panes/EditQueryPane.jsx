@@ -14,7 +14,7 @@ import {
 } from '../../actions/query';
 
 
-@connect(state => state)
+@connect(state => ({ queries: state.queries }))
 export default class EditQueryPane extends PaneBase {
     componentDidMount() {
         let queryId = this.getParam(0);
@@ -44,7 +44,8 @@ export default class EditQueryPane extends PaneBase {
                 <QueryForm key="form" ref="form" query={ query }
                     onSubmit={ this.onSubmit.bind(this) }/>,
                 <h3 key="filterHeader">Filters</h3>,
-                <FilterList ref="filters" key="filters" filters={ filters }/>
+                <FilterList ref="filters" key="filters" filters={ filters }
+                    openPane={ this.openPane.bind(this) }/>, // TODO: Remove eventually
             ];
         }
         else {
