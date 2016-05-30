@@ -62,6 +62,7 @@ export default class FilterList extends React.Component {
             'campaign_participation': 'Campaign participation',
             'join_date': 'Join date',
             'person_data': 'Person data',
+            'person_tags': 'Person tags',
         };
 
         let items = [];
