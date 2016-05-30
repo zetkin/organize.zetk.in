@@ -2,4 +2,12 @@
     .TagCloudItem {
         cursor: pointer;
     }
+
+    .SelectPeoplePane-saveButton {
+        @include icon-button($fa-var-floppy-o);
+    }
+    .SelectPeoplePane-createButton {
+        @include icon-button($fa-var-tag);
+        margin-bottom: 1em;
+    }
 }
