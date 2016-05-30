@@ -16,8 +16,12 @@
         top: 0.5em;
         overflow: hidden;
         cursor: pointer;
-        color: lighten($c-text, 50);
         font-size: 1.5em;
+        color: lighten($c-text, 70);
+
+        &:hover {
+            color: lighten($c-text, 50);            
+        }
 
         &.FilterBase-removeButton {
             right: 0.5em;
@@ -29,6 +33,8 @@
         &.FilterBase-moveButton {
             left: 0.5em;
             opacity: 0;
+            cursor: grab;
+            cursor: -webkit-grab;
             &::before {
                 @include icon($fa-var-arrows);
             }
