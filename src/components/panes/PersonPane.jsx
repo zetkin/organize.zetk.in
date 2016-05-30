@@ -14,14 +14,8 @@ import {
 } from '../../actions/personTag';
 
 
-const FIELDS = {
-    'email': 'E-mail address',
-    'phone': 'Phone number',
-    'co_address': 'C/o address',
-    'street_address': 'Street address',
-    'zip_code': 'Zip code',
-    'city': 'City',
-};
+const BASIC_FIELDS = [ 'email', 'phone' ];
+const ADDR_FIELDS = [ 'co_address', 'street_address', 'zip_code', 'city' ];
 
 @connect(state => ({ people: state.people, personTags: state.personTags }))
 export default class PersonPane extends PaneBase {
@@ -70,23 +64,35 @@ export default class PersonPane extends PaneBase {
                 );
             }
 
+            let addrFields = ADDR_FIELDS.map(field => (
+                <span key={ field } className="PersonPane-infoValue">
+                    { person[field] }
+                </span>
+            ));
+
+            let createInfoItem = (name, content) => {
+                let className = 'PersonPane-' + name;
+
+                if (!content) {
+                    className += ' PersonPane-emptyField';
+                    content = <span className="PersonPane-infoValue">
+                        Missing</span>;
+                }
+
+                return (
+                    <li key={ name } className={ className }>
+                        { content }
+                    </li>
+                );
+            };
+
             return [
                 <DraggableAvatar key="avatar" ref="avatar" person={ person }/>,
                 <ul key="info" className="PersonPane-info">
-                    { Object.keys(FIELDS).map(name => {
-                        if (person[name]) {
-                            let className = 'PersonPane-' + name;
-
-                            return (
-                                <li key={ name } className={ className }>
-                                    <span className="PersonPane-infoLabel">
-                                        { FIELDS[name] }</span>
-                                    <span className="PersonPane-infoValue">
-                                        { person[name] }</span>
-                                </li>
-                            );
-                        }
-                    } ) }
+                    { BASIC_FIELDS.map(field => (
+                        createInfoItem(field, person[field])
+                    )) }
+                    { createInfoItem('address', addrFields) }
                 </ul>,
                 <a onClick={ this.onClickEdit.bind(this) }>
                     Edit basic information</a>,
