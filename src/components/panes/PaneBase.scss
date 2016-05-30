@@ -79,8 +79,13 @@
             left: 0;
             right: 0;
             .PaneBase-toolbar {
-                margin: 1em;
+                padding: 1em;
                 color: #666666;
+                > * { // All direct children
+                    display: inline-block;
+                    margin-right: 0.5em;
+                    margin-bottom: 0;
+                }
             }
         }
 
