@@ -73,13 +73,41 @@
         }
 
         a {
-            display: block;
-            float: left;
-            clear: both;
+            @include col(6,12);
+            text-align: center;
         }
 
         .CallAssignmentPane-stats {
+            min-height: 92px;
             margin-bottom: 10px;
+            & > div {
+                @include col(6,12);
+            }
+            div > div {
+                position: relative;
+                min-height: 90px;
+                background-color: lighten($c-ui-bg, 1);
+                border: 1px solid darken($c-ui-bg, 3);
+                border-radius: 4px;
+                text-align: center;
+                padding: 20px;
+                
+                &:after {
+                    @include icon($fa-var-pencil);
+                    position: absolute;
+                    right: 0.5em;
+                    top: 0.5em;
+                    font-size: 1.5em;
+                    opacity: 0;
+                    transition: opacity .2s;
+                }
+
+                &:hover {
+                    &::after {
+                        opacity: 1;
+                    }
+                }
+            }
 
             &:after {
                 display: block;
@@ -87,15 +115,48 @@
                 clear: both;
             }
 
+            h1 {
+                margin: 0 0 5px 0;
+            }
+
             .CallAssignmentPane-targetStats {
-                float: left;
-                width: 150px;
+                h1 {
+                    &::before {
+                        @include icon($fa-var-users);
+                    }
+                }
             }
 
             .CallAssignmentPane-goalStats {
-                float: right;
-                width: 150px;
+                h1 {
+                    &::before {
+                        @include icon($fa-var-flag-checkered);
+                    }
+                }
+            }
+
+            .LoadingIndicator {
+                margin-top: 10px;
             }
         }
+
+        .CallAssignmentPane-progress {
+            background-color: lighten($c-ui-bg, 2);
+            border: 1px solid darken($c-ui-bg, 3);
+            border-radius: 5px;
+            width: 100%;
+            height: 20px;
+            margin: 20px 0;
+            overflow: hidden;
+            .CallAssignmentPane-progressContent {
+                border-radius: 5px 0 0 5px;
+                border-bottom: 2px solid darken($c-brand-main, 15);
+                background-color: $c-brand-main;
+                height: 100%;
+                width: 10%;
+                transition: width 0.4s;
+            }
+        }
+
     }
 }
