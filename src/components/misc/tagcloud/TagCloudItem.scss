@@ -14,11 +14,13 @@
     }
     .TagCloudItem-removeButton:after {
         @include icon($fa-var-remove);
+        margin-right: 0;
     }
     .TagCloudItem-editButton {
         margin-top: -2px;
         &:after {
             @include icon($fa-var-pencil);
+            margin-right: 0;
         }
     }    
     &:hover {

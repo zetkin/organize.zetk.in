@@ -41,15 +41,7 @@ ul {
 }
 
 button, input[type="button"], a.btn {
-    @include input-base;
-    width: auto;
-    background-color: lighten($c-ui-bg, 1);
-    padding: 6px 15px;
-    cursor: pointer;
-    margin-bottom: inherit;
-    &:hover {
-        background-color: darken($c-ui-bg, 1);
-    }
+    @include inline-button;
 
     &.add{
         @include icon-button($fa-var-plus);

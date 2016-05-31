@@ -4,10 +4,10 @@
     }
 
     .SelectPeoplePane-saveButton {
-        @include icon-button($fa-var-floppy-o);
+        @include inline-button($color:$c-brand-confirm, $icon:$fa-var-floppy-o);
     }
     .SelectPeoplePane-createButton {
-        @include icon-button($fa-var-tag);
+        @include inline-button($icon:$fa-var-tag);
         margin-bottom: 1em;
     }
 }
