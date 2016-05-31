@@ -46,7 +46,7 @@
     border-color: darken($color, $amount*2);
 }
 
-@mixin button {
+@mixin button($color: $c-brand-confirm) {
     font-size: 1.4em;
     font-weight: 500;
     border-width: 0;
@@ -55,7 +55,7 @@
     color: $c-text-contrast;
     border-bottom: 3px solid;
     border-radius: 3px;
-    @include button-color($c-brand-complement);
+    @include button-color($color);
 }
 
 @mixin key-reference {

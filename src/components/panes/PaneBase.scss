@@ -100,8 +100,7 @@
             text-align: center;
             z-index: 3;
             button { // TODO: Need to add classes to btns to set colors etc
-                @include button;
-                @include button-color($c-brand-confirm);
+                @include button($c-brand-confirm);
                 width: 100%;
             }
         }
