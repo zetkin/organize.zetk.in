@@ -100,7 +100,7 @@
             text-align: center;
             z-index: 3;
             button {
-                @include button($color:$c-brand-confirm, $icon:$fa-var-tag);
+                @include button($color:$c-brand-confirm);
                 width: 100%;
             }
         }
