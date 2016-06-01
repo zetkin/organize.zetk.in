@@ -247,14 +247,15 @@ function Pane(domElement, isBase) {
 
     this.domElement.addEventListener('mousedown', onDomElementMouseDown);
     function onDomElementMouseDown(ev) {
-        if (_layout == HORIZONTAL && !section.isBase && ev.pageY < 160) {
+        let x = ev.offsetX;
+        if (_layout == HORIZONTAL && !section.isBase && x < 20) {
             startDragging(ev);
             ev.preventDefault();
             ev.stopImmediatePropagation();
         }
     }
 
-    this.domElement.addEventListener('mousemove', onDomElementMouseMove);
+    this.domElement.parentNode.addEventListener('mousemove', onDomElementMouseMove);
     function onDomElementMouseMove(ev) {
         if (dragging) {
             section.setX(originalX + (ev.pageX - startX));
@@ -264,7 +265,7 @@ function Pane(domElement, isBase) {
         }
     }
 
-    this.domElement.addEventListener('touchmove', onDomElementTouchMove);
+    this.domElement.parentNode.addEventListener('touchmove', onDomElementTouchMove);
     function onDomElementTouchMove(ev) {
         if (dragging) {
             var touch = ev.changedTouches[0],
@@ -294,8 +295,8 @@ function Pane(domElement, isBase) {
 
     this.stop = function() {
         this.domElement.removeChild(this.shaderElement);
-        this.domElement.removeEventListener('touchmove', onDomElementTouchMove);
-        this.domElement.removeEventListener('mousemove', onDomElementMouseMove);
+        this.domElement.parentNode.removeEventListener('touchmove', onDomElementTouchMove);
+        this.domElement.parentNode.removeEventListener('mousemove', onDomElementMouseMove);
         this.domElement.removeEventListener('mousedown', onDomElementMouseDown);
         this.domElement.removeEventListener('touchstart', onDomElementTouchStart);
 
