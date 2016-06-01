@@ -31,7 +31,7 @@
         @include icon($fa-var-list-alt);
     }
 
-    .ViewSwitch-state-map{
-        @include icon-button($fa-var-map-o);
+    .ViewSwitch-state-map:before{
+        @include icon($fa-var-map-o);
     }
 }
