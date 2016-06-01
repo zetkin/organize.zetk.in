@@ -7,16 +7,20 @@
         margin-top: -1px;
         opacity: 0;
         transition: opacity 0.3s;
-        color: lighten($c-text, 40);
-
+        color: lighten($c-text, 60);
+        &:hover {
+            color: lighten($c-text, 40);
+        }
     }
     .TagCloudItem-removeButton:after {
         @include icon($fa-var-remove);
+        margin-right: 0;
     }
     .TagCloudItem-editButton {
         margin-top: -2px;
         &:after {
             @include icon($fa-var-pencil);
+            margin-right: 0;
         }
     }    
     &:hover {
@@ -24,6 +28,8 @@
         .TagCloudItem-removeButton, .TagCloudItem-editButton {
             cursor: pointer;
             opacity: 1;
+            
+            
         }
         
     }

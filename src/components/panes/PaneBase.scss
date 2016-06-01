@@ -79,8 +79,13 @@
             left: 0;
             right: 0;
             .PaneBase-toolbar {
-                margin: 1em;
+                padding: 1em;
                 color: #666666;
+                > * { // All direct children
+                    display: inline-block;
+                    margin-right: 0.5em;
+                    margin-bottom: 0;
+                }
             }
         }
 
@@ -93,9 +98,9 @@
             padding: 20px;
             box-shadow: 0 0 5px rgba(0,0,0,0.1);
             text-align: center;
-            button { // TODO: Need to add classes to btns to set colors etc
-                @include button;
-                @include button-color($c-brand-confirm);
+            z-index: 3;
+            button {
+                @include button($color:$c-brand-confirm);
                 width: 100%;
             }
         }
@@ -119,10 +124,14 @@
             position: absolute;
             top: 0;
             left: 0;
-            right: -20px;
+            right: 0;
             bottom: 0;
             overflow-y: scroll;
             overflow-x: hidden;
+            &::-webkit-scrollbar { // hides scrollbar in webkit browsers.
+                width: 0px;
+                background: transparent;
+            }
 
             h2 {
                 margin-top: 0;

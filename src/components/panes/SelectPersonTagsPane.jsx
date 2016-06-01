@@ -53,8 +53,9 @@ export default class SelectPersonTagsPane extends PaneBase {
             <button key="saveButton" className="SelectPeoplePane-saveButton"
                 onClick={ this.onClickSave.bind(this) }>Save</button>,
             <h3 key="availableHeader">Select tags to be added</h3>,
-            <a key="createLink" onClick={ this.onClickCreate.bind(this) }>
-                Create a new tag</a>,
+            <button key="createLink" className="SelectPeoplePane-createButton"
+                onClick={ this.onClickCreate.bind(this) }>
+                Create a new tag</button>,
             <TagCloud key="availableTags" tags={ tagsAvailable }
                 showEditButtons={ true }
                 onEdit={ this.onEdit.bind(this) }

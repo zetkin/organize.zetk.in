@@ -1,14 +1,12 @@
 .ViewSwitch{
     display: inline-block;
     button {
-    	@include input-base;
-
+        @include inline-button;
         width: auto;
-        padding: 8px 10px;
+        margin-bottom: inherit;
 
         &:focus {
             outline: 0;
-            border-color: #eaeaea;
         }
 
         &:first-child {
@@ -19,22 +17,21 @@
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
         }
-
-        &.selected {
-            background-color: #eee;
-        }
     }
 
-    .ViewSwitch-state-cal{
-        @include icon-button($fa-var-calendar);
-        //@include icon-button-only();
+    .ViewSwitch-state-cal:before{
+        @include icon($fa-var-calendar);
     }
 
-    .ViewSwitch-state-list{
-        @include icon-button($fa-var-list-alt);
+    .ViewSwitch-state-cal {
+        @include icon-button-only();
+    }
+    
+    .ViewSwitch-state-list:before{
+        @include icon($fa-var-list-alt);
     }
 
-    .ViewSwitch-state-map{
-        @include icon-button($fa-var-map-o);
+    .ViewSwitch-state-map:before{
+        @include icon($fa-var-map-o);
     }
 }

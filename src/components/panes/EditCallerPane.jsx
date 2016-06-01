@@ -67,12 +67,12 @@ export default class EditCallerPane extends PaneBase {
         }
 
         return [
-            <h3 key="prioHeader">Prioritized tags</h3>,
+            <h3 key="prioHeader"><i className="fa fa-star"></i> Prioritized tags</h3>,
             <p key="prioInstructions">
                 People with these tags will be prioritized for this caller.
             </p>,
             prioTags,
-            <h3 key="exHeader">Excluded tags</h3>,
+            <h3 key="exHeader"><i className="fa fa-ban"></i> Excluded tags</h3>,
             <p key="exInstructions">
                 This caller will not be calling people with these tags.
             </p>,
