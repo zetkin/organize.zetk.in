@@ -172,7 +172,7 @@
         }
 
         .PaneBase-shader {
-            display: none;
+            display: block;
         }
 
         // Use smaller padding on base pane, which does not have a close
@@ -218,6 +218,7 @@
                     @include icon($fa-var-ellipsis-v);
                     position: absolute;
                     top: calc(50% - 1em);
+                    left: -1.5px;
                     color: darken($c-ui-bg, 5);
                     font-size: 2em;
                 }
