@@ -51,8 +51,9 @@ export default class EditPersonPane extends PaneBase {
                         person={ data.personItem.data }
                         onSubmit={ this.onSubmit.bind(this) }/>,
 
-                    <input ref="submitButton" type="button" value="Delete"
-                        onClick={ this.onDeleteClick.bind(this) }/>
+                    <Button label="Delete Person"
+                        onClick={ this.onDeleteClick.bind(this) }
+                        className="EditPersonPane-deleteButton"/>
                 ];
             }
         }
