@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import PersonTagForm from '../forms/PersonTagForm';
+import Button from '../misc/Button';
 import { createPersonTag } from '../../actions/personTag';
 
 
@@ -25,8 +26,9 @@ export default class AddPersonTagPane extends PaneBase {
 
     renderPaneFooter(data) {
         return (
-            <button onClick={ this.onSubmit.bind(this) }>
-                Add tag</button>
+            <Button label="Add tag"
+                onClick={ this.onSubmit.bind(this) }
+                className="AddPersonTagPane-saveButton"/>
         );
     }
 
