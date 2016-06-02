@@ -26,7 +26,7 @@ export default class AddPersonTagPane extends PaneBase {
     renderPaneFooter(data) {
         return (
             <button onClick={ this.onSubmit.bind(this) }>
-                Submit</button>
+                Add tag</button>
         );
     }
 
