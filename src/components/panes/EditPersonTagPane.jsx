@@ -52,7 +52,9 @@ export default class EditPersonTagPane extends PaneBase {
 
     renderPaneFooter(data) {
         return (
-            <Button label="Save tag" onClick={ this.onSubmit.bind(this) }/>
+            <Button className="EditPersonTagPane-saveButton"
+                label="Save tag"
+                onClick={ this.onSubmit.bind(this) }/>
         );
     }
 
