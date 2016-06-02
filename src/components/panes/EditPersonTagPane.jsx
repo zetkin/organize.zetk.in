@@ -49,6 +49,13 @@ export default class EditPersonTagPane extends PaneBase {
         }
     }
 
+    renderPaneFooter(data) {
+        return (
+            <button onClick={ this.onSubmit.bind(this) }>
+                Submit</button>
+        );
+    }
+
     onSubmit(ev) {
         ev.preventDefault();
 
