@@ -5,9 +5,21 @@
     min-width: 400px;
     background-color: $c-ui-bg;
     color: lighten($c-text, .3);
+    z-index: 1;
+
+    &.PaneBase-scrolled {
+
+        &:first-child {
+            .PaneBase-header {
+                z-index: 5;
+                background-color: rgba(lighten($c-ui-bg, 20),1);
+                height: 55px;
+                box-shadow: 0 0 0.2em rgba(0,0,0,0.1);
+            }
+        }
+    }
 
     .PaneBase-content {
-        margin-top: 1em;
         padding: 0 2em 2em;
 
         h3 {
@@ -23,12 +35,19 @@
         right: 0;
         bottom: 0;
         pointer-events: none;
+        z-index: 10;
     }
 
     &:first-child {
         .PaneBase-closeLink {
             display: none;
         }
+    }
+
+    &:first-child:not(:last-child){
+        // If there are more than one pane open
+        height: 40px;
+        overflow: hidden;
     }
 
     // Completely transparent link placed just over the pane (where the header
@@ -61,16 +80,15 @@
         bottom: 0;
         right: auto;
         display: block;
+        box-shadow: 0 0 2em rgba(0, 0, 0, 0.1);
+
+        &:first-child:not(:last-child){
+        // If there are more than one pane open
+            height: auto;
+            overflow: visable;
+        }
 
         &::before {
-            content: "";
-            display: block;
-            position: absolute;
-            top: 0;
-            left: -10px;
-            width: 10px;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(0,0,0,0.0), rgba(0,0,0,0.02));
         }
 
         .PaneBase-header {
@@ -78,6 +96,10 @@
             top: 0;
             left: 0;
             right: 0;
+            height: 60px;
+            z-index: 1;
+            background-color: $c-ui-bg;
+            transition: background-color .3s, height .3s;
             .PaneBase-toolbar {
                 padding: 1em;
                 color: #666666;
@@ -106,21 +128,21 @@
         }
 
         .PaneBase-closeLink {
-            top: 10px;
-            left: 10px;
+            top: 0;
+            left: -5px;
             right: auto;
-
+            transition: all .1s;
+            font-size: 2.5em;
+            color: lighten($c-text, 85);
             &::before{
                 @include icon($fa-var-close);
-                color: #ddd;
-                font-size: 2.4em;
             }
         }
 
         .PaneBase-content {
             display: block;
-            margin-top: 70px;
-            padding: 0 30px 80px;
+            // margin-top: 70px;
+            padding: 50px 30px 80px;
             position: absolute;
             top: 0;
             left: 0;
@@ -150,7 +172,7 @@
         }
 
         .PaneBase-shader {
-            display: block;
+            display: none;
         }
 
         // Use smaller padding on base pane, which does not have a close
@@ -162,6 +184,7 @@
 
             .PaneBase-content {
                 padding-left: 20px;
+                margin-top: 1em;
             }
 
             header {
@@ -177,5 +200,45 @@
                 display: none;
             }
         }
+
+        &:not(:first-child) {
+            // Sub pane specific styling
+            .PaneBase-header {
+                width: 20px;
+                height: 100%;
+
+                &:hover {
+                    cursor:col-resize;
+                    .PaneBase-closelink {
+                        color: lighten($c-text, 80);
+                    }
+                }
+
+                &:before {
+                    @include icon($fa-var-ellipsis-v);
+                    position: absolute;
+                    top: calc(50% - 1em);
+                    color: darken($c-ui-bg, 5);
+                    font-size: 2em;
+                }
+            }
+
+            .PaneBase-content {
+                padding-top: 70px;
+            }
+
+            &.PaneBase-scrolled {
+                .PaneBase-closelink {
+                    top: 0;
+                    left: -1.5px;
+                    font-size: 2em;
+                    color: lighten($c-text, 95);
+                    &:hover {
+                        color: lighten($c-text, 80);
+                    }
+                }
+            }
+        }
+
     }
 }
