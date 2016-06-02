@@ -44,8 +44,7 @@
         }
     }
 
-    &:first-child:not(:last-child){
-        // If there are more than one pane open
+    &:not(:last-child) .PaneBase-content {
         height: 40px;
         overflow: hidden;
     }
@@ -74,6 +73,34 @@
         background: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.1) 80%, rgba(0,0,0,0.2));
     }
 
+    .PaneBase-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: lighten($c-ui-bg, 20);
+        padding: 20px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        text-align: center;
+        z-index: 3;
+        button {
+            @include button($color:$c-brand-confirm);
+            width: 100%;
+        }
+    }
+
+    .PaneBase-header {
+        .PaneBase-toolbar {
+            padding: 1em;
+            color: #666666;
+            > * { // All direct children
+                display: inline-block;
+                margin-right: 0.5em;
+                margin-bottom: 0;
+            }
+        }
+    }
+
     @include medium-screen {
         position: absolute;
         top: 0;
@@ -82,13 +109,10 @@
         display: block;
         box-shadow: 0 0 2em rgba(0, 0, 0, 0.1);
 
-        &:first-child:not(:last-child){
+        &:not(:last-child) .PaneBase-content{
         // If there are more than one pane open
             height: auto;
             overflow: visable;
-        }
-
-        &::before {
         }
 
         .PaneBase-header {
@@ -100,31 +124,6 @@
             z-index: 1;
             background-color: $c-ui-bg;
             transition: background-color .3s, height .3s;
-            .PaneBase-toolbar {
-                padding: 1em;
-                color: #666666;
-                > * { // All direct children
-                    display: inline-block;
-                    margin-right: 0.5em;
-                    margin-bottom: 0;
-                }
-            }
-        }
-
-        .PaneBase-footer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: white;
-            padding: 20px;
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
-            text-align: center;
-            z-index: 3;
-            button {
-                @include button($color:$c-brand-confirm);
-                width: 100%;
-            }
         }
 
         .PaneBase-closeLink {

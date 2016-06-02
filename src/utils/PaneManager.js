@@ -208,6 +208,7 @@ function Pane(domElement, isBase) {
     };
     this.setY = function(val) {
         this.domElement.style.top = val+'px';
+        this.domElement.style.minHeight = 'calc(100vh - ' + val + 'px)';
     };
 
     var shade = 0;
