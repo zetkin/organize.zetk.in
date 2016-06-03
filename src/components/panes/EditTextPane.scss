@@ -4,6 +4,18 @@
     .EditTextPane-editor {
         @include card;
         background-color: white;
-        padding: 0.5em;
+        padding: 1.5em;
+        min-height: 300px;
     }
+
+    .Button.EditTextPane-saveButton {
+        @include col(5,11, $last:true);
+        @include col-offset(1,11);
+        @include button($icon: $fa-var-save);
+    }
+    .Button.EditTextPane-closeButton {
+        @include col(5,11, $first:true);
+        @include button($color: $c-ui-darker, $icon: $fa-var-close);
+    }
+
 }
