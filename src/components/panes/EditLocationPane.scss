@@ -1,0 +1,11 @@
+.EditLocationPane {
+
+    .EditLocationPane-saveButton {
+        @include button($icon: $fa-var-map-marker);
+    }
+
+    .EditLocationPane-deleteButton {
+        @include button($color: $c-brand-delete, $icon: $fa-var-trash);
+        width: 100%;
+    }
+}
