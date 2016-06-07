@@ -1,11 +1,13 @@
 .AddLocationPane {
 
-    .AddLocationPane-saveButton {
+    .Button.AddLocationPane-saveButton {
+        @include col(5,11, $last:true);
+        @include col-offset(1,11);
         @include button($icon: $fa-var-map-marker);
     }
 
-    .AddLocationPane-deleteButton {
+    .Button.AddLocationPane-closeButton {
+        @include col(5,11, $first:true);
         @include button($color: $c-ui-dark, $icon: $fa-var-close);
-        width: 100%;
     }
 }
