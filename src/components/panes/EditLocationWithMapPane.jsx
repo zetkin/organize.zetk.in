@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import LocationForm from '../forms/LocationForm';
+import Button from '../misc/Button';
 import LocationMap from '../misc/LocationMap';
 import { getListItemById } from '../../utils/store';
 import { retrieveLocation, updateLocation, deleteLocation,
@@ -10,7 +11,7 @@ import { retrieveLocation, updateLocation, deleteLocation,
 
 
 @connect(state => state)
-export default class LocationPane extends PaneBase {
+export default class EditLocationWithMapPane extends PaneBase {
     componentDidMount() {
         let locId = this.props.params[0];
         let locItem = getListItemById(this.props.locations.locationList, locId);
@@ -49,7 +50,8 @@ export default class LocationPane extends PaneBase {
             let style = {
                 position: 'relative',
                 height: '300px',
-                width: '100%'
+                width: '100%',
+                marginBottom: '2em',
             }
 
             return [
@@ -61,7 +63,8 @@ export default class LocationPane extends PaneBase {
                         onMapClick={ this.onUpdatePosition.bind(this) } />,
                 <LocationForm key="form" ref="form" loc={ data.locItem.data }
                     onSubmit={ this.onSubmit.bind(this) }/>,
-                <input key="delete" type="button" value="Delete"
+                <Button className="EditLocationWithMapPane-deleteButton"
+                    label="Delete"
                     onClick={ this.onDeleteClick.bind(this) }/>
             ];
         }
@@ -69,6 +72,14 @@ export default class LocationPane extends PaneBase {
             // TODO: Show loading indicator?
             return null;
         }
+    }
+
+    renderPaneFooter(data) {
+        return (
+            <Button className="EditLocationWithMapPane-saveButton"
+                label="Save"
+                onClick={ this.onSubmit.bind(this) }/>
+        );
     }
 
     onUpdatePosition (position) {
