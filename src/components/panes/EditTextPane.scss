@@ -15,7 +15,7 @@
     }
     .Button.EditTextPane-closeButton {
         @include col(5,11, $first:true);
-        @include button($color: $c-ui-darker, $icon: $fa-var-close);
+        @include button($color: $c-ui-dark, $icon: $fa-var-close);
     }
 
 }
