@@ -16,7 +16,6 @@ export default class ActivityForm extends React.Component {
                 <TextArea label="Description" name="info_text"
                     initialValue={ campaign.info_text }/>
 
-                <input key="submit" type="submit"/>
             </Form>
         );
     }

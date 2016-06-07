@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import CampaignForm from '../forms/CampaignForm';
+import Button from '../misc/Button';
 import { createCampaign } from '../../actions/campaign';
 
 
@@ -20,6 +21,14 @@ export default class AddCampaignPane extends PaneBase {
         return (
             <CampaignForm ref="form" campaign={ initialData }
                 onSubmit={ this.onSubmit.bind(this) }/>
+        );
+    }
+
+    renderPaneFooter(data) {
+        return (
+            <Button className="AddCampaignPane-saveButton"
+                label="Save Changes"
+                onClick={ this.onSubmit.bind(this) }/>
         );
     }
 
