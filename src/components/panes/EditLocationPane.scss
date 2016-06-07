@@ -6,6 +6,5 @@
 
     .EditLocationPane-deleteButton {
         @include button($color: $c-brand-delete, $icon: $fa-var-trash);
-        width: 100%;
     }
 }
