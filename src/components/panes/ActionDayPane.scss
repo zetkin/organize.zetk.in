@@ -1,3 +1,31 @@
 .PaneBase.ActionDayPane {
     min-width: 680px;
+
+    .PaneBase-content h2 {
+        margin-bottom: 2em;
+    }
+
+    .ActionDayPane-dateLabel {
+        position: relative;
+        display:inline-block;
+        margin: 0 1em;
+        left: -0.3em;
+        font-size: 1.5em;
+
+        &:before {
+            @include icon($fa-var-calendar);
+        }
+    }
+
+    .PaneBase-footer button {
+        width: auto;
+    }
+
+    .ActionDayPane-prevButton {
+        @include button($icon:$fa-var-chevron-left);
+    }
+
+    .ActionDayPane-nextButton {
+        @include button($icon:$fa-var-chevron-right);
+    }
 }
