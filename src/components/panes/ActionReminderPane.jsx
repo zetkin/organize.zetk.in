@@ -5,6 +5,7 @@ import PaneBase from './PaneBase';
 import Form from '../forms/Form';
 import TextArea from '../forms/inputs/TextArea';
 import Avatar from '../misc/Avatar';
+import Button from '../misc/Button';
 import Person from '../misc/elements/Person';
 import Action from '../misc/elements/Action';
 import { retrieveAction, sendActionReminders } from '../../actions/action';
@@ -55,7 +56,6 @@ export default class ActionReminderPane extends PaneBase {
                 <Form key="reminderForm" ref="reminderForm"
                     onSubmit={ this.onRemindersSubmit.bind(this) }>
                     <TextArea name="message" label="Custom additional info"/>
-                    <input type="submit" value="Send all"/>
                 </Form>
             ];
         }
@@ -88,6 +88,14 @@ export default class ActionReminderPane extends PaneBase {
             reminderForm,
             remindedList
         ];
+    }
+
+    renderPaneFooter(data) {
+        return (
+            <Button className="ActionReminderPane-saveButton"
+                label="Send Reminders"
+                onClick={ this.onRemindersSubmit.bind(this) }/>
+        );
     }
 
     onRemindersSubmit(ev) {
