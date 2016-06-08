@@ -1,11 +1,12 @@
 .CallList {
+    width: $medium-width;
     .ListHeader {
         li:nth-child(1) {
-            left: 140px;
+            @include col(7,12);
         }
 
         li:nth-child(2) {
-            left: 300px;
+            @include col(5,12);
         }
     }
 }

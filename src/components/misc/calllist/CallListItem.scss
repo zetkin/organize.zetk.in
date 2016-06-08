@@ -1,49 +1,53 @@
 .CallListItem {
-    position: relative;
-    margin: 0.5em 0;
-    padding: 0.5em;
-    height: 6em;
-    background-color: white;
-    box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
-
-    &::after {
-        content: "";
-        display: block;
-        clear: both;
-    }
+    width: 100%;
+    margin: 1em 0;
+    padding: 1em;
+    @include card;
 
     .Avatar {
-        width: 50px;
-        height: 50px;
+        @include col(1,12, $align:middle);
+        &:first-child {
+            @include col(1,12, $align:middle, $first:true);
+        }
     }
 
     .CallListItem-callIcon {
-        padding: 0 5px;
+        @include col(1,12, $align:middle, $first:true);
+        font-size: 2.5em;
         position: relative;
-        top: -20px;
+        &:before {
+            @include icon($fa-var-phone);
+            margin-right: 0;
+
+        }
+        &:after {
+            @include icon($fa-var-arrow-right);
+            font-size: 0.5em;
+            position: absolute;
+            right: 0.8em;
+            top: 0.5em;
+        }
     }
 
-    .CallListItem-target {
-        position: absolute;
-        left: 140px;
-        top: 10px;
-    }
-
-    .CallListItem-caller {
-        position: absolute;
-        left: 140px;
-        top: 30px;
+    .CallListItem-caller, .CallListItem-target {
+        @include col(2,12, $align:middle);
+        font-size: 1.5em;
     }
 
     .CallListItem-time {
-        position: absolute;
-        left: 300px;
-        top: 10px;
+        @include col(3,12, $align:middle);
+        font-size: 1.4em;
+        &:before {
+            @include icon($fa-var-clock-o);
+        }
     }
 
     .CallListItem-status {
-        position: absolute;
-        left: 300px;
-        top: 30px;
+        @include col(2,12, $align:middle, $last:true);
+        text-align: center;
+        &:before {
+            @include icon($fa-var-flag);
+        }
     }
+
 }

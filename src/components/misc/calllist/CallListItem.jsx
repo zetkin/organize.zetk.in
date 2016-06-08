@@ -23,15 +23,13 @@ export default class CallListItem extends React.Component {
 
                 <Avatar className="CallListItem-callerAvatar"
                     person={ call.caller }/>
-                <span className="CallListItem-callIcon">{'>'}</span>
-                <Avatar className="CallListItem-targetAvatar"
-                    person={ call.target }/>
-
-                <span className="CallListItem-target">
-                    { call.target.name }</span>
                 <span className="CallListItem-caller">
                     { call.caller.name }</span>
-
+                <span className="CallListItem-callIcon"/>
+                <Avatar className="CallListItem-targetAvatar"
+                    person={ call.target }/>
+                <span className="CallListItem-target">
+                    { call.target.name }</span>
                 <span className="CallListItem-time">
                     { timestamp.long() }</span>
                 <span className="CallListItem-status">

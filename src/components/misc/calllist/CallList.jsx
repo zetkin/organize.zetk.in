@@ -31,8 +31,8 @@ export default class CallList extends React.Component {
 
         let columns = [
             {
-                'target.name': 'Target',
                 'caller.name': 'Caller',
+                'target.name': 'Target',
             },
             {
                 'allocation_time': 'Time',
