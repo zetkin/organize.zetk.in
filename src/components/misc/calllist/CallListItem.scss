@@ -45,8 +45,37 @@
     .CallListItem-status {
         @include col(2,12, $align:middle, $last:true);
         text-align: center;
-        &:before {
-            @include icon($fa-var-flag);
+        font-size: 1.5em;
+        .CallListItem-stateAllocated:before {
+            @include icon($fa-var-hourglass-half);
+            color: $c-ui-dark;
+        }
+        .CallListItem-stateSuccess:before {
+            @include icon($fa-var-check);
+            color: $c-brand-success;
+
+            // TODO: Remove these when done testing.
+            //
+            // @include icon($fa-var-undo);
+            // color: $c-ui-dark;
+
+            // @include icon($fa-var-minus-circle);
+            // color: $c-brand-delete;
+
+            // @include icon($fa-var-exclamation-triangle);
+            // color: $c-brand-delete;
+        }
+        .CallListItem-stateFailed:before {
+            @include icon($fa-var-minus-circle);
+            color: $c-brand-delete;
+        }
+        .CallListItem-stateLater:before {
+            @include icon($fa-var-undo);
+            color: $c-ui-dark;
+        }
+        .CallListItem-stateWarning:before {
+            @include icon($fa-var-exclamation-triangle);
+            color: $c-brand-delete;
         }
     }
 

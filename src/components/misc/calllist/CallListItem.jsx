@@ -16,6 +16,33 @@ export default class CallListItem extends React.Component {
     render() {
         let call = this.props.callItem.data;
         let timestamp = Date.utc.create(call.allocation_time);
+        let stateClass = "CallListItem-state";
+        let stateLabel = null;
+
+        // TODO: Discuss appropriate labels and icons
+        switch (call.state) {
+            case 0:
+                stateLabel = "Allocated"; stateClass += "Allocated";
+                break;
+            case 1:
+                stateLabel = "Success"; stateClass += "Success";
+                break;
+            case 11:
+                stateLabel = "Failed: No response"; stateClass += "Failed";
+                break;
+            case 12:
+                stateLabel = "Failed: Line busy"; stateClass += "Failed";
+                break;
+            case 13:
+                stateLabel = "Failed: Call back later"; stateClass += "Later";
+                break;
+            case 21:
+                stateLabel = "Failed: Invalid number"; stateClass += "Warning";
+                break;
+            case 21:
+                stateLabel = "Failed: Call dropped"; stateClass += "Warning";
+                break;
+        }
 
         return (
             <li className="CallListItem"
@@ -33,7 +60,8 @@ export default class CallListItem extends React.Component {
                 <span className="CallListItem-time">
                     { timestamp.long() }</span>
                 <span className="CallListItem-status">
-                    { call.state }</span>
+                    <span className={ stateClass } title={ stateLabel }/>
+                </span>
             </li>
         );
     }
