@@ -18,6 +18,7 @@ import queries from './queries';
 import search from './search';
 import selections from './selections';
 import user from './user';
+import view from './view';
 
 
 export const appReducer = combineReducers({
@@ -37,6 +38,7 @@ export const appReducer = combineReducers({
     search,
     selections,
     user,
+    view,
 });
 
 let middleware = [

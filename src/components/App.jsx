@@ -2,7 +2,6 @@ import React from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux';
-import Router from 'react-router-component';
 
 import Header from './header/Header';
 import Dashboard from './dashboard/Dashboard';
@@ -21,6 +20,34 @@ import MapsSection from './sections/maps/MapsSection';
 export default class App extends React.Component {
     render() {
         let stateJson = JSON.stringify(this.props.initialState);
+
+        let SectionComponent;
+        switch (this.props.view.section) {
+            case 'dashboard':
+                SectionComponent = Dashboard;
+                break;
+            case 'people':
+                SectionComponent = PeopleSection;
+                break;
+            case 'campaign':
+                SectionComponent = CampaignSection;
+                break;
+            case 'dialog':
+                SectionComponent = DialogSection;
+                break;
+            case 'maps':
+                SectionComponent = MapsSection;
+                break;
+            default:
+                SectionComponent = NotFoundPage;
+                break;
+        }
+
+        let section = (
+            <SectionComponent section={ this.props.view.section }
+                panes={ this.props.view.panes }/>
+        );
+
         return (
             <html>
                 <head>
@@ -33,28 +60,9 @@ export default class App extends React.Component {
                 <body>
                     <div className="App">
                         <Header onSearchNavigate={ this.onSearchNavigate.bind(this) }/>
-                        <Router.Locations className="App-main" ref="router"
-                            onNavigation={ this.onNavigation.bind(this) }
-                            path={ this.props.path }>
-
-                            <Router.Location ref="dashboard" path="/"
-                                handler={ Dashboard }/>
-
-                            <Router.Location ref="people" path="/people(/*)"
-                                handler={ PeopleSection }/>
-
-                            <Router.Location ref="campaign" path="/campaign(/*)"
-                                handler={ CampaignSection }/>
-
-                            <Router.Location ref="dialog" path="/dialog(/*)"
-                                handler={ DialogSection }/>
-
-                            <Router.Location ref="maps" path="/maps(/*)"
-                                handler={ MapsSection }/>
-
-                            <Router.NotFound ref="notfound"
-                                handler={ NotFoundPage }/>
-                        </Router.Locations>
+                        <div className="App-main">
+                            { section }
+                        </div>
                         <KeyboardShortcuts
                             onSectionShortcut={ this.onSectionShortcut.bind(this) }
                             onSubSectionShortcut={ this.onSubSectionShortcut.bind(this) }/>

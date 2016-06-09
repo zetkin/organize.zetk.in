@@ -1,3 +1,6 @@
+// Flux actions relate to view state
+export const SET_PANES_FROM_URL_PATH = 'SET_PANES_FROM_URL_PATH';
+
 // Flux actions related to users
 export const GET_USER_INFO = 'GET_USER_INFO';
 export const GET_USER_MEMBERSHIPS = 'GET_USER_MEMBERSHIPS';

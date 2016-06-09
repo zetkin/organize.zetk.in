@@ -15,6 +15,7 @@ import search from './search';
 import widgets from './widgets';
 import App from '../components/App';
 import ActivistPage from '../components/fullpages/ActivistPage';
+import { setPanesFromUrlPath } from '../actions/view';
 
 
 var app = express();
@@ -49,6 +50,8 @@ app.ws('/search', search);
 
 function renderReactPage(Component, req, res) {
     try {
+        req.store.dispatch(setPanesFromUrlPath(req.path));
+
         var PageFactory = React.createFactory(Component);
         var props = {
             initialState: req.store.getState(),

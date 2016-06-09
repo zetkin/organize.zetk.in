@@ -9,6 +9,10 @@ import { componentClassNames } from '../';
 
 
 export default class SectionBase extends React.Component {
+    static propTypes = {
+        panes: React.PropTypes.array.isRequired,
+    };
+
     runPaneManager() {
         const panes = Object.keys(this.refs)
             .filter(key => (key.indexOf('pane') == 0 && key != 'paneContainer'))
@@ -35,43 +39,34 @@ export default class SectionBase extends React.Component {
     }
 
     render() {
-        var Pane;
         var panes = [];
-        var panePath;
-        var router = this.context.router;
         var subSections = this.getSubSections();
-        var basePath = router.getMatch().matchedPath;
         var curSubSectionIndex;
 
-        var i;
-        var subPath = router.getMatch().unmatchedPath;
-
-        if (!subPath) {
+        if (this.props.panes.length == 0) {
             curSubSectionIndex = 0;
-            Pane = subSections[0].startPane;
-            panePath = basePath + '/' + subSections[0].path;
+            let Pane = subSections[0].startPane;
             panes.push(
                 <Pane ref="pane0" key={ subSections[0].path } isBase={ true }
                     onOpenPane={ this.onOpenPane.bind(this, 0) }
                     onPushPane={ this.onPushPane.bind(this) }
-                    paneType={ subSections[0].path } panePath={ panePath }/>);
+                    paneType={ subSections[0].path }/>);
         }
         else {
             var subRefIndex = 1;
             var subStartIndex = 1;
-            var subPathSegments = subPath.split('/');
 
-            for (i = 0; i < subSections.length; i++) {
+            for (let i = 0; i < subSections.length; i++) {
                 var section = subSections[i];
-                if (section.path == subPathSegments[0]) {
+                if (section.path == this.props.panes[0].type) {
                     curSubSectionIndex = i;
-                    Pane = section.startPane;
-                    panePath = basePath + '/' + section.path;
+
+                    let Pane = section.startPane;
                     panes.push(
                         <Pane ref="pane0" key={ section.path } isBase={ true }
                             onOpenPane={ this.onOpenPane.bind(this, 0) }
                             onPushPane={ this.onPushPane.bind(this) }
-                            paneType={ section.path } panePath={ panePath }/>);
+                            paneType={ section.path }/>);
                     break;
                 }
             }
@@ -86,38 +81,28 @@ export default class SectionBase extends React.Component {
             if (panes.length == 0) {
                 curSubSectionIndex = 0;
                 section = subSections[0];
-                Pane = section.startPane;
-                panePath = basePath + '/' + section.path;
+                let Pane = section.startPane;
                 panes.push(
                     <Pane ref="pane0" key={ section.path } isBase={ true }
                         onOpenPane={ this.onOpenPane.bind(this, 0) }
                         onPushPane={ this.onPushPane.bind(this) }
-                        paneType={ section.path } panePath={ panePath }/>);
+                        paneType={ section.path }/>);
 
                 subStartIndex = 0;
             }
 
-            for (i = subStartIndex; i < subPathSegments.length; i++) {
-                var segment = subPathSegments[i];
-                var segmentData = segment.split(':');
-                var paneName = segmentData[0];
-                var paneParams = [];
+            for (let i = subStartIndex; i < this.props.panes.length; i++) {
+                let paneData = this.props.panes[i];
+                let Pane = resolvePane(paneData.type);
 
-                if (segmentData.length == 2) {
-                    paneParams = segmentData[1].split(',');
-                }
-
-                panePath = basePath + '/' + subPathSegments.slice(0, i+1).join('/');
-
-                Pane = resolvePane(paneName);
                 panes.push(
-                    <Pane ref={ 'pane' + subRefIndex } key={ segment }
+                    <Pane ref={ 'pane' + subRefIndex } key={ paneData.id }
                         onClose={ this.onClosePane.bind(this, i) }
                         onReplace={ this.onReplacePane.bind(this, i) }
                         onOpenPane={ this.onOpenPane.bind(this, i) }
                         onPushPane={ this.onPushPane.bind(this) }
-                        paneType={ paneName }
-                        panePath={ panePath } params={ paneParams }/>
+                        paneType={ paneData.type }
+                        params={ paneData.params }/>
                 );
 
                 subRefIndex++;
@@ -135,7 +120,7 @@ export default class SectionBase extends React.Component {
                 <nav className="SectionBase-nav">
                     <ul>
                         { subSections.map(function(subData, index) {
-                            var path = basePath + '/' + subData.path;
+                            var path = this.props.section + '/' + subData.path;
                             var classes = cx('SectionBase-navItem',
                                 'SectionBase-navItem-' + subData.path, {
                                     'selected': (index === curSubSectionIndex)
@@ -244,7 +229,3 @@ export default class SectionBase extends React.Component {
         router.navigate(path);
     }
 }
-
-SectionBase.contextTypes = {
-    router: React.PropTypes.any
-};
