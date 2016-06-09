@@ -46,6 +46,12 @@ let middleware = [
     thunk,
 ];
 
+let devTools = f => f;
+if (typeof window === 'object' && window.devToolsExtension) {
+    devTools = window.devToolsExtension();
+}
+
 export const configureStore = compose(
-    applyMiddleware(...middleware)
+    applyMiddleware(...middleware),
+    devTools,
 )(createStore);
