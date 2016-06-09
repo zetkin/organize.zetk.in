@@ -50,7 +50,7 @@
     .CallListItem-status {
         @include col(2,12, $align:middle, $last:true);
         text-align: center;
-        font-size: 2em;
+        font-size: 1.7em;
 
         & > span:before {
             border-radius: 2px;
