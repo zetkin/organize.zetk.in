@@ -220,8 +220,3 @@ export default class KeyboardShortcuts extends React.Component {
         }
     }
 }
-
-KeyboardShortcuts.propTypes = {
-    onSectionShortcut: React.PropTypes.func.isRequired,
-    onSubSectionShortcut: React.PropTypes.func.isRequired
-};
