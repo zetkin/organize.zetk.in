@@ -41,6 +41,49 @@ export default function viewState(state = null, action) {
             section, panes,
         });
     }
+    else if (action.type == types.OPEN_PANE) {
+        let panes = state.panes.concat();
+        panes.splice(action.payload.index + 1, 0, {
+            id: '$' + makeRandomString(6),
+            type: action.payload.paneType,
+            params: action.payload.params || [],
+        });
+
+        return Object.assign({}, state, {
+            panes
+        });
+    }
+    else if (action.type == types.CLOSE_PANE) {
+        let panes = state.panes.concat();
+        panes.splice(action.payload.index, 1);
+
+        return Object.assign({}, state, {
+            panes
+        });
+    }
+    else if (action.type == types.REPLACE_PANE) {
+        let panes = state.panes.concat();
+        panes[action.payload.index] = {
+            id: '$' + makeRandomString(6),
+            type: action.payload.paneType,
+            params: action.payload.params || [],
+        };
+
+        return Object.assign({}, state, {
+            panes
+        });
+    }
+    else if (action.type == types.PUSH_PANE) {
+        let panes = state.panes.concat([{
+            id: '$' + makeRandomString(6),
+            type: action.payload.paneType,
+            params: action.payload.params || [],
+        }]);
+
+        return Object.assign({}, state, {
+            panes
+        });
+    }
     else {
         return state || {
             section: 'dashboard',

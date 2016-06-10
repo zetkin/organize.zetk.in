@@ -6,11 +6,18 @@ import cx from 'classnames';
 import PaneManager from '../../utils/PaneManager';
 import { resolvePane } from '../panes';
 import { componentClassNames } from '../';
+import {
+    openPane,
+    closePane,
+    replacePane,
+    pushPane,
+} from '../../actions/view';
 
 
 export default class SectionBase extends React.Component {
     static propTypes = {
         panes: React.PropTypes.array.isRequired,
+        dispatch: React.PropTypes.func.isRequired,
     };
 
     runPaneManager() {
@@ -175,57 +182,18 @@ export default class SectionBase extends React.Component {
     }
 
     onClosePane(index) {
-        const router = this.context.router;
-        const basePath = router.getMatch().matchedPath;
-        const subPath = router.getMatch().unmatchedPath;
-        const subPathSegments = subPath.split('/');
-
-        // Remove element at index
-        subPathSegments.splice(index, 1);
-        const path = [ basePath ].concat(subPathSegments).join('/');
-
-        router.navigate(path);
+        this.props.dispatch(closePane(index));
     }
 
-    onReplacePane(index, newSegment) {
-        const router = this.context.router;
-        const basePath = router.getMatch().matchedPath;
-        const subPath = router.getMatch().unmatchedPath;
-        const subPathSegments = subPath.split('/');
-
-        // Replace segment at index
-        subPathSegments[index] = newSegment;
-        const path = [ basePath ].concat(subPathSegments).join('/');
-
-        router.navigate(path);
+    onReplacePane(index, paneType, params) {
+        this.props.dispatch(replacePane(index, paneType, params));
     }
 
-    onOpenPane(index, newSegment) {
-        const router = this.context.router;
-        const basePath = router.getMatch().matchedPath;
-        const subPath = router.getMatch().unmatchedPath;
-        const subPathSegments = subPath? subPath.split('/') : [];
-
-        // Add segment after index
-        subPathSegments.splice(index + 1, 0, newSegment);
-        const path = [ basePath ].concat(subPathSegments).join('/');
-
-        router.navigate(path);
+    onOpenPane(index, paneType, params) {
+        this.props.dispatch(openPane(index, paneType, params));
     }
 
-    onPushPane(newSegment) {
-        const router = this.context.router;
-        const basePath = router.getMatch().matchedPath;
-        const subPath = router.getMatch().unmatchedPath || '';
-        const subPathSegments = subPath? subPath.split('/') : [];
-
-        // Make sure that newSegment is unique
-        const subPathFiltered = subPathSegments.filter(s => s != newSegment);
-
-        // Add segment at the end
-        subPathFiltered.push(newSegment);
-        const path = [ basePath ].concat(subPathFiltered).join('/');
-
-        router.navigate(path);
+    onPushPane(paneType, params) {
+        this.props.dispatch(pushPane(paneType, params));
     }
 }

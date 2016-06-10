@@ -45,6 +45,7 @@ export default class App extends React.Component {
 
         let section = (
             <SectionComponent section={ this.props.view.section }
+                dispatch={ this.props.dispatch }
                 panes={ this.props.view.panes }/>
         );
 

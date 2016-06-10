@@ -7,3 +7,31 @@ export function setPanesFromUrlPath(path) {
         payload: { path },
     };
 }
+
+export function openPane(index, paneType, params) {
+    return {
+        type: types.OPEN_PANE,
+        payload: { index, paneType, params },
+    };
+}
+
+export function closePane(index) {
+    return {
+        type: types.CLOSE_PANE,
+        payload: { index },
+    };
+}
+
+export function replacePane(index, paneType, params) {
+    return {
+        type: types.REPLACE_PANE,
+        payload: { index, paneType, params },
+    };
+}
+
+export function pushPane(paneType, params) {
+    return {
+        type: types.PUSH_PANE,
+        payload: { paneType, params },
+    };
+}
