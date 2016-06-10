@@ -51,7 +51,7 @@ export default class App extends React.Component {
                 </head>
                 <body>
                     <div className="App">
-                        <Header onSearchNavigate={ this.onSearchNavigate.bind(this) }/>
+                        <Header/>
                         <div className="App-main">
                             { section }
                         </div>
@@ -63,26 +63,5 @@ export default class App extends React.Component {
                 </body>
             </html>
         );
-    }
-
-    onNavigation() {
-        this.props.dispatch(clearSearch());
-    }
-
-    onSearchNavigate(paneType, params, defaultBase) {
-        const router = this.refs.router;
-        const curMatch = router.getMatch();
-        const curMatchRef = curMatch.route.ref;
-
-        var path = paneType + ':' + params.join(',');
-
-        if (curMatchRef == 'dashboard') {
-            path = defaultBase + '/' + path;
-        }
-        else {
-            path = curMatch.path + '/' + path;
-        }
-
-        router.navigate(path);
     }
 }

@@ -32,6 +32,9 @@ export default function search(state = null, action) {
                 isActive: false,
             });
 
+        case types.OPEN_PANE:
+        case types.PUSH_PANE:
+        case types.GOTO_SECTION:
         case types.CLEAR_SEARCH:
             return Object.assign({}, state, {
                 query: '',

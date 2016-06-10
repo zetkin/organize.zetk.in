@@ -9,12 +9,17 @@ import CampaignMatch from './CampaignMatch';
 import LocationMatch from './LocationMatch';
 import PersonMatch from './PersonMatch';
 import QueryMatch from './QueryMatch';
-import { beginSearch, changeSearchScope, clearSearch, endSearch, search
-    } from '../../../actions/search';
+import { gotoSection, pushPane } from '../../../actions/view';
+import {
+    beginSearch,
+    changeSearchScope,
+    clearSearch,
+    search,
+} from '../../../actions/search';
 
 
 
-@connect(state => state)
+@connect(state => ({ search: state.search, view: state.view }))
 export default class Search extends React.Component {
     constructor(props) {
         super(props);
@@ -109,38 +114,38 @@ export default class Search extends React.Component {
     }
 
     onMatchSelect(match) {
-        var defaultBase;
-        var paneType;
-        var params;
+        let defaultSection;
+        let paneType;
+        let params;
 
         switch (match.type) {
             case 'actionday':
-                defaultBase = '/campaign/actions';
+                defaultSection = 'campaign';
                 paneType = 'actionday';
                 params = [ match.data.date ];
                 break;
             case 'call_assignment':
-                defaultBase = '/dialog/assignments';
+                defaultSection = 'dialog';
                 paneType = 'callassignment';
                 params = [ match.data.id ];
                 break;
             case 'campaign':
-                defaultBase = '/campaign/actions';
+                defaultSection = 'campaign';
                 paneType = 'editcampaign';
                 params = [ match.data.id ];
                 break;
             case 'location':
-                defaultBase = '/maps/locations';
+                defaultSection = 'maps';
                 paneType = 'editlocationwithmap';
                 params = [ match.data.id ];
                 break;
             case 'person':
-                defaultBase = '/people/list';
+                defaultSection = 'people';
                 paneType = 'person';
                 params = [ match.data.id ];
                 break;
             case 'query':
-                defaultBase = '/people/list';
+                defaultSection = 'people';
                 paneType = 'query';
                 params = [ match.data.id ];
                 break;
@@ -150,9 +155,12 @@ export default class Search extends React.Component {
                 return;
         }
 
-        if (this.props.onMatchNavigate) {
-            this.props.onMatchNavigate(paneType, params, defaultBase);
+        let curSection = this.props.view.section;
+        if (!curSection || curSection === 'dashboard') {
+            this.props.dispatch(gotoSection(defaultSection));
         }
+
+        this.props.dispatch(pushPane(paneType, params));
     }
 
     onKeyDown(ev) {
@@ -210,7 +218,7 @@ export default class Search extends React.Component {
     }
 
     onBlur(ev) {
-        this.props.dispatch(endSearch());
+        this.props.dispatch(clearSearch());
     }
 }
 
