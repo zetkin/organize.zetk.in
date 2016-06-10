@@ -20,6 +20,8 @@ import selections from './selections';
 import user from './user';
 import view from './view';
 
+import { urlMiddleware } from './middleware/url';
+
 
 export const appReducer = combineReducers({
     actions,
@@ -42,6 +44,7 @@ export const appReducer = combineReducers({
 });
 
 let middleware = [
+    urlMiddleware,
     promiseMiddleware(),
     thunk,
 ];

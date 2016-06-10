@@ -20,7 +20,7 @@ export default class App extends React.Component {
 
         let SectionComponent;
         switch (this.props.view.section) {
-            case 'dashboard':
+            case '':
                 SectionComponent = Dashboard;
                 break;
             case 'people':

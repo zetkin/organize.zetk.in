@@ -12,6 +12,11 @@ export default function viewState(state = null, action) {
             path = path.substr(1);
         }
 
+        // Remove trailing slash
+        if (path[path.length-1] === '/') {
+            path = path.substr(0, path.length-1);
+        }
+
         let segments = path.split('/');
 
         // Remove first segment if empty
@@ -22,7 +27,7 @@ export default function viewState(state = null, action) {
         let section, panes;
 
         if (segments.length == 0) {
-            section = 'dashboard';
+            section = '';
             panes = [];
         }
         else {
@@ -85,7 +90,7 @@ export default function viewState(state = null, action) {
         });
     }
     else if (action.type == types.GOTO_SECTION) {
-        let section = action.payload.section || 'dashboard';
+        let section = action.payload.section || '';
         let panes = state.panes;
 
         if (action.payload.subSection) {
@@ -105,7 +110,7 @@ export default function viewState(state = null, action) {
     }
     else {
         return state || {
-            section: 'dashboard',
+            section: '',
             panes: [],
         };
     }
