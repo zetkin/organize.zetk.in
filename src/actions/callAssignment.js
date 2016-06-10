@@ -4,13 +4,13 @@ import * as types from '.';
 import makeRandomString from '../utils/makeRandomString';
 
 
-export function createCallAssignment(data, draftId) {
+export function createCallAssignment(data, draftId, paneId) {
     return function(dispatch, getState) {
         let orgId = getState().org.activeId;
 
         dispatch({
             type: types.CREATE_CALL_ASSIGNMENT,
-            meta: { draftId },
+            meta: { draftId, paneId },
             payload: {
                 promise: Z.resource('orgs', orgId,
                     'call_assignments').post(data)
