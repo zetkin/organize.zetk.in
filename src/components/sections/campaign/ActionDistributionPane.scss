@@ -1,6 +1,11 @@
 .ActionDistributionPane {
+
+    .PaneBase-header {
+        height: 190px;
+    }
+
     .campaignselect {
-        width: 300px;
+        width: 100%;
     }
 
     &.scrolled {
@@ -9,7 +14,7 @@
         }
     }
 
-    .section-pane-content {
+    .section-pane-content { // TODO: Old? Remove?
         top: 130px;
 
         h3 {
@@ -19,12 +24,12 @@
         }
     }
 
-    .ActionDistributionPane-locations {
-        float: left;
-        width: 74%;
+    .ActionDistributionPane-locations, .ActionDistributionPane-activities {
+        @include col(12,12);
 
         .ActionDistributionItem {
-            width: 32%;
+            @include col(10,10);
+            margin: 0 0 2em 0;
         }
 
         &::after {
@@ -34,21 +39,40 @@
         }
     }
 
-    .ActionDistributionPane-activities {
-        float: right;
-        width: 25%;
-        min-height: 50%;
-        padding: 0 1% 10em;
-        border-left: 1px solid #ddd;
+    @include medium-screen {
 
-        .ActionDistributionItem {
-            width: 100%;
+        &.PaneBase:first-child .PaneBase-content {
+            margin-top: 13em;
         }
 
-        &::after {
-            content: "";
-            display: block;
-            clear: both;
+        .campaignselect {
+            width: 300px;
+        }
+
+        .ActionDistributionPane-locations {
+            @include col(9,12, $first:true, $gap:1em);
+
+            .ActionDistributionItem {
+                margin: 0 1.5% 2em;
+                @include col(3.1,10);
+                &:nth-child(3n+1) {
+                    margin-left: 0;
+                }
+                &:nth-child(3n) {
+                    margin-right: 0;
+                }
+            }
+        }
+        .ActionDistributionPane-activities {
+            @include col(3,12, $last:true, $gap:1em);
+            min-height: 50%;
+            padding: 0 1% 10em;
+            border-left: 1px solid #ddd;
+
+            .ActionDistributionItem {
+                margin: 0 0 2em 0;
+                width: 100%;
+            }
         }
     }
 }
