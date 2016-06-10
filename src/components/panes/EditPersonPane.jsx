@@ -73,7 +73,7 @@ export default class EditPersonPane extends PaneBase {
     }
 
     onDeleteClick(ev) {
-        var personId = this.props.params[0];
+        var personId = this.getParam(0);
 
         this.props.dispatch(deletePerson(personId));
         this.closePane();

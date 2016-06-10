@@ -11,7 +11,7 @@ import { getListItemById } from '../../utils/store';
 @connect(state => state)
 export default class LocationPane extends PaneBase {
     componentDidMount() {
-        let locId = this.props.params[0];
+        let locId = this.getParam(0);
         let locItem = getListItemById(this.props.locations.locationList, locId);
 
         if (locItem) {
@@ -23,7 +23,7 @@ export default class LocationPane extends PaneBase {
     }
 
     getRenderData() {
-        let locId = this.props.params[0];
+        let locId = this.getParam(0);
 
         return {
             locItem: getListItemById(this.props.locations.locationList, locId),
@@ -58,7 +58,7 @@ export default class LocationPane extends PaneBase {
     onSubmit(ev) {
         ev.preventDefault();
 
-        var locationId = this.props.params[0];
+        var locationId = this.getParam(0);
         var values = this.refs.form.getChangedValues();
         var pendingLatLng = this.props.locations.pendingLocation;
         if (pendingLatLng) {
@@ -71,7 +71,7 @@ export default class LocationPane extends PaneBase {
 
 
     onDeleteClick(ev) {
-        var locationId = this.props.params[0];
+        var locationId = this.getParam(0);
         this.props.dispatch(clearPendingLocation());
         this.props.dispatch(deleteLocation(locationId));
         this.closePane();

@@ -10,7 +10,7 @@ import { getListItemById } from '../../utils/store';
 export default class CampaignPane extends PaneBase {
     getRenderData() {
         let campaignList = this.props.campaigns.campaignList;
-        var campaignId = this.props.params[0];
+        var campaignId = this.getParam(0);
 
         return {
             campaignItem: getListItemById(campaignList, campaignId),
