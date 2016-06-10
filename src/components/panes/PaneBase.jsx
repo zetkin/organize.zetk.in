@@ -43,7 +43,6 @@ export default class PaneBase extends React.Component {
 
     render() {
         const data = this.getRenderData();
-        const paneType = this.props.paneType;
 
         const classes = cx(componentClassNames(this), {
             'PaneBase-scrolled': this.state.scrolled
@@ -129,8 +128,8 @@ export default class PaneBase extends React.Component {
     }
 
     getParam(idx, defaultValue) {
-        if (this.props.params.length > idx) {
-            return this.props.params[idx];
+        if (this.props.paneData.params.length > idx) {
+            return this.props.paneData.params[idx];
         }
         else {
             return defaultValue;

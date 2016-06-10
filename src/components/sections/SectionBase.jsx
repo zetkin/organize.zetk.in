@@ -58,8 +58,8 @@ export default class SectionBase extends React.Component {
             panes.push(
                 <Pane ref="pane0" key={ subSections[0].path } isBase={ true }
                     onOpenPane={ this.onOpenPane.bind(this, 0) }
-                    onPushPane={ this.onPushPane.bind(this) }
-                    paneType={ subSections[0].path }/>);
+                    onPushPane={ this.onPushPane.bind(this) }/>
+            );
         }
         else {
             var subRefIndex = 1;
@@ -74,8 +74,8 @@ export default class SectionBase extends React.Component {
                     panes.push(
                         <Pane ref="pane0" key={ sub.path } isBase={ true }
                             onOpenPane={ this.onOpenPane.bind(this, 0) }
-                            onPushPane={ this.onPushPane.bind(this) }
-                            paneType={ sub.path }/>);
+                            onPushPane={ this.onPushPane.bind(this) }/>
+                    );
                     break;
                 }
             }
@@ -94,8 +94,8 @@ export default class SectionBase extends React.Component {
                 panes.push(
                     <Pane ref="pane0" key={ sub.path } isBase={ true }
                         onOpenPane={ this.onOpenPane.bind(this, 0) }
-                        onPushPane={ this.onPushPane.bind(this) }
-                        paneType={ sub.path }/>);
+                        onPushPane={ this.onPushPane.bind(this) }/>
+                );
 
                 subStartIndex = 0;
             }
@@ -110,8 +110,7 @@ export default class SectionBase extends React.Component {
                         onReplace={ this.onReplacePane.bind(this, i) }
                         onOpenPane={ this.onOpenPane.bind(this, i) }
                         onPushPane={ this.onPushPane.bind(this) }
-                        paneType={ paneData.type }
-                        params={ paneData.params }/>
+                        paneData={ paneData }/>
                 );
 
                 subRefIndex++;
