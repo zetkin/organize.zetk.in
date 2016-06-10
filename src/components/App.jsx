@@ -9,10 +9,7 @@ import NotFoundPage from './NotFoundPage';
 import KeyboardShortcuts from './KeyboardShortcuts';
 import { clearSearch } from '../actions/search';
 
-import CampaignSection from './sections/campaign/CampaignSection';
-import DialogSection from './sections/dialog/DialogSection';
-import PeopleSection from './sections/people/PeopleSection';
-import MapsSection from './sections/maps/MapsSection';
+import SectionBase from './sections/SectionBase';
 
 
 @connect(state => state)
@@ -27,16 +24,10 @@ export default class App extends React.Component {
                 SectionComponent = Dashboard;
                 break;
             case 'people':
-                SectionComponent = PeopleSection;
-                break;
             case 'campaign':
-                SectionComponent = CampaignSection;
-                break;
             case 'dialog':
-                SectionComponent = DialogSection;
-                break;
             case 'maps':
-                SectionComponent = MapsSection;
+                SectionComponent = SectionBase;
                 break;
             default:
                 SectionComponent = NotFoundPage;
