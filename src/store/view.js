@@ -84,6 +84,25 @@ export default function viewState(state = null, action) {
             panes
         });
     }
+    else if (action.type == types.GOTO_SECTION) {
+        let section = action.payload.section || 'dashboard';
+        let panes = state.panes;
+
+        if (action.payload.subSection) {
+            panes = [{
+                id: '$' + makeRandomString(6),
+                type: action.payload.subSection,
+                params: [],
+            }];
+        }
+        else {
+            panes = [];
+        }
+
+        return Object.assign({}, state, {
+            section, panes
+        });
+    }
     else {
         return state || {
             section: 'dashboard',

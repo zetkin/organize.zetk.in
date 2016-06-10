@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Link } from 'react-router-component';
 import cx from 'classnames';
 
 import PaneManager from '../../utils/PaneManager';
@@ -11,6 +10,7 @@ import {
     closePane,
     replacePane,
     pushPane,
+    gotoSection,
 } from '../../actions/view';
 
 
@@ -122,28 +122,30 @@ export default class SectionBase extends React.Component {
         const helpUrl = '/help/sections/' + sectionType;
         const classes = cx(componentClassNames(this));
 
+        let subMenuItems = subSections.map((subData, idx) => {
+            let classes = cx('SectionBase-navItem',
+                'SectionBase-navItem-' + subData.path, {
+                    'selected': (idx === curSubSectionIndex)
+                });
+
+            return (
+                <li key={ subData.path } className={ classes }>
+                    <a onClick={ this.onClickSub.bind(this, subData) }>
+                        { subData.title }</a>
+                </li>
+            );
+        });
+
         return (
             <div className={ classes }>
                 <nav className="SectionBase-nav">
                     <ul>
-                        { subSections.map(function(subData, index) {
-                            var path = this.props.section + '/' + subData.path;
-                            var classes = cx('SectionBase-navItem',
-                                'SectionBase-navItem-' + subData.path, {
-                                    'selected': (index === curSubSectionIndex)
-                                });
-
-                            return (
-                                <li key={ subData.path } className={ classes }>
-                                    <Link href={ path}>
-                                        { subData.title }
-                                    </Link>
-                                </li>
-                            );
-                        }, this)}
+                        { subMenuItems }
                         <li key="back"
                             className='SectionBase-navItem SectionBase-navBack'>
-                            <Link href="/">Back to <br />Dashboard</Link></li>
+                            <a onClick={ this.onClickBack.bind(this) }>
+                                Back to<br/>
+                                dashboard</a></li>
                     </ul>
                     <div className="SectionBase-navMisc">
                         <a target="_blank" href="http://zetkin.org">About</a>
@@ -155,6 +157,10 @@ export default class SectionBase extends React.Component {
                 </div>
             </div>
         );
+    }
+
+    onClickSub(subData) {
+        this.props.dispatch(gotoSection(this.props.section, subData.path));
     }
 
     getSubSections() {
@@ -179,6 +185,10 @@ export default class SectionBase extends React.Component {
         else {
             return false;
         }
+    }
+
+    onClickBack(index) {
+        this.props.dispatch(gotoSection(null));
     }
 
     onClosePane(index) {

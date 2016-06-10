@@ -35,3 +35,10 @@ export function pushPane(paneType, params) {
         payload: { paneType, params },
     };
 }
+
+export function gotoSection(section, subSection) {
+    return {
+        type: types.GOTO_SECTION,
+        payload: { section, subSection },
+    }
+}

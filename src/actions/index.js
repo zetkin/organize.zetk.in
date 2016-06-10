@@ -4,6 +4,7 @@ export const OPEN_PANE = 'OPEN_PANE';
 export const CLOSE_PANE = 'CLOSE_PANE';
 export const REPLACE_PANE = 'REPLACE_PANE';
 export const PUSH_PANE = 'PUSH_PANE';
+export const GOTO_SECTION = 'GOTO_SECTION';
 
 // Flux actions related to users
 export const GET_USER_INFO = 'GET_USER_INFO';
