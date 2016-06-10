@@ -55,9 +55,7 @@ export default class App extends React.Component {
                         <div className="App-main">
                             { section }
                         </div>
-                        <KeyboardShortcuts
-                            onSectionShortcut={ this.onSectionShortcut.bind(this) }
-                            onSubSectionShortcut={ this.onSubSectionShortcut.bind(this) }/>
+                        <KeyboardShortcuts/>
                     </div>
                     <script type="text/json"
                         id="App-initialState"
@@ -69,10 +67,6 @@ export default class App extends React.Component {
 
     onNavigation() {
         this.props.dispatch(clearSearch());
-    }
-
-    onSectionShortcut(path) {
-        this.refs.router.navigate(path);
     }
 
     onSearchNavigate(paneType, params, defaultBase) {
@@ -90,18 +84,5 @@ export default class App extends React.Component {
         }
 
         router.navigate(path);
-    }
-
-    onSubSectionShortcut(index) {
-        var curMatch = this.refs.router.getMatch();
-        var router = this.refs.router;
-        var ref = curMatch.route.ref;
-
-        if (ref !== 'dashboard' && ref !== 'notfound') {
-            return router.refs[ref].gotoSubSectionAt(index);
-        }
-        else {
-            return false;
-        }
     }
 }

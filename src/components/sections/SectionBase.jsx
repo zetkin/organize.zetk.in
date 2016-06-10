@@ -173,19 +173,6 @@ export default class SectionBase extends React.Component {
         throw "renderSectionContent() not implemented";
     }
 
-    gotoSubSectionAt(index) {
-        var subSections = this.getSubSections();
-
-        if (index < subSections.length) {
-            let sub = subSections[index]
-            this.props.dispatch(gotoSection(this.props.section, sub.path));
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
     onClickBack(index) {
         this.props.dispatch(gotoSection(null));
     }
