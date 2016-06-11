@@ -15,7 +15,7 @@ import {
 } from '../../actions/view';
 
 
-export default class SectionBase extends React.Component {
+export default class Section extends React.Component {
     static propTypes = {
         panes: React.PropTypes.array.isRequired,
         dispatch: React.PropTypes.func.isRequired,
@@ -124,8 +124,8 @@ export default class SectionBase extends React.Component {
         const classes = cx(componentClassNames(this));
 
         let subMenuItems = subSections.map((subData, idx) => {
-            let classes = cx('SectionBase-navItem',
-                'SectionBase-navItem-' + subData.path, {
+            let classes = cx('Section-navItem',
+                'Section-navItem-' + subData.path, {
                     'selected': (idx === curSubSectionIndex)
                 });
 
@@ -139,21 +139,21 @@ export default class SectionBase extends React.Component {
 
         return (
             <div className={ classes }>
-                <nav className="SectionBase-nav">
+                <nav className="Section-nav">
                     <ul>
                         { subMenuItems }
                         <li key="back"
-                            className='SectionBase-navItem SectionBase-navBack'>
+                            className='Section-navItem Section-navBack'>
                             <a onClick={ this.onClickBack.bind(this) }>
                                 Back to<br/>
                                 dashboard</a></li>
                     </ul>
-                    <div className="SectionBase-navMisc">
+                    <div className="Section-navMisc">
                         <a target="_blank" href="http://zetkin.org">About</a>
                         <a target="_blank" href={ helpUrl }>Help</a>
                     </div>
                 </nav>
-                <div className="SectionBase-container" ref="paneContainer">
+                <div className="Section-container" ref="paneContainer">
                     { panes }
                 </div>
             </div>

@@ -9,7 +9,7 @@ import NotFoundPage from './NotFoundPage';
 import KeyboardShortcuts from './KeyboardShortcuts';
 import { clearSearch } from '../actions/search';
 
-import SectionBase from './sections/SectionBase';
+import Section from './sections/Section';
 
 
 @connect(state => state)
@@ -27,7 +27,7 @@ export default class App extends React.Component {
             case 'campaign':
             case 'dialog':
             case 'maps':
-                SectionComponent = SectionBase;
+                SectionComponent = Section;
                 break;
             default:
                 SectionComponent = NotFoundPage;
