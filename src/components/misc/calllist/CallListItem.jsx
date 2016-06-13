@@ -19,7 +19,6 @@ export default class CallListItem extends React.Component {
         let stateClass = "CallListItem-state";
         let stateLabel = null;
 
-        // TODO: Discuss appropriate labels and icons
         switch (call.state) {
             case 0:
                 stateLabel = "Allocated"; stateClass += "Allocated";
@@ -48,20 +47,19 @@ export default class CallListItem extends React.Component {
             <li className="CallListItem"
                 onClick={ this.props.onSelect.bind(this, call) }>
 
-                <Avatar className="CallListItem-callerAvatar"
-                    person={ call.caller }/>
-                <span className="CallListItem-caller">
-                    { call.caller.name }</span>
-                <span className="CallListItem-callIcon"/>
+                <span className={ "CallListItem-callIcon " + stateClass } title={ stateLabel }/>
                 <Avatar className="CallListItem-targetAvatar"
                     person={ call.target }/>
                 <span className="CallListItem-target">
                     { call.target.name }</span>
-                <span className="CallListItem-time">
-                    { timestamp.long() }</span>
-                <span className="CallListItem-status">
-                    <span className={ stateClass } title={ stateLabel }/>
-                </span>
+                <div className="CallListItem-callInfo">
+                    <Avatar className="CallListItem-callerAvatar"
+                        person={ call.caller }/>
+                    <span className="CallListItem-caller">
+                        { call.caller.name }</span>
+                    <span className="CallListItem-time">
+                        { timestamp.long() }</span>
+                </div>
             </li>
         );
     }

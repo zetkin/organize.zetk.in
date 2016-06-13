@@ -1,5 +1,10 @@
 .CallList {
-    width: $medium-width;
+
+    width: 100%;
+
+    @include medium-screen {
+        max-width: 540px;
+    }
     .ListHeader {
         li:nth-child(1) {
             @include col(7,12);
