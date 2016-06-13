@@ -14,7 +14,7 @@ import { getListItemById } from '../../utils/store';
 @connect(state => state)
 export default class EditPersonPane extends PaneBase {
     componentDidMount() {
-        let personId = this.props.params[0];
+        let personId = this.getParam(0);
         let person = getListItemById(this.props.people.personList, personId);
 
         if (!person) {
@@ -23,7 +23,7 @@ export default class EditPersonPane extends PaneBase {
     }
 
     getRenderData() {
-        let personId = this.props.params[0];
+        let personId = this.getParam(0);
 
         return {
             personItem: getListItemById(this.props.people.personList, personId)
@@ -77,13 +77,13 @@ export default class EditPersonPane extends PaneBase {
 
         let form = this.refs.personForm;
         let values = form.getChangedValues();
-        let personId = this.props.params[0];
+        let personId = this.getParam(0);
 
         this.props.dispatch(updatePerson(personId, values));
     }
 
     onDeleteClick(ev) {
-        var personId = this.props.params[0];
+        var personId = this.getParam(0);
 
         this.props.dispatch(deletePerson(personId));
         this.closePane();

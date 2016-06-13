@@ -18,6 +18,9 @@ import queries from './queries';
 import search from './search';
 import selections from './selections';
 import user from './user';
+import view from './view';
+
+import { urlMiddleware } from './middleware/url';
 
 
 export const appReducer = combineReducers({
@@ -37,13 +40,21 @@ export const appReducer = combineReducers({
     search,
     selections,
     user,
+    view,
 });
 
 let middleware = [
+    urlMiddleware,
     promiseMiddleware(),
     thunk,
 ];
 
+let devTools = f => f;
+if (typeof window === 'object' && window.devToolsExtension) {
+    devTools = window.devToolsExtension();
+}
+
 export const configureStore = compose(
-    applyMiddleware(...middleware)
+    applyMiddleware(...middleware),
+    devTools,
 )(createStore);

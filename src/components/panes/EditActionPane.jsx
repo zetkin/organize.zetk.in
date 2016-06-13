@@ -11,7 +11,7 @@ import { retrieveAction, updateAction } from '../../actions/action';
 @connect(state => state)
 export default class EditActionPane extends PaneBase {
     getRenderData() {
-        let actionId = this.props.params[0];
+        let actionId = this.getParam(0);
         let actionList = this.props.actions.actionList;
         let actionItem = getListItemById(actionList, actionId);
 
@@ -63,7 +63,7 @@ export default class EditActionPane extends PaneBase {
         ev.preventDefault();
 
         var values = this.refs.form.getChangedValues();
-        var actionId = this.props.params[0];
+        var actionId = this.getParam(0);
 
         this.props.dispatch(updateAction(actionId, values));
     }

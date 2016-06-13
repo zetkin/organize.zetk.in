@@ -2,7 +2,6 @@ import React from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux';
-import Router from 'react-router-component';
 
 import Header from './header/Header';
 import Dashboard from './dashboard/Dashboard';
@@ -10,10 +9,7 @@ import NotFoundPage from './NotFoundPage';
 import KeyboardShortcuts from './KeyboardShortcuts';
 import { clearSearch } from '../actions/search';
 
-import CampaignSection from './sections/campaign/CampaignSection';
-import DialogSection from './sections/dialog/DialogSection';
-import PeopleSection from './sections/people/PeopleSection';
-import MapsSection from './sections/maps/MapsSection';
+import Section from './sections/Section';
 
 
 @connect(state => state)
@@ -21,6 +17,29 @@ import MapsSection from './sections/maps/MapsSection';
 export default class App extends React.Component {
     render() {
         let stateJson = JSON.stringify(this.props.initialState);
+
+        let SectionComponent;
+        switch (this.props.view.section) {
+            case '':
+                SectionComponent = Dashboard;
+                break;
+            case 'people':
+            case 'campaign':
+            case 'dialog':
+            case 'maps':
+                SectionComponent = Section;
+                break;
+            default:
+                SectionComponent = NotFoundPage;
+                break;
+        }
+
+        let section = (
+            <SectionComponent section={ this.props.view.section }
+                dispatch={ this.props.dispatch }
+                panes={ this.props.view.panes }/>
+        );
+
         return (
             <html>
                 <head>
@@ -32,32 +51,11 @@ export default class App extends React.Component {
                 </head>
                 <body>
                     <div className="App">
-                        <Header onSearchNavigate={ this.onSearchNavigate.bind(this) }/>
-                        <Router.Locations className="App-main" ref="router"
-                            onNavigation={ this.onNavigation.bind(this) }
-                            path={ this.props.path }>
-
-                            <Router.Location ref="dashboard" path="/"
-                                handler={ Dashboard }/>
-
-                            <Router.Location ref="people" path="/people(/*)"
-                                handler={ PeopleSection }/>
-
-                            <Router.Location ref="campaign" path="/campaign(/*)"
-                                handler={ CampaignSection }/>
-
-                            <Router.Location ref="dialog" path="/dialog(/*)"
-                                handler={ DialogSection }/>
-
-                            <Router.Location ref="maps" path="/maps(/*)"
-                                handler={ MapsSection }/>
-
-                            <Router.NotFound ref="notfound"
-                                handler={ NotFoundPage }/>
-                        </Router.Locations>
-                        <KeyboardShortcuts
-                            onSectionShortcut={ this.onSectionShortcut.bind(this) }
-                            onSubSectionShortcut={ this.onSubSectionShortcut.bind(this) }/>
+                        <Header/>
+                        <div className="App-main">
+                            { section }
+                        </div>
+                        <KeyboardShortcuts/>
                     </div>
                     <script type="text/json"
                         id="App-initialState"
@@ -65,43 +63,5 @@ export default class App extends React.Component {
                 </body>
             </html>
         );
-    }
-
-    onNavigation() {
-        this.props.dispatch(clearSearch());
-    }
-
-    onSectionShortcut(path) {
-        this.refs.router.navigate(path);
-    }
-
-    onSearchNavigate(paneType, params, defaultBase) {
-        const router = this.refs.router;
-        const curMatch = router.getMatch();
-        const curMatchRef = curMatch.route.ref;
-
-        var path = paneType + ':' + params.join(',');
-
-        if (curMatchRef == 'dashboard') {
-            path = defaultBase + '/' + path;
-        }
-        else {
-            path = curMatch.path + '/' + path;
-        }
-
-        router.navigate(path);
-    }
-
-    onSubSectionShortcut(index) {
-        var curMatch = this.refs.router.getMatch();
-        var router = this.refs.router;
-        var ref = curMatch.route.ref;
-
-        if (ref !== 'dashboard' && ref !== 'notfound') {
-            return router.refs[ref].gotoSubSectionAt(index);
-        }
-        else {
-            return false;
-        }
     }
 }

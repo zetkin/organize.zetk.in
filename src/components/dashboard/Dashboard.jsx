@@ -6,6 +6,7 @@ import Shortcut from './Shortcut';
 import DraggableWidget from './widgets/DraggableWidget';
 import Widget from './widgets/Widget';
 import { moveWidget } from '../../actions/dashboard';
+import { gotoSection } from '../../actions/view';
 
 
 @connect(state => state)
@@ -36,17 +37,20 @@ export default class Dashboard extends React.Component {
             let shortcut = shortcuts[i];
             let classes = 'Dashboard-shortcut Dashboard-shortcut-' + shortcut;
             let label = labels[shortcut];
+            let onClick = this.onClickShortcut.bind(this, shortcut);
 
             if (i < 4) {
                 favoriteElements.push(
                     <li className={ classes } key={ shortcut }>
-                        <Shortcut target={ shortcut } label={ label }/></li>
+                        <Shortcut label={ label } onClick={ onClick }/>
+                    </li>
                 );
             }
             else {
                 shortcutElements.push(
                     <li key={ shortcut }>
-                        <Shortcut target={ shortcut } label={ label }/></li>
+                        <Shortcut label={ label } onClick={ onClick }/>
+                    </li>
                 );
             }
         }
@@ -77,6 +81,10 @@ export default class Dashboard extends React.Component {
                 <Footer/>
             </div>
         );
+    }
+
+    onClickShortcut(target) {
+        this.props.dispatch(gotoSection(target));
     }
 
     onMoveWidget(widget, before) {

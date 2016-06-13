@@ -11,7 +11,7 @@ import { getListItemById } from '../../utils/store';
 export default class EditActivityPane extends PaneBase {
     getRenderData() {
         let activityList = this.props.activities.activityList;
-        let activityId = this.props.params[0];
+        let activityId = this.getParam(0);
 
         return {
             activityItem: getListItemById(activityList, activityId),
@@ -43,13 +43,13 @@ export default class EditActivityPane extends PaneBase {
         ev.preventDefault();
 
         const values = this.refs.form.getChangedValues();
-        const activityId = this.props.params[0];
+        const activityId = this.getParam(0);
 
         this.props.dispatch(updateActivity(activityId, values));
     }
 
     onDeleteClick(ev) {
-        const activityId = this.props.params[0];
+        const activityId = this.getParam(0);
 
         this.props.dispatch(deleteActivity(activityId));
         this.closePane();

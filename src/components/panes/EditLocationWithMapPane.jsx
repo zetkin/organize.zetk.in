@@ -13,7 +13,7 @@ import { retrieveLocation, updateLocation, deleteLocation,
 @connect(state => state)
 export default class EditLocationWithMapPane extends PaneBase {
     componentDidMount() {
-        let locId = this.props.params[0];
+        let locId = this.getParam(0);
         let locItem = getListItemById(this.props.locations.locationList, locId);
 
         if (locItem) {
@@ -25,7 +25,7 @@ export default class EditLocationWithMapPane extends PaneBase {
     }
 
     getRenderData() {
-        let locId = this.props.params[0];
+        let locId = this.getParam(0);
 
         return {
             locItem: getListItemById(this.props.locations.locationList, locId),
@@ -89,7 +89,7 @@ export default class EditLocationWithMapPane extends PaneBase {
     onSubmit(ev) {
         ev.preventDefault();
 
-        let locId = this.props.params[0];
+        let locId = this.getParam(0);
         let values = this.refs.form.getChangedValues();
         let pendingLatLng = this.props.locations.pendingLocation;
 
@@ -103,7 +103,7 @@ export default class EditLocationWithMapPane extends PaneBase {
 
 
     onDeleteClick(ev) {
-        var locId = this.props.params[0];
+        var locId = this.getParam(0);
         this.props.dispatch(clearPendingLocation());
         this.props.dispatch(deleteLocation(locationId));
         this.closePane();
