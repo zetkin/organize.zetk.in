@@ -37,7 +37,6 @@ export default class PersonForm extends React.Component {
                 <TextInput label="City" name="city"
                     initialValue={ person.city }/>
 
-                <input name="submit" type="submit"/>
             </Form>
         );
     }

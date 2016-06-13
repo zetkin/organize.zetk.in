@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import PersonTagForm from '../forms/PersonTagForm';
+import Button from '../misc/Button';
 import { getListItemById } from '../../utils/store';
 import {
     retrievePersonTag,
@@ -49,6 +50,14 @@ export default class EditPersonTagPane extends PaneBase {
         }
     }
 
+    renderPaneFooter(data) {
+        return (
+            <Button className="EditPersonTagPane-saveButton"
+                label="Save tag"
+                onClick={ this.onSubmit.bind(this) }/>
+        );
+    }
+
     onSubmit(ev) {
         ev.preventDefault();
 
@@ -56,5 +65,6 @@ export default class EditPersonTagPane extends PaneBase {
         let values = this.refs.form.getValues();
 
         this.props.dispatch(updatePersonTag(tagId, values));
+        this.closePane();
     }
 }

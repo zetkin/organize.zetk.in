@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import PersonForm from '../forms/PersonForm';
+import Button from '../misc/Button';
 import DraggableAvatar from '../misc/DraggableAvatar';
+import LoadingIndicator from '../misc/LoadingIndicator';
 import { retrievePerson, updatePerson, deletePerson }
     from '../../actions/person';
 import { getListItemById } from '../../utils/store';
@@ -41,8 +43,7 @@ export default class EditPersonPane extends PaneBase {
     renderPaneContent(data) {
         if (data.personItem) {
             if (data.personItem.isPending) {
-                // TODO: Show proper loading indicator?
-                return <h1>Loading</h1>;
+                return <LoadingIndicator/>;
             }
             else {
                 return [
@@ -50,8 +51,9 @@ export default class EditPersonPane extends PaneBase {
                         person={ data.personItem.data }
                         onSubmit={ this.onSubmit.bind(this) }/>,
 
-                    <input ref="submitButton" type="button" value="Delete"
-                        onClick={ this.onDeleteClick.bind(this) }/>
+                    <Button label="Delete Person"
+                        onClick={ this.onDeleteClick.bind(this) }
+                        className="EditPersonPane-deleteButton"/>
                 ];
             }
         }
@@ -60,6 +62,14 @@ export default class EditPersonPane extends PaneBase {
             return <h1>HELO</h1>;
             return null;
         }
+    }
+
+    renderPaneFooter(data) {
+        return (
+            <Button className="EditPersonPane-saveButton"
+                label="Save Changes"
+                onClick={ this.onSubmit.bind(this) }/>
+        );
     }
 
     onSubmit(ev) {

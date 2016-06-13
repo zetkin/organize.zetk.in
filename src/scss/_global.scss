@@ -40,7 +40,7 @@ ul {
     @include list-unstyled;
 }
 
-button, input[type="button"], a.btn {
+button, input[type="button"], a.btn, a.Button {
     @include inline-button;
 
     &.add{

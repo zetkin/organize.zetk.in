@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import ActionForm from '../forms/ActionForm';
+import Button from '../misc/Button';
 import { getListItemById } from '../../utils/store';
 import { retrieveAction, updateAction } from '../../actions/action';
 
@@ -48,6 +49,14 @@ export default class EditActionPane extends PaneBase {
             // TODO: Show loading indicator?
             return null;
         }
+    }
+
+    renderPaneFooter(data) {
+        return (
+            <Button className="EditActionPane-saveButton"
+                label="Save Changes"
+                onClick={ this.onSubmit.bind(this) }/>
+        );
     }
 
     onSubmit(ev) {

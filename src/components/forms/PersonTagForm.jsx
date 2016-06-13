@@ -22,8 +22,6 @@ export default class PersonTagForm extends React.Component {
                     initialValue={ tag.title }/>
                 <TextArea label="Information" name="info_text"
                     initialValue={ tag.info_text }/>
-
-                <input key="submit" type="submit"/>
             </Form>
         );
     }

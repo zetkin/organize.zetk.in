@@ -31,12 +31,12 @@ export default class CallList extends React.Component {
 
         let columns = [
             {
-                'target.name': 'Target',
                 'caller.name': 'Caller',
+                'state': 'Status',
             },
             {
+                'target.name': 'Target',
                 'allocation_time': 'Time',
-                'state': 'Status',
             }
         ];
 

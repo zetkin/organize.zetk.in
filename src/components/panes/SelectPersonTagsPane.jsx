@@ -50,8 +50,6 @@ export default class SelectPersonTagsPane extends PaneBase {
             <TagCloud key="selectedTags" tags={ tagsSelected }
                 showRemoveButtons={ true }
                 onRemove={ this.onRemove.bind(this) }/>,
-            <button key="saveButton" className="SelectPeoplePane-saveButton"
-                onClick={ this.onClickSave.bind(this) }>Save</button>,
             <h3 key="availableHeader">Select tags to be added</h3>,
             <button key="createLink" className="SelectPeoplePane-createButton"
                 onClick={ this.onClickCreate.bind(this) }>
@@ -61,6 +59,13 @@ export default class SelectPersonTagsPane extends PaneBase {
                 onEdit={ this.onEdit.bind(this) }
                 onSelect={ this.onSelect.bind(this) }/>,
         ];
+    }
+
+    renderPaneFooter(data) {
+        return (
+             <button key="saveButton" className="SelectPeoplePane-saveButton"
+                onClick={ this.onClickSave.bind(this) }>Save</button>
+        );
     }
 
     onClickSave() {

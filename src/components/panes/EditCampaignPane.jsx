@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import CampaignForm from '../forms/CampaignForm';
+import Button from '../misc/Button';
 import { getListItemById } from '../../utils/store';
 import { retrieveCampaign, updateCampaign, deleteCampaign }
     from '../../actions/campaign';
@@ -40,14 +41,23 @@ export default class EditCampaignPane extends PaneBase {
                     campaign={ data.campaignItem.data }
                     onSubmit={ this.onSubmit.bind(this) }/>,
 
-                <input key="delete" type="button" value="Delete"
-                    onClick={ this.onDeleteClick.bind(this) }/>
+                <Button label="Delete Campaign"
+                    onClick={ this.onDeleteClick.bind(this) }
+                    className="EditCampaignPane-deleteButton"/>
             ];
         }
         else {
             // TODO: Show loading indicator?
             return null;
         }
+    }
+
+    renderPaneFooter(data) {
+        return (
+            <Button className="EditCampaignPane-saveButton"
+                label="Save Changes"
+                onClick={ this.onSubmit.bind(this) }/>
+        );
     }
 
     onSubmit(ev) {

@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import LocationForm from '../forms/LocationForm';
+import Button from '../misc/Button';
 import { retrieveLocation, updateLocation, deleteLocation,
     setPendingLocation, clearPendingLocation } from '../../actions/location';
 import { getListItemById } from '../../utils/store';
 
 
 @connect(state => state)
-export default class LocationPane extends PaneBase {
+export default class EditLocationPane extends PaneBase {
     componentDidMount() {
         let locId = this.props.params[0];
         let locItem = getListItemById(this.props.locations.locationList, locId);
@@ -45,14 +46,23 @@ export default class LocationPane extends PaneBase {
             return [
                 <LocationForm key="form" ref="form" loc={ data.locItem.data }
                     onSubmit={ this.onSubmit.bind(this) }/>,
-                <input key="delete" type="button" value="Delete"
-                    onClick={ this.onDeleteClick.bind(this) }/>
+                <Button label="Delete Location"
+                    onClick={ this.onDeleteClick.bind(this) }
+                    className="EditLocationPane-deleteButton"/>
             ];
         }
         else {
             // TODO: Show loading indicator?
             return null;
         }
+    }
+
+    renderPaneFooter(data) {
+        return (
+            <Button className="EditLocationPane-saveButton"
+                label="Save Changes"
+                onClick={ this.onSubmit.bind(this) }/>
+        );
     }
 
     onSubmit(ev) {

@@ -1,4 +1,9 @@
 .SelectPersonTagsPane {
+
+    .TagCloud {
+        min-height: 32px;
+    }
+
     .TagCloudItem {
         cursor: pointer;
     }

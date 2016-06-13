@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import CallAssignmentForm from '../forms/CallAssignmentForm';
+import Button from '../misc/Button';
 import { getListItemById } from '../../utils/store';
 import { retrieveCallAssignment, createCallAssignment }
     from '../../actions/callAssignment';
@@ -43,6 +44,14 @@ export default class AddCallAssignmentPane extends PaneBase {
             // The pane is referencing a draft that no longer exists
             this.closePane();
         }
+    }
+
+    renderPaneFooter(data) {
+        return (
+            <Button className="AddCallAssignmentPane-saveButton"
+                label="Create Call Assignment"
+                onClick={ this.onSubmit.bind(this) }/>
+        );
     }
 
     onSubmit(ev) {

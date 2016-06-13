@@ -9,7 +9,7 @@
 
     .PersonPane-info {
         margin: 1em 0 0;
-        font-size: 1.4em;        
+        font-size: 1.4em;
 
         li {
             margin-bottom: 0.8em;
@@ -18,7 +18,7 @@
                 margin-right: 0.5em;
             }
         }
-        
+
         .PersonPane-emptyField {
             color: lighten($c-text, 60);
         }
@@ -35,7 +35,7 @@
                 @include icon($fa-var-phone);
             }
         }
-        
+
         .PersonPane-address {
             &:before {
                 @include icon($fa-var-home);
@@ -51,7 +51,7 @@
         }
 
     }
-    
+
     a:hover {
         cursor: pointer;
         text-decoration: underline;

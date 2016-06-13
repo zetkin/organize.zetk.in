@@ -16,8 +16,6 @@ export default class LocationForm extends React.Component {
 
                 <TextArea label="Info text" name="info_text"
                     initialValue={ loc.info_text }/>
-
-                <input type="submit"/>
             </Form>
         );
     }

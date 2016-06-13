@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import Button from '../misc/Button';
 import LocationMap from '../misc/LocationMap';
 import PaneBase from './PaneBase';
 import LocationForm from '../forms/LocationForm';
@@ -25,18 +26,25 @@ export default class AddLocationPane extends PaneBase {
             width: '100%'
         }
 
-        return [ 
+        return [
             <h3>1. Click on map to add location position</h3>,
-            <LocationMap 
-                    style={ style } 
+            <LocationMap
+                    style={ style }
                     pendingLocation={ pendingLocation }
                     onLocationChange={ this.onUpdatePosition.bind(this) }
                     locationsForBounds={ locations }
                     onMapClick={ this.onUpdatePosition.bind(this) } />,
             <h3>2. Enter information about the location and press save</h3>,
-            <LocationForm key="form" ref="form" loc={ data.loc }
-                onSubmit={ this.onSubmit.bind(this) }/>
+            <LocationForm key="form" ref="form" loc={ data.loc }/>
         ]
+    }
+
+    renderPaneFooter(data) {
+        return (
+            <Button className="EditLocationWithMapPane-saveButton"
+                label="Save"
+                onClick={ this.onSubmit.bind(this) }/>
+        );
     }
 
     onUpdatePosition (position) {

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
+import Button from '../misc/Button';
 import PeopleList from '../misc/peoplelist/PeopleList';
 import { getListItemById } from '../../utils/store';
 import { retrievePeople } from '../../actions/person';
@@ -58,12 +59,18 @@ export default class SelectPeoplePane extends PaneBase {
             <h3 key="selectedHeader">{ selectedHeader }</h3>,
             <PeopleList key="selectedList" people={ peopleSelected }
                 onSelect={ this.onDeselect.bind(this) }/>,
-            <button key="saveButton" className="SelectPeoplePane-saveButton"
-                onClick={ this.onClickSave.bind(this) }>Save</button>,
             <h3 key="availableHeader">Add people to selection</h3>,
             <PeopleList key="availableList" people={ peopleAvailable }
                 onSelect={ this.onSelect.bind(this) }/>,
         ];
+    }
+
+    renderPaneFooter(data) {
+        return (
+            <Button className="SelectPeoplePane-saveButton"
+                label="Add Callers"
+                onClick={ this.onClickSave.bind(this) }/>
+        );
     }
 
     onClickSave() {

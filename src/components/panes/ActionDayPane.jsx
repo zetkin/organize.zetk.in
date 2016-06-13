@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
+import Button from '../misc/Button';
 import ActionList from '../misc/actionlist/ActionList';
 import { retrieveActions } from '../../actions/action';
 import { moveActionParticipant } from '../../actions/participant';
@@ -28,16 +29,29 @@ export default class ActionDayPane extends PaneBase {
         let actions = actionList.items.map(i => i.data).filter(a =>
             moment(a.start_time).isSame(date, 'day'));
 
-        return [
-            <input key="prevBtn" type="button" value="<"
-                onClick={ this.onClickPrev.bind(this) }/>,
-            <input key="nextBtn" type="button" value=">"
-                onClick={ this.onClickNext.bind(this) }/>,
+        return (
             <ActionList key="actionList" actions={ actions }
                 dispatch={ this.props.dispatch }
                 participants={ this.props.participants }
                 onMoveParticipant={ this.onMoveParticipant.bind(this) }
                 onActionOperation={ this.onActionOperation.bind(this) }/>
+        );
+    }
+
+    renderPaneFooter(data) {
+        const d = moment(this.getParam(0));
+        let dateStr = d.format('YYYY-MM-DD');
+
+        return [
+            <Button label=""
+                onClick={ this.onClickPrev.bind(this) }
+                className="ActionDayPane-prevButton"/>,
+            <div className="ActionDayPane-dateLabel">
+            { dateStr }
+            </div>,
+            <Button label=""
+                onClick={ this.onClickNext.bind(this) }
+                className="ActionDayPane-nextButton"/>,
         ];
     }
 

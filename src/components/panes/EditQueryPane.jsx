@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import QueryForm from '../forms/QueryForm';
+import Button from '../misc/Button';
 import FilterList from '../filters/FilterList';
 import { getListItemById } from '../../utils/store';
 import {
@@ -17,6 +18,8 @@ import {
 @connect(state => ({ queries: state.queries }))
 export default class EditQueryPane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         let queryId = this.getParam(0);
         this.props.dispatch(retrieveQuery(queryId));
     }
@@ -56,8 +59,9 @@ export default class EditQueryPane extends PaneBase {
 
     renderPaneFooter(data) {
         return (
-            <button onClick={ this.onSubmit.bind(this) }>
-                Submit</button>
+            <Button label="Save Query"
+                onClick={ this.onSubmit.bind(this) }
+                className="EditQueryPane-saveButton"/>
         );
     }
 

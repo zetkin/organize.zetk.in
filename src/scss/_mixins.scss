@@ -71,6 +71,8 @@
     @if $icon {
         &:before {
             @include icon($icon);
+            line-height: 0;
+            height: 0;
         }
     }
 }
@@ -87,6 +89,8 @@
         padding-left: .3em;
         &:before {
             @include icon($icon);
+            line-height: 0;
+            height: 0;
         }
     }
 }
