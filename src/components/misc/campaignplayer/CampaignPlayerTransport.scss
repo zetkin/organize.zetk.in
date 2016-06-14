@@ -2,9 +2,7 @@
     background-color: white;
     width: 100%;
     height: 4em;
-    margin: 1.5em 0;
-
-    box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
+    @include card;
 
     .CampaignPlayerTransport-time {
         position: absolute;
@@ -17,11 +15,11 @@
     .CampaignPlayerTransport-button {
         width: 5em;
         height: 5em;
-        margin: -0.5em 0 0 1em;
+        margin: -1em 0 0 0.5em;
         border-radius: 50%;
         border: none;
         cursor: pointer;
-        background-color: $c-ui-darker;
+        background-color: $c-brand-confirm;
 
         &:focus {
             outline: 0;
@@ -29,10 +27,11 @@
         &.CampaignPlayerTransport-playButton {
             &::before{
                 @include icon($fa-var-play);
-                    margin-left: .25em;
+                    margin-left: .1em;
             }
         }
         &.CampaignPlayerTransport-stopButton {
+            background-color: $c-brand-delete;
             &::before{
                 @include icon($fa-var-stop);
             }

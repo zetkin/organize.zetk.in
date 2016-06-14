@@ -2,9 +2,11 @@
     .CampaignPlayerTransport {
         position: absolute;
         z-index: 2;
-        bottom: 20px;
-        left: 40px;
-        right: 40px;
+        bottom: 40px;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        width: 90%;
     }
 
     .CampaignPlayer-heatmap {
