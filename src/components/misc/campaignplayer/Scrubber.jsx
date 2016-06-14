@@ -50,8 +50,11 @@ export default class Scrubber extends React.Component {
 
         function onMouseMove(ev) {
             const bounds = scrubber.getBoundingClientRect();
-            const x = ev.clientX - bounds.left;
-            const f = (x / scrubber.offsetWidth);
+            const buttonCenter = scrubber.children[0].clientWidth / 2;
+            const x = ev.clientX - bounds.left - buttonCenter;
+            let f = (x / scrubber.offsetWidth);
+            if (f < 0) f = 0;
+            if (f > 1) f = 1;
 
             component.setState({
                 scrubPos: f
