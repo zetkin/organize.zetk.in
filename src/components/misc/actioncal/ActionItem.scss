@@ -1,4 +1,5 @@
 .ActionItem{
+    position: relative;
     padding: 0.8em 1em;
     margin: 0 0 0.1em;
     background-color: white;
@@ -8,6 +9,37 @@
     &:hover {
         background-color: darken(white, 2);
     }
+
+    .location {
+        display: block;
+        font-size: 1.3em;
+        font-weight: bold;
+        margin: 0 0 0.4em;
+
+        &::before {
+            @include icon($fa-var-map-marker);
+            display: block;
+            float: left;
+            width: 0.5em;
+            height: 0.8em;
+            margin: 0.2em 0.4em 0 0;
+            font-size: .8em;
+            line-height: 0.9;
+        }
+    }
+
+    .activity {
+        display: inline-block;
+        font-size: 1.1em;
+    }
+
+    .time {
+        display: inline-block;
+        font-size: 1.1em;
+        margin-right: 0.5em;
+        float: left;
+    }
+
 }
 // TRANSITIONS
 .ActionItem-enter {
