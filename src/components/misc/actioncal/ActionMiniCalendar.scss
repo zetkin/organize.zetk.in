@@ -13,10 +13,18 @@
         height: 100%;
         margin-left: 0.1em;
         vertical-align: top;
+        border: 0;
+
+        &:hover {
+            background-color: darken(#eee, 2);
+        }
 
         &.today {
-            border-left: 1px solid #ddd;
-            border-right: 1px solid #ddd;
+            background-color: $c-brand-confirm;
+            h4 {
+                color: white;
+                border:none;
+            }
 
             hr {
                 color: #333;
@@ -27,6 +35,9 @@
             margin: 0.5em 0;
             color: #999;
             transition: color 0.3s;
+            padding: 0.3em;
+            background-color: inherit;
+            box-shadow: none;
 
             &:hover {
                 color: #666;
@@ -38,6 +49,7 @@
             display: block;
             font-size: 0.9em;
             text-align: center;
+            padding: 0;
         }
 
         .weekday {
@@ -48,6 +60,7 @@
             display: none;
         }
     }
+
     .ActionDay-sat,
     .ActionDay-sun {
         background-color: #eaeaea;
@@ -56,10 +69,12 @@
     .ActionDay-monthBegin {
         border-left: 1px solid #ccc;
     }
+
     .ActionItem,
     .ActionDayOverflow {
         position: relative;
         height: 2em;
+        box-shadow: none;
 
         span {
             display: none;
@@ -76,6 +91,7 @@
                 opacity: 0.5;
             }
         }
+
         &::after{
             content: "";
             position: absolute;
@@ -84,10 +100,11 @@
             bottom: 0;
             left: 0;
             opacity: 0;
-            background-color: #A1D490;
+            background-color: #51D0B3;
             transition: opacity 0.4s ease-in;
         }
     }
+
     .ActionDay-pseudoitem {
         height: 2em;
     }

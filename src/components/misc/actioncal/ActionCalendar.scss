@@ -1,5 +1,20 @@
 .ActionCalendar {
 
+    .ActionDay {
+        h4 {
+            &:hover {
+                &:after {
+                    @include icon($fa-var-search-plus);
+                    position: absolute;
+                    right: 0;
+                }
+            }
+        }
+        &.today h4 {
+            background-color: $c-brand-confirm;
+            color: white;
+        }
+    }
     .ActionItem:after {
         @include icon($fa-var-ellipsis-v);
         font-size: 2em;

@@ -19,13 +19,6 @@
             font-size: 1.2em;
             padding-right: 0.5em;
         }
-        &:hover {
-            &:after {
-                @include icon($fa-var-search-plus);
-                position: absolute;
-                right: 0;
-            }
-        }
     }
 
     .cloneHint {
@@ -67,10 +60,6 @@
 
         &:last-child {
             border-right: 1px solid #f4f4f4;
-        }
-
-        &.today h4 {
-            border: 1px solid #aaa;
         }
 
         .cloneHint {
