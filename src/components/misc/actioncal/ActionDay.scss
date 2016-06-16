@@ -21,14 +21,16 @@
     border-width: 0;
     cursor: pointer;
     text-align: center;
+    color: #aaa;
 
     transition: opacity 0.3s 0.1s;
 
     &::before {
-        content: "+";
-        color: #aaa;
-        font-size: 1.5em;
-        font-weight: bold;
+        @include icon($fa-var-plus);
+    }
+
+    &:hover {
+        background-color: darken(#eee, 1);
     }
 }
 @include medium-screen {

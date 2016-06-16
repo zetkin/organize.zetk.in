@@ -1,9 +1,13 @@
 .ActionItem{
-    padding: 0.5em 1em;
+    padding: 0.8em 1em;
     margin: 0 0 0.1em;
     background-color: white;
-    box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
+    box-shadow: 0 0 0.3em rgba(0,0,0,0.1);
     cursor: pointer;
+
+    &:hover {
+        background-color: darken(white, 2);
+    }
 }
 // TRANSITIONS
 .ActionItem-enter {

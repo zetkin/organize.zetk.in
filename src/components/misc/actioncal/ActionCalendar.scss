@@ -1,19 +1,32 @@
 .ActionCalendar{
+
     .ActionDay {
         position: relative;
-        border-left: 1px solid #f4f4f4;
+        border-left: 1px solid #F1F1F1;
         padding-bottom: 2em;
+        color: darken($c-ui-darker, 10);
+
+        &:hover {
+            background-color: darken($c-ui-bg, 1);
+        }
 
         h4 {
-            margin: 0 0 0.1em;
-            padding: 0.5em 1em;
+            margin:0;
+            padding: 0.8em 1em;
             background-color: white;
             color: #666;
             box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
 
             .date {
-                font-size: 1.1em;
+                font-size: 1.2em;
                 padding-right: 0.5em;
+            }
+            &:hover {
+                &:after {
+                    @include icon($fa-var-search-plus);
+                    position: absolute;
+                    right: 0;
+                }
             }
         }
         .cloneHint {
@@ -25,9 +38,9 @@
 
         .location {
             display: block;
-            font-size: 1.2em;
+            font-size: 1.3em;
             font-weight: bold;
-            margin: 0 0 0.2em;
+            margin: 0 0 0.4em;
 
             &::before {
                 @include icon($fa-var-map-marker);
@@ -54,16 +67,14 @@
         }
 
         &::after {
-            @include icon($fa-var-bars);
-            font-size: 1.6em;
-            display: block;
+            @include icon($fa-var-ellipsis-v);
+            font-size: 2em;
+            width: 0.5em;
             position: absolute;
             color: #eee;
-            height: auto;
-            top: 0.35em;
-            bottom: 0.35em;
+            top: calc(50% - 0.8em);
             right: 0.25em;
-            cursor: move;
+            cursor: -webkit-grab;
         }
     }
 }
@@ -74,9 +85,10 @@
             @include flex-container;
 
             h2 {
-                font-size: 1em;
+                font-size: 1.2em;
                 font-weight: normal;
                 width: 4%;
+                margin-top: 0.5em;
             }
 
             &::after {
@@ -96,19 +108,6 @@
                 border: 1px solid #aaa;
             }
 
-            h4 {
-                margin: 0 0 0.1em;
-                padding: 0.5em 1em;
-                background-color: white;
-                color: #666;
-                box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
-
-                .date {
-                    font-size: 1.1em;
-                    padding-right: 0.5em;
-                }
-            }
-
             .cloneHint {
                 display: block;
                 position: absolute;
@@ -120,12 +119,8 @@
 
                 code {
                     @include key-reference
+                    background-color: darken(#eee, 3);
                 }
-            }
-        }
-        .ActionItem {
-            &::after {
-                font-size: 1em;
             }
         }
     }
