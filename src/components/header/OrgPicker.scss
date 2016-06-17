@@ -1,17 +1,18 @@
 .OrgPicker-label {
-    margin: 1em 0 0.25em;
-    font-size: 0.8em;
-    color: #888;
+    font-size: 1em;
 }
 
 .OrgPicker-list {
     @include list-unstyled;
-
+    margin-left: 1.7em;
+    font-size: 0.8em;
 }
 
 .OrgPicker-item {
-    font-weight: bold;
     cursor: pointer;
     margin: 0.5em 0;
-    color: black;
+
+    &:hover {
+        color: $c-brand-main;
+    }
 }

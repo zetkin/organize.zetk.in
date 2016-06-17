@@ -30,8 +30,8 @@ export default class UserMenu extends React.Component {
                         <span className="UserMenu-org">{ activeOrg.title }</span>
                     </div>
                     <ul>
-                        <li><a href="/logout">Log out</a></li>
-                        <li><a href={ accountUrl }>Account settings</a></li>
+                        <li><a className="UserMenu-logout" href="/logout">Log out</a></li>
+                        <li><a className="UserMenu-account" href={ accountUrl }>Account settings</a></li>
                         <li>< OrgPicker memberships={ memberships } activeOrg={ activeOrg }/></li>
                     </ul>
                 </div>

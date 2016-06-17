@@ -34,8 +34,21 @@
     }
     li a {
         text-decoration: none;
-        color: black;
-        font-weight: bold;
+        color: lighten($c-text,10);
+
+        &:hover {
+            color: $c-brand-main;
+        }
+
+    }
+    .UserMenu-logout:before {
+        @include icon($fa-var-power-off);
+    }
+    .UserMenu-account:before {
+        @include icon($fa-var-user);
+    }
+    .UserMenu-activeOrg:before {
+        @include icon($fa-var-sitemap);
     }
 }
 .UserMenu-name,
@@ -72,7 +85,7 @@
 
         &:hover {
             &::before {
-                opacity: 0.2;
+                opacity: 0.1;
                 visibility: visible;
             }
 
@@ -98,10 +111,10 @@
         background-color: transparent;
 
 
-        ul {
+        > ul {
             display: none;
+            @include card;
             padding: 0.5em;
-            background-color: white;
             margin-top: 0.7em;
         }
     }
