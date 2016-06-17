@@ -21,11 +21,15 @@
 .UserMenu-info{
     display: none;
     margin-top: 3em;
+    margin-right: -0.6em;
     padding: 0.5em;
     color:white;
+    @include card;
+    // background-color: white;
 
     ul {
         margin-top: 0.7em;
+        font-size: 0.9em;
     }
     li {
         list-style-type: none;
@@ -53,7 +57,7 @@
 }
 .UserMenu-name,
 .UserMenu-org{
-    text-align: right;
+    text-align: center;
     display: block;
 }
 .UserMenu-name{
@@ -107,19 +111,25 @@
 
         display: block;
         margin-top: 0;
+        margin-right: 0.3em;
         padding: 0;
         background-color: transparent;
-
+        color: white;
+        box-shadow: none;
 
         > ul {
             display: none;
             @include card;
             padding: 0.5em;
-            margin-top: 0.7em;
+            margin-top: 0.8em;
         }
     }
     .UserMenu-user{
         width: 14em;
         padding: 0.5em 3.5em 0.45em 0;
+    }
+    .UserMenu-name,
+    .UserMenu-org {
+        text-align: right;
     }
 }
