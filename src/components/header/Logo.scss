@@ -1,6 +1,6 @@
 .Logo {
     position: absolute;
-    top: 0;
+    top: 0.5em;
     left: 0;
     margin: 0;
     color: #fff;
@@ -43,7 +43,7 @@
 
 @include medium-screen {
     .Logo {
-        left: 0.4em;
+        left: 0.5em;
 
         a{
             color: inherit;
