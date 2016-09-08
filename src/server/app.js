@@ -17,11 +17,10 @@ import { setPanesFromUrlPath } from '../actions/view';
 
 
 const authOpts = {
-    // TODO: Externalize these options
-    loginUrl: 'http://login.zetkin',
+    loginUrl: process.env.ZETKIN_LOGIN_URL,
     app: {
-        id: 'a3',
-        key: 'def456',
+        id: process.env.ZETKIN_APP_ID,
+        key: process.env.ZETKIN_APP_KEY,
     }
 };
 
