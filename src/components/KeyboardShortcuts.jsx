@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { beginSearch } from '../actions/search';
 import { gotoSection } from '../actions/view';
 
-import { SECTIONS } from '../sections';
+import { SECTIONS } from './sections';
 
 
 @connect(state => ({ view: state.view }))
