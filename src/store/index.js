@@ -1,6 +1,5 @@
 import { combineReducers, compose, applyMiddleware, createStore } from 'redux';
 import promiseMiddleware from 'redux-promise-middleware';
-import thunk from 'redux-thunk';
 
 import actions from './actions';
 import activities from './activities';
@@ -23,7 +22,7 @@ import view from './view';
 import { urlMiddleware } from './middleware/url';
 
 
-export const appReducer = combineReducers({
+const appReducer = combineReducers({
     actions,
     activities,
     callAssignments,
@@ -43,18 +42,29 @@ export const appReducer = combineReducers({
     view,
 });
 
-let middleware = [
-    urlMiddleware,
-    promiseMiddleware(),
-    thunk,
-];
+export const configureStore = (initialState, z) => {
+    let thunkWithZ = store => next => action => {
+        if (typeof action === 'function') {
+            return action({ ...store, z });
+        }
 
-let devTools = f => f;
-if (typeof window === 'object' && window.devToolsExtension) {
-    devTools = window.devToolsExtension();
-}
+        return next(action);
+    };
 
-export const configureStore = compose(
-    applyMiddleware(...middleware),
-    devTools,
-)(createStore);
+    let middleware = [
+        urlMiddleware,
+        promiseMiddleware(),
+        thunkWithZ,
+    ];
+
+    let devTools = f => f;
+    if (typeof window === 'object' && window.devToolsExtension) {
+        devTools = window.devToolsExtension();
+    }
+    let createWithMiddleware = compose(
+        applyMiddleware(...middleware),
+        devTools,
+    )(createStore);
+
+    return createWithMiddleware(appReducer, initialState);
+};

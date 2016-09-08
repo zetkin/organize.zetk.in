@@ -16,7 +16,7 @@ router.all(/.*/, function(req, res, next) {
     // TODO: Don't do this. Use separate Z instances in actions, like req.z
     Z.setTicket(req.z.getTicket());
 
-    req.store = configureStore(appReducer);
+    req.store = configureStore(undefined, req.z);
 
     let a0 = getUserInfo();
     req.store.dispatch(a0);
@@ -45,30 +45,41 @@ router.all(/.*/, function(req, res, next) {
         });
 });
 
+
 function waitForActions(execActions) {
-    return function(req, res, next) {
+    return (req, res, next) => {
         let thunksOrActions = execActions(req);
         let promises = [];
 
         for (let i = 0; i < thunksOrActions.length; i++) {
             let thunkOrAction = thunksOrActions[i];
             if (typeof thunkOrAction === 'function') {
-                thunkOrAction(function(action) {
-                    thunkOrAction = action;
-                    req.store.dispatch(action);
-                }, req.store.getState);
+                // Invoke thunk method, passing an augmented store where the
+                // dispatch method has been replaced with a method that also
+                // saves the dispatched action to be inspected for promises.
+                thunkOrAction({
+                    ...req.store,
+                    z: req.z,
+                    dispatch: function(action) {
+                        thunkOrAction = action;
+                        req.store.dispatch(thunkOrAction);
+                    }
+                });
             }
 
             if (thunkOrAction.payload && thunkOrAction.payload.promise) {
                 promises.push(thunkOrAction.payload.promise);
             }
+
+            req.store.dispatch(thunkOrAction);
         }
 
-        Promise.all(promises).then(function() {
-            next();
-        });
-    }
+        Promise.all(promises)
+            .then(() => next())
+            .catch(() => next());
+    };
 }
+
 
 router.get([/people$/, /people\/list$/], waitForActions(req => [
     retrievePeople()

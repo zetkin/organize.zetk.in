@@ -11,7 +11,7 @@ import Z from 'zetkin';
 
 import polyfills from '../utils/polyfills';
 import App from '../components/App';
-import { appReducer, configureStore } from '../store';
+import { configureStore } from '../store';
 import { subscribeToUrlChanges } from '../store/middleware/url';
 
 
@@ -31,7 +31,7 @@ window.onload = function() {
     let stateElem = document.getElementById('App-initialState');
     let stateJson = stateElem.innerText || stateElem.textContent;
     let initialState = JSON.parse(stateJson);
-    let store = configureStore(appReducer, initialState);
+    let store = configureStore(initialState, Z);
     let props = { initialState, }
 
     // Route when history state changes
