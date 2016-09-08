@@ -19,13 +19,13 @@ router.all(/.*/, function(req, res, next) {
     req.store = configureStore(undefined, req.z);
 
     let a0 = getUserInfo();
-    req.store.dispatch(a0);
 
-    a0.payload.promise
+    // TODO: Come up with some better way to do this?
+    a0({ ...req.store, z: req.z })
+        .payload.promise
         .then(function(result) {
             let a1 = getUserMemberships();
-            req.store.dispatch(a1);
-            return a1.payload.promise;
+            return a1({ ...req.store, z: req.z }).payload.promise;
         })
         .then(function(result) {
             let userStore = req.store.getState().user;
