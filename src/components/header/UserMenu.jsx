@@ -10,7 +10,7 @@ export default class UserMenu extends React.Component {
     render() {
         let userStore = this.props.user;
 
-        var accountUrl = '//accounts.zetkin'; //TODO: Use env var ZETKIN_DOMAIN;
+        var accountUrl = '//account.zetkin'; //TODO: Use env var ZETKIN_DOMAIN;
 
         const membership = userStore.activeMembership;
         const activeOrg = membership.organization;
