@@ -1,16 +1,14 @@
-import Z from 'zetkin';
-
 import * as types from '.';
 
 
 export function retrieveActionParticipants(actionId) {
-    return function(dispatch, getState) {
+    return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
         dispatch({
             type: types.RETRIEVE_ACTION_PARTICIPANTS,
             meta: { actionId },
             payload: {
-                promise: Z.resource('orgs', orgId, 'actions', actionId,
+                promise: z.resource('orgs', orgId, 'actions', actionId,
                     'participants').get(),
             }
         });
@@ -18,13 +16,13 @@ export function retrieveActionParticipants(actionId) {
 }
 
 export function addActionParticipant(personId, actionId) {
-    return function(dispatch, getState) {
+    return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
         dispatch({
             type: types.ADD_ACTION_PARTICIPANT,
             meta: { actionId, personId },
             payload: {
-                promise: Z.resource('orgs', orgId, 'actions', actionId,
+                promise: z.resource('orgs', orgId, 'actions', actionId,
                     'participants', personId).put()
             }
         });
@@ -45,17 +43,17 @@ export function moveActionParticipant(personId, oldActionId, newActionId) {
 }
 
 export function executeActionParticipantMoves(moves) {
-    return function(dispatch, getState) {
+    return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
         let apiCalls = [];
 
         // TODO: Make some server-side batch executer for this?
         for (let i = 0; i < moves.length; i++) {
             var move = moves[i];
-            apiCalls.push(Z.resource('orgs', orgId, 'actions',
+            apiCalls.push(z.resource('orgs', orgId, 'actions',
                 move.from, 'participants', move.person)
                 .meta('move', move).del());
-            apiCalls.push(Z.resource('orgs', orgId, 'actions',
+            apiCalls.push(z.resource('orgs', orgId, 'actions',
                 move.to, 'participants', move.person).put());
         }
 
