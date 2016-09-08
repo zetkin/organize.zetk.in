@@ -7,10 +7,8 @@ import expressWs from 'express-ws';
 import http from 'http';
 import path from 'path';
 import { Provider } from 'react-redux';
-import Z from 'zetkin';
 
 import dataRouter from './datarouter';
-import apiProxy from './apiproxy';
 import search from './search';
 import widgets from './widgets';
 import App from '../components/App';

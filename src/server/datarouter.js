@@ -1,5 +1,4 @@
 import express from 'express';
-import Z from 'zetkin';
 
 import { appReducer, configureStore } from '../store';
 import { retrieveActions, retrieveAction } from '../actions/action';
@@ -13,9 +12,6 @@ import { getUserInfo, getUserMemberships } from '../actions/user';
 var router = express.Router();
 
 router.all(/.*/, function(req, res, next) {
-    // TODO: Don't do this. Use separate Z instances in actions, like req.z
-    Z.setTicket(req.z.getTicket());
-
     req.store = configureStore(undefined, req.z);
 
     let a0 = getUserInfo();
