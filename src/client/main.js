@@ -18,7 +18,7 @@ import { subscribeToUrlChanges } from '../store/middleware/url';
 window.onload = function() {
     // Configure API to use server
     Z.configure({
-        host: 'api.zetkin',
+        host: 'api.' + process.env.ZETKIN_DOMAIN,
         port: 80,
         ssl: false
     });

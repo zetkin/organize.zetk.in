@@ -4,7 +4,8 @@ import React from 'react';
 export default class Avatar extends React.Component {
     render() {
         const person = this.props.person;
-        const src = '//avatars.zetkin/avatar/' + person.id;
+        const avatarDomain = '//avatars.' + process.env.ZETKIN_DOMAIN;
+        const src = avatarDomain + '/avatar/' + person.id;
         const alt = (person.first_name && person.last_name)?
             person.first_name + ' ' + person.last_name :
             person.name? person.name : '';
