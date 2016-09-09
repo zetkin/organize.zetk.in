@@ -1,5 +1,4 @@
 import express from 'express';
-import Z from 'zetkin';
 
 import { appReducer, configureStore } from '../store';
 import { retrieveActions, retrieveAction } from '../actions/action';
@@ -13,16 +12,16 @@ import { getUserInfo, getUserMemberships } from '../actions/user';
 var router = express.Router();
 
 router.all(/.*/, function(req, res, next) {
-    req.store = configureStore(appReducer);
+    req.store = configureStore(undefined, req.z);
 
     let a0 = getUserInfo();
-    req.store.dispatch(a0);
 
-    a0.payload.promise
+    // TODO: Come up with some better way to do this?
+    a0({ ...req.store, z: req.z })
+        .payload.promise
         .then(function(result) {
             let a1 = getUserMemberships();
-            req.store.dispatch(a1);
-            return a1.payload.promise;
+            return a1({ ...req.store, z: req.z }).payload.promise;
         })
         .then(function(result) {
             let userStore = req.store.getState().user;
@@ -42,30 +41,41 @@ router.all(/.*/, function(req, res, next) {
         });
 });
 
+
 function waitForActions(execActions) {
-    return function(req, res, next) {
+    return (req, res, next) => {
         let thunksOrActions = execActions(req);
         let promises = [];
 
         for (let i = 0; i < thunksOrActions.length; i++) {
             let thunkOrAction = thunksOrActions[i];
             if (typeof thunkOrAction === 'function') {
-                thunkOrAction(function(action) {
-                    thunkOrAction = action;
-                    req.store.dispatch(action);
-                }, req.store.getState);
+                // Invoke thunk method, passing an augmented store where the
+                // dispatch method has been replaced with a method that also
+                // saves the dispatched action to be inspected for promises.
+                thunkOrAction({
+                    ...req.store,
+                    z: req.z,
+                    dispatch: function(action) {
+                        thunkOrAction = action;
+                        req.store.dispatch(thunkOrAction);
+                    }
+                });
             }
 
             if (thunkOrAction.payload && thunkOrAction.payload.promise) {
                 promises.push(thunkOrAction.payload.promise);
             }
+
+            req.store.dispatch(thunkOrAction);
         }
 
-        Promise.all(promises).then(function() {
-            next();
-        });
-    }
+        Promise.all(promises)
+            .then(() => next())
+            .catch(() => next());
+    };
 }
+
 
 router.get([/people$/, /people\/list$/], waitForActions(req => [
     retrievePeople()

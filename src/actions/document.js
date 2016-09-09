@@ -19,7 +19,7 @@ export function saveTextDocument(id, content) {
 }
 
 export function finishTextDocument(id) {
-    return function(dispatch, getState) {
+    return ({ dispatch, getState }) => {
         let docList = getState().documents.docList;
         let doc = getListItemById(docList, id);
         doc.data.doneCallback(doc.data.content);

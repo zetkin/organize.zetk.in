@@ -30,7 +30,7 @@ export function removeFromSelection(id, objId) {
 }
 
 export function finishSelection(id) {
-    return function(dispatch, getState) {
+    return ({ dispatch, getState }) => {
         let selectionList = getState().selections.selectionList;
         let selection = getListItemById(selectionList, id);
 
