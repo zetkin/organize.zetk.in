@@ -39,22 +39,22 @@ export default class ImporterTableSet extends React.Component {
 
         return (
             <div className="ImporterTableSet">
-                <ul className="ImporterTableSet-tabs">
+                <select className="importerTableSet-tableSelect"
+                    onChange={ this.onChangeTable.bind(this) }>
                 { tableSet.tableList.items.map(item => (
-                    <li key={ item.data.id } className="ImporterTableSet-tab"
-                        onClick={ this.onClickTab.bind(this, item.data) }>
+                    <option key={ item.data.id } value={ item.data.id }>
                         { item.data.name }
-                    </li>
+                    </option>
                 )) }
-                </ul>
+                </select>
                 { table }
             </div>
         );
     }
 
-    onClickTab(table) {
+    onChangeTable(ev) {
         this.setState({
-            selectedTableId: table.id,
+            selectedTableId: ev.target.value,
         });
     }
 }
