@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import PaneBase from '../../panes/PaneBase';
+import Button from '../../misc/Button';
 import LocationMap from '../../misc/LocationMap';
 import ViewSwitch from '../../misc/ViewSwitch';
 import LocationList from '../../misc/loclist/LocationList';
@@ -49,7 +50,7 @@ export default class LocationsPane extends PaneBase {
             };
 
             content = (
-                <LocationMap style={ style } 
+                <LocationMap style={ style }
                     locations={ locations }
                     locationsForBounds={ locations }
                     pendingLocation={ pendingLocation }
@@ -82,9 +83,9 @@ export default class LocationsPane extends PaneBase {
             <ViewSwitch key="viewSwitch" states={ switchStates }
                 selected={ this.state.viewMode }
                 onSwitch={ this.onViewSwitch.bind(this) }/>,
-            <button key="addLocationButton" type="button"
-                className="LocationsPane-addLocationButton"
-                onClick={ this.onAddClick.bind(this) } >Add</button>
+            <Button className="LocationsPane-addLocationButton"
+                label="Add"
+                onClick={ this.onAddClick.bind(this) }/>
         ];
     }
 
@@ -100,7 +101,7 @@ export default class LocationsPane extends PaneBase {
            loc.lat = center.lat();
            loc.lng = center.lng();
         }
-        
+
         this.props.dispatch(setPendingLocation(loc));
         this.openPane('addlocation');
         this.setState({

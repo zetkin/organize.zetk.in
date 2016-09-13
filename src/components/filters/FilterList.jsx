@@ -62,6 +62,7 @@ export default class FilterList extends React.Component {
             'campaign_participation': 'Campaign participation',
             'join_date': 'Join date',
             'person_data': 'Person data',
+            'person_tags': 'Person tags',
         };
 
         let items = [];
@@ -70,6 +71,7 @@ export default class FilterList extends React.Component {
 
             items.push(
                 <FilterListItem key={ filter.id } filter={ filter }
+                    openPane={ this.props.openPane } // TODO: Remove eventually
                     showOpSwitch={ i > 0 && !this.props.isDraggingOver }
                     onChangeConfig={ this.onChangeConfig.bind(this, i) }
                     onChangeOp={ this.onChangeOp.bind(this, i) }

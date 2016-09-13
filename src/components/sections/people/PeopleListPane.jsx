@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 import PaneBase from '../../panes/PaneBase';
+import Button from '../../misc/Button';
 import PeopleList from '../../misc/peoplelist/PeopleList';
 import RelSelectInput from '../../forms/inputs/RelSelectInput';
 import { retrievePeople } from '../../../actions/person';
@@ -84,8 +85,9 @@ export default class PeopleListPane extends PaneBase {
                 onValueChange={ this.onQueryChange.bind(this) }
                 onCreate={ this.onQueryCreate.bind(this) }
                 onEdit={ this.onQueryEdit.bind(this) }/>,
-            <button key="addButton" className="PeopleListPane-addButton"
-                onClick={ this.onAddClick.bind(this) }>Add</button>
+            <Button className="PeopleListPane-addButton"
+                label="Add"
+                onClick={ this.onAddClick.bind(this) }/>
         ];
     }
 

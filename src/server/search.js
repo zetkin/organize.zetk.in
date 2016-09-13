@@ -1,5 +1,3 @@
-import Z from 'zetkin';
-
 import searchMatches from '../utils/searchMatches';
 
 
@@ -44,19 +42,19 @@ function search(ws, req) {
             searchFuncs.push(searchCallAssignments);
         }
 
-        queue = new SearchQueue(msg.org, msg.query, writeFunc, searchFuncs);
+        queue = new SearchQueue(req.z, msg.org, msg.query, writeFunc, searchFuncs);
         queue.run();
     });
 }
 
-function SearchQueue(orgId, query, writeMatch, searchFuncs) {
+function SearchQueue(z, orgId, query, writeMatch, searchFuncs) {
     var _idx = 0;
     var _writeMatch = writeMatch;
 
     var _proceed = function() {
         if (_idx < searchFuncs.length) {
             const searchFunc = searchFuncs[_idx++];
-            const promise = searchFunc(orgId, query, writeMatch)
+            const promise = searchFunc(z, orgId, query, writeMatch)
 
             if (promise) {
                 promise.then(function() {
@@ -85,14 +83,14 @@ function SearchQueue(orgId, query, writeMatch, searchFuncs) {
     }
 }
 
-function searchActions(orgId, q, writeMatch) {
+function searchActions(z, orgId, q, writeMatch) {
     var date = Date.utc.create(q);
     if (date.isValid()) {
         const dateStr = date.format('{yyyy}-{MM}-{dd}');
 
         // Searching for date
         // TODO: Search using backend filtering
-        return Z.resource('orgs', orgId, 'actions').get()
+        return z.resource('orgs', orgId, 'actions').get()
             .then(function(result) {
                 const actions = result.data.data;
                 const dayActions = [];
@@ -122,9 +120,9 @@ function searchActions(orgId, q, writeMatch) {
     }
 }
 
-function searchPeople(orgId, q, writeMatch) {
+function searchPeople(z, orgId, q, writeMatch) {
     // TODO: Use API-side filtering once implemented
-    return Z.resource('orgs', orgId, 'people').get()
+    return z.resource('orgs', orgId, 'people').get()
         .then(function(result) {
             var i;
             var people = result.data.data;
@@ -138,8 +136,8 @@ function searchPeople(orgId, q, writeMatch) {
         })
 }
 
-function searchPersonQueries(orgId, q, writeMatch) {
-    return Z.resource('orgs', orgId, 'people', 'queries').get()
+function searchPersonQueries(z, orgId, q, writeMatch) {
+    return z.resource('orgs', orgId, 'people', 'queries').get()
         .then(function(result) {
             let queries = result.data.data;
 
@@ -151,8 +149,8 @@ function searchPersonQueries(orgId, q, writeMatch) {
         });
 }
 
-function searchLocations(orgId, q, writeMatch) {
-    return Z.resource('orgs', orgId, 'locations').get()
+function searchLocations(z, orgId, q, writeMatch) {
+    return z.resource('orgs', orgId, 'locations').get()
         .then(function(result) {
             var i;
             var locations = result.data.data;
@@ -166,8 +164,8 @@ function searchLocations(orgId, q, writeMatch) {
         })
 }
 
-function searchCallAssignments(orgId, q, writeMatch) {
-    return Z.resource('orgs', orgId, 'call_assignments').get()
+function searchCallAssignments(z, orgId, q, writeMatch) {
+    return z.resource('orgs', orgId, 'call_assignments').get()
         .then(function(result) {
             let assignments = result.data.data;
 
@@ -180,8 +178,8 @@ function searchCallAssignments(orgId, q, writeMatch) {
         });
 }
 
-function searchCampaigns(orgId, q, writeMatch) {
-    return Z.resource('orgs', orgId, 'campaigns').get()
+function searchCampaigns(z, orgId, q, writeMatch) {
+    return z.resource('orgs', orgId, 'campaigns').get()
         .then(function(result) {
             var i;
             var campaigns = result.data.data;

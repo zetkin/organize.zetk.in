@@ -43,6 +43,7 @@ export default class FilterListItem extends React.Component {
         let filter = this.props.connectDragSource(
             <div className="FilterListItem-filter">
                 <FilterComponent config={ filterData.config }
+                    openPane={ this.props.openPane } // TODO: Remove eventually
                     onFilterRemove={ this.onRemove.bind(this) }
                     onConfigChange={ this.onChangeConfig.bind(this) }/>
             </div>

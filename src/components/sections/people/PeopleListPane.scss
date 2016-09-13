@@ -2,4 +2,9 @@
     .RelSelectInput {
         width: 300px;
     }
+
+    .PeopleListPane-addButton {
+        @include inline-button($icon: $fa-var-plus);
+    }
+
 }

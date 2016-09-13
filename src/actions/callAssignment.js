@@ -1,18 +1,16 @@
-import Z from 'zetkin';
-
 import * as types from '.';
 import makeRandomString from '../utils/makeRandomString';
 
 
-export function createCallAssignment(data, draftId) {
-    return function(dispatch, getState) {
+export function createCallAssignment(data, draftId, paneId) {
+    return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
 
         dispatch({
             type: types.CREATE_CALL_ASSIGNMENT,
-            meta: { draftId },
+            meta: { draftId, paneId },
             payload: {
-                promise: Z.resource('orgs', orgId,
+                promise: z.resource('orgs', orgId,
                     'call_assignments').post(data)
             },
         });
@@ -20,41 +18,41 @@ export function createCallAssignment(data, draftId) {
 }
 
 export function retrieveCallAssignments() {
-    return function(dispatch, getState) {
+    return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
 
         dispatch({
             type: types.RETRIEVE_CALL_ASSIGNMENTS,
             payload: {
-                promise: Z.resource('orgs', orgId, 'call_assignments').get(),
+                promise: z.resource('orgs', orgId, 'call_assignments').get(),
             },
         });
     };
 }
 
 export function retrieveCallAssignment(id) {
-    return function(dispatch, getState) {
+    return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
 
         dispatch({
             type: types.RETRIEVE_CALL_ASSIGNMENT,
             meta: { id },
             payload: {
-                promise: Z.resource('orgs', orgId, 'call_assignments', id).get()
+                promise: z.resource('orgs', orgId, 'call_assignments', id).get()
             }
         });
     };
 }
 
 export function retrieveCallAssignmentStats(id) {
-    return function(dispatch, getState) {
+    return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
 
         dispatch({
             type: types.RETRIEVE_CALL_ASSIGNMENT_STATS,
             meta: { id },
             payload: {
-                promise: Z.resource('orgs', orgId,
+                promise: z.resource('orgs', orgId,
                     'call_assignments', id, 'stats').get()
             }
         });
@@ -62,13 +60,13 @@ export function retrieveCallAssignmentStats(id) {
 }
 
 export function updateCallAssignment(id, data) {
-    return function(dispatch, getState) {
+    return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
 
         dispatch({
             type: types.UPDATE_CALL_ASSIGNMENT,
             payload: {
-                promise: Z.resource(
+                promise: z.resource(
                     'orgs', orgId, 'call_assignments', id).patch(data),
             },
         });
@@ -76,14 +74,14 @@ export function updateCallAssignment(id, data) {
 }
 
 export function retrieveCallAssignmentCallers(id) {
-    return function(dispatch, getState) {
+    return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
 
         dispatch({
             type: types.RETRIEVE_CALL_ASSIGNMENT_CALLERS,
             meta: { id },
             payload: {
-                promise: Z.resource('orgs', orgId, 'call_assignments', id,
+                promise: z.resource('orgs', orgId, 'call_assignments', id,
                     'callers').get(),
             }
         });
@@ -91,10 +89,10 @@ export function retrieveCallAssignmentCallers(id) {
 }
 
 export function addCallAssignmentCallers(id, callerIds) {
-    return function(dispatch, getState) {
+    return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
 
-        let promises = callerIds.map(callerId => Z.resource('orgs', orgId,
+        let promises = callerIds.map(callerId => z.resource('orgs', orgId,
             'call_assignments', id, 'callers', callerId).put());
 
         dispatch({
@@ -108,14 +106,14 @@ export function addCallAssignmentCallers(id, callerIds) {
 };
 
 export function removeCallAssignmentCaller(id, callerId) {
-    return function(dispatch, getState) {
+    return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
 
         dispatch({
             type: types.REMOVE_CALL_ASSIGNMENT_CALLER,
             meta: { id, callerId },
             payload: {
-                promise: Z.resource('orgs', orgId, 'call_assignments', id,
+                promise: z.resource('orgs', orgId, 'call_assignments', id,
                     'callers', callerId).del(),
             }
         });
@@ -123,10 +121,10 @@ export function removeCallAssignmentCaller(id, callerId) {
 }
 
 export function addCallerPrioritizedTags(assignmentId, callerId, tagIds) {
-    return function(dispatch, getState) {
+    return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
 
-        let promises = tagIds.map(tagId => Z.resource('orgs', orgId,
+        let promises = tagIds.map(tagId => z.resource('orgs', orgId,
             'call_assignments', assignmentId, 'callers', callerId,
             'prioritized_tags', tagId).put());
 
@@ -141,10 +139,10 @@ export function addCallerPrioritizedTags(assignmentId, callerId, tagIds) {
 }
 
 export function removeCallerPrioritizedTags(assignmentId, callerId, tagIds) {
-    return function(dispatch, getState) {
+    return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
 
-        let promises = tagIds.map(tagId => Z.resource('orgs', orgId,
+        let promises = tagIds.map(tagId => z.resource('orgs', orgId,
             'call_assignments', assignmentId, 'callers', callerId,
             'prioritized_tags', tagId).del());
 
@@ -159,10 +157,10 @@ export function removeCallerPrioritizedTags(assignmentId, callerId, tagIds) {
 }
 
 export function addCallerExcludedTags(assignmentId, callerId, tagIds) {
-    return function(dispatch, getState) {
+    return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
 
-        let promises = tagIds.map(tagId => Z.resource('orgs', orgId,
+        let promises = tagIds.map(tagId => z.resource('orgs', orgId,
             'call_assignments', assignmentId, 'callers', callerId,
             'excluded_tags', tagId).put());
 
@@ -177,10 +175,10 @@ export function addCallerExcludedTags(assignmentId, callerId, tagIds) {
 }
 
 export function removeCallerExcludedTags(assignmentId, callerId, tagIds) {
-    return function(dispatch, getState) {
+    return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
 
-        let promises = tagIds.map(tagId => Z.resource('orgs', orgId,
+        let promises = tagIds.map(tagId => z.resource('orgs', orgId,
             'call_assignments', assignmentId, 'callers', callerId,
             'excluded_tags', tagId).del());
 

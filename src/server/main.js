@@ -10,9 +10,8 @@ var server = app.listen(port, function() {
 
     // Code running on server should make API calls to itself.
     Z.configure({
-        base: '/api',
-        host: addr.address,
-        port: addr.port,
+        host: 'api.' + process.env.ZETKIN_DOMAIN,
+        port: 80,
         ssl: false
     });
 

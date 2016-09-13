@@ -1,0 +1,14 @@
+.LoadingIndicator {
+    display:block;
+    color: darken($c-ui-bg, 3);
+    font-size: 2em;
+    text-align: center;
+    vertical-align: middle;
+    .LoadingIndicator-icon {
+        display:block;
+        &:after {
+            @include icon($fa-var-circle-o-notch);
+            @include icon-spin;
+        }
+    }
+}

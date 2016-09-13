@@ -40,11 +40,9 @@ ul {
     @include list-unstyled;
 }
 
-button{
-    border: 1px solid $c-ui-dark;
-    background-color: $c-ui-bg;
-    padding: 5px;
-    cursor: pointer;
+button, input[type="button"], a.btn, a.Button {
+    @include inline-button;
+
     &.add{
         @include icon-button($fa-var-plus);
     }

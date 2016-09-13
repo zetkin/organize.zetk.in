@@ -1,6 +1,5 @@
 import express from 'express';
 import http from 'http';
-import Z from 'zetkin';
 
 const widgets = express.Router();
 
@@ -37,7 +36,7 @@ widgets.get('/today', function(req, res) {
 
     Promise.all([
         weatherPromise,
-        Z.resource('orgs', orgId, 'actions').get()
+        req.z.resource('orgs', orgId, 'actions').get()
     ]).then(function(results) {
         const weather = results[0];
         const actions = results[1].data.data;

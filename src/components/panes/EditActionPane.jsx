@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import ActionForm from '../forms/ActionForm';
+import Button from '../misc/Button';
 import { getListItemById } from '../../utils/store';
 import { retrieveAction, updateAction } from '../../actions/action';
 
@@ -10,7 +11,7 @@ import { retrieveAction, updateAction } from '../../actions/action';
 @connect(state => state)
 export default class EditActionPane extends PaneBase {
     getRenderData() {
-        let actionId = this.props.params[0];
+        let actionId = this.getParam(0);
         let actionList = this.props.actions.actionList;
         let actionItem = getListItemById(actionList, actionId);
 
@@ -50,11 +51,19 @@ export default class EditActionPane extends PaneBase {
         }
     }
 
+    renderPaneFooter(data) {
+        return (
+            <Button className="EditActionPane-saveButton"
+                label="Save Changes"
+                onClick={ this.onSubmit.bind(this) }/>
+        );
+    }
+
     onSubmit(ev) {
         ev.preventDefault();
 
         var values = this.refs.form.getChangedValues();
-        var actionId = this.props.params[0];
+        var actionId = this.getParam(0);
 
         this.props.dispatch(updateAction(actionId, values));
     }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import LocationForm from '../forms/LocationForm';
+import Button from '../misc/Button';
 import LocationMap from '../misc/LocationMap';
 import { getListItemById } from '../../utils/store';
 import { retrieveLocation, updateLocation, deleteLocation,
@@ -10,9 +11,9 @@ import { retrieveLocation, updateLocation, deleteLocation,
 
 
 @connect(state => state)
-export default class LocationPane extends PaneBase {
+export default class EditLocationWithMapPane extends PaneBase {
     componentDidMount() {
-        let locId = this.props.params[0];
+        let locId = this.getParam(0);
         let locItem = getListItemById(this.props.locations.locationList, locId);
 
         if (locItem) {
@@ -24,7 +25,7 @@ export default class LocationPane extends PaneBase {
     }
 
     getRenderData() {
-        let locId = this.props.params[0];
+        let locId = this.getParam(0);
 
         return {
             locItem: getListItemById(this.props.locations.locationList, locId),
@@ -49,7 +50,8 @@ export default class LocationPane extends PaneBase {
             let style = {
                 position: 'relative',
                 height: '300px',
-                width: '100%'
+                width: '100%',
+                marginBottom: '2em',
             }
 
             return [
@@ -61,7 +63,8 @@ export default class LocationPane extends PaneBase {
                         onMapClick={ this.onUpdatePosition.bind(this) } />,
                 <LocationForm key="form" ref="form" loc={ data.locItem.data }
                     onSubmit={ this.onSubmit.bind(this) }/>,
-                <input key="delete" type="button" value="Delete"
+                <Button className="EditLocationWithMapPane-deleteButton"
+                    label="Delete"
                     onClick={ this.onDeleteClick.bind(this) }/>
             ];
         }
@@ -71,6 +74,14 @@ export default class LocationPane extends PaneBase {
         }
     }
 
+    renderPaneFooter(data) {
+        return (
+            <Button className="EditLocationWithMapPane-saveButton"
+                label="Save"
+                onClick={ this.onSubmit.bind(this) }/>
+        );
+    }
+
     onUpdatePosition (position) {
         this.props.dispatch(setPendingLocation(position));
     }
@@ -78,7 +89,7 @@ export default class LocationPane extends PaneBase {
     onSubmit(ev) {
         ev.preventDefault();
 
-        let locId = this.props.params[0];
+        let locId = this.getParam(0);
         let values = this.refs.form.getChangedValues();
         let pendingLatLng = this.props.locations.pendingLocation;
 
@@ -92,7 +103,7 @@ export default class LocationPane extends PaneBase {
 
 
     onDeleteClick(ev) {
-        var locId = this.props.params[0];
+        var locId = this.getParam(0);
         this.props.dispatch(clearPendingLocation());
         this.props.dispatch(deleteLocation(locationId));
         this.closePane();

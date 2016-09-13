@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import LocationForm from '../forms/LocationForm';
+import Button from '../misc/Button';
 import { getLocationAverage } from '../../utils/location';
 import { setPendingLocation, clearPendingLocation, createLocation }
     from '../../actions/location';
@@ -31,13 +32,22 @@ export default class AddLocationPane extends PaneBase {
             title: this.getParam(0)
         };
 
-        return [ 
+        return [
             <h3>1. Move highlighted marker to the position of location</h3>,
             <h3>2. Enter information about the location and press save</h3>,
             <LocationForm key="form" ref="form" loc={ initialData }
-                onSubmit={ this.onSubmit.bind(this) }/>,
-            <input key="delete" type="button" value="Cancel"
-                    onClick={ this.onDeleteClick.bind(this) }/>
+                onSubmit={ this.onSubmit.bind(this) }/>
+        ];
+    }
+
+    renderPaneFooter(data) {
+        return [
+            <Button className="AddLocationPane-closeButton"
+                label="Close"
+                onClick={ this.onDeleteClick.bind(this) }/>,
+            <Button className="AddLocationPane-saveButton"
+                label="Add Location"
+                onClick={ this.onSubmit.bind(this) }/>
         ];
     }
 

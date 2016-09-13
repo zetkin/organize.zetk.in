@@ -50,18 +50,36 @@ export default class SelectPersonTagsPane extends PaneBase {
             <TagCloud key="selectedTags" tags={ tagsSelected }
                 showRemoveButtons={ true }
                 onRemove={ this.onRemove.bind(this) }/>,
-            <button key="saveButton" className="SelectPeoplePane-saveButton"
-                onClick={ this.onClickSave.bind(this) }>Save</button>,
             <h3 key="availableHeader">Select tags to be added</h3>,
+            <button key="createLink" className="SelectPeoplePane-createButton"
+                onClick={ this.onClickCreate.bind(this) }>
+                Create a new tag</button>,
             <TagCloud key="availableTags" tags={ tagsAvailable }
+                showEditButtons={ true }
+                onEdit={ this.onEdit.bind(this) }
                 onSelect={ this.onSelect.bind(this) }/>,
         ];
+    }
+
+    renderPaneFooter(data) {
+        return (
+             <button key="saveButton" className="SelectPeoplePane-saveButton"
+                onClick={ this.onClickSave.bind(this) }>Save</button>
+        );
     }
 
     onClickSave() {
         let selectionId = this.getParam(0);
         this.props.dispatch(finishSelection(selectionId));
         this.closePane();
+    }
+
+    onClickCreate() {
+        this.openPane('addpersontag');
+    }
+
+    onEdit(tag) {
+        this.openPane('editpersontag', tag.id);
     }
 
     onSelect(tag) {

@@ -29,15 +29,28 @@
     }
 }
 
-@mixin button-color($color) {
+@mixin button-color($color, $amount:5) {
+    //TODO: switch darken/lighten based on lightness
     background-color: $color;
     border-color: darken($color, 10);
+
+    @if (lightness($color) < 70%) {
+        color: $c-text-contrast;
+    }
+    @else {
+        color: inherit;
+    }
+
     &:hover {
-        @include button-active($color, 10);
+        @include button-active($color, $amount);
     }
     &:focus {
-        border-color: darken($color, 15);
-        background-color: darken($color, 15);
+        border-color: darken($color, $amount * 1.5);
+        background-color: darken($color, $amount * 1.5);
+    }
+    &.selected {
+        border-color: darken($color, $amount * 1.5);
+        background-color: darken($color, $amount * 1.5);
     }
 }
 
@@ -46,16 +59,40 @@
     border-color: darken($color, $amount*2);
 }
 
-@mixin button {
+@mixin button($color: $c-brand-confirm, $amount:5, $icon:false) {
     font-size: 1.4em;
     font-weight: 500;
     border-width: 0;
     display: inline-block;
     padding: 1.2em 1em 0.9em;
-    color: $c-text-contrast;
     border-bottom: 3px solid;
     border-radius: 3px;
-    @include button-color($c-brand-complement);
+    @include button-color($color, $amount);
+    @if $icon {
+        &:before {
+            @include icon($icon);
+            line-height: 0;
+            height: 0;
+        }
+    }
+}
+
+@mixin inline-button($color: lighten($c-ui-bg, 1), $amount:5, $icon:false) {
+    @include input-base;
+    width: auto;
+    content: lightness($color); // for reference;
+    padding: .5em 1em .4em;
+    cursor: pointer;
+    margin-bottom: inherit;
+    @include button-color($color, $amount);
+    @if $icon {
+        padding-left: .3em;
+        &:before {
+            @include icon($icon);
+            line-height: 0;
+            height: 0;
+        }
+    }
 }
 
 @mixin key-reference {
@@ -76,7 +113,13 @@
     height: 1.6em;
     width: 1.6em;
     line-height: 1.6;
+    margin-right: .2em;
     content: $fa-character;
+}
+
+@mixin icon-spin {
+    -webkit-animation: fa-spin 1s infinite steps(24);
+        animation: fa-spin 1s infinite steps(24);
 }
 
 @mixin icon-button($fa-character) {
@@ -95,6 +138,7 @@
     width: 3em;
     color: transparent;
     &::before{
+        display:inline;
         color: $c-ui-darker;
     }
 }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import CallerList from '../misc/callerlist/CallerList';
+import LoadingIndicator from '../misc/LoadingIndicator';
 import { getListItemById } from '../../utils/store';
 import { createTextDocument } from '../../actions/document';
 import { createSelection } from '../../actions/selection';
@@ -61,22 +62,32 @@ export default class CallAssignmentPane extends PaneBase {
             let assignment = data.assignmentItem.data;
             let instructions = assignment.instructions;
 
-            let targetContent = null;
-            if (assignment.statsItem && !assignment.statsItem.isPending) {
-                let stats = assignment.statsItem.data;
-                targetContent = [
-                    <div key="targetStats"
-                        className="CallAssignmentPane-targetStats">
-                        <h1>{ stats.num_target_matches }</h1>
-                        <span>people make up the target</span>
-                    </div>,
-                    <div key="goalStats"
-                        className="CallAssignmentPane-goalStats">
-                        <h1>{ stats.num_remaining_targets }</h1>
-                        <span>do not yet meet the goal</span>
-                    </div>
-                ];
+            let targetStats = null;
+            let goalStats = null;
+            let progressSum = 0.5;
+            if (!assignment.statsItem || assignment.statsItem.isPending) {
+                targetStats = <LoadingIndicator/>;
+                goalStats = <LoadingIndicator/>;
             }
+            else {
+                let stats = assignment.statsItem.data;
+                targetStats = [
+                    <h1 key="targetStatsHeader">
+                        { stats.num_target_matches }</h1>,
+                    <span key="targetStatsInfo">
+                        people make up the target</span>
+                ];
+
+                goalStats = [
+                    <h1 key="goalStatsHeader">
+                        { stats.num_remaining_targets }</h1>,
+                    <span key="goalStatsInfo">
+                        do not yet meet the goal</span>
+                ];
+
+                progressSum = 100 * (1 - stats.num_remaining_targets / stats.num_target_matches);
+            }
+
             if (data.queryItem && data.queryItem.data.matchList) {
                 targetContent = <h1>{ data.queryItem.data.matchList.items.length }</h1>;
             }
@@ -114,12 +125,27 @@ export default class CallAssignmentPane extends PaneBase {
                     className="CallAssignmentPane-target">
                     <h3>Targets</h3>
                     <div className="CallAssignmentPane-stats">
-                        { targetContent }
+                        <div>
+                            <div key="targetStats"
+                                className="CallAssignmentPane-targetStats">
+                                { targetStats }
+                            </div>
+                        </div>
+                        <div>
+                            <div key="goalStats"
+                                className="CallAssignmentPane-goalStats">
+                                { goalStats }
+                            </div>
+                        </div>
                     </div>
                     <a onClick={ this.onClickEditTarget.bind(this) }>
                         Edit target filters</a>
                     <a onClick={ this.onClickEditGoal.bind(this) }>
                         Edit goal filters</a>
+                    <div className="CallAssignmentPane-progress">
+                        <div style={{ width: progressSum + '%' }} 
+                            className="CallAssignmentPane-progressContent"/>
+                    </div>
                 </div>,
 
                 <div key="callers"

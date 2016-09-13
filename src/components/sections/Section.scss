@@ -1,17 +1,17 @@
-.SectionBase{
+.Section {
     height: 100%;
     background-color: #f8f8f8;
 
-    .SectionBase-container {
+    .Section-container {
         position: relative;
     }
 
-    .SectionBase-nav {
+    .Section-nav {
         background-color: black;
         width: 100%;
     }
 
-    .SectionBase-nav {
+    .Section-nav {
         @include flex-container;
         min-height: 4.8em;
         ul{
@@ -21,20 +21,20 @@
         }
     }
 
-    .SectionBase-navMisc {
+    .Section-navMisc {
         @include flex(2);
         @include flex-container;
         @include align-items(flex-end);
         text-align: center;
     }
 
-    .SectionBase-navMisc a {
+    .Section-navMisc a {
         @include flex(1);
         color: white;
         padding: 1em 0;
     }
 
-    .SectionBase-navItem {
+    .Section-navItem {
         @include flex;
         text-align: center;
         color: white;
@@ -45,7 +45,7 @@
     }
 
     @include medium-screen {
-        .SectionBase-nav {
+        .Section-nav {
             @include flex-container(column);
             position: fixed;
             width: 10em;
@@ -60,7 +60,7 @@
                 @include flex-container(column);
             }
         }
-        .SectionBase-navMisc a {
+        .Section-navMisc a {
             color: #888;
             padding: 0.5em 1em;
             border-left: 0.1em solid #888;
@@ -79,13 +79,13 @@
             }
         }
 
-        .SectionBase-navItem{
+        .Section-navItem{
             @include flex(none);
             width: 100%;
             padding: 0;
         }
 
-        .SectionBase-navItem a {
+        .Section-navItem a {
             display: block;
             position: relative;
             list-style-type: none;
@@ -130,15 +130,15 @@
             }
         }
 
-        .SectionBase-navItem.selected a::after {
+        .Section-navItem.selected a::after {
             opacity: 1;
         }
 
-        .SectionBase-navItem.selected a::before {
+        .Section-navItem.selected a::before {
             background-color: #FFF;// Should highlight icon
         }
 
-        .SectionBase-container {
+        .Section-container {
             position: absolute;
             top: 0;
             left: 100px;
@@ -147,7 +147,7 @@
             background-color: white;
         }
 
-        .SectionBase .PaneBase:first-child {
+        .Section .PaneBase:first-child {
             // Base pane, always full-width and not interactive
             left: 0;
             right: 0;

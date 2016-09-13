@@ -8,12 +8,13 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': process.env.NODE_ENV,
+            'process.env.ZETKIN_DOMAIN': '"dev.zetkin.org"',
             'process.env.GA_TRACKING_ID': '"UA-75118791-1"',
         }),
     ],
     output: {
         path: path.join(__dirname, 'dist/static/js'),
-        publicPath: 'http://organize.zetkin/',
+        publicPath: 'http://organize.dev.zetkin.org/',
         filename: '[name].js'
     },
     node: {

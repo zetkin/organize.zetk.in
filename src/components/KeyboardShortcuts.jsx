@@ -1,12 +1,14 @@
 import cx from 'classnames';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-component';
 
 import { beginSearch } from '../actions/search';
+import { gotoSection } from '../actions/view';
+
+import { SECTIONS } from './sections';
 
 
-@connect(state => state)
+@connect(state => ({ view: state.view }))
 export default class KeyboardShortcuts extends React.Component {
     constructor(props) {
         super(props);
@@ -65,7 +67,7 @@ export default class KeyboardShortcuts extends React.Component {
                     <p>
                         Quickly press another key to navigate.
                     </p>
-                    <Link href="/help/shortcuts">What is this?</Link>
+                    <a href="/help/shortcuts">What is this?</a>
                     <ul>
                         <li><code>h</code> home</li>
                         <li><code>p</code> people</li>
@@ -120,19 +122,19 @@ export default class KeyboardShortcuts extends React.Component {
                     break;
 
                 case 99:    // 'c' == campaign
-                    this.navigateToSection('/campaign');
+                    this.props.dispatch(gotoSection('campaign'));
                     break;
                 case 100:    // 'd' == dialog
-                    this.navigateToSection('/dialog');
+                    this.props.dispatch(gotoSection('dialog'));
                     break;
                 case 104:   // 'h' == home
-                    this.navigateToSection('/');
+                    this.props.dispatch(gotoSection(null));
                     break;
                 case 109:   // 'm' == maps
-                    this.navigateToSection('/maps');
+                    this.props.dispatch(gotoSection('maps'));
                     break;
                 case 112:   // 'p' == people
-                    this.navigateToSection('/people');
+                    this.props.dispatch(gotoSection('people'));
                     break;
             }
 
@@ -181,15 +183,11 @@ export default class KeyboardShortcuts extends React.Component {
         }
     }
 
-    navigateToSection(path) {
-        this.closeReference();
-        this.props.onSectionShortcut(path);
-    }
-
     navigateToSubSection(index) {
-        var navigated = this.props.onSubSectionShortcut(index);
-
-        if (navigated) {
+        let curSection = SECTIONS[this.props.view.section];
+        if (curSection && index < curSection.subSections.length) {
+            this.props.dispatch(gotoSection(this.props.view.section,
+                curSection.subSections[index].path));
             this.closeReference();
         }
     }
@@ -222,8 +220,3 @@ export default class KeyboardShortcuts extends React.Component {
         }
     }
 }
-
-KeyboardShortcuts.propTypes = {
-    onSectionShortcut: React.PropTypes.func.isRequired,
-    onSubSectionShortcut: React.PropTypes.func.isRequired
-};

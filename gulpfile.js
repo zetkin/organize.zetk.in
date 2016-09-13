@@ -39,19 +39,19 @@ gulp.task('cleanSass', function(cb) {
     ], cb);
 });
 
-gulp.task('cleanTemplates', function(cb) {
+gulp.task('cleanFonts', function(cb) {
     return del([
-        'dist/templates',
+        'dist/static/fonts',
     ], cb);
 });
 
 gulp.task('clean', function(cb) {
-    return runSequence('cleanImages', 'cleanTemplates', 'cleanSass', cb);
+    return runSequence('cleanImages', 'cleanFonts', 'cleanSass', cb);
 });
 
-gulp.task('copyTemplates', function() {
-    return gulp.src('./templates/**/*.html')
-        .pipe(gulp.dest('./dist/templates'));
+gulp.task('copyFonts', function() {
+    return gulp.src('./assets/fonts/**/*')
+        .pipe(gulp.dest('./dist/static/fonts'));
 });
 
 gulp.task('js', function() {
@@ -110,7 +110,7 @@ gulp.task('minify', function() {
 });
 
 gulp.task('default', [ 'clean' ], function(cb) {
-    return runSequence('bundleJs', 'buildSass', 'minifyImages', 'copyTemplates', cb);
+    return runSequence('bundleJs', 'buildSass', 'minifyImages', 'copyFonts', cb);
 });
 
 
@@ -136,8 +136,8 @@ gulp.task('watch', function() {
         return runSequence('minifyImages');
     });
 
-    watch('templates/**/*', function() {
-        return runSequence('copyTemplates');
+    watch('assets/fonts/**/*', function() {
+        return runSequence('copyFonts');
     });
 });
 

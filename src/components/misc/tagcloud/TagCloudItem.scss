@@ -1,36 +1,36 @@
 .TagCloudItem {
-    position: relative;
-    float: left;
-    background-color: $c-ui-dark;
-    border-radius: 4px;
-    padding: 4px 12px;
-    margin: 0 4px 4px 0;
-    font-size: 14px;
+    @include tag;
 
-    color: black;
-    transition: color 0.2s;
-
-    .TagCloudItem-removeButton {
+    .TagCloudItem-removeButton, .TagCloudItem-editButton {
         position: absolute;
-        top: 4px;
-        right: 4px;
-        text-align: right;
-        width: 20px;
-
+        right: 0;
+        margin-top: -1px;
         opacity: 0;
         transition: opacity 0.3s;
-
-        font-weight: bold;
-        color: black;
+        color: lighten($c-text, 60);
+        &:hover {
+            color: lighten($c-text, 40);
+        }
     }
-
+    .TagCloudItem-removeButton:after {
+        @include icon($fa-var-remove);
+        margin-right: 0;
+    }
+    .TagCloudItem-editButton {
+        margin-top: -2px;
+        &:after {
+            @include icon($fa-var-pencil);
+            margin-right: 0;
+        }
+    }    
     &:hover {
-        color: $c-ui-darker;
 
-        .TagCloudItem-removeButton {
+        .TagCloudItem-removeButton, .TagCloudItem-editButton {
             cursor: pointer;
             opacity: 1;
-            background: linear-gradient(90deg, rgba($c-ui-dark,0), rgba($c-ui-dark, 1) 70%, rgba($c-ui-dark,1));
+            
+            
         }
+        
     }
 }

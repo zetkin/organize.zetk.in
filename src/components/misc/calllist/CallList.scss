@@ -1,11 +1,17 @@
 .CallList {
+
+    width: 100%;
+
+    @include medium-screen {
+        max-width: 540px;
+    }
     .ListHeader {
         li:nth-child(1) {
-            left: 140px;
+            @include col(7,12);
         }
 
         li:nth-child(2) {
-            left: 300px;
+            @include col(5,12);
         }
     }
 }

@@ -27,6 +27,7 @@
         left: 34px;
         &::after {
             @include icon($fa-var-plus);
+            margin-right: 0;
         }
     }
 
@@ -34,6 +35,7 @@
         right: 34px;
         &::after {
             @include icon($fa-var-minus);
+            margin-right: 0;
         }
     }
 

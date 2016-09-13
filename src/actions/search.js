@@ -3,7 +3,7 @@ import searchMatches from '../utils/searchMatches';
 
 
 export function search(query) {
-    return function(dispatch, getState) {
+    return ({ dispatch, getState }) => {
         execSearch(getState, dispatch, query);
 
         dispatch({

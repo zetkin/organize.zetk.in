@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import CallAssignmentForm from '../forms/CallAssignmentForm';
+import Button from '../misc/Button';
 import { getListItemById } from '../../utils/store';
 import { retrieveCallAssignment, updateCallAssignment }
     from '../../actions/callAssignment';
@@ -46,6 +47,14 @@ export default class EditCallAssignmentPane extends PaneBase {
             // TODO: Loading indicator
             return 'Loading...';
         }
+    }
+
+    renderPaneFooter(data) {
+        return (
+            <Button className="EditCallAssignmentPane-saveButton"
+                label="Save Changes"
+                onClick={ this.onSubmit.bind(this) }/>
+        );
     }
 
     onSubmit(ev) {

@@ -1,0 +1,3 @@
+.EditPersonPane-deleteButton {
+    @include button($color: $c-brand-delete, $icon: $fa-var-trash);
+}

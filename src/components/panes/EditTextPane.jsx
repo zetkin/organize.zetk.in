@@ -3,6 +3,7 @@ import Editor from 'react-medium-editor';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
+import Button from '../misc/Button';
 import { getListItemById } from '../../utils/store';
 import { saveTextDocument, finishTextDocument } from '../../actions/document';
 
@@ -27,12 +28,6 @@ export default class EditTextPane extends PaneBase {
             let content = data.docItem.data.content;
 
             return [
-                <button key="finishButton"
-                    onClick={ this.onClickFinish.bind(this) }>
-                    Save and close</button>,
-                <button key="cancelButton"
-                    onClick={ this.onClickCancel.bind(this) }>
-                    Close without saving</button>,
                 <Editor className="EditTextPane-editor"
                     key="editor" tag="div" text={ content }
                     onChange={ this.onChange.bind(this) }/>,
@@ -41,6 +36,17 @@ export default class EditTextPane extends PaneBase {
         else {
             return null;
         }
+    }
+
+    renderPaneFooter(data) {
+        return [
+            <Button className="EditTextPane-closeButton"
+                    label="Close"
+                    onClick={ this.onClickCancel.bind(this) }/>,
+            <Button className="EditTextPane-saveButton"
+                label="Save"
+                onClick={ this.onClickFinish.bind(this) }/>,
+        ];
     }
 
     onClickFinish(ev) {

@@ -5,6 +5,7 @@
 
     .FilterList-addSection {
         @include ghost-placeholder();
+        margin-bottom: 80px;
         select {
             margin: 0;
         }

@@ -43,7 +43,6 @@ export default class PaneBase extends React.Component {
 
     render() {
         const data = this.getRenderData();
-        const paneType = this.props.paneType;
 
         const classes = cx(componentClassNames(this), {
             'PaneBase-scrolled': this.state.scrolled
@@ -129,8 +128,8 @@ export default class PaneBase extends React.Component {
     }
 
     getParam(idx, defaultValue) {
-        if (this.props.params.length > idx) {
-            return this.props.params[idx];
+        if (this.props.paneData.params.length > idx) {
+            return this.props.paneData.params[idx];
         }
         else {
             return defaultValue;
@@ -138,23 +137,20 @@ export default class PaneBase extends React.Component {
     }
 
     openPane(paneType, ...params) {
-        const paneSegment = panePathSegment(paneType, params);
         if (this.props.onOpenPane) {
-            this.props.onOpenPane(paneSegment);
+            this.props.onOpenPane(paneType, params);
         }
     }
 
     gotoPane(paneType, ...params) {
-        const paneSegment = panePathSegment(paneType, params);
         if (this.props.onReplace) {
-            this.props.onReplace(paneSegment);
+            this.props.onReplace(paneType, params);
         }
     }
 
     pushPane(paneType, ...params) {
         if (this.props.onPushPane) {
-            const pathSegment = panePathSegment(paneType, params);
-            this.props.onPushPane(pathSegment);
+            this.props.onPushPane(paneType, params);
         }
     }
 
@@ -180,13 +176,3 @@ PaneBase.propTypes = {
 PaneBase.defaultProps = {
     isBase: false
 };
-
-function panePathSegment(paneType, params) {
-    var paneSegment = paneType;
-
-    if (params.length) {
-        paneSegment += ':' + params.join(',');
-    }
-
-    return paneSegment;
-}

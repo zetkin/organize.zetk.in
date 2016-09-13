@@ -1,6 +1,5 @@
 import { combineReducers, compose, applyMiddleware, createStore } from 'redux';
 import promiseMiddleware from 'redux-promise-middleware';
-import thunk from 'redux-thunk';
 
 import actions from './actions';
 import activities from './activities';
@@ -19,9 +18,12 @@ import queries from './queries';
 import search from './search';
 import selections from './selections';
 import user from './user';
+import view from './view';
+
+import { urlMiddleware } from './middleware/url';
 
 
-export const appReducer = combineReducers({
+const appReducer = combineReducers({
     actions,
     activities,
     callAssignments,
@@ -39,13 +41,32 @@ export const appReducer = combineReducers({
     search,
     selections,
     user,
+    view,
 });
 
-let middleware = [
-    promiseMiddleware(),
-    thunk,
-];
+export const configureStore = (initialState, z) => {
+    let thunkWithZ = store => next => action => {
+        if (typeof action === 'function') {
+            return action({ ...store, z });
+        }
 
-export const configureStore = compose(
-    applyMiddleware(...middleware)
-)(createStore);
+        return next(action);
+    };
+
+    let middleware = [
+        urlMiddleware,
+        promiseMiddleware(),
+        thunkWithZ,
+    ];
+
+    let devTools = f => f;
+    if (typeof window === 'object' && window.devToolsExtension) {
+        devTools = window.devToolsExtension();
+    }
+    let createWithMiddleware = compose(
+        applyMiddleware(...middleware),
+        devTools,
+    )(createStore);
+
+    return createWithMiddleware(appReducer, initialState);
+};

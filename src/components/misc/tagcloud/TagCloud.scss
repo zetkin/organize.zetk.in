@@ -1,10 +1,37 @@
+@mixin tag {
+    position: relative;
+    float: left;
+    background-color: darken($c-ui-bg, 6);
+    border-radius: 4px;
+    padding: .5em 1.5em .5em .7em;
+    margin: 0 4px 4px 0;
+    font-size: 1.3em;
+
+    color: lighten($c-text, 20);
+    transition: color 0.2s;
+}
+
 .TagCloud {
     .TagCloud-addButton {
-        display: block;
-        padding-top: 10px;
-        float: left;
-        text-decoration: underline;
+        @include tag;
+        background: lighten($c-ui-bg, 5);
+        border: 1px solid darken($c-ui-bg, 5);
+        top:-1px;
+        padding: .5em .8em .5em 1.6em;
+        color: lighten($c-text, 40);
         cursor: pointer;
+        
+        &:before {
+            @include icon($fa-var-plus);
+            position: absolute;
+            left: 0;
+            margin-top: -1px;
+        
+        }
+
+        &:hover {
+            background: $c-ui-bg;
+        }
     }
 
     &:after {
@@ -13,3 +40,4 @@
         clear: both;
     }
 }
+

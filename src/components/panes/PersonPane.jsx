@@ -2,82 +2,131 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
-import PersonForm from '../forms/PersonForm';
 import DraggableAvatar from '../misc/DraggableAvatar';
-import { retrievePerson, updatePerson, deletePerson }
-    from '../../actions/person';
+import TagCloud from '../misc/tagcloud/TagCloud';
 import { getListItemById } from '../../utils/store';
+import { retrievePerson } from '../../actions/person';
+import { createSelection } from '../../actions/selection';
+import {
+    addTagsToPerson,
+    removeTagFromPerson,
+    retrieveTagsForPerson,
+} from '../../actions/personTag';
 
 
-@connect(state => state)
+const BASIC_FIELDS = [ 'email', 'phone' ];
+const ADDR_FIELDS = [ 'co_address', 'street_address', 'zip_code', 'city' ];
+
+@connect(state => ({ people: state.people, personTags: state.personTags }))
 export default class PersonPane extends PaneBase {
     componentDidMount() {
-        let personId = this.props.params[0];
-        let person = getListItemById(this.props.people.personList, personId);
-
-        if (!person) {
-            this.props.dispatch(retrievePerson(personId));
-        }
+        let personId = this.getParam(0);
+        this.props.dispatch(retrievePerson(personId));
+        this.props.dispatch(retrieveTagsForPerson(personId));
     }
 
     getRenderData() {
-        let personId = this.props.params[0];
+        let personId = this.getParam(0);
+        let personList = this.props.people.personList;
 
         return {
-            personItem: getListItemById(this.props.people.personList, personId)
+            personItem: getListItemById(personList, personId),
         }
     }
 
     getPaneTitle(data) {
-        if (data.person) {
-            return data.person.first_name + ' ' + data.person.last_name;
+        if (data.personItem && data.personItem.data) {
+            let person = data.personItem.data;
+            return person.first_name + ' ' + person.last_name;
         }
         else {
-            return null;
+            return 'Person';
         }
     }
 
     renderPaneContent(data) {
         if (data.personItem) {
-            if (data.personItem.isPending) {
-                // TODO: Show proper loading indicator?
-                return <h1>Loading</h1>;
-            }
-            else {
-                return [
-                    <DraggableAvatar ref="avatar"
-                        person={ data.personItem.data }/>,
+            let person = data.personItem.data;
 
-                    <PersonForm ref="personForm"
-                        person={ data.personItem.data }
-                        onSubmit={ this.onSubmit.bind(this) }/>,
+            let tagCloud = null;
+            if (person.tagList && !person.tagList.isPending) {
+                let tagList = this.props.personTags.tagList;
+                let tags = person.tagList.items
+                    .map(i => getListItemById(tagList, i.data.id))
+                    .filter(i => i !== null)
+                    .map(i => i.data);
 
-                    <input ref="submitButton" type="button" value="Delete"
-                        onClick={ this.onDeleteClick.bind(this) }/>
-                ];
+                tagCloud = (
+                    <TagCloud tags={ tags }
+                        showAddButton={ true } showRemoveButtons={ true }
+                        onRemove={ this.onRemoveTag.bind(this) }
+                        onAdd={ this.onAddTag.bind(this) }/>
+                );
             }
+
+            let addrFields = ADDR_FIELDS.filter(f => person[f]).map(field => (
+                <span key={ field } className="PersonPane-infoValue">
+                    { person[field] }
+                </span>
+            ));
+
+            let createInfoItem = (name, content) => {
+                let className = 'PersonPane-' + name;
+
+                if (!content) {
+                    className += ' PersonPane-emptyField';
+                    content = <span className="PersonPane-infoValue">
+                        Missing</span>;
+                }
+
+                return (
+                    <li key={ name } className={ className }>
+                        { content }
+                    </li>
+                );
+            };
+
+            return [
+                <DraggableAvatar key="avatar" ref="avatar" person={ person }/>,
+                <ul key="info" className="PersonPane-info">
+                    { BASIC_FIELDS.map(field => (
+                        createInfoItem(field, person[field])
+                    )) }
+                    { createInfoItem('address',
+                        addrFields.length? addrFields : null) }
+                </ul>,
+                <a onClick={ this.onClickEdit.bind(this) }>
+                    Edit basic information</a>,
+                <div className="PersonPane-tags">
+                    <h3>Tags</h3>
+                    { tagCloud }
+                </div>,
+            ];
         }
         else {
-            // TODO: Show error?
-            return <h1>HELO</h1>;
+            // TODO: Loading indicator
             return null;
         }
     }
 
-    onSubmit(ev) {
-        ev.preventDefault();
+    onAddTag() {
+        let personId = this.getParam(0);
+        let action = createSelection('persontag', null, null, ids => {
+            this.props.dispatch(addTagsToPerson(personId, ids));
+        });
 
-        let form = this.refs.personForm;
-        let values = form.getChangedValues();
-        let personId = this.props.params[0];
-
-        this.props.dispatch(updatePerson(personId, values));
+        this.props.dispatch(action);
+        this.openPane('selectpersontags', action.payload.id);
     }
 
-    onDeleteClick(ev) {
-        var personId = this.props.params[0];
 
-        this.props.dispatch(deletePerson(personId));
-        this.closePane();
+    onRemoveTag(tag) {
+        let personId = this.getParam(0);
+        this.props.dispatch(removeTagFromPerson(personId, tag.id));
+    }
+
+    onClickEdit(ev) {
+        let personId = this.getParam(0);
+        this.openPane('editperson', personId);
     }
 }

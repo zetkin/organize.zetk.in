@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import ActionForm from '../forms/ActionForm';
+import Button from '../misc/Button';
 import { createAction } from '../../actions/action';
 
 
@@ -45,6 +46,14 @@ export default class AddActionPane extends PaneBase {
                 onCreateLocation={ this.onCreateLocation.bind(this) }
                 onCreateActivity={ this.onCreateActivity.bind(this) }
                 onSubmit={ this.onSubmit.bind(this) }/>
+        );
+    }
+
+    renderPaneFooter(data) {
+        return (
+            <Button className="AddActionPane-saveButton"
+                label="Create Action"
+                onClick={ this.onSubmit.bind(this) }/>
         );
     }
 

@@ -37,7 +37,6 @@ export default class CallAssignmentForm extends React.Component {
                     name="cooldown"
                     initialValue={ assignment.cooldown }/>
 
-                <input type="submit" value="Submit"/>
             </Form>
         );
     }
