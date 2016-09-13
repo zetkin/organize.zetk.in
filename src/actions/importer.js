@@ -31,7 +31,7 @@ export function useImportTableFirstRowAsHeader(tableId, useFirstAsHeader) {
 }
 
 export function updateImportColumn(tableId, columnId, props) {
-    return function(dispatch, getState) {
+    return ({ dispatch, getState }) => {
         let tableSet = getState().importer.tableSet;
         let tableItem = getListItemById(tableSet.tableList, tableId);
         let table = tableItem.data;
