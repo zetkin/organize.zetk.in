@@ -1,7 +1,9 @@
 import React from 'react';
 
+import Button from '../Button';
 import ImporterTable from './ImporterTable';
 import { getListItemById } from '../../../utils/store';
+import { executeImport } from '../../../actions/importer';
 
 
 export default class ImporterTableSet extends React.Component {
@@ -48,6 +50,8 @@ export default class ImporterTableSet extends React.Component {
                 )) }
                 </select>
                 { table }
+                <Button label="Import"
+                    onClick={ this.onClickImport.bind(this) }/>
             </div>
         );
     }
@@ -56,5 +60,9 @@ export default class ImporterTableSet extends React.Component {
         this.setState({
             selectedTableId: ev.target.value,
         });
+    }
+
+    onClickImport() {
+        this.props.dispatch(executeImport(this.state.selectedTableId));
     }
 }

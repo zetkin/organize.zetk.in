@@ -76,3 +76,45 @@ export function updateImportColumn(tableId, columnId, props) {
         });
     }
 }
+
+export function executeImport(tableId) {
+    return ({ dispatch, getState }) => {
+        let orgId = getState().org.activeId;
+        let tableSet = getState().importer.tableSet;
+        let tableItem = getListItemById(tableSet.tableList, tableId);
+        let table = tableItem.data;
+
+        // Create minimal representation of included columns only
+        let columns = table.columnList.items
+            .filter(i => i.data.included)
+            .map(i => ({
+                type: i.data.type,
+                config: i.data.config,
+            }));
+
+        // Create minimal representation of row values, but only for those
+        // columns that have been included.
+        let rows = table.rows
+            .filter(r => r.included)
+            .map(r => r.values
+                .filter((c, idx) => table.columnList.items[idx].data.included)
+            );
+
+        let data = { columns, rows, orgId };
+
+        // TODO: Add fetch polyfill
+        dispatch({
+            type: types.EXECUTE_IMPORT,
+            payload: {
+                promise: fetch('/api/import', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                })
+            }
+        });
+    };
+}
