@@ -42,7 +42,7 @@ export function updateImportColumn(tableId, columnId, props) {
             // Set default configuration for each type
             if (props.type == 'person_data') {
                 props.config = {
-                    field: 'id',
+                    field: props.config? props.config.field : 'id',
                 };
             }
             else if (props.type == 'person_tag') {
