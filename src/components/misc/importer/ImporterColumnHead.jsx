@@ -4,7 +4,6 @@ import { resolveSummaryComponent } from './summary';
 
 
 const PERSON_OPTIONS = {
-    'person.id': 'Zetkin ID',
     'person.first_name': 'First name',
     'person.last_name': 'Last name',
     'person.email': 'E-mail address',
@@ -56,6 +55,7 @@ export default class ImporterColumnHead extends React.Component {
                 <select value={ type }
                     onChange={ this.onChangeColumn.bind(this) }>
                     <option value="unknown">Column type</option>
+                    <option value="person.id">Zetkin ID</option>
                     <optgroup label="Person fields">
                     { Object.keys(PERSON_OPTIONS).map(value => (
                         <option key={ value } value={ value }>
