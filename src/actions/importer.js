@@ -114,7 +114,14 @@ export function executeImport(tableId) {
                     },
                     body: JSON.stringify(data),
                 })
+                .then(res => res.json())
             }
         });
+    };
+}
+
+export function resetImport() {
+    return {
+        type: types.RESET_IMPORT,
     };
 }

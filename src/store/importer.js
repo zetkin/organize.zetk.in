@@ -8,7 +8,20 @@ import {
 
 
 export default function importer(state = null, action) {
-    if (action.type == types.PARSE_IMPORT_FILE + '_FULFILLED') {
+    if (action.type == types.EXECUTE_IMPORT + '_PENDING') {
+        return Object.assign({}, state, {
+            importIsPending: true,
+        });
+    }
+    else if (action.type == types.EXECUTE_IMPORT + '_FULFILLED') {
+        return Object.assign({}, state, {
+            importIsPending: false,
+            importStats: action.payload.report,
+            importError: false,
+            tableSet: null,
+        });
+    }
+    else if (action.type == types.PARSE_IMPORT_FILE + '_FULFILLED') {
         return Object.assign({}, state, {
             tableSet: action.payload.tableSet,
         });
@@ -75,8 +88,19 @@ export default function importer(state = null, action) {
             }),
         });
     }
+    else if (action.type == types.RESET_IMPORT) {
+        return Object.assign({}, state, {
+            importIsPending: false,
+            importError: null,
+            importStats: null,
+            tableSet: null,
+        });
+    }
     else {
         return state || {
+            importIsPending: false,
+            importError: null,
+            importStats: null,
             tableSet: null,
         };
     }

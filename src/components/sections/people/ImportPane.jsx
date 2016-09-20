@@ -3,9 +3,11 @@ import React from 'react';
 import DropZone from 'react-dropzone';
 import { connect } from 'react-redux';
 
+import Button from '../../misc/Button';
 import PaneBase from '../../panes/PaneBase';
 import ImporterTableSet from '../../misc/importer/ImporterTableSet';
-import { parseImportFile } from '../../../actions/importer';
+import LoadingIndicator from '../../misc/LoadingIndicator';
+import { parseImportFile, resetImport } from '../../../actions/importer';
 
 
 @connect(state => ({ importer: state.importer }))
@@ -24,13 +26,31 @@ export default class ImportPane extends PaneBase {
         });
 
         let tableSet = this.props.importer.tableSet;
+        let stats = this.props.importer.importStats;
+        let isPending = this.props.importer.importIsPending;
 
-        if (tableSet) {
+        if (isPending) {
+            return <LoadingIndicator />;
+        }
+        else if (tableSet) {
             return (
                 <ImporterTableSet tableSet={ tableSet }
                     onEditColumn={ this.onEditColumn.bind(this) }
                     dispatch={ this.props.dispatch }/>
             );
+        }
+        else if (stats) {
+            return [
+                <h1>Import complete</h1>,
+                <ul>
+                    <li>Imported: { stats.num_imported }</li>
+                    <li>Created: { stats.num_created }</li>
+                    <li>Updated: { stats.num_updated }</li>
+                    <li>Tagged: { stats.num_tagged }</li>
+                </ul>,
+                <Button label="Import more"
+                    onClick={ this.onClickReset.bind(this) }/>
+            ];
         }
         else {
             return [
@@ -67,5 +87,9 @@ export default class ImportPane extends PaneBase {
 
         let file = files[0];
         this.props.dispatch(parseImportFile(file));
+    }
+
+    onClickReset() {
+        this.props.dispatch(resetImport());
     }
 }
