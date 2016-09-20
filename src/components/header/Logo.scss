@@ -1,61 +1,19 @@
 .Logo {
     position: absolute;
-    top: 0.5em;
-    left: 0;
-    margin: 0;
-    color: #fff;
+    top: 15px;
+    bottom: 15px;
+    left: 15px;
 
-    a{
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        font-size: 1.8em;
-        color: transparent;
-        line-height: 1.35;
-    }
-    a::before{
-        content: "Z";
-        position: absolute;
-        color: #fff;
-        top: 0;
-        left: 0;
-        padding: 0 0.362em;;
-        display: block;
-    }
-
-    a::after {
-        content: "BETA";
-        display: block;
-        position: absolute;
-        left: 10px;
-        top: 17px;
-
-        padding: 1px 3px;
-        border-radius: 4px;
-
-        background-color: black;
-        font-weight: normal;
-        font-size: 8px;
-        color: white;
+    img {
+        height: 100%;
+        width: auto;
     }
 }
 
 @include medium-screen {
     .Logo {
-        left: 0.5em;
-
-        a{
-            color: inherit;
-        }
-        a::before{
-            content: "";
-            display: none;
-        }
-
-        a::after {
-            left: 90px;
-            top: 30px;
-        }
+        top: 10px;
+        bottom: 10px;
+        left: 28px;
     }
 }
