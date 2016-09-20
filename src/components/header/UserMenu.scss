@@ -1,8 +1,8 @@
 .UserMenu {
     display: block;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 0.5em;
+    right: 0.5em;
     font-size: 1.6em;
 
     &:hover {
@@ -21,12 +21,15 @@
 .UserMenu-info{
     display: none;
     margin-top: 3em;
+    margin-right: -0.6em;
     padding: 0.5em;
-    background-color: white;
+    color:white;
+    @include card;
+    // background-color: white;
 
     ul {
-        margin-top: 0;
-        text-align: right;
+        margin-top: 0.7em;
+        font-size: 0.9em;
     }
     li {
         list-style-type: none;
@@ -35,20 +38,33 @@
     }
     li a {
         text-decoration: none;
-        color: black;
-        font-weight: bold;
+        color: lighten($c-text,10);
+
+        &:hover {
+            color: $c-brand-main;
+        }
+
+    }
+    .UserMenu-logout:before {
+        @include icon($fa-var-power-off);
+    }
+    .UserMenu-account:before {
+        @include icon($fa-var-user);
+    }
+    .UserMenu-activeOrg:before {
+        @include icon($fa-var-sitemap);
     }
 }
 .UserMenu-name,
 .UserMenu-org{
-    text-align: right;
+    text-align: center;
     display: block;
 }
 .UserMenu-name{
-    font-weight: bold;
 }
 .UserMenu-org{
-    font-size: 0.8em;
+    font-size: 0.7em;
+    margin-top: 0.3em;
 }
 
 @include medium-screen {
@@ -73,7 +89,7 @@
 
         &:hover {
             &::before {
-                opacity: 0.5;
+                opacity: 0.1;
                 visibility: visible;
             }
 
@@ -88,7 +104,6 @@
         z-index: 3000;
     }
     .UserMenu-info {
-        background-color: red;
         position: absolute;
         top: 0;
         right: 0;
@@ -96,18 +111,25 @@
 
         display: block;
         margin-top: 0;
+        margin-right: 0.3em;
         padding: 0;
         background-color: transparent;
+        color: white;
+        box-shadow: none;
 
-
-        ul {
+        > ul {
             display: none;
+            @include card;
             padding: 0.5em;
-            background-color: white;
+            margin-top: 0.8em;
         }
     }
     .UserMenu-user{
         width: 14em;
         padding: 0.5em 3.5em 0.45em 0;
+    }
+    .UserMenu-name,
+    .UserMenu-org {
+        text-align: right;
     }
 }
