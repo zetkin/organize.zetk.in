@@ -1,11 +1,14 @@
 /* Colors */
-$c-brand-main: #FB2B2B;
-$c-brand-complement: #888;
+$c-brand-main: #ee323e;
+$c-brand-main-pink: #ed1c55;
+$c-brand-main-orange: #ef4123;
 
-$c-brand-confirm: #1FBCEA;  // blue
+$c-brand-comp-light: #48baeb;
+$c-brand-comp-dark: #3598c5;
+
+$c-brand-confirm: $c-brand-comp-light;
 $c-brand-delete: #F64A50;   // red
 $c-brand-success: #41EF5A;  // green
-
 
 $c-text: #000;
 $c-text-contrast: #FFF;
