@@ -7,15 +7,17 @@ import { gotoSection } from '../../actions/view';
 @connect(state => ({}))
 export default class Logo extends React.Component {
     render() {
-        let href = '/'
         return (
-            <h1 className="Logo">
-                <a onClick={ this.onClick.bind(this) }>
-                    Zetkin</a></h1>
+            <a className="Logo" href="/"
+                onClick={ this.onClick.bind(this) }>
+                <img src="/static/img/logo-white.png"
+                    alt="Zetkin"/>
+            </a>
         );
     }
 
-    onClick() {
+    onClick(ev) {
+        ev.preventDefault();
         this.props.dispatch(gotoSection(null));
     }
 }
