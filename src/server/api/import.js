@@ -4,6 +4,7 @@ import express from 'express';
 const importApi = express();
 
 importApi.post('/', (req, res, next) => {
+    let idColumnIdx;
     let orgId = req.body.orgId;
     let rows = req.body.rows;
     let cols = req.body.columns;
@@ -55,13 +56,19 @@ importApi.post('/', (req, res, next) => {
 
         let tags = [];
         let person = {};
+        let personId;
 
         for (let c = 0; c < cols.length; c++) {
             let col = cols[c];
             let val = row[c];
 
             if (col.type === 'person_data') {
-                person[col.config.field] = row[c];
+                if (col.config.field == 'id') {
+                    personId = row[c];
+                }
+                else {
+                    person[col.config.field] = row[c];
+                }
             }
             else if (col.type === 'person_tag') {
                 let mapping = col.config.mappings.find(m => m.value === val);
@@ -72,14 +79,27 @@ importApi.post('/', (req, res, next) => {
             }
         }
 
-        // TODO: Deal differently with persons with ID (update, don't add)
-        promise = promise
-            .then(res => req.z.resource('orgs', orgId, 'people').post(person))
-            .then(res => {
-                report.num_created++;
-                report.num_imported++;
-                return res;
-            });
+        // Update persons for which there are ID, or create new when there is none
+        if (personId) {
+            promise = promise
+                .then(res => req.z.resource(
+                    'orgs', orgId, 'people', personId).patch(person))
+                .then(res => {
+                    report.num_updated++;
+                    report.num_imported++;
+                    return res;
+                });
+        }
+        else {
+            promise = promise
+                .then(res => req.z.resource(
+                    'orgs', orgId, 'people').post(person))
+                .then(res => {
+                    report.num_created++;
+                    report.num_imported++;
+                    return res;
+                });
+        }
 
         if (tags.length) {
             promise = promise
