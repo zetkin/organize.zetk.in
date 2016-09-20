@@ -116,13 +116,21 @@ importApi.post('/', (req, res, next) => {
         }
     }
 
-    promise.then(() => {
-        res.status(200).json({
-            ok: true,
-            error: null,
-            report: report,
+    promise
+        .then(() => {
+            res.status(200).json({
+                ok: true,
+                error: null,
+                report: report,
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                ok: false,
+                error: err,
+            });
         });
-    });
+
 });
 
 
