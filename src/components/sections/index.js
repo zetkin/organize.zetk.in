@@ -8,6 +8,7 @@ import InvitePane from './people/InvitePane';
 import ImportPane from './people/ImportPane';
 import JoinRequestsPane from './people/JoinRequestsPane';
 import LocationsPane from './maps/LocationsPane';
+import OfficialsPane from './settings/OfficialsPane';
 import PeopleListPane from './people/PeopleListPane';
 
 
@@ -53,7 +54,14 @@ export const SECTIONS = {
             { path: 'locations', title: 'Locations',
                 startPane: LocationsPane }
         ],
-    }
+    },
+    settings: {
+        title: 'Settings',
+        subSections: [
+            { path: 'officials', title: 'Officials',
+                startPane: OfficialsPane },
+        ],
+    },
 };
 
 
