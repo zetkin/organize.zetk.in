@@ -1,70 +1,29 @@
-.ActionCalendar{
+.ActionCalendar {
+
     .ActionDay {
-        position: relative;
-        border-left: 1px solid #f4f4f4;
-        padding-bottom: 2em;
-
         h4 {
-            margin: 0 0 0.1em;
-            padding: 0.5em 1em;
-            background-color: white;
-            color: #666;
-            box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
-
-            .date {
-                font-size: 1.1em;
-                padding-right: 0.5em;
+            &:hover {
+                &:after {
+                    @include icon($fa-var-search-plus);
+                    position: absolute;
+                    right: 0;
+                }
             }
         }
-        .cloneHint {
-            display: none;
+        &.today h4 {
+            background-color: $c-brand-confirm;
+            color: white;
         }
     }
-    .ActionItem {
-        position: relative;
-
-        .location {
-            display: block;
-            font-size: 1.2em;
-            font-weight: bold;
-            margin: 0 0 0.2em;
-
-            &::before {
-                @include icon($fa-var-map-marker);
-                display: block;
-                float: left;
-                width: 0.5em;
-                height: 0.8em;
-                margin: 0.2em 0.4em 0 0;
-                font-size: .8em;
-                line-height: 0.9;
-            }
-        }
-
-        .activity {
-            display: inline-block;
-            font-size: 1.1em;
-        }
-
-        .time {
-            display: inline-block;
-            font-size: 1.1em;
-            margin-right: 0.5em;
-            float: left;
-        }
-
-        &::after {
-            @include icon($fa-var-bars);
-            font-size: 1.6em;
-            display: block;
-            position: absolute;
-            color: #eee;
-            height: auto;
-            top: 0.35em;
-            bottom: 0.35em;
-            right: 0.25em;
-            cursor: move;
-        }
+    .ActionItem:after {
+        @include icon($fa-var-ellipsis-v);
+        font-size: 2em;
+        width: 0.5em;
+        position: absolute;
+        color: #eee;
+        top: calc(50% - 0.8em);
+        right: 0.25em;
+        cursor: -webkit-grab;
     }
 }
 
@@ -74,58 +33,16 @@
             @include flex-container;
 
             h2 {
-                font-size: 1em;
+                font-size: 1.2em;
                 font-weight: normal;
                 width: 4%;
+                margin-top: 0.5em;
             }
 
             &::after {
                 content: "";
                 display: block;
                 clear: both;
-            }
-        }
-        .ActionDay {
-            @include flex;
-
-            &:last-child {
-                border-right: 1px solid #f4f4f4;
-            }
-
-            &.today h4 {
-                border: 1px solid #aaa;
-            }
-
-            h4 {
-                margin: 0 0 0.1em;
-                padding: 0.5em 1em;
-                background-color: white;
-                color: #666;
-                box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
-
-                .date {
-                    font-size: 1.1em;
-                    padding-right: 0.5em;
-                }
-            }
-
-            .cloneHint {
-                display: block;
-                position: absolute;
-                left: 1em;
-                right: 1em;
-                bottom: 1em;
-                text-align: center;
-                color: #999;
-
-                code {
-                    @include key-reference
-                }
-            }
-        }
-        .ActionItem {
-            &::after {
-                font-size: 1em;
             }
         }
     }
