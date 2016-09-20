@@ -6,5 +6,8 @@
     height: 6.8em;
     z-index: 1000;
     padding: 1.8em;
-    background-color: $c-brand-main;
+    background: radial-gradient(
+        circle at 50% 50%,
+        $c-brand-main-orange,
+        $c-brand-main-pink);
 }
