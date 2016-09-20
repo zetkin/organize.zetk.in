@@ -16,5 +16,8 @@ module.exports = {
         path: path.join(__dirname, 'dist/static/js'),
         publicPath: 'http://organize.dev.zetkin.org/',
         filename: '[name].js'
+    },
+    node: {
+        fs: 'empty',
     }
 };

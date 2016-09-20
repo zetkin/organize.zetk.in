@@ -1,0 +1,10 @@
+.ImportPane {
+    .ImportPane-dropZone {
+        background-color: $c-ui-dark;
+        min-height: 200px;
+    }
+
+    .ImportPane-dropZone-isDragging {
+        background-color: $c-ui-darker;
+    }
+}

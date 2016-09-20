@@ -1,0 +1,8 @@
+.ImporterColumnPane {
+    .ImporterColumnPane-settings {
+        & > div {
+            @include card;
+            padding: 10px;
+        }
+    }
+}

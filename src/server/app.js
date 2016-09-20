@@ -8,6 +8,7 @@ import http from 'http';
 import path from 'path';
 import { Provider } from 'react-redux';
 
+import api from './api';
 import dataRouter from './datarouter';
 import search from './search';
 import widgets from './widgets';
@@ -42,6 +43,7 @@ app.use(auth.validate(authOpts));
 app.get('/logout', auth.logout(authOpts));
 
 app.use(dataRouter);
+app.use('/api', api);
 app.use('/widgets', widgets);
 
 expressWs(app);

@@ -1,13 +1,14 @@
 import ActionDistributionPane from './campaign/ActionDistributionPane';
 import AllActionsPane from './campaign/AllActionsPane';
-import CampaignPlaybackPane from './campaign/CampaignPlaybackPane';
 import AllCallAssignmentsPane from './dialog/AllCallAssignmentsPane';
 import CallAssignmentTemplatePane from './dialog/CallAssignmentTemplatePane';
 import CallLogPane from './dialog/CallLogPane';
-import PeopleListPane from './people/PeopleListPane';
-import JoinRequestsPane from './people/JoinRequestsPane';
+import CampaignPlaybackPane from './campaign/CampaignPlaybackPane';
 import InvitePane from './people/InvitePane';
+import ImportPane from './people/ImportPane';
+import JoinRequestsPane from './people/JoinRequestsPane';
 import LocationsPane from './maps/LocationsPane';
+import PeopleListPane from './people/PeopleListPane';
 
 
 export const SECTIONS = {
@@ -20,6 +21,8 @@ export const SECTIONS = {
                 startPane: JoinRequestsPane },
             { path: 'invite', title: 'Invite',
                 startPane: InvitePane },
+            { path: 'import', title: 'Import',
+                startPane: ImportPane },
         ],
     },
     campaign: {

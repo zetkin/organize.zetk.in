@@ -1,0 +1,24 @@
+.ImporterColumnHead {
+    @include card;
+    padding: 10px;
+
+    h3.ImporterColumnHead-name {
+        font-size: 14px;
+        margin: 0 0 5px;
+    }
+
+    .ImporterColumnHead-summary {
+        p {
+            font-size: 11px;
+            font-style: italic;
+            font-weight: normal;
+        }
+    }
+
+    .ImporterColumnHead-editLink {
+        font-size: 11px;
+        cursor: pointer;
+        font-weight: normal;
+        text-decoration: underline;
+    }
+}
