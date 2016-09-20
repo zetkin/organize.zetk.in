@@ -99,6 +99,13 @@ export function parseWorkbook(data) {
                     table.useFirstRowAsHeader = true;
                     table.columnList.items.forEach((colItem, idx) => {
                         colItem.data.name = table.rows[0].values[idx];
+
+                        // Try to figure out type by name
+                        let cfg = guessColumnConfigFromName(colItem.data.name);
+                        if (cfg) {
+                            colItem.data.type = cfg.type;
+                            colItem.data.config = cfg.config;
+                        }
                     });
 
                     table.rows.splice(0, 1);
@@ -110,4 +117,20 @@ export function parseWorkbook(data) {
     });
 
     return tableSet;
+}
+
+function guessColumnConfigFromName(name) {
+    let type, config;
+
+    // TODO: Evolve this function. Add common, localized names
+    if (name.toLowerCase() == 'id') {
+        type = 'person_data';
+        config = {
+            field: 'id'
+        };
+    }
+
+    if (type && config) {
+        return { type, config };
+    }
 }
