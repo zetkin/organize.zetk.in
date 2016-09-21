@@ -10,6 +10,37 @@ export function retrieveOfficials() {
             payload: {
                 promise: z.resource('orgs', orgId, 'officials').get()
             }
-        })
+        });
+    };
+}
+
+export function setOfficialRole(personId, role) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.SET_OFFICIAL_ROLE,
+            meta: { personId, role },
+            payload: {
+                promise: z.resource('orgs', orgId, 'officials', personId)
+                    .put({ role })
+            }
+        });
+    };
+}
+
+export function setOfficialsRole(personIds, role) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        let promises = personIds.map(id =>
+            z.resource('orgs', orgId, 'officials', id).put({ role }));
+
+        dispatch({
+            type: types.SET_OFFICIALS_ROLE,
+            payload: {
+                promise: Promise.all(promises)
+            }
+        });
     };
 }

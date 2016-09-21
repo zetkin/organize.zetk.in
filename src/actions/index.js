@@ -134,3 +134,5 @@ export const RESET_IMPORT = 'RESET_IMPORT';
 
 // Flux actions related to officials
 export const RETRIEVE_OFFICIALS = 'RETRIEVE_OFFICIALS';
+export const SET_OFFICIAL_ROLE = 'SET_OFFICIAL_ROLE';
+export const SET_OFFICIALS_ROLE = 'SET_OFFICIALS_ROLE';
