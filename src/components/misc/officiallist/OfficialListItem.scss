@@ -1,0 +1,14 @@
+.OfficialListItem {
+    float: left;
+    width: 100px;
+    margin: 0 10px 10px 0;
+
+    .OfficialListItem-name {
+        font-size: 200%;
+    }
+
+    .Avatar {
+        width: 100%;
+        height: auto;
+    }
+}

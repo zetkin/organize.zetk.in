@@ -1,0 +1,7 @@
+.OfficialList {
+    &:after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+}
