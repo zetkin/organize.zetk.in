@@ -66,9 +66,23 @@ export default class SelectPeoplePane extends PaneBase {
     }
 
     renderPaneFooter(data) {
+        let label;
+        let numSelected = data.selectionItem.data.selectedIds.length;
+
+        // TODO: Move to l10n
+        if (numSelected === 0) {
+            label = 'Select no one';
+        }
+        else if (numSelected === 1) {
+            label = 'Select one person';
+        }
+        else {
+            label = 'Select ' + numSelected + ' people';
+        }
+
         return (
             <Button className="SelectPeoplePane-saveButton"
-                label="Add Callers"
+                label={ label }
                 onClick={ this.onClickSave.bind(this) }/>
         );
     }
