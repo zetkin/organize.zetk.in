@@ -78,6 +78,6 @@ export default class OfficialsPane extends PaneBase {
     }
 
     onSelect(role, official) {
-        console.log('SELECT', role, official);
+        this.openPane('person', official.id)
     }
 }
