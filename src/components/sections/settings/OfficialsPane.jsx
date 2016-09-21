@@ -4,7 +4,11 @@ import React from 'react';
 import PaneBase from '../../panes/PaneBase';
 import OfficialList from '../../misc/officiallist/OfficialList';
 import { createSelection } from '../../../actions/selection';
-import { retrieveOfficials } from '../../../actions/official';
+import {
+    retrieveOfficials,
+    setOfficialsRole,
+    setOfficialRole
+} from '../../../actions/official';
 
 
 @connect(state => ({ officials: state.officials }))
@@ -51,16 +55,15 @@ export default class OfficialsPane extends PaneBase {
         ];
     }
 
-    onAdd(role, official) {
-        if (official) {
-            // TODO Add
-            console.log('Add official', official);
+    onAdd(role, person) {
+        if (person) {
+            this.props.dispatch(setOfficialRole(person.id, role));
         }
         else {
             let instructions = 'Select people to be added as officials';
 
             let action = createSelection('person', null, instructions, ids => {
-                console.log('SELECTED', ids);
+                this.props.dispatch(setOfficialsRole(ids, role));
             });
 
             this.props.dispatch(action);
