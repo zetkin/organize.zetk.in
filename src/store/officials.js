@@ -3,6 +3,7 @@ import {
     createList,
     createListItems,
     getListItemById,
+    removeListItem,
     updateOrAddListItem,
     updateOrAddListItems,
 } from '../utils/store';
@@ -55,11 +56,16 @@ export default function officials(state = null, action) {
             });
 
         case types.SET_OFFICIALS_ROLE + '_FULFILLED':
-            console.log(action);
             let officials = action.payload.map(d => d.data.data);
             return Object.assign({}, state, {
                 officialList: updateOrAddListItems(
                     state.officialList, officials)
+            });
+
+        case types.DELETE_OFFICIAL + '_FULFILLED':
+            return Object.assign({}, state, {
+                officialList: removeListItem(state.officialList,
+                    action.meta.personId)
             });
 
         default:

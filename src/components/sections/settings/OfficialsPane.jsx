@@ -5,6 +5,7 @@ import PaneBase from '../../panes/PaneBase';
 import OfficialList from '../../misc/officiallist/OfficialList';
 import { createSelection } from '../../../actions/selection';
 import {
+    deleteOfficial,
     retrieveOfficials,
     setOfficialsRole,
     setOfficialRole
@@ -73,7 +74,7 @@ export default class OfficialsPane extends PaneBase {
 
 
     onRemove(official) {
-        console.log('REMOVE', official);
+        this.props.dispatch(deleteOfficial(official.id));
     }
 
     onSelect(role, official) {

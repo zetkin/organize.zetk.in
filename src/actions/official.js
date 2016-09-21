@@ -44,3 +44,17 @@ export function setOfficialsRole(personIds, role) {
         });
     };
 }
+
+export function deleteOfficial(personId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.DELETE_OFFICIAL,
+            meta: { personId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'officials', personId).del()
+            }
+        });
+    };
+}
