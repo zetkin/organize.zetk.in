@@ -60,7 +60,7 @@ export default class OfficialList extends React.Component {
             <ul className={ classes }>
                 { addItem }
             { this.props.officials.map(o => (
-                <OfficialListItem key={ o.person.id } official={ o }
+                <OfficialListItem key={ o.id } official={ o }
                     onSelect={ this.props.onSelect.bind(this) }
                     onRemove={ this.props.onRemove.bind(this) }/>
             )) }
