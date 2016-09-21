@@ -4,4 +4,27 @@
         display: block;
         clear: both;
     }
+
+    .OfficialList-addItem {
+        @include ghost-placeholder();
+
+        float: left;
+        width: 100px;
+        height: 150px;
+        padding: 10px;
+    }
+
+    &.OfficialList-isPersonOver {
+        .OfficialList-addItem {
+            border-color: $c-ui-darker;
+
+            p {
+                opacity: 0;
+            }
+        }
+
+        .OfficialList {
+            opacity: 0.5;
+        }
+    }
 }

@@ -45,9 +45,9 @@ export default class OfficialList extends React.Component {
         let addItem = this.props.connectDropTarget(
             <li key="add" className="OfficialList-addItem">
                 <p>
-                    Drag a person here or <a
+                    Drop or <a
                         onClick={ this.onClickAddOfficials.bind(this) }>
-                        select officials to be added</a>.
+                        select officials</a>.
                 </p>
             </li>
         );
@@ -58,12 +58,12 @@ export default class OfficialList extends React.Component {
 
         return (
             <ul className={ classes }>
-                { addItem }
             { this.props.officials.map(o => (
                 <OfficialListItem key={ o.id } official={ o }
                     onSelect={ this.props.onSelect.bind(this) }
                     onRemove={ this.props.onRemove.bind(this) }/>
             )) }
+                { addItem }
             </ul>
         );
     }
