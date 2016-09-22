@@ -6,7 +6,6 @@ import CallLogPane from './dialog/CallLogPane';
 import CampaignPlaybackPane from './campaign/CampaignPlaybackPane';
 import InvitePane from './people/InvitePane';
 import ImportPane from './people/ImportPane';
-import JoinRequestsPane from './people/JoinRequestsPane';
 import LocationsPane from './maps/LocationsPane';
 import OfficialsPane from './settings/OfficialsPane';
 import PeopleListPane from './people/PeopleListPane';
@@ -18,8 +17,6 @@ export const SECTIONS = {
         subSections: [
             { path: 'list', title: 'People',
                 startPane: PeopleListPane },
-            { path: 'requests', title: 'Join requests',
-                startPane: JoinRequestsPane },
             { path: 'invite', title: 'Invite',
                 startPane: InvitePane },
             { path: 'import', title: 'Import',
