@@ -40,7 +40,7 @@ export default class InviteBox extends React.Component {
         }
 
         formElements.push(
-            <input key="email" type="email"
+            <input key="email" type="email" className="InviteBox-emailInput"
                 disabled={ this.props.isPending }
                 value={ this.state.inviteEmail }
                 onChange={ this.onInviteEmailChange.bind(this) }/>
@@ -53,7 +53,9 @@ export default class InviteBox extends React.Component {
         }
         else {
             formElements.push(
-                <input key="submit" type="submit" value="Send invite"/>
+                <input key="submit" type="submit"
+                    className="InviteBox-submitButton"
+                    value="Send invite"/>
             );
         }
 
