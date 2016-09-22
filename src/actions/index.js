@@ -137,3 +137,6 @@ export const RETRIEVE_OFFICIALS = 'RETRIEVE_OFFICIALS';
 export const SET_OFFICIAL_ROLE = 'SET_OFFICIAL_ROLE';
 export const SET_OFFICIALS_ROLE = 'SET_OFFICIALS_ROLE';
 export const DELETE_OFFICIAL = 'DELETE_OFFICIAL';
+
+// Flux actions related to invites
+export const RETRIEVE_INVITES = 'RETRIEVE_INVITES';
