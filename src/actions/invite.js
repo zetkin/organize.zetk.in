@@ -13,3 +13,17 @@ export function retrieveInvites() {
         });
     };
 }
+
+export function createInvite(email) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.CREATE_INVITE,
+            meta: { email },
+            payload: {
+                promise: z.resource('orgs', orgId, 'invites').post({ email })
+            }
+        });
+    };
+}

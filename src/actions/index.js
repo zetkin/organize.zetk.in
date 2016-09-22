@@ -139,4 +139,5 @@ export const SET_OFFICIALS_ROLE = 'SET_OFFICIALS_ROLE';
 export const DELETE_OFFICIAL = 'DELETE_OFFICIAL';
 
 // Flux actions related to invites
+export const CREATE_INVITE = 'CREATE_INVITE';
 export const RETRIEVE_INVITES = 'RETRIEVE_INVITES';

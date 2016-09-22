@@ -1,7 +1,8 @@
 import * as types from '../actions';
 import {
     createList,
-    createListItems
+    createListItems,
+    updateOrAddListItem,
 } from '../utils/store';
 
 
@@ -21,6 +22,25 @@ export default function invites(state = null, action) {
                     isPending: false,
                     items: createListItems(action.payload.data.data)
                 })
+            });
+
+        case types.CREATE_INVITE + '_PENDING':
+            return Object.assign({}, state, {
+                createIsPending: true,
+            });
+
+        case types.CREATE_INVITE + '_FULFILLED':
+            let invite = action.payload.data.data;
+            return Object.assign({}, state, {
+                createIsPending: false,
+                inviteList: updateOrAddListItem(state.inviteList,
+                    invite.id, invite)
+            });
+
+        case types.CREATE_INVITE + '_REJECTED':
+            return Object.assign({}, state, {
+                createIsPending: false,
+                createError: action.payload.data,
             });
 
         default:
