@@ -40,7 +40,9 @@ export default function invites(state = null, action) {
         case types.CREATE_INVITE + '_REJECTED':
             return Object.assign({}, state, {
                 createIsPending: false,
-                createError: action.payload.data,
+                createError: Object.assign({}, action.payload.data, {
+                    email: action.meta.email,
+                })
             });
 
         default:
