@@ -8,6 +8,7 @@ import calls from './calls';
 import campaigns from './campaigns';
 import dashboard from './dashboard';
 import documents from './documents';
+import invites from './invites';
 import locations from './locations';
 import officials from './officials';
 import org from './org';
@@ -32,6 +33,7 @@ const appReducer = combineReducers({
     campaigns,
     dashboard,
     documents,
+    invites,
     locations,
     officials,
     org,
