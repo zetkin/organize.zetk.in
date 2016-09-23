@@ -4,6 +4,11 @@ import cx from 'classnames';
 import ListHeader from './ListHeader';
 
 
+function r(obj, fieldPath) {
+    let path = fieldPath.split('.');
+    return path.reduce((o, e) => o[e], obj);
+}
+
 export default class List extends React.Component {
     static propTypes = {
         list: React.PropTypes.shape({
@@ -41,9 +46,17 @@ export default class List extends React.Component {
             );
         }
 
-        if (sortField && this.props.sortFunc) {
-            items = items.concat().sort((i0, i1) =>
-                this.props.sortFunc(sortField, i0, i1));
+        if (sortField) {
+            // Use custom sort func from properties if one exists, or use a
+            // default sort func which resolves fields from the header columns
+            // and uses standard JS comparison to figure out order.
+            let sortFunc = this.props.sortFunc || ((i0, i1) => {
+                if (r(i0.data, sortField) < r(i1.data, sortField)) return -1;
+                if (r(i0.data, sortField) > r(i1.data, sortField)) return 1;
+                return 0;
+            });
+
+            items = items.concat().sort(sortFunc);
         }
 
         let ItemComponent = this.props.itemComponent;
