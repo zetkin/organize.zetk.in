@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Avatar from '../Avatar';
+import Avatar from '../misc/Avatar';
 
 
 export default class CallListItem extends React.Component {
