@@ -1,0 +1,11 @@
+.ListItem {
+    width: 100%;
+    margin: 1em 0;
+    padding: 1em;
+    @include card;
+
+    &:hover {
+        background-color: darken($c-ui-bg, 1);
+        cursor: pointer;
+    }
+}

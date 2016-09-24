@@ -1,8 +1,7 @@
 .ParticipantList {
     display: none;
-}
-@include medium-screen {
-    .ParticipantList {
+
+    @include medium-screen {
         display: block;
         min-height: 5em;
         float: right;
@@ -21,7 +20,8 @@
             clear: both;
         }
     }
-    .ParticipantList .moreMarticipants {
+
+    .ParticipantList-moreParticipants {
         padding: 15px 2px;
         background-color: #eee;
         text-align: center;
@@ -29,13 +29,10 @@
         font-weight: bold;
         color: #ccc;
         cursor: pointer;
+        color: #aaa;
 
         &::before {
             content: "+";
         }
-    }
-
-    .ParticipantList .moreMarticipants {
-        color: #aaa;
     }
 }

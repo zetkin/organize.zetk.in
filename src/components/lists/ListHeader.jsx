@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 
-import { componentClassNames } from '../..';
+import { componentClassNames } from '..';
 
 
 export default class ListHeader extends React.Component {

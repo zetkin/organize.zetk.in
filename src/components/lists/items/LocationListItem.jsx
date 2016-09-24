@@ -4,7 +4,7 @@ import url from 'url';
 
 export default class LocationListItem extends React.Component {
     render() {
-        const loc = this.props.location.data;
+        const loc = this.props.data;
         const lat = loc.lat;
         const lng = loc.lng;
 
@@ -21,12 +21,12 @@ export default class LocationListItem extends React.Component {
         });
 
         return (
-            <li className="LocationListItem"
+            <div className="LocationListItem"
                 onClick={ this.onClick.bind(this) }>
                 <img src={ imgSrc }/>
                 <span className="LocationListItem-title">
                     { loc.title }</span>
-            </li>
+            </div>
         );
     }
 

@@ -1,16 +1,23 @@
 import React from 'react';
 import cx from 'classnames';
 import { DropTarget } from 'react-dnd';
+import { connect } from 'react-redux';
 
-import ParticipantList from './ParticipantList';
-import ContactSlot from './ContactSlot';
-import { retrieveActionParticipants } from '../../../actions/participant';
+import ParticipantList from './elements/ParticipantList';
+import ContactSlot from './elements/ContactSlot';
+import { updateAction } from '../../../actions/action';
+import {
+    addActionParticipant,
+    moveActionParticipant,
+    retrieveActionParticipants,
+} from '../../../actions/participant';
 
 
 const actionTarget = {
     canDrop(props, monitor) {
         const person = monitor.getItem();
-        const participants = props.participants;
+        const action = props.data;
+        const participants = props.participants.byAction[action.id];
         const duplicate = participants.find(p => (p.id == person.id));
 
         // Only allow drops if it wouldn't result in duplicate
@@ -19,11 +26,18 @@ const actionTarget = {
 
     drop(props) {
         // TODO: Use generalized onDropPerson instead
+        let action = props.data;
         return {
             targetType: 'participant',
-            onAddParticipant: props.onAddParticipant,
-            onMoveParticipant: props.onMoveParticipant,
-            newAction: props.action
+            onAddParticipant: (person) => {
+                props.dispatch(addActionParticipant(
+                    person.id, action.id));
+            },
+            newAction: action,
+            onMoveParticipant: (person, oldAction) => {
+                props.dispatch(moveActionParticipant(
+                    person.id, oldAction.id, action.id));
+            },
         };
     }
 };
@@ -43,11 +57,20 @@ const contactTarget = {
 
     drop(props) {
         // TODO: Use generalized onDropPerson instead
+        let action = props.data;
         return {
             targetType: 'contact',
+            newAction: action,
             onMoveParticipant: props.onMoveParticipant,
-            onSetContact: props.onSetContact,
-            newAction: props.action
+            onSetContact: (person, oldAction) => {
+                props.dispatch(updateAction(action.id, {
+                    contact_id: person.id
+                }));
+
+                if (action.id != oldAction.id) {
+                    // TODO: Remove from old action
+                }
+            }
         }
     }
 };
@@ -61,9 +84,16 @@ function collectContact(connect, monitor) {
 }
 
 
+@connect(state => ({ participants: state.participants }))
 @DropTarget('person', actionTarget, collectParticipant)
 @DropTarget('person', contactTarget, collectContact)
 export default class ActionListItem extends React.Component {
+    static propTypes = {
+        data: React.PropTypes.object.isRequired,
+        participants: React.PropTypes.object,
+        onOperation: React.PropTypes.func,
+    }
+
     constructor(props) {
         super(props);
 
@@ -73,9 +103,11 @@ export default class ActionListItem extends React.Component {
     }
 
     componentDidMount() {
-        var action = this.props.action;
+        let action = this.props.data;
+        let participants = this.props.participants.byAction[action.id];
 
-        if (!this.props.participants) {
+        // TODO: Move to load when first shown (in view)
+        if (!participants) {
             this.props.dispatch(retrieveActionParticipants(action.id));
         }
     }
@@ -101,7 +133,9 @@ export default class ActionListItem extends React.Component {
             }
         }
 
-        if (nextProps.participants != this.props.participants) {
+        let action = this.props.data;
+        if (nextProps.participants.byAction[action.id]
+            != this.props.participants.byAction[action.id]) {
             return true;
         }
 
@@ -109,9 +143,9 @@ export default class ActionListItem extends React.Component {
     }
 
     render() {
-        const action = this.props.action;
+        let action = this.props.data;
+        let participants = this.props.participants.byAction[action.id] || [];
         const contact = action.contact;
-        const participants = this.props.participants || [];
         const actionDate = new Date(action.start_time);
         const large = (this.state.expanded || this.props.isParticipantOver);
 
@@ -148,7 +182,7 @@ export default class ActionListItem extends React.Component {
         };
 
         return (
-            <li className={ classNames } style={ style }
+            <div className={ classNames } style={ style }
                 onClick={ this.onClick.bind(this) }>
 
                 <span className="time">
@@ -162,68 +196,18 @@ export default class ActionListItem extends React.Component {
 
                 { participantList }
                 { contactSlot }
-
-                <ul className="ActionListItem-operations">
-                    <li className="ActionListItem-operation">
-                        <a onClick={ this.onEditClick.bind(this) }>
-                            Edit</a></li>
-                        <li className="ActionListItem-operation">
-                        <a onClick={ this.onSendClick.bind(this) }>
-                            Send reminders</a></li>
-                        <li className="ActionListItem-operation">
-                        <a onClick={ this.onBookClick.bind(this) }>
-                            Book all available activists</a></li>
-                        <li className="ActionListItem-operation">
-                        <a onClick={ this.onCancelClick.bind(this) }>
-                            Cancel action</a></li>
-                </ul>
-            </li>
+            </div>
         );
     }
 
     onClick(ev) {
-        this.setState({
-            expanded: !this.state.expanded
-        });
+        this.props.onSelect();
     }
 
     onShowAllParticipants(ev) {
+        ev.stopPropagation();
         this.setState({
             expanded: true
         });
     }
-
-    onEditClick(ev) {
-        ev.stopPropagation();
-        if (this.props.onOperation) {
-            this.props.onOperation('edit');
-        }
-    }
-
-    onSendClick(ev) {
-        ev.stopPropagation();
-        if (this.props.onOperation) {
-            this.props.onOperation('sendreminders');
-        }
-    }
-
-    onBookClick(ev) {
-        ev.stopPropagation();
-        if (this.props.onOperation) {
-            this.props.onOperation('bookall');
-        }
-    }
-
-    onCancelClick(ev) {
-        ev.stopPropagation();
-        if (this.props.onOperation) {
-            this.props.onOperation('cancel');
-        }
-    }
 }
-
-ActionListItem.propTypes = {
-    action: React.PropTypes.object.isRequired,
-    participants: React.PropTypes.array,
-    onOperation: React.PropTypes.func
-};

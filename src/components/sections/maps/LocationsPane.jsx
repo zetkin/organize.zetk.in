@@ -5,7 +5,7 @@ import PaneBase from '../../panes/PaneBase';
 import Button from '../../misc/Button';
 import LocationMap from '../../misc/LocationMap';
 import ViewSwitch from '../../misc/ViewSwitch';
-import LocationList from '../../misc/loclist/LocationList';
+import LocationList from '../../lists/LocationList';
 import { retrieveLocations, setPendingLocation }
     from '../../../actions/location';
 
@@ -61,7 +61,7 @@ export default class LocationsPane extends PaneBase {
         }
         else if (this.state.viewMode == 'list') {
             content = (
-                <LocationList locations={ locationList.items }
+                <LocationList locationList={ locationList }
                     onSelect={ this.onLocationSelect.bind(this) }/>
             );
         }
