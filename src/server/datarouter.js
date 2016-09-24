@@ -78,6 +78,10 @@ function waitForActions(execActions) {
 }
 
 
+router.get(/action:(\d+)$/, waitForActions(req => [
+    retrieveAction(req.params[0])
+]));
+
 router.get([/people$/, /people\/list$/], waitForActions(req => [
     retrievePeople()
 ]));
