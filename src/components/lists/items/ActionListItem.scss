@@ -1,12 +1,6 @@
 .ActionListItem {
     overflow: hidden;
-    list-style-type: none;
     position: relative;
-    background-color: white;
-    margin: 0.5em 0;
-    padding: 0.5em;
-    box-shadow: 0 0 0.1em rgba(0,0,0,0.1);
-
     transition: height 0.1s;
 
     &.expanded {
@@ -96,53 +90,9 @@
         text-indent: 0;
         background-color: rgba(221, 221, 221, 1.0);
     }
-
-    .ActionListItem-operations {
-        margin: 0;
-        padding: 0;
-        position: absolute;
-        left: 10px;
-        bottom: 5px;
-
-        opacity: 0;
-        visibility: hidden;
-
-        transition: opacity 0.4s;
-
-    }
-    .ActionListItem-operation {
-        display: block;
-        float: left;
-        margin: 0 20px 0 0;
-        padding: 0;
-
-        a {
-            cursor: pointer;
-        }
-    }
-
-    .ActionListItem-operation a {
-        color: #888;
-    }
-
-    .ActionListItem-operation a:hover {
-        color: #555;
-    }
 }
 @include medium-screen {
     .ActionListItem {
-
-        &.expanded {
-            .ActionListItem-operations  li:nth-child(n){
-                display: block;;
-            }
-        }
-
-
-        &.dragOver {
-            box-shadow: 0 0 0.2em rgba(0,0,0,0.2);
-        }
-
         li.participant {
             cursor: move;
 

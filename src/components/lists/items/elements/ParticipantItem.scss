@@ -1,0 +1,14 @@
+.ParticipantItem {
+    &.hidden {
+        display: none;
+    }
+
+    figure {
+        margin: 0;
+    }
+
+    img {
+        width: 50px;
+        height: auto;
+    }
+}

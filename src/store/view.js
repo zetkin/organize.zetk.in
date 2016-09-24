@@ -126,6 +126,10 @@ export default function viewState(state = null, action) {
             }),
         });
     }
+    else if (action.type == types.MOVE_ACTION_PARTICIPANT) {
+        // TODO: Display move pane if more than one move
+        return state;
+    }
     else {
         return state || {
             section: '',

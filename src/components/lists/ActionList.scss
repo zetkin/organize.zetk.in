@@ -1,0 +1,50 @@
+.ActionList {
+    .ListHeader {
+        position: relative;
+        height: 15px;
+
+        li {
+            color: #888;
+            font-size: 10px;
+            position: absolute;
+            list-style-type: none;
+        }
+
+        li:nth-child(1) {
+            left: 10px;
+        }
+
+        li:nth-child(2) {
+            left: 120px;
+        }
+
+        li:nth-child(3) {
+            display: none;
+        }
+
+        li:nth-child(4) {
+            display: none;
+        }
+    }
+
+    @include medium-screen {
+        .ActionList {
+            width: 60%;
+            min-width: 640px;
+        }
+
+        .ListHeader {
+            li:nth-child(3) {
+                display: block;
+                width: 8em;
+                right: 24em;
+            }
+
+            li:nth-child(4) {
+                display: block;
+                width: 10em;
+                right: 12em;
+            }
+        }
+    }
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { DragSource } from 'react-dnd';
 
-import Avatar from '../Avatar';
+import Avatar from '../../../misc/Avatar';
 
 
 const contactSource = {
@@ -17,7 +17,7 @@ const contactSource = {
         }
 
         const person = monitor.getItem();
-        const oldAction = props.action;
+        const oldAction = props.data;
         const newAction = dropResult.newAction;
         const targetType = dropResult.targetType;
 

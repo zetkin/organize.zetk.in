@@ -2,7 +2,7 @@ import React from 'react';
 import { DragSource } from 'react-dnd';
 import cx from 'classnames';
 
-import Avatar from '../Avatar';
+import Avatar from '../../../misc/Avatar';
 
 const participantSource = {
     beginDrag(props) {
