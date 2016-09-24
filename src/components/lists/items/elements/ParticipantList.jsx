@@ -5,7 +5,7 @@ import ParticipantItem from './ParticipantItem';
 
 export default class ParticipantList extends React.Component {
     shouldComponentUpdate(nextProps, nextState) {
-        return (nextProps.participants
+        return (!!nextProps.participants
             && nextProps.participants != this.props.participants);
     }
 
@@ -16,7 +16,7 @@ export default class ParticipantList extends React.Component {
 
         var moreItem = null;
 
-        if (participants.length > maxVisible) {
+        if (maxVisible && participants.length > maxVisible) {
             const numAdditional = participants.length - (maxVisible - 1);
 
             moreItem = (
@@ -54,8 +54,4 @@ ParticipantList.propTypes = {
         first_name: React.PropTypes.string.isRequired,
         last_name: React.PropTypes.string.isRequired
     }))
-};
-
-ParticipantList.defaultProps = {
-    maxVisible: 4
 };
