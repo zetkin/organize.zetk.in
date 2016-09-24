@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CallListItem from './CallListItem';
+import CallListItem from './items/CallListItem';
 import List from './List';
 
 

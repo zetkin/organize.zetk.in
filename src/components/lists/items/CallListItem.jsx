@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Avatar from '../misc/Avatar';
+import Avatar from '../../misc/Avatar';
 
 
 export default class CallListItem extends React.Component {
@@ -44,7 +44,7 @@ export default class CallListItem extends React.Component {
         }
 
         return (
-            <li className="CallListItem"
+            <div className="CallListItem"
                 onClick={ this.props.onSelect.bind(this, call) }>
 
                 <span className={ "CallListItem-callIcon " + stateClass } title={ stateLabel }/>
@@ -60,7 +60,7 @@ export default class CallListItem extends React.Component {
                     <span className="CallListItem-time">
                         { timestamp.long() }</span>
                 </div>
-            </li>
+            </div>
         );
     }
 }

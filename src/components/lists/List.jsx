@@ -70,8 +70,10 @@ export default class List extends React.Component {
                 { items.map((i, index) => {
                     let key = i.data? i.data.id : index;
                     return (
-                        <ItemComponent key={ key } callItem={ i }
-                            onSelect={ this.onSelect.bind(this, i) }/>
+                        <li key={ key } className="List-item">
+                            <ItemComponent key={ key } callItem={ i }
+                                onSelect={ this.onSelect.bind(this, i) }/>
+                        </li>
                     );
                 }) }
                 </ul>
