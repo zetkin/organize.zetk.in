@@ -60,7 +60,7 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         }
         else {
             viewComponent = <ActionList actionList={ actionList }
-                onSelect={ this.onSelect.bind(this) }/>
+                onSelect={ item => this.onSelectAction(item.data) }/>
         }
 
         return viewComponent;
@@ -86,9 +86,5 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         this.setState({
             viewMode: state
         });
-    }
-
-    onSelect(item) {
-        this.openPane('editaction', item.data.id);
     }
 }

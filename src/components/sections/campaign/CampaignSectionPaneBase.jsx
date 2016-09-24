@@ -70,7 +70,7 @@ export default class CampaignSectionPaneBase extends PaneBase {
     }
 
     onSelectAction(action) {
-        this.openPane('editaction', action.id);
+        this.openPane('action', action.id);
     }
 
     onEditCampaign(campaign) {

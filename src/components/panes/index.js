@@ -1,3 +1,4 @@
+import ActionPane from './ActionPane';
 import ActionDayPane from './ActionDayPane';
 import ActionReminderPane from './ActionReminderPane';
 import AddActionPane from './AddActionPane';
@@ -30,6 +31,7 @@ import SelectPeoplePane from './SelectPeoplePane';
 import SelectPersonTagsPane from './SelectPersonTagsPane';
 
 var _panes = {
+    'action': ActionPane,
     'actionday': ActionDayPane,
     'addaction': AddActionPane,
     'addactivity': AddActivityPane,
