@@ -2,6 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 
 import ListHeader from './ListHeader';
+import ListItem from './items/ListItem';
 
 
 function r(obj, fieldPath) {
@@ -59,7 +60,6 @@ export default class List extends React.Component {
             items = items.concat().sort(sortFunc);
         }
 
-        let ItemComponent = this.props.itemComponent;
         let classes = cx(this.props.className, 'List');
 
         return (
@@ -70,21 +70,14 @@ export default class List extends React.Component {
                 { items.map((i, index) => {
                     let key = i.data? i.data.id : index;
                     return (
-                        <li key={ key } className="List-item">
-                            <ItemComponent key={ key } callItem={ i }
-                                onSelect={ this.onSelect.bind(this, i) }/>
-                        </li>
+                        <ListItem key={ key } item={ i }
+                            itemComponent={ this.props.itemComponent }
+                            onSelect={ this.props.onSelect }/>
                     );
                 }) }
                 </ul>
             </div>
         );
-    }
-
-    onSelect(item) {
-        if (this.props.onSelect) {
-            this.props.onSelect(item);
-        }
     }
 
     onFieldClick(field) {

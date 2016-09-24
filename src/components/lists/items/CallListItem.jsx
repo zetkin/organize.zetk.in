@@ -6,15 +6,11 @@ import Avatar from '../../misc/Avatar';
 export default class CallListItem extends React.Component {
     static propTypes = {
         onSelect: React.PropTypes.func.isRequired,
-        callItem: React.PropTypes.shape({
-            isPending: React.PropTypes.bool,
-            error: React.PropTypes.any,
-            data: React.PropTypes.object,
-        }).isRequired,
+        data: React.PropTypes.object,
     };
 
     render() {
-        let call = this.props.callItem.data;
+        let call = this.props.data;
         let timestamp = Date.utc.create(call.allocation_time);
         let stateClass = "CallListItem-state";
         let stateLabel = null;
