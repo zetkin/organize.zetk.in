@@ -22,6 +22,7 @@ import EditPersonPane from './EditPersonPane';
 import EditPersonTagPane from './EditPersonTagPane';
 import EditTextPane from './EditTextPane';
 import EditQueryPane from './EditQueryPane';
+import LocationPane from './LocationPane';
 import ImporterColumnPane from './ImporterColumnPane';
 import MoveParticipantsPane from './MoveParticipantsPane';
 import PersonPane from './PersonPane';
@@ -54,7 +55,7 @@ var _panes = {
     'editquery': EditQueryPane,
     'edittext': EditTextPane,
     'importercolumn': ImporterColumnPane,
-    'location': EditLocationPane,
+    'location': LocationPane,
     'moveparticipants': MoveParticipantsPane,
     'person': PersonPane,
     'query': QueryPane,
