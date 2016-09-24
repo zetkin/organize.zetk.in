@@ -3,7 +3,7 @@ import React from 'react';
 
 import PaneBase from '../../panes/PaneBase';
 import Button from '../../misc/Button';
-import PeopleList from '../../misc/peoplelist/PeopleList';
+import PersonList from '../../lists/PersonList';
 import RelSelectInput from '../../forms/inputs/RelSelectInput';
 import { retrievePeople } from '../../../actions/person';
 import { getListItemById } from '../../../utils/store';
@@ -50,7 +50,7 @@ export default class PeopleListPane extends PaneBase {
     }
 
     renderPaneContent() {
-        let people = this.props.people.personList.items;
+        let personList = this.props.people.personList;
 
         if (this.state.selectedQueryId) {
             let queryId = this.state.selectedQueryId;
@@ -58,12 +58,12 @@ export default class PeopleListPane extends PaneBase {
             let query = getListItemById(queryList, queryId);
 
             if (query && query.data && query.data.matchList) {
-                people = query.data.matchList.items;
+                personList = query.data.matchList;
             }
         }
 
         return (
-            <PeopleList key="personList" people={ people }
+            <PersonList key="personList" personList={ personList }
                 onSelect={ this.onSelect.bind(this) }/>
         );
     }
@@ -91,11 +91,12 @@ export default class PeopleListPane extends PaneBase {
         ];
     }
 
-    onSelect(person) {
+    onSelect(item) {
+        let person = item.data;
         this.openPane('person', person.id);
     }
 
-    onAddClick(person) {
+    onAddClick() {
         this.openPane('addperson');
     }
 

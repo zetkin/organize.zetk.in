@@ -1,10 +1,5 @@
-.PeopleListItem {
+.PersonListItem {
     position: relative;
-    margin: 0.5em 0;
-    padding: 0.5em;
-    height: 6em;
-    background-color: white;
-    box-shadow: 0 0 0.2em rgba(0,0,0,0.1);
 
     &::after {
         content: "";
@@ -13,7 +8,7 @@
     }
 
     span {
-        font-size: 1.4em;   
+        font-size: 1.4em;
         line-height: 1.7em;
         display: block;
         overflow: hidden;
@@ -24,22 +19,22 @@
         @include col(2, 12, $first:true);
     }
 
-    .PeopleListItem-col {
+    .PersonListItem-col {
         @include col(4, 12);
         &:last-child {
             @include col(6, 12, $last:true);
         }
     }
 
-    .PeopleListItem-firstName {
+    .PersonListItem-firstName {
 
     }
 
-    .PeopleListItem-lastName {
+    .PersonListItem-lastName {
 
     }
 
-    .PeopleListItem-email, .PeopleListItem-phone {
+    .PersonListItem-email, .PersonListItem-phone {
         font-size: 1.0em;
 
         a {
