@@ -38,7 +38,7 @@ export default class LocationList extends React.Component {
                         return (
                             <LocationListItem location={ loc }
                                 key={ loc.data.id }
-                                onSelect={ this.onSelect.bind(this, loc) }/>
+                                onSelect={ this.onSelect.bind(this, loc.data) }/>
                         );
                     }, this)}
                 </ul>

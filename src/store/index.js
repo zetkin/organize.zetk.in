@@ -10,6 +10,7 @@ import dashboard from './dashboard';
 import documents from './documents';
 import invites from './invites';
 import locations from './locations';
+import locationTags from './locationTags';
 import officials from './officials';
 import org from './org';
 import participants from './participants';
@@ -41,6 +42,7 @@ const appReducer = combineReducers({
     people,
     importer,
     personTags,
+    locationTags,
     queries,
     search,
     selections,

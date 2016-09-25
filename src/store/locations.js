@@ -1,6 +1,12 @@
 import {
-    createList, createListItems,
-    updateOrAddListItem, removeListItem } from '../utils/store';
+    createList, 
+    createListItems,
+    updateOrAddListItem,
+    updateOrAddListItems,
+    removeListItem,
+    getListItemById 
+} from '../utils/store';
+
 import {
     CREATE_LOCATION,
     RETRIEVE_LOCATIONS,
@@ -8,11 +14,16 @@ import {
     UPDATE_LOCATION,
     DELETE_LOCATION,
     SET_PENDING_LOCATION,
-    CLEAR_PENDING_LOCATION
+    CLEAR_PENDING_LOCATION,
+    RETRIEVE_TAGS_FOR_LOCATION,
+    ADD_TAGS_TO_LOCATION,
+    REMOVE_TAG_FROM_LOCATION
 } from '../actions';
 
 export default function locations(state = null, action) {
+    let locItem;
     let loc;
+    let tags;
 
     switch (action.type) {
         case RETRIEVE_LOCATIONS + '_PENDING':
@@ -59,10 +70,75 @@ export default function locations(state = null, action) {
             return Object.assign({}, state, {
                 pendingLocation: Object.assign({}, action.payload),
             });
-
+        
         case CLEAR_PENDING_LOCATION:
             return Object.assign({}, state, {
                 pendingLocation: false,
+            });
+
+        case RETRIEVE_TAGS_FOR_LOCATION + '_PENDING':
+            loc = {
+                id: action.meta.id,
+                tagList: createList(null, { isPending: true }),
+            };
+
+            return Object.assign({}, state, {
+                locationList: updateOrAddListItem(state.locationList,
+                    loc.id, loc),
+            });
+
+        case RETRIEVE_TAGS_FOR_LOCATION + '_FULFILLED':
+            tags = action.payload.data.data.map(t => ({ id: t.id }));
+            loc = {
+                id: action.meta.id,
+                tagList: createList(tags, { isPending: false }),
+            };
+
+            return Object.assign({}, state, {
+                locationList: updateOrAddListItem(state.locationList,
+                    loc.id, loc),
+            });
+
+        case ADD_TAGS_TO_LOCATION + '_FULFILLED':
+            locItem = getListItemById(state.locationList, action.meta.id);
+            if (locItem) {
+                tags = action.meta.tagIds.map(id => ({ id }));
+                loc = Object.assign({}, locItem.data, {
+                    id: action.meta.id,
+                    tagList: updateOrAddListItems(
+                        locItem.data.tagList, tags)
+                });
+
+                return Object.assign({}, state, {
+                    locationList: updateOrAddListItem(state.locationList,
+                        loc.id, loc),
+                });
+            }
+            else {
+                return state;
+            }
+
+        case REMOVE_TAG_FROM_LOCATION + '_FULFILLED':
+            locItem = getListItemById(state.locationList, action.meta.id);
+            if (locItem) {
+                loc = Object.assign({}, locItem.data, {
+                    id: action.meta.id,
+                    tagList: removeListItem(locItem.data.tagList,
+                        action.meta.tagId)
+                });
+
+                return Object.assign({}, state, {
+                    locationList: updateOrAddListItem(state.locationList,
+                        loc.id, loc),
+                });
+            }
+            else {
+                return state;
+            }
+
+            return Object.assign({}, state, {
+                locationList: updateOrAddListItem(state.locationList,
+                    loc.id, loc),
             });
 
         default:

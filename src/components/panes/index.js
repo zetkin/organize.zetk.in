@@ -7,6 +7,7 @@ import AddCampaignPane from './AddCampaignPane';
 import AddPersonPane from './AddPersonPane';
 import AddPersonTagPane from './AddPersonTagPane';
 import AddLocationPane from './AddLocationPane';
+import AddLocationTagPane from './AddLocationTagPane'
 import AddLocationWithMapPane from './AddLocationWithMapPane';
 import CallPane from './CallPane';
 import CallAssignmentPane from './CallAssignmentPane';
@@ -17,6 +18,7 @@ import EditCallAssignmentPane from './EditCallAssignmentPane';
 import EditCallerPane from './EditCallerPane';
 import EditCampaignPane from './EditCampaignPane';
 import EditLocationPane from './EditLocationPane';
+import EditLocationTagPane from './EditLocationTagPane';
 import EditLocationWithMapPane from './EditLocationWithMapPane';
 import EditPersonPane from './EditPersonPane';
 import EditPersonTagPane from './EditPersonTagPane';
@@ -28,6 +30,7 @@ import MoveParticipantsPane from './MoveParticipantsPane';
 import PersonPane from './PersonPane';
 import QueryPane from './QueryPane';
 import SelectPeoplePane from './SelectPeoplePane';
+import SelectLocationTagsPane from './SelectLocationTagsPane';
 import SelectPersonTagsPane from './SelectPersonTagsPane';
 
 var _panes = {
@@ -38,6 +41,7 @@ var _panes = {
     'addcampaign': AddCampaignPane,
     'addlocationwithmap': AddLocationWithMapPane,
     'addlocation': AddLocationPane,
+    'addlocationtag': AddLocationTagPane,
     'addperson': AddPersonPane,
     'addpersontag': AddPersonTagPane,
     'call': CallPane,
@@ -49,6 +53,7 @@ var _panes = {
     'editcaller': EditCallerPane,
     'editcampaign': EditCampaignPane,
     'editlocation': EditLocationPane,
+    'editlocationtag': EditLocationTagPane,
     'editlocationwithmap': EditLocationWithMapPane,
     'editperson': EditPersonPane,
     'editpersontag': EditPersonTagPane,
@@ -61,6 +66,7 @@ var _panes = {
     'query': QueryPane,
     'reminder': ActionReminderPane,
     'selectpeople': SelectPeoplePane,
+    'selectlocationtags': SelectLocationTagsPane,
     'selectpersontags': SelectPersonTagsPane,
 };
 
