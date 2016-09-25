@@ -33,6 +33,7 @@ import SelectPersonTagsPane from './SelectPersonTagsPane';
 var _panes = {
     'action': ActionPane,
     'actionday': ActionDayPane,
+    'actionreminder': ActionReminderPane,
     'addaction': AddActionPane,
     'addactivity': AddActivityPane,
     'addcallassignment': AddCallAssignmentPane,
@@ -60,7 +61,6 @@ var _panes = {
     'moveparticipants': MoveParticipantsPane,
     'person': PersonPane,
     'query': QueryPane,
-    'reminder': ActionReminderPane,
     'selectpeople': SelectPeoplePane,
     'selectpersontags': SelectPersonTagsPane,
 };

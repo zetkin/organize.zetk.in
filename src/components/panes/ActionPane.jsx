@@ -165,6 +165,10 @@ export default class ActionPane extends PaneBase {
                 <div key="participants"
                     className="ActionPane-participants">
                     <h3>Participants</h3>
+                    <p>
+                        <a onClick={ this.onClickReminders.bind(this) }>
+                            Send reminders</a>
+                    </p>
                     { participantList }
                 </div>,
 
@@ -182,5 +186,10 @@ export default class ActionPane extends PaneBase {
     onClickEdit(ev) {
         let actionId = this.getParam(0);
         this.openPane('editaction', actionId);
+    }
+
+    onClickReminders(ev) {
+        let actionId = this.getParam(0);
+        this.openPane('actionreminder', actionId);
     }
 }
