@@ -44,7 +44,7 @@ export default class ParticipantList extends React.Component {
 }
 
 ParticipantList.propTypes = {
-    maxVisible: React.PropTypes.number.isRequired,
+    maxVisible: React.PropTypes.number,
     onShowAll: React.PropTypes.func,
     action: React.PropTypes.shape({
         id: React.PropTypes.number.isRequired
