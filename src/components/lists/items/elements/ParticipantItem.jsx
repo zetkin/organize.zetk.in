@@ -21,12 +21,13 @@ const participantSource = {
         const newAction = dropResult.newAction;
         const targetType = dropResult.targetType;
 
-        if (oldAction.id != newAction.id && dropResult.onMoveParticipant) {
-            dropResult.onMoveParticipant(person, oldAction);
-        }
-
+        // TODO: Use general-purpose onDropPerson
         if (targetType == 'contact' && dropResult.onSetContact) {
             dropResult.onSetContact(person, oldAction);
+        }
+
+        if (oldAction && oldAction.id != newAction.id && dropResult.onMoveParticipant) {
+            dropResult.onMoveParticipant(person, oldAction);
         }
     }
 }

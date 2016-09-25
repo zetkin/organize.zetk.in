@@ -2,11 +2,12 @@ import { connect } from 'react-redux';
 import { DropTarget } from 'react-dnd';
 import React from 'react';
 
+import ContactSlot from '../lists/items/elements/ContactSlot';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import ParticipantList from '../lists/items/elements/ParticipantList';
 import { getListItemById } from '../../utils/store';
-import { retrieveAction } from '../../actions/action';
+import { retrieveAction, updateAction } from '../../actions/action';
 import {
     addActionParticipant,
     retrieveActionParticipants,
@@ -45,6 +46,34 @@ function collectParticipant(connect, monitor) {
     };
 }
 
+const contactTarget = {
+    canDrop(props, monitor) {
+        return true;
+    },
+
+    drop(props) {
+        // TODO: Use generalized onDropPerson instead
+        let actionId = props.paneData.params[0];
+
+        return {
+            targetType: 'contact',
+            onSetContact: person => {
+                props.dispatch(updateAction(actionId, {
+                    contact_id: person.id
+                }));
+            }
+        }
+    }
+};
+
+function collectContact(connect, monitor) {
+    return {
+        connectContactDropTarget: connect.dropTarget(),
+        isContactOver: monitor.isOver(),
+        canDropContact: monitor.canDrop()
+    };
+}
+
 
 let select = state => ({
     actions: state.actions,
@@ -54,6 +83,7 @@ let select = state => ({
 
 @connect(select)
 @DropTarget('person', actionTarget, collectParticipant)
+@DropTarget('person', contactTarget, collectContact)
 export default class ActionPane extends PaneBase {
     componentDidMount() {
         let actionId = this.getParam(0);
@@ -109,6 +139,13 @@ export default class ActionPane extends PaneBase {
                 </div>
             );
 
+            let contactSlot = this.props.connectContactDropTarget(
+                <div className="ActionPane-contactDropTarget">
+                    <ContactSlot
+                        contact={ action.contact }/>
+                </div>
+            );
+
             return [
                 <div key="summary"
                     className="ActionPane-summary">
@@ -117,6 +154,12 @@ export default class ActionPane extends PaneBase {
                     </span>
                     <a onClick={ this.onClickEdit.bind(this) }>
                         Edit details</a>
+                </div>,
+
+                <div key="contact"
+                    className="ActionPane-contact">
+                    <h3>Contact person</h3>
+                    { contactSlot }
                 </div>,
 
                 <div key="participants"
