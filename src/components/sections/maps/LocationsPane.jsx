@@ -33,10 +33,8 @@ export default class LocationsPane extends PaneBase {
 
     renderPaneContent() {
         let content = null;
-
         let locationList = this.props.locations.locationList;
-        let locations = locationList.items.map(i => i.data);
-
+        
         // add pending to location list
         let pendingLocation = this.props.locations.pendingLocation;
 
@@ -51,8 +49,8 @@ export default class LocationsPane extends PaneBase {
 
             content = (
                 <LocationMap style={ style }
-                    locations={ locations }
-                    locationsForBounds={ locations }
+                    locations={ locationList.items }
+                    locationsForBounds={ locationList.items }
                     pendingLocation={ pendingLocation }
                     ref="locationMap"
                     onLocationChange={ this.onLocationChange.bind(this) }
@@ -110,7 +108,7 @@ export default class LocationsPane extends PaneBase {
     }
 
     onLocationSelect(loc) {
-        this.openPane('location', loc.id);
+        this.openPane('location', loc.data.id);
     }
 
     onLocationChange(loc) {

@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-
 export default class LocationMap extends React.Component {
     componentDidMount() {
         var ctrDOMNode = ReactDOM.findDOMNode(this.refs.mapContainer);
@@ -48,8 +47,6 @@ export default class LocationMap extends React.Component {
         )
     }
 
-    
-
     resetMarkers() {
         var i;
         var marker;
@@ -64,13 +61,13 @@ export default class LocationMap extends React.Component {
 
         var pendingId;
         if (this.props.pendingLocation) {
-            this.createMarker(this.props.pendingLocation, true);
+            this.createMarker({data: this.props.pendingLocation}, true);
             pendingId = this.props.pendingLocation.id;
         }
 
         if (locations) {
             for (i = 0; i < locations.length; i++) {
-                if (pendingId !== locations[i].id) {
+                if (pendingId !== locations[i].data.id) {
                     this.createMarker(locations[i], false, bounds);
                 }
             }
@@ -82,17 +79,17 @@ export default class LocationMap extends React.Component {
         if (!this.centerSetFromData && this.props.locationsForBounds) {
             if (this.props.locationsForBounds.length > 0) {
                 this.centerSetFromData = true;
-                this.positionateMap(this.props.locationsForBounds);
+                this.positionMap(this.props.locationsForBounds);
             }
         }
     }
 
-    positionateMap (locations) {
+    positionMap(locations) {
         var i;
         var bounds = new google.maps.LatLngBounds();
         // create Bounds and  loop through locations and 
         for (i = 0; i < locations.length; i++) {
-            var latLng = new google.maps.LatLng(locations[i].lat, locations[i].lng);
+            var latLng = new google.maps.LatLng(locations[i].data.lat, locations[i].data.lng);
             bounds.extend(latLng);
         }
         this.map.setCenter(bounds.getCenter());
@@ -101,13 +98,13 @@ export default class LocationMap extends React.Component {
 
     createMarker(loc, editable, bounds) {
         var marker;
-        var latLng = new google.maps.LatLng(loc.lat, loc.lng);
+        var latLng = new google.maps.LatLng(loc.data.lat, loc.data.lng);
 
         marker = new google.maps.Marker({
             position: latLng,
             map: this.map,
             draggable: editable, 
-            title: loc.title,
+            title: loc.data.title,
         });
 
         // if editable only drag the marker (all info already vibile)
@@ -125,7 +122,8 @@ export default class LocationMap extends React.Component {
 
         this.markers.push(marker);
     }
-    onMarkerDragEnd (marker, locationData) {
+
+    onMarkerDragEnd(marker, locationData) {
         var pos = marker.getPosition();
         if (this.props.onLocationChange) {
             this.props.onLocationChange({
