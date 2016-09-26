@@ -31,7 +31,7 @@ export default class CallAssignmentPane extends PaneBase {
 
         if (assignmentItem && assignmentItem.data
             && !assignmentItem.data.statsItem) {
-            // If there are now stats for this assignment, e.g. because they
+            // If there are no stats for this assignment, e.g. because they
             // were removed by some operation that invalidated them, retrieve
             // call assignment statistics anew.
             this.props.dispatch(retrieveCallAssignmentStats(assignmentId));
