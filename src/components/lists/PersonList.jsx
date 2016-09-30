@@ -6,8 +6,12 @@ import PersonListItem from './items/PersonListItem';
 
 
 export default class PersonList extends React.Component {
-    static propTypes: {
-        personList: React.PropTypes.array.isRequired,
+    static propTypes = {
+        personList: React.PropTypes.shape({
+            error: React.PropTypes.object,
+            isPending: React.PropTypes.bool,
+            items: React.PropTypes.array,
+        }).isRequired,
     }
 
     shouldComponentUpdate(nextProps, nextState) {
