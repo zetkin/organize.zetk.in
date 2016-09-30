@@ -77,7 +77,10 @@ export default class ActionDay extends React.Component {
                     <span className="date">{ dateLabel }</span>
                     <span className="weekday">{ dayLabel }</span>
                 </h4>
-                <CSSTransitionGroup transitionName="actionitem" component="ul">
+                <CSSTransitionGroup
+                    transitionEnterTimeout={ 300 }
+                    transitionLeaveTimeout={ 300 }
+                    transitionName="actionitem" component="ul">
                 { actions.map(function(action) {
                     return <ActionItem key={ action.id } action={ action }
                             onClick={ this.onActionClick.bind(this, action) }/>
