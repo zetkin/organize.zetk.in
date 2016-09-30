@@ -8,9 +8,15 @@ import ActionMiniCalendar from '../../misc/actioncal/ActionMiniCalendar';
 import { getLocationAverage } from '../../../utils/location';
 import { retrieveActions } from '../../../actions/action';
 import { retrieveLocations } from '../../../actions/location';
+import { filteredActionList } from '../../../store/actions';
 
 
-@connect(state => state)
+const mapStateToProps = state => ({
+    locations: state.locations,
+    filteredActionList: filteredActionList(state)
+});
+
+@connect(mapStateToProps)
 export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
     getPaneTitle() {
         return 'Campaign playback';
@@ -24,7 +30,7 @@ export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
     }
 
     renderPaneTop() {
-        let actionList = this.props.actions.actionList;
+        let actionList = this.props.filteredActionList;
         let actions = actionList.items.map(i => i.data);
 
         return <ActionMiniCalendar actions={ actions }
@@ -35,7 +41,7 @@ export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
     }
 
     renderPaneContent() {
-        let actionList = this.props.actions.actionList;
+        let actionList = this.props.filteredActionList;
         let actions = actionList.items.map(i => i.data);
 
         let locList = this.props.locations.locationList;
