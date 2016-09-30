@@ -36,6 +36,7 @@ export default class ActionDayPane extends PaneBase {
 
             return (
                 <ActionList key="actionList" actionList={ actionList }
+                    onSelect={ this.onSelect.bind(this) }
                     onMoveParticipant={ this.onMoveParticipant.bind(this) }
                     onActionOperation={ this.onActionOperation.bind(this) }/>
             );
@@ -86,6 +87,10 @@ export default class ActionDayPane extends PaneBase {
         if (this.props.participants.moves.length) {
             this.pushPane('moveparticipants');
         }
+    }
+
+    onSelect(actionItem) {
+        this.openPane('action', actionItem.data.id);
     }
 
     onActionOperation(action, operation) {
