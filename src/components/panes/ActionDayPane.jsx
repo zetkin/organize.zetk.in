@@ -2,9 +2,10 @@ import moment from 'moment';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import PaneBase from './PaneBase';
+import ActionList from '../lists/ActionList';
 import Button from '../misc/Button';
-import ActionList from '../misc/actionlist/ActionList';
+import LoadingIndicator from '../misc/LoadingIndicator';
+import PaneBase from './PaneBase';
 import { retrieveActions } from '../../actions/action';
 import { moveActionParticipant } from '../../actions/participant';
 
@@ -26,16 +27,22 @@ export default class ActionDayPane extends PaneBase {
     renderPaneContent(data) {
         let date = moment(this.getParam(0));
         let actionList = this.props.actions.actionList;
-        let actions = actionList.items.map(i => i.data).filter(a =>
-            moment(a.start_time).isSame(date, 'day'));
 
-        return (
-            <ActionList key="actionList" actions={ actions }
-                dispatch={ this.props.dispatch }
-                participants={ this.props.participants }
-                onMoveParticipant={ this.onMoveParticipant.bind(this) }
-                onActionOperation={ this.onActionOperation.bind(this) }/>
-        );
+        if (actionList.items) {
+            actionList = Object.assign({}, actionList, {
+                items: actionList.items.filter(i =>
+                    moment(i.data.start_time).isSame(date, 'day'))
+            });
+
+            return (
+                <ActionList key="actionList" actionList={ actionList }
+                    onMoveParticipant={ this.onMoveParticipant.bind(this) }
+                    onActionOperation={ this.onActionOperation.bind(this) }/>
+            );
+        }
+        else {
+            return <LoadingIndicator/>;
+        }
     }
 
     renderPaneFooter(data) {
@@ -43,13 +50,14 @@ export default class ActionDayPane extends PaneBase {
         let dateStr = d.format('YYYY-MM-DD');
 
         return [
-            <Button label=""
+            <Button key="prevButton" label=""
                 onClick={ this.onClickPrev.bind(this) }
                 className="ActionDayPane-prevButton"/>,
-            <div className="ActionDayPane-dateLabel">
-            { dateStr }
+            <div key="dateLabel"
+                className="ActionDayPane-dateLabel">
+                { dateStr }
             </div>,
-            <Button label=""
+            <Button key="nextButton" label=""
                 onClick={ this.onClickNext.bind(this) }
                 className="ActionDayPane-nextButton"/>,
         ];
