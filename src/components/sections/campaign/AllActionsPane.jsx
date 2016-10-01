@@ -8,9 +8,15 @@ import ActionCalendar from '../../misc/actioncal/ActionCalendar';
 import ViewSwitch from '../../misc/ViewSwitch';
 import { retrieveCampaigns } from '../../../actions/campaign';
 import { retrieveActions } from '../../../actions/action';
+import { filteredActionList } from '../../../store/actions';
 
 
-@connect(state => state)
+const mapStateToProps = state => ({
+    actions: state.actions,
+    filteredActionList: filteredActionList(state)
+});
+
+@connect(mapStateToProps)
 export default class AllActionsPane extends CampaignSectionPaneBase {
     constructor(props) {
         super(props);
@@ -32,7 +38,7 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
     }
 
     renderPaneContent() {
-        let actionList = this.props.actions.actionList;
+        let actionList = this.props.filteredActionList;
         let viewComponent;
 
         let startDate, endDate;

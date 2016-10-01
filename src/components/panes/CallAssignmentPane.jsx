@@ -11,6 +11,7 @@ import {
     updateCallAssignment,
     addCallAssignmentCallers,
     removeCallAssignmentCaller,
+    retrieveCallAssignment,
     retrieveCallAssignmentCallers,
     retrieveCallAssignmentStats,
 } from '../../actions/callAssignment';
@@ -20,6 +21,7 @@ import {
 export default class CallAssignmentPane extends PaneBase {
     componentDidMount() {
         let assignmentId = this.getParam(0);
+        this.props.dispatch(retrieveCallAssignment(assignmentId));
         this.props.dispatch(retrieveCallAssignmentStats(assignmentId));
         this.props.dispatch(retrieveCallAssignmentCallers(assignmentId));
     }
@@ -48,13 +50,12 @@ export default class CallAssignmentPane extends PaneBase {
     }
 
     getPaneTitle(data) {
-        let title = '';
-
-        if (data.assignmentItem) {
-            title += data.assignmentItem.data.title;
+        if (data.assignmentItem && data.assignmentItem.data.title) {
+            return data.assignmentItem.data.title;
         }
-
-        return title;
+        else {
+            return 'Call Assignment';
+        }
     }
 
     renderPaneContent(data) {

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
-import PeopleList from '../misc/peoplelist/PeopleList';
+import PersonList from '../lists/PersonList';
 import { getListItemById } from '../../utils/store';
 import { retrieveQuery, retrieveQueryMatches } from '../../actions/query';
 
@@ -51,17 +51,17 @@ export default class QueryPane extends PaneBase {
     renderPaneContent(data) {
         let item = data.queryItem;
         if (item && item.data && item.data.matchList) {
-            let people = item.data.matchList.items;
+            let matchList = item.data.matchList;
 
             return [
-                <PeopleList key="peopleList" people={ people }
+                <PersonList key="peopleList" personList={ matchList }
                     onSelect={ this.onPersonSelect.bind(this) }/>
             ];
         }
     }
 
-    onPersonSelect(person) {
-        this.openPane('person', person.id);
+    onPersonSelect(personItem) {
+        this.openPane('person', personItem.data.id);
     }
 
     onEditClick(ev) {

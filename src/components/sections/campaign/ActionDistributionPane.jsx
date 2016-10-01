@@ -14,9 +14,15 @@ import {
     highlightActionLocationPhase,
     retrieveActions,
 } from '../../../actions/action';
+import { filteredActionList } from '../../../store/actions';
 
 
-@connect(state => state)
+const mapStateToProps = state => ({
+    actions: state.actions,
+    filteredActionList: filteredActionList(state)
+});
+
+@connect(mapStateToProps)
 export default class ActionDistributionPane extends CampaignSectionPaneBase {
     getPaneTitle() {
         return 'Location and activity distribution';
@@ -30,7 +36,7 @@ export default class ActionDistributionPane extends CampaignSectionPaneBase {
     }
 
     renderPaneTop() {
-        let actionList = this.props.actions.actionList;
+        let actionList = this.props.filteredActionList;
         let actions = actionList.items.map(i => i.data);
 
         return <ActionMiniCalendar actions={ actions }
@@ -41,7 +47,7 @@ export default class ActionDistributionPane extends CampaignSectionPaneBase {
     }
 
     renderPaneContent() {
-        let actionList = this.props.actions.actionList;
+        let actionList = this.props.filteredActionList;
         let actions = actionList.items.map(i => i.data);
 
         return [

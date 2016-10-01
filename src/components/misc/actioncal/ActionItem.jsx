@@ -64,7 +64,7 @@ export default class ActionItem extends React.Component {
 ActionItem.propTypes = {
     onClick: React.PropTypes.func,
     action: React.PropTypes.shape({
-        id: React.PropTypes.string,
+        id: React.PropTypes.any,            // TODO: Require uuid string
         location: React.PropTypes.object,
         activity: React.PropTypes.object
     }).isRequired

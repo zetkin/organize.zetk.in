@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { appReducer, configureStore } from '../store';
+import { configureStore } from '../store';
 import { retrieveActions, retrieveAction } from '../actions/action';
 import { retrieveActivities } from '../actions/activity';
 import { retrieveCampaigns, retrieveCampaign } from '../actions/campaign';

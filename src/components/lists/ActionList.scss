@@ -28,11 +28,6 @@
     }
 
     @include medium-screen {
-        .ActionList {
-            width: 60%;
-            min-width: 640px;
-        }
-
         .ListHeader {
             li:nth-child(3) {
                 display: block;
