@@ -53,6 +53,12 @@ widgets.get('/today', function(req, res) {
         };
 
         res.json(data);
+    })
+    .catch(err => {
+        res.status(500).json({
+            data: null,
+            error: err,
+        });
     });
 });
 
