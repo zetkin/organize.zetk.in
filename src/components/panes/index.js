@@ -1,3 +1,4 @@
+import ActionPane from './ActionPane';
 import ActionDayPane from './ActionDayPane';
 import ActionReminderPane from './ActionReminderPane';
 import AddActionPane from './AddActionPane';
@@ -7,6 +8,7 @@ import AddCampaignPane from './AddCampaignPane';
 import AddPersonPane from './AddPersonPane';
 import AddPersonTagPane from './AddPersonTagPane';
 import AddLocationPane from './AddLocationPane';
+import AddLocationTagPane from './AddLocationTagPane'
 import AddLocationWithMapPane from './AddLocationWithMapPane';
 import CallPane from './CallPane';
 import CallAssignmentPane from './CallAssignmentPane';
@@ -17,26 +19,32 @@ import EditCallAssignmentPane from './EditCallAssignmentPane';
 import EditCallerPane from './EditCallerPane';
 import EditCampaignPane from './EditCampaignPane';
 import EditLocationPane from './EditLocationPane';
+import EditLocationTagPane from './EditLocationTagPane';
 import EditLocationWithMapPane from './EditLocationWithMapPane';
 import EditPersonPane from './EditPersonPane';
 import EditPersonTagPane from './EditPersonTagPane';
 import EditTextPane from './EditTextPane';
 import EditQueryPane from './EditQueryPane';
+import LocationPane from './LocationPane';
 import ImporterColumnPane from './ImporterColumnPane';
 import MoveParticipantsPane from './MoveParticipantsPane';
 import PersonPane from './PersonPane';
 import QueryPane from './QueryPane';
 import SelectPeoplePane from './SelectPeoplePane';
+import SelectLocationTagsPane from './SelectLocationTagsPane';
 import SelectPersonTagsPane from './SelectPersonTagsPane';
 
 var _panes = {
+    'action': ActionPane,
     'actionday': ActionDayPane,
+    'actionreminder': ActionReminderPane,
     'addaction': AddActionPane,
     'addactivity': AddActivityPane,
     'addcallassignment': AddCallAssignmentPane,
     'addcampaign': AddCampaignPane,
     'addlocationwithmap': AddLocationWithMapPane,
     'addlocation': AddLocationPane,
+    'addlocationtag': AddLocationTagPane,
     'addperson': AddPersonPane,
     'addpersontag': AddPersonTagPane,
     'call': CallPane,
@@ -48,18 +56,19 @@ var _panes = {
     'editcaller': EditCallerPane,
     'editcampaign': EditCampaignPane,
     'editlocation': EditLocationPane,
+    'editlocationtag': EditLocationTagPane,
     'editlocationwithmap': EditLocationWithMapPane,
     'editperson': EditPersonPane,
     'editpersontag': EditPersonTagPane,
     'editquery': EditQueryPane,
     'edittext': EditTextPane,
     'importercolumn': ImporterColumnPane,
-    'location': EditLocationPane,
+    'location': LocationPane,
     'moveparticipants': MoveParticipantsPane,
     'person': PersonPane,
     'query': QueryPane,
-    'reminder': ActionReminderPane,
     'selectpeople': SelectPeoplePane,
+    'selectlocationtags': SelectLocationTagsPane,
     'selectpersontags': SelectPersonTagsPane,
 };
 

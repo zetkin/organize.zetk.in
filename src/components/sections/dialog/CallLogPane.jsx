@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import CallList from '../../misc/calllist/CallList';
+import CallList from '../../lists/CallList';
 import PaneBase from '../../panes/PaneBase';
 import { retrieveCalls } from '../../../actions/call';
 
@@ -25,7 +25,8 @@ export default class CallLogPane extends PaneBase {
         ];
     }
 
-    onSelect(call) {
+    onSelect(item) {
+        let call = item.data;
         this.openPane('call', call.id);
     }
 }

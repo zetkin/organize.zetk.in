@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import Button from '../misc/Button';
-import PeopleList from '../misc/peoplelist/PeopleList';
+import PersonList from '../lists/PersonList';
 import { getListItemById } from '../../utils/store';
 import { retrievePeople } from '../../actions/person';
 import {
@@ -44,23 +44,27 @@ export default class SelectPeoplePane extends PaneBase {
 
         // Create list of selected person objects from selection array
         // of selected IDs.
-        let peopleSelected = selection.selectedIds.map(id =>
-            getListItemById(data.personList, id));
+        let selectionList = {
+            items: selection.selectedIds.map(id =>
+                getListItemById(data.personList, id))
+        }
 
         // Only show people that haven't already been selected
-        let peopleAvailable = data.personList.items.filter(p =>
-            selection.selectedIds.indexOf(p.data.id) < 0);
+        let personList = Object.assign({}, data.personList, {
+            items: data.personList.items.filter(p =>
+                selection.selectedIds.indexOf(p.data.id) < 0)
+        });
 
-        let selectedHeader = 'Selected (' + peopleSelected.length + ')';
+        let selectedHeader = 'Selected (' + selectionList.items.length + ')';
 
-        // TODO: Use something more compact than PeopleList?
+        // TODO: Use something more compact than PersonList?
         return [
             instructions,
             <h3 key="selectedHeader">{ selectedHeader }</h3>,
-            <PeopleList key="selectedList" people={ peopleSelected }
+            <PersonList key="selectionList" personList={ selectionList }
                 onSelect={ this.onDeselect.bind(this) }/>,
             <h3 key="availableHeader">Add people to selection</h3>,
-            <PeopleList key="availableList" people={ peopleAvailable }
+            <PersonList key="availableList" personList={ personList }
                 onSelect={ this.onSelect.bind(this) }/>,
         ];
     }
@@ -93,13 +97,15 @@ export default class SelectPeoplePane extends PaneBase {
         this.closePane();
     }
 
-    onSelect(person) {
+    onSelect(personItem) {
+        let personId = personItem.data.id;
         let selectionId = this.getParam(0);
-        this.props.dispatch(addToSelection(selectionId, person.id));
+        this.props.dispatch(addToSelection(selectionId, personId));
     }
 
-    onDeselect(person) {
+    onDeselect(personItem) {
+        let personId = personItem.data.id;
         let selectionId = this.getParam(0);
-        this.props.dispatch(removeFromSelection(selectionId, person.id));
+        this.props.dispatch(removeFromSelection(selectionId, personId));
     }
 }

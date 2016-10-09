@@ -62,8 +62,8 @@ export default class ActionMiniCalendar extends React.Component {
             }
 
             days.push(
-                <ActionDay date={ new Date(d) } actions={ dayActions }
-                    maxVisible={ 3 }
+                <ActionDay key={ d } date={ new Date(d) }
+                    actions={ dayActions } maxVisible={ 3 }
                     onSelect={ this.props.onSelectDay }
                     onAddAction={ this.props.onAddAction }
                     onMoveAction={ this.props.onMoveAction }

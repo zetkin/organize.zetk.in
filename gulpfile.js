@@ -19,10 +19,11 @@ var watch = require('gulp-watch');
 var webpack = require('webpack');
 var webpackConfig = require('./webpack.config.js');
 
-
 const babelConfig = {
     stage: 1,
 };
+
+var dockerContainer = process.env.ZETKIN_CONTAINER_NAME;
 
 const jsSrc = 'src/**/*.@(js|jsx)';
 const jsDest = 'dist/organize.zetk.in';
@@ -100,7 +101,7 @@ gulp.task('minifyImages', [ 'cleanImages' ], function() {
 });
 
 gulp.task('restartDevServer', shell.task([
-    'docker exec environment_zetkinorganize_1 sv restart organize.zetk.in'
+    'docker exec ' + dockerContainer + ' sv restart organize.zetk.in'
 ]));
 
 gulp.task('minify', function() {
@@ -124,6 +125,10 @@ gulp.task('lint', function() {
 });
 
 gulp.task('watch', function() {
+    if (!dockerContainer) {
+        throw 'Missing variable ZETKIN_CONTAINER_NAME';
+    }
+
     watch('src/**/*.@(js|jsx)', function() {
         return runSequence('bundleJs', 'restartDevServer');
     });

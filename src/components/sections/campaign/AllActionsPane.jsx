@@ -2,16 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import CampaignSectionPaneBase from './CampaignSectionPaneBase';
-import ActionList from '../../misc/actionlist/ActionList';
+import ActionList from '../../lists/ActionList';
 import CampaignSelect from '../../misc/CampaignSelect';
 import ActionCalendar from '../../misc/actioncal/ActionCalendar';
 import ViewSwitch from '../../misc/ViewSwitch';
 import { retrieveCampaigns } from '../../../actions/campaign';
 import { retrieveActions } from '../../../actions/action';
-import { moveActionParticipant } from '../../../actions/participant';
+import { filteredActionList } from '../../../store/actions';
 
 
-@connect(state => state)
+const mapStateToProps = state => ({
+    actions: state.actions,
+    filteredActionList: filteredActionList(state)
+});
+
+@connect(mapStateToProps)
 export default class AllActionsPane extends CampaignSectionPaneBase {
     constructor(props) {
         super(props);
@@ -33,13 +38,12 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
     }
 
     renderPaneContent() {
-        let actionList = this.props.actions.actionList;
-        let actions = actionList.items.map(i => i.data);
+        let actionList = this.props.filteredActionList;
         let viewComponent;
 
         let startDate, endDate;
 
-        if (actions.length == 0) {
+        if (actionList.items.length == 0) {
             // Use this week and the next month by default
             const now = new Date();
             const year = now.getFullYear();
@@ -50,6 +54,8 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         }
 
         if (this.state.viewMode == 'cal') {
+            let actions = actionList.items.map(i => i.data);
+
             viewComponent = <ActionCalendar actions={ actions }
                     startDate={ startDate } endDate={ endDate }
                     onSelectDay={ this.onSelectDay.bind(this) }
@@ -59,11 +65,8 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
                     onSelectAction={ this.onSelectAction.bind(this) }/>
         }
         else {
-            viewComponent = <ActionList actions={ actions }
-                dispatch={ this.props.dispatch }
-                participants={ this.props.participants }
-                onMoveParticipant={ this.onMoveParticipant.bind(this) }
-                onActionOperation={ this.onActionOperation.bind(this) }/>;
+            viewComponent = <ActionList actionList={ actionList }
+                onSelect={ item => this.onSelectAction(item.data) }/>
         }
 
         return viewComponent;
@@ -76,10 +79,10 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         };
 
         return [
-            <CampaignSelect
+            <CampaignSelect key="campaignSelect"
                 onCreate={ this.onCreateCampaign.bind(this) }
                 onEdit={ this.onEditCampaign.bind(this) }/>,
-            <ViewSwitch states={ viewStates }
+            <ViewSwitch key="viewSwitch" states={ viewStates }
                 selected={ this.state.viewMode }
                 onSwitch={ this.onViewSwitch.bind(this) }/>
         ];
@@ -89,26 +92,5 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         this.setState({
             viewMode: state
         });
-    }
-
-    onActionOperation(action, operation) {
-        if (operation == 'edit') {
-            this.openPane('editaction', action.id);
-        }
-        else if (operation == 'sendreminders') {
-            this.openPane('reminder', action.id);
-        }
-    }
-
-    onMoveParticipant(action, person, oldAction) {
-        this.props.dispatch(moveActionParticipant(
-            person.id, oldAction.id, action.id));
-
-        let participantStore = this.props.participants;
-        let moves = participantStore.moves;
-
-        if (moves.length) {
-            this.pushPane('moveparticipants');
-        }
     }
 }

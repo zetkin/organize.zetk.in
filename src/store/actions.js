@@ -6,6 +6,19 @@ import {
 } from '../utils/store';
 import * as types from '../actions';
 
+export const filteredActionList = state => {
+    let selectedCampaign = state.campaigns.selectedCampaign;
+
+    if (!selectedCampaign) {
+        return state.actions.actionList;
+    }
+
+    return Object.assign({}, state.actions.actionList, {
+        items: state.actions.actionList.items.filter(i =>
+            i.data.campaign.id === selectedCampaign),
+    });
+};
+
 
 export default function actions(state = null, action) {
     let actionData;

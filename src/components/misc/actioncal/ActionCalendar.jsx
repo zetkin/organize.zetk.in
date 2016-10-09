@@ -8,6 +8,9 @@ export default class ActionCalendar extends React.Component {
     render() {
         const actions = this.props.actions;
 
+        actions.sort((a0, a1) =>
+            (new Date(a0.start_time)) - (new Date(a1.start_time)));
+
         var startDate = this.props.startDate;
         var endDate = this.props.endDate;
 

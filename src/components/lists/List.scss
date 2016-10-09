@@ -1,0 +1,7 @@
+.List {
+    width: 100%;
+
+    @include medium-screen {
+        max-width: 720px;
+    }
+}

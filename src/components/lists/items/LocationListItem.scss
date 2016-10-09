@@ -1,0 +1,10 @@
+.LocationListItem {
+    position: relative;
+
+    .LocationListItem-title {
+        position: absolute;
+        top: 10px;
+        left: 140px;
+        font-size: 1.2em;
+    }
+}
