@@ -1,11 +1,14 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import cx from 'classnames';
 
 import { componentClassNames } from '..';
 
 
+@injectIntl
 export default class ListHeader extends React.Component {
     render() {
+        const formatMessage = this.props.intl.formatMessage;
         const columns = this.props.columns;
         const sortField = this.props.sortField;
 
@@ -17,7 +20,7 @@ export default class ListHeader extends React.Component {
 
                 for (let i = 0; i < keys.length; i++) {
                     let key = keys[i];
-                    let label = column[key];
+                    let label = formatMessage({ id: column[key] });
                     let classes = cx({
                         'selected': (key == sortField)
                     });
