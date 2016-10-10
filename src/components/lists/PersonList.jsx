@@ -21,12 +21,12 @@ export default class PersonList extends React.Component {
     render() {
         const columns = [
             {
-                'first_name': 'First name',
-                'last_name': 'Last name',
+                'first_name': 'lists.personList.header.firstName',
+                'last_name': 'lists.personList.header.lastName',
             },
             {
-                'email': 'E-mail address',
-                'phone': 'Phone number',
+                'email': 'lists.personList.header.email',
+                'phone': 'lists.personList.header.phone',
             }
         ];
 
