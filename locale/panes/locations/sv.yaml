@@ -1,0 +1,4 @@
+addButton: "Lägg till"
+viewModes:
+    map: "Karta"
+    list: "Lista"
