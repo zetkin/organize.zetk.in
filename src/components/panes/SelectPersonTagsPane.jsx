@@ -1,6 +1,8 @@
 import React from 'react';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
+import Button from '../misc/Button';
 import PaneBase from './PaneBase';
 import TagCloud from '../misc/tagcloud/TagCloud';
 import { retrievePersonTags } from '../../actions/personTag';
@@ -10,6 +12,7 @@ import { addToSelection, removeFromSelection, finishSelection }
 
 
 @connect(state => state)
+@injectIntl
 export default class SelectPersonTagsPane extends PaneBase {
     componentDidMount() {
         this.props.dispatch(retrievePersonTags());
@@ -26,7 +29,8 @@ export default class SelectPersonTagsPane extends PaneBase {
     }
 
     getPaneTitle(data) {
-        return 'Select person tags';
+        const formatMessage = this.props.intl.formatMessage;
+        return formatMessage({ id: 'panes.selectPersonTags.title' });
     }
 
     renderPaneContent(data) {
@@ -43,17 +47,22 @@ export default class SelectPersonTagsPane extends PaneBase {
                 selection.selectedIds.indexOf(d.id) < 0);
         }
 
-        let selectedHeader = 'Selected (' + tagsSelected.length + ')';
+        let numSelected = tagsSelected.length;
 
         return [
-            <h3 key="selectedHeader">{ selectedHeader }</h3>,
+            <Msg tagName="h3" key="selectedHeader"
+                id="panes.selectPersonTags.selectedHeader"
+                values={{ numSelected }}/>,
             <TagCloud key="selectedTags" tags={ tagsSelected }
                 showRemoveButtons={ true }
                 onRemove={ this.onRemove.bind(this) }/>,
-            <h3 key="availableHeader">Select tags to be added</h3>,
-            <button key="createLink" className="SelectPeoplePane-createButton"
-                onClick={ this.onClickCreate.bind(this) }>
-                Create a new tag</button>,
+            <Msg tagName="h3" key="availableHeader"
+                id="panes.selectPersonTags.availableHeader"
+                values={{ numSelected }}/>,
+            <Button key="createLink"
+                labelMsg="panes.selectPersonTags.createButton"
+                className="SelectPeoplePane-createButton"
+                onClick={ this.onClickCreate.bind(this) }/>,
             <TagCloud key="availableTags" tags={ tagsAvailable }
                 showEditButtons={ true }
                 onEdit={ this.onEdit.bind(this) }
@@ -62,9 +71,12 @@ export default class SelectPersonTagsPane extends PaneBase {
     }
 
     renderPaneFooter(data) {
+        let numSelected = data.selectionItem.data.selectedIds.length;
+
         return (
-             <button key="saveButton" className="SelectPeoplePane-saveButton"
-                onClick={ this.onClickSave.bind(this) }>Save</button>
+            <Button className="SelectPersonTagsPane-saveButton"
+                labelMsg="panes.selectPersonTags.okButton"
+                labelValues={{ numSelected }}/>
         );
     }
 

@@ -8,10 +8,10 @@
         cursor: pointer;
     }
 
-    .SelectPeoplePane-saveButton {
+    .SelectPersonTagsPane-saveButton {
         @include inline-button($color:$c-brand-confirm, $icon:$fa-var-floppy-o);
     }
-    .SelectPeoplePane-createButton {
+    .SelectPersonTagsPane-createButton {
         @include inline-button($icon:$fa-var-tag);
         margin-bottom: 1em;
     }
