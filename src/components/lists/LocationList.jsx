@@ -7,7 +7,7 @@ import LocationListItem from './items/LocationListItem';
 export default class LocationList extends React.Component {
     render() {
         let columns = [
-            { 'title': 'Title' }
+            { 'title': 'lists.locationList.header.title' },
         ];
 
         let locationList = this.props.locationList;
