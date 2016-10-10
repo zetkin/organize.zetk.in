@@ -13,49 +13,44 @@ import PeopleListPane from './people/PeopleListPane';
 
 export const SECTIONS = {
     people: {
-        title: 'People',
         subSections: [
-            { path: 'list', title: 'People',
+            { path: 'list',
                 startPane: PeopleListPane },
-            { path: 'invite', title: 'Invite',
+            { path: 'invite',
                 startPane: InvitePane },
-            { path: 'import', title: 'Import',
+            { path: 'import',
                 startPane: ImportPane },
         ],
     },
     campaign: {
-        title: 'Campaign',
         subSections: [
-            { path: 'actions', title: 'All actions',
+            { path: 'actions',
                 startPane: AllActionsPane },
-            { path: 'distribution', title: 'Distribution',
+            { path: 'distribution',
                 startPane: ActionDistributionPane },
-            { path: 'playback', title: 'Playback',
+            { path: 'playback',
                 startPane: CampaignPlaybackPane }
         ],
     },
     dialog: {
-        title: 'Dialog',
         subSections: [
-            { path: 'assignments', title: 'Assignments',
+            { path: 'assignments',
                 startPane: AllCallAssignmentsPane },
-            { path: 'calls', title: 'Call log',
+            { path: 'calls',
                 startPane: CallLogPane },
-            { path: 'startassignment', title: 'Assignment templates',
+            { path: 'startassignment',
                 startPane: CallAssignmentTemplatePane },
         ],
     },
     maps: {
-        title: 'Maps',
         subSections: [
-            { path: 'locations', title: 'Locations',
+            { path: 'locations',
                 startPane: LocationsPane }
         ],
     },
     settings: {
-        title: 'Settings',
         subSections: [
-            { path: 'officials', title: 'Officials',
+            { path: 'officials',
                 startPane: OfficialsPane },
         ],
     },

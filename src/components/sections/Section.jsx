@@ -1,3 +1,4 @@
+import { injectIntl } from 'react-intl';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
@@ -15,6 +16,7 @@ import {
 } from '../../actions/view';
 
 
+@injectIntl
 export default class Section extends React.Component {
     static propTypes = {
         panes: React.PropTypes.array.isRequired,
@@ -122,8 +124,15 @@ export default class Section extends React.Component {
 
         const helpUrl = '/help/sections/' + sectionType;
         const classes = cx(componentClassNames(this));
+        const formatMessage = this.props.intl.formatMessage;
 
         let subMenuItems = subSections.map((subData, idx) => {
+            let label = formatMessage({
+                id: 'sections.subSections.'
+                    + this.props.section
+                    + '.' + subData.path,
+            });
+
             let classes = cx('Section-navItem',
                 'Section-navItem-' + subData.path, {
                     'selected': (idx === curSubSectionIndex)
@@ -132,10 +141,12 @@ export default class Section extends React.Component {
             return (
                 <li key={ subData.path } className={ classes }>
                     <a onClick={ this.onClickSub.bind(this, subData) }>
-                        { subData.title }</a>
+                        { label }</a>
                 </li>
             );
         });
+
+        const backLabel = formatMessage({ id: 'sections.backToDashboard' });
 
         return (
             <div className={ classes }>
@@ -145,8 +156,7 @@ export default class Section extends React.Component {
                         <li key="back"
                             className='Section-navItem Section-navBack'>
                             <a onClick={ this.onClickBack.bind(this) }>
-                                Back to<br/>
-                                dashboard</a></li>
+                                { backLabel }</a></li>
                     </ul>
                     <div className="Section-navMisc">
                         <a target="_blank" href="http://zetkin.org">About</a>
