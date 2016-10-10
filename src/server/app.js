@@ -6,14 +6,15 @@ import express from 'express';
 import expressWs from 'express-ws';
 import http from 'http';
 import path from 'path';
-import { Provider } from 'react-redux';
 
 import api from './api';
 import dataRouter from './datarouter';
 import search from './search';
 import widgets from './widgets';
+import { loadLocaleHandler } from './locale';
 import App from '../components/App';
 import ActivistPage from '../components/fullpages/ActivistPage';
+import IntlReduxProvider from '../components/IntlReduxProvider';
 import { setPanesFromUrlPath } from '../actions/view';
 
 
@@ -44,6 +45,7 @@ app.get('/logout', auth.logout(authOpts));
 
 app.use(dataRouter);
 app.use('/api', api);
+app.get('/l10n', loadLocaleHandler());
 app.use('/widgets', widgets);
 
 expressWs(app);
@@ -60,7 +62,7 @@ function renderReactPage(Component, req, res) {
         };
 
         var html = ReactDOMServer.renderToString(
-            React.createElement(Provider, { store: req.store },
+            React.createElement(IntlReduxProvider, { store: req.store },
                 PageFactory(props)));
 
         res.send(html);
