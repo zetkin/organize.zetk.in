@@ -27,29 +27,56 @@ const authOpts = {
 };
 
 
-var app = express();
+export default function initApp(messages) {
+    let app = express();
 
-app.use('/favicon.ico', (req, res) =>
-    res.status(404).type('txt').send('Not found'));
+    app.use('/favicon.ico', (req, res) =>
+        res.status(404).type('txt').send('Not found'));
 
-app.use('/static/', express.static(
-    path.join(__dirname, '../../static'),
-    { fallthrough: false }));
+    app.use('/static/', express.static(
+        path.join(__dirname, '../../static'),
+        { fallthrough: false }));
 
-app.use(cookieParser());
+    app.use(cookieParser());
 
-app.use(auth.initialize(authOpts));
-app.get('/', auth.callback(authOpts));
-app.use(auth.validate(authOpts));
-app.get('/logout', auth.logout(authOpts));
+    app.use(auth.initialize(authOpts));
+    app.get('/', auth.callback(authOpts));
+    app.use(auth.validate(authOpts));
+    app.get('/logout', auth.logout(authOpts));
 
-app.use(dataRouter);
-app.use('/api', api);
-app.get('/l10n', loadLocaleHandler());
-app.use('/widgets', widgets);
+    app.use(dataRouter(messages));
+    app.use('/api', api);
+    app.get('/l10n', loadLocaleHandler());
+    app.use('/widgets', widgets);
 
-expressWs(app);
-app.ws('/search', search);
+    expressWs(app);
+    app.ws('/search', search);
+
+    app.get('/activist', function(req, res, next) {
+        if (req.store.getState().user.memberships.length) {
+            // Officials should not be able to see the message to non-officials,
+            // which would be very confusing.
+            res.redirect(303, '/');
+        }
+        else {
+            renderReactPage(ActivistPage, req, res);
+        }
+    });
+
+    app.use(function(req, res, next) {
+        if (req.url == '/search') {
+            // Don't render any output for search. Because of how
+            // the express-ws middleware works, all routes must
+            // call next(), even if the route is later in the chain
+            // than the ws handler.
+            return next();
+        }
+
+        renderReactPage(App, req, res);
+    });
+
+    return app;
+}
 
 function renderReactPage(Component, req, res) {
     try {
@@ -71,28 +98,3 @@ function renderReactPage(Component, req, res) {
         throw err; // TODO: Better error handling
     }
 }
-
-app.get('/activist', function(req, res, next) {
-    if (req.store.getState().user.memberships.length) {
-        // Officials should not be able to see the message to non-officials,
-        // which would be very confusing.
-        res.redirect(303, '/');
-    }
-    else {
-        renderReactPage(ActivistPage, req, res);
-    }
-});
-
-app.use(function(req, res, next) {
-    if (req.url == '/search') {
-        // Don't render any output for search. Because of how
-        // the express-ws middleware works, all routes must
-        // call next(), even if the route is later in the chain
-        // than the ws handler.
-        return next();
-    }
-
-    renderReactPage(App, req, res);
-});
-
-module.exports = app;
