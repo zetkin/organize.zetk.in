@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 
 import ScopeSelect from './ScopeSelect';
 import ActionDayMatch from './ActionDayMatch';
@@ -19,6 +20,7 @@ import {
 
 
 
+@injectIntl
 @connect(state => ({ search: state.search, view: state.view }))
 export default class Search extends React.Component {
     constructor(props) {
@@ -92,13 +94,16 @@ export default class Search extends React.Component {
             );
         }
 
+        let placeholder = this.props.intl.formatMessage(
+            { id: 'header.search.typeToSearch' });
+
         return (
             <form className={ classes.join(' ') }>
                 <ScopeSelect value={ scope }
                     onSelect={ this.onScopeSelect.bind(this) }/>
 
                 <input type="search" ref="searchField"
-                    placeholder="Start typing to search"
+                    placeholder={ placeholder }
                     value={ searchStore.query }
                     onChange={ this.onChange.bind(this) }
                     onFocus={ this.onFocus.bind(this) }
