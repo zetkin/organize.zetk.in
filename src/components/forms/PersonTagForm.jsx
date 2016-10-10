@@ -8,7 +8,7 @@ import TextInput from './inputs/TextInput';
 export default class PersonTagForm extends React.Component {
     static propTypes = {
         tag: React.PropTypes.shape({
-            title: React.PropTypes.string.isRequired,
+            title: React.PropTypes.string,
             info_text: React.PropTypes.string,
         }),
     };
@@ -18,9 +18,9 @@ export default class PersonTagForm extends React.Component {
 
         return (
             <Form ref="form" {...this.props }>
-                <TextInput label="Title" name="title"
+                <TextInput labelMsg="forms.personTag.title" name="title"
                     initialValue={ tag.title }/>
-                <TextArea label="Information" name="info_text"
+                <TextArea labelMsg="forms.personTag.info" name="info_text"
                     initialValue={ tag.info_text }/>
             </Form>
         );
