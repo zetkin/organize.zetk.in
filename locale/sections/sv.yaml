@@ -1,0 +1,34 @@
+labels:
+    people: "Människor"
+    campaign: "Kampanj"
+    dialog: "Dialog"
+    maps: "Kartor"
+    survey: "Enkät"
+    resources: "Resurser"
+    meetups: "Meetups"
+    finance: "Ekonomi"
+    settings: "Inställningar"
+
+backToDashboard: "Tillbaka"
+
+subSections:
+    people:
+        list: "Människor"
+        invite: "Inbjudan"
+        import: "Importera"
+
+    campaign:
+        actions: "Aktioner"
+        distribution: "Spridning"
+        playback: "Spela upp"
+
+    dialog:
+        assignments: "Ringuppdrag"
+        calls: "Samtalslogg"
+        startassignment: "Skapa uppdrag"
+
+    maps:
+        locations: "Platser"
+
+    settings:
+        officials: "Funktionärer"
