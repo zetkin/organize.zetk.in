@@ -1,7 +1,9 @@
 import cx from 'classnames';
 import React from 'react';
 import { DropTarget } from 'react-dnd';
+import { FormattedMessage as Msg } from 'react-intl';
 
+import Link from '../Link';
 import CallerListItem from './CallerListItem';
 
 
@@ -16,7 +18,6 @@ const callerTarget = {
     },
 
     drop(props) {
-        console.log('DROP!');
         return {
             targetType: 'caller',
             onDropPerson: p => props.onAdd(p)
@@ -43,13 +44,16 @@ export default class CallerList extends React.Component {
     };
 
     render() {
+        let selectLink = (
+            <Link msgId="lists.callerList.selectLink"
+                onClick={ this.onClickAddCallers.bind(this) }/>
+        );
+
         let addItem = this.props.connectDropTarget(
             <li className="CallerList-addItem">
-                <p>
-                    Drag a person here or <a
-                        onClick={ this.onClickAddCallers.bind(this) }>
-                        select callers to be added</a>.
-                </p>
+                <Msg tagName="p"
+                    id="lists.callerList.addCaller"
+                    values={{ selectLink }}/>
             </li>
         );
 

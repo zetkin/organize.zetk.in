@@ -49,7 +49,7 @@ export default class AddCallAssignmentPane extends PaneBase {
     renderPaneFooter(data) {
         return (
             <Button className="AddCallAssignmentPane-saveButton"
-                label="Create Call Assignment"
+                labelMsg="Create Call Assignment"
                 onClick={ this.onSubmit.bind(this) }/>
         );
     }

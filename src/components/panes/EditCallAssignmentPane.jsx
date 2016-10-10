@@ -52,7 +52,7 @@ export default class EditCallAssignmentPane extends PaneBase {
     renderPaneFooter(data) {
         return (
             <Button className="EditCallAssignmentPane-saveButton"
-                label="Save Changes"
+                labelMsg="Save Changes"
                 onClick={ this.onSubmit.bind(this) }/>
         );
     }
