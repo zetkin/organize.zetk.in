@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 
 import FilterBase from './FilterBase';
 import Form from '../forms/Form';
@@ -6,6 +7,7 @@ import SelectInput from '../forms/inputs/SelectInput';
 import TextInput from '../forms/inputs/TextInput';
 
 
+@injectIntl
 export default class PersonDataFilter extends FilterBase {
     constructor(props) {
         super(props);
@@ -18,21 +20,22 @@ export default class PersonDataFilter extends FilterBase {
     }
 
     renderFilterForm(config) {
-        const fieldLabels = {
-            'first_name': 'First name',
-            'last_name': 'Last name',
-            'email': 'E-mail address',
-            'phone': 'Phone number',
-            'co_address': 'C/o address',
-            'street_address': 'Street address',
-            'zip': 'Zip code',
-            'city': 'City'
+        const msg = id => this.props.intl.formatMessage({ id });
+        const fieldMessages = {
+            'first_name': 'filters.personData.fields.first_name',
+            'last_name': 'filters.personData.fields.last_name',
+            'email': 'filters.personData.fields.email',
+            'phone': 'filters.personData.fields.phone',
+            'co_address': 'filters.personData.fields.co_address',
+            'street_address': 'filters.personData.fields.street_address',
+            'zip': 'filters.personData.fields.zip',
+            'city': 'filters.personData.fields.city',
         };
 
         let fields = config.fields || {};
         let fieldInputs = Object.keys(fields).map(field => (
             <TextInput key={ field } name={ field }
-                label={ fieldLabels[field] }
+                labelMsg={ fieldMessages[field] }
                 initialValue={ fields[field] }/>
         ));
 
@@ -42,18 +45,18 @@ export default class PersonDataFilter extends FilterBase {
             let field = this.state.nextField;
             fieldInputs.push(
                 <TextInput key={ field } name={ field }
-                    label={ fieldLabels[field] }
+                    labelMsg={ fieldMessages[field] }
                     initialValue={ fields[field] }/>
             );
         }
 
         let remainingOptions = {
-            '_': 'Select more fields to search for',
+            '_': msg('filters.personData.selectFields'),
         };
 
-        Object.keys(fieldLabels).forEach(field => {
+        Object.keys(fieldMessages).forEach(field => {
             if (!(field in fields))
-                remainingOptions[field] = fieldLabels[field];
+                remainingOptions[field] = msg(fieldMessages[field]);
         });
 
         return [
