@@ -1,22 +1,10 @@
 import React from 'react';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 
 import SelectInput from '../../../forms/inputs/SelectInput';
 
 
-const FIELD_OPTIONS = {
-    'id': 'Zetkin ID',
-    'first_name': 'First name',
-    'last_name': 'Last name',
-    'email': 'E-mail address',
-    'phone': 'Phone number',
-    'co_address': 'C/o address',
-    'street_address': 'Street address',
-    'zip_code': 'Zip code',
-    'city': 'City',
-    'gender': 'Gender',
-};
-
-
+@injectIntl
 export default class PersonDataColumnSettings extends React.Component {
     static propTypes = {
         config: React.PropTypes.object.isRequired,
@@ -26,12 +14,28 @@ export default class PersonDataColumnSettings extends React.Component {
     render() {
         let field = this.props.config.field;
 
+        const col = id => this.props.intl.formatMessage(
+            { id: 'panes.import.settings.personData.fields.' + id })
+
+        const FIELD_OPTIONS = {
+            'id': col('id'),
+            'first_name': col('firstName'),
+            'last_name': col('lastName'),
+            'email': col('email'),
+            'phone': col('phone'),
+            'co_address': col('coAddress'),
+            'street_address': col('streetAddress'),
+            'zip_code': col('zip'),
+            'city': col('city'),
+            'gender': col('gender'),
+        };
+
+
         return (
             <div className="PersonDataColumnSettings">
-                <h3>Field</h3>
-                <p>
-                    What Person field does this column represent?
-                </p>
+                <Msg tagName="h3" id="panes.import.settings.personData.h"/>
+                <Msg tagName="p"
+                    id="panes.import.settings.personData.instructions"/>
                 <SelectInput name="field"
                     value={ field } options={ FIELD_OPTIONS }
                     onValueChange={ this.onChangeField.bind(this) }/>

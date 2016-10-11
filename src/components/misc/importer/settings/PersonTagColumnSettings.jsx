@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import TagCloud from '../../tagcloud/TagCloud';
@@ -28,17 +29,18 @@ export default class PersonTagColumnSettings extends React.Component {
                 <ul className="PersonTagColumnSettings-mappings">
                 { config.mappings.map(mapping => {
                     let value = mapping.value;
-                    let label = value?
-                        'Mapping for value: ' + mapping.value
-                        : 'Mapping for empty cells';
+                    let labelMsg = value?
+                        'panes.import.settings.personTag.valueLabel' :
+                        'panes.import.settings.personTag.emptyLabel';
 
                     let tags = getListItemsByIds(tagList, mapping.tags)
                         .map(i => i.data);
 
                     return (
-                        <li key={ label }
+                        <li key={ value }
                             className="PersonTagColumnSettings-mapping">
-                            <h4>{ label }</h4>
+                            <Msg tagName="h4" id={ labelMsg }
+                                values={{ value }}/>
                             <TagCloud tags={ tags }
                                 showAddButton={ true }
                                 showRemoveButtons={ true }

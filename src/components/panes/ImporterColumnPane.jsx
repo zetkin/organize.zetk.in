@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
@@ -9,14 +10,8 @@ import { updateImportColumn } from '../../actions/importer';
 import { resolveSettingsComponent } from '../misc/importer/settings';
 
 
-const TYPE_OPTIONS = {
-    'unknown': 'Select column type',
-    'person_data': 'Person data',
-    'person_tag': 'Tag',
-};
-
-
 @connect(state => ({ importer: state.importer }))
+@injectIntl
 export default class ImporterColumnPane extends PaneBase {
     getRenderData() {
         let tableId = this.getParam(0);
@@ -32,12 +27,9 @@ export default class ImporterColumnPane extends PaneBase {
     }
 
     getPaneTitle(data) {
-        if (data.columnItem && data.columnItem.data.name) {
-            return 'Edit column settings: ' + data.columnItem.data.name;
-        }
-        else {
-            return 'Edit column settings';
-        }
+        const formatMessage = this.props.intl.formatMessage;
+        return formatMessage({ id: 'panes.importerColumn.title' },
+            { column: data.columnItem.data.name });
     }
 
     renderPaneContent(data) {
@@ -45,6 +37,13 @@ export default class ImporterColumnPane extends PaneBase {
 
         let SettingsComponent = resolveSettingsComponent(column.type);
         let settings = null;
+
+        const msg = id => this.props.intl.formatMessage({ id });
+        const TYPE_OPTIONS = {
+            'unknown': msg('panes.importerColumn.typeOptions.unknown'),
+            'person_data': msg('panes.importerColumn.typeOptions.personData'),
+            'person_tag': msg('panes.importerColumn.typeOptions.personTag'),
+        };
 
         if (SettingsComponent) {
             // TODO: Remove openPane attribute after pane refactor
@@ -55,7 +54,9 @@ export default class ImporterColumnPane extends PaneBase {
             );
         }
         else {
-            settings = "Select a column type and edit it's settings here";
+            settings = (
+                <Msg id="panes.importerColumn.instructions"/>
+            );
         }
 
         return [
