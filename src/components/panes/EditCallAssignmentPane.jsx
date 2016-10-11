@@ -1,15 +1,18 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import CallAssignmentForm from '../forms/CallAssignmentForm';
 import Button from '../misc/Button';
+import LoadingIndicator from '../misc/LoadingIndicator';
 import { getListItemById } from '../../utils/store';
 import { retrieveCallAssignment, updateCallAssignment }
     from '../../actions/callAssignment';
 
 
 @connect(state => state)
+@injectIntl
 export default class EditCallAssignmentPane extends PaneBase {
     componentDidMount() {
         let assignmentId = this.getParam(0);
@@ -26,16 +29,21 @@ export default class EditCallAssignmentPane extends PaneBase {
     }
 
     getPaneTitle(data) {
+        const formatMessage = this.props.intl.formatMessage;
+
         if (data.assignmentItem && !data.assignmentItem.isPending) {
-            return 'Edit assignment: ' + data.assignmentItem.data.title;
+            return formatMessage(
+                { id: 'panes.editCallAssignment.title' },
+                { title: data.assignmentItem.data.title });
         }
         else {
-            return 'Edit assignment';
+            return formatMessage(
+                { id: 'panes.editCallAssignment.pendingTitle' });
         }
     }
 
     renderPaneContent(data) {
-        if (data.assignmentItem) {
+        if (data.assignmentItem && !data.assignmentItem.isPending) {
             let assignment = data.assignmentItem.data;
             return [
                 <CallAssignmentForm key="form" ref="form"
@@ -44,15 +52,14 @@ export default class EditCallAssignmentPane extends PaneBase {
             ];
         }
         else {
-            // TODO: Loading indicator
-            return 'Loading...';
+            return <LoadingIndicator />;
         }
     }
 
     renderPaneFooter(data) {
         return (
             <Button className="EditCallAssignmentPane-saveButton"
-                labelMsg="Save Changes"
+                labelMsg="panes.editCallAssignment.saveButton"
                 onClick={ this.onSubmit.bind(this) }/>
         );
     }
