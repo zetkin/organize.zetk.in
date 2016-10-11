@@ -3,6 +3,7 @@ import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import Link from '../misc/Link';
+import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import DraggableAvatar from '../misc/DraggableAvatar';
 import TagCloud from '../misc/tagcloud/TagCloud';
@@ -98,7 +99,8 @@ export default class PersonPane extends PaneBase {
                         addrFields.length? addrFields : null) }
                 </ul>,
                 <Link key="editLink"
-                    msgId="panes.person.editLink"/>,
+                    msgId="panes.person.editLink"
+                    onClick={ this.onClickEdit.bind(this) }/>,
                 <div key="tags" className="PersonPane-tags">
                     <Msg tagName="h3" id="panes.person.tagHeader"/>
                     { tagCloud }
@@ -106,8 +108,7 @@ export default class PersonPane extends PaneBase {
             ];
         }
         else {
-            // TODO: Loading indicator
-            return null;
+            return <LoadingIndicator />;
         }
     }
 
