@@ -47,11 +47,12 @@ export default class EditPersonPane extends PaneBase {
             }
             else {
                 return [
-                    <PersonForm ref="personForm"
+                    <PersonForm key="form" ref="personForm"
                         person={ data.personItem.data }
                         onSubmit={ this.onSubmit.bind(this) }/>,
 
-                    <Button label="Delete Person"
+                    <Button key="deleteButton"
+                        labelMsg="panes.editPerson.deleteButton"
                         onClick={ this.onDeleteClick.bind(this) }
                         className="EditPersonPane-deleteButton"/>
                 ];
@@ -59,7 +60,6 @@ export default class EditPersonPane extends PaneBase {
         }
         else {
             // TODO: Show error?
-            return <h1>HELO</h1>;
             return null;
         }
     }
@@ -67,7 +67,7 @@ export default class EditPersonPane extends PaneBase {
     renderPaneFooter(data) {
         return (
             <Button className="EditPersonPane-saveButton"
-                label="Save Changes"
+                labelMsg="panes.editPerson.saveButton"
                 onClick={ this.onSubmit.bind(this) }/>
         );
     }
