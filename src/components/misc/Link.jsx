@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import { injectIntl } from 'react-intl';
 
 
@@ -7,6 +8,7 @@ export default class Link extends React.Component {
     static propTypes = {
         msgId: React.PropTypes.string.isRequired,
         msgValues: React.PropTypes.object,
+        className: React.PropTypes.string,
     };
 
     render() {
@@ -15,8 +17,11 @@ export default class Link extends React.Component {
         let label = formatMessage({ id: this.props.msgId },
             this.props.msgValues);
 
+        let classes = cx('Link', this.props.className);
+
         return (
-            <a onClick={ this.props.onClick }>
+            <a className={ classes }
+                onClick={ this.props.onClick }>
                 { label }
             </a>
         );
