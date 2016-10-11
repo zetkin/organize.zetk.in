@@ -1,2 +1,7 @@
 tagCloud:
     addButton: "Lägg till"
+inviteBox:
+    h: "Skicka inbjudan"
+    sendButton: "Skicka"
+    instructions: |
+        Fyll i e-postadress till den person du vill bjuda in.
