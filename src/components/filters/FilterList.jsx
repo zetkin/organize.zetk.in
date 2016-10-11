@@ -87,7 +87,7 @@ export default class FilterList extends React.Component {
                 items.push(
                     <li key={ key }>
                         <DropContainer type="filter"
-                            instructions="Drop here to move filter"
+                            instructionsMsg="filters.dropInstructions"
                             onDrop={ this.onDrop.bind(this, i+1) }/>
                     </li>
                 );
