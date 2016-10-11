@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
@@ -16,6 +17,7 @@ import {
 
 
 @connect(state => ({ queries: state.queries }))
+@injectIntl
 export default class EditQueryPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
@@ -34,8 +36,9 @@ export default class EditQueryPane extends PaneBase {
     }
 
     getPaneTitle(data) {
-        return data.queryItem?
-            ('Edit query: ' + data.queryItem.data.title) : 'Edit query';
+        const formatMessage = this.props.intl.formatMessage;
+        return formatMessage(
+            { id: 'panes.editQuery.title' });
     }
 
     renderPaneContent(data) {
@@ -46,7 +49,10 @@ export default class EditQueryPane extends PaneBase {
             return [
                 <QueryForm key="form" ref="form" query={ query }
                     onSubmit={ this.onSubmit.bind(this) }/>,
-                <h3 key="filterHeader">Filters</h3>,
+                <Msg tagName="h3" key="filterHeader"
+                    id="panes.editQuery.filterHeader"/>,
+                <Msg tagName="p" key="filterIntro"
+                    id="panes.editQuery.filterIntro"/>,
                 <FilterList ref="filters" key="filters" filters={ filters }
                     openPane={ this.openPane.bind(this) }/>, // TODO: Remove eventually
             ];
@@ -59,9 +65,9 @@ export default class EditQueryPane extends PaneBase {
 
     renderPaneFooter(data) {
         return (
-            <Button label="Save Query"
-                onClick={ this.onSubmit.bind(this) }
-                className="EditQueryPane-saveButton"/>
+            <Button className="EditQueryPane-saveButton"
+                labelMsg="panes.editQuery.saveButton"
+                onClick={ this.onSubmit.bind(this) }/>
         );
     }
 

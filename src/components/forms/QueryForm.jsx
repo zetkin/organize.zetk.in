@@ -18,10 +18,10 @@ export default class QueryForm extends React.Component {
 
         return (
             <Form ref="form" { ...this.props }>
-                <TextInput label="Title" name="title"
+                <TextInput labelMsg="forms.query.title" name="title"
                     initialValue={ query.title }/>
 
-                <TextArea label="Info text" name="info_text"
+                <TextArea labelMsg="forms.query.description" name="info_text"
                     initialValue={ query.info_text }/>
             </Form>
         );
