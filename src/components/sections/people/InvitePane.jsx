@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import InviteBox from '../../misc/InviteBox';
@@ -28,7 +29,7 @@ export default class InvitePane extends PaneBase {
 
             content.push(
                 <div className="InvitePane-invites">
-                    <h2>Sent invites</h2>
+                    <Msg tagName="h2" id="panes.invite.sentHeader"/>
                     <ul className="InvitePane-inviteList">
                     { invites.map(i => {
                         return (

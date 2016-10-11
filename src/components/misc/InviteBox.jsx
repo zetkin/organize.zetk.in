@@ -1,6 +1,8 @@
 import React from 'react';
+import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
+import Button from './Button';
 import LoadingIndicator from './LoadingIndicator';
 import { createInvite } from '../../actions/invite';
 
@@ -53,21 +55,17 @@ export default class InviteBox extends React.Component {
         }
         else {
             formElements.push(
-                <input key="submit" type="submit"
-                    className="InviteBox-submitButton"
-                    value="Send invite"/>
+                <Button key="sendButton"
+                    labelMsg="misc.inviteBox.sendButton"
+                    onClick={ this.onClickSend.bind(this) }/>
             );
         }
 
         return (
             <div className="InviteBox">
-                <h2>Send new invite</h2>
-                <p>
-                    Enter an e-mail address to send an invite.
-                </p>
-                <form onSubmit={ this.onInviteSubmit.bind(this) }>
-                    { formElements }
-                </form>
+                <Msg tagName="h2" id="misc.inviteBox.h"/>
+                <Msg tagName="p" id="misc.inviteBox.instructions"/>
+                { formElements }
             </div>
         );
     }
@@ -78,8 +76,7 @@ export default class InviteBox extends React.Component {
         });
     }
 
-    onInviteSubmit(ev) {
-        ev.preventDefault()
+    onClickSend() {
         this.props.dispatch(createInvite(this.state.inviteEmail));
         this.setState({
             inviteEmail: null,
