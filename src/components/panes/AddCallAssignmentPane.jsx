@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
@@ -10,6 +11,7 @@ import { retrieveCallAssignment, createCallAssignment }
 
 
 @connect(state => state)
+@injectIntl
 export default class AddCallAssignmentPane extends PaneBase {
     getRenderData() {
         let assignmentId = this.getParam(0);
@@ -21,7 +23,8 @@ export default class AddCallAssignmentPane extends PaneBase {
     }
 
     getPaneTitle(data) {
-        return 'Create call assignment';
+        const formatMessage = this.props.intl.formatMessage;
+        return formatMessage({ id: 'panes.addCallAssignment.title' });
     }
 
     renderPaneContent(data) {
@@ -49,7 +52,7 @@ export default class AddCallAssignmentPane extends PaneBase {
     renderPaneFooter(data) {
         return (
             <Button className="AddCallAssignmentPane-saveButton"
-                labelMsg="Create Call Assignment"
+                labelMsg="panes.addCallAssignment.saveButton"
                 onClick={ this.onSubmit.bind(this) }/>
         );
     }
