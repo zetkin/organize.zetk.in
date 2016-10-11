@@ -1,3 +1,4 @@
+import { FormattedMessage as Msg } from 'react-intl';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import cx from 'classnames';
@@ -65,10 +66,15 @@ export default class RelSelectInput extends InputBase {
                 'focused': (this.state.focusedIndex == this.values.length)
             });
 
+            let value = (
+                <em>{ this.state.inputValue }</em>
+            );
+
             createOption = (
                 <li key="create" className={ createOptionClasses }
                     onMouseDown={ this.onClickCreate.bind(this) }>
-                    Create <em>{ this.state.inputValue || 'new' }...</em>
+                    <Msg id="forms.relSelectInput.addLabel"
+                        values={{ value }}/>
                 </li>
             );
 
