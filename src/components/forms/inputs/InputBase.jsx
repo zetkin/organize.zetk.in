@@ -5,7 +5,7 @@ import { FormattedMessage as Msg } from 'react-intl';
 export default class InputBase extends React.Component {
     static propTypes = {
         name: React.PropTypes.string.isRequired,
-        labelMsg: React.PropTypes.string.isRequired,
+        labelMsg: React.PropTypes.string,
         initialValue: React.PropTypes.string,
         className: React.PropTypes.string
     };
@@ -15,10 +15,16 @@ export default class InputBase extends React.Component {
     }
 
     render() {
-        return (
-            <div className={ this.props.className }>
+        let label = null;
+        if (this.props.labelMsg) {
+            label = (
                 <Msg tagName="label"
                     id={ this.props.labelMsg }/>
+            );
+        }
+        return (
+            <div className={ this.props.className }>
+                { label }
                 { this.renderInput() }
             </div>
         );
