@@ -24,10 +24,6 @@ const mapStateToProps = state => ({
 
 @connect(mapStateToProps)
 export default class ActionDistributionPane extends CampaignSectionPaneBase {
-    getPaneTitle() {
-        return 'Location and activity distribution';
-    }
-
     componentDidMount() {
         super.componentDidMount();
 

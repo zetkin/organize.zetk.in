@@ -18,10 +18,6 @@ const mapStateToProps = state => ({
 
 @connect(mapStateToProps)
 export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
-    getPaneTitle() {
-        return 'Campaign playback';
-    }
-
     componentDidMount() {
         super.componentDidMount();
 

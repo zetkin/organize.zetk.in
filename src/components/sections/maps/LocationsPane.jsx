@@ -20,10 +20,6 @@ export default class LocationsPane extends PaneBase {
         };
     }
 
-    getPaneTitle() {
-        return 'Locations';
-    }
-
     componentDidMount() {
         super.componentDidMount();
 

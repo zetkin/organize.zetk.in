@@ -26,10 +26,6 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         };
     }
 
-    getPaneTitle() {
-        return 'All actions';
-    }
-
     componentDidMount() {
         super.componentDidMount();
 
