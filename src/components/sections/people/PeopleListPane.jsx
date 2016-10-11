@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import React from 'react';
 
 import PaneBase from '../../panes/PaneBase';
@@ -15,6 +16,7 @@ import {
 
 
 @connect(state => ({ people: state.people, queries: state.queries }))
+@injectIntl
 export default class PeopleListPane extends PaneBase {
     constructor(props) {
         super(props);
@@ -22,10 +24,6 @@ export default class PeopleListPane extends PaneBase {
         this.state = {
             selectedQueryId: undefined
         };
-    }
-
-    getPaneTitle() {
-        return 'People';
     }
 
     componentWillReceiveProps(nextProps) {
@@ -69,6 +67,8 @@ export default class PeopleListPane extends PaneBase {
     }
 
     getPaneTools(data) {
+        const formatMessage = this.props.intl.formatMessage;
+
         let queryId = this.state.selectedQueryId;
         let queryList = this.props.queries.queryList;
         let query = getListItemById(queryList, queryId);
@@ -78,15 +78,19 @@ export default class PeopleListPane extends PaneBase {
         //       e.g. a proper type attribute on the query
         let queries = queryList.items.map(i => i.data).filter(q => q.title);
 
+        let querySelectNullLabel = formatMessage(
+            { id: 'panes.peopleList.querySelect.nullLabel' });
+
         return [
             <RelSelectInput key="querySelect" name="querySelect"
                 value={ queryId } objects={ queries } showEditLink={ true }
-                allowNull={ true } nullLabel="(Show all people)"
+                allowNull={ true } nullLabel={ querySelectNullLabel }
                 onValueChange={ this.onQueryChange.bind(this) }
                 onCreate={ this.onQueryCreate.bind(this) }
                 onEdit={ this.onQueryEdit.bind(this) }/>,
-            <Button className="PeopleListPane-addButton"
-                label="Add"
+            <Button key="addButton"
+                className="PeopleListPane-addButton"
+                labelMsg="panes.peopleList.addButton"
                 onClick={ this.onAddClick.bind(this) }/>
         ];
     }
