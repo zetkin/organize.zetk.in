@@ -1,24 +1,11 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 
+import Link from '../Link';
 import { resolveSummaryComponent } from './summary';
 
 
-const PERSON_OPTIONS = {
-    'person.first_name': 'First name',
-    'person.last_name': 'Last name',
-    'person.email': 'E-mail address',
-    'person.phone': 'Phone number',
-    'person.co_address': 'C/o address',
-    'person.street_address': 'Street address',
-    'person.zip_code': 'Zip code',
-    'person.city': 'City',
-    'person.gender': 'Gender',
-};
-
-const COMPLEX_OPTIONS = {
-    'person_tag': 'Tag',
-};
-
+@injectIntl
 export default class ImporterColumnHead extends React.Component {
     static propTypes = {
         column: React.PropTypes.object.isRequired,
@@ -27,6 +14,25 @@ export default class ImporterColumnHead extends React.Component {
     };
 
     render() {
+        const formatMessage = this.props.intl.formatMessage;
+        const col = id => formatMessage({ id: 'panes.import.column.' + id });
+
+        const PERSON_OPTIONS = {
+            'person.first_name': col('colOptions.person.firstName'),
+            'person.last_name': col('colOptions.person.lastName'),
+            'person.email': col('colOptions.person.email'),
+            'person.phone': col('colOptions.person.phone'),
+            'person.co_address': col('colOptions.person.coAddress'),
+            'person.street_address': col('colOptions.person.streetAddress'),
+            'person.zip_code': col('colOptions.person.zip'),
+            'person.city': col('colOptions.person.city'),
+            'person.gender': col('colOptions.person.gender'),
+        };
+
+        const COMPLEX_OPTIONS = {
+            'person_tag': col('colOptions.complex.tag'),
+        };
+
         let column = this.props.column;
         let type = column.type;
 
@@ -49,20 +55,28 @@ export default class ImporterColumnHead extends React.Component {
             summary = <SummaryComponent column={ column }/>;
         }
 
+        let unknownLabel = col('unknown');
+        let idLabel = col('id');
+        let personFieldsLabel = formatMessage(
+            { id: 'panes.import.column.personFields' });
+
+        let otherFieldsLabel = formatMessage(
+            { id: 'panes.import.column.otherFields' });
+
         return (
             <th className="ImporterColumnHead">
                 <h3 className="ImporterColumnHead-name">{ name }</h3>
                 <select value={ type }
                     onChange={ this.onChangeColumn.bind(this) }>
-                    <option value="unknown">Column type</option>
-                    <option value="person.id">Zetkin ID</option>
-                    <optgroup label="Person fields">
+                    <option value="unknown">{ unknownLabel }</option>
+                    <option value="person.id">{ idLabel }</option>
+                    <optgroup label={ personFieldsLabel }>
                     { Object.keys(PERSON_OPTIONS).map(value => (
                         <option key={ value } value={ value }>
                             { PERSON_OPTIONS[value] }</option>
                     )) }
                     </optgroup>
-                    <optgroup label="Other types">
+                    <optgroup label={ otherFieldsLabel }>
                     { Object.keys(COMPLEX_OPTIONS).map(value => (
                         <option key={ value } value={ value }>
                             { COMPLEX_OPTIONS[value] }</option>
@@ -72,9 +86,9 @@ export default class ImporterColumnHead extends React.Component {
                 <div className="ImporterColumnHead-summary">
                     { summary }
                 </div>
-                <a className="ImporterColumnHead-editLink"
-                    onClick={ this.onClickEdit.bind(this) }>
-                    Edit column settings</a>
+                <Link className="ImporterColumnHead-editLink"
+                    msgId="panes.import.column.editSettingsLink"
+                    onClick={ this.onClickEdit.bind(this) }/>
             </th>
         );
     }

@@ -50,7 +50,8 @@ export default class ImporterTableSet extends React.Component {
                 )) }
                 </select>
                 { table }
-                <Button label="Import"
+                <Button
+                    labelMsg="panes.import.importButton"
                     onClick={ this.onClickImport.bind(this) }/>
             </div>
         );

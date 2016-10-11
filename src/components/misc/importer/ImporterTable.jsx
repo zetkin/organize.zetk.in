@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage as Msg } from 'react-intl';
 
 import ImporterTableHead from './ImporterTableHead';
 import ImporterTableBody from './ImporterTableBody';
@@ -24,7 +25,8 @@ export default class ImporterTable extends React.Component {
                 + table.numEmptyColumnsRemoved;
 
             removedInfo = (
-                <p>{ removedLabel }</p>
+                <Msg tagName="p" id="panes.import.table.emptyColumnsRemoved"
+                    values={{ numRemoved: table.numEmptyColumnsRemoved }}/>
             );
         }
 
@@ -34,7 +36,7 @@ export default class ImporterTable extends React.Component {
 
                 { removedInfo }
 
-                Use first row as header:
+                <Msg id="panes.import.table.firstRowAsHeader"/>
                 <input type="checkbox" checked={ table.useFirstRowAsHeader }
                     onChange={ this.onChangeFirstRow.bind(this) }/>
                 <table>
