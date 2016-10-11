@@ -29,6 +29,26 @@ column:
         complex:
             tag: "Etiketter"
 
+settings:
+    personTag:
+        valueLabel: "Etiketter för rader med värde: { value }"
+        emptyLabel: "Etiketter för tomma rader"
+
+    personData:
+        h: "Välj fält"
+        instructions: "Vilka personuppgifter finns i den här kolumnen?"
+        fields:
+            id: "Zetkin-ID"
+            firstName: "Förnamn"
+            lastName: "Efternamn"
+            email: "E-post"
+            phone: "Telefon"
+            coAddress: "C/O-adress"
+            streetAddress: "Gatuadress"
+            zip: "Postnummer"
+            city: "Ort"
+            gender: "Kön"
+
 summary:
     personTag:
         summary: |
