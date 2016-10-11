@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import FilterBase from './FilterBase';
@@ -9,25 +10,9 @@ import SelectInput from '../forms/inputs/SelectInput';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
 import { retrieveCallAssignments } from '../../actions/callAssignment';
 
-const OPERATOR_OPTIONS = {
-    'called_spec': 'Called as part of a specific assignment',
-    'called_any': 'Called during any assignment',
-    'reached_spec': 'Reached during a specific assignment',
-    'reached_any': 'Reached during any assignment',
-    'notreached_spec': 'Not reached during a specific assignment',
-    'notreached_any': 'Never reached at all',
-};
-
-const DATE_OPTIONS = {
-    'any': 'at any point in time',
-    'after': 'after',
-    'before': 'before',
-    'between': 'between',
-    'inlast': 'in the last',
-};
-
 
 @connect(state => ({ callAssignments: state.callAssignments }))
+@injectIntl
 export default class CallHistoryFilter extends FilterBase {
     constructor(props) {
         super(props);
@@ -53,10 +38,30 @@ export default class CallHistoryFilter extends FilterBase {
         let timeframe = this.state.timeframe;
         let op = this.state.op;
 
+        const msg = id => this.props.intl.formatMessage({ id });
+
+        const OPERATOR_OPTIONS = {
+            'called_spec': msg('filters.callHistory.opOptions.calledSpec'),
+            'called_any': msg('filters.callHistory.opOptions.calledAny'),
+            'reached_spec': msg('filters.callHistory.opOptions.reachedSpec'),
+            'reached_any': msg('filters.callHistory.opOptions.reachedAny'),
+            'notreached_spec': msg('filters.callHistory.opOptions.notReachedSpec'),
+            'notreached_any': msg('filters.callHistory.opOptions.notReachedAny'),
+        };
+
+        const DATE_OPTIONS = {
+            'any': msg('filters.callHistory.dateOptions.any'),
+            'after': msg('filters.callHistory.dateOptions.after'),
+            'before': msg('filters.callHistory.dateOptions.before'),
+            'between': msg('filters.callHistory.dateOptions.between'),
+            'inlast': msg('filters.callHistory.dateOptions.inLast'),
+        };
+
         let assignmentSelect = null;
         if (op.indexOf('spec') > 0) {
             assignmentSelect = (
-                <RelSelectInput name="assignment" label="Which assignment?"
+                <RelSelectInput name="assignment"
+                    labelMsg="filters.callHistory.assignment"
                     objects={ assignments } value={ this.state.assignment }
                     onValueChange={ this.onChangeSimpleField.bind(this) }
                     showCreateOption={ false }/>
