@@ -1,0 +1,8 @@
+addFilter: "Lägg till filter"
+dropInstructions: "Släpp filter här för att byta ordning"
+types:
+    callHistory: "Ringhistorik"
+    campaignParticipation: "Kampanjdeltagande"
+    joinDate: "Inträdesdatum"
+    personData: "Personuppgifter"
+    personTags: "Etiketter"

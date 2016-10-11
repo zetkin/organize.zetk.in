@@ -1,0 +1,5 @@
+opLabel: "Matcha personer som"
+opOptions:
+    all: "har alla följande etiketter"
+    any: "har någon av följande etiketter"
+    none: "inte har någon av följande etiketter"
