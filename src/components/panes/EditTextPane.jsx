@@ -1,5 +1,6 @@
 import React from 'react';
 import Editor from 'react-medium-editor';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
@@ -9,6 +10,7 @@ import { saveTextDocument, finishTextDocument } from '../../actions/document';
 
 
 @connect(state => state)
+@injectIntl
 export default class EditTextPane extends PaneBase {
     getRenderData() {
         let docId = this.getParam(0);
@@ -20,7 +22,8 @@ export default class EditTextPane extends PaneBase {
     }
 
     getPaneTitle(data) {
-        return 'Edit text';
+        const formatMessage = this.props.intl.formatMessage;
+        return formatMessage({ id: 'panes.editText.title' });
     }
 
     renderPaneContent(data) {
@@ -40,11 +43,13 @@ export default class EditTextPane extends PaneBase {
 
     renderPaneFooter(data) {
         return [
-            <Button className="EditTextPane-closeButton"
-                    label="Close"
-                    onClick={ this.onClickCancel.bind(this) }/>,
-            <Button className="EditTextPane-saveButton"
-                label="Save"
+            <Button key="closeButton"
+                className="EditTextPane-closeButton"
+                labelMsg="panes.editText.closeButton"
+                onClick={ this.onClickCancel.bind(this) }/>,
+            <Button key="saveButton"
+                className="EditTextPane-saveButton"
+                labelMsg="panes.editText.saveButton"
                 onClick={ this.onClickFinish.bind(this) }/>,
         ];
     }
