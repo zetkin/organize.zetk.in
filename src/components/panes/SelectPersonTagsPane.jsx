@@ -76,7 +76,8 @@ export default class SelectPersonTagsPane extends PaneBase {
         return (
             <Button className="SelectPersonTagsPane-saveButton"
                 labelMsg="panes.selectPersonTags.okButton"
-                labelValues={{ numSelected }}/>
+                labelValues={{ numSelected }}
+                onClick={ this.onClickSave.bind(this) }/>
         );
     }
 
