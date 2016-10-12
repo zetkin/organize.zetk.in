@@ -13,6 +13,7 @@ import { filteredActionList } from '../../../store/actions';
 
 const mapStateToProps = state => ({
     actions: state.actions,
+    campaigns: state.campaigns,
     filteredActionList: filteredActionList(state)
 });
 
