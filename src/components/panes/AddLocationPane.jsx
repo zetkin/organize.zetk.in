@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
@@ -10,6 +11,7 @@ import { setPendingLocation, clearPendingLocation, createLocation }
 
 
 @connect(state => state)
+@injectIntl
 export default class AddLocationPane extends PaneBase {
     componentDidMount() {
         let pendingLocation = this.props.locations.pendingLocation;
@@ -24,7 +26,8 @@ export default class AddLocationPane extends PaneBase {
     }
 
     getPaneTitle(data) {
-        return 'Add Location';
+        return this.props.intl.formatMessage(
+            { id: 'panes.editLocation.title' });
     }
 
     renderPaneContent(data) {
@@ -32,6 +35,7 @@ export default class AddLocationPane extends PaneBase {
             title: this.getParam(0)
         };
 
+        // TODO: Figure out better workflow for this
         return [
             <h3>1. Move highlighted marker to the position of location</h3>,
             <h3>2. Enter information about the location and press save</h3>,
@@ -43,10 +47,10 @@ export default class AddLocationPane extends PaneBase {
     renderPaneFooter(data) {
         return [
             <Button className="AddLocationPane-closeButton"
-                label="Close"
+                labelMsg="panes.addLocation.closeButton"
                 onClick={ this.onDeleteClick.bind(this) }/>,
             <Button className="AddLocationPane-saveButton"
-                label="Add Location"
+                labelMsg="panes.addLocation.saveButton"
                 onClick={ this.onSubmit.bind(this) }/>
         ];
     }
