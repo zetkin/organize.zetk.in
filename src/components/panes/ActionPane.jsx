@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { DropTarget } from 'react-dnd';
 import React from 'react';
 
+import Link from '../misc/Link';
 import ContactSlot from '../lists/items/elements/ContactSlot';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
@@ -84,6 +86,7 @@ let select = state => ({
 @connect(select)
 @DropTarget('person', actionTarget, collectParticipant)
 @DropTarget('person', contactTarget, collectContact)
+@injectIntl
 export default class ActionPane extends PaneBase {
     componentDidMount() {
         let actionId = this.getParam(0);
@@ -107,10 +110,12 @@ export default class ActionPane extends PaneBase {
     getPaneTitle(data) {
         if (data.actionItem && data.actionItem.data) {
             let action = data.actionItem.data;
-            return 'Action: ' + action.activity.title;
+            return this.props.intl.formatMessage({ id: 'panes.action.title' }, {
+                activity: action.activity.title,
+            });
         }
         else {
-            return 'Action';
+            return null;
         }
     }
 
@@ -152,29 +157,27 @@ export default class ActionPane extends PaneBase {
                     <span className="ActionPane-info">
                         { action.info_text }
                     </span>
-                    <a onClick={ this.onClickEdit.bind(this) }>
-                        Edit details</a>
+                    <Link msgId="panes.action.editLink"
+                        onClick={ this.onClickEdit.bind(this) }/>
                 </div>,
 
                 <div key="contact"
                     className="ActionPane-contact">
-                    <h3>Contact person</h3>
+                    <Msg tagName="h3" id="panes.action.contact.h"/>
                     { contactSlot }
                 </div>,
 
                 <div key="participants"
                     className="ActionPane-participants">
-                    <h3>Participants</h3>
-                    <p>
-                        <a onClick={ this.onClickReminders.bind(this) }>
-                            Send reminders</a>
-                    </p>
+                    <Msg tagName="h3" id="panes.action.participants.h"/>
+                    <Link msgId="panes.action.participants.sendRemindersLink"
+                        onClick={ this.onClickReminders.bind(this) }/>
                     { participantList }
                 </div>,
 
                 <div key="responses"
                     className="ActionPane-responses">
-                    <h3>Responses</h3>
+                    <Msg tagName="h3" id="panes.action.responses.h"/>
                 </div>
             ];
         }
