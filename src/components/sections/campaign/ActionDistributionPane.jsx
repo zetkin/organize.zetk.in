@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import CampaignSectionPaneBase from './CampaignSectionPaneBase';
@@ -47,16 +48,18 @@ export default class ActionDistributionPane extends CampaignSectionPaneBase {
         let actions = actionList.items.map(i => i.data);
 
         return [
-            <div className="ActionDistributionPane-locations">
-                <h3>Locations</h3>
+            <div key="locations"
+                className="ActionDistributionPane-locations">
+                <Msg tagName="h3" id="panes.actionDistribution.locations.h"/>
                 <ActionDistribution actions={ actions }
                     instanceField="location"
                     onMouseOver={ this.onLocMouseOver.bind(this) }
                     onMouseOverPhase={ this.onLocMouseOverPhase.bind(this) }
                     onMouseOut={ this.onMouseOut.bind(this) }/>
             </div>,
-            <div className="ActionDistributionPane-activities">
-                <h3>Activities</h3>
+            <div key="activities"
+                className="ActionDistributionPane-activities">
+                <Msg tagName="h3" id="panes.actionDistribution.activities.h"/>
                 <ActionDistribution actions={ actions }
                     instanceField="activity"
                     onMouseOver={ this.onActivityMouseOver.bind(this) }
