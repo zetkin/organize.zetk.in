@@ -42,31 +42,31 @@ export default class ActionForm extends React.Component {
 
         return (
             <Form className="ActionForm" ref="form" {...this.props }>
-                <RelSelectInput label="Campaign" name="campaign_id"
+                <RelSelectInput labelMsg="forms.action.campaign" name="campaign_id"
                     objects={ campaigns } showEditLink={ true }
                     onCreate={ this.props.onCreateCampaign }
                     onEdit={ this.props.onEditCampaign }
                     initialValue={ action.campaign.id }/>
-                <DateInput label="Date" name="date"
+                <DateInput labelMsg="forms.action.date" name="date"
                     initialValue={ date }/>
-                <TimeInput label="Start" name="start_time"
+                <TimeInput labelMsg="forms.action.startTime" name="start_time"
                     initialValue={ startTime }/>
-                <TimeInput label="End" name="end_time"
+                <TimeInput labelMsg="forms.action.endTime" name="end_time"
                     initialValue={ endTime }/>
-                <IntInput label="Minimum participants"
+                <IntInput labelMsg="forms.action.requiredParticipants"
                     name="num_participants_required"
                     initialValue={ action.num_participants_required || 2 }/>
-                <RelSelectInput label="Location" name="location_id"
+                <RelSelectInput labelMsg="forms.action.location" name="location_id"
                     objects={ locations } showEditLink={ true }
                     onCreate={ this.props.onCreateLocation }
                     onEdit={ this.props.onEditLocation }
                     initialValue={ action.location.id }/>
-                <RelSelectInput label="Activity" name="activity_id"
+                <RelSelectInput labelMsg="forms.action.activity" name="activity_id"
                     objects={ activities } showEditLink={ true }
                     onCreate={ this.props.onCreateActivity }
                     onEdit={ this.props.onEditActivity }
                     initialValue={ action.activity.id }/>
-                <TextArea label="Information" name="info_text"
+                <TextArea labelMsg="forms.action.info" name="info_text"
                     initialValue={ action.info_text }/>
 
             </Form>
