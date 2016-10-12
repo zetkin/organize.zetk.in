@@ -1,0 +1,6 @@
+header:
+    startTime: "Tid"
+    activity: "Aktivitet"
+    location: "Plats"
+    contact: "Ansvarig"
+    participants: "Deltagare"
