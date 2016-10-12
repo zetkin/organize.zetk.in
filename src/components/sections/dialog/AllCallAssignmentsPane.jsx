@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import PaneBase from '../../panes/PaneBase';
 import { retrieveCallAssignments } from '../../../actions/callAssignment';
 
+import CallAssignmentsList from '../../lists/CallAssignmentsList'
+
 
 @connect(state => state)
 export default class AllCallAssignmentsPane extends PaneBase {
@@ -19,20 +21,11 @@ export default class AllCallAssignmentsPane extends PaneBase {
 
     renderPaneContent(data) {
         return (
-            <ul>
-                { data.assignments.items.map(item => {
-                    let a = item.data;
-                    return (
-                        <li key={ a.id }
-                            onClick={ this.onClickAssignment.bind(this, a) }>
-                            { a.title }</li>
-                    );
-                })}
-            </ul>
+            <CallAssignmentsList callAssignmentsList={data.assignments} onSelect={this.onClickAssignment.bind(this)} />
         );
     }
 
     onClickAssignment(assignment) {
-        this.openPane('callassignment', assignment.id);
+        this.openPane('callassignment', assignment.data.id);
     }
 }
