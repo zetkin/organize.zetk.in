@@ -70,8 +70,8 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
 
     getPaneTools(data) {
         const viewStates = {
-            'cal': 'Calendar',
-            'list': 'List'
+            'cal': 'panes.allActions.viewModes.calendar',
+            'list': 'panes.allActions.viewModes.list'
         };
 
         return [

@@ -21,17 +21,17 @@ export default class ActionList extends React.Component {
 
         let columns = [
             {
-                'start_time': 'Time',
+                'start_time': 'lists.actionList.header.startTime',
             },
             {
-                'activity': 'Activity',
-                'location': 'Location',
+                'activity': 'lists.actionList.header.activity',
+                'location': 'lists.actionList.header.location',
             },
             {
-                'contact': 'Contact',
+                'contact': 'lists.actionList.header.contact',
             },
             {
-                'participants': 'Participants',
+                'participants': 'lists.actionList.header.participants',
             }
         ];
 
