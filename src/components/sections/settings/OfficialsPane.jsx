@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { FormattedMessage as Msg } from 'react-intl';
 import React from 'react';
 
 import PaneBase from '../../panes/PaneBase';
@@ -30,25 +31,22 @@ export default class OfficialsPane extends PaneBase {
 
         return [
             <div className="OfficialsPane-admins" key="admins">
-                <h1>Administrators</h1>
-                <p>{
-                    "Administrators have full access to all aspects of the " +
-                    "organization."
-                }</p>
+                <Msg tagName="h1" id="panes.officials.admins.h"/>
+                <Msg tagName="p" id="panes.officials.admins.desc"/>
                 <OfficialList officials={ admins }
+                    addMsg="panes.officials.admins.add"
+                    selectLinkMsg="panes.officials.admins.selectLink"
                     onAdd={ this.onAdd.bind(this, 'admin') }
                     onRemove={ this.onRemove.bind(this) }
                     onSelect={ this.onSelect.bind(this, 'admin') }/>
             </div>,
 
             <div className="OfficialsPane-organizers" key="organizers">
-                <h1>Organizers</h1>
-                <p>{
-                    "Organizers have enough access to perform the day-to-day " +
-                    "tasks related to, for example, managing a running campaign " +
-                    "or an active call assignment."
-                }</p>
+                <Msg tagName="h1" id="panes.officials.organizers.h"/>
+                <Msg tagName="p" id="panes.officials.organizers.desc"/>
                 <OfficialList officials={ organizers }
+                    addMsg="panes.officials.organizers.add"
+                    selectLinkMsg="panes.officials.organizers.selectLink"
                     onAdd={ this.onAdd.bind(this, 'organizer') }
                     onRemove={ this.onRemove.bind(this) }
                     onSelect={ this.onSelect.bind(this, 'organizer') }/>

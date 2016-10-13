@@ -1,0 +1,6 @@
+title: "Redigera sökfråga"
+filterHeader: "Filter"
+filterIntro: |
+    En sökfråga består av en kedja av filter, där varje filter adderar
+    eller exkluderar personer till resultatet av föregående filter.
+saveButton: "Spara sökfråga"

@@ -1,0 +1,8 @@
+title: "Inställningar för kolumn: { column }"
+instructions: |
+    Välj en kolumn-typ och redigera inställningar här.
+
+typeOptions:
+    unknown: "Välj en kolumn-typ"
+    personData: "Personuppgifter"
+    personTag: "Etiketter"

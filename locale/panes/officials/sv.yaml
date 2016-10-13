@@ -1,0 +1,15 @@
+admins:
+    h: "Administratörer"
+    desc: |
+        Administratörer har fulla rättigheter att skapa, redigera och radera
+        alla typer av innehåll.
+    add: "Släpp eller { selectLink }."
+    selectLink: "välj personer"
+
+organizers:
+    h: "Organisatörer"
+    desc: |
+        Organisatörer har tillräckliga rättigheter för att exempelvis
+        genomföra kampanjer och hantera ringuppdrag.
+    add: "Släpp eller { selectLink }."
+    selectLink: "välj personer"

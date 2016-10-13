@@ -55,6 +55,11 @@ gulp.task('copyFonts', function() {
         .pipe(gulp.dest('./dist/static/fonts'));
 });
 
+gulp.task('copyMessages', function() {
+    return gulp.src('./locale/**/*')
+        .pipe(gulp.dest('./dist/locale'));
+});
+
 gulp.task('js', function() {
     const newerConfig = {
         dest: jsDest,
@@ -111,7 +116,8 @@ gulp.task('minify', function() {
 });
 
 gulp.task('default', [ 'clean' ], function(cb) {
-    return runSequence('bundleJs', 'buildSass', 'minifyImages', 'copyFonts', cb);
+    return runSequence('bundleJs', 'buildSass',
+        'minifyImages', 'copyFonts', 'copyMessages', cb);
 });
 
 
@@ -143,6 +149,10 @@ gulp.task('watch', function() {
 
     watch('assets/fonts/**/*', function() {
         return runSequence('copyFonts');
+    });
+
+    watch('locale/**/*', function() {
+        return runSequence('copyMessages');
     });
 });
 

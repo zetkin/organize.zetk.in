@@ -1,0 +1,5 @@
+header:
+    callerName: "Ringare"
+    targetName: "Mottagare"
+    status: "Status"
+    time: "Tid"

@@ -1,3 +1,4 @@
+import { FormattedMessage as Msg } from 'react-intl';
 import React from 'react';
 import cx from 'classnames';
 
@@ -41,7 +42,7 @@ export default class ScopeSelect extends React.Component {
                     return (
                         <li key={ scope } className={ classNames }
                             onClick={ this.onScopeClick.bind(this, scope) }>
-                            { scope }</li>
+                            <Msg id={ 'header.search.scopes.' + scope }/></li>
                     );
                 }, this)}
             </ul>

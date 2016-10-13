@@ -1,15 +1,18 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
+import Button from '../misc/Button';
 import PaneBase from './PaneBase';
 import ActivityForm from '../forms/ActivityForm';
 import { createActivity } from '../../actions/activity';
 
 
 @connect(state => state)
+@injectIntl
 export default class AddActivityPane extends PaneBase {
     getPaneTitle(data) {
-        return 'Add activity';
+        return this.props.intl.formatMessage({ id: 'panes.addActivity.title' });
     }
 
     renderPaneContent(data) {
@@ -20,6 +23,14 @@ export default class AddActivityPane extends PaneBase {
         return (
             <ActivityForm ref="form" activity={ initialData }
                 onSubmit={ this.onSubmit.bind(this) }/>
+        );
+    }
+
+    renderPaneFooter(data) {
+        return (
+            <Button className="AddActivityPane-saveButton"
+                labelMsg="panes.addActivity.saveButton"
+                onClick={ this.onSubmit.bind(this) }/>
         );
     }
 

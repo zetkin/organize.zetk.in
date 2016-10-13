@@ -1,0 +1,11 @@
+campaignSelect:
+    nullLabel: "Alla kampanjer"
+
+inviteBox:
+    h: "Skicka inbjudan"
+    sendButton: "Skicka"
+    instructions: |
+        Fyll i e-postadress till den person du vill bjuda in.
+
+tagCloud:
+    addButton: "Lägg till"

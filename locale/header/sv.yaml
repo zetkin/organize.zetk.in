@@ -1,0 +1,11 @@
+search:
+    typeToSearch: "Börja skriva för att söka"
+    scopes:
+        all: "Allt"
+        people: "Människor"
+        campaign: "Kampanj"
+        maps: "Kartor"
+
+userMenu:
+    logOutLink: "Logga ut"
+    accountLink: "Konto-inställningar"

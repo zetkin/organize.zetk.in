@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage as Msg } from 'react-intl';
 
 import TagCloudItem from './TagCloudItem';
 
@@ -27,7 +28,7 @@ export default class TagCloud extends React.Component {
             addButton = (
                 <li className="TagCloud-addButton"
                     onClick={ this.props.onAdd }>
-                    Add
+                    <Msg id="misc.tagCloud.addButton"/>
                 </li>
             );
         }

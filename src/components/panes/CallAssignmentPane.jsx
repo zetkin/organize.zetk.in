@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 
+import Link from '../misc/Link';
 import PaneBase from './PaneBase';
 import CallerList from '../misc/callerlist/CallerList';
 import LoadingIndicator from '../misc/LoadingIndicator';
@@ -18,6 +20,7 @@ import {
 
 
 @connect(state => state)
+@injectIntl
 export default class CallAssignmentPane extends PaneBase {
     componentDidMount() {
         let assignmentId = this.getParam(0);
@@ -50,15 +53,18 @@ export default class CallAssignmentPane extends PaneBase {
     }
 
     getPaneTitle(data) {
+        const formatMessage = this.props.intl.formatMessage;
         if (data.assignmentItem && data.assignmentItem.data.title) {
             return data.assignmentItem.data.title;
         }
         else {
-            return 'Call Assignment';
+            return formatMessage({ id: 'panes.callAssignment.title' });
         }
     }
 
     renderPaneContent(data) {
+        const formatMessage = this.props.intl.formatMessage;
+
         if (data.assignmentItem) {
             let assignment = data.assignmentItem.data;
             let instructions = assignment.instructions;
@@ -75,15 +81,15 @@ export default class CallAssignmentPane extends PaneBase {
                 targetStats = [
                     <h1 key="targetStatsHeader">
                         { stats.num_target_matches }</h1>,
-                    <span key="targetStatsInfo">
-                        people make up the target</span>
+                    <Msg key="targetStatsInfo"
+                        id="panes.callAssignment.target.stats.target"/>,
                 ];
 
                 goalStats = [
                     <h1 key="goalStatsHeader">
                         { stats.num_remaining_targets }</h1>,
-                    <span key="goalStatsInfo">
-                        do not yet meet the goal</span>
+                    <Msg key="goalStatsInfo"
+                        id="panes.callAssignment.target.stats.goal"/>,
                 ];
 
                 progressSum = 100 * (1 - stats.num_remaining_targets / stats.num_target_matches);
@@ -104,27 +110,34 @@ export default class CallAssignmentPane extends PaneBase {
                 );
             }
 
+            let cooldownLabel = formatMessage(
+                { id: 'panes.callAssignment.summary.cooldown' },
+                { cooldown: assignment.cooldown });
+
             return [
                 <div key="summary"
                     className="CallAssignmentPane-summary">
                     <span className="CallAssignmentPane-summaryDesc">{ assignment.description }</span>
                     <span className="CallAssignmentPane-summaryDate">{ assignment.start_date } - { assignment.end_date }</span>
-                    <span className="CallAssignmentPane-summaryCooldown">{ assignment.cooldown } hours</span>
-                    <a onClick={ this.onClickEditSettings.bind(this) }>
-                        Edit basic settings</a>
+                    <span className="CallAssignmentPane-summaryCooldown">
+                        { cooldownLabel }</span>
+                    <Link msgId="panes.callAssignment.summary.editLink"
+                        onClick={ this.onClickEditSettings.bind(this) }/>
                 </div>,
 
                 <div key="instructions"
                     className="CallAssignmentPane-instructions">
-                    <h3>Instructions to callers</h3>
+                    <Msg tagName="h3"
+                        id="panes.callAssignment.instructions.h"/>
                     <div dangerouslySetInnerHTML={{ __html: instructions }}/>
-                    <a onClick={ this.onClickEditInstructions.bind(this) }>
-                        Edit instructions</a>
+                    <Link msgId="panes.callAssignment.instructions.editLink"
+                        onClick={ this.onClickEditInstructions.bind(this) }/>
                 </div>,
 
                 <div key="target"
                     className="CallAssignmentPane-target">
-                    <h3>Targets</h3>
+                    <Msg tagName="h3"
+                        id="panes.callAssignment.target.h"/>
                     <div className="CallAssignmentPane-stats">
                         <div>
                             <div key="targetStats"
@@ -139,10 +152,10 @@ export default class CallAssignmentPane extends PaneBase {
                             </div>
                         </div>
                     </div>
-                    <a onClick={ this.onClickEditTarget.bind(this) }>
-                        Edit target filters</a>
-                    <a onClick={ this.onClickEditGoal.bind(this) }>
-                        Edit goal filters</a>
+                    <Link msgId="panes.callAssignment.target.editTargetLink"
+                        onClick={ this.onClickEditTarget.bind(this) }/>
+                    <Link msgId="panes.callAssignment.target.editGoalLink"
+                        onClick={ this.onClickEditGoal.bind(this) }/>
                     <div className="CallAssignmentPane-progress">
                         <div style={{ width: progressSum + '%' }} 
                             className="CallAssignmentPane-progressContent"/>
@@ -151,7 +164,8 @@ export default class CallAssignmentPane extends PaneBase {
 
                 <div key="callers"
                     className="CallAssignmentPane-callers">
-                    <h3>Callers</h3>
+                    <Msg tagName="h3"
+                        id="panes.callAssignment.callers.h"/>
                     { callerContent }
                 </div>
             ];

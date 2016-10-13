@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import FilterBase from './FilterBase';
@@ -8,24 +9,9 @@ import SelectInput from '../forms/inputs/SelectInput';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
 import { retrieveCampaigns } from '../../actions/campaign';
 
-const OPERATOR_OPTIONS = {
-    'in_spec': 'Participate in specific campaign',
-    'in_any': 'Participate in any campaign',
-    'notin_spec': 'Do not participate in specific campaign',
-    'notin_any': 'Do not participate in any campaigns',
-};
-
-const DATE_OPTIONS = {
-    'any': 'at any point in time',
-    'future': 'in the future',
-    'past': 'in the past',
-    'after': 'after',
-    'before': 'before',
-    'between': 'between',
-};
-
 
 @connect(state => ({ campaigns: state.campaigns }))
+@injectIntl
 export default class CampaignFilter extends FilterBase {
     constructor(props) {
         super(props);
@@ -50,10 +36,29 @@ export default class CampaignFilter extends FilterBase {
         let campaigns = campaignStore.campaignList.items.map(i => i.data);
         let timeframe = this.state.timeframe;
 
+        const msg = id => this.props.intl.formatMessage({ id });
+
+        const OPERATOR_OPTIONS = {
+            'in_spec': msg('filters.campaign.opOptions.inSpec'),
+            'in_any': msg('filters.campaign.opOptions.inAny'),
+            'notin_spec': msg('filters.campaign.opOptions.notInSpec'),
+            'notin_any': msg('filters.campaign.opOptions.notInAny'),
+        };
+
+        const DATE_OPTIONS = {
+            'any': msg('filters.campaign.dateOptions.any'),
+            'future': msg('filters.campaign.dateOptions.future'),
+            'past': msg('filters.campaign.dateOptions.past'),
+            'after': msg('filters.campaign.dateOptions.after'),
+            'before': msg('filters.campaign.dateOptions.before'),
+            'between': msg('filters.campaign.dateOptions.between'),
+        };
+
         let campaignSelect = null;
         if (this.state.op == 'in_spec' || this.state.op == 'notin_spec') {
             campaignSelect = (
-                <RelSelectInput name="campaign" label="Which campaign?"
+                <RelSelectInput name="campaign"
+                    labelMsg="filters.campaign.campaign"
                     objects={ campaigns } value={ this.state.campaign }
                     onValueChange={ this.onChangeSimpleField.bind(this) }
                     showCreateOption={ false }/>
@@ -82,7 +87,7 @@ export default class CampaignFilter extends FilterBase {
 
         return [
             <SelectInput key="operator" name="operator"
-                label="Match people who"
+                labelMsg="filters.campaign.participantStatus"
                 options={ OPERATOR_OPTIONS } value={ this.state.op }
                 onValueChange={ this.onSelectOperator.bind(this) }/>,
 

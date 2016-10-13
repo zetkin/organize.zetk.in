@@ -7,7 +7,7 @@ import { createAction, updateAction } from '../../../actions/action';
 
 export default class CampaignSectionPaneBase extends PaneBase {
     onCalendarAddAction(date) {
-        const selectedId = this.props.campaigns.selectedId;
+        const selectedId = this.props.campaigns.selectedCampaign;
         const campParam = selectedId || 0;
         const dateParam = moment(date).format('YYYY-MM-DD');
 

@@ -20,10 +20,6 @@ export default class LocationsPane extends PaneBase {
         };
     }
 
-    getPaneTitle() {
-        return 'Locations';
-    }
-
     componentDidMount() {
         super.componentDidMount();
 
@@ -73,16 +69,17 @@ export default class LocationsPane extends PaneBase {
 
     getPaneTools(data) {
         const switchStates = {
-            'map': 'Map',
-            'list': 'List'
+            'map': 'panes.locations.viewModes.map',
+            'list': 'panes.locations.viewModes.list',
         };
 
         return [
             <ViewSwitch key="viewSwitch" states={ switchStates }
                 selected={ this.state.viewMode }
                 onSwitch={ this.onViewSwitch.bind(this) }/>,
-            <Button className="LocationsPane-addLocationButton"
-                label="Add"
+            <Button key="addButton"
+                className="LocationsPane-addLocationButton"
+                labelMsg="panes.locations.addButton"
                 onClick={ this.onAddClick.bind(this) }/>
         ];
     }

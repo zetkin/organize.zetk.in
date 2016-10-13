@@ -1,5 +1,6 @@
-import React from 'react';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
+import React from 'react';
 
 import Footer from './Footer';
 import Shortcut from './Shortcut';
@@ -10,6 +11,7 @@ import { gotoSection } from '../../actions/view';
 
 
 @connect(state => state)
+@injectIntl
 export default class Dashboard extends React.Component {
     render() {
         let dashboardStore = this.props.dashboard;
@@ -20,23 +22,12 @@ export default class Dashboard extends React.Component {
         let favoriteElements = [];
         let shortcutElements = [];
 
-        // TODO: Move to localization
-        const labels = {
-            'people': 'People',
-            'campaign': 'Campaign',
-            'dialog': 'Dialog',
-            'maps': 'Maps',
-            'survey': 'Survey',
-            'resources': 'Resources',
-            'meetups': 'Meetups',
-            'finance': 'Finance',
-            'settings': 'Settings'
-        };
+        const formatMessage = this.props.intl.formatMessage;
 
         for (let i = 0; i < shortcuts.length; i++) {
             let shortcut = shortcuts[i];
             let classes = 'Dashboard-shortcut Dashboard-shortcut-' + shortcut;
-            let label = labels[shortcut];
+            let label = formatMessage({ id: 'sections.labels.' + shortcut });
             let onClick = this.onClickShortcut.bind(this, shortcut);
 
             if (i < 4) {

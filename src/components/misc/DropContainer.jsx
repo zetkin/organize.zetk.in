@@ -1,4 +1,5 @@
 import cx from 'classnames';
+import { FormattedMessage as Msg } from 'react-intl';
 import React from 'react';
 import { DropTarget } from 'react-dnd';
 
@@ -26,18 +27,25 @@ function collect(connect, monitor) {
 export default class DropContainer extends React.Component {
     static propTypes = {
         type: React.PropTypes.string.isRequired,
-        instructions: React.PropTypes.string,
+        instructionsMsg: React.PropTypes.string,
         onDrop: React.PropTypes.func,
     };
 
     render() {
+        let instructions = null;
+        if (this.props.instructionsMsg) {
+            instructions = (
+                <Msg id={ this.props.instructionsMsg }/>
+            );
+        }
+
         let classes = cx('DropContainer', {
             'DropContainer-isDraggingOver': this.props.isDraggingOver,
         });
 
         return this.props.connectDropTarget(
             <div className={ classes }>
-                { this.props.instructions || '' }
+                { instructions }
             </div>
         );
     }

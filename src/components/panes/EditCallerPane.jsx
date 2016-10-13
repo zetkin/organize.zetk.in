@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
@@ -16,6 +17,7 @@ import {
 
 
 @connect(state => state)
+@injectIntl
 export default class EditCallerPane extends PaneBase {
     componentDidMount() {
         let assignmentId = this.getParam(0);
@@ -39,21 +41,26 @@ export default class EditCallerPane extends PaneBase {
     }
 
     getPaneTitle(data) {
+        const formatMessage = this.props.intl.formatMessage;
         if (data.callerItem) {
             let caller = data.callerItem.data;
-            return 'Edit caller: ' + caller.first_name + ' ' + caller.last_name;
+            return formatMessage({ id: 'panes.editCaller.title' },
+                { firstName: caller.first_name, lastName: caller.last_name });
         }
         else {
-            return 'Edit caller';
+            return formatMessage({ id: 'panes.editCaller.pendingTitle' });
         }
     }
 
     renderPaneContent(data) {
+        let firstName = '';
         let prioTags = null;
         let exTags = null;
 
         if (data.callerItem) {
             let caller = data.callerItem.data;
+
+            firstName = caller.first_name;
 
             prioTags = <TagCloud key="prioTags" tags={ caller.prioritized_tags }
                 showAddButton={ true } showRemoveButtons={ true }
@@ -67,15 +74,21 @@ export default class EditCallerPane extends PaneBase {
         }
 
         return [
-            <h3 key="prioHeader"><i className="fa fa-star"></i> Prioritized tags</h3>,
-            <p key="prioInstructions">
-                People with these tags will be prioritized for this caller.
-            </p>,
+            <h3 key="prioHeader">
+                <i className="fa fa-star"/>
+                <Msg id="panes.editCaller.prio.h"/>,
+            </h3>,
+            <Msg tagName="p" key="prioInstructions"
+                id="panes.editCaller.prio.instructions"
+                values={{ firstName }}/>,
             prioTags,
-            <h3 key="exHeader"><i className="fa fa-ban"></i> Excluded tags</h3>,
-            <p key="exInstructions">
-                This caller will not be calling people with these tags.
-            </p>,
+            <h3 key="exHeader">
+                <i className="fa fa-ban"/>
+                <Msg id="panes.editCaller.ex.h"/>
+            </h3>,
+            <Msg tagName="p" key="exInstructions"
+                id="panes.editCaller.ex.instructions"
+                values={{ firstName }}/>,
             exTags,
         ];
     }

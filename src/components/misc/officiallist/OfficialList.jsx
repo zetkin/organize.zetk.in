@@ -1,4 +1,5 @@
 import cx from 'classnames';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import React from 'react';
 import { DropTarget } from 'react-dnd';
 
@@ -32,9 +33,12 @@ function collectOfficial(connect, monitor) {
 }
 
 
+@injectIntl
 @DropTarget('person', officialTarget, collectOfficial)
 export default class OfficialList extends React.Component {
     static propTypes = {
+        addMsg: React.PropTypes.string.isRequired,
+        selectLinkMsg: React.PropTypes.string.isRequired,
         officials: React.PropTypes.array.isRequired,
         onSelect: React.PropTypes.func.isRequired,
         onRemove: React.PropTypes.func.isRequired,
@@ -42,13 +46,17 @@ export default class OfficialList extends React.Component {
     };
 
     render() {
+        const formatMessage = this.props.intl.formatMessage;
+
+        let selectLink = (
+            <a onClick={ this.onClickAddOfficials.bind(this) }>
+                { formatMessage({ id: this.props.selectLinkMsg }) }</a>
+        );
+
         let addItem = this.props.connectDropTarget(
             <li key="add" className="OfficialList-addItem">
-                <p>
-                    Drop or <a
-                        onClick={ this.onClickAddOfficials.bind(this) }>
-                        select officials</a>.
-                </p>
+                <Msg tagName="p" id={ this.props.addMsg }
+                    values={{ selectLink }}/>
             </li>
         );
 

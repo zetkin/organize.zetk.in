@@ -1,0 +1,5 @@
+header:
+    firstName: "Förnamn"
+    lastName: "Efternamn"
+    email: "E-post"
+    phone: "Telefonnummer"

@@ -30,6 +30,7 @@ export function retrieveActivity(id) {
         let orgId = getState().org.activeId;
         dispatch({
             type: types.RETRIEVE_ACTIVITY,
+            meta: { id },
             payload: {
                 promise: z.resource('orgs', orgId, 'activities', id).get(),
             }

@@ -13,6 +13,7 @@ import { filteredActionList } from '../../../store/actions';
 
 const mapStateToProps = state => ({
     actions: state.actions,
+    campaigns: state.campaigns,
     filteredActionList: filteredActionList(state)
 });
 
@@ -24,10 +25,6 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         this.state = {
             viewMode: 'cal'
         };
-    }
-
-    getPaneTitle() {
-        return 'All actions';
     }
 
     componentDidMount() {
@@ -74,8 +71,8 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
 
     getPaneTools(data) {
         const viewStates = {
-            'cal': 'Calendar',
-            'list': 'List'
+            'cal': 'panes.allActions.viewModes.calendar',
+            'list': 'panes.allActions.viewModes.list'
         };
 
         return [

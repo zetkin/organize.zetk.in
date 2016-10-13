@@ -1,0 +1,8 @@
+campaign: "Kampanj"
+date: "Datum"
+startTime: "Starttid"
+endTime: "Sluttid"
+requiredParticipants: "Minsta antal deltagare"
+location: "Plats"
+activity: "Aktivitet"
+info: "Information vid anmälan"

@@ -1,0 +1,12 @@
+title: "Aktion: { activity }"
+editLink: "Redigera aktion"
+
+contact:
+    h: "Ansvarig"
+
+participants:
+    h: "Bokade deltagare"
+    sendRemindersLink: "Skicka påminnelser"
+
+responses:
+    h: "Anmälningar"

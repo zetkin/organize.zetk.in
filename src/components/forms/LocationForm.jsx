@@ -11,10 +11,10 @@ export default class LocationForm extends React.Component {
 
         return (
             <Form ref="form" { ...this.props }>
-                <TextInput label="Title" name="title"
+                <TextInput labelMsg="forms.location.title" name="title"
                     initialValue={ loc.title }/>
 
-                <TextArea label="Info text" name="info_text"
+                <TextArea labelMsg="forms.location.info" name="info_text"
                     initialValue={ loc.info_text }/>
             </Form>
         );

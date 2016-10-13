@@ -1,0 +1,14 @@
+campaign: "Vilken kampanj?"
+participantStatus: "Matcha personer som"
+opOptions:
+    inSpec: "deltar i följande kampanj"
+    inAny: "deltar i någon kampanj"
+    notInSpec: "inte deltar i följande kampanj"
+    notInAny: "inte deltar i någon kampanj"
+dateOptions:
+    any: "överhuvudtaget"
+    future: "i framtiden"
+    past: "tidigare"
+    after: "efter ett visst datum"
+    before: "innan ett visst datum"
+    between: "mellan vissa datum"

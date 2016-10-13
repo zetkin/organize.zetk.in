@@ -1,6 +1,9 @@
 import React from 'react';
+import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
+import Link from '../misc/Link';
+import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import DraggableAvatar from '../misc/DraggableAvatar';
 import TagCloud from '../misc/tagcloud/TagCloud';
@@ -40,7 +43,7 @@ export default class PersonPane extends PaneBase {
             return person.first_name + ' ' + person.last_name;
         }
         else {
-            return 'Person';
+            return null;
         }
     }
 
@@ -95,17 +98,17 @@ export default class PersonPane extends PaneBase {
                     { createInfoItem('address',
                         addrFields.length? addrFields : null) }
                 </ul>,
-                <a onClick={ this.onClickEdit.bind(this) }>
-                    Edit basic information</a>,
-                <div className="PersonPane-tags">
-                    <h3>Tags</h3>
+                <Link key="editLink"
+                    msgId="panes.person.editLink"
+                    onClick={ this.onClickEdit.bind(this) }/>,
+                <div key="tags" className="PersonPane-tags">
+                    <Msg tagName="h3" id="panes.person.tagHeader"/>
                     { tagCloud }
                 </div>,
             ];
         }
         else {
-            // TODO: Loading indicator
-            return null;
+            return <LoadingIndicator />;
         }
     }
 

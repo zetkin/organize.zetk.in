@@ -1,0 +1,14 @@
+assignment: "Vilket ringuppdrag?"
+opOptions:
+    calledSpec: "Ringd i ett specifikt ringuppdrag"
+    calledAny: "Ringd överhuvudtaget"
+    reachedSpec: "Nådd i ett specifikt ringuppdrag"
+    reachedAny: "Nådd överhuvudtaget"
+    notReachedSpec: "Inte nådd i ett specifikt ringuppdrag"
+    notReachedAny: "Inte nådd alls"
+dateOptions:
+    any: "närsomhelst"
+    after: "efter ett visst datum"
+    before: "före ett visst datum"
+    between: "mellan vissa datum"
+    inLast: "under de senaste dagarna"

@@ -1,5 +1,6 @@
 import moment from 'moment';
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import ActionList from '../lists/ActionList';
@@ -11,6 +12,7 @@ import { moveActionParticipant } from '../../actions/participant';
 
 
 @connect(state => state)
+@injectIntl
 export default class ActionDayPane extends PaneBase {
     componentDidMount() {
         if (this.props.actions.actionList.items.length == 0) {
@@ -19,9 +21,12 @@ export default class ActionDayPane extends PaneBase {
     }
 
     getPaneTitle(data) {
+        const formatMessage = this.props.intl.formatMessage;
         const d = moment(this.getParam(0));
 
-        return 'Actions on ' + d.format('YYYY-MM-DD');
+        return formatMessage({ id: 'panes.actionDay.title' }, {
+            day: d.format('YYYY-MM-DD'),
+        });
     }
 
     renderPaneContent(data) {
@@ -51,14 +56,16 @@ export default class ActionDayPane extends PaneBase {
         let dateStr = d.format('YYYY-MM-DD');
 
         return [
-            <Button key="prevButton" label=""
+            <Button key="prevButton"
+                labelMsg="panes.actionDay.prevButton"
                 onClick={ this.onClickPrev.bind(this) }
                 className="ActionDayPane-prevButton"/>,
             <div key="dateLabel"
                 className="ActionDayPane-dateLabel">
                 { dateStr }
             </div>,
-            <Button key="nextButton" label=""
+            <Button key="nextButton"
+                labelMsg="panes.actionDay.nextButton"
                 onClick={ this.onClickNext.bind(this) }
                 className="ActionDayPane-nextButton"/>,
         ];

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { FormattedMessage as Msg } from 'react-intl';
 
 import PaneBase from '../../panes/PaneBase';
 import StayInTouchTemplate from './templates/StayInTouchTemplate';
@@ -26,10 +27,10 @@ export default class CallAssignmentTemplatePane extends PaneBase {
 
     renderPaneContent(data) {
         return [
-            <h1 key="header">Create call assignment from template</h1>,
-            <p key="instructions">
-                Select a template and configure it to get started.
-            </p>,
+            <Msg key="header" tagName="h1"
+                id="panes.callAssignmentTemplate.h"/>,
+            <Msg key="instructions" tagName="p"
+                id="panes.callAssignmentTemplate.instructions"/>,
             <div key="templates"
                 className="CallAssignmentTemplatePane-templates">
                 <StayInTouchTemplate onCreate={ this.onCreate.bind(this) }/>

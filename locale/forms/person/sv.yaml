@@ -1,0 +1,13 @@
+firstName: "Förnamn"
+lastName: "Efternamn"
+gender: "Kön"
+genderOptions:
+    female: "Kvinna"
+    male: "Man"
+    other: "Annat"
+email: "E-post"
+phone: "Telefonnummer"
+coAddress: "C/O-adress"
+streetAddress: "Gatuadress"
+zip: "Postnummer"
+city: "Stad"

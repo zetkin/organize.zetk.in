@@ -1,4 +1,5 @@
 import { combineReducers, compose, applyMiddleware, createStore } from 'redux';
+import { intlReducer } from 'react-intl-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 
 import actions from './actions';
@@ -27,6 +28,7 @@ import { urlMiddleware } from './middleware/url';
 
 
 const appReducer = combineReducers({
+    intl: intlReducer,
     actions,
     activities,
     callAssignments,

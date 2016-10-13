@@ -1,0 +1,60 @@
+importButton: "Importera"
+importMoreButton: "Importera mer"
+
+table:
+    firstRowAsHeader: "Första raden innehåller rubriker"
+    emptyColumnsRemoved: |
+        { numRemoved, plural,
+            =1 {Ignorerade en tom kolumn}
+            other {Ignorerade # tomma kolumner}
+        }
+
+column:
+    id: "Zetkin-ID"
+    unknown: "Kolumntyp"
+    personFields: "Personfält"
+    otherFields: "Annan data"
+    editSettingsLink: "Redigera kolumninställningar"
+    colOptions:
+        person:
+            firstName: "Förnamn"
+            lastName: "Efternamn"
+            email: "E-post"
+            phone: "Telefon"
+            coAddress: "C/O-adress"
+            streetAddress: "Gatuadress"
+            zip: "Postnummer"
+            city: "Ort"
+            gender: "Kön"
+        complex:
+            tag: "Etiketter"
+
+settings:
+    personTag:
+        valueLabel: "Etiketter för rader med värde: { value }"
+        emptyLabel: "Etiketter för tomma rader"
+
+    personData:
+        h: "Välj fält"
+        instructions: "Vilka personuppgifter finns i den här kolumnen?"
+        fields:
+            id: "Zetkin-ID"
+            firstName: "Förnamn"
+            lastName: "Efternamn"
+            email: "E-post"
+            phone: "Telefon"
+            coAddress: "C/O-adress"
+            streetAddress: "Gatuadress"
+            zip: "Postnummer"
+            city: "Ort"
+            gender: "Kön"
+
+summary:
+    personTag:
+        summary: |
+            {numTagged, plural,
+                =0 {Inga värden översatta, ändra inställningarna.}
+                =1 {Översätter ett värde till etiketter}
+                other {Översätter # värden till etiketter}
+            }
+        untaggedWarning: |

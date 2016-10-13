@@ -1,0 +1,3 @@
+addButton: "Lägg till"
+querySelect:
+    nullLabel: "(Visa alla människor)"

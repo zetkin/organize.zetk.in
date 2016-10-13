@@ -1,6 +1,8 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
+import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import ActionForm from '../forms/ActionForm';
 import Button from '../misc/Button';
@@ -9,6 +11,7 @@ import { retrieveAction, updateAction } from '../../actions/action';
 
 
 @connect(state => state)
+@injectIntl
 export default class EditActionPane extends PaneBase {
     getRenderData() {
         let actionId = this.getParam(0);
@@ -25,7 +28,7 @@ export default class EditActionPane extends PaneBase {
     }
 
     getPaneTitle(data) {
-        return 'Edit action';
+        return this.props.intl.formatMessage({ id: 'panes.editAction.title' });
     }
 
     renderPaneContent(data) {
@@ -46,15 +49,14 @@ export default class EditActionPane extends PaneBase {
             );
         }
         else {
-            // TODO: Show loading indicator?
-            return null;
+            return <LoadingIndicator />;
         }
     }
 
     renderPaneFooter(data) {
         return (
             <Button className="EditActionPane-saveButton"
-                label="Save Changes"
+                labelMsg="panes.editAction.saveButton"
                 onClick={ this.onSubmit.bind(this) }/>
         );
     }

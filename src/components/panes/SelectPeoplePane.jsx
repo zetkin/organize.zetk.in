@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
@@ -14,6 +15,7 @@ import {
 
 
 @connect(state => state)
+@injectIntl
 export default class SelectPeoplePane extends PaneBase {
     componentDidMount() {
         this.props.dispatch(retrievePeople());
@@ -30,7 +32,8 @@ export default class SelectPeoplePane extends PaneBase {
     }
 
     getPaneTitle(data) {
-        return 'Select people';
+        const formatMessage = this.props.intl.formatMessage;
+        return formatMessage({ id: 'panes.selectPeople.title' });
     }
 
     renderPaneContent(data) {
@@ -55,38 +58,30 @@ export default class SelectPeoplePane extends PaneBase {
                 selection.selectedIds.indexOf(p.data.id) < 0)
         });
 
-        let selectedHeader = 'Selected (' + selectionList.items.length + ')';
+        let numSelected = selectionList.items.length;
 
         // TODO: Use something more compact than PersonList?
         return [
             instructions,
-            <h3 key="selectedHeader">{ selectedHeader }</h3>,
+            <Msg tagName="h3" key="selectedHeader"
+                id="panes.selectPeople.selectedHeader"
+                values={{ numSelected }}/>,
             <PersonList key="selectionList" personList={ selectionList }
                 onSelect={ this.onDeselect.bind(this) }/>,
-            <h3 key="availableHeader">Add people to selection</h3>,
+            <Msg tagName="h3" key="availableHeader"
+                id="panes.selectPeople.availableHeader"/>,
             <PersonList key="availableList" personList={ personList }
                 onSelect={ this.onSelect.bind(this) }/>,
         ];
     }
 
     renderPaneFooter(data) {
-        let label;
         let numSelected = data.selectionItem.data.selectedIds.length;
-
-        // TODO: Move to l10n
-        if (numSelected === 0) {
-            label = 'Select no one';
-        }
-        else if (numSelected === 1) {
-            label = 'Select one person';
-        }
-        else {
-            label = 'Select ' + numSelected + ' people';
-        }
 
         return (
             <Button className="SelectPeoplePane-saveButton"
-                label={ label }
+                labelMsg="panes.selectPeople.okButton"
+                labelValues={{ numSelected }}
                 onClick={ this.onClickSave.bind(this) }/>
         );
     }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import FilterBase from './FilterBase';
@@ -9,13 +10,8 @@ import { createSelection } from '../../actions/selection';
 import { getListItemById } from '../../utils/store';
 
 
-const CONDITION_OPTIONS = {
-    'all': 'All of the following tags',
-    'any': 'Any of the following tags',
-    'none': 'None of the following tags',
-};
-
 @connect(state => ({ personTags: state.personTags }))
+@injectIntl
 export default class PersonTagsFilter extends FilterBase {
     constructor(props) {
         super(props);
@@ -44,6 +40,13 @@ export default class PersonTagsFilter extends FilterBase {
     }
 
     renderFilterForm(config) {
+        const msg = id => this.props.intl.formatMessage({ id });
+        const CONDITION_OPTIONS = {
+            'all': msg('filters.personTags.opOptions.all'),
+            'any': msg('filters.personTags.opOptions.any'),
+            'none': msg('filters.personTags.opOptions.none'),
+        };
+
         let tagList = this.props.personTags.tagList;
         let tags = this.state.tags
             .map(tagId => getListItemById(tagList, tagId))
@@ -52,7 +55,7 @@ export default class PersonTagsFilter extends FilterBase {
 
         return [
             <SelectInput key="condition" name="condition"
-                label="Match people with"
+                labelMsg="filters.personTags.opLabel"
                 options={ CONDITION_OPTIONS } value={ this.state.condition }
                 onValueChange={ this.onSelectCondition.bind(this) }/>,
             <TagCloud key="tags" tags={ tags }

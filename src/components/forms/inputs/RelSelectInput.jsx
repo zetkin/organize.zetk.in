@@ -1,3 +1,4 @@
+import { FormattedMessage as Msg } from 'react-intl';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import cx from 'classnames';
@@ -65,10 +66,15 @@ export default class RelSelectInput extends InputBase {
                 'focused': (this.state.focusedIndex == this.values.length)
             });
 
+            let value = (
+                <em>{ this.state.inputValue }</em>
+            );
+
             createOption = (
                 <li key="create" className={ createOptionClasses }
                     onMouseDown={ this.onClickCreate.bind(this) }>
-                    Create <em>{ this.state.inputValue || 'new' }...</em>
+                    <Msg id="forms.relSelectInput.addLabel"
+                        values={{ value }}/>
                 </li>
             );
 
@@ -111,7 +117,7 @@ export default class RelSelectInput extends InputBase {
                     var editLink = null;
                     if (showEditLink) {
                         editLink = <a className="RelSelectInput-editLink"
-                            onMouseDown={ this.onClickEdit.bind(this, obj) }>
+                            onClick={ this.onClickEdit.bind(this, obj) }>
                             <i className="fa fa-pencil"></i></a>;
                     }
 
@@ -228,9 +234,14 @@ export default class RelSelectInput extends InputBase {
         const listDOMNode = ReactDOM.findDOMNode(this.refs.objectList);
         listDOMNode.scrollTop = 0;
 
-        this.setState({
-            inputFocused: false
-        });
+        // TODO: This is a smelly solution to the onClick/onMouseDown problem
+        //       The blur event fires on mouse down, so the click event never
+        //       fires if blurring hides the menu.
+        setTimeout(() => {
+            this.setState({
+                inputFocused: false
+            });
+        }, 50);
     }
 
     createObject() {

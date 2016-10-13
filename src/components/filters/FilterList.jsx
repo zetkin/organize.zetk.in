@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { DropTarget } from 'react-dnd';
 
 import FilterListItem from './FilterListItem';
@@ -25,6 +26,7 @@ function collectTarget(connect, monitor) {
 }
 
 @DropTarget('filter', filterTarget, collectTarget)
+@injectIntl
 export default class FilterList extends React.Component {
     static propTypes = {
         filters: React.PropTypes.array.isRequired,
@@ -57,12 +59,14 @@ export default class FilterList extends React.Component {
         let filters = this.state.filters;
         let filterElements = [];
 
+        const msg = id => this.props.intl.formatMessage({ id });
+
         const filterTypes = {
-            'call_history': 'Call history',
-            'campaign_participation': 'Campaign participation',
-            'join_date': 'Join date',
-            'person_data': 'Person data',
-            'person_tags': 'Person tags',
+            'call_history': msg('filters.types.callHistory'),
+            'campaign_participation': msg('filters.types.campaignParticipation'),
+            'join_date': msg('filters.types.joinDate'),
+            'person_data': msg('filters.types.personData'),
+            'person_tags': msg('filters.types.personTags'),
         };
 
         let items = [];
@@ -83,7 +87,7 @@ export default class FilterList extends React.Component {
                 items.push(
                     <li key={ key }>
                         <DropContainer type="filter"
-                            instructions="Drop here to move filter"
+                            instructionsMsg="filters.dropInstructions"
                             onDrop={ this.onDrop.bind(this, i+1) }/>
                     </li>
                 );
@@ -96,7 +100,7 @@ export default class FilterList extends React.Component {
                 <div className="FilterList-addSection">
                     <select value=""
                         onChange={ this.onFilterTypeSelect.bind(this) }>
-                        <option value="">Add filter</option>
+                        <Msg tagName="option" id="filters.addFilter"/>
                         {Object.keys(filterTypes).map(function(type) {
                             const label = filterTypes[type];
                             return (
