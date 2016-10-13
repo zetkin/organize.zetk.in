@@ -6,4 +6,6 @@ search:
         campaign: "Kampanj"
         maps: "Kartor"
 
-
+userMenu:
+    logOutLink: "Logga ut"
+    accountLink: "Konto-inställningar"
