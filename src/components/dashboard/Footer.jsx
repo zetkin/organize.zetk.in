@@ -1,21 +1,23 @@
 import React from 'react';
+import { FormattedMessage as Msg } from 'react-intl';
+
+import Link from '../misc/Link';
 
 
 export default class Footer extends React.Component {
     render() {
-        const info = [
-            'Zetkin is developed by the Zetkin Foundation, a non-profit with',
-            'the mission to revolutionize the organization of activism.'
-        ].join(' ');
-
         return (
             <footer className="Footer">
-                { info }
+                <Msg tagName="p" id="dashboard.footer.info"/>
                 <ul>
-                    <li><a href="http://zetkin.org" target="_blank">
-                        About Zetkin Foundation</a></li>
-                    <li><a href="/help" target="_blank">
-                        Learn how to use Zetkin</a></li>
+                    <li>
+                        <Link href="http://zetkin.org" target="_blank"
+                            msgId="dashboard.footer.foundationLink"/>
+                    </li>
+                    <li>
+                        <Link href="http://manual.zetkin.org" target="_blank"
+                            msgId="dashboard.footer.helpLink"/>
+                    </li>
                 </ul>
             </footer>
         );
