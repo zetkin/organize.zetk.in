@@ -11,9 +11,9 @@ export default class ActivityForm extends React.Component {
 
         return (
             <Form ref="form" {...this.props }>
-                <TextInput label="Title" name="title"
+                <TextInput labelMsg="forms.campaign.title" name="title"
                     initialValue={ campaign.title }/>
-                <TextArea label="Description" name="info_text"
+                <TextArea labelMsg="forms.campaign.description" name="info_text"
                     initialValue={ campaign.info_text }/>
 
             </Form>
