@@ -9,7 +9,10 @@ labels:
     finance: "Ekonomi"
     settings: "Inställningar"
 
-backToDashboard: "Tillbaka"
+menu:
+    backToDashboard: "Tillbaka"
+    aboutLink: "Info"
+    helpLink: "Hjälp"
 
 subSections:
     people:
