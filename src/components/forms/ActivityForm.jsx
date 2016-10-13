@@ -11,12 +11,10 @@ export default class ActivityForm extends React.Component {
 
         return (
             <Form ref="form" {...this.props }>
-                <TextInput label="Title" name="title"
+                <TextInput labelMsg="forms.activity.title" name="title"
                     initialValue={ activity.title }/>
-                <TextArea label="Information" name="info_text"
+                <TextArea labelMsg="forms.activity.description" name="info_text"
                     initialValue={ activity.info_text }/>
-
-                <input key="submit" type="submit"/>
             </Form>
         );
     }
