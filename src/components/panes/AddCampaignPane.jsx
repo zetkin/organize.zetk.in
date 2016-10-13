@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
@@ -8,9 +9,10 @@ import { createCampaign } from '../../actions/campaign';
 
 
 @connect(state => state)
+@injectIntl
 export default class AddCampaignPane extends PaneBase {
     getPaneTitle(data) {
-        return 'Add campagin';
+        return this.props.intl.formatMessage({ id: 'panes.addCampaign.title' });
     }
 
     renderPaneContent(data) {
@@ -27,7 +29,7 @@ export default class AddCampaignPane extends PaneBase {
     renderPaneFooter(data) {
         return (
             <Button className="AddCampaignPane-saveButton"
-                label="Save Changes"
+                labelMsg="panes.editCampaign.saveButton"
                 onClick={ this.onSubmit.bind(this) }/>
         );
     }
