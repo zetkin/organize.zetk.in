@@ -117,7 +117,7 @@ export default class RelSelectInput extends InputBase {
                     var editLink = null;
                     if (showEditLink) {
                         editLink = <a className="RelSelectInput-editLink"
-                            onMouseDown={ this.onClickEdit.bind(this, obj) }>
+                            onClick={ this.onClickEdit.bind(this, obj) }>
                             <i className="fa fa-pencil"></i></a>;
                     }
 
@@ -234,9 +234,14 @@ export default class RelSelectInput extends InputBase {
         const listDOMNode = ReactDOM.findDOMNode(this.refs.objectList);
         listDOMNode.scrollTop = 0;
 
-        this.setState({
-            inputFocused: false
-        });
+        // TODO: This is a smelly solution to the onClick/onMouseDown problem
+        //       The blur event fires on mouse down, so the click event never
+        //       fires if blurring hides the menu.
+        setTimeout(() => {
+            this.setState({
+                inputFocused: false
+            });
+        }, 50);
     }
 
     createObject() {
