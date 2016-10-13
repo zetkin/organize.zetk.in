@@ -9,6 +9,9 @@ export default class Link extends React.Component {
         msgId: React.PropTypes.string.isRequired,
         msgValues: React.PropTypes.object,
         className: React.PropTypes.string,
+        href: React.PropTypes.string,
+        onClick: React.PropTypes.func,
+        target: React.PropTypes.string,
     };
 
     render() {
@@ -21,6 +24,7 @@ export default class Link extends React.Component {
 
         return (
             <a className={ classes }
+                href={ this.props.href } target={ this.props.target }
                 onClick={ this.props.onClick }>
                 { label }
             </a>
