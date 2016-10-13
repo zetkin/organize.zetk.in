@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
 
+import Link from '../misc/Link';
 import PaneManager from '../../utils/PaneManager';
 import { resolvePane } from '../panes';
 import { componentClassNames } from '../';
@@ -146,7 +147,7 @@ export default class Section extends React.Component {
             );
         });
 
-        const backLabel = formatMessage({ id: 'sections.backToDashboard' });
+        const backLabel = formatMessage({ id: 'sections.menu.backToDashboard' });
 
         return (
             <div className={ classes }>
@@ -159,8 +160,10 @@ export default class Section extends React.Component {
                                 { backLabel }</a></li>
                     </ul>
                     <div className="Section-navMisc">
-                        <a target="_blank" href="http://zetkin.org">About</a>
-                        <a target="_blank" href={ helpUrl }>Help</a>
+                        <Link target="_blank" href="http://zetkin.org"
+                            msgId="sections.menu.aboutLink"/>
+                        <Link target="_blank" href={ helpUrl }
+                            msgId="sections.menu.helpLink"/>
                     </div>
                 </nav>
                 <div className="Section-container" ref="paneContainer">
