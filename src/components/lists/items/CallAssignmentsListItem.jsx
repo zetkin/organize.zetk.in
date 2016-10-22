@@ -46,24 +46,24 @@ export default class CallAssignmentsListItem extends React.Component {
         }
 
         if (!assignment.callerList || assignment.callerList.isPending) {
-          participantList = <LoadingIndicator/>
+            participantList = <LoadingIndicator/>
         } else {
-          let participants = assignment.callerList.items.map(p => p.data);
-          participantList = <ParticipantList
-              maxVisible={ 4 }
-              participants={ participants }/>
+            let participants = assignment.callerList.items.map(p => p.data);
+            participantList = <ParticipantList
+                maxVisible={ 4 }
+                participants={ participants }/>
         }
 
         return (
             <div className="CallAssignmentsListItem"
                 onClick={ () => {this.props.onSelect(assignment)} }>
                 <div className="CallAssignmentsListItem-info">
-                  <h1>{ assignment.title }</h1>
-                  { participantList }
+                    <h1>{ assignment.title }</h1>
+                        { participantList }
                 </div>
                 <div className="CallAssignmentsListItem-stats">
-                  <div className="CallAssignmentsListItem-targetStats">{ targetStats }</div>
-                  <div className="CallAssignmentsListItem-goalStats">{ goalStats }</div>
+                    <div className="CallAssignmentsListItem-targetStats">{ targetStats }</div>
+                    <div className="CallAssignmentsListItem-goalStats">{ goalStats }</div>
                 </div>
             </div>
         );
