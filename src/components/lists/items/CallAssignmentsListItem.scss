@@ -1,0 +1,30 @@
+.CallAssignmentsListItem {
+    height: 10em;
+
+    .CallAssignmentsListItem-info * {
+        position: relative;
+        display: inline-block;
+    }
+
+    .CallAssignmentsListItem-stats * {
+        display: inline-block;
+    }
+
+    .CallAssignmentsListItem-targetStats {
+        h1 {
+            &::before {
+                @include icon($fa-var-users);
+            }
+        }
+    }
+
+    .CallAssignmentsListitem-goalStats {
+        h1 {
+            &::before {
+                @include icon($fa-var-flag-checkered);
+            }
+        }
+        position: absolute;
+        left: 140px;
+    }
+}
