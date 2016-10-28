@@ -212,6 +212,12 @@
             }
         }
 
+        &.Section-settings {
+            .Section-navItem-officials a:before {
+                background-image: url(/static/img/section-nav/settings-officials.png);
+            }
+        }
+
         .Section-navBack a:before {
             background-image: url(/static/img/section-nav/back.png);
         }
