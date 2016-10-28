@@ -67,7 +67,6 @@ export default class Dashboard extends React.Component {
                     { shortcutElements }
                 </ul>
                 <div className="Dashboard-widgets">
-                    { widgetElements }
                 </div>
                 <Footer/>
             </div>
