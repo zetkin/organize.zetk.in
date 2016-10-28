@@ -120,11 +120,9 @@ export default class Section extends React.Component {
             }
         }
 
-        const sectionType = this.constructor.name
-            .replace(/Section$/, '').toLowerCase();
-
+        const sectionType = this.props.section;
         const helpUrl = '/help/sections/' + sectionType;
-        const classes = cx(componentClassNames(this));
+        const classes = cx(componentClassNames(this), 'Section-' + sectionType);
         const formatMessage = this.props.intl.formatMessage;
 
         let subMenuItems = subSections.map((subData, idx) => {
