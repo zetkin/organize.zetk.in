@@ -223,7 +223,9 @@ export default class Search extends React.Component {
     }
 
     onBlur(ev) {
-        this.props.dispatch(clearSearch());
+        setTimeout(() => {
+            this.props.dispatch(clearSearch());
+        }, 50);
     }
 }
 
