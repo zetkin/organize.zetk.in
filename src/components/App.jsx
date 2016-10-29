@@ -44,6 +44,7 @@ export default class App extends React.Component {
         return (
             <html>
                 <head>
+                    <title>Zetkin Organize</title>
                     <script src="/static/js/main.js"></script>
                     <link rel="stylesheet" type="text/css"
                         href="/static/css/style.css"/>
