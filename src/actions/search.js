@@ -29,7 +29,7 @@ export function searchMatchFound(match) {
 
 export function changeSearchScope(scope) {
     return {
-        type: types.CHANGE_SCOPE,
+        type: types.CHANGE_SEARCH_SCOPE,
         payload: { scope },
     };
 }

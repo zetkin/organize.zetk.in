@@ -18,7 +18,7 @@ export default function search(state = null, action) {
 
         case types.BEGIN_SEARCH:
             return Object.assign({}, state, {
-                scope: action.payload.scope,
+                scope: action.payload.scope || state.scope,
                 isActive: true,
             });
 
@@ -43,7 +43,7 @@ export default function search(state = null, action) {
                 results: []
             });
 
-        case types.CHANGE_SCOPE:
+        case types.CHANGE_SEARCH_SCOPE:
             return Object.assign({}, state, {
                 scope: action.payload.scope,
             });

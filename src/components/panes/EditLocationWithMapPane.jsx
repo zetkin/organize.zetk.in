@@ -64,7 +64,7 @@ export default class EditLocationWithMapPane extends PaneBase {
                 <LocationForm key="form" ref="form" loc={ data.locItem.data }
                     onSubmit={ this.onSubmit.bind(this) }/>,
                 <Button className="EditLocationWithMapPane-deleteButton"
-                    label="Delete"
+                    labelMsg="panes.editLocationWithMap.deleteButton"
                     onClick={ this.onDeleteClick.bind(this) }/>
             ];
         }
@@ -77,7 +77,7 @@ export default class EditLocationWithMapPane extends PaneBase {
     renderPaneFooter(data) {
         return (
             <Button className="EditLocationWithMapPane-saveButton"
-                label="Save"
+                labelMsg="panes.editLocationWithMap.saveButton"
                 onClick={ this.onSubmit.bind(this) }/>
         );
     }

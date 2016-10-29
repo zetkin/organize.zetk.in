@@ -98,7 +98,8 @@ export default class Search extends React.Component {
             { id: 'header.search.typeToSearch' });
 
         return (
-            <form className={ classes.join(' ') }>
+            <form className={ classes.join(' ') }
+                onSubmit={ (ev) => ev.preventDefault() }>
                 <ScopeSelect value={ scope }
                     onSelect={ this.onScopeSelect.bind(this) }/>
 
@@ -223,7 +224,9 @@ export default class Search extends React.Component {
     }
 
     onBlur(ev) {
-        this.props.dispatch(clearSearch());
+        setTimeout(() => {
+            this.props.dispatch(clearSearch());
+        }, 50);
     }
 }
 

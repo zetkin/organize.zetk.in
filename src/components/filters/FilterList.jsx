@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
-import { injectIntl, FormattedMessage as Msg } from 'react-intl';
+import { FormattedMessage as Msg } from 'react-intl';
 import { DropTarget } from 'react-dnd';
 
 import FilterListItem from './FilterListItem';
@@ -26,13 +26,18 @@ function collectTarget(connect, monitor) {
 }
 
 @DropTarget('filter', filterTarget, collectTarget)
-@injectIntl
 export default class FilterList extends React.Component {
     static propTypes = {
         filters: React.PropTypes.array.isRequired,
         onAppendFilter: React.PropTypes.func,
         onRemoveFilter: React.PropTypes.func,
         onChangeFilter: React.PropTypes.func,
+    };
+
+    static contextTypes = {
+        intl: React.PropTypes.shape({
+            formatMessage: React.PropTypes.func,
+        }),
     };
 
     constructor(props) {
@@ -59,7 +64,7 @@ export default class FilterList extends React.Component {
         let filters = this.state.filters;
         let filterElements = [];
 
-        const msg = id => this.props.intl.formatMessage({ id });
+        const msg = id => this.context.intl.formatMessage({ id });
 
         const filterTypes = {
             'call_history': msg('filters.types.callHistory'),
