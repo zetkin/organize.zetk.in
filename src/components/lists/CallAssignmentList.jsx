@@ -1,13 +1,13 @@
 import React from 'react';
 
-import CallAssignmentsListItem from './items/CallAssignmentsListItem';
+import CallAssignmentListItem from './items/CallAssignmentListItem';
 import List from './List';
 
 
-export default class CallAssignmentsList extends React.Component {
+export default class CallAssignmentList extends React.Component {
     static propTypes = {
         onSelect: React.PropTypes.func,
-        callAssignmentsList: React.PropTypes.shape({
+        callAssignmentList: React.PropTypes.shape({
             error: React.PropTypes.any,
             isPending: React.PropTypes.bool,
             items: React.PropTypes.array.isRequired,
@@ -25,9 +25,9 @@ export default class CallAssignmentsList extends React.Component {
         ];
 
         return (
-            <List className="CallAssignmentsList"
-                headerColumns={ columns } itemComponent={ CallAssignmentsListItem }
-                list={ this.props.callAssignmentsList } onSelect={ this.props.onSelect }/>
+            <List className="CallAssignmentList"
+                headerColumns={ columns } itemComponent={ CallAssignmentListItem }
+                list={ this.props.callAssignmentList } onSelect={ this.props.onSelect }/>
         );
     }
 }

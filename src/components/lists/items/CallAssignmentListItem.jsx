@@ -9,8 +9,9 @@ import {
     retrieveCallAssignmentCallers,
 } from '../../../actions/callAssignment';
 
-@connect(state => state.callAssignments)
-export default class CallAssignmentsListItem extends React.Component {
+
+@connect(() => ({}))
+export default class CallAssignmentListItem extends React.Component {
     static propTypes = {
         onSelect: React.PropTypes.func.isRequired,
         data: React.PropTypes.object,
@@ -55,15 +56,15 @@ export default class CallAssignmentsListItem extends React.Component {
         }
 
         return (
-            <div className="CallAssignmentsListItem"
+            <div className="CallAssignmentListItem"
                 onClick={ () => {this.props.onSelect(assignment)} }>
-                <div className="CallAssignmentsListItem-info">
+                <div className="CallAssignmentListItem-info">
                     <h1>{ assignment.title }</h1>
                         { participantList }
                 </div>
-                <div className="CallAssignmentsListItem-stats">
-                    <div className="CallAssignmentsListItem-targetStats">{ targetStats }</div>
-                    <div className="CallAssignmentsListItem-goalStats">{ goalStats }</div>
+                <div className="CallAssignmentListItem-stats">
+                    <div className="CallAssignmentListItem-targetStats">{ targetStats }</div>
+                    <div className="CallAssignmentListItem-goalStats">{ goalStats }</div>
                 </div>
             </div>
         );

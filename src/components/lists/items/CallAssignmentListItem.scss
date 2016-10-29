@@ -1,16 +1,16 @@
-.CallAssignmentsListItem {
+.CallAssignmentListItem {
     height: 10em;
 
-    .CallAssignmentsListItem-info * {
+    .CallAssignmentListItem-info * {
         position: relative;
         display: inline-block;
     }
 
-    .CallAssignmentsListItem-stats * {
+    .CallAssignmentListItem-stats * {
         display: inline-block;
     }
 
-    .CallAssignmentsListItem-targetStats {
+    .CallAssignmentListItem-targetStats {
         h1 {
             &::before {
                 @include icon($fa-var-users);
@@ -18,7 +18,7 @@
         }
     }
 
-    .CallAssignmentsListitem-goalStats {
+    .CallAssignmentListitem-goalStats {
         h1 {
             &::before {
                 @include icon($fa-var-flag-checkered);
