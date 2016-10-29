@@ -17,11 +17,10 @@ export default class CallAssignmentsList extends React.Component {
     render() {
         let columns = [
             {
-                'title': 'Assignment',
+                'title': 'lists.callAssignmentList.header.title',
             },
             {
-                'start_date': 'Start date',
-                'end_date': 'End date',
+                'callers': 'lists.callAssignmentList.header.callers',
             }
         ];
 
