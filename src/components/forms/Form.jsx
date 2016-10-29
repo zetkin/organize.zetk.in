@@ -45,7 +45,7 @@ export default class Form extends React.Component {
                     );
 
                     if (props.name !== undefined
-                        && !this.state.values[props.name]) {
+                        && this.state.values[props.name] === undefined) {
 
                         this.state.values[props.name] = props.initialValue;
                     }
