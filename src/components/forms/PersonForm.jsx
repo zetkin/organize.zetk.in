@@ -1,21 +1,17 @@
 import React from 'react';
-import { injectIntl } from 'react-intl';
 
 import Form from './Form';
 import TextInput from './inputs/TextInput';
 import SelectInput from './inputs/SelectInput';
 
 
-@injectIntl
 export default class PersonForm extends React.Component {
     render() {
-        const msg = id => this.props.intl.formatMessage({ id });
-
         var person = this.props.person || {};
         var genderOptions = {
-            'f': msg('forms.person.genderOptions.female'),
-            'm': msg('forms.person.genderOptions.male'),
-            'o': msg('forms.person.genderOptions.other'),
+            'f': 'forms.person.genderOptions.female',
+            'm': 'forms.person.genderOptions.male',
+            'o': 'forms.person.genderOptions.other',
         };
 
         return (
@@ -26,6 +22,7 @@ export default class PersonForm extends React.Component {
                     initialValue={ person.last_name }/>
                 <SelectInput labelMsg="forms.person.gender" name="gender"
                     options={ genderOptions }
+                    optionLabelsAreMessages={ true }
                     initialValue={ person.gender }/>
                 <TextInput labelMsg="forms.person.email" name="email"
                     initialValue={ person.email }/>
