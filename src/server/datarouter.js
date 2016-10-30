@@ -29,32 +29,13 @@ export default messages => {
 
         req.store = configureStore(initialState, req.z);
 
-        let a0 = getUserInfo();
-
-        // TODO: Come up with some better way to do this?
-        a0({ ...req.store, z: req.z })
-            .payload.promise
-            .then(function(result) {
-                let a1 = getUserMemberships();
-                return a1({ ...req.store, z: req.z }).payload.promise;
-            })
-            .then(function(result) {
-                let userStore = req.store.getState().user;
-    
-                if (!userStore.memberships.length && req.url != '/activist') {
-                    // This user does not have any official roles. Redirect to
-                    // page which explains why they can't use organizer app.
-                    res.redirect(303, '/activist');
-                }
-                else {
-                    next();
-                }
-            })
-            .catch(function(err) {
-                // TODO: What could this be? Handle!
-                next();
-            });
+        next();
     });
+
+    router.get('*', waitForActions(req => [
+        getUserInfo(),
+        getUserMemberships(),
+    ]));
 
     router.get(/action:(\d+)$/, waitForActions(req => [
         retrieveAction(req.params[0])
@@ -146,7 +127,6 @@ function waitForActions(execActions) {
                     z: req.z,
                     dispatch: function(action) {
                         thunkOrAction = action;
-                        req.store.dispatch(thunkOrAction);
                     }
                 });
             }
