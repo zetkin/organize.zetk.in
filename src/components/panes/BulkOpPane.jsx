@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import Button from '../misc/Button';
 import PaneBase from './PaneBase';
+import { resolveConfig } from '../bulk/config';
 import { getListItemById } from '../../utils/store';
 
 
@@ -20,6 +21,7 @@ export default class BulkOpPane extends PaneBase {
         let selectionItem = getListItemById(selectionList, selectionId);
 
         return {
+            config: null,
             selection: selectionItem.data
         };
     }
@@ -34,11 +36,36 @@ export default class BulkOpPane extends PaneBase {
     }
 
     renderPaneContent(data) {
+        let ConfigComponent = resolveConfig(this.getParam(0));
+        let config = this.state.config || {};
+
+        return (
+            <ConfigComponent config={ config }
+                onConfigChange={ this.onConfigChange.bind(this) }
+                openPane={ this.openPane.bind(this) }/>
+        );
     }
 
     renderPaneFooter(data) {
-        return (
-            <Button labelMsg="panes.bulkOp.submitButton"/>
-        );
+        if (this.state.config) {
+            return (
+                <Button labelMsg="panes.bulkOp.submitButton"
+                    onClick={ this.onSubmitButtonClick.bind(this) }/>
+            );
+        }
+        else {
+            return null;
+        }
+    }
+
+    onConfigChange(config) {
+        this.setState({
+            config
+        });
+    }
+
+    onSubmitButtonClick() {
+        // TODO: Execute bulk op on back-end
+        console.log(this.state.config);
     }
 }
