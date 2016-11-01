@@ -3,6 +3,7 @@ import { injectIntl } from 'react-intl';
 import React from 'react';
 
 import PaneBase from '../../panes/PaneBase';
+import BulkOpSelect from '../../bulk/BulkOpSelect';
 import Button from '../../misc/Button';
 import PersonList from '../../lists/PersonList';
 import RelSelectInput from '../../forms/inputs/RelSelectInput';
@@ -60,17 +61,12 @@ export default class PeopleListPane extends PaneBase {
         this.props.dispatch(retrieveQueries());
     }
 
-    renderPaneContent() {
+    getRenderData() {
+        let selectionId = this.state.bulkSelectionId;
+        let selectionList = this.props.selections.selectionList;
+        let selectionItem = getListItemById(selectionList, selectionId);
+
         let personList = this.props.people.personList;
-        let selection = null;
-
-        if (this.state.bulkSelectionId) {
-            let selectionId = this.state.bulkSelectionId;
-            let selectionList = this.props.selections.selectionList;
-            let selectionItem = getListItemById(selectionList, selectionId);
-
-            selection = selectionItem? selectionItem.data : null;
-        }
 
         if (this.state.selectedQueryId) {
             let queryId = this.state.selectedQueryId;
@@ -81,6 +77,16 @@ export default class PeopleListPane extends PaneBase {
                 personList = query.data.matchList;
             }
         }
+
+        return {
+            personList,
+            selection: selectionItem? selectionItem.data : null,
+        };
+    }
+
+    renderPaneContent(data) {
+        let personList = data.personList
+        let selection = data.selection;
 
         return (
             <PersonList key="personList" personList={ personList }
@@ -106,7 +112,7 @@ export default class PeopleListPane extends PaneBase {
         let querySelectNullLabel = formatMessage(
             { id: 'panes.peopleList.querySelect.nullLabel' });
 
-        return [
+        let tools = [
             <RelSelectInput key="querySelect" name="querySelect"
                 value={ queryId } objects={ queries } showEditLink={ true }
                 allowNull={ true } nullLabel={ querySelectNullLabel }
@@ -118,6 +124,19 @@ export default class PeopleListPane extends PaneBase {
                 labelMsg="panes.peopleList.addButton"
                 onClick={ this.onAddClick.bind(this) }/>
         ];
+
+        if (data.selection && data.selection.selectedIds.length) {
+            let ops = [ 'delete', 'tag' ];
+
+            tools.push(
+                <BulkOpSelect key="bulkOps"
+                    objectType="person"
+                    selection={ data.selection }
+                    operations={ ops }/>
+            );
+        }
+
+        return tools;
     }
 
     onItemClick(item) {
