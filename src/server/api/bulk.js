@@ -40,6 +40,12 @@ let operations = {
 
         return Promise.all(promises);
     },
+
+    'person.delete': (req, res) => {
+        let orgId = req.body.orgId;
+        return Promise.all(req.body.objects.map(id =>
+            req.z.resource('orgs', orgId, 'people', id).del()));
+    },
 };
 
 export default bulkApi;
