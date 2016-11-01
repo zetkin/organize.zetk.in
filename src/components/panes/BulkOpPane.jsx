@@ -2,6 +2,7 @@ import React from 'react';
 import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
+import Button from '../misc/Button';
 import PaneBase from './PaneBase';
 import { getListItemById } from '../../utils/store';
 
@@ -33,5 +34,11 @@ export default class BulkOpPane extends PaneBase {
     }
 
     renderPaneContent(data) {
+    }
+
+    renderPaneFooter(data) {
+        return (
+            <Button labelMsg="panes.bulkOp.submitButton"/>
+        );
     }
 }
