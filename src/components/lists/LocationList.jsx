@@ -15,7 +15,7 @@ export default class LocationList extends React.Component {
         return (
                 <List className="LocationList" headerColumns={ columns }
                     list={ locationList } itemComponent={ LocationListItem }
-                    onSelect={ this.props.onSelect }/>
+                    onItemClick={ this.props.onItemClick }/>
         );
     }
 }

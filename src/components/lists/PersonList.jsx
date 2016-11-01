@@ -34,7 +34,7 @@ export default class PersonList extends React.Component {
             <List className="PersonList"
                 headerColumns={ columns } itemComponent={ PersonListItem }
                 list={ this.props.personList }
-                onSelect={ this.props.onSelect }/>
+                onItemClick={ this.props.onItemClick }/>
         );
     }
 }

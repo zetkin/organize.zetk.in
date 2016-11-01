@@ -21,11 +21,11 @@ export default class CallLogPane extends PaneBase {
     renderPaneContent(data) {
         return [
             <CallList key="list" callList={ data.callList }
-                onSelect={ this.onSelect.bind(this) }/>
+                onItemClick={ this.onItemClick.bind(this) }/>
         ];
     }
 
-    onSelect(item) {
+    onItemClick(item) {
         let call = item.data;
         this.openPane('call', call.id);
     }

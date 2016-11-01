@@ -25,7 +25,7 @@ export default class List extends React.Component {
         className: React.PropTypes.string,
         sortFunc: React.PropTypes.func,
 
-        onSelect: React.PropTypes.func,
+        onItemClick: React.PropTypes.func,
     };
 
     constructor(props) {
@@ -72,7 +72,7 @@ export default class List extends React.Component {
                     return (
                         <ListItem key={ key } item={ i }
                             itemComponent={ this.props.itemComponent }
-                            onSelect={ this.props.onSelect }/>
+                            onItemClick={ this.props.onItemClick }/>
                     );
                 }) }
                 </ul>

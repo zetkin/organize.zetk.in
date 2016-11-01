@@ -62,7 +62,7 @@ export default class PeopleListPane extends PaneBase {
 
         return (
             <PersonList key="personList" personList={ personList }
-                onSelect={ this.onSelect.bind(this) }/>
+                onItemClick={ this.onItemClick.bind(this) }/>
         );
     }
 
@@ -95,7 +95,7 @@ export default class PeopleListPane extends PaneBase {
         ];
     }
 
-    onSelect(item) {
+    onItemClick(item) {
         let person = item.data;
         this.openPane('person', person.id);
     }

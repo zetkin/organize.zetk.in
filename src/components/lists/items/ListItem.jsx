@@ -22,15 +22,15 @@ export default class ListItem extends React.Component {
         return (
             <li className="ListItem">
                 <ItemComponent data={ item.data }
-                    onSelect={ this.onSelect.bind(this) }/>
+                    onItemClick={ this.onItemClick.bind(this) }/>
             </li>
         );
     }
 
-    onSelect() {
-        if (this.props.onSelect) {
+    onItemClick() {
+        if (this.props.onItemClick) {
             let item = this.props.item;
-            this.props.onSelect(item);
+            this.props.onItemClick(item);
         }
     }
 }

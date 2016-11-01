@@ -40,7 +40,7 @@ export default class ActionList extends React.Component {
                 list={ this.props.actionList }
                 headerColumns={ columns }
                 itemComponent={ ActionListItem }
-                onSelect={ this.props.onSelect }
+                onItemClick={ this.props.onItemClick }
                 />
         );
     }

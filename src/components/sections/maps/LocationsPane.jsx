@@ -56,7 +56,7 @@ export default class LocationsPane extends PaneBase {
         else if (this.state.viewMode == 'list') {
             content = (
                 <LocationList locationList={ locationList }
-                    onSelect={ this.onLocationSelect.bind(this) }/>
+                    onItemClick={ this.onLocationSelect.bind(this) }/>
             );
         }
 

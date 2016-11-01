@@ -23,7 +23,7 @@ export default class AllCallAssignmentsPane extends PaneBase {
         return (
             <CallAssignmentList
                 callAssignmentList={ data.assignmentList }
-                onSelect={ this.onClickAssignment.bind(this) } />
+                onItemClick={ this.onClickAssignment.bind(this) } />
         );
     }
 

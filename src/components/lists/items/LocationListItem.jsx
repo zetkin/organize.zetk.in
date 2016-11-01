@@ -31,14 +31,14 @@ export default class LocationListItem extends React.Component {
     }
 
     onClick() {
-        if (this.props.onSelect) {
-            this.props.onSelect(this.props.location);
+        if (this.props.onItemClick) {
+            this.props.onItemClick(this.props.location);
         }
     }
 }
 
 LocationListItem.propTypes = {
-    onSelect: React.PropTypes.func,
+    onItemClick: React.PropTypes.func,
     location: React.PropTypes.shape({
         id: React.PropTypes.number.isRequired,
         title: React.PropTypes.string.isRequired,

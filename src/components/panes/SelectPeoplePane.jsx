@@ -67,11 +67,11 @@ export default class SelectPeoplePane extends PaneBase {
                 id="panes.selectPeople.selectedHeader"
                 values={{ numSelected }}/>,
             <PersonList key="selectionList" personList={ selectionList }
-                onSelect={ this.onDeselect.bind(this) }/>,
+                onItemClick={ this.onDeselect.bind(this) }/>,
             <Msg tagName="h3" key="availableHeader"
                 id="panes.selectPeople.availableHeader"/>,
             <PersonList key="availableList" personList={ personList }
-                onSelect={ this.onSelect.bind(this) }/>,
+                onItemClick={ this.onSelect.bind(this) }/>,
         ];
     }
 
