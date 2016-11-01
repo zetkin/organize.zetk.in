@@ -131,6 +131,7 @@ export default class PeopleListPane extends PaneBase {
             tools.push(
                 <BulkOpSelect key="bulkOps"
                     objectType="person"
+                    openPane={ this.openPane.bind(this) }
                     selection={ data.selection }
                     operations={ ops }/>
             );
