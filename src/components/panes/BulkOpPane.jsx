@@ -36,15 +36,32 @@ export default class BulkOpPane extends PaneBase {
         return formatMessage({ id }, { count });
     }
 
+    componentWillMount() {
+        let ConfigComponent = resolveConfig(this.getParam(0));
+        if (!ConfigComponent) {
+            // Since there is no UI for this bulk op, it obviously
+            // doesn't require a config, so defaulting to empty config.
+            this.setState({
+                config: {}
+            });
+        }
+    }
+
     renderPaneContent(data) {
         let ConfigComponent = resolveConfig(this.getParam(0));
-        let config = this.state.config || {};
 
-        return (
-            <ConfigComponent config={ config }
-                onConfigChange={ this.onConfigChange.bind(this) }
-                openPane={ this.openPane.bind(this) }/>
-        );
+        if (ConfigComponent) {
+            let config = this.state.config || {};
+
+            return (
+                <ConfigComponent config={ config }
+                    onConfigChange={ this.onConfigChange.bind(this) }
+                    openPane={ this.openPane.bind(this) }/>
+            );
+        }
+        else {
+            return null;
+        }
     }
 
     renderPaneFooter(data) {
