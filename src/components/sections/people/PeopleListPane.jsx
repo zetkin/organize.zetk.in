@@ -9,20 +9,33 @@ import RelSelectInput from '../../forms/inputs/RelSelectInput';
 import { retrievePeople } from '../../../actions/person';
 import { getListItemById } from '../../../utils/store';
 import {
+    createSelection,
+    addToSelection,
+    removeFromSelection,
+} from '../../../actions/selection';
+import {
     createQuery,
     retrieveQueries,
     retrieveQueryMatches,
 } from '../../../actions/query';
 
 
-@connect(state => ({ people: state.people, queries: state.queries }))
+const mapStateToProps = state => ({
+    people: state.people,
+    queries: state.queries,
+    selections: state.selections,
+});
+
+
+@connect(mapStateToProps)
 @injectIntl
 export default class PeopleListPane extends PaneBase {
     constructor(props) {
         super(props);
 
         this.state = {
-            selectedQueryId: undefined
+            selectedQueryId: undefined,
+            bulkSelectionId: undefined,
         };
     }
 
@@ -49,6 +62,15 @@ export default class PeopleListPane extends PaneBase {
 
     renderPaneContent() {
         let personList = this.props.people.personList;
+        let selection = null;
+
+        if (this.state.bulkSelectionId) {
+            let selectionId = this.state.bulkSelectionId;
+            let selectionList = this.props.selections.selectionList;
+            let selectionItem = getListItemById(selectionList, selectionId);
+
+            selection = selectionItem? selectionItem.data : null;
+        }
 
         if (this.state.selectedQueryId) {
             let queryId = this.state.selectedQueryId;
@@ -62,6 +84,9 @@ export default class PeopleListPane extends PaneBase {
 
         return (
             <PersonList key="personList" personList={ personList }
+                allowBulkSelection={ true }
+                bulkSelection={ selection }
+                onItemSelect={ this.onItemSelect.bind(this) }
                 onItemClick={ this.onItemClick.bind(this) }/>
         );
     }
@@ -98,6 +123,26 @@ export default class PeopleListPane extends PaneBase {
     onItemClick(item) {
         let person = item.data;
         this.openPane('person', person.id);
+    }
+
+    onItemSelect(item, selected) {
+        let selectionId = this.state.bulkSelectionId;
+        if (!selectionId) {
+            let action = createSelection('bulk', null, null);
+            selectionId = action.payload.id;
+
+            this.props.dispatch(action);
+            this.setState({
+                bulkSelectionId: selectionId
+            });
+        }
+
+        if (selected) {
+            this.props.dispatch(addToSelection(selectionId, item.data.id));
+        }
+        else {
+            this.props.dispatch(removeFromSelection(selectionId, item.data.id));
+        }
     }
 
     onAddClick() {

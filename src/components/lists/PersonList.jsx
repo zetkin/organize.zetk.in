@@ -7,6 +7,10 @@ import PersonListItem from './items/PersonListItem';
 
 export default class PersonList extends React.Component {
     static propTypes = {
+        allowBulkSelection: React.PropTypes.bool,
+        bulkSelection: React.PropTypes.object,
+        onItemSelect: React.PropTypes.func,
+        onItemClick: React.PropTypes.func,
         personList: React.PropTypes.shape({
             error: React.PropTypes.object,
             isPending: React.PropTypes.bool,
@@ -15,7 +19,8 @@ export default class PersonList extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return (nextProps.personList !== this.props.personList);
+        return (nextProps.personList !== this.props.personList
+            || nextProps.bulkSelection !== this.props.bulkSelection);
     }
 
     render() {
@@ -34,6 +39,9 @@ export default class PersonList extends React.Component {
             <List className="PersonList"
                 headerColumns={ columns } itemComponent={ PersonListItem }
                 list={ this.props.personList }
+                allowBulkSelection={ this.props.allowBulkSelection }
+                bulkSelection={ this.props.bulkSelection }
+                onItemSelect={ this.props.onItemSelect }
                 onItemClick={ this.props.onItemClick }/>
         );
     }
