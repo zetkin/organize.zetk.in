@@ -24,7 +24,9 @@ export default class List extends React.Component {
         itemComponent: React.PropTypes.func.isRequired,
         className: React.PropTypes.string,
         sortFunc: React.PropTypes.func,
-
+        allowBulkSelection: React.PropTypes.bool,
+        bulkSelection: React.PropTypes.object,
+        onItemSelect: React.PropTypes.func,
         onItemClick: React.PropTypes.func,
     };
 
@@ -60,6 +62,11 @@ export default class List extends React.Component {
             items = items.concat().sort(sortFunc);
         }
 
+        let selectedIds = [];
+        if (this.props.bulkSelection) {
+            selectedIds = this.props.bulkSelection.selectedIds;
+        }
+
         let classes = cx(this.props.className, 'List');
 
         return (
@@ -69,9 +76,15 @@ export default class List extends React.Component {
                 <ul key="List-items">
                 { items.map((i, index) => {
                     let key = i.data? i.data.id : index;
+                    let selected = i.data?
+                        !!selectedIds.find(id => id == i.data.id) : false;
+
                     return (
                         <ListItem key={ key } item={ i }
                             itemComponent={ this.props.itemComponent }
+                            showCheckbox={ this.props.allowBulkSelection }
+                            selected={ selected }
+                            onItemSelect={ this.props.onItemSelect }
                             onItemClick={ this.props.onItemClick }/>
                     );
                 }) }
