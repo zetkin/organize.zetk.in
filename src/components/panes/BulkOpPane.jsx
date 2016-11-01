@@ -6,6 +6,7 @@ import Button from '../misc/Button';
 import PaneBase from './PaneBase';
 import { resolveConfig } from '../bulk/config';
 import { getListItemById } from '../../utils/store';
+import { executeBulkOperation } from '../../actions/bulk';
 
 
 const mapStateToProps = (state, props) => ({
@@ -65,7 +66,17 @@ export default class BulkOpPane extends PaneBase {
     }
 
     onSubmitButtonClick() {
-        // TODO: Execute bulk op on back-end
-        console.log(this.state.config);
+        let selectionList = this.props.selections.selectionList;
+        let selectionId = this.getParam(1);
+        let selectionItem = getListItemById(selectionList, selectionId);
+
+        let op = this.getParam(0);
+        let objects = selectionItem.data.selectedIds;
+        let config = this.state.config;
+
+        this.props.dispatch(executeBulkOperation(op, objects, config));
+
+        // TODO: Display loading indicator first and verify success?
+        this.closePane();
     }
 }
