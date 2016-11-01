@@ -5,7 +5,7 @@ import Avatar from '../../misc/Avatar';
 
 export default class CallListItem extends React.Component {
     static propTypes = {
-        onSelect: React.PropTypes.func.isRequired,
+        onItemClick: React.PropTypes.func.isRequired,
         data: React.PropTypes.object,
     };
 
@@ -41,7 +41,7 @@ export default class CallListItem extends React.Component {
 
         return (
             <div className="CallListItem"
-                onClick={ this.props.onSelect.bind(this, call) }>
+                onClick={ this.props.onItemClick.bind(this, call) }>
 
                 <span className={ "CallListItem-callIcon " + stateClass } title={ stateLabel }/>
                 <Avatar className="CallListItem-targetAvatar"

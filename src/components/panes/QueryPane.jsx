@@ -55,12 +55,12 @@ export default class QueryPane extends PaneBase {
 
             return [
                 <PersonList key="peopleList" personList={ matchList }
-                    onSelect={ this.onPersonSelect.bind(this) }/>
+                    onItemClick={ this.onPersonItemClick.bind(this) }/>
             ];
         }
     }
 
-    onPersonSelect(personItem) {
+    onPersonItemClick(personItem) {
         this.openPane('person', personItem.data.id);
     }
 

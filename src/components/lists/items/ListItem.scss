@@ -4,8 +4,19 @@
     padding: 1em;
     @include card;
 
+    &.ListItem-withCheckbox {
+        padding-left: 3em;
+        position: relative;
+    }
+
     &:hover {
         background-color: darken($c-ui-bg, 1);
         cursor: pointer;
+    }
+
+    .ListItem-checkbox {
+        position: absolute;
+        top: 0.6em;
+        left: 0.6em;
     }
 }

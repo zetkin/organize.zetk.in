@@ -48,7 +48,7 @@ export default class PaneBase extends React.Component {
             'PaneBase-scrolled': this.state.scrolled
         });
 
-        var toolbar = this.getPaneTools();
+        var toolbar = this.getPaneTools(data);
         if (toolbar) {
             toolbar = (
                 <div className="PaneBase-toolbar">

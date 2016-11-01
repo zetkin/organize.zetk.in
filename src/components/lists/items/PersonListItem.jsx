@@ -5,7 +5,7 @@ import DraggableAvatar from '../../misc/DraggableAvatar';
 
 export default class PersonListItem extends React.Component {
     static propTypes = {
-        onSelect: React.PropTypes.func,
+        onItemClick: React.PropTypes.func,
         data: React.PropTypes.shape({
             id: React.PropTypes.number.isRequired,
             first_name: React.PropTypes.string.isRequired,
@@ -26,7 +26,7 @@ export default class PersonListItem extends React.Component {
 
         return (
             <div className="PersonListItem"
-                onClick={ this.props.onSelect }>
+                onClick={ this.props.onItemClick }>
 
                 <DraggableAvatar person={ person }/>
                 <div className="PersonListItem-col">

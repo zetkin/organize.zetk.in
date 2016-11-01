@@ -13,7 +13,7 @@ import {
 @connect(() => ({}))
 export default class CallAssignmentListItem extends React.Component {
     static propTypes = {
-        onSelect: React.PropTypes.func.isRequired,
+        onItemClick: React.PropTypes.func.isRequired,
         data: React.PropTypes.object,
     };
 
@@ -57,7 +57,7 @@ export default class CallAssignmentListItem extends React.Component {
 
         return (
             <div className="CallAssignmentListItem"
-                onClick={ () => {this.props.onSelect(assignment)} }>
+                onClick={ () => {this.props.onItemClick(assignment)} }>
                 <div className="CallAssignmentListItem-info">
                     <h1>{ assignment.title }</h1>
                         { participantList }

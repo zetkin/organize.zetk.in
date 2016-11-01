@@ -6,7 +6,7 @@ import List from './List';
 
 export default class CallAssignmentList extends React.Component {
     static propTypes = {
-        onSelect: React.PropTypes.func,
+        onItemClick: React.PropTypes.func,
         callAssignmentList: React.PropTypes.shape({
             error: React.PropTypes.any,
             isPending: React.PropTypes.bool,
@@ -26,8 +26,10 @@ export default class CallAssignmentList extends React.Component {
 
         return (
             <List className="CallAssignmentList"
-                headerColumns={ columns } itemComponent={ CallAssignmentListItem }
-                list={ this.props.callAssignmentList } onSelect={ this.props.onSelect }/>
+                headerColumns={ columns }
+                itemComponent={ CallAssignmentListItem }
+                list={ this.props.callAssignmentList }
+                onItemClick={ this.props.onItemClick }/>
         );
     }
 }

@@ -1,0 +1,19 @@
+selectLabel: Välj operation
+ops:
+    person:
+        delete: |
+            Radera {count, plural,
+                =1 {en person}
+                =2 {två personer}
+                =3 {tre personer}
+                =4 {fyra personer}
+                =5 {fem personer}
+                other {# personer}}
+        tag:
+            Sätt etiketter på {count, plural,
+                =1 {en person}
+                =2 {två personer}
+                =3 {tre personer}
+                =4 {fyra personer}
+                =5 {fem personer}
+                other {# personer}}

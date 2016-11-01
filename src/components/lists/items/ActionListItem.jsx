@@ -201,7 +201,7 @@ export default class ActionListItem extends React.Component {
     }
 
     onClick(ev) {
-        this.props.onSelect();
+        this.props.onItemClick();
     }
 
     onShowAllParticipants(ev) {
