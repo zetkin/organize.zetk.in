@@ -15,7 +15,7 @@ export function retrieveActionParticipants(actionId) {
     };
 }
 
-export function addActionParticipant(personId, actionId) {
+export function addActionParticipant(actionId, personId) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
         dispatch({
