@@ -3,6 +3,8 @@ import express from 'express';
 import { createLocalizeHandler } from './locale';
 import { configureStore } from '../store';
 import { retrieveActions, retrieveAction } from '../actions/action';
+import { retrieveActionParticipants } from '../actions/participant';
+import { retrieveActionResponses } from '../actions/actionResponse';
 import { retrieveActivities } from '../actions/activity';
 import { retrieveCampaigns, retrieveCampaign } from '../actions/campaign';
 import { retrieveLocations, retrieveLocation } from '../actions/location';
@@ -38,7 +40,9 @@ export default messages => {
     ]));
 
     router.get(/action:(\d+)$/, waitForActions(req => [
-        retrieveAction(req.params[0])
+        retrieveAction(req.params[0]),
+        retrieveActionResponses(req.params[0]),
+        retrieveActionParticipants(req.params[0]),
     ]));
 
     router.get([/people$/, /people\/list$/], waitForActions(req => [
