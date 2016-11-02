@@ -40,6 +40,8 @@ export default class PersonCollection extends React.Component {
     static propTypes = {
         items: React.PropTypes.array.isRequired,
         itemComponent: React.PropTypes.func.isRequired,
+        showEditButtons: React.PropTypes.bool,
+        showRemoveButtons: React.PropTypes.bool,
         addPersonMsg: React.PropTypes.string,
         selectLinkMsg: React.PropTypes.string,
         dispatch: React.PropTypes.func,
@@ -47,6 +49,11 @@ export default class PersonCollection extends React.Component {
         onSelect: React.PropTypes.func,
         onRemove: React.PropTypes.func,
         onAdd: React.PropTypes.func,
+    };
+
+    static defaultProps = {
+        showEditButtons: true,
+        showRemoveButtons: true,
     };
 
     render() {
@@ -79,6 +86,8 @@ export default class PersonCollection extends React.Component {
                 <li key={ i.id } className="PersonCollection-item">
                     <PersonCollectionItem item={ i }
                         itemComponent={ this.props.itemComponent }
+                        showEditButton={ this.props.showEditButtons }
+                        showRemoveButton={ this.props.showRemoveButtons }
                         onSelect={ this.onSelect.bind(this, i) }
                         onRemove={ this.onRemove.bind(this, i) }/>
                 </li>
