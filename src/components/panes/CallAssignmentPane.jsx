@@ -4,7 +4,8 @@ import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 
 import Link from '../misc/Link';
 import PaneBase from './PaneBase';
-import CallerList from '../misc/callerlist/CallerList';
+import PersonCollection from '../misc/personcollection/PersonCollection';
+import { PCCallerItem } from '../misc/personcollection/items';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import { getListItemById } from '../../utils/store';
 import { createTextDocument } from '../../actions/document';
@@ -103,7 +104,10 @@ export default class CallAssignmentPane extends PaneBase {
             if (assignment.callerList) {
                 let callers = assignment.callerList.items.map(i => i.data);
                 callerContent = (
-                    <CallerList callers={ callers }
+                    <PersonCollection items={ callers }
+                        itemComponent={ PCCallerItem }
+                        selectLinkMsg="panes.callAssignment.callers.selectLink"
+                        addPersonMsg="panes.callAssignment.callers.addCaller"
                         onAdd={ this.onAddCaller.bind(this) }
                         onSelect={ this.onSelectCaller.bind(this) }
                         onRemove={ this.onRemoveCaller.bind(this) }/>
