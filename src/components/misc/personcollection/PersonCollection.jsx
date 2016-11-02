@@ -40,29 +40,33 @@ export default class PersonCollection extends React.Component {
     static propTypes = {
         items: React.PropTypes.array.isRequired,
         itemComponent: React.PropTypes.func.isRequired,
-        addPersonMsg: React.PropTypes.string.isRequired,
-        selectLinkMsg: React.PropTypes.string.isRequired,
-        dispatch: React.PropTypes.func.isRequired,
-        openPane: React.PropTypes.func.isRequired,
+        addPersonMsg: React.PropTypes.string,
+        selectLinkMsg: React.PropTypes.string,
+        dispatch: React.PropTypes.func,
+        openPane: React.PropTypes.func,
         onSelect: React.PropTypes.func,
         onRemove: React.PropTypes.func,
         onAdd: React.PropTypes.func,
     };
 
     render() {
-        let selectLink = (
-            <Link msgId={ this.props.selectLinkMsg }
-                onClick={ this.onClickAddPersons.bind(this) }/>
-        );
+        let addItem;
 
-        let addItem = this.props.connectDropTarget(
-            <li key="addItem"
-                className="PersonCollection-addItem">
-                <Msg tagName="p"
-                    id={ this.props.addPersonMsg }
-                    values={{ selectLink }}/>
-            </li>
-        );
+        if (this.props.addPersonMsg) {
+            let selectLink = (
+                <Link msgId={ this.props.selectLinkMsg }
+                    onClick={ this.onClickAddPersons.bind(this) }/>
+            );
+
+            addItem = this.props.connectDropTarget(
+                <li key="addItem"
+                    className="PersonCollection-addItem">
+                    <Msg tagName="p"
+                        id={ this.props.addPersonMsg }
+                        values={{ selectLink }}/>
+                </li>
+            );
+        }
 
         let classes = cx('PersonCollection', {
             'PersonCollection-isPersonOver': this.props.isPersonOver,
