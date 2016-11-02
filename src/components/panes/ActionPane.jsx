@@ -127,6 +127,7 @@ export default class ActionPane extends PaneBase {
                         itemComponent={ PCActionParticipantItem }
                         selectLinkMsg="panes.action.participants.selectLink"
                         addPersonMsg="panes.action.participants.addPerson"
+                        showEditButtons={ false }
                         dispatch={ this.props.dispatch }
                         openPane={ this.openPane.bind(this) }
                         onRemove={ this.onRemoveParticipant.bind(this) }
