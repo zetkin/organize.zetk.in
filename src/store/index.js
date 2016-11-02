@@ -3,6 +3,7 @@ import { intlReducer } from 'react-intl-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 
 import actions from './actions';
+import actionResponses from './actionResponses';
 import activities from './activities';
 import callAssignments from './callAssignments';
 import calls from './calls';
@@ -30,6 +31,7 @@ import { urlMiddleware } from './middleware/url';
 const appReducer = combineReducers({
     intl: intlReducer,
     actions,
+    actionResponses,
     activities,
     callAssignments,
     calls,
