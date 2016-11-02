@@ -22,6 +22,7 @@ export default class List extends React.Component {
                 data: React.PropTypes.object,
             })).isRequired,
         }).isRequired,
+        enablePagination: React.PropTypes.bool,
         headerColumns: React.PropTypes.array,
         itemComponent: React.PropTypes.func.isRequired,
         className: React.PropTypes.string,
@@ -73,14 +74,17 @@ export default class List extends React.Component {
         let classes = cx(this.props.className, 'List');
 
         let loadMoreLink = null;
-        if (list.isPending) {
-            loadMoreLink = <LoadingIndicator />;
-        }
-        else {
-            loadMoreLink = (
-                <Link onClick={ this.onLoadMoreClick.bind(this) }
-                    msgId="lists.loadMoreLink"/>
-            );
+        if (this.props.enablePagination) {
+            if (list.isPending) {
+                loadMoreLink = <LoadingIndicator />;
+            }
+            else {
+                loadMoreLink = (
+                    <Link className="List-loadMoreLink"
+                        msgId="lists.loadMoreLink"
+                        onClick={ this.onLoadMoreClick.bind(this) }/>
+                );
+            }
         }
 
         return (

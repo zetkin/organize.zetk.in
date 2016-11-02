@@ -39,6 +39,7 @@ export default class PersonList extends React.Component {
             <List className="PersonList"
                 headerColumns={ columns } itemComponent={ PersonListItem }
                 list={ this.props.personList }
+                enablePagination={ true }
                 allowBulkSelection={ this.props.allowBulkSelection }
                 bulkSelection={ this.props.bulkSelection }
                 onItemSelect={ this.props.onItemSelect }
