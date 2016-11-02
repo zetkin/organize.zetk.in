@@ -3,50 +3,26 @@ import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { DropTarget } from 'react-dnd';
 import React from 'react';
 
+import Button from '../misc/Button';
 import Link from '../misc/Link';
 import ContactSlot from '../lists/items/elements/ContactSlot';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
-import ParticipantList from '../lists/items/elements/ParticipantList';
+import PersonCollection from '../misc/personcollection/PersonCollection';
 import { getListItemById } from '../../utils/store';
 import { retrieveAction, updateAction } from '../../actions/action';
 import {
+    PCActionParticipantItem,
+    PCActionResponseItem,
+} from '../misc/personcollection/items';
+import { retrieveActionResponses } from '../../actions/actionResponse';
+import {
     addActionParticipant,
+    addActionParticipants,
+    removeActionParticipant,
     retrieveActionParticipants,
 } from '../../actions/participant';
 
-
-const actionTarget = {
-    canDrop(props, monitor) {
-        let person = monitor.getItem();
-        let actionId = props.paneData.params[0];
-        let participants = props.participants.byAction[actionId];
-        let duplicate = participants.find(p => (p.id == person.id));
-
-        // Only allow drops if it wouldn't result in duplicate
-        return (duplicate === undefined);
-    },
-
-    drop(props) {
-        let actionId = props.paneData.params[0];
-
-        return {
-            targetType: 'actionParticipant',
-            onDropPerson: person => {
-                props.dispatch(addActionParticipant(
-                    person.id, actionId));
-            },
-        };
-    }
-};
-
-function collectParticipant(connect, monitor) {
-    return {
-        connectParticipantDropTarget: connect.dropTarget(),
-        isParticipantOver: monitor.isOver(),
-        canDropParticipant: monitor.canDrop()
-    };
-}
 
 const contactTarget = {
     canDrop(props, monitor) {
@@ -77,14 +53,14 @@ function collectContact(connect, monitor) {
 }
 
 
-let select = state => ({
+let mapStateToProps = state => ({
     actions: state.actions,
-    participants: state.participants,
+    actionParticipants: state.participants,
+    actionResponses: state.actionResponses,
 });
 
 
-@connect(select)
-@DropTarget('person', actionTarget, collectParticipant)
+@connect(mapStateToProps)
 @DropTarget('person', contactTarget, collectContact)
 @injectIntl
 export default class ActionPane extends PaneBase {
@@ -93,8 +69,12 @@ export default class ActionPane extends PaneBase {
 
         this.props.dispatch(retrieveAction(actionId));
 
-        if (!this.props.participants.byAction[actionId]) {
+        if (!this.props.actionParticipants.byAction[actionId]) {
             this.props.dispatch(retrieveActionParticipants(actionId));
+        }
+
+        if (!this.props.actionResponses.byAction[actionId]) {
+            this.props.dispatch(retrieveActionResponses(actionId));
         }
     }
 
@@ -136,13 +116,42 @@ export default class ActionPane extends PaneBase {
     renderPaneContent(data) {
         if (data.actionItem) {
             let action = data.actionItem.data;
-            let participants = this.props.participants.byAction[action.id];
+            let participants = this.props.actionParticipants.byAction[action.id];
+            let responses = this.props.actionResponses.byAction[action.id];
+            let participantList;
+            let responseList;
 
-            let participantList = this.props.connectParticipantDropTarget(
-                <div className="ActionPane-participantDropTarget">
-                    <ParticipantList participants={ participants }/>
-                </div>
-            );
+            if (participants) {
+                participantList = (
+                    <PersonCollection items={ participants }
+                        itemComponent={ PCActionParticipantItem }
+                        selectLinkMsg="panes.action.participants.selectLink"
+                        addPersonMsg="panes.action.participants.addPerson"
+                        showEditButtons={ false }
+                        dispatch={ this.props.dispatch }
+                        openPane={ this.openPane.bind(this) }
+                        onRemove={ this.onRemoveParticipant.bind(this) }
+                        onAdd={ this.onAddParticipants.bind(this) }
+                        />
+                );
+
+                // Filter responses to not include participants
+                if (responses) {
+                    responses = responses.filter(r =>
+                        !participants.find(p => p.id == r.id));
+                }
+            }
+
+            if (responses && responses.length) {
+                responseList = (
+                    <PersonCollection items={ responses }
+                        itemComponent={ PCActionResponseItem }
+                        showRemoveButtons={ false }
+                        showEditButtons={ false }
+                        onSelect={ this.onSelectResponse.bind(this) }
+                        />
+                );
+            }
 
             let contactSlot = this.props.connectContactDropTarget(
                 <div className="ActionPane-contactDropTarget">
@@ -161,6 +170,12 @@ export default class ActionPane extends PaneBase {
                         onClick={ this.onClickEdit.bind(this) }/>
                 </div>,
 
+                <div key="responses"
+                    className="ActionPane-responses">
+                    <Msg tagName="h3" id="panes.action.responses.h"/>
+                    { responseList }
+                </div>,
+
                 <div key="contact"
                     className="ActionPane-contact">
                     <Msg tagName="h3" id="panes.action.contact.h"/>
@@ -170,20 +185,21 @@ export default class ActionPane extends PaneBase {
                 <div key="participants"
                     className="ActionPane-participants">
                     <Msg tagName="h3" id="panes.action.participants.h"/>
-                    <Link msgId="panes.action.participants.sendRemindersLink"
-                        onClick={ this.onClickReminders.bind(this) }/>
                     { participantList }
                 </div>,
-
-                <div key="responses"
-                    className="ActionPane-responses">
-                    <Msg tagName="h3" id="panes.action.responses.h"/>
-                </div>
             ];
         }
         else {
             return <LoadingIndicator/>;
         }
+    }
+
+    renderPaneFooter(data) {
+        return (
+            <Button className="ActionPane-reminderButton"
+                labelMsg="panes.action.sendRemindersButton"
+                onClick={ this.onClickReminders.bind(this) }/>
+        );
     }
 
     onClickEdit(ev) {
@@ -194,5 +210,20 @@ export default class ActionPane extends PaneBase {
     onClickReminders(ev) {
         let actionId = this.getParam(0);
         this.openPane('actionreminder', actionId);
+    }
+
+    onAddParticipants(ids) {
+        let actionId = this.getParam(0);
+        this.props.dispatch(addActionParticipants(actionId, ids));
+    }
+
+    onSelectResponse(person) {
+        let actionId = this.getParam(0);
+        this.props.dispatch(addActionParticipant(actionId, person.id));
+    }
+
+    onRemoveParticipant(person) {
+        let actionId = this.getParam(0);
+        this.props.dispatch(removeActionParticipant(actionId, person.id));
     }
 }

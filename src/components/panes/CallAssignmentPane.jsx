@@ -4,11 +4,11 @@ import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 
 import Link from '../misc/Link';
 import PaneBase from './PaneBase';
-import CallerList from '../misc/callerlist/CallerList';
+import PersonCollection from '../misc/personcollection/PersonCollection';
+import { PCCallerItem } from '../misc/personcollection/items';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import { getListItemById } from '../../utils/store';
 import { createTextDocument } from '../../actions/document';
-import { createSelection } from '../../actions/selection';
 import {
     updateCallAssignment,
     addCallAssignmentCallers,
@@ -103,8 +103,13 @@ export default class CallAssignmentPane extends PaneBase {
             if (assignment.callerList) {
                 let callers = assignment.callerList.items.map(i => i.data);
                 callerContent = (
-                    <CallerList callers={ callers }
-                        onAdd={ this.onAddCaller.bind(this) }
+                    <PersonCollection items={ callers }
+                        itemComponent={ PCCallerItem }
+                        selectLinkMsg="panes.callAssignment.callers.selectLink"
+                        addPersonMsg="panes.callAssignment.callers.addCaller"
+                        dispatch={ this.props.dispatch }
+                        openPane={ this.openPane.bind(this) }
+                        onAdd={ this.onAddCallers.bind(this) }
                         onSelect={ this.onSelectCaller.bind(this) }
                         onRemove={ this.onRemoveCaller.bind(this) }/>
                 );
@@ -187,24 +192,9 @@ export default class CallAssignmentPane extends PaneBase {
             assignmentId, caller.id));
     }
 
-    onAddCaller(caller) {
+    onAddCallers(ids) {
         let assignmentId = this.getParam(0);
-
-        if (caller) {
-            let ids = [ caller.id ];
-            this.props.dispatch(addCallAssignmentCallers(assignmentId, ids));
-        }
-        else {
-            let instructions = 'Select people to be added as callers';
-
-            // TODO: Add existing callers as pre-selection
-            let action = createSelection('person', null, instructions, ids => {
-                this.props.dispatch(addCallAssignmentCallers(assignmentId, ids));
-            });
-
-            this.props.dispatch(action);
-            this.openPane('selectpeople', action.payload.id);
-        }
+        this.props.dispatch(addCallAssignmentCallers(assignmentId, ids));
     }
 
     onClickEditSettings(ev) {

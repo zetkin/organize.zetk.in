@@ -1,0 +1,18 @@
+.PersonCollectionCallerItem {
+    .PersonCollectionCallerItem-name {
+        position: absolute;
+        left: 70px;
+        top: 15px;
+        font-size: 20px;
+    }
+
+    .PersonCollectionCallerItem-tags {
+        position: absolute;
+        left: 70px;
+        top: 45px;
+        li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+    }
+}

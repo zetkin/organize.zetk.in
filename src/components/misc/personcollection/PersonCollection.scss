@@ -1,14 +1,14 @@
-.CallerList {
-    .CallerList-addItem {
+.PersonCollection {
+    .PersonCollection-addItem {
         @include ghost-placeholder();
     }
 
-    .CallerListItem {
+    .PersonCollectionItem {
         transition: opacity 0.2s;
     }
 
-    &.CallerList-isPersonOver {
-        .CallerList-addItem {
+    &.PersonCollection-isPersonOver {
+        .PersonCollection-addItem {
             border-color: $c-ui-darker;
 
             p {
@@ -16,7 +16,7 @@
             }
         }
 
-        .CallerListItem {
+        .PersonCollectionItem {
             opacity: 0.5;
         }
     }

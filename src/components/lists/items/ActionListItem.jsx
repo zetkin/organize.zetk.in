@@ -31,7 +31,7 @@ const actionTarget = {
             targetType: 'participant',
             onAddParticipant: (person) => {
                 props.dispatch(addActionParticipant(
-                    person.id, action.id));
+                    action.id, person.id));
             },
             newAction: action,
             onMoveParticipant: (person, oldAction) => {

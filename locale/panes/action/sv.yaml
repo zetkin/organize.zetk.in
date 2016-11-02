@@ -1,12 +1,14 @@
 title: "Aktion: { activity }"
 editLink: "Redigera aktion"
+sendRemindersButton: "Skicka påminnelser"
 
 contact:
     h: "Ansvarig"
 
 participants:
     h: "Bokade deltagare"
-    sendRemindersLink: "Skicka påminnelser"
+    selectLink: "välj deltagare"
+    addPerson: "Släpp en person här eller { selectLink }."
 
 responses:
     h: "Anmälningar"

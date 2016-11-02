@@ -93,7 +93,7 @@ export default class ActionReminderPane extends PaneBase {
     renderPaneFooter(data) {
         return (
             <Button className="ActionReminderPane-saveButton"
-                label="Send Reminders"
+                labelMsg="panes.actionReminder.saveButton"
                 onClick={ this.onRemindersSubmit.bind(this) }/>
         );
     }
