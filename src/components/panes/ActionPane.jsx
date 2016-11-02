@@ -3,6 +3,7 @@ import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { DropTarget } from 'react-dnd';
 import React from 'react';
 
+import Button from '../misc/Button';
 import Link from '../misc/Link';
 import ContactSlot from '../lists/items/elements/ContactSlot';
 import LoadingIndicator from '../misc/LoadingIndicator';
@@ -183,8 +184,6 @@ export default class ActionPane extends PaneBase {
                 <div key="participants"
                     className="ActionPane-participants">
                     <Msg tagName="h3" id="panes.action.participants.h"/>
-                    <Link msgId="panes.action.participants.sendRemindersLink"
-                        onClick={ this.onClickReminders.bind(this) }/>
                     { participantList }
                 </div>,
             ];
@@ -192,6 +191,14 @@ export default class ActionPane extends PaneBase {
         else {
             return <LoadingIndicator/>;
         }
+    }
+
+    renderPaneFooter(data) {
+        return (
+            <Button className="ActionPane-reminderButton"
+                labelMsg="panes.action.sendRemindersButton"
+                onClick={ this.onClickReminders.bind(this) }/>
+        );
     }
 
     onClickEdit(ev) {
