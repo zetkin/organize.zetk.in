@@ -8,9 +8,13 @@ import ContactSlot from '../lists/items/elements/ContactSlot';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import PersonCollection from '../misc/personcollection/PersonCollection';
-import { PCActionParticipantItem } from '../misc/personcollection/items';
 import { getListItemById } from '../../utils/store';
 import { retrieveAction, updateAction } from '../../actions/action';
+import {
+    PCActionParticipantItem,
+    PCActionResponseItem,
+} from '../misc/personcollection/items';
+import { retrieveActionResponses } from '../../actions/actionResponse';
 import {
     addActionParticipant,
     addActionParticipants,
@@ -50,7 +54,8 @@ function collectContact(connect, monitor) {
 
 let mapStateToProps = state => ({
     actions: state.actions,
-    participants: state.participants,
+    actionParticipants: state.participants,
+    actionResponses: state.actionResponses,
 });
 
 
@@ -63,8 +68,12 @@ export default class ActionPane extends PaneBase {
 
         this.props.dispatch(retrieveAction(actionId));
 
-        if (!this.props.participants.byAction[actionId]) {
+        if (!this.props.actionParticipants.byAction[actionId]) {
             this.props.dispatch(retrieveActionParticipants(actionId));
+        }
+
+        if (!this.props.actionResponses.byAction[actionId]) {
+            this.props.dispatch(retrieveActionResponses(actionId));
         }
     }
 
@@ -106,8 +115,10 @@ export default class ActionPane extends PaneBase {
     renderPaneContent(data) {
         if (data.actionItem) {
             let action = data.actionItem.data;
-            let participants = this.props.participants.byAction[action.id];
+            let participants = this.props.actionParticipants.byAction[action.id];
+            let responses = this.props.actionResponses.byAction[action.id];
             let participantList;
+            let responseList;
 
             if (participants) {
                 participantList = (
@@ -119,6 +130,14 @@ export default class ActionPane extends PaneBase {
                         openPane={ this.openPane.bind(this) }
                         onRemove={ this.onRemoveParticipant.bind(this) }
                         onAdd={ this.onAddParticipants.bind(this) }
+                        />
+                );
+            }
+
+            if (responses) {
+                responseList = (
+                    <PersonCollection items={ responses }
+                        itemComponent={ PCActionResponseItem }
                         />
                 );
             }
@@ -140,6 +159,12 @@ export default class ActionPane extends PaneBase {
                         onClick={ this.onClickEdit.bind(this) }/>
                 </div>,
 
+                <div key="responses"
+                    className="ActionPane-responses">
+                    <Msg tagName="h3" id="panes.action.responses.h"/>
+                    { responseList }
+                </div>,
+
                 <div key="contact"
                     className="ActionPane-contact">
                     <Msg tagName="h3" id="panes.action.contact.h"/>
@@ -153,11 +178,6 @@ export default class ActionPane extends PaneBase {
                         onClick={ this.onClickReminders.bind(this) }/>
                     { participantList }
                 </div>,
-
-                <div key="responses"
-                    className="ActionPane-responses">
-                    <Msg tagName="h3" id="panes.action.responses.h"/>
-                </div>
             ];
         }
         else {
