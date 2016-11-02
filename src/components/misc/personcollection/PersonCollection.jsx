@@ -44,8 +44,8 @@ export default class PersonCollection extends React.Component {
         selectLinkMsg: React.PropTypes.string.isRequired,
         dispatch: React.PropTypes.func.isRequired,
         openPane: React.PropTypes.func.isRequired,
-        onSelect: React.PropTypes.func.isRequired,
-        onRemove: React.PropTypes.func.isRequired,
+        onSelect: React.PropTypes.func,
+        onRemove: React.PropTypes.func,
         onAdd: React.PropTypes.func,
     };
 
@@ -75,12 +75,24 @@ export default class PersonCollection extends React.Component {
                 <li key={ i.id } className="PersonCollection-item">
                     <PersonCollectionItem item={ i }
                         itemComponent={ this.props.itemComponent }
-                        onSelect={ this.props.onSelect.bind(this) }
-                        onRemove={ this.props.onRemove.bind(this) }/>
+                        onSelect={ this.onSelect.bind(this, i) }
+                        onRemove={ this.onRemove.bind(this, i) }/>
                 </li>
             )) }
             </ul>
         );
+    }
+
+    onSelect(item) {
+        if (this.props.onSelect) {
+            this.props.onSelect(item);
+        }
+    }
+
+    onRemove(item) {
+        if (this.props.onRemove) {
+            this.props.onRemove(item);
+        }
     }
 
     onClickAddPersons(ev) {
