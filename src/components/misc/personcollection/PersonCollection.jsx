@@ -5,6 +5,7 @@ import { FormattedMessage as Msg } from 'react-intl';
 
 import Link from '../Link';
 import PersonCollectionItem from './PersonCollectionItem';
+import { createSelection } from '../../../actions/selection';
 
 
 const personTarget = {
@@ -20,7 +21,7 @@ const personTarget = {
     drop(props) {
         return {
             targetType: 'person',
-            onDropPerson: p => props.onAdd(p)
+            onDropPerson: p => props.onAdd([ p.id ])
         };
     }
 };
@@ -41,6 +42,8 @@ export default class PersonCollection extends React.Component {
         itemComponent: React.PropTypes.func.isRequired,
         addPersonMsg: React.PropTypes.string.isRequired,
         selectLinkMsg: React.PropTypes.string.isRequired,
+        dispatch: React.PropTypes.func.isRequired,
+        openPane: React.PropTypes.func.isRequired,
         onSelect: React.PropTypes.func.isRequired,
         onRemove: React.PropTypes.func.isRequired,
         onAdd: React.PropTypes.func,
@@ -80,8 +83,12 @@ export default class PersonCollection extends React.Component {
     }
 
     onClickAddPersons(ev) {
-        if (this.props.onAdd) {
-            this.props.onAdd(null);
-        }
+        // TODO: Externalize instructions
+        // TODO: Add existing people as pre-selection
+        let action = createSelection('person', null, null, ids =>
+            this.props.onAdd(ids));
+
+        this.props.dispatch(action);
+        this.props.openPane('selectpeople', action.payload.id);
     }
 }
