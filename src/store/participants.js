@@ -19,6 +19,25 @@ export default function participants(state = null, action) {
             byAction[actionId].push(action.payload.data.data);
             return Object.assign({}, state, { byAction: byAction });
 
+        case types.ADD_ACTION_PARTICIPANTS + '_FULFILLED':
+            byAction = Object.assign({}, state.byAction);
+            actionId = action.meta.actionId;
+            byAction[actionId] = (byAction[actionId] || []).concat();
+            action.payload.forEach(payload => {
+                let data = payload.data.data;
+                if (!byAction[actionId].find(p => p.id == data.id)) {
+                    byAction[actionId].push(data);
+                }
+            });
+            return Object.assign({}, state, { byAction });
+
+        case types.REMOVE_ACTION_PARTICIPANT + '_FULFILLED':
+            byAction = Object.assign({}, state.byAction);
+            actionId = action.meta.actionId;
+            byAction[actionId] = (byAction[actionId] || []).filter(p =>
+                p.id != action.meta.personId);
+            return Object.assign({}, state, { byAction: byAction });
+
         case types.MOVE_ACTION_PARTICIPANT:
             let move = action.payload.move;
             byAction = state.byAction;

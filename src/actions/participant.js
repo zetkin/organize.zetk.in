@@ -29,6 +29,38 @@ export function addActionParticipant(personId, actionId) {
     };
 }
 
+export function addActionParticipants(actionId, personIds) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        let promises = personIds.map(id =>
+            z.resource('orgs', orgId, 'actions', actionId,
+                'participants', id).put());
+
+        dispatch({
+            type: types.ADD_ACTION_PARTICIPANTS,
+            meta: { actionId, personIds },
+            payload: {
+                promise: Promise.all(promises),
+            }
+        });
+    };
+}
+
+export function removeActionParticipant(actionId, personId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.REMOVE_ACTION_PARTICIPANT,
+            meta: { actionId, personId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'actions', actionId,
+                    'participants', personId).del(),
+            }
+        });
+    };
+}
+
 export function moveActionParticipant(personId, oldActionId, newActionId) {
     return {
         type: types.MOVE_ACTION_PARTICIPANT,
