@@ -144,6 +144,9 @@ export default class ActionPane extends PaneBase {
                 responseList = (
                     <PersonCollection items={ responses }
                         itemComponent={ PCActionResponseItem }
+                        showRemoveButtons={ false }
+                        showEditButtons={ false }
+                        onSelect={ this.onSelectResponse.bind(this) }
                         />
                 );
             }
@@ -204,6 +207,11 @@ export default class ActionPane extends PaneBase {
     onAddParticipants(ids) {
         let actionId = this.getParam(0);
         this.props.dispatch(addActionParticipants(actionId, ids));
+    }
+
+    onSelectResponse(person) {
+        let actionId = this.getParam(0);
+        this.props.dispatch(addActionParticipant(actionId, person.id));
     }
 
     onRemoveParticipant(person) {
