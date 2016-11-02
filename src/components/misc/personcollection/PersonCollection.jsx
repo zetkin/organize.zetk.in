@@ -56,7 +56,8 @@ export default class PersonCollection extends React.Component {
         );
 
         let addItem = this.props.connectDropTarget(
-            <li className="PersonCollection-addItem">
+            <li key="addItem"
+                className="PersonCollection-addItem">
                 <Msg tagName="p"
                     id={ this.props.addPersonMsg }
                     values={{ selectLink }}/>
@@ -71,8 +72,8 @@ export default class PersonCollection extends React.Component {
             <ul className={ classes }>
                 { addItem }
             { this.props.items.map(i => (
-                <li className="PersonCollection-item">
-                    <PersonCollectionItem key={ i.id } item={ i }
+                <li key={ i.id } className="PersonCollection-item">
+                    <PersonCollectionItem item={ i }
                         itemComponent={ this.props.itemComponent }
                         onSelect={ this.props.onSelect.bind(this) }
                         onRemove={ this.props.onRemove.bind(this) }/>
