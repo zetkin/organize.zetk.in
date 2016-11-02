@@ -42,7 +42,9 @@ export default class PersonList extends React.Component {
                 allowBulkSelection={ this.props.allowBulkSelection }
                 bulkSelection={ this.props.bulkSelection }
                 onItemSelect={ this.props.onItemSelect }
-                onItemClick={ this.props.onItemClick }/>
+                onItemClick={ this.props.onItemClick }
+                onLoadPage={ this.props.onLoadPage }
+                />
         );
     }
 }

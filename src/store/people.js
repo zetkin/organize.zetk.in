@@ -25,11 +25,22 @@ export default function people(state = null, action) {
             });
 
         case types.RETRIEVE_PEOPLE + '_FULFILLED':
+            let items = state.personList.items;
+            let page = action.meta.page;
+            if (page > state.personList.lastPage) {
+                items = items.concat(
+                    createListItems(action.payload.data.data));
+            }
+            else {
+                items = createListItems(action.payload.data.data);
+            }
+
             return Object.assign({}, state, {
                 personList: {
                     isPending: false,
                     error: null,
-                    items: createListItems(action.payload.data.data)
+                    lastPage: Math.max(state.personList.lastPage, page),
+                    items: items,
                 }
             });
 

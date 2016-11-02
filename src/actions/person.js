@@ -13,13 +13,15 @@ export function createPerson(data) {
     };
 }
 
-export function retrievePeople() {
+export function retrievePeople(page = 0) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
         dispatch({
             type: types.RETRIEVE_PEOPLE,
+            meta: { page },
             payload: {
-                promise: z.resource('orgs', orgId, 'people').get()
+                promise: z.resource('orgs', orgId, 'people')
+                    .get(page, 20)
             }
         });
     };
