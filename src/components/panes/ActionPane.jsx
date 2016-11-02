@@ -132,9 +132,15 @@ export default class ActionPane extends PaneBase {
                         onAdd={ this.onAddParticipants.bind(this) }
                         />
                 );
+
+                // Filter responses to not include participants
+                if (responses) {
+                    responses = responses.filter(r =>
+                        !participants.find(p => p.id == r.id));
+                }
             }
 
-            if (responses) {
+            if (responses && responses.length) {
                 responseList = (
                     <PersonCollection items={ responses }
                         itemComponent={ PCActionResponseItem }
