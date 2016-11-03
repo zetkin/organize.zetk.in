@@ -92,6 +92,7 @@ export default class PeopleListPane extends PaneBase {
             <PersonList key="personList" personList={ personList }
                 allowBulkSelection={ true }
                 bulkSelection={ selection }
+                onLoadPage={ this.onLoadPage.bind(this) }
                 onItemSelect={ this.onItemSelect.bind(this) }
                 onItemClick={ this.onItemClick.bind(this) }/>
         );
@@ -162,6 +163,15 @@ export default class PeopleListPane extends PaneBase {
         }
         else {
             this.props.dispatch(removeFromSelection(selectionId, item.data.id));
+        }
+    }
+
+    onLoadPage(page) {
+        if (this.state.selectedQueryId) {
+            // TODO: Load paginated query matches once supported
+        }
+        else {
+            this.props.dispatch(retrievePeople(page));
         }
     }
 

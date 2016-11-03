@@ -1,8 +1,10 @@
 import React from 'react';
 import cx from 'classnames';
 
+import Link from '../misc/Link';
 import ListHeader from './ListHeader';
 import ListItem from './items/ListItem';
+import LoadingIndicator from '../misc/LoadingIndicator';
 
 
 function r(obj, fieldPath) {
@@ -20,6 +22,7 @@ export default class List extends React.Component {
                 data: React.PropTypes.object,
             })).isRequired,
         }).isRequired,
+        enablePagination: React.PropTypes.bool,
         headerColumns: React.PropTypes.array,
         itemComponent: React.PropTypes.func.isRequired,
         className: React.PropTypes.string,
@@ -37,7 +40,8 @@ export default class List extends React.Component {
     }
 
     render() {
-        let items = this.props.list.items;
+        let list = this.props.list;
+        let items = list.items;
         let sortField = this.state.sortField;
 
         let header = null;
@@ -69,6 +73,20 @@ export default class List extends React.Component {
 
         let classes = cx(this.props.className, 'List');
 
+        let loadMoreLink = null;
+        if (this.props.enablePagination) {
+            if (list.isPending) {
+                loadMoreLink = <LoadingIndicator />;
+            }
+            else {
+                loadMoreLink = (
+                    <Link className="List-loadMoreLink"
+                        msgId="lists.loadMoreLink"
+                        onClick={ this.onLoadMoreClick.bind(this) }/>
+                );
+            }
+        }
+
         return (
             <div className={ classes }>
                 { header }
@@ -89,8 +107,15 @@ export default class List extends React.Component {
                     );
                 }) }
                 </ul>
+                { loadMoreLink }
             </div>
         );
+    }
+
+    onLoadMoreClick() {
+        if (this.props.onLoadPage) {
+            this.props.onLoadPage(this.props.list.lastPage + 1);
+        }
     }
 
     onFieldClick(field) {

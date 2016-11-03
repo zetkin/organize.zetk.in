@@ -4,4 +4,20 @@
     @include medium-screen {
         max-width: 720px;
     }
+
+    .List-loadMoreLink {
+        display: block;
+        padding: 1em;
+        text-align: center;
+        background-color: darken($c-ui-bg, 5%);
+        color: $c-ui-dark;
+        cursor: pointer;
+
+        transition: background-color 0.2s, color 0.1s;
+
+        &:hover {
+            background-color: darken($c-ui-bg, 10%);
+            color: $c-ui-dark;
+        }
+    }
 }

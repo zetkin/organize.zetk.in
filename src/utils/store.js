@@ -1,6 +1,7 @@
 export function createList(items, meta = {}) {
     return {
         isPending: meta.isPending || false,
+        lastPage: 0,
         error: meta.error || null,
         items: createListItems(items || []),
     };
