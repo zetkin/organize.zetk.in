@@ -120,10 +120,15 @@
             left: 0;
             right: 0;
             z-index: 1;
-            max-height: 50px;
-            overflow: hidden;
             background-color: $c-ui-bg;
             transition: background-color .2s .2s, max-height .3s;
+        }
+
+        &:first-child {
+            .PaneBase-header {
+                max-height: 50px;
+                overflow: hidden;
+            }
         }
 
         .PaneBase-filterDrawer {
