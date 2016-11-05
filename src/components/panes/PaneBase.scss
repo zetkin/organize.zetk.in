@@ -128,13 +128,20 @@
 
         .PaneBase-filterDrawer {
             padding: 1em;
+            opacity: 0;
+            transition: opacity 0.2s 0.2s;
         }
 
         &.PaneBase-filtersVisible {
             .PaneBase-header {
                 background-color: white;
                 max-height: 400px;
+                overflow: visible;
                 transition: background-color .3s, max-height .5s;
+            }
+
+            .PaneBase-filterDrawer {
+                opacity: 1;
             }
         }
 
