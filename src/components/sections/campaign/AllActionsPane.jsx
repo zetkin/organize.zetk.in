@@ -23,7 +23,7 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         super(props);
 
         this.state = {
-            viewMode: 'cal'
+            viewMode: 'cal',
         };
     }
 
@@ -76,12 +76,17 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         };
 
         return [
+            <ViewSwitch key="viewSwitch" states={ viewStates }
+                selected={ this.state.viewMode }
+                onSwitch={ this.onViewSwitch.bind(this) }/>,
+        ];
+    }
+
+    getPaneFilters(data) {
+        return [
             <CampaignSelect key="campaignSelect"
                 onCreate={ this.onCreateCampaign.bind(this) }
                 onEdit={ this.onEditCampaign.bind(this) }/>,
-            <ViewSwitch key="viewSwitch" states={ viewStates }
-                selected={ this.state.viewMode }
-                onSwitch={ this.onViewSwitch.bind(this) }/>
         ];
     }
 
