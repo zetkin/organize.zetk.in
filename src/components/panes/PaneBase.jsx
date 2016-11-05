@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
 
+import Button from '../misc/Button';
 import { componentClassNames } from '..';
 
 
@@ -10,7 +11,8 @@ export default class PaneBase extends React.Component {
         super(props);
 
         this.state = {
-            scrolled: false
+            scrolled: false,
+            showFilters: false,
         };
     }
 
@@ -45,14 +47,38 @@ export default class PaneBase extends React.Component {
         const data = this.getRenderData();
 
         const classes = cx(componentClassNames(this), {
-            'PaneBase-scrolled': this.state.scrolled
+            'PaneBase-scrolled': this.state.scrolled,
+            'PaneBase-filtersVisible': this.state.showFilters,
         });
 
+        let filterDrawer = null;
+        let filters = this.getPaneFilters(data);
         var toolbar = this.getPaneTools(data);
-        if (toolbar) {
+
+        if (filters || toolbar) {
+            let filterButton = null;
+
+            if (filters) {
+                if (this.state.showFilters) {
+                    filterDrawer = (
+                        <div className="PaneBase-filterDrawer">
+                            { filters }
+                        </div>
+                    );
+                }
+
+                filterButton = (
+                    <Button key="filterButton"
+                        className="PaneBase-filterButton"
+                        labelMsg="panes.filterButton"
+                        onClick={ this.onFilterButtonClick.bind(this) }/>
+                );
+            }
+
             toolbar = (
                 <div className="PaneBase-toolbar">
                     { toolbar }
+                    { filterButton }
                 </div>
             );
         }
@@ -88,6 +114,7 @@ export default class PaneBase extends React.Component {
                     </div>
                     { closeButton }
                     { toolbar }
+                    { filterDrawer }
                 </header>
                 <div ref="content" className="PaneBase-content">
                     { title }
@@ -108,6 +135,10 @@ export default class PaneBase extends React.Component {
     }
 
     getPaneTools(data) {
+        return null;
+    }
+
+    getPaneFilters(data) {
         return null;
     }
 
@@ -158,6 +189,12 @@ export default class PaneBase extends React.Component {
         if (this.props.onClose) {
             this.props.onClose();
         }
+    }
+
+    onFilterButtonClick() {
+        this.setState({
+            showFilters: !this.state.showFilters,
+        });
     }
 
     onCloseClick(ev) {
