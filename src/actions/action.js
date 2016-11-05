@@ -15,7 +15,14 @@ export function retrieveActions(afterDate, beforeDate) {
         }
 
         if (beforeDate) {
-            filters.push(['start_time', '<', beforeDate]);
+            // Add one day to beforeDate, to include all actions
+            // on that day
+            let beforeDateNext = Date
+                .create(beforeDate)
+                .addDays(1)
+                .format('{yyyy}-{MM}-{dd}');
+
+            filters.push(['start_time', '<', beforeDateNext]);
         }
 
         dispatch({

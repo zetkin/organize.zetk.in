@@ -105,11 +105,10 @@ export default function actions(state = null, action) {
         default:
             // By default, filter from last week and eight weeks forward
             let startDate = Date.create('last monday');
-            let endDate = startDate.clone().addDays(8 * 7);
             return state || {
                 filters: {
                     afterDate: startDate.format('{yyyy}-{MM}-{dd}'),
-                    beforeDate: endDate.format('{yyyy}-{MM}-{dd}'),
+                    beforeDate: null,
                 },
                 actionList: createList(),
             };

@@ -39,8 +39,20 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         let actionList = this.props.filteredActionList;
         let viewComponent;
 
-        let startDate = Date.create(this.props.actions.filters.afterDate);
-        let endDate = Date.create(this.props.actions.filters.beforeDate);
+        // Use afterDate filter as startDate, or today if it's null
+        let startDate = this.props.actions.filters.afterDate?
+            Date.create(this.props.actions.filters.afterDate) : new Date();
+
+        // Default to no end date (which displays all actions) or, if there
+        // are no actions, use 8 weeks in future. If there is a filter, use
+        // that date.
+        let endDate = null;
+        if (this.props.actions.filters.beforeDate) {
+            endDate = Date.create(this.props.actions.filters.beforeDate);
+        }
+        else if (actionList.items.length == 0) {
+            endDate = startDate.clone().addDays(8 * 7);
+        }
 
         if (this.state.viewMode == 'cal') {
             let actions = actionList.items.map(i => i.data);
