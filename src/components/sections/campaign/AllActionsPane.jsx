@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import CampaignSectionPaneBase from './CampaignSectionPaneBase';
 import ActionList from '../../lists/ActionList';
 import CampaignSelect from '../../misc/CampaignSelect';
+import DateInput from '../../forms/inputs/DateInput';
 import ActionCalendar from '../../misc/actioncal/ActionCalendar';
 import ViewSwitch from '../../misc/ViewSwitch';
 import { retrieveCampaigns } from '../../../actions/campaign';
@@ -38,17 +39,8 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         let actionList = this.props.filteredActionList;
         let viewComponent;
 
-        let startDate, endDate;
-
-        if (actionList.items.length == 0) {
-            // Use this week and the next month by default
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth();
-            const date = now.getDate();
-            startDate = new Date(year, month, date - 5);
-            endDate = new Date(year, month, date + 30);
-        }
+        let startDate = Date.create(this.props.actions.filters.afterDate);
+        let endDate = Date.create(this.props.actions.filters.beforeDate);
 
         if (this.state.viewMode == 'cal') {
             let actions = actionList.items.map(i => i.data);
@@ -87,6 +79,18 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
             <CampaignSelect key="campaignSelect"
                 onCreate={ this.onCreateCampaign.bind(this) }
                 onEdit={ this.onEditCampaign.bind(this) }/>,
+            <div key="dateFilter" className="AllActionsPane-dateFilter">
+                <DateInput name="afterDate"
+                    value={ this.props.actions.filters.afterDate }
+                    labelMsg="panes.allActions.filters.afterDate"
+                    onValueChange={ this.onFilterAfterDateChange.bind(this) }
+                    />
+                <DateInput name="beforeDate"
+                    value={ this.props.actions.filters.beforeDate }
+                    labelMsg="panes.allActions.filters.beforeDate"
+                    onValueChange={ this.onFilterBeforeDateChange.bind(this) }
+                    />
+            </div>
         ];
     }
 
@@ -94,5 +98,15 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         this.setState({
             viewMode: state
         });
+    }
+
+    onFilterAfterDateChange(name, value) {
+        let beforeDate = this.props.actions.filters.beforeDate;
+        this.props.dispatch(retrieveActions(value, beforeDate));
+    }
+
+    onFilterBeforeDateChange(name, value) {
+        let afterDate = this.props.actions.filters.afterDate;
+        this.props.dispatch(retrieveActions(afterDate, value));
     }
 }
