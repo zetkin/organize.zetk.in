@@ -99,27 +99,7 @@ export default class PeopleListPane extends PaneBase {
     }
 
     getPaneTools(data) {
-        const formatMessage = this.props.intl.formatMessage;
-
-        let queryId = this.state.selectedQueryId;
-        let queryList = this.props.queries.queryList;
-        let query = getListItemById(queryList, queryId);
-
-        // Only include queries that have a title
-        // TODO: Find some better way to filter out call assignment queries,
-        //       e.g. a proper type attribute on the query
-        let queries = queryList.items.map(i => i.data).filter(q => q.title);
-
-        let querySelectNullLabel = formatMessage(
-            { id: 'panes.peopleList.querySelect.nullLabel' });
-
         let tools = [
-            <RelSelectInput key="querySelect" name="querySelect"
-                value={ queryId } objects={ queries } showEditLink={ true }
-                allowNull={ true } nullLabel={ querySelectNullLabel }
-                onValueChange={ this.onQueryChange.bind(this) }
-                onCreate={ this.onQueryCreate.bind(this) }
-                onEdit={ this.onQueryEdit.bind(this) }/>,
             <Button key="addButton"
                 className="PeopleListPane-addButton"
                 labelMsg="panes.peopleList.addButton"
@@ -139,6 +119,31 @@ export default class PeopleListPane extends PaneBase {
         }
 
         return tools;
+    }
+
+    getPaneFilters(data) {
+        const formatMessage = this.props.intl.formatMessage;
+
+        let queryId = this.state.selectedQueryId;
+        let queryList = this.props.queries.queryList;
+        let query = getListItemById(queryList, queryId);
+
+        // Only include queries that have a title
+        // TODO: Find some better way to filter out call assignment queries,
+        //       e.g. a proper type attribute on the query
+        let queries = queryList.items.map(i => i.data).filter(q => q.title);
+
+        let querySelectNullLabel = formatMessage(
+            { id: 'panes.peopleList.querySelect.nullLabel' });
+
+        return [
+            <RelSelectInput key="querySelect" name="querySelect"
+                value={ queryId } objects={ queries } showEditLink={ true }
+                allowNull={ true } nullLabel={ querySelectNullLabel }
+                onValueChange={ this.onQueryChange.bind(this) }
+                onCreate={ this.onQueryCreate.bind(this) }
+                onEdit={ this.onQueryEdit.bind(this) }/>,
+        ];
     }
 
     onItemClick(item) {
