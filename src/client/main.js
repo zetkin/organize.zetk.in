@@ -10,10 +10,10 @@ import ReactDOM from 'react-dom';
 import svLocaleData from 'react-intl/locale-data/sv';
 import Z from 'zetkin';
 
+import polyfills from '../utils/polyfills';
 import App from '../components/App';
 import { configureStore } from '../store';
 import IntlReduxProvider from '../components/IntlReduxProvider';
-import polyfills from '../utils/polyfills';
 import { subscribeToUrlChanges } from '../store/middleware/url';
 
 

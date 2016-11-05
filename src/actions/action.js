@@ -1,13 +1,29 @@
 import * as types from '.';
 
 
-export function retrieveActions() {
+export function retrieveActions(afterDate, beforeDate) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
+
+        let filters = [];
+
+        afterDate = afterDate || getState().actions.filters.afterDate;
+        beforeDate = beforeDate || getState().actions.filters.beforeDate;
+
+        if (afterDate) {
+            filters.push(['start_time', '>', afterDate]);
+        }
+
+        if (beforeDate) {
+            filters.push(['start_time', '<', beforeDate]);
+        }
+
         dispatch({
             type: types.RETRIEVE_ACTIONS,
+            meta: { afterDate, beforeDate },
             payload: {
-                promise: z.resource('orgs', orgId, 'actions').get()
+                promise: z.resource('orgs', orgId, 'actions').get(
+                    null, null, filters),
             }
         });
     };

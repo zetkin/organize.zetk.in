@@ -26,6 +26,10 @@ export default function actions(state = null, action) {
     switch (action.type) {
         case types.RETRIEVE_ACTIONS + '_PENDING':
             return Object.assign({}, state, {
+                filters: {
+                    afterDate: action.meta.afterDate,
+                    beforeDate: action.meta.beforeDate,
+                },
                 actionList: Object.assign({}, state.actionList, {
                     isPending: true,
                     error:null,
@@ -91,7 +95,14 @@ export default function actions(state = null, action) {
             return toggleActionHighlights(state, action, (a, p) => false);
 
         default:
+            // By default, filter from last week and eight weeks forward
+            let startDate = Date.create('last monday');
+            let endDate = startDate.clone().addDays(8 * 7);
             return state || {
+                filters: {
+                    afterDate: startDate.format('{yyyy}-{MM}-{dd}'),
+                    beforeDate: endDate.format('{yyyy}-{MM}-{dd}'),
+                },
                 actionList: createList(),
             };
     }
