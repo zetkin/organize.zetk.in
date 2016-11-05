@@ -5,7 +5,7 @@ import InputBase from './InputBase';
 
 export default class DateInput extends InputBase {
     renderInput() {
-        const value = this.props.value;
+        const value = this.props.value || '';
 
         return (
             <div className="DateInput">

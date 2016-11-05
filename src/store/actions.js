@@ -94,6 +94,14 @@ export default function actions(state = null, action) {
         case types.CLEAR_ACTION_HIGHLIGHTS:
             return toggleActionHighlights(state, action, (a, p) => false);
 
+        case types.SELECT_CAMPAIGN:
+            return Object.assign({}, state, {
+                filters: {
+                    afterDate: null,
+                    beforeDate: null,
+                },
+            });
+
         default:
             // By default, filter from last week and eight weeks forward
             let startDate = Date.create('last monday');
