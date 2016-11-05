@@ -59,13 +59,11 @@ export default class PaneBase extends React.Component {
             let filterButton = null;
 
             if (filters) {
-                if (this.state.showFilters) {
-                    filterDrawer = (
-                        <div className="PaneBase-filterDrawer">
-                            { filters }
-                        </div>
-                    );
-                }
+                filterDrawer = (
+                    <div className="PaneBase-filterDrawer">
+                        { filters }
+                    </div>
+                );
 
                 filterButton = (
                     <Button key="filterButton"

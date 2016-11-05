@@ -12,8 +12,7 @@
         &:first-child {
             .PaneBase-header {
                 z-index: 5;
-                background-color: rgba(lighten($c-ui-bg, 20),1);
-                height: 55px;
+                background-color: white;
                 box-shadow: 0 0 0.2em rgba(0,0,0,0.1);
             }
         }
@@ -120,10 +119,23 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 60px;
             z-index: 1;
+            max-height: 50px;
+            overflow: hidden;
             background-color: $c-ui-bg;
-            transition: background-color .3s, height .3s;
+            transition: background-color .2s .2s, max-height .3s;
+        }
+
+        .PaneBase-filterDrawer {
+            padding: 1em;
+        }
+
+        &.PaneBase-filtersVisible {
+            .PaneBase-header {
+                background-color: white;
+                max-height: 400px;
+                transition: background-color .3s, max-height .5s;
+            }
         }
 
         .PaneBase-closeLink {
