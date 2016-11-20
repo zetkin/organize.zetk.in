@@ -1,0 +1,7 @@
+.ImporterTableSet {
+    .button {
+        @include button();
+        float: right;
+        margin-top: 2em;
+    }
+}
