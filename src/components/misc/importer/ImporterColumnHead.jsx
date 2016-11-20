@@ -1,5 +1,6 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
+import cx from 'classnames';
 
 import Link from '../Link';
 import { resolveSummaryComponent } from './summary';
@@ -63,8 +64,15 @@ export default class ImporterColumnHead extends React.Component {
         let otherFieldsLabel = formatMessage(
             { id: 'panes.import.column.otherFields' });
 
+        let isUnknown = (type == "unknown" ? "unknown" : "");
+
+        const classes = cx(
+            "ImporterColumnHead",
+            isUnknown
+        );
+
         return (
-            <th className="ImporterColumnHead">
+            <th className={ classes }>
                 <h3 className="ImporterColumnHead-name">{ name }</h3>
                 <select value={ type }
                     onChange={ this.onChangeColumn.bind(this) }>
