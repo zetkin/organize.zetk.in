@@ -1,7 +1,11 @@
 .ImporterTableSet {
     .button {
-        @include button();
+        @include button($icon: $fa-var-cloud-upload);
         float: right;
         margin-top: 2em;
+        position: fixed;
+        bottom: 1em;
+        right: 1em;
+        width: 20%;
     }
 }
