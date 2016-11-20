@@ -25,8 +25,10 @@ export default class ImporterTable extends React.Component {
                 + table.numEmptyColumnsRemoved;
 
             removedInfo = (
-                <Msg tagName="p" id="panes.import.table.emptyColumnsRemoved"
-                    values={{ numRemoved: table.numEmptyColumnsRemoved }}/>
+                <div className="ImporterTable-info">
+                    <Msg tagName="p" id="panes.import.table.emptyColumnsRemoved"
+                        values={{ numRemoved: table.numEmptyColumnsRemoved }}/>
+                </div>
             );
         }
 

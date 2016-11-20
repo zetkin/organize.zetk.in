@@ -15,6 +15,16 @@
         }
     }
 
+    .ImporterTable-info {
+        @include col(12,12);
+        p {
+            &:before {
+                @include icon($fa-var-info-circle);
+                color: $c-brand-comp-light;
+            }
+        }
+    }
+
     table {
         display: block;
         overflow: scroll;
