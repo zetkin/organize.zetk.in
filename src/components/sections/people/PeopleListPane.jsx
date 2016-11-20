@@ -127,7 +127,7 @@ export default class PeopleListPane extends PaneBase {
         ];
 
         if (data.selection && data.selection.selectedIds.length) {
-            let ops = [ 'delete', 'tag' ];
+            let ops = [ 'delete', 'tag', 'export' ];
 
             tools.push(
                 <BulkOpSelect key="bulkOps"
