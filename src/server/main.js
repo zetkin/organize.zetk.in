@@ -5,7 +5,7 @@ import initApp from './app';
 import polyfills from '../utils/polyfills';
 import { loadMessages } from './locale';
 
-var port = process.env.ZETKIN_FRONTEND_PORT || 8000;
+var port = process.env.ZETKIN_FRONTEND_PORT || 80;
 let msgPath = path.join(__dirname, '../../locale');
 
 loadMessages(msgPath, (err, messages) => {
