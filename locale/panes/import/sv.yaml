@@ -1,5 +1,6 @@
 importButton: "Importera"
 importMoreButton: "Importera mer"
+importDropZoneMessage: "Dra och släpp en fil här, eller klicka och välj en för att importera."
 
 table:
     firstRowAsHeader: "Första raden innehåller rubriker"

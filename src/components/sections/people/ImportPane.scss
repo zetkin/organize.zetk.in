@@ -1,10 +1,35 @@
 .ImportPane {
     .ImportPane-dropZone {
-        background-color: $c-ui-dark;
+        background-color: darken($c-ui-bg,5);
         min-height: 200px;
+        padding: 15% 10% 10%;
+        cursor: pointer;
+        border: dashed 3px darken($c-ui-bg, 10);
+
+        &:hover {
+            background-color: darken($c-ui-bg,6);
+        }
+    }
+
+    .ImportPane-dropZoneMessage {
+        margin: -50px auto 0;
+        text-align: center;
+        color: darken($c-ui-bg, 40);
+
+        &:before {
+            @include icon($fa-var-file-o);
+            font-size: 4em;
+        }
     }
 
     .ImportPane-dropZone-isDragging {
-        background-color: $c-ui-darker;
+        background-color: darken($c-ui-bg, 8);
+
+         .ImportPane-dropZoneMessage {
+            &:before {
+                @include icon($fa-var-file);
+                font-size: 4em;
+            }
+         }
     }
 }

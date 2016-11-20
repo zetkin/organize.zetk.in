@@ -2,6 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import DropZone from 'react-dropzone';
 import { connect } from 'react-redux';
+import { FormattedMessage as Msg } from 'react-intl';
 
 import Button from '../../misc/Button';
 import PaneBase from '../../panes/PaneBase';
@@ -58,7 +59,11 @@ export default class ImportPane extends PaneBase {
                 <DropZone key="dropZone" className={ classes }
                     onDragEnter={ this.onDragEnter.bind(this) }
                     onDragLeave={ this.onDragLeave.bind(this) }
-                    onDrop={ this.onDrop.bind(this) }/>
+                    onDrop={ this.onDrop.bind(this) }>
+                    <div className="ImportPane-dropZoneMessage" >
+                        <Msg tagName="p" id="panes.import.importDropZoneMessage"/>
+                    </div>
+                </DropZone>
             ];
         }
     }
