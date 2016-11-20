@@ -3,6 +3,7 @@ importMoreButton: "Importera mer"
 importDropZoneMessage: "Dra och släpp en fil här, eller klicka och välj en för att importera."
 
 table:
+    tableSelectLabel: "Ark att importera:"
     firstRowAsHeader: "Första raden innehåller rubriker"
     emptyColumnsRemoved: |
         { numRemoved, plural,
