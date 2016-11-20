@@ -1,0 +1,28 @@
+.ImporterTableRow {
+    &:nth-child(odd) {
+        background: darken($c-ui-bg, 2);
+    }
+
+    td {
+        font-size: 0.9em;
+
+        span {
+            display: block;
+            width: 100%;
+            padding: 0.8em;
+        }
+
+        &.unknown {
+            opacity: 0.4;
+        }
+
+    }
+
+    .TagCloud {
+        font-size: 0.6em;
+        line-height: 0;
+        .TagCloudItem {
+            margin: 0;
+        }
+    }
+}
