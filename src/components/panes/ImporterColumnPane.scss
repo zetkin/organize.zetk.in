@@ -1,6 +1,15 @@
 .ImporterColumnPane {
+    select {
+        font-size: 1.5em;
+    }
+
     .ImporterColumnPane-settings {
-        & > div {
+        & > span {
+            font-size: 1.3em;
+        }
+
+        .PersonDataColumnSettings, .PersonTagColumnSettings-mapping {
+            margin-bottom: 2em;
             @include card;
             padding: 10px;
         }

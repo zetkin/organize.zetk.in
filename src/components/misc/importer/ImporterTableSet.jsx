@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage as Msg } from 'react-intl';
 
 import Button from '../Button';
 import ImporterTable from './ImporterTable';
@@ -41,14 +42,18 @@ export default class ImporterTableSet extends React.Component {
 
         return (
             <div className="ImporterTableSet">
-                <select className="importerTableSet-tableSelect"
-                    onChange={ this.onChangeTable.bind(this) }>
-                { tableSet.tableList.items.map(item => (
-                    <option key={ item.data.id } value={ item.data.id }>
-                        { item.data.name }
-                    </option>
-                )) }
-                </select>
+                <div className="importerTableSet-tableSelector">
+                    <Msg id="panes.import.table.tableSelectLabel"
+                        values={{ numRemoved: table.numEmptyColumnsRemoved }}/>
+                    <select className="importerTableSet-tableSelect"
+                        onChange={ this.onChangeTable.bind(this) }>
+                    { tableSet.tableList.items.map(item => (
+                        <option key={ item.data.id } value={ item.data.id }>
+                            { item.data.name }
+                        </option>
+                    )) }
+                    </select>
+                </div>
                 { table }
                 <Button
                     labelMsg="panes.import.importButton"

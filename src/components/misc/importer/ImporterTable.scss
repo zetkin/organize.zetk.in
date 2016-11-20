@@ -1,0 +1,32 @@
+.ImporterTable {
+    .ImporterTable-settings {
+        @include col(4, 12);
+        font-size: 1.5em;
+        line-height: 1.5em;
+        margin: 1em 0;
+
+        input[type="checkbox"] {
+            width: 1.5em;
+            height: 1.5em;
+        }
+
+        span {
+            vertical-align: top;
+        }
+    }
+
+    .ImporterTable-info {
+        @include col(12,12);
+        p {
+            &:before {
+                @include icon($fa-var-info-circle);
+                color: $c-brand-comp-light;
+            }
+        }
+    }
+
+    table {
+        display: block;
+        overflow: scroll;
+    }
+}

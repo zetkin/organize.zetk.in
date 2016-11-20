@@ -1,17 +1,34 @@
 .ImporterColumnHead {
     @include card;
     padding: 10px;
+    min-width: 250px;
+    margin: 0 10px;
+    border-bottom: 3px solid $c-brand-comp-light;
+
+    &.unknown {
+        border-bottom: 3px solid $c-brand-main;
+        background: rgba(white, 0.3);
+    }
 
     h3.ImporterColumnHead-name {
         font-size: 14px;
-        margin: 0 0 5px;
+        margin: 0 0 10px;
+        font-weight: 700;
+    }
+
+    select {
+        font-size: 1em;
+        margin-bottom: 5px;
     }
 
     .ImporterColumnHead-summary {
+        height: 1.4em;
+        margin-bottom: 0.5em;
         p {
             font-size: 11px;
             font-style: italic;
             font-weight: normal;
+            margin: 0;
         }
     }
 
@@ -19,6 +36,13 @@
         font-size: 11px;
         cursor: pointer;
         font-weight: normal;
-        text-decoration: underline;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &:before {
+            @include icon($fa-var-pencil);
+        }
     }
 }

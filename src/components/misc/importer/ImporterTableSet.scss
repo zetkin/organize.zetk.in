@@ -1,0 +1,30 @@
+.ImporterTableSet {
+
+    .importerTableSet-tableSelector {
+        display: inline-block;
+        font-size: 1.5em;
+        float:right;
+
+        &:before {
+            @include icon($fa-var-file-o);
+        }
+
+        span {
+            margin-right: 1em;
+        }
+
+        select {
+            display: inline-block;
+            width: 250px;
+            font-size: 1em;
+        }
+    }
+
+    .button {
+        @include button($icon: $fa-var-cloud-upload);
+        position: fixed;
+        bottom: 1em;
+        right: 1em;
+        width: 20%;
+    }
+}

@@ -18,9 +18,10 @@ export default class ImporterTableRow extends React.Component {
             { values.map((val, idx) => {
                 let column = columns[idx];
                 let ValueComponent = resolveValueComponent(column);
+                let isUnknown = (column.type == "unknown" ? "unknown" : "");
 
                 return (
-                    <td key={ columns[idx].id }>
+                    <td key={ columns[idx].id } className={ isUnknown }>
                         <ValueComponent value={ val } column={ column }/>
                     </td>
                 );

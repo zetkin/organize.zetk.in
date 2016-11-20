@@ -25,8 +25,10 @@ export default class ImporterTable extends React.Component {
                 + table.numEmptyColumnsRemoved;
 
             removedInfo = (
-                <Msg tagName="p" id="panes.import.table.emptyColumnsRemoved"
-                    values={{ numRemoved: table.numEmptyColumnsRemoved }}/>
+                <div className="ImporterTable-info">
+                    <Msg tagName="p" id="panes.import.table.emptyColumnsRemoved"
+                        values={{ numRemoved: table.numEmptyColumnsRemoved }}/>
+                </div>
             );
         }
 
@@ -36,9 +38,12 @@ export default class ImporterTable extends React.Component {
 
                 { removedInfo }
 
-                <Msg id="panes.import.table.firstRowAsHeader"/>
-                <input type="checkbox" checked={ table.useFirstRowAsHeader }
-                    onChange={ this.onChangeFirstRow.bind(this) }/>
+                <div className="ImporterTable-settings">
+                    <input type="checkbox" checked={ table.useFirstRowAsHeader }
+                        onChange={ this.onChangeFirstRow.bind(this) }/>
+                    <Msg id="panes.import.table.firstRowAsHeader"/>
+                </div>
+
                 <table>
                     <ImporterTableHead columnList={ table.columnList }
                         onChangeColumn={ this.onChangeColumn.bind(this) }

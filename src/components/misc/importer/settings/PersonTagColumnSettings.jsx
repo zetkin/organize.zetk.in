@@ -39,7 +39,7 @@ export default class PersonTagColumnSettings extends React.Component {
                     return (
                         <li key={ value }
                             className="PersonTagColumnSettings-mapping">
-                            <Msg tagName="h4" id={ labelMsg }
+                            <Msg tagName="h3" id={ labelMsg }
                                 values={{ value }}/>
                             <TagCloud tags={ tags }
                                 showAddButton={ true }
