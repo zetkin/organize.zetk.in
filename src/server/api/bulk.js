@@ -10,11 +10,17 @@ bulkApi.post('/', (req, res, next) => {
 
         exec(req, res)
             .then(result => {
-                res.status(200).json({
-                    ok: true,
-                });
+                if (!res.headersSent) {
+                    // If headers have not already been sent, send a simple
+                    // status object indicating that the bulk op was executed.
+                    res.status(200).json({
+                        ok: true,
+                    });
+                }
             })
             .catch(err => {
+                console.log('Error executing bulk op ' + op);
+                console.trace(err);
                 res.status(500).json({
                     ok: false,
                     error: err,
