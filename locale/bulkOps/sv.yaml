@@ -9,8 +9,17 @@ ops:
                 =4 {fyra personer}
                 =5 {fem personer}
                 other {# personer}}
-        tag:
+        tag: |
             Sätt etiketter på {count, plural,
+                =1 {en person}
+                =2 {två personer}
+                =3 {tre personer}
+                =4 {fyra personer}
+                =5 {fem personer}
+                other {# personer}}
+
+        export: |
+            Exportera {count, plural,
                 =1 {en person}
                 =2 {två personer}
                 =3 {tre personer}

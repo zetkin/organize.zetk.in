@@ -9,4 +9,7 @@ headers:
             Radera {count, plural,
                 =1 {en person}
                 other {# personer}}
-
+        export: |
+            Exportera {count, plural,
+                =1 {en person}
+                other {# personer}}

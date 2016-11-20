@@ -26,6 +26,9 @@ export default class ActionMiniCalendar extends React.Component {
     render() {
         const actions = this.props.actions;
 
+        actions.sort((a0, a1) =>
+            (new Date(a0.start_time)) - (new Date(a1.start_time)));
+
         var startDate, endDate;
 
         if (actions.length) {
