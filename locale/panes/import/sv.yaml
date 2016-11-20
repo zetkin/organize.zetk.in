@@ -12,7 +12,7 @@ table:
 
 column:
     id: "Zetkin-ID"
-    unknown: "Kolumntyp"
+    unknown: "Hoppa över kolumn"
     personFields: "Personfält"
     otherFields: "Annan data"
     editSettingsLink: "Redigera kolumninställningar"
