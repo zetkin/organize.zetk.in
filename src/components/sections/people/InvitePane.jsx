@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
+import cx from 'classnames';
 
 import InviteBox from '../../misc/InviteBox';
 import LoadingIndicator from '../../misc/LoadingIndicator';
@@ -28,12 +29,17 @@ export default class InvitePane extends PaneBase {
             let invites = inviteList.items.map(i => i.data);
 
             content.push(
+                <Msg tagName="h2" id="panes.invite.sentHeader"/>,
                 <div className="InvitePane-invites">
-                    <Msg tagName="h2" id="panes.invite.sentHeader"/>
                     <ul className="InvitePane-inviteList">
                     { invites.map(i => {
+
+                        const classes = cx({
+                            'InvitePane-invite': true,
+                            'consumed': i.is_consumed
+                        });
                         return (
-                            <li key={ i.id } className="InvitePane-invite">
+                            <li key={ i.id } className={ classes }>
                                 <span className="InvitePane-time">
                                     { i.invite_time }</span>
                                 <span className="InvitePane-email">
