@@ -1,0 +1,49 @@
+.InvitePane-invites {
+    @include card;
+
+    padding: 0.5em;
+    .InvitePane-invite {
+        margin: 1em 0;
+        padding: 0.5em;
+        font-size: 1.3em;
+        border-bottom: 1px solid #eee;
+
+        &:before {
+            @include icon($fa-var-clock-o);
+            @include col(1,12);
+            margin: 0;
+            color: lighten($c-text, 60);
+        }
+
+        &.consumed:before {
+            @include icon($fa-var-check);
+             @include col(1,12);
+            margin: 0;
+            color: $c-brand-success;
+        }
+    }
+
+    .InvitePane-time {
+        @include col(4,12);
+        text-align: left;
+        color: lighten($c-text, 40);
+        &:before {
+            @include icon($fa-var-sign-in);
+        }
+    }
+
+    .InvitePane-email {
+        @include col(4,12);
+    }
+
+    .InvitePane-official {
+        @include col(3,12);
+        text-align: right;
+        color: lighten($c-text, 40);
+        &:before {
+            @include icon($fa-var-user);
+        }
+    }
+
+
+}
