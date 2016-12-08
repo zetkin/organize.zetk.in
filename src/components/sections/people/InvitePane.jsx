@@ -1,8 +1,9 @@
 import React from 'react';
-import { FormattedMessage as Msg } from 'react-intl';
+import { FormattedDate, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 
+import Button from '../../misc/Button';
 import InviteBox from '../../misc/InviteBox';
 import LoadingIndicator from '../../misc/LoadingIndicator';
 import PaneBase from '../../panes/PaneBase';
@@ -30,30 +31,51 @@ export default class InvitePane extends PaneBase {
 
             content.push(
                 <Msg tagName="h2" id="panes.invite.sentHeader"/>,
-                <div className="InvitePane-invites">
-                    <ul className="InvitePane-inviteList">
+                <table className="InvitePane-invites">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Skickad</th>
+                            <th>E-postadress</th>
+                            <th>Inbjuden av</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
                     { invites.map(i => {
+
+                        let inviteTime = new Date(i.invite_time);
 
                         const classes = cx({
                             'InvitePane-invite': true,
                             'consumed': i.is_consumed
                         });
                         return (
-                            <li key={ i.id } className={ classes }>
-                                <span className="InvitePane-time">
-                                    { i.invite_time }</span>
-                                <span className="InvitePane-email">
-                                    { i.invite_email }</span>
-                                <span className="InvitePane-official">
-                                    { i.official.name }</span>
-                            </li>
+                            <tr key={ i.id } className={ classes }>
+                                <td className="InvitePane-consumed"></td>
+                                <td className="InvitePane-time">
+                                    <FormattedDate value={ inviteTime } /></td>
+                                <td className="InvitePane-email">
+                                    { i.invite_email }</td>
+                                <td className="InvitePane-official">
+                                    { i.official.name }</td>
+                                <td className="InvitePane-remove">
+                                    <Button key="removeButton"
+                                        labelMsg="panes.invite.removeButton"
+                                        onClick={ this.onClickRemove.bind(this) }/>
+                                </td>
+                            </tr>
                         );
                     }) }
-                    </ul>
-                </div>
+                    </tbody>
+                </table>
             );
         }
 
         return content;
+    }
+
+    onClickRemove() {
+        return null;
     }
 }
