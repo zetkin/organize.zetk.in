@@ -34,11 +34,14 @@ export default class InvitePane extends PaneBase {
                 <table className="InvitePane-invites">
                     <thead>
                         <tr>
-                            <th></th>
-                            <th>Skickad</th>
-                            <th>E-postadress</th>
-                            <th>Inbjuden av</th>
-                            <th></th>
+                            <th/>
+                            <Msg tagName="th"
+                                id="panes.invite.table.header.sent"/>
+                            <Msg tagName="th"
+                                id="panes.invite.table.header.email"/>
+                            <Msg tagName="th"
+                                id="panes.invite.table.header.official"/>
+                            <th/>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,7 +64,7 @@ export default class InvitePane extends PaneBase {
                                     { i.official.name }</td>
                                 <td className="InvitePane-remove">
                                     <Button key="removeButton"
-                                        labelMsg="panes.invite.removeButton"
+                                        labelMsg="panes.invite.table.removeButton"
                                         onClick={ this.onClickRemove.bind(this) }/>
                                 </td>
                             </tr>
