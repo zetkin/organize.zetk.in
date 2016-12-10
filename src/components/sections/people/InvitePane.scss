@@ -1,0 +1,55 @@
+.InvitePane-invites {
+    @include card;
+    width: 100%;
+    font-size: 1.5em;
+    padding: 0.5em;
+
+    th {
+        text-align: left;
+    }
+
+    td {
+        border-bottom: 1px solid #eee;
+        padding: 1em 0;
+    }
+
+    .InvitePane-consumed {
+        &:before {
+            @include icon($fa-var-clock-o);
+            margin: 0;
+            color: lighten($c-text, 60);
+        }
+    }
+
+    .consumed .InvitePane-consumed {
+        &:before {
+            @include icon($fa-var-check);
+            margin: 0;
+            color: $c-brand-success;
+        }
+    }
+
+    .InvitePane-time {
+        text-align: left;
+        color: lighten($c-text, 40);
+        &:before {
+            @include icon($fa-var-sign-in);
+        }
+    }
+
+    .InvitePane-official {
+        color: lighten($c-text, 40);
+        &:before {
+            @include icon($fa-var-user);
+        }
+    }
+
+    .InvitePane-remove {
+        .Button {
+            @include inline-button($color: white, $icon: $fa-var-times);
+            font-size: 0.9em;
+            float: right;
+        }
+    }
+
+}

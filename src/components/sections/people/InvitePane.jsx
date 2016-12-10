@@ -1,11 +1,13 @@
 import React from 'react';
-import { FormattedMessage as Msg } from 'react-intl';
+import { FormattedDate, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
+import cx from 'classnames';
 
+import Button from '../../misc/Button';
 import InviteBox from '../../misc/InviteBox';
 import LoadingIndicator from '../../misc/LoadingIndicator';
 import PaneBase from '../../panes/PaneBase';
-import { retrieveInvites } from '../../../actions/invite';
+import { retrieveInvites, deleteInvite } from '../../../actions/invite';
 
 
 @connect(state => ({ invites: state.invites }))
@@ -18,36 +20,67 @@ export default class InvitePane extends PaneBase {
         let inviteList = this.props.invites.inviteList;
 
         let content = [
-            <InviteBox/>
+            <InviteBox key="inviteBox"/>
         ];
 
         if (inviteList.isPending) {
-            content.push(<LoadingIndicator/>);
+            content.push(<LoadingIndicator key="loadingIndicator"/>);
         }
         else {
             let invites = inviteList.items.map(i => i.data);
 
             content.push(
-                <div className="InvitePane-invites">
-                    <Msg tagName="h2" id="panes.invite.sentHeader"/>
-                    <ul className="InvitePane-inviteList">
+                <Msg key="sentHeader"
+                    tagName="h2" id="panes.invite.sentHeader"/>,
+                <table key="table" className="InvitePane-invites">
+                    <thead>
+                        <tr>
+                            <th/>
+                            <Msg tagName="th"
+                                id="panes.invite.table.header.sent"/>
+                            <Msg tagName="th"
+                                id="panes.invite.table.header.email"/>
+                            <Msg tagName="th"
+                                id="panes.invite.table.header.official"/>
+                            <th/>
+                        </tr>
+                    </thead>
+                    <tbody>
                     { invites.map(i => {
+                        let inviteTime = new Date(i.invite_time);
+                        let id = i.id;
+
+                        const classes = cx({
+                            'InvitePane-invite': true,
+                            'consumed': i.is_consumed
+                        });
+
                         return (
-                            <li key={ i.id } className="InvitePane-invite">
-                                <span className="InvitePane-time">
-                                    { i.invite_time }</span>
-                                <span className="InvitePane-email">
-                                    { i.invite_email }</span>
-                                <span className="InvitePane-official">
-                                    { i.official.name }</span>
-                            </li>
+                            <tr key={ i.id } className={ classes }>
+                                <td className="InvitePane-consumed"></td>
+                                <td className="InvitePane-time">
+                                    <FormattedDate value={ inviteTime } /></td>
+                                <td className="InvitePane-email">
+                                    { i.invite_email }</td>
+                                <td className="InvitePane-official">
+                                    { i.official.name }</td>
+                                <td className="InvitePane-remove">
+                                    <Button key="removeButton"
+                                        labelMsg="panes.invite.table.removeButton"
+                                        onClick={ this.onClickRemove.bind(this, id) }/>
+                                </td>
+                            </tr>
                         );
                     }) }
-                    </ul>
-                </div>
+                    </tbody>
+                </table>
             );
         }
 
         return content;
+    }
+
+    onClickRemove(id) {
+        this.props.dispatch(deleteInvite(id));
     }
 }

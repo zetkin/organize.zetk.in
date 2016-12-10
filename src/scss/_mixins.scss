@@ -29,6 +29,29 @@
     }
 }
 
+@mixin form-base {
+    color: lighten($c-text, 40);
+
+    input,
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    input[type="password"] {
+        @include input-base;
+    }
+
+    input[type="submit"] {
+        @include button;
+        display: block;
+    }
+
+    label {
+        margin: 0 0 8px 0;
+        display: inline-block;
+        font-size: 1.25em;
+    }
+}
+
 @mixin button-color($color, $amount:5) {
     //TODO: switch darken/lighten based on lightness
     background-color: $color;

@@ -27,3 +27,17 @@ export function createInvite(email) {
         });
     };
 }
+
+export function deleteInvite(id) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.DELETE_INVITE,
+            meta: { id },
+            payload: {
+                promise: z.resource('orgs', orgId, 'invites', id).del()
+            },
+        });
+    };
+}

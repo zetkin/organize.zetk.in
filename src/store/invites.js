@@ -2,6 +2,7 @@ import * as types from '../actions';
 import {
     createList,
     createListItems,
+    removeListItem,
     updateOrAddListItem,
 } from '../utils/store';
 
@@ -43,6 +44,11 @@ export default function invites(state = null, action) {
                 createError: Object.assign({}, action.payload.data, {
                     email: action.meta.email,
                 })
+            });
+
+        case types.DELETE_INVITE + '_FULFILLED':
+            return Object.assign({}, state, {
+                inviteList: removeListItem(state.inviteList, action.meta.id)
             });
 
         default:

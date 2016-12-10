@@ -1,23 +1,31 @@
 .InviteBox {
     @include card;
     max-width: 400px;
-    padding: 10px;
-    margin: 0 0 10px;
+    padding: 1em;
+    margin: 0 0 3em;
 
     input {
         float: left;
     }
 
+    @include form-base;
+
     .InviteBox-emailInput {
-        width: 70%;
-        height: 30px;
-        padding: 5px;
-        font-size: 150%;
+        @include col(12,12);
+        margin-bottom: 1em;
+        font-size: 1.5em;
+    }
+
+    .Button {
+        @include col(12,12);
+        @include button();
     }
 
     .LoadingIndicator {
+        height: 3em;
         float: left;
-        margin: 0 0 0 10px;
+        width: 100%;
+        padding: 0.5em 0;
     }
 
     &:after {
