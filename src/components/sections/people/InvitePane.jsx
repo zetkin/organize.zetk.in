@@ -7,7 +7,7 @@ import Button from '../../misc/Button';
 import InviteBox from '../../misc/InviteBox';
 import LoadingIndicator from '../../misc/LoadingIndicator';
 import PaneBase from '../../panes/PaneBase';
-import { retrieveInvites } from '../../../actions/invite';
+import { retrieveInvites, deleteInvite } from '../../../actions/invite';
 
 
 @connect(state => ({ invites: state.invites }))
@@ -47,13 +47,14 @@ export default class InvitePane extends PaneBase {
                     </thead>
                     <tbody>
                     { invites.map(i => {
-
                         let inviteTime = new Date(i.invite_time);
+                        let id = i.id;
 
                         const classes = cx({
                             'InvitePane-invite': true,
                             'consumed': i.is_consumed
                         });
+
                         return (
                             <tr key={ i.id } className={ classes }>
                                 <td className="InvitePane-consumed"></td>
@@ -66,7 +67,7 @@ export default class InvitePane extends PaneBase {
                                 <td className="InvitePane-remove">
                                     <Button key="removeButton"
                                         labelMsg="panes.invite.table.removeButton"
-                                        onClick={ this.onClickRemove.bind(this) }/>
+                                        onClick={ this.onClickRemove.bind(this, id) }/>
                                 </td>
                             </tr>
                         );
@@ -79,7 +80,7 @@ export default class InvitePane extends PaneBase {
         return content;
     }
 
-    onClickRemove() {
-        return null;
+    onClickRemove(id) {
+        this.props.dispatch(deleteInvite(id));
     }
 }
