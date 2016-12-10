@@ -146,6 +146,7 @@ export const DELETE_OFFICIAL = 'DELETE_OFFICIAL';
 // Flux actions related to invites
 export const CREATE_INVITE = 'CREATE_INVITE';
 export const RETRIEVE_INVITES = 'RETRIEVE_INVITES';
+export const DELETE_INVITE = 'DELETE_INVITE';
 
 // Redux actions related to location tags
 export const CREATE_LOCATION_TAG = 'CREATE_LOCATION_TAG';
