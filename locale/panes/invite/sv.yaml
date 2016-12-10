@@ -1,2 +1,7 @@
 sentHeader: "Skickade inbjudningar"
-removeButton: "Ta bort"
+table:
+    removeButton: "Ta bort"
+    header:
+        sent: "Skickad"
+        email: "Till e-postadress"
+        official: "Skickad av"
