@@ -20,18 +20,19 @@ export default class InvitePane extends PaneBase {
         let inviteList = this.props.invites.inviteList;
 
         let content = [
-            <InviteBox/>
+            <InviteBox key="inviteBox"/>
         ];
 
         if (inviteList.isPending) {
-            content.push(<LoadingIndicator/>);
+            content.push(<LoadingIndicator key="loadingIndicator"/>);
         }
         else {
             let invites = inviteList.items.map(i => i.data);
 
             content.push(
-                <Msg tagName="h2" id="panes.invite.sentHeader"/>,
-                <table className="InvitePane-invites">
+                <Msg key="sentHeader"
+                    tagName="h2" id="panes.invite.sentHeader"/>,
+                <table key="table" className="InvitePane-invites">
                     <thead>
                         <tr>
                             <th/>
