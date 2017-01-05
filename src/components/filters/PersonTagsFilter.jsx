@@ -32,6 +32,8 @@ export default class PersonTagsFilter extends FilterBase {
     }
 
     componentDidMount() {
+        super.componentDidMount();
+
         let tagList = this.props.personTags.tagList;
 
         if (tagList.items.length == 0 && !tagList.isPending) {
