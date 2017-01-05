@@ -12,7 +12,7 @@ export default class OrgPicker extends React.Component {
 
         if(memberships.length > 1){
             return (
-                <div className="OrgPicker UserMenu-activeOrg">
+                <div className="OrgPicker OrgUserMenu-activeOrg">
                     <span className="OrgPicker-label">
                         Switch organization</span>
                     <ul className="OrgPicker-list">

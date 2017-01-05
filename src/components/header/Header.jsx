@@ -2,7 +2,7 @@ import React from 'react';
 
 import Logo from './Logo';
 import Search from './search/Search';
-import UserMenu from './UserMenu';
+import OrgUserMenu from './OrgUserMenu';
 
 
 export default class Header extends React.Component {
@@ -11,7 +11,7 @@ export default class Header extends React.Component {
             <header className="Header">
                 <Logo />
                 <Search onMatchNavigate={ this.props.onSearchNavigate }/>
-                <UserMenu />
+                <OrgUserMenu />
             </header>
         );
     }

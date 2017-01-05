@@ -7,7 +7,7 @@ import Avatar from '../misc/Avatar';
 
 
 @connect(state => state)
-export default class UserMenu extends React.Component {
+export default class OrgUserMenu extends React.Component {
     render() {
         let userStore = this.props.user;
 
@@ -19,25 +19,25 @@ export default class UserMenu extends React.Component {
         const memberships = userStore.memberships;
 
         return (
-            <nav className="UserMenu">
+            <nav className="OrgUserMenu">
                 <Avatar person={ profile }/>
-                <div className="UserMenu-info">
-                    <div className="UserMenu-user">
+                <div className="OrgUserMenu-info">
+                    <div className="OrgUserMenu-user">
                         <a href={ accountUrl }>
-                            <span className="UserMenu-name">
+                            <span className="OrgUserMenu-name">
                                 { profile.name }
                             </span>
                         </a>
-                        <span className="UserMenu-org">{ activeOrg.title }</span>
+                        <span className="OrgUserMenu-org">{ activeOrg.title }</span>
                     </div>
                     <ul>
                         <li>
-                            <Link className="UserMenu-logout"
+                            <Link className="OrgUserMenu-logout"
                                 href="/logout"
                                 msgId="header.userMenu.logOutLink"/>
                         </li>
                         <li>
-                            <Link className="UserMenu-account"
+                            <Link className="OrgUserMenu-account"
                                 href={ accountUrl }
                                 msgId="header.userMenu.accountLink"/>
                         </li>
