@@ -1,6 +1,8 @@
 var path = require('path');
 var webpack = require('webpack');
 
+var appId = process.env.ZETKIN_APP_ID || 'a3';
+
 module.exports = {
     entry: [
         path.join(__dirname, 'dist/organize.zetk.in/client/main.js')
@@ -8,6 +10,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': process.env.NODE_ENV,
+            'process.env.ZETKIN_APP_ID': JSON.stringify(appId),
             'process.env.ZETKIN_DOMAIN': '"dev.zetkin.org"',
             'process.env.GA_TRACKING_ID': '"UA-75118791-1"',
         }),
