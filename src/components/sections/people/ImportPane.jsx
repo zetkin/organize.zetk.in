@@ -50,7 +50,7 @@ export default class ImportPane extends PaneBase {
                     <li>Tagged: { stats.num_tagged }</li>
                 </ul>,
                 <Button key="importMoreButton"
-                    labelMsg="panes.import.importMore"
+                    labelMsg="panes.import.importMoreButton"
                     onClick={ this.onClickReset.bind(this) }/>
             ];
         }

@@ -25,6 +25,10 @@ export default class FilterBase extends React.Component {
         );
     }
 
+    componentDidMount() {
+        this.onConfigChange();
+    }
+
     renderFilterForm(config) {
         return null;
     }

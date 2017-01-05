@@ -241,7 +241,7 @@ export default class RelSelectInput extends InputBase {
             this.setState({
                 inputFocused: false
             });
-        }, 50);
+        }, 250);
     }
 
     createObject() {

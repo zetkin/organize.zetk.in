@@ -85,6 +85,19 @@ export default function initApp(messages) {
 }
 
 function renderReactPage(Component, req, res) {
+    // Remove all segments of path representing panes that refer to draft data,
+    // which will not be available after a refresh.
+    let pathWithoutDrafts = req.path
+        .split('/')
+        .filter(s => s.indexOf(':$') < 0 && s.indexOf(',$') < 0)
+        .join('/');
+
+    // If there were references to drafts, redirect to path without drafts.
+    if (pathWithoutDrafts !== req.path) {
+        res.redirect(pathWithoutDrafts);
+        return;
+    }
+
     try {
         req.store.dispatch(setPanesFromUrlPath(req.path));
 

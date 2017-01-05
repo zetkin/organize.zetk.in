@@ -67,31 +67,36 @@ function execSearch(getState, dispatch, query) {
     };
 
     if (!wsOpen) {
-        if (!ws) {
-            let url = 'ws://' + window.location.host + '/search';
+        let url = 'ws://' + window.location.host + '/search';
 
-            ws = new WebSocket(url);
-            ws.onopen = function() {
-                wsOpen = true;
-                sendQuery(query);
-            };
+        ws = new WebSocket(url);
+        ws.onopen = function() {
+            wsOpen = true;
+            sendQuery(query);
+        };
+        ws.onerror = function() {
+            wsOpen = false;
+        };
+        ws.onclose = function() {
+            wsOpen = false;
+        };
 
-            ws.onmessage = function(ev) {
-                let msg = JSON.parse(ev.data);
-                let currentQuery = getState().search.query;
 
-                if (msg.cmd == 'match' && msg.query == currentQuery) {
-                    var existing = getState().search.results.find(
-                        m => (m.type == msg.match.type
-                                && m.data.id == msg.match.data.id));
+        ws.onmessage = function(ev) {
+            let msg = JSON.parse(ev.data);
+            let currentQuery = getState().search.query;
 
-                    if (existing === undefined) {
-                        dispatch(searchMatchFound(msg.match));
-                    }
+            if (msg.cmd == 'match' && msg.query == currentQuery) {
+                var existing = getState().search.results.find(
+                    m => (m.type == msg.match.type
+                            && m.data.id == msg.match.data.id));
+
+                if (existing === undefined) {
+                    dispatch(searchMatchFound(msg.match));
                 }
+            }
 
-            };
-        }
+        };
     }
     else {
         sendQuery(query);

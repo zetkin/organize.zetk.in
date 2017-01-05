@@ -9,6 +9,7 @@ export default class PersonList extends React.Component {
     static propTypes = {
         allowBulkSelection: React.PropTypes.bool,
         bulkSelection: React.PropTypes.object,
+        enablePagination: React.PropTypes.bool,
         onItemSelect: React.PropTypes.func,
         onItemClick: React.PropTypes.func,
         personList: React.PropTypes.shape({
@@ -39,7 +40,7 @@ export default class PersonList extends React.Component {
             <List className="PersonList"
                 headerColumns={ columns } itemComponent={ PersonListItem }
                 list={ this.props.personList }
-                enablePagination={ true }
+                enablePagination={ !!this.props.enablePagination }
                 allowBulkSelection={ this.props.allowBulkSelection }
                 bulkSelection={ this.props.bulkSelection }
                 onItemSelect={ this.props.onItemSelect }

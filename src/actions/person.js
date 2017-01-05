@@ -13,7 +13,7 @@ export function createPerson(data) {
     };
 }
 
-export function retrievePeople(page = 0) {
+export function retrievePeople(page = 0, perPage = 20) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
         dispatch({
@@ -21,7 +21,7 @@ export function retrievePeople(page = 0) {
             meta: { page },
             payload: {
                 promise: z.resource('orgs', orgId, 'people')
-                    .get(page, 20)
+                    .get(page, perPage)
             }
         });
     };

@@ -24,6 +24,8 @@ export default class CampaignFilter extends FilterBase {
     }
 
     componentDidMount() {
+        super.componentDidMount();
+
         let campaignList = this.props.campaigns.campaignList;
 
         if (campaignList.items.length == 0 && !campaignList.isPending) {

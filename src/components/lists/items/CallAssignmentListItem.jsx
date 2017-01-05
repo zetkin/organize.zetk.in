@@ -18,9 +18,25 @@ export default class CallAssignmentListItem extends React.Component {
     };
 
     componentDidMount() {
-        let assignment = this.props.data
-        this.props.dispatch(retrieveCallAssignmentStats(assignment.id));
-        this.props.dispatch(retrieveCallAssignmentCallers(assignment.id));
+        let assignment = this.props.data;
+        if (!assignment.statsItem) {
+            this.props.dispatch(retrieveCallAssignmentStats(assignment.id));
+        }
+
+        if (!assignment.callerList) {
+            this.props.dispatch(retrieveCallAssignmentCallers(assignment.id));
+        }
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        let assignment = nextProps.data;
+        if (!assignment.statsItem) {
+            this.props.dispatch(retrieveCallAssignmentStats(assignment.id));
+        }
+
+        if (!assignment.callerList) {
+            this.props.dispatch(retrieveCallAssignmentCallers(assignment.id));
+        }
     }
 
     render() {
@@ -29,10 +45,11 @@ export default class CallAssignmentListItem extends React.Component {
         let goalStats = null;
         let participantList = null;
 
-        if (!assignment.statsItem || assignment.statsItem.isPending) {
+        if (assignment.statsItem && assignment.statsItem.isPending) {
             targetStats = <LoadingIndicator/>;
             goalStats = <LoadingIndicator/>;
-        } else {
+        }
+        else if (assignment.statsItem && assignment.statsItem.data) {
             let stats = assignment.statsItem.data;
             targetStats = (
                 <h1 key="targetStatsHeader">
@@ -46,9 +63,10 @@ export default class CallAssignmentListItem extends React.Component {
             );
         }
 
-        if (!assignment.callerList || assignment.callerList.isPending) {
+        if (assignment.callerList && assignment.callerList.isPending) {
             participantList = <LoadingIndicator/>
-        } else {
+        }
+        else if (assignment.callerList) {
             let participants = assignment.callerList.items.map(p => p.data);
             participantList = <ParticipantList
                 maxVisible={ 4 }

@@ -25,6 +25,8 @@ export default class CallHistoryFilter extends FilterBase {
     }
 
     componentDidMount() {
+        super.componentDidMount();
+
         let assignmentList = this.props.callAssignments.assignmentList;
 
         if (assignmentList.items.length == 0 && !assignmentList.isPending) {

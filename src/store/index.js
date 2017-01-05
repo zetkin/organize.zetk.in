@@ -2,6 +2,8 @@ import { combineReducers, compose, applyMiddleware, createStore } from 'redux';
 import { intlReducer } from 'react-intl-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 
+import loginRedirect from '../common/redux/middleware/loginRedirect';
+
 import actions from './actions';
 import actionResponses from './actionResponses';
 import activities from './activities';
@@ -67,6 +69,7 @@ export const configureStore = (initialState, z) => {
         urlMiddleware,
         promiseMiddleware(),
         thunkWithZ,
+        loginRedirect(process.env.ZETKIN_APP_ID, process.env.ZETKIN_DOMAIN),
     ];
 
     let devTools = f => f;

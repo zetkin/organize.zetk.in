@@ -90,6 +90,7 @@ export default class PeopleListPane extends PaneBase {
 
         return (
             <PersonList key="personList" personList={ personList }
+                enablePagination={ true }
                 allowBulkSelection={ true }
                 bulkSelection={ selection }
                 onLoadPage={ this.onLoadPage.bind(this) }
