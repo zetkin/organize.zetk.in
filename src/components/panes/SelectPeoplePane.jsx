@@ -18,7 +18,7 @@ import {
 @injectIntl
 export default class SelectPeoplePane extends PaneBase {
     componentDidMount() {
-        this.props.dispatch(retrievePeople());
+        this.props.dispatch(retrievePeople(null, null));
     }
 
     getRenderData() {
