@@ -102,6 +102,17 @@ export default function callAssignments(state = null, action) {
                 return state;
             }
 
+        case types.RETRIEVE_CALL_ASSIGNMENT_CALLERS + '_PENDING':
+            assignment = {
+                id: action.meta.id,
+                callerList: createList(null, { isPending: true }),
+            };
+
+            return Object.assign({}, state, {
+                assignmentList: updateOrAddListItem(state.assignmentList,
+                    assignment.id, assignment),
+            });
+
         case types.RETRIEVE_CALL_ASSIGNMENT_CALLERS + '_FULFILLED':
             assignment = {
                 id: action.meta.id,
