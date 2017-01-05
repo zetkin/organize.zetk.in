@@ -226,7 +226,7 @@ export default class Search extends React.Component {
     onBlur(ev) {
         setTimeout(() => {
             this.props.dispatch(clearSearch());
-        }, 50);
+        }, 350);
     }
 }
 
