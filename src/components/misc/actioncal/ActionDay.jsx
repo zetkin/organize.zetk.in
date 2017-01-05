@@ -66,7 +66,7 @@ export default class ActionDay extends React.Component {
         });
 
         var dropHint = null;
-        if (this.props.isOver) {
+        if (false && this.props.isOver) { // TODO: Add back once cloning works
             dropHint = <span className="cloneHint">
                 Hold <code>shift</code> to copy action.</span>;
         }
