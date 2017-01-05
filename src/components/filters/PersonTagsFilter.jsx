@@ -17,7 +17,7 @@ export default class PersonTagsFilter extends FilterBase {
         super(props);
 
         this.state = {
-            condition: props.config.condition,
+            condition: props.config.condition || 'all',
             tags: props.config.tags || [],
         };
     }
