@@ -37,6 +37,8 @@ export default class MobilizeTemplate extends React.Component {
         return (
             <AssignmentTemplate type="mobilize"
                 configValues={ configValues }
+                selected={ this.props.selected }
+                onSelect={ this.props.onSelect }
                 onCreate={ this.onCreate.bind(this) }/>
         );
     }

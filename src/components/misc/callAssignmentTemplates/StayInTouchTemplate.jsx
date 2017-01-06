@@ -16,7 +16,7 @@ export default class StayInTouchTemplate extends React.Component {
 
     render() {
         const formatMessage = id => this.props.intl.formatMessage({ id });
-        const msgBase = 'panes.callAssignmentTemplate.templates.stayintouch';
+        const msgBase = 'panes.addCallAssignment.templates.stayintouch';
 
         let options = {
             '90': formatMessage(msgBase + '.intervalSelect.three'),
@@ -40,6 +40,8 @@ export default class StayInTouchTemplate extends React.Component {
         return (
             <AssignmentTemplate type="stayintouch"
                 configValues={ configValues }
+                selected={ this.props.selected }
+                onSelect={ this.props.onSelect }
                 onCreate={ this.onCreate.bind(this) }/>
         );
     }

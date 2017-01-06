@@ -1,9 +1,14 @@
 .AssignmentTemplate {
-    text-align: center;
+    @include card;
+    margin: 1em 0;
+    padding: 1em;
 
-    .AssignmentTemplate-image {
-        width: 100%;
-        height: auto;
+    overflow: hidden;
+    max-height: 4em;
+    transition: max-height 0.3s;
+
+    &.selected {
+        max-height: 20em;
     }
 
     .AssignmentTemplate-config {
@@ -20,11 +25,5 @@
         input, select {
             margin: 0;
         }
-    }
-
-    @include medium-screen {
-        width: 44%;
-        margin: 3%;
-        float: left;
     }
 }

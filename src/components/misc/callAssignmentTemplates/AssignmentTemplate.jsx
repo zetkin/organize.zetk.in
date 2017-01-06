@@ -2,47 +2,45 @@ import { FormattedMessage as Msg } from 'react-intl';
 import React from 'react';
 import cx from 'classnames';
 
-import Button from '../../../misc/Button';
+import Button from '../Button';
 
 
 export default class AssignmentTemplate extends React.Component {
     static propTypes = {
         type: React.PropTypes.string.isRequired,
+        selected: React.PropTypes.bool.isRequired,
         configValues: React.PropTypes.object,
+        onSelect: React.PropTypes.func,
     };
 
     render() {
         let type = this.props.type;
 
-        const msgBase = 'panes.callAssignmentTemplate.templates.' + type;
+        const msgBase = 'panes.addCallAssignment.templates.' + type;
 
         let titleMsg = msgBase + '.title';
         let configMsg = msgBase + '.config';
-        let buttonMsg = msgBase + '.okButton';
-        let classes = cx('AssignmentTemplate', 'AssignmentTemplate-' + type);
-        let imgSrc = '/static/img/assignments/' + type + '.png';
+        let classes = cx('AssignmentTemplate', 'AssignmentTemplate-' + type, {
+            selected: this.props.selected,
+        });
 
         return (
-            <div className={ classes }>
+            <div className={ classes }
+                onClick={ this.onSelect.bind(this) }>
+
                 <Msg tagName="h2" id={ titleMsg }/>
-                <img className="AssignmentTemplate-image"
-                    src={ imgSrc }/>
 
                 <div className="AssignmentTemplate-config">
                     <Msg tagName="p" id={ configMsg }
                         values={ this.props.configValues }/>
                 </div>
-
-                <Button className="AssignmentTemplate-okButton"
-                    labelMsg={ buttonMsg }
-                    onClick={ this.onOkClick.bind(this) }/>
             </div>
         );
     }
 
-    onOkClick() {
-        if (this.props.onCreate) {
-            this.props.onCreate(this.props.type, null);
+    onSelect() {
+        if (!this.props.selected && this.props.onSelect) {
+            this.props.onSelect(this.props.type);
         }
     }
 }
