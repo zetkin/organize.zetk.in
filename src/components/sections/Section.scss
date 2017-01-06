@@ -193,6 +193,10 @@
         }
 
         &.Section-maps {
+            .Section-navItem-overview a:before {
+                background-image: url(/static/img/section-nav/maps-overview.png);
+            }
+
             .Section-navItem-locations a:before {
                 background-image: url(/static/img/section-nav/maps-locations.png);
             }

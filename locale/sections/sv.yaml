@@ -31,6 +31,7 @@ subSections:
         startassignment: "Skapa uppdrag"
 
     maps:
+        overview: "Överblick"
         locations: "Platser"
 
     settings:

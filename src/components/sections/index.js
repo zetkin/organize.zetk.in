@@ -6,6 +6,7 @@ import CampaignPlaybackPane from './campaign/CampaignPlaybackPane';
 import InvitePane from './people/InvitePane';
 import ImportPane from './people/ImportPane';
 import LocationsPane from './maps/LocationsPane';
+import MapOverviewPane from './maps/MapOverviewPane';
 import OfficialsPane from './settings/OfficialsPane';
 import PeopleListPane from './people/PeopleListPane';
 
@@ -41,8 +42,10 @@ export const SECTIONS = {
     },
     maps: {
         subSections: [
+            { path: 'overview',
+                startPane: MapOverviewPane },
             { path: 'locations',
-                startPane: LocationsPane }
+                startPane: LocationsPane },
         ],
     },
     settings: {
