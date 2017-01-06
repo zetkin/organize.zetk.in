@@ -3,22 +3,18 @@
 }
 
 .ContactSlot {
-    float: right;
     position: relative;
     background-color: #eee;
-    width: 5em;
-    height: 5em;
-    margin-right: 4.5em;
+    width: 3em;
+    height: 3em;
 
     &::before {
         content: "?";
         display: block;
-        margin-top: 0.5em;
         left: 0;
         right: 0;
         text-align: center;
         font-size: 2.5em;
-        font-weight: bold;
         color: #ccc;
     }
 }
@@ -31,7 +27,7 @@
 }
 
 .ContactSlot img {
-    width: 50px;
+    width: 3em;
     height: auto;
 }
 @include medium-screen {
