@@ -1,5 +1,4 @@
 .ActionListItem {
-    overflow: hidden;
     position: relative;
     transition: height 0.1s;
 
@@ -19,36 +18,46 @@
         top: 5px;
     }
 
-    span {
-        font-size: 110%;
+    .ActionListItem-date {
+        position: absolute;
+        left: -10em;
+        width: 8em;
+        height: 100%;
+        padding-right: 1em;
+        border-right: 1px solid #000;
+
+        .date, .time {
+            display: block;
+        }
     }
 
-    .time {
-        position: absolute;
-        left: 10px;
-        top: 5px;
-
-        font-weight: bold;
-    }
-
-    .date {
-        position: absolute;
-        left: 10px;
-        top: 25px;
+    .ActionListItem-info {
+        @include col(6,12);
     }
 
     .activity {
-        position: absolute;
-        left: 120px;
-        top: 5px;
-
-        font-weight: bold;
+        margin: 0.5em 0;
+        font-size: 1.3em!important;
     }
 
     .location {
-        position: absolute;
-        left: 120px;
-        top: 25px;
+        font-size: 1.2em;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &:before {
+            @include icon($fa-var-map-marker);
+        }
+    }
+
+    .ActionListItem-contactSlot {
+        @include col(1.5,12);
+        margin: 0.25em 0;
+    }
+
+    .ActionListItem-participantList {
+        @include col(4.5,12);
+        padding-right: 0;
     }
 
     .info:before {

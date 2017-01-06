@@ -1,21 +1,22 @@
 .ActionList {
+    font-size: 1.3em;
+
     .ListHeader {
         position: relative;
         height: 15px;
 
         li {
             color: #888;
-            font-size: 10px;
-            position: absolute;
             list-style-type: none;
         }
 
         li:nth-child(1) {
-            left: 10px;
+            width: 9em;
+            display: inline-block;
         }
 
         li:nth-child(2) {
-            left: 120px;
+            @include col(6,12);
         }
 
         li:nth-child(3) {
@@ -27,18 +28,22 @@
         }
     }
 
+    .ListItem {
+        margin-left: 9em;
+    }
+
     @include medium-screen {
+        &.List {
+            max-width: 580px;
+        }
+
         .ListHeader {
             li:nth-child(3) {
-                display: block;
-                width: 8em;
-                right: 24em;
+                @include col(1.5,12);
             }
 
             li:nth-child(4) {
-                display: block;
-                width: 10em;
-                right: 12em;
+                display: inline-block;
             }
         }
     }
