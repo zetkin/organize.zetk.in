@@ -188,7 +188,7 @@ export default class AddCallAssignmentPane extends PaneBase {
                     title: formatMessage(
                         { id: 'misc.callAssignmentTemplates.inform.title' }),
                     description: formatMessage(
-                        { id: 'misc.callAssignmentTemplates.mobilize.inform' }),
+                        { id: 'misc.callAssignmentTemplates.inform.desc' }),
                 };
             }
             else if (this.state.goalType == 'mobilize') {
