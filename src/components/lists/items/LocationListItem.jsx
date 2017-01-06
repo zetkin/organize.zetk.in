@@ -16,7 +16,8 @@ export default class LocationListItem extends React.Component {
                 center: (lat + 0.0002) + ',' + lng,
                 markers: lat + ',' + lng,
                 zoom: 15,
-                size: '120x90'
+                size: '120x90',
+                key: 'AIzaSyAHVagqI3RTd0psf57oA6gzKqVyjp8FS8w',
             }
         });
 
