@@ -21,8 +21,11 @@ export default class MobilizeTemplate extends React.Component {
     }
 
     render() {
-        let configValues = {
-            campaignSelect: (
+        return (
+            <AssignmentTemplate type="mobilize"
+                selected={ this.props.selected }
+                onSelect={ this.props.onSelect }
+                onCreate={ this.onCreate.bind(this) }>
                 <select name="campaign" value={ this.state.campaignId }
                     onChange={ this.onChange.bind(this) }>
                 { this.props.campaigns.map(c => (
@@ -31,15 +34,7 @@ export default class MobilizeTemplate extends React.Component {
                     </option>
                 )) }
                 </select>
-            )
-        };
-
-        return (
-            <AssignmentTemplate type="mobilize"
-                configValues={ configValues }
-                selected={ this.props.selected }
-                onSelect={ this.props.onSelect }
-                onCreate={ this.onCreate.bind(this) }/>
+            </AssignmentTemplate>
         );
     }
 

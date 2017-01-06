@@ -9,7 +9,6 @@ export default class AssignmentTemplate extends React.Component {
     static propTypes = {
         type: React.PropTypes.string.isRequired,
         selected: React.PropTypes.bool.isRequired,
-        configValues: React.PropTypes.object,
         onSelect: React.PropTypes.func,
     };
 
@@ -19,7 +18,7 @@ export default class AssignmentTemplate extends React.Component {
         const msgBase = 'panes.addCallAssignment.templates.' + type;
 
         let titleMsg = msgBase + '.title';
-        let configMsg = msgBase + '.config';
+        let instructionsMsg = msgBase + '.instructions';
         let classes = cx('AssignmentTemplate', 'AssignmentTemplate-' + type, {
             selected: this.props.selected,
         });
@@ -30,9 +29,11 @@ export default class AssignmentTemplate extends React.Component {
 
                 <Msg tagName="h2" id={ titleMsg }/>
 
-                <div className="AssignmentTemplate-config">
-                    <Msg tagName="p" id={ configMsg }
-                        values={ this.props.configValues }/>
+                <div className="AssignmentTemplate-instructions">
+                    <Msg tagName="p" id={ instructionsMsg }/>
+                </div>
+                <div className="AssignmentTemplate-form">
+                    { this.props.children }
                 </div>
             </div>
         );

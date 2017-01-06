@@ -24,8 +24,11 @@ export default class StayInTouchTemplate extends React.Component {
             '365': formatMessage(msgBase + '.intervalSelect.twelve'),
         };
 
-        let configValues = {
-            intervalSelect: (
+        return (
+            <AssignmentTemplate type="stayintouch"
+                selected={ this.props.selected }
+                onSelect={ this.props.onSelect }
+                onCreate={ this.onCreate.bind(this) }>
                 <select name="interval" value={ this.state.interval }
                     onChange={ this.onChange.bind(this) }>
                 { Object.keys(options).map(key => (
@@ -34,15 +37,7 @@ export default class StayInTouchTemplate extends React.Component {
                     </option>
                 )) }
                 </select>
-            )
-        };
-
-        return (
-            <AssignmentTemplate type="stayintouch"
-                configValues={ configValues }
-                selected={ this.props.selected }
-                onSelect={ this.props.onSelect }
-                onCreate={ this.onCreate.bind(this) }/>
+            </AssignmentTemplate>
         );
     }
 

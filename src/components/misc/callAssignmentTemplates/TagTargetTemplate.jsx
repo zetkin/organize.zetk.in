@@ -21,8 +21,12 @@ export default class TagTargetTemplate extends React.Component {
     }
 
     render() {
-        let configValues = {
-            tagSelect: (
+        return (
+            <AssignmentTemplate type="tagTarget"
+                selected={ this.props.selected }
+                onSelect={ this.props.onSelect }
+                onCreate={ this.onCreate.bind(this) }>
+
                 <select name="tag" value={ this.state.tagId }
                     onChange={ this.onChange.bind(this) }>
                 { this.props.tags.map(c => (
@@ -31,15 +35,7 @@ export default class TagTargetTemplate extends React.Component {
                     </option>
                 )) }
                 </select>
-            )
-        };
-
-        return (
-            <AssignmentTemplate type="tagTarget"
-                configValues={ configValues }
-                selected={ this.props.selected }
-                onSelect={ this.props.onSelect }
-                onCreate={ this.onCreate.bind(this) }/>
+            </AssignmentTemplate>
         );
     }
 
