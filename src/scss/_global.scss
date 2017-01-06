@@ -10,8 +10,8 @@ html {
 body {
     margin: 0;
     background-color: #ddd;
-    font-size: 62.5%;
-    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-family: franklin-gothic-urw, sans-serif;
 }
 
 #main {
@@ -20,15 +20,11 @@ body {
     right: 0;
     left: 0;
 }
-h1 {
-    // todo: define vertical rythm
-}
-h2 {
-    // todo: define vertical rythm
-    font-size: 1.5rem;
-}
-h2, h3, h4 {
-    font-weight: normal;
+h1, h2, h3, h4 {
+    font-family: 'azo-sans-web', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    color: darken($c-text, 5);
 }
 
 a {
