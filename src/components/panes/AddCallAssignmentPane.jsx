@@ -7,7 +7,6 @@ import PaneBase from './PaneBase';
 import CallAssignmentForm from '../forms/CallAssignmentForm';
 import Button from '../misc/Button';
 import Link from '../misc/Link';
-import { getListItemById } from '../../utils/store';
 import { retrieveCampaigns } from '../../actions/campaign';
 import { retrievePersonTags } from '../../actions/personTag';
 import { retrieveCallAssignment, createCallAssignment }
@@ -264,9 +263,6 @@ export default class AddCallAssignmentPane extends PaneBase {
             ev.preventDefault();
 
             let values = this.refs.form.getValues();
-            let assignmentId = this.getParam(0);
-            let assignmentList = this.props.callAssignments.assignmentList;
-            let assignmentItem = getListItemById(assignmentList, assignmentId);
 
             if (this.state.targetType == 'tagTarget') {
                 values.target_filters = [{
@@ -321,7 +317,7 @@ export default class AddCallAssignmentPane extends PaneBase {
             }
 
             this.props.dispatch(createCallAssignment(
-                values, assignmentId, this.props.paneData.id));
+                values, this.props.paneData.id));
         }
     }
 }
