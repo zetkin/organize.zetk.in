@@ -6,12 +6,13 @@ import AssignmentTemplate from './AssignmentTemplate';
 
 @injectIntl
 export default class StayInTouchTemplate extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            interval: '180',
-        };
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.selected && !nextProps.config.interval) {
+            // Emit default configuration
+            nextProps.onConfigChange({
+                interval: '180',
+            });
+        }
     }
 
     render() {
@@ -27,9 +28,8 @@ export default class StayInTouchTemplate extends React.Component {
         return (
             <AssignmentTemplate type="stayintouch"
                 selected={ this.props.selected }
-                onSelect={ this.props.onSelect }
-                onCreate={ this.onCreate.bind(this) }>
-                <select name="interval" value={ this.state.interval }
+                onSelect={ this.props.onSelect }>
+                <select name="interval" value={ this.props.config.interval }
                     onChange={ this.onChange.bind(this) }>
                 { Object.keys(options).map(key => (
                     <option key={ key } value={ key }>
@@ -42,16 +42,10 @@ export default class StayInTouchTemplate extends React.Component {
     }
 
     onChange(ev) {
-        this.setState({
-            interval: ev.target.value,
-        });
-    }
-
-    onCreate(type) {
-        let config = {
-            interval: this.state.interval,
-        };
-
-        this.props.onCreate(type, config);
+        if (this.props.onConfigChange) {
+            this.props.onConfigChange({
+                interval: ev.target.value,
+            });
+        }
     }
 }

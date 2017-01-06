@@ -4,30 +4,25 @@ import AssignmentTemplate from './AssignmentTemplate';
 
 
 export default class TagTargetTemplate extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            tagId: undefined,
-        };
-    }
-
     componentWillReceiveProps(nextProps) {
-        if (nextProps.tags && nextProps.tags.length) {
-            this.setState({
-                tagId: nextProps.tags[0].id.toString(),
-            });
+        if (nextProps.selected) {
+            let tags = nextProps.tags;
+
+            if (tags && tags.length && !nextProps.config.tagId) {
+                // Emit default configuration
+                nextProps.onConfigChange({
+                    tagId: tags[0].id.toString(),
+                });
+            }
         }
     }
-
     render() {
         return (
             <AssignmentTemplate type="tagTarget"
                 selected={ this.props.selected }
-                onSelect={ this.props.onSelect }
-                onCreate={ this.onCreate.bind(this) }>
+                onSelect={ this.props.onSelect }>
 
-                <select name="tag" value={ this.state.tagId }
+                <select name="tag" value={ this.props.config.tagId }
                     onChange={ this.onChange.bind(this) }>
                 { this.props.tags.map(c => (
                     <option key={ c.id } value={ c.id.toString() }>
@@ -39,21 +34,22 @@ export default class TagTargetTemplate extends React.Component {
         );
     }
 
-    onChange(ev) {
-        this.setState({
-            tagId: ev.target.value,
-        });
+    componentDidMount() {
+        let tags = this.props.tags;
+
+        if (tags && tags.length && !this.props.config.tagId) {
+            // Emit default configuration
+            this.props.onConfigChange({
+                tagId: tags[0].id.toString(),
+            });
+        }
     }
 
-    onCreate(type) {
-        if (this.props.onCreate) {
-            let tags = this.props.tags;
-            let config = {
-                tag: tags.find(c =>
-                    c.id.toString() == this.state.tagId)
-            };
-
-            this.props.onCreate(type, config);
+    onChange(ev) {
+        if (this.props.onConfigChange) {
+            this.props.onConfigChange({
+                tagId: ev.target.value,
+            });
         }
     }
 }

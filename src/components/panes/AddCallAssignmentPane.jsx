@@ -30,9 +30,9 @@ export default class AddCallAssignmentPane extends PaneBase {
         this.state = {
             step: 'target',
             targetType: null,
-            targetConfig: null,
+            targetConfig: {},
             goalType: null,
-            goalConfig: null,
+            goalConfig: {},
         };
     }
 
@@ -86,7 +86,9 @@ export default class AddCallAssignmentPane extends PaneBase {
                     id="panes.addCallAssignment.target.instructions"/>,
                 <div key="templates">
                     <TagTargetTemplate tags={ data.tags }
+                        config={ this.state.targetConfig }
                         selected={ this.state.targetType == 'tagTarget' }
+                        onConfigChange={ this.onTargetConfigChange.bind(this) }
                         onSelect={ this.onTargetSelect.bind(this) }/>
                     <Link className="AddCallAssignmentPane-customLink"
                         msgId="panes.addCallAssignment.target.customLink"
@@ -101,13 +103,19 @@ export default class AddCallAssignmentPane extends PaneBase {
                     id="panes.addCallAssignment.goal.instructions"/>,
                 <div key="templates">
                     <InformTemplate
+                        config={ this.state.goalConfig }
                         selected={ this.state.goalType == 'inform' }
+                        onConfigChange={ this.onGoalConfigChange.bind(this) }
                         onSelect={ this.onGoalSelect.bind(this) }/>
                     <MobilizeTemplate campaigns={ data.campaigns }
+                        config={ this.state.goalConfig }
                         selected={ this.state.goalType == 'mobilize' }
+                        onConfigChange={ this.onGoalConfigChange.bind(this) }
                         onSelect={ this.onGoalSelect.bind(this) }/>
                     <StayInTouchTemplate
+                        config={ this.state.goalConfig }
                         selected={ this.state.goalType == 'stayintouch' }
+                        onConfigChange={ this.onGoalConfigChange.bind(this) }
                         onSelect={ this.onGoalSelect.bind(this) }/>
                     <Link className="AddCallAssignmentPane-customLink"
                         msgId="panes.addCallAssignment.goal.customLink"
@@ -182,6 +190,18 @@ export default class AddCallAssignmentPane extends PaneBase {
         this.setState({
             targetType: type,
             step: (type == 'custom')? 'goal' : this.state.step,
+        });
+    }
+
+    onTargetConfigChange(config) {
+        this.setState({
+            targetConfig: config,
+        });
+    }
+
+    onGoalConfigChange(config) {
+        this.setState({
+            goalConfig: config,
         });
     }
 
