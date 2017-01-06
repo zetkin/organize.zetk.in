@@ -160,7 +160,7 @@ export default class ActionListItem extends React.Component {
             !contact || p.id != contact.id);
 
         const participantList = this.props.connectParticipantDropTarget(
-            <div>
+            <div className="ActionListItem-participantList">
                 <ParticipantList action={ action }
                     maxVisible={ large? participants.length : 4 }
                     onShowAll={ this.onShowAllParticipants.bind(this) }
@@ -169,7 +169,7 @@ export default class ActionListItem extends React.Component {
         );
 
         const contactSlot = this.props.connectContactDropTarget(
-            <div>
+            <div className="ActionListItem-contactSlot">
                 <ContactSlot contact={ contact } action={ action }/>
             </div>
         );
@@ -185,17 +185,21 @@ export default class ActionListItem extends React.Component {
             <div className={ classNames } style={ style }
                 onClick={ this.onClick.bind(this) }>
 
-                <span className="time">
-                    { actionDate.toISOString().substr(11,5) }</span>
-                <span className="date">
-                    { actionDate.toDateString() }</span>
-                <span className="activity">
-                    { action.activity.title }</span>
-                <span className="location">
-                    { action.location.title }</span>
+                <div className="ActionListItem-date">
+                    <span className="date">
+                        { actionDate.toDateString() }</span>
+                    <span className="time">
+                        { actionDate.toISOString().substr(11,5) }</span>
+                </div>
+                <div className="ActionListItem-info">
+                    <h3 className="activity">
+                        { action.activity.title }</h3>
+                    <span className="location">
+                        { action.location.title }</span>
+                </div>
 
-                { participantList }
                 { contactSlot }
+                { participantList }
             </div>
         );
     }
