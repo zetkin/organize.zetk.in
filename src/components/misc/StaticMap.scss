@@ -1,0 +1,18 @@
+.StaticMap {
+    max-width: 100%;
+
+    img {
+        width: 100%;
+        height: auto;
+    }
+
+    .StaticMap-coordinates {
+        margin: 0.5em 0;
+
+        span {
+            color: $c-ui-dark;
+            font-size: 1.3em;
+            padding-right: 1em;
+        }
+    }
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
+import StaticMap from '../misc/StaticMap';
 import TagCloud from '../misc/tagcloud/TagCloud'
 
 import { 
@@ -83,6 +84,8 @@ export default class LocationPane extends PaneBase {
                 <div>
                     <p>{ data.locItem.data.info_text }</p>
                     <a onClick={ this.onLocationEdit.bind(this) }>Edit</a>
+
+                    <StaticMap location={ data.locItem.data }/>
 
                     <h3>Tags</h3>
                     { tagCloud }
