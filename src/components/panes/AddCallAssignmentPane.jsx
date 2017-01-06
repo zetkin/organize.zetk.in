@@ -33,17 +33,15 @@ export default class AddCallAssignmentPane extends PaneBase {
             targetConfig: {},
             goalType: null,
             goalConfig: {},
+            assignment: null,
         };
     }
 
     getRenderData() {
-        let assignmentId = this.getParam(0);
-        let assignmentList = this.props.callAssignments.assignmentList;
         let campaignList = this.props.campaigns.campaignList;
         let tagList = this.props.personTags.tagList;
 
         return {
-            assignmentItem: getListItemById(assignmentList, assignmentId),
             campaigns: campaignList.items.map(i => i.data),
             tags: tagList.items.map(i => i.data),
         }
@@ -55,8 +53,7 @@ export default class AddCallAssignmentPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        let assignment = data.assignmentItem?
-            data.assignmentItem.data : undefined;
+        let assignment = this.state.assignment;
 
         let stepIdx = STEPS.indexOf(this.state.step);
         let breadcrumbs = (
@@ -182,14 +179,70 @@ export default class AddCallAssignmentPane extends PaneBase {
         }
     }
 
+    gotoStep(step, newState) {
+        let extraState = { step };
+
+        if (step == 'form') {
+            const formatMessage = this.props.intl.formatMessage;
+
+            if (this.state.goalType == 'stayintouch') {
+                let months = Math.round(this.state.goalConfig.interval/30);
+                extraState.assignment = {
+                    title: formatMessage(
+                        { id: 'misc.callAssignmentTemplates.stayintouch.title' }),
+                    description: formatMessage(
+                        { id: 'misc.callAssignmentTemplates.stayintouch.desc' },
+                        { months }),
+                };
+            }
+            else if (this.state.goalType == 'inform') {
+                extraState.assignment = {
+                    title: formatMessage(
+                        { id: 'misc.callAssignmentTemplates.inform.title' }),
+                    description: formatMessage(
+                        { id: 'misc.callAssignmentTemplates.mobilize.inform' }),
+                };
+            }
+            else if (this.state.goalType == 'mobilize') {
+                let campaignItem = this.props.campaigns.campaignList.items
+                    .find(i => i.data.id == this.state.goalConfig.campaignId);
+
+                let campaign = campaignItem.data;
+
+                extraState.assignment = {
+                    title: formatMessage(
+                        { id: 'misc.callAssignmentTemplates.mobilize.title' },
+                        { campaign: campaign.title }),
+                    description: formatMessage(
+                        { id: 'misc.callAssignmentTemplates.mobilize.desc' },
+                        { campaign: campaign.title }),
+                };
+            }
+            else {
+                extraState.assignment = {
+                    title: "",
+                    description: "",
+                };
+            }
+
+            let startDate = Date.utc.create();
+            let endDate = (30).daysAfter(startDate);
+
+            extraState.assignment.start_date = startDate.format('{yyyy}-{MM}-{dd}');
+            extraState.assignment.end_date = endDate.format('{yyyy}-{MM}-{dd}');
+            extraState.assignment.cooldown = 3;
+        }
+
+        this.setState(Object.assign({}, newState, extraState));
+    }
+
     onStepClick(step) {
-        this.setState({ step });
+        this.gotoStep(step);
     }
 
     onTargetSelect(type) {
-        this.setState({
+        this.gotoStep((type == 'custom')? 'goal' : this.state.step, {
             targetType: type,
-            step: (type == 'custom')? 'goal' : this.state.step,
         });
     }
 
@@ -206,22 +259,17 @@ export default class AddCallAssignmentPane extends PaneBase {
     }
 
     onGoalSelect(type) {
-        this.setState({
+        this.gotoStep((type == 'custom')? 'form' : this.state.step, {
             goalType: type,
-            step: (type == 'custom')? 'form' : this.state.step,
         });
     }
 
     onSubmit(ev) {
         if (this.state.step == 'target') {
-            this.setState({
-                step: 'goal',
-            });
+            this.gotoStep('goal');
         }
         else if (this.state.step == 'goal') {
-            this.setState({
-                step: 'form',
-            });
+            this.gotoStep('form');
         }
         else if (this.state.step == 'form') {
             ev.preventDefault();
