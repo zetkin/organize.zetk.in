@@ -137,17 +137,6 @@ export default class AddCallAssignmentPane extends PaneBase {
         this.props.dispatch(retrievePersonTags());
     }
 
-    componentDidUpdate() {
-        let assignmentId = this.getParam(0);
-        let assignmentList = this.props.callAssignments.assignmentList;
-        let assignmentItem = getListItemById(assignmentList, assignmentId);
-
-        if (assignmentId && assignmentId.charAt(0) == '$' && !assignmentItem) {
-            // The pane is referencing a draft that no longer exists
-            this.closePane();
-        }
-    }
-
     renderPaneFooter(data) {
         let step = this.state.step;
         let msgId = 'panes.addCallAssignment.' + step + '.saveButton';
@@ -279,9 +268,56 @@ export default class AddCallAssignmentPane extends PaneBase {
             let assignmentList = this.props.callAssignments.assignmentList;
             let assignmentItem = getListItemById(assignmentList, assignmentId);
 
-            if (assignmentItem) {
-                values.target_filters = assignmentItem.data.target_filters;
-                values.goal_filters = assignmentItem.data.goal_filters;
+            if (this.state.targetType == 'tagTarget') {
+                values.target_filters = [{
+                    type: 'person_tags',
+                    config: {
+                        'condition': 'all',
+                        'tags': [ this.state.targetConfig.tagId ],
+                    }
+                }];
+            }
+            else {
+                values.target_filters = [];
+            }
+
+            if (this.state.goalType == 'stayintouch') {
+                // Add filter to find people who have been contacted in the
+                // selected number of months.
+                values.goal_filters = [{
+                    type: 'call_history',
+                    config: {
+                        operator: 'reached',
+                        after: '-' + this.state.goalConfig.interval + 'd',
+                    }
+                }];
+            }
+            else if (this.state.goalType == 'inform') {
+                // Add filter to find all who have been reached in this
+                // particular call assignment. The $self expression is replaced
+                // by the API with the ID of the newly created assignment
+                values.goal_filters = [{
+                    type: 'call_history',
+                    config: {
+                        operator: 'reached',
+                        assignment: '$self',
+                    }
+                }];
+            }
+            else if (this.state.goalType ==  'mobilize') {
+                // Add filter to find all who have future bookings in the
+                // relevant campaign.
+                values.goal_filters = [{
+                    type: 'campaign_participation',
+                    config: {
+                        operator: 'in',
+                        campaign: this.state.goalConfig.campaignId,
+                        after: 'now',
+                    }
+                }];
+            }
+            else {
+                values.goal_filters = [];
             }
 
             this.props.dispatch(createCallAssignment(
