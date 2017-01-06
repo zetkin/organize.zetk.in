@@ -6,6 +6,7 @@ import cx from 'classnames';
 import PaneBase from './PaneBase';
 import CallAssignmentForm from '../forms/CallAssignmentForm';
 import Button from '../misc/Button';
+import Link from '../misc/Link';
 import { getListItemById } from '../../utils/store';
 import { retrieveCampaigns } from '../../actions/campaign';
 import { retrievePersonTags } from '../../actions/personTag';
@@ -87,6 +88,9 @@ export default class AddCallAssignmentPane extends PaneBase {
                     <TagTargetTemplate tags={ data.tags }
                         selected={ this.state.targetType == 'tagTarget' }
                         onSelect={ this.onTargetSelect.bind(this) }/>
+                    <Link className="AddCallAssignmentPane-customLink"
+                        msgId="panes.addCallAssignment.target.customLink"
+                        onClick={ this.onTargetSelect.bind(this, 'custom') }/>
                 </div>
             ];
         }
@@ -105,6 +109,9 @@ export default class AddCallAssignmentPane extends PaneBase {
                     <StayInTouchTemplate
                         selected={ this.state.goalType == 'stayintouch' }
                         onSelect={ this.onGoalSelect.bind(this) }/>
+                    <Link className="AddCallAssignmentPane-customLink"
+                        msgId="panes.addCallAssignment.goal.customLink"
+                        onClick={ this.onGoalSelect.bind(this, 'custom') }/>
                 </div>,
             ];
         }
@@ -146,10 +153,12 @@ export default class AddCallAssignmentPane extends PaneBase {
 
         let enabled = true;
         if (step == 'target') {
-            enabled = !!this.state.targetType;
+            enabled = (this.state.targetType
+                && this.state.targetType != 'custom');
         }
         else if (step == 'goal') {
-            enabled = !!this.state.goalType;
+            enabled = (this.state.goalType
+                && this.state.goalType != 'custom');
         }
 
         // TODO: Style differently instead of just hiding?
@@ -172,12 +181,14 @@ export default class AddCallAssignmentPane extends PaneBase {
     onTargetSelect(type) {
         this.setState({
             targetType: type,
+            step: (type == 'custom')? 'goal' : this.state.step,
         });
     }
 
     onGoalSelect(type) {
         this.setState({
             goalType: type,
+            step: (type == 'custom')? 'form' : this.state.step,
         });
     }
 
