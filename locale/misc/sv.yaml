@@ -9,3 +9,22 @@ inviteBox:
 
 tagCloud:
     addButton: "Lägg till"
+
+callAssignmentTemplates:
+    inform:
+        title: "Informera om..."
+        desc: |
+            Vi ringer runt tills vi pratat med alla en gång för att
+            informera om...
+    mobilize:
+        title: "Mobilisera till {campaign}"
+        desc: |
+            Vi ringer runt och mobiliserar aktivister till vår kampanj {campaign}.
+    stayintouch:
+        title: "Håll kontakten"
+        desc: |
+            Vi pratar med alla i målgruppen en gång {months, select,
+                3 {var tredje månad}
+                6 {var sjätte månad}
+                12 {om året}
+            }.
