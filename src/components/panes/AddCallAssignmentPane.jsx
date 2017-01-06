@@ -1,6 +1,7 @@
 import React from 'react';
 import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
+import cx from 'classnames';
 
 import PaneBase from './PaneBase';
 import CallAssignmentForm from '../forms/CallAssignmentForm';
@@ -16,6 +17,8 @@ import MobilizeTemplate from '../misc/callAssignmentTemplates/MobilizeTemplate';
 import StayInTouchTemplate from '../misc/callAssignmentTemplates/StayInTouchTemplate';
 import TagTargetTemplate from '../misc/callAssignmentTemplates/TagTargetTemplate';
 
+
+const STEPS = [ 'target', 'goal', 'form' ];
 
 @connect(state => state)
 @injectIntl
@@ -54,8 +57,30 @@ export default class AddCallAssignmentPane extends PaneBase {
         let assignment = data.assignmentItem?
             data.assignmentItem.data : undefined;
 
+        let stepIdx = STEPS.indexOf(this.state.step);
+        let breadcrumbs = (
+            <ul key="breadcrumbs" className="AddCallAssignmentPane-breadcrumbs">
+            { STEPS.map((step, idx) => {
+                let msgId = 'panes.addCallAssignment.breadcrumbs.' + step;
+                let classes = cx('AddCallAssignmentPane-breadcrumb', {
+                    past: idx < stepIdx,
+                    current: idx === stepIdx,
+                    future: idx > stepIdx,
+                });
+
+                return (
+                    <li key={ step } className={ classes }
+                        onClick={ this.onStepClick.bind(this, step) }>
+                        <Msg id={ msgId } values={ this.state }/>
+                    </li>
+                );
+            }) }
+            </ul>
+        );
+
         if (this.state.step === 'target') {
             return [
+                breadcrumbs,
                 <Msg tagName="p" key="instructions"
                     id="panes.addCallAssignment.target.instructions"/>,
                 <div key="templates">
@@ -67,6 +92,7 @@ export default class AddCallAssignmentPane extends PaneBase {
         }
         else if (this.state.step === 'goal') {
             return [
+                breadcrumbs,
                 <Msg tagName="p" key="instructions"
                     id="panes.addCallAssignment.goal.instructions"/>,
                 <div key="templates">
@@ -84,6 +110,9 @@ export default class AddCallAssignmentPane extends PaneBase {
         }
         else if (this.state.step === 'form') {
             return [
+                breadcrumbs,
+                <Msg tagName="p" key="instructions"
+                    id="panes.addCallAssignment.form.instructions"/>,
                 <CallAssignmentForm key="form" ref="form"
                     assignment={ assignment }
                     onSubmit={ this.onSubmit.bind(this) }/>,
@@ -134,6 +163,10 @@ export default class AddCallAssignmentPane extends PaneBase {
         else {
             return null;
         }
+    }
+
+    onStepClick(step) {
+        this.setState({ step });
     }
 
     onTargetSelect(type) {
