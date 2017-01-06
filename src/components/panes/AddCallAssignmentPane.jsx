@@ -7,12 +7,14 @@ import CallAssignmentForm from '../forms/CallAssignmentForm';
 import Button from '../misc/Button';
 import { getListItemById } from '../../utils/store';
 import { retrieveCampaigns } from '../../actions/campaign';
+import { retrievePersonTags } from '../../actions/personTag';
 import { retrieveCallAssignment, createCallAssignment }
     from '../../actions/callAssignment';
 
 import InformTemplate from '../misc/callAssignmentTemplates/InformTemplate';
 import MobilizeTemplate from '../misc/callAssignmentTemplates/MobilizeTemplate';
 import StayInTouchTemplate from '../misc/callAssignmentTemplates/StayInTouchTemplate';
+import TagTargetTemplate from '../misc/callAssignmentTemplates/TagTargetTemplate';
 
 
 @connect(state => state)
@@ -23,7 +25,7 @@ export default class AddCallAssignmentPane extends PaneBase {
 
         this.state = {
             step: 'target',
-            targetType: 'all', // TODO: Default to null
+            targetType: null,
             targetConfig: null,
             goalType: null,
             goalConfig: null,
@@ -34,10 +36,12 @@ export default class AddCallAssignmentPane extends PaneBase {
         let assignmentId = this.getParam(0);
         let assignmentList = this.props.callAssignments.assignmentList;
         let campaignList = this.props.campaigns.campaignList;
+        let tagList = this.props.personTags.tagList;
 
         return {
             assignmentItem: getListItemById(assignmentList, assignmentId),
             campaigns: campaignList.items.map(i => i.data),
+            tags: tagList.items.map(i => i.data),
         }
     }
 
@@ -54,6 +58,11 @@ export default class AddCallAssignmentPane extends PaneBase {
             return [
                 <Msg tagName="p" key="instructions"
                     id="panes.addCallAssignment.target.instructions"/>,
+                <div key="templates">
+                    <TagTargetTemplate tags={ data.tags }
+                        selected={ this.state.targetType == 'tagTarget' }
+                        onSelect={ this.onTargetSelect.bind(this) }/>
+                </div>
             ];
         }
         else if (this.state.step === 'goal') {
@@ -84,6 +93,7 @@ export default class AddCallAssignmentPane extends PaneBase {
 
     componentDidMount() {
         this.props.dispatch(retrieveCampaigns());
+        this.props.dispatch(retrievePersonTags());
     }
 
     componentDidUpdate() {
@@ -124,6 +134,12 @@ export default class AddCallAssignmentPane extends PaneBase {
         else {
             return null;
         }
+    }
+
+    onTargetSelect(type) {
+        this.setState({
+            targetType: type,
+        });
     }
 
     onGoalSelect(type) {
