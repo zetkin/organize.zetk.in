@@ -1,7 +1,6 @@
 import ActionDistributionPane from './campaign/ActionDistributionPane';
 import AllActionsPane from './campaign/AllActionsPane';
 import AllCallAssignmentsPane from './dialog/AllCallAssignmentsPane';
-import CallAssignmentTemplatePane from './dialog/CallAssignmentTemplatePane';
 import CallLogPane from './dialog/CallLogPane';
 import CampaignPlaybackPane from './campaign/CampaignPlaybackPane';
 import InvitePane from './people/InvitePane';
@@ -38,8 +37,6 @@ export const SECTIONS = {
                 startPane: AllCallAssignmentsPane },
             { path: 'calls',
                 startPane: CallLogPane },
-            { path: 'startassignment',
-                startPane: CallAssignmentTemplatePane },
         ],
     },
     maps: {

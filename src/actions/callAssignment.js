@@ -2,13 +2,13 @@ import * as types from '.';
 import makeRandomString from '../utils/makeRandomString';
 
 
-export function createCallAssignment(data, draftId, paneId) {
+export function createCallAssignment(data, paneId) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
 
         dispatch({
             type: types.CREATE_CALL_ASSIGNMENT,
-            meta: { draftId, paneId },
+            meta: { paneId },
             payload: {
                 promise: z.resource('orgs', orgId,
                     'call_assignments').post(data)
@@ -189,85 +189,5 @@ export function removeCallerExcludedTags(assignmentId, callerId, tagIds) {
                 promise: Promise.all(promises),
             }
         });
-    };
-}
-
-export function createCallAssignmentDraft(type, config) {
-    // Prepend ID with $ to denote draft
-    let id = '$' + makeRandomString(6);
-    let title = '';
-    let description = '';
-    let startDate = Date.utc.create();
-    let endDate = (30).daysAfter(startDate);
-    let targetFilters = [];
-    let goalFilters = [];
-
-    switch (type) {
-        case 'stayintouch':
-            let months = Math.round(config.interval/30);
-            title = 'Stay in touch';
-            description = 'Stay in touch every ' + months + ' months';
-
-            // Add filter to find people who have not been contacted in the
-            // selected number of months.
-            goalFilters.push({
-                type: 'call_history',
-                config: {
-                    operator: 'notreached',
-                    after: '-' + config.interval + 'd',
-                }
-            });
-            break;
-
-        case 'inform':
-            title = 'Inform';
-            description = '(No description)';
-
-            // Add filter to find all who have not already been reached in this
-            // particular call assignment. The $self expression is replaced by
-            // the API with the ID of the newly created assignment.
-            goalFilters.push({
-                type: 'call_history',
-                config: {
-                    operator: 'notreached',
-                    assignment: '$self',
-                }
-            });
-            break;
-
-        case 'mobilize':
-            title = 'Mobilize: ' + config.campaign.title;
-            description = 'Mobilize activists for campaign "' +
-                config.campaign.title + '"';
-
-            // Add filter to find all who do not have future bookings
-            // in the concerned campaign.
-            goalFilters.push({
-                type: 'campaign_participation',
-                config: {
-                    operator: 'notin',
-                    campaign: config.campaign.id,
-                    after: 'now',
-                }
-            });
-            break;
-
-        case 'survey':
-            // TODO: Implement this
-            break;
-    }
-
-    let assignment = {
-        id, title, description,
-        start_date: startDate.format('{yyyy}-{MM}-{dd}'),
-        end_date: endDate.format('{yyyy}-{MM}-{dd}'),
-        target_filters: targetFilters,
-        goal_filters: goalFilters,
-        cooldown: 3,
-    };
-
-    return {
-        type: types.CREATE_CALL_ASSIGNMENT_DRAFT,
-        payload: { assignment },
     };
 }

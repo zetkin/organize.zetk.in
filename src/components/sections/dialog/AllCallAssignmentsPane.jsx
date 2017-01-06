@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import Button from '../../misc/Button';
 import PaneBase from '../../panes/PaneBase';
 import { retrieveCallAssignments } from '../../../actions/callAssignment';
 
@@ -25,6 +26,19 @@ export default class AllCallAssignmentsPane extends PaneBase {
                 callAssignmentList={ data.assignmentList }
                 onItemClick={ this.onClickAssignment.bind(this) } />
         );
+    }
+
+    getPaneTools(data) {
+        return [
+            <Button key="addButton"
+                className="AllCallAssignmentsPane-addButton"
+                labelMsg="panes.allCallAssignments.addButton"
+                onClick={ this.onAddClick.bind(this) }/>,
+        ];
+    }
+
+    onAddClick() {
+        this.openPane('addcallassignment');
     }
 
     onClickAssignment(assignment) {

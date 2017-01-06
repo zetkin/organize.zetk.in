@@ -1,0 +1,81 @@
+.AddCallAssignmentPane {
+    .AddCallAssignmentPane-customLink {
+        text-decoration: underline;
+        font-size: 1.5em;
+        margin: 0.5em 0;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    .AddCallAssignmentPane-breadcrumbs {
+        margin: 0 1em;
+    }
+
+    .AddCallAssignmentPane-breadcrumb {
+        position: relative;
+        padding: 1em 0 2em 1em;
+        border-left: 0.2em solid $c-ui-dark;
+
+        span {
+            font-size: 1.4em;
+            position: absolute;
+            top: -0.2em;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        &.past {
+            color: $c-ui-dark;
+            border-color: $c-ui-darker;
+
+            &:before {
+                background-color: $c-ui-darker;
+            }
+        }
+
+        &.current {
+            color: $c-ui-darker;
+            font-weight: bold;
+
+            &:before {
+                background-color: $c-ui-darker;
+            }
+        }
+
+        &.future {
+            color: $c-ui-dark;
+            border-color: $c-ui-dark;
+
+            &:before {
+                background-color: $c-ui-dark;
+            }
+        }
+
+        &:last-child {
+            border-color: transparent;
+        }
+
+        &:before {
+            content: "";
+            display: block;
+            width: 0.6em;
+            height: 0.6em;
+            border-radius: 0.3em;
+            position: absolute;
+            left: -0.4em;
+            top: 0;
+        }
+    }
+
+    .AssignmentTemplate {
+        &:last-of-type {
+            margin-bottom: 3em;
+        }
+    }
+}

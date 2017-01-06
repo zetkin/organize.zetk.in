@@ -6,17 +6,18 @@ import AssignmentTemplate from './AssignmentTemplate';
 
 @injectIntl
 export default class StayInTouchTemplate extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            interval: '180',
-        };
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.selected && !nextProps.config.interval) {
+            // Emit default configuration
+            nextProps.onConfigChange({
+                interval: '180',
+            });
+        }
     }
 
     render() {
         const formatMessage = id => this.props.intl.formatMessage({ id });
-        const msgBase = 'panes.callAssignmentTemplate.templates.stayintouch';
+        const msgBase = 'panes.addCallAssignment.templates.stayintouch';
 
         let options = {
             '90': formatMessage(msgBase + '.intervalSelect.three'),
@@ -24,9 +25,11 @@ export default class StayInTouchTemplate extends React.Component {
             '365': formatMessage(msgBase + '.intervalSelect.twelve'),
         };
 
-        let configValues = {
-            intervalSelect: (
-                <select name="interval" value={ this.state.interval }
+        return (
+            <AssignmentTemplate type="stayintouch"
+                selected={ this.props.selected }
+                onSelect={ this.props.onSelect }>
+                <select name="interval" value={ this.props.config.interval }
                     onChange={ this.onChange.bind(this) }>
                 { Object.keys(options).map(key => (
                     <option key={ key } value={ key }>
@@ -34,27 +37,15 @@ export default class StayInTouchTemplate extends React.Component {
                     </option>
                 )) }
                 </select>
-            )
-        };
-
-        return (
-            <AssignmentTemplate type="stayintouch"
-                configValues={ configValues }
-                onCreate={ this.onCreate.bind(this) }/>
+            </AssignmentTemplate>
         );
     }
 
     onChange(ev) {
-        this.setState({
-            interval: ev.target.value,
-        });
-    }
-
-    onCreate(type) {
-        let config = {
-            interval: this.state.interval,
-        };
-
-        this.props.onCreate(type, config);
+        if (this.props.onConfigChange) {
+            this.props.onConfigChange({
+                interval: ev.target.value,
+            });
+        }
     }
 }

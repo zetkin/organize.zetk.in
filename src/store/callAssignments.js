@@ -20,7 +20,7 @@ export default function callAssignments(state = null, action) {
             assignment = action.payload.data.data;
             return Object.assign({}, state, {
                 assignmentList: updateOrAddListItem(state.assignmentList,
-                    action.meta.draftId || assignment.id, assignment),
+                    assignment.id, assignment),
             });
 
         case types.RETRIEVE_CALL_ASSIGNMENTS + '_PENDING':
@@ -246,13 +246,6 @@ export default function callAssignments(state = null, action) {
                     assignment.id, assignment, { isPending: false, error: null }),
             });
 
-        case types.CREATE_CALL_ASSIGNMENT_DRAFT:
-            assignment = action.payload.assignment;
-            return Object.assign({}, state, {
-                assignmentList: updateOrAddListItem(state.assignmentList,
-                    assignment.id, assignment, { isDraft: true }),
-            });
-            
         default:
             return state || {
                 assignmentList: createList(),
