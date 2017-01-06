@@ -1,2 +1,72 @@
 title: "Skapa ringuppdrag"
-saveButton: "Skapa ringuppdrag"
+
+breadcrumbs:
+    target: |
+        Målgrupp{targetType, select,
+            tagTarget {: Ring alla med en viss etikett}
+            custom {: Ingen mall}
+            other {}
+        }
+    goal: |
+        Syfte{goalType, select,
+            inform {: Informera}
+            mobilize {: Mobilisera till kampanj}
+            stayintouch {: Hålla kontakten}
+            custom {: Ingen mall}
+            other {}
+        }
+    form: "Inställningar"
+
+target:
+    saveButton: |
+        {targetType, select,
+            tagTarget {Välj målgrupp utifrån etikett}
+        }
+    customLink: "Definiera urvalsregler manuellt senare"
+    instructions: |
+        Steg 1 av 3. Välj ringuppdragets målgrupp.
+
+goal:
+    saveButton: |
+        {goalType, select,
+            inform {Skapa uppdrag för att informera}
+            mobilize {Skapa mobiliseringsuppdrag}
+            stayintouch {Skapa uppdrag för att hålla kontakten}
+        }
+    customLink: "Definiera urvalsregler manuellt senare"
+    instructions: |
+        Steg 2 av 3. Välj syfte med ringuppdraget för att skapa urvalsregler
+        automatiskt.
+
+form:
+    saveButton: "Skapa ringuppdrag"
+    instructions: |
+        Steg 3 av 3. Fyll i och kontrollera titel, beskrivning och inställningar
+        för ringuppdraget.
+
+templates:
+    tagTarget:
+        title: "Alla med en viss etikett"
+        instructions: |
+            Välj en etikett. Målgruppen kommer bestå av alla personer med den
+            här etiketten.
+
+    mobilize:
+        title: "Mobilisera till kampanj"
+        instructions: |
+            Välj en kampanj. Personer som redan har kommande bokningar i
+            kampanjen kommer inte att bli ringda.
+
+    stayintouch:
+        title: "Håll kontakten"
+        instructions: |
+            Hur ofta ska vi höra av oss?
+        intervalSelect:
+            three: "Var tredje månad"
+            six: "Var sjätte månad"
+            twelve: "En gång om året"
+
+    inform:
+        title: "Informera"
+        instructions: |
+            Alla blir ringda tills de blivit nådda och informerade en gång.
