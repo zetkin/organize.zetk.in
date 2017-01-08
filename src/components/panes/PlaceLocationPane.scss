@@ -1,0 +1,27 @@
+.PlaceLocationPane {
+    width: 700px;
+
+    .LocationMap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .PaneBase-header {
+        background-color: transparent;
+    }
+
+    .PaneBase-footer {
+        .Button {
+            float: left;
+            max-width: 200px;
+        }
+
+        .Button:last-child {
+            float: right;
+            max-width: 200px;
+        }
+    }
+}

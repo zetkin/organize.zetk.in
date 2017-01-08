@@ -13,8 +13,9 @@ import {
     RETRIEVE_LOCATION,
     UPDATE_LOCATION,
     DELETE_LOCATION,
-    SET_PENDING_LOCATION,
-    CLEAR_PENDING_LOCATION,
+    CREATE_PENDING_LOCATION,
+    SAVE_PENDING_LOCATION,
+    FINISH_PENDING_LOCATION,
     RETRIEVE_TAGS_FOR_LOCATION,
     ADD_TAGS_TO_LOCATION,
     REMOVE_TAG_FROM_LOCATION
@@ -66,14 +67,29 @@ export default function locations(state = null, action) {
                     action.meta.id),
             });
 
-        case SET_PENDING_LOCATION:
+        case CREATE_PENDING_LOCATION:
             return Object.assign({}, state, {
-                pendingLocation: Object.assign({}, action.payload),
+                pendingLocationList: updateOrAddListItem(state.pendingLocationList,
+                    action.payload.id, {
+                        id: action.payload.id,
+                        position: action.payload.position,
+                        doneCallback: action.payload.doneCallback
+                    }),
             });
-        
-        case CLEAR_PENDING_LOCATION:
+
+        case SAVE_PENDING_LOCATION:
             return Object.assign({}, state, {
-                pendingLocation: false,
+                pendingLocationList: updateOrAddListItem(state.pendingLocationList,
+                    action.payload.id, {
+                        id: action.payload.id,
+                        position: action.payload.position,
+                    }),
+            });
+
+        case FINISH_PENDING_LOCATION:
+            return Object.assign({}, state, {
+                pendingLocationList: removeListItem(state.pendingLocationList,
+                    action.payload.id),
             });
 
         case RETRIEVE_TAGS_FOR_LOCATION + '_PENDING':
@@ -144,7 +160,7 @@ export default function locations(state = null, action) {
         default:
             return state || {
                 locationList: createList(),
-                pendingLocation: false,
+                pendingLocationList: createList(),
             };
     }
 }

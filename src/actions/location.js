@@ -1,4 +1,6 @@
 import * as types from './';
+import makeRandomString from '../utils/makeRandomString';
+import { getListItemById } from '../utils/store';
 
 
 export function createLocation(data) {
@@ -64,19 +66,33 @@ export function deleteLocation(id) {
     };
 }
 
-export function setPendingLocation(data) {
+export function createPendingLocation(position, doneCallback) {
+    let id = '$' + makeRandomString(6);
+
     return {
-        type: types.SET_PENDING_LOCATION,
-        payload: {
-            id: data.id,
-            lat: data.lat,
-            lng: data.lng,
-        }
+        type: types.CREATE_PENDING_LOCATION,
+        payload: { id, position, doneCallback },
     };
 }
 
-export function clearPendingLocation(data) {
+export function savePendingLocation(id, position) {
     return {
-        type: types.CLEAR_PENDING_LOCATION,
+        type: types.SAVE_PENDING_LOCATION,
+        payload: { id, position },
+    };
+}
+
+export function finishPendingLocation(id) {
+    return ({ dispatch, getState }) => {
+        let pendingLocationList = getState().locations.pendingLocationList;
+        let pendingLocation = getListItemById(pendingLocationList, id);
+        let position = pendingLocation.data.position;
+
+        pendingLocation.data.doneCallback(position);
+
+        dispatch({
+            type: types.FINISH_PENDING_LOCATION,
+            payload: { id, position }
+        });
     };
 }

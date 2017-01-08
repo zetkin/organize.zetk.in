@@ -5,61 +5,96 @@ import { connect } from 'react-redux';
 import PaneBase from './PaneBase';
 import LocationForm from '../forms/LocationForm';
 import Button from '../misc/Button';
+import Link from '../misc/Link';
+import StaticMap from '../misc/StaticMap';
+import { getListItemById } from '../../utils/store';
 import { getLocationAverage } from '../../utils/location';
-import { setPendingLocation, clearPendingLocation, createLocation }
-    from '../../actions/location';
+import {
+    createPendingLocation,
+    createLocation,
+} from '../../actions/location';
 
 
-@connect(state => state)
+@connect(state => ({ locations: state.locations }))
 @injectIntl
 export default class AddLocationPane extends PaneBase {
-    componentDidMount() {
-        let pendingLocation = this.props.locations.pendingLocation;
+    constructor(props) {
+        super(props);
 
-        // When mounting pane from page reload set pendinglocation 
-        if (pendingLocation === false) {
-            let locList = this.props.locations.locationList;
-            let locCenter = getLocationAverage(locList);
-
-            this.props.dispatch(setPendingLocation(locCenter));
-        }
+        this.state = {
+            pendingLocation: null,
+        };
     }
 
     getPaneTitle(data) {
         return this.props.intl.formatMessage(
-            { id: 'panes.editLocation.title' });
+            { id: 'panes.addLocation.title' });
     }
 
     renderPaneContent(data) {
-        const initialData = {
-            title: this.getParam(0)
-        };
+        let map;
 
-        // TODO: Figure out better workflow for this
+        if (this.state.pendingLocation) {
+            map = (
+                <StaticMap key="map"
+                    location={ this.state.pendingLocation }
+                    onClick={ this.onSetPositionClick.bind(this) }
+                    />
+            );
+        }
+        else {
+            map = (
+                <Link key="setPositionLink"
+                    className="AddLocationPane-setPositionLink"
+                    msgId="panes.addLocation.setPositionLink"
+                    onClick={ this.onSetPositionClick.bind(this) }
+                    />
+            );
+        }
+
         return [
-            <h3>1. Move highlighted marker to the position of location</h3>,
-            <h3>2. Enter information about the location and press save</h3>,
-            <LocationForm key="form" ref="form" loc={ initialData }
-                onSubmit={ this.onSubmit.bind(this) }/>
+            <LocationForm key="form" ref="form"
+                onSubmit={ this.onSubmit.bind(this) }/>,
+            map,
         ];
     }
 
     renderPaneFooter(data) {
-        return [
-            <Button className="AddLocationPane-closeButton"
-                labelMsg="panes.addLocation.closeButton"
-                onClick={ this.onDeleteClick.bind(this) }/>,
-            <Button className="AddLocationPane-saveButton"
-                labelMsg="panes.addLocation.saveButton"
-                onClick={ this.onSubmit.bind(this) }/>
-        ];
+        if (this.state.pendingLocation) {
+            return (
+                <Button className="AddLocationPane-saveButton"
+                    labelMsg="panes.addLocation.saveButton"
+                    onClick={ this.onSubmit.bind(this) }/>
+            );
+        }
+        else {
+            return null;
+        }
+    }
+
+    onSetPositionClick() {
+        let initialPosition = this.state.pendingLocation;
+
+        if (!initialPosition) {
+            let locationList = this.props.locations.locationList;
+            initialPosition = getLocationAverage(locationList);
+        }
+
+        let action = createPendingLocation(initialPosition, pos => {
+            this.setState({
+                pendingLocation: pos,
+            });
+        });
+
+        this.props.dispatch(action);
+        this.openPane('placelocation', action.payload.id);
     }
 
     onSubmit(ev) {
         ev.preventDefault();
         var values = this.refs.form.getValues();
 
-        var pendingLatLng = this.props.locations.pendingLocation;
+        var pendingLatLng = this.state.pendingLocation;
 
         if (pendingLatLng) {
             values.lat = pendingLatLng.lat;
@@ -67,17 +102,6 @@ export default class AddLocationPane extends PaneBase {
         }
 
         this.props.dispatch(createLocation(values));
-        this.props.dispatch(clearPendingLocation());
-        this.closePane();
-    }
-
-    onDeleteClick(ev) {
-        this.props.dispatch(clearPendingLocation());
-        this.closePane();
-    }
-
-    onCloseClick() {
-        this.props.dispatch(clearPendingLocation());
         this.closePane();
     }
 }

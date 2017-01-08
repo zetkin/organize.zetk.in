@@ -3,6 +3,16 @@ import url from 'url';
 
 
 export default class LocationListItem extends React.Component {
+    static propTypes = {
+        onItemClick: React.PropTypes.func,
+        data: React.PropTypes.shape({
+            id: React.PropTypes.any.isRequired,
+            title: React.PropTypes.string.isRequired,
+            lat: React.PropTypes.number.isRequired,
+            lng: React.PropTypes.number.isRequired
+        }).isRequired
+    };
+
     render() {
         const loc = this.props.data;
         const lat = loc.lat;
@@ -16,33 +26,18 @@ export default class LocationListItem extends React.Component {
                 center: (lat + 0.0002) + ',' + lng,
                 markers: lat + ',' + lng,
                 zoom: 15,
-                size: '120x90'
+                size: '120x90',
+                key: 'AIzaSyAHVagqI3RTd0psf57oA6gzKqVyjp8FS8w',
             }
         });
 
         return (
             <div className="LocationListItem"
-                onClick={ this.onClick.bind(this) }>
+                onClick={ this.props.onItemClick }>
                 <img src={ imgSrc }/>
                 <span className="LocationListItem-title">
                     { loc.title }</span>
             </div>
         );
     }
-
-    onClick() {
-        if (this.props.onItemClick) {
-            this.props.onItemClick(this.props.location);
-        }
-    }
 }
-
-LocationListItem.propTypes = {
-    onItemClick: React.PropTypes.func,
-    location: React.PropTypes.shape({
-        id: React.PropTypes.number.isRequired,
-        title: React.PropTypes.string.isRequired,
-        lat: React.PropTypes.number.isRequired,
-        lng: React.PropTypes.number.isRequired
-    }).isRequired
-};

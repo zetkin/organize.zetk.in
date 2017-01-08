@@ -1,13 +1,35 @@
 .AddLocationPane {
+    .AddLocationPane-setPositionLink {
+        position: relative;
+        padding: 120px 0;
+        display: block;
 
-    .Button.AddLocationPane-saveButton {
-        @include col(5,11, $last:true);
-        @include col-offset(1,11);
-        @include button($icon: $fa-var-map-marker);
+        background-color: lighten($c-ui-dark, 10%);
+        color: white;
+        font-size: 2em;
+        text-align: center;
+        cursor: pointer;
+
+        &:hover {
+            &:after {
+                content: "+";
+                display: block;
+                padding: 0.5em 0;
+                width: 2em;
+                height: 2em;
+
+                position: absolute;
+                bottom: 1em;
+                right: 1em;
+
+                text-align: center;
+                background-color: $c-ui-dark;
+                border-radius: 2em;
+            }
+        }
     }
 
-    .Button.AddLocationPane-closeButton {
-        @include col(5,11, $first:true);
-        @include button($color: $c-ui-dark, $icon: $fa-var-close);
+    .StaticMap {
+        cursor: pointer;
     }
 }
