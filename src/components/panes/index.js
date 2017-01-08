@@ -30,6 +30,7 @@ import LocationPane from './LocationPane';
 import ImporterColumnPane from './ImporterColumnPane';
 import MoveParticipantsPane from './MoveParticipantsPane';
 import PersonPane from './PersonPane';
+import PlaceLocationPane from './PlaceLocationPane';
 import QueryPane from './QueryPane';
 import SelectPeoplePane from './SelectPeoplePane';
 import SelectLocationTagsPane from './SelectLocationTagsPane';
@@ -68,6 +69,7 @@ var _panes = {
     'location': LocationPane,
     'moveparticipants': MoveParticipantsPane,
     'person': PersonPane,
+    'placelocation': PlaceLocationPane,
     'query': QueryPane,
     'selectpeople': SelectPeoplePane,
     'selectlocationtags': SelectLocationTagsPane,
