@@ -248,8 +248,8 @@ function Pane(domElement, isBase) {
 
     this.domElement.addEventListener('mousedown', onDomElementMouseDown);
     function onDomElementMouseDown(ev) {
-        let x = ev.offsetX;
-        if (_layout == HORIZONTAL && !section.isBase && x < 20) {
+        let x = ev.clientX - domElement.getBoundingClientRect().left;
+        if (_layout == HORIZONTAL && !section.isBase && x < 30) {
             startDragging(ev);
             ev.preventDefault();
             ev.stopImmediatePropagation();
