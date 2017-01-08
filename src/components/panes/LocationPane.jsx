@@ -9,8 +9,8 @@ import {
     retrieveLocation, 
     updateLocation, 
     deleteLocation,
-    setPendingLocation, 
-    clearPendingLocation 
+    createPendingLocation,
+    savePendingLocation,
 } from '../../actions/location';
 
 import { 
@@ -29,10 +29,7 @@ export default class LocationPane extends PaneBase {
         let locId = this.getParam(0);
         let locItem = getListItemById(this.props.locations.locationList, locId);
 
-        if (locItem) {
-            this.props.dispatch(setPendingLocation(locItem.data));
-        }
-        else {
+        if (!locItem) {
             this.props.dispatch(retrieveLocation(locId));
         }
 
@@ -103,7 +100,20 @@ export default class LocationPane extends PaneBase {
 
     onMapClick() {
         let locationId = this.getParam(0);
-        this.openPane('placelocation', locationId);
+        let locationList = this.props.locations.locationList;
+        let locationItem = getListItemById(locationList, locationId);
+
+        let initialPosition = {
+            lat: locationItem.data.lat,
+            lng: locationItem.data.lng,
+        };
+
+        let action = createPendingLocation(initialPosition, pos => {
+            this.props.dispatch(updateLocation(locationId, pos));
+        });
+
+        this.props.dispatch(action);
+        this.openPane('placelocation', action.payload.id);
     }
 
     onLocationEdit() {
@@ -124,10 +134,5 @@ export default class LocationPane extends PaneBase {
     onRemoveTag(tag) {
         let locationId = this.getParam(0);
         this.props.dispatch(removeTagFromLocation(locationId, tag.id));
-    }
-
-    onCloseClick() {
-        this.props.dispatch(clearPendingLocation());
-        this.closePane();
     }
 }

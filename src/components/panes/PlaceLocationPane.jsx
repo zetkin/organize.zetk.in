@@ -5,32 +5,14 @@ import PaneBase from './PaneBase';
 import Button from '../misc/Button';
 import LocationMap from '../misc/LocationMap';
 import { getListItemById } from '../../utils/store';
-import { updateLocation } from '../../actions/location';
+import {
+    savePendingLocation,
+    finishPendingLocation
+} from '../../actions/location';
 
 
 @connect(state => ({ locations: state.locations }))
 export default class PlaceLocationPane extends PaneBase {
-    constructor(props) {
-        super(props);
-
-        let locationList = this.props.locations.locationList;
-        let locationItem = getListItemById(locationList, this.getParam(0));
-
-        if (locationItem) {
-            this.state = {
-                pendingLocation: {
-                    lat: locationItem.data.lat,
-                    lng: locationItem.data.lng,
-                },
-            };
-        }
-        else {
-            this.state = {
-                pendingLocation: null,
-            };
-        }
-    }
-
     getRenderData() {
         let locationList = this.props.locations.locationList;
 
@@ -44,13 +26,18 @@ export default class PlaceLocationPane extends PaneBase {
     }
 
     renderPaneContent(data) {
+        let id = this.getParam(0);
+        let pendingLocationList = this.props.locations.pendingLocationList;
+        let pendingLocationItem = getListItemById(pendingLocationList, id);
+        let pendingLocation = pendingLocationItem.data.position;
+
         let style = {
             position: 'absolute',
         };
 
         return [
             <LocationMap key="map" style={ style }
-                pendingLocation={ this.state.pendingLocation }
+                pendingLocation={ pendingLocation }
                 locationsForBounds={ data.locationList.items }
                 onLocationChange={ this.onLocationChange.bind(this) }
                 />
@@ -71,14 +58,13 @@ export default class PlaceLocationPane extends PaneBase {
     }
 
     onLocationChange(loc) {
-        this.setState({
-            pendingLocation: loc,
-        });
+        let id = this.getParam(0);
+        this.props.dispatch(savePendingLocation(id, loc));
     }
 
     onClickSave(ev) {
         let id = this.getParam(0);
-        this.props.dispatch(updateLocation(id, this.state.pendingLocation));
+        this.props.dispatch(finishPendingLocation(id));
         this.closePane();
     }
 
