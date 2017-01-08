@@ -6,7 +6,7 @@ export default class LocationListItem extends React.Component {
     static propTypes = {
         onItemClick: React.PropTypes.func,
         data: React.PropTypes.shape({
-            id: React.PropTypes.number.isRequired,
+            id: React.PropTypes.any.isRequired,
             title: React.PropTypes.string.isRequired,
             lat: React.PropTypes.number.isRequired,
             lng: React.PropTypes.number.isRequired
