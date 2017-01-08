@@ -85,7 +85,10 @@ export default class LocationPane extends PaneBase {
                     <p>{ data.locItem.data.info_text }</p>
                     <a onClick={ this.onLocationEdit.bind(this) }>Edit</a>
 
-                    <StaticMap location={ data.locItem.data }/>
+                    <StaticMap
+                        location={ data.locItem.data }
+                        onClick={ this.onMapClick.bind(this) }
+                        />
 
                     <h3>Tags</h3>
                     { tagCloud }
@@ -96,6 +99,11 @@ export default class LocationPane extends PaneBase {
             // TODO: Show loading indicator?
             return null;
         }
+    }
+
+    onMapClick() {
+        let locationId = this.getParam(0);
+        this.openPane('placelocation', locationId);
     }
 
     onLocationEdit() {
