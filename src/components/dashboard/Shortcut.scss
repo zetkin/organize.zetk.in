@@ -2,13 +2,15 @@
     width: 98%;
     text-align: center;
 
+    a {
+        cursor: pointer;
+    }
+
     &.expanded {
         margin: 20px 1%;
         display: block;
 
         a {
-            cursor: pointer;
-
             &:hover {
                 font-weight: bold;
             }

@@ -27,6 +27,17 @@
         .Shortcut {
             display: inline-block;
         }
+
+        &:hover {
+            color: $c-ui-dark;
+        }
+    }
+
+    .Shortcut-settings {
+        &::before {
+            @include icon($fa-var-cog);
+            display: inline;
+        }
     }
 }
 
@@ -82,6 +93,7 @@
         column-count: 2;
 
     }
+
     .Dashboard-widgets .DraggableWidget-widgetcontainer {
         display: inline-block;
         width: 100%;
