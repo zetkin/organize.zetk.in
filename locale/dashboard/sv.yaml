@@ -2,5 +2,11 @@ footer:
     info: |
         Zetkin utvecklas av Zetkin Foundation med syfte att revolutionera
         aktivistisk organisering.
-    foundationLink: "Om Zetkin Foundation"
-    helpLink: "Läs mer i Zetkin-manualen"
+
+    foundationLink:
+        text: "Om Zetkin Foundation"
+        href: "http://zetkin.org/sv"
+
+    helpLink:
+        text: "Läs mer i Zetkin-manualen"
+        href: "http://manual.zetkin.org/sv/for-funktionarer"
