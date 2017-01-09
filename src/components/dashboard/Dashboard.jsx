@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { injectIntl } from 'react-intl';
 import React from 'react';
 
 import Footer from './Footer';
@@ -11,7 +10,6 @@ import { gotoSection } from '../../actions/view';
 
 
 @connect(state => state)
-@injectIntl
 export default class Dashboard extends React.Component {
     render() {
         let dashboardStore = this.props.dashboard;
@@ -21,8 +19,6 @@ export default class Dashboard extends React.Component {
         let widgetElements = [];
         let favoriteElements = [];
         let shortcutElements = [];
-
-        const formatMessage = this.props.intl.formatMessage;
 
         shortcuts.forEach((shortcut, index) => {
             if (index < 4) {
