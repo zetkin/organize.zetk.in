@@ -24,27 +24,29 @@ export default class Dashboard extends React.Component {
 
         const formatMessage = this.props.intl.formatMessage;
 
-        for (let i = 0; i < shortcuts.length; i++) {
-            let shortcut = shortcuts[i];
-            let classes = 'Dashboard-shortcut Dashboard-shortcut-' + shortcut;
-            let label = formatMessage({ id: 'sections.labels.' + shortcut });
+        shortcuts.forEach((shortcut, index) => {
             let onClick = this.onClickShortcut.bind(this, shortcut);
 
-            if (i < 4) {
+            if (index < 4) {
                 favoriteElements.push(
-                    <li className={ classes } key={ shortcut }>
-                        <Shortcut label={ label } onClick={ onClick }/>
+                    <li key={ shortcut }>
+                        <Shortcut section={ shortcut }
+                            expanded={ true }
+                            onClick={ onClick }
+                            />
                     </li>
                 );
             }
             else {
                 shortcutElements.push(
                     <li key={ shortcut }>
-                        <Shortcut label={ label } onClick={ onClick }/>
+                        <Shortcut section={ shortcut }
+                            onClick={ onClick }
+                            />
                     </li>
                 );
             }
-        }
+        });
 
         for (let i = 0; i < widgets.length; i++) {
             var widgetConfig = widgets[i];
