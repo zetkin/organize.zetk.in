@@ -25,14 +25,12 @@ export default class Dashboard extends React.Component {
         const formatMessage = this.props.intl.formatMessage;
 
         shortcuts.forEach((shortcut, index) => {
-            let onClick = this.onClickShortcut.bind(this, shortcut);
-
             if (index < 4) {
                 favoriteElements.push(
                     <li key={ shortcut }>
                         <Shortcut section={ shortcut }
                             expanded={ true }
-                            onClick={ onClick }
+                            onClick={ this.onClickShortcut.bind(this) }
                             />
                     </li>
                 );
@@ -41,7 +39,7 @@ export default class Dashboard extends React.Component {
                 shortcutElements.push(
                     <li key={ shortcut }>
                         <Shortcut section={ shortcut }
-                            onClick={ onClick }
+                            onClick={ this.onClickShortcut.bind(this) }
                             />
                     </li>
                 );
@@ -75,8 +73,8 @@ export default class Dashboard extends React.Component {
         );
     }
 
-    onClickShortcut(target) {
-        this.props.dispatch(gotoSection(target));
+    onClickShortcut(section, subSection) {
+        this.props.dispatch(gotoSection(section, subSection));
     }
 
     onMoveWidget(widget, before) {
