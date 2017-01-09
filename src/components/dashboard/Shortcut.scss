@@ -1,0 +1,46 @@
+.Shortcut {
+    width: 98%;
+    text-align: center;
+
+    a {
+        cursor: pointer;
+    }
+
+    &.expanded {
+        margin: 20px 1%;
+        display: block;
+
+        a {
+            &:hover {
+                font-weight: bold;
+            }
+        }
+
+        img {
+            display: block;
+            max-height: 120px;
+            width: auto;
+            margin: 0 auto 20px;
+        }
+
+        .Shortcut-subSections {
+            margin: 0.5em 0 0;
+
+            a {
+                color: $c-brand-comp-dark;
+                text-decoration: underline;
+                font-size: 0.8em;
+
+                &:hover {
+                    color: $c-brand-comp-light;
+                    font-weight: normal;
+                }
+            }
+        }
+
+        @include medium-screen {
+            float: left;
+            width: 23%;
+        }
+    }
+}

@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { injectIntl } from 'react-intl';
 import React from 'react';
 
 import Footer from './Footer';
@@ -11,7 +10,6 @@ import { gotoSection } from '../../actions/view';
 
 
 @connect(state => state)
-@injectIntl
 export default class Dashboard extends React.Component {
     render() {
         let dashboardStore = this.props.dashboard;
@@ -22,29 +20,27 @@ export default class Dashboard extends React.Component {
         let favoriteElements = [];
         let shortcutElements = [];
 
-        const formatMessage = this.props.intl.formatMessage;
-
-        for (let i = 0; i < shortcuts.length; i++) {
-            let shortcut = shortcuts[i];
-            let classes = 'Dashboard-shortcut Dashboard-shortcut-' + shortcut;
-            let label = formatMessage({ id: 'sections.labels.' + shortcut });
-            let onClick = this.onClickShortcut.bind(this, shortcut);
-
-            if (i < 4) {
+        shortcuts.forEach((shortcut, index) => {
+            if (index < 4) {
                 favoriteElements.push(
-                    <li className={ classes } key={ shortcut }>
-                        <Shortcut label={ label } onClick={ onClick }/>
+                    <li key={ shortcut }>
+                        <Shortcut section={ shortcut }
+                            expanded={ true }
+                            onClick={ this.onClickShortcut.bind(this) }
+                            />
                     </li>
                 );
             }
             else {
                 shortcutElements.push(
                     <li key={ shortcut }>
-                        <Shortcut label={ label } onClick={ onClick }/>
+                        <Shortcut section={ shortcut }
+                            onClick={ this.onClickShortcut.bind(this) }
+                            />
                     </li>
                 );
             }
-        }
+        });
 
         for (let i = 0; i < widgets.length; i++) {
             var widgetConfig = widgets[i];
@@ -73,8 +69,8 @@ export default class Dashboard extends React.Component {
         );
     }
 
-    onClickShortcut(target) {
-        this.props.dispatch(gotoSection(target));
+    onClickShortcut(section, subSection) {
+        this.props.dispatch(gotoSection(section, subSection));
     }
 
     onMoveWidget(widget, before) {
