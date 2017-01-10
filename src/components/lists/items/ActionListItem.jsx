@@ -196,6 +196,11 @@ export default class ActionListItem extends React.Component {
 
         let incomingResponses;
 
+        if (responses) {
+            responses = responses.filter(r =>
+                !participants.find(p => p.id == r.id));
+        }
+
         if (responses.length) {
             incomingResponses = (
                 <div className="incomingResponses">
