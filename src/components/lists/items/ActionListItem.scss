@@ -73,7 +73,37 @@
 
     .ActionListItem-participantStatuses {
         @include col(6,12);
+        position: relative;
         text-align: right;
+
+        > div {
+            display: inline-block;
+        }
+
+        .bookedParticipants {
+            position: absolute;
+            left: 0.5em;
+            top: -0.8em;
+            padding: 0.2em 0.5em;
+            border-radius: 0.5em;
+            color: white;
+
+            &.safe {
+                background-color: $c-brand-success;
+            }
+
+            &.low {
+                background-color: $c-ui-focus;
+            }
+
+            &.danger {
+                background-color: $c-brand-delete;
+            }
+
+            &:before {
+                @include icon($fa-var-user);
+            }
+        }
 
         .incomingResponses {
             &:before {
@@ -105,8 +135,7 @@
             }
         }
 
-        > div {
-            display: inline-block;
+        .incomingResponses, .reminders {
             margin-left: 1em;
 
             > * {

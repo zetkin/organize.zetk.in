@@ -194,6 +194,23 @@ export default class ActionListItem extends React.Component {
             height: height + 'em'
         };
 
+        let bookedParticipants = ( participants.length + "/" + action.num_participants_required );
+
+        const bookingDiff = (action.num_participants_required - participants.length);
+        let indicator;
+
+        if (bookingDiff >= 2)
+            indicator = 'danger';
+        else if (bookingDiff >= 1)
+            indicator = 'low';
+        else if (bookingDiff <= 0)
+            indicator = 'safe';
+
+        var bookedParticipantsClasses = cx(
+            'bookedParticipants',
+            indicator
+        );
+
         let incomingResponses;
 
         if (responses) {
@@ -252,6 +269,9 @@ export default class ActionListItem extends React.Component {
                 <div className="ActionListItem-actionStatuses">
                 </div>
                 <div className="ActionListItem-participantStatuses">
+                    <div className={ bookedParticipantsClasses }>
+                        { bookedParticipants }
+                    </div>
                     { incomingResponses }
                     <div className={ reminderClasses }>
                         <i className="fa fa-bell-o"></i>
