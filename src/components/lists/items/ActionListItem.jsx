@@ -209,7 +209,8 @@ export default class ActionListItem extends React.Component {
 
         var reminderStatus = '';
 
-        if (sentReminders.length == participants.length) {
+        if (sentReminders.length == participants.length
+                && participants.length > 0) {
             reminderStatus = 'sent';
         }
         else if (inPast) {
