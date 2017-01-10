@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import ParticipantList from './elements/ParticipantList';
 import ContactSlot from './elements/ContactSlot';
 import { updateAction } from '../../../actions/action';
+import { retrieveActionResponses } from '../../../actions/actionResponse';
 import {
     addActionParticipant,
     moveActionParticipant,
@@ -83,14 +84,19 @@ function collectContact(connect, monitor) {
     };
 }
 
+let mapStateToProps = state => ({
+    participants: state.participants,
+    responses: state.actionResponses,
+});
 
-@connect(state => ({ participants: state.participants }))
+@connect(mapStateToProps)
 @DropTarget('person', actionTarget, collectParticipant)
 @DropTarget('person', contactTarget, collectContact)
 export default class ActionListItem extends React.Component {
     static propTypes = {
         data: React.PropTypes.object.isRequired,
         participants: React.PropTypes.object,
+        responses: React.PropTypes.object,
         onOperation: React.PropTypes.func,
     }
 
@@ -105,12 +111,15 @@ export default class ActionListItem extends React.Component {
     componentDidMount() {
         let action = this.props.data;
         let participants = this.props.participants.byAction[action.id];
+        let responses = this.props.responses.byAction[action.id];
 
         // TODO: Move to load when first shown (in view)
         if (!participants) {
             this.props.dispatch(retrieveActionParticipants(action.id));
         }
-        // TODO: fetch responses.
+        if (!responses) {
+            this.props.dispatch(retrieveActionResponses(action.id));
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -146,6 +155,7 @@ export default class ActionListItem extends React.Component {
     render() {
         let action = this.props.data;
         let participants = this.props.participants.byAction[action.id] || [];
+        let responses = this.props.responses.byAction[action.id] || [];
         const contact = action.contact;
         const actionDate = new Date(action.start_time);
         const inPast = (actionDate < (new Date()) ? true : false);
@@ -183,6 +193,16 @@ export default class ActionListItem extends React.Component {
         const style = {
             height: height + 'em'
         };
+
+        let incomingResponses;
+
+        if (responses.length) {
+            incomingResponses = (
+                <div className="incomingResponses">
+                    <i className="fa fa-inbox"></i>
+                </div>
+            );
+        }
 
         const sentReminders = participants.filter(p =>
             p.reminder_sent != null);
@@ -226,9 +246,7 @@ export default class ActionListItem extends React.Component {
                 <div className="ActionListItem-actionStatuses">
                 </div>
                 <div className="ActionListItem-participantStatuses">
-                    <div className="incomingResponses">
-                        <i className="fa fa-inbox"></i>
-                    </div>
+                    { incomingResponses }
                     <div className={ reminderClasses }>
                         <i className="fa fa-bell-o"></i>
                     </div>
