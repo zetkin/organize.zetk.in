@@ -31,6 +31,13 @@
         }
     }
 
+    &.past {
+        .ActionListItem-date {
+            color: lighten($c-text, 80);
+            border-right-color: lighten($c-text, 80);
+        }
+    }
+
     .ActionListItem-info {
         @include col(6,12);
     }
@@ -58,6 +65,57 @@
     .ActionListItem-participantList {
         @include col(4.5,12);
         padding-right: 0;
+    }
+
+    .ActionListItem-actionStatuses {
+        @include col(6,12);
+    }
+
+    .ActionListItem-participantStatuses {
+        @include col(6,12);
+        text-align: right;
+
+        .incomingResponses {
+            &:before {
+                @include icon($fa-var-arrow-down);
+                color: $c-brand-delete;
+            }
+        }
+
+        .reminders {
+            &.sent {
+                &:before {
+                    @include icon($fa-var-check);
+                    color: $c-brand-success;
+                }
+            }
+
+            &.missed {
+                &:before {
+                    @include icon($fa-var-times);
+                    color: $c-brand-delete;
+                }
+            }
+
+            &.left {
+                &:before {
+                    @include icon($fa-var-ellipsis-h);
+                    color: $c-brand-delete;
+                }
+            }
+        }
+
+        > div {
+            display: inline-block;
+            margin-left: 1em;
+
+            &:before {
+                position: absolute;
+                font-size: 0.8em!important;
+                margin-top: -1.5em!important;
+                padding-right: .4em;
+            }
+        }
     }
 
     .info:before {

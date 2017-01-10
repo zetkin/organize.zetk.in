@@ -110,6 +110,7 @@ export default class ActionListItem extends React.Component {
         if (!participants) {
             this.props.dispatch(retrieveActionParticipants(action.id));
         }
+        // TODO: fetch responses.
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -147,12 +148,14 @@ export default class ActionListItem extends React.Component {
         let participants = this.props.participants.byAction[action.id] || [];
         const contact = action.contact;
         const actionDate = new Date(action.start_time);
+        const inPast = (actionDate < (new Date()) ? true : false);
         const large = (this.state.expanded || this.props.isParticipantOver);
 
         const classNames = cx({
             'ActionListItem': true,
             'dragOver': this.props.isParticipantOver,
-            'expanded': this.state.expanded
+            'expanded': this.state.expanded,
+            'past': inPast
         });
 
         // Exclude contact person (if one exists) from participants
@@ -181,6 +184,26 @@ export default class ActionListItem extends React.Component {
             height: height + 'em'
         };
 
+        const sentReminders = participants.filter(p =>
+            p.reminder_sent != null);
+
+        var reminderStatus = '';
+
+        if (sentReminders.length == participants.length) {
+            reminderStatus = 'sent';
+        }
+        else if (inPast) {
+            reminderStatus = 'missed'
+        }
+        else {
+            reminderStatus = 'left';
+        }
+
+        var reminderClasses = cx(
+            'reminders',
+            reminderStatus
+        );
+
         return (
             <div className={ classNames } style={ style }
                 onClick={ this.onClick.bind(this) }>
@@ -200,6 +223,16 @@ export default class ActionListItem extends React.Component {
 
                 { contactSlot }
                 { participantList }
+                <div className="ActionListItem-actionStatuses">
+                </div>
+                <div className="ActionListItem-participantStatuses">
+                    <div className="incomingResponses">
+                        <i className="fa fa-inbox"></i>
+                    </div>
+                    <div className={ reminderClasses }>
+                        <i className="fa fa-bell-o"></i>
+                    </div>
+                </div>
             </div>
         );
     }
