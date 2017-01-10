@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import React from 'react';
 
-import PaneBase from '../../panes/PaneBase';
+import RootPaneBase from '../RootPaneBase';
 import BulkOpSelect from '../../bulk/BulkOpSelect';
 import Button from '../../misc/Button';
 import PersonList from '../../lists/PersonList';
@@ -30,7 +30,7 @@ const mapStateToProps = state => ({
 
 @connect(mapStateToProps)
 @injectIntl
-export default class PeopleListPane extends PaneBase {
+export default class PeopleListPane extends RootPaneBase {
     constructor(props) {
         super(props);
 

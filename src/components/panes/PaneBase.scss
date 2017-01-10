@@ -7,17 +7,6 @@
     color: lighten($c-text, .3);
     z-index: 1;
 
-    &.PaneBase-scrolled {
-
-        &:first-child {
-            .PaneBase-header {
-                z-index: 5;
-                background-color: white;
-                box-shadow: 0 0 0.2em rgba(0,0,0,0.1);
-            }
-        }
-    }
-
     .PaneBase-content {
         padding: 0 2em 2em;
 
@@ -35,12 +24,6 @@
         bottom: 0;
         pointer-events: none;
         z-index: 10;
-    }
-
-    &:first-child {
-        .PaneBase-closeLink {
-            display: none;
-        }
     }
 
     &:not(:last-child) .PaneBase-content {
@@ -124,13 +107,6 @@
             transition: background-color .2s .2s, max-height .3s;
         }
 
-        &:first-child {
-            .PaneBase-header {
-                max-height: 50px;
-                overflow: hidden;
-            }
-        }
-
         .PaneBase-filterDrawer {
             padding: 1em;
             opacity: 0;
@@ -195,23 +171,6 @@
 
         .PaneBase-shader {
             display: block;
-        }
-
-        // Use smaller padding on base pane, which does not have a close
-        // button that needs to be avoided
-        &:first-child {
-            // Base pane, always full-width and not interactive
-            left: 0;
-            right: 0;
-
-            .PaneBase-content {
-                padding-left: 20px;
-                margin-top: 1em;
-            }
-
-            header {
-                margin-top: 0;
-            }
         }
 
         &:last-child {

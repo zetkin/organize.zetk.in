@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage as Msg } from 'react-intl';
 import React from 'react';
 
-import PaneBase from '../../panes/PaneBase';
+import RootPaneBase from '../RootPaneBase';
 import OfficialList from '../../misc/officiallist/OfficialList';
 import { createSelection } from '../../../actions/selection';
 import {
@@ -14,7 +14,7 @@ import {
 
 
 @connect(state => ({ officials: state.officials }))
-export default class OfficialsPane extends PaneBase {
+export default class OfficialsPane extends RootPaneBase {
     componentDidMount() {
         this.props.dispatch(retrieveOfficials());
     }

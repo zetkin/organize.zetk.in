@@ -6,12 +6,13 @@ import Button from '../misc/Button';
 import { componentClassNames } from '..';
 
 
-export default class PaneBase extends React.Component {
+export default class RootPaneBase extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             scrolled: false,
+            showFilters: false,
         };
     }
 
@@ -46,27 +47,45 @@ export default class PaneBase extends React.Component {
         const data = this.getRenderData();
 
         const classes = cx(componentClassNames(this), {
-            'PaneBase-scrolled': this.state.scrolled,
+            'RootPaneBase-scrolled': this.state.scrolled,
+            'RootPaneBase-filtersVisible': this.state.showFilters,
         });
 
-        var title = null;
-        var subTitle = null;
-        var closeButton = null;
-        if (!this.props.isBase) {
-            closeButton = (
-                <a className="PaneBase-closelink"
-                    onClick={ this.onCloseClick.bind(this) }/>
-            );
+        let filterDrawer = null;
+        let filters = this.getPaneFilters(data);
+        var toolbar = this.getPaneTools(data);
 
-            title = <h2>{ this.getPaneTitle(data) }</h2>;
-            subTitle = <small>{ this.getPaneSubTitle(data) }</small>;
+        if (filters || toolbar) {
+            let filterButton = null;
+
+            if (filters) {
+                filterDrawer = (
+                    <div className="RootPaneBase-filterDrawer">
+                        { filters }
+                    </div>
+                );
+
+                filterButton = (
+                    <Button key="filterButton"
+                        className="RootPaneBase-filterButton"
+                        labelMsg="panes.filterButton"
+                        onClick={ this.onFilterButtonClick.bind(this) }/>
+                );
+            }
+
+            toolbar = (
+                <div className="RootPaneBase-toolbar">
+                    { toolbar }
+                    { filterButton }
+                </div>
+            );
         }
 
         let footer = null;
         let footerContent = this.renderPaneFooter(data);
         if (footerContent) {
             footer = (
-                <footer className="PaneBase-footer">
+                <footer className="RootPaneBase-footer">
                     { footerContent }
                 </footer>
             );
@@ -74,15 +93,14 @@ export default class PaneBase extends React.Component {
 
         return (
             <div ref="pane" className={ classes }>
-                <header className="PaneBase-header">
-                    <div className="PaneBase-top">
+                <header className="RootPaneBase-header">
+                    <div className="RootPaneBase-top">
                     { this.renderPaneTop(data) }
                     </div>
-                    { closeButton }
+                    { toolbar }
+                    { filterDrawer }
                 </header>
-                <div ref="content" className="PaneBase-content">
-                    { title }
-                    { subTitle }
+                <div ref="content" className="RootPaneBase-content">
                     { this.renderPaneContent(data) }
                 </div>
                 { footer }
@@ -98,11 +116,11 @@ export default class PaneBase extends React.Component {
         return null;
     }
 
-    getPaneTitle(data) {
-        throw "Must implement getPaneTitle()";
+    getPaneTools(data) {
+        return null;
     }
 
-    getPaneSubTitle(data) {
+    getPaneFilters(data) {
         return null;
     }
 
@@ -147,19 +165,20 @@ export default class PaneBase extends React.Component {
         }
     }
 
+    onFilterButtonClick() {
+        this.setState({
+            showFilters: !this.state.showFilters,
+        });
+    }
+
     onCloseClick(ev) {
         this.closePane();
     }
 }
 
-PaneBase.propTypes = {
-    isBase: React.PropTypes.bool,
+RootPaneBase.propTypes = {
     onClose: React.PropTypes.func,
     onReplace: React.PropTypes.func,
     onOpenPane: React.PropTypes.func,
     onPushPane: React.PropTypes.func
-};
-
-PaneBase.defaultProps = {
-    isBase: false
 };

@@ -4,14 +4,14 @@ import DropZone from 'react-dropzone';
 import { connect } from 'react-redux';
 
 import Button from '../../misc/Button';
-import PaneBase from '../../panes/PaneBase';
+import RootPaneBase from '../RootPaneBase';
 import ImporterTableSet from '../../misc/importer/ImporterTableSet';
 import LoadingIndicator from '../../misc/LoadingIndicator';
 import { parseImportFile, resetImport } from '../../../actions/importer';
 
 
 @connect(state => ({ importer: state.importer }))
-export default class ImportPane extends PaneBase {
+export default class ImportPane extends RootPaneBase {
     constructor(props) {
         super(props);
 

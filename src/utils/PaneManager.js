@@ -181,7 +181,7 @@ function Pane(domElement, isBase) {
     this.domElement = domElement;
     this.contentElement = domElement.getElementsByClassName('PaneBase-content')[0];
     this.shaderElement = document.createElement('div');
-    this.shaderElement.className = 'PaneBase-shader';
+    this.shaderElement.className = isBase? 'RootPaneBase-shader' : 'PaneBase-shader';
     this.domElement.appendChild(this.shaderElement);
     this.dragging = false;
     this.isBase = isBase;

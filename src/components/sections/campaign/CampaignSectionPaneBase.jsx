@@ -1,11 +1,11 @@
 import moment from 'moment';
 import React from 'react';
 
-import PaneBase from '../../panes/PaneBase';
+import RootPaneBase from '../RootPaneBase';
 import { createAction, updateAction } from '../../../actions/action';
 
 
-export default class CampaignSectionPaneBase extends PaneBase {
+export default class CampaignSectionPaneBase extends RootPaneBase {
     onCalendarAddAction(date) {
         const selectedId = this.props.campaigns.selectedCampaign;
         const campParam = selectedId || 0;

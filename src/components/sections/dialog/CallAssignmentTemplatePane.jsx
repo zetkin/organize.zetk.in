@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage as Msg } from 'react-intl';
 
-import PaneBase from '../../panes/PaneBase';
+import RootPaneBase from '../RootPaneBase';
 import StayInTouchTemplate from './templates/StayInTouchTemplate';
 import InformTemplate from './templates/InformTemplate';
 import MobilizeTemplate from './templates/MobilizeTemplate';
@@ -12,7 +12,7 @@ import { createCallAssignmentDraft } from '../../../actions/callAssignment';
 
 
 @connect(state => state)
-export default class CallAssignmentTemplatePane extends PaneBase {
+export default class CallAssignmentTemplatePane extends RootPaneBase {
     componentDidMount() {
         this.props.dispatch(retrieveCampaigns());
     }

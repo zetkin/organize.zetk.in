@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import PaneBase from '../../panes/PaneBase';
+import RootPaneBase from '../RootPaneBase';
 import Button from '../../misc/Button';
 import LocationMap from '../../misc/LocationMap';
 import ViewSwitch from '../../misc/ViewSwitch';
@@ -11,7 +11,7 @@ import { retrieveLocations, setPendingLocation }
 
 
 @connect(state => state)
-export default class LocationsPane extends PaneBase {
+export default class LocationsPane extends RootPaneBase {
     constructor(props) {
         super(props)
 
