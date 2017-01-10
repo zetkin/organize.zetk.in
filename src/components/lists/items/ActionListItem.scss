@@ -109,6 +109,10 @@
             display: inline-block;
             margin-left: 1em;
 
+            > * {
+                color: lighten($c-text, 30);
+            }
+
             &:before {
                 position: absolute;
                 font-size: 0.8em!important;
