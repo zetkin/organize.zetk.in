@@ -48,7 +48,7 @@
         .Section-nav {
             @include flex-container(column);
             position: fixed;
-            width: 10em;
+            width: 100px;
             top: 6.8em;
             left: 0;
             bottom: 0;
