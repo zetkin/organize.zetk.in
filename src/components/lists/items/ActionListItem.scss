@@ -1,5 +1,4 @@
 .ActionListItem {
-    overflow: hidden;
     position: relative;
     transition: height 0.1s;
 
@@ -19,36 +18,137 @@
         top: 5px;
     }
 
-    span {
-        font-size: 110%;
+    .ActionListItem-date {
+        position: absolute;
+        left: -10em;
+        width: 8em;
+        height: 100%;
+        padding-right: 1em;
+        border-right: 1px solid #000;
+
+        .date, .time {
+            display: block;
+        }
     }
 
-    .time {
-        position: absolute;
-        left: 10px;
-        top: 5px;
-
-        font-weight: bold;
+    &.past {
+        .ActionListItem-date {
+            color: lighten($c-text, 80);
+            border-right-color: lighten($c-text, 80);
+        }
     }
 
-    .date {
-        position: absolute;
-        left: 10px;
-        top: 25px;
+    .ActionListItem-info {
+        @include col(6,12);
     }
 
     .activity {
-        position: absolute;
-        left: 120px;
-        top: 5px;
-
-        font-weight: bold;
+        margin: 0.5em 0;
+        font-size: 1.3em!important;
     }
 
     .location {
-        position: absolute;
-        left: 120px;
-        top: 25px;
+        font-size: 1.2em;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &:before {
+            @include icon($fa-var-map-marker);
+        }
+    }
+
+    .ActionListItem-contactSlot {
+        @include col(1.5,12);
+        margin: 0.25em 0;
+    }
+
+    .ActionListItem-participantList {
+        @include col(4.5,12);
+        padding-right: 0;
+    }
+
+    .ActionListItem-actionStatuses {
+        @include col(6,12);
+    }
+
+    .ActionListItem-participantStatuses {
+        @include col(6,12);
+        position: relative;
+        text-align: right;
+
+        > div {
+            display: inline-block;
+        }
+
+        .bookedParticipants {
+            position: absolute;
+            left: 0.5em;
+            top: -0.8em;
+            padding: 0.2em 0.5em;
+            border-radius: 0.5em;
+            color: white;
+
+            &.safe {
+                background-color: $c-brand-success;
+            }
+
+            &.low {
+                background-color: $c-ui-focus;
+            }
+
+            &.danger {
+                background-color: $c-brand-delete;
+            }
+
+            &:before {
+                @include icon($fa-var-user);
+            }
+        }
+
+        .incomingResponses {
+            &:before {
+                @include icon($fa-var-arrow-down);
+                color: $c-brand-delete;
+            }
+        }
+
+        .reminders {
+            &.sent {
+                &:before {
+                    @include icon($fa-var-check);
+                    color: $c-brand-success;
+                }
+            }
+
+            &.missed {
+                &:before {
+                    @include icon($fa-var-times);
+                    color: $c-brand-delete;
+                }
+            }
+
+            &.left {
+                &:before {
+                    @include icon($fa-var-ellipsis-h);
+                    color: $c-brand-delete;
+                }
+            }
+        }
+
+        .incomingResponses, .reminders {
+            margin-left: 1em;
+
+            > * {
+                color: lighten($c-text, 30);
+            }
+
+            &:before {
+                position: absolute;
+                font-size: 0.8em!important;
+                margin-top: -1.5em!important;
+                padding-right: .4em;
+            }
+        }
     }
 
     .info:before {

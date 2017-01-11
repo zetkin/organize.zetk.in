@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import ParticipantList from './elements/ParticipantList';
 import ContactSlot from './elements/ContactSlot';
 import { updateAction } from '../../../actions/action';
+import { retrieveActionResponses } from '../../../actions/actionResponse';
 import {
     addActionParticipant,
     moveActionParticipant,
@@ -83,14 +84,19 @@ function collectContact(connect, monitor) {
     };
 }
 
+let mapStateToProps = state => ({
+    participants: state.participants,
+    responses: state.actionResponses,
+});
 
-@connect(state => ({ participants: state.participants }))
+@connect(mapStateToProps)
 @DropTarget('person', actionTarget, collectParticipant)
 @DropTarget('person', contactTarget, collectContact)
 export default class ActionListItem extends React.Component {
     static propTypes = {
         data: React.PropTypes.object.isRequired,
         participants: React.PropTypes.object,
+        responses: React.PropTypes.object,
         onOperation: React.PropTypes.func,
     }
 
@@ -105,10 +111,14 @@ export default class ActionListItem extends React.Component {
     componentDidMount() {
         let action = this.props.data;
         let participants = this.props.participants.byAction[action.id];
+        let responses = this.props.responses.byAction[action.id];
 
         // TODO: Move to load when first shown (in view)
         if (!participants) {
             this.props.dispatch(retrieveActionParticipants(action.id));
+        }
+        if (!responses) {
+            this.props.dispatch(retrieveActionResponses(action.id));
         }
     }
 
@@ -145,14 +155,17 @@ export default class ActionListItem extends React.Component {
     render() {
         let action = this.props.data;
         let participants = this.props.participants.byAction[action.id] || [];
+        let responses = this.props.responses.byAction[action.id] || [];
         const contact = action.contact;
         const actionDate = new Date(action.start_time);
+        const inPast = (actionDate < (new Date()) ? true : false);
         const large = (this.state.expanded || this.props.isParticipantOver);
 
         const classNames = cx({
             'ActionListItem': true,
             'dragOver': this.props.isParticipantOver,
-            'expanded': this.state.expanded
+            'expanded': this.state.expanded,
+            'past': inPast
         });
 
         // Exclude contact person (if one exists) from participants
@@ -160,7 +173,7 @@ export default class ActionListItem extends React.Component {
             !contact || p.id != contact.id);
 
         const participantList = this.props.connectParticipantDropTarget(
-            <div>
+            <div className="ActionListItem-participantList">
                 <ParticipantList action={ action }
                     maxVisible={ large? participants.length : 4 }
                     onShowAll={ this.onShowAllParticipants.bind(this) }
@@ -169,7 +182,7 @@ export default class ActionListItem extends React.Component {
         );
 
         const contactSlot = this.props.connectContactDropTarget(
-            <div>
+            <div className="ActionListItem-contactSlot">
                 <ContactSlot contact={ contact } action={ action }/>
             </div>
         );
@@ -181,21 +194,89 @@ export default class ActionListItem extends React.Component {
             height: height + 'em'
         };
 
+        let bookedParticipants = ( participants.length + "/" + action.num_participants_required );
+
+        const bookingDiff = (action.num_participants_required - participants.length);
+        let indicator;
+
+        if (bookingDiff >= 2)
+            indicator = 'danger';
+        else if (bookingDiff >= 1)
+            indicator = 'low';
+        else if (bookingDiff <= 0)
+            indicator = 'safe';
+
+        var bookedParticipantsClasses = cx(
+            'bookedParticipants',
+            indicator
+        );
+
+        let incomingResponses;
+
+        if (responses) {
+            responses = responses.filter(r =>
+                !participants.find(p => p.id == r.id));
+        }
+
+        if (responses.length) {
+            incomingResponses = (
+                <div className="incomingResponses">
+                    <i className="fa fa-inbox"></i>
+                </div>
+            );
+        }
+
+        const sentReminders = participants.filter(p =>
+            p.reminder_sent != null);
+
+        var reminderStatus = '';
+
+        if (sentReminders.length == participants.length
+                && participants.length > 0) {
+            reminderStatus = 'sent';
+        }
+        else if (inPast) {
+            reminderStatus = 'missed'
+        }
+        else {
+            reminderStatus = 'left';
+        }
+
+        var reminderClasses = cx(
+            'reminders',
+            reminderStatus
+        );
+
         return (
             <div className={ classNames } style={ style }
                 onClick={ this.onClick.bind(this) }>
 
-                <span className="time">
-                    { actionDate.toISOString().substr(11,5) }</span>
-                <span className="date">
-                    { actionDate.toDateString() }</span>
-                <span className="activity">
-                    { action.activity.title }</span>
-                <span className="location">
-                    { action.location.title }</span>
+                <div className="ActionListItem-date">
+                    <span className="date">
+                        { actionDate.toDateString() }</span>
+                    <span className="time">
+                        { actionDate.toISOString().substr(11,5) }</span>
+                </div>
+                <div className="ActionListItem-info">
+                    <h3 className="activity">
+                        { action.activity.title }</h3>
+                    <span className="location">
+                        { action.location.title }</span>
+                </div>
 
-                { participantList }
                 { contactSlot }
+                { participantList }
+                <div className="ActionListItem-actionStatuses">
+                </div>
+                <div className="ActionListItem-participantStatuses">
+                    <div className={ bookedParticipantsClasses }>
+                        { bookedParticipants }
+                    </div>
+                    { incomingResponses }
+                    <div className={ reminderClasses }>
+                        <i className="fa fa-bell-o"></i>
+                    </div>
+                </div>
             </div>
         );
     }
