@@ -38,6 +38,7 @@
 
         div {
             @include col(3,12);
+            padding: 0;
 
             span {
                 display: block;

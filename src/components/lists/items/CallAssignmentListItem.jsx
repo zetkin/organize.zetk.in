@@ -78,6 +78,10 @@ export default class CallAssignmentListItem extends React.Component {
             progressSum = 100 *
                 (1 - stats.num_remaining_targets / stats.num_target_matches);
 
+            let successRate = (stats.num_calls_reached > 0)
+                ? ((Math.round(100 *
+                    stats.num_calls_reached / stats.num_calls_made)) + "%")
+                : 0;
 
             callsStats = (
                 <div className="CallAssignmentListItem-statsCalls">
@@ -87,7 +91,7 @@ export default class CallAssignmentListItem extends React.Component {
             );
             reachedStats = (
                 <div className="CallAssignmentListItem-statsReached">
-                    { stats.num_calls_reached }
+                    { successRate }
                     <Msg id="lists.callAssignmentList.item.stats.reached"/>
                 </div>
             );
