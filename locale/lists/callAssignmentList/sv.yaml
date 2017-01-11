@@ -4,7 +4,7 @@ header:
     stats: "Statistik"
 item:
     info:
-        callers: "{ count } Ringare"
+        callers: "{ count } ringare"
     stats:
         calls: "Uppringingar"
         reached: "Nådda"
