@@ -6,6 +6,7 @@ import Link from '../misc/Link';
 import PaneBase from './PaneBase';
 import PersonCollection from '../misc/personcollection/PersonCollection';
 import { PCCallerItem } from '../misc/personcollection/items';
+import ProgressBar from '../misc/ProgressBar';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import { getListItemById } from '../../utils/store';
 import { createTextDocument } from '../../actions/document';
@@ -161,10 +162,7 @@ export default class CallAssignmentPane extends PaneBase {
                         onClick={ this.onClickEditTarget.bind(this) }/>
                     <Link msgId="panes.callAssignment.target.editGoalLink"
                         onClick={ this.onClickEditGoal.bind(this) }/>
-                    <div className="CallAssignmentPane-progress">
-                        <div style={{ width: progressSum + '%' }} 
-                            className="CallAssignmentPane-progressContent"/>
-                    </div>
+                    <ProgressBar progressSum={ progressSum }/>
                 </div>,
 
                 <div key="callers"

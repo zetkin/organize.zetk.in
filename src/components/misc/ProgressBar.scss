@@ -1,0 +1,17 @@
+.ProgressBar {
+    background-color: lighten($c-ui-bg, 2);
+    border: 1px solid darken($c-ui-bg, 3);
+    border-radius: 5px;
+    width: 100%;
+    height: 1em;
+    overflow: hidden;
+}
+
+.ProgressBar-content {
+    border-radius: 5px 0 0 5px;
+    border-bottom: 0.2em solid darken($c-brand-main, 15);
+    background-color: $c-brand-main;
+    height: 100%;
+    width: 10%;
+    transition: width 0.4s;
+}

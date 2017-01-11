@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage as Msg } from 'react-intl';
 
 import LoadingIndicator from '../../misc/LoadingIndicator';
+import ProgressBar from '../../misc/ProgressBar';
 import ParticipantList from './elements/ParticipantList'
 
 import {
@@ -43,6 +44,7 @@ export default class CallAssignmentListItem extends React.Component {
 
     render() {
         let assignment = this.props.data;
+        let progressSum = 0;
         let callsStats = null;
         let reachedStats = null;
         let targetStats = null;
@@ -72,6 +74,11 @@ export default class CallAssignmentListItem extends React.Component {
         }
         else if (assignment.statsItem && assignment.statsItem.data) {
             let stats = assignment.statsItem.data;
+
+            progressSum = 100 *
+                (1 - stats.num_remaining_targets / stats.num_target_matches);
+
+
             callsStats = (
                 <div className="CallAssignmentListItem-statsCalls">
                     { stats.num_calls_made }
@@ -126,6 +133,7 @@ export default class CallAssignmentListItem extends React.Component {
                     { participantIndicator }
                 </div>
                 <div className="CallAssignmentListItem-stats">
+                    <ProgressBar progressSum={ progressSum }/>
                     { callsStats }
                     { reachedStats }
                     { targetStats }
