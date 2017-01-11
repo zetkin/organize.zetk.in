@@ -77,12 +77,16 @@ export default class CallAssignmentListItem extends React.Component {
             <div className="CallAssignmentListItem"
                 onClick={ () => {this.props.onItemClick(assignment)} }>
                 <div className="CallAssignmentListItem-info">
-                    <h1>{ assignment.title }</h1>
-                        { participantList }
+                    <h3 className="CallAssignmentListItem-infoTitle">
+                        { assignment.title }</h3>
+                    <span className="CallAssignmentListItem-infoCallers">
+                        { participantList }</span>
                 </div>
                 <div className="CallAssignmentListItem-stats">
-                    <div className="CallAssignmentListItem-targetStats">{ targetStats }</div>
-                    <div className="CallAssignmentListItem-goalStats">{ goalStats }</div>
+                    <div className="CallAssignmentListItem-targetStats">
+                        { targetStats }</div>
+                    <div className="CallAssignmentListItem-goalStats">
+                        { goalStats }</div>
                 </div>
             </div>
         );

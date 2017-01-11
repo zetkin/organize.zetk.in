@@ -1,13 +1,23 @@
 .CallAssignmentListItem {
-    height: 10em;
+    position: relative;
 
-    .CallAssignmentListItem-info * {
-        position: relative;
-        display: inline-block;
+    .CallAssignmentListItem-info {
+        @include col(6,12);
+
+        .CallAssignmentListItem-infoTitle {
+            margin: 0.5em 0;
+            font-size: 1.3em;
+        }
+
+        .CallAssignmentListItem-infoCallers {
+
+        }
     }
 
-    .CallAssignmentListItem-stats * {
-        display: inline-block;
+
+
+    .CallAssignmentListItem-stats {
+        @include col(6,12);
     }
 
     .CallAssignmentListItem-targetStats {
@@ -24,7 +34,5 @@
                 @include icon($fa-var-flag-checkered);
             }
         }
-        position: absolute;
-        left: 140px;
     }
 }
