@@ -46,21 +46,24 @@ export default class EditTextPane extends PaneBase {
 
     renderPaneContent(data) {
         if (this.state.inBrowser) {
+            const m = id => this.props.intl
+                .formatMessage({ id: 'panes.editText.editor.' + id });
+
             let toolbarConfig = {
                 INLINE_STYLE_BUTTONS: [
-                    { label: 'Bold', style: 'BOLD', className: 'custom-css-class' },
-                    { label: 'Italic', style: 'ITALIC' },
-                    { label: 'Underline', style: 'UNDERLINE' },
+                    { label: m('bold'), style: 'BOLD', className: 'custom-css-class' },
+                    { label: m('italic'), style: 'ITALIC' },
+                    { label: m('underline'), style: 'UNDERLINE' },
                 ],
                 BLOCK_TYPE_DROPDOWN: [
-                    { label: 'Normal', style: 'unstyled' },
-                    { label: 'Heading Large', style: 'header-one' },
-                    { label: 'Heading Medium', style: 'header-two' },
-                    { label: 'Heading Small', style: 'header-three' },
+                    { label: m('p'), style: 'unstyled' },
+                    { label: m('h1'), style: 'header-one' },
+                    { label: m('h2'), style: 'header-two' },
+                    { label: m('h3'), style: 'header-three' },
                 ],
                 BLOCK_TYPE_BUTTONS: [
-                    { label: 'UL', style: 'unordered-list-item' },
-                    { label: 'OL', style: 'ordered-list-item' },
+                    { label: m('ul'), style: 'unordered-list-item' },
+                    { label: m('ol'), style: 'ordered-list-item' },
                 ],
             };
 
