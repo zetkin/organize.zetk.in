@@ -18,26 +18,6 @@
         top: 5px;
     }
 
-    .ActionListItem-date {
-        position: absolute;
-        left: -10em;
-        width: 8em;
-        height: 100%;
-        padding-right: 1em;
-        border-right: 1px solid #000;
-
-        .date, .time {
-            display: block;
-        }
-    }
-
-    &.past {
-        .ActionListItem-date {
-            color: lighten($c-text, 80);
-            border-right-color: lighten($c-text, 80);
-        }
-    }
-
     .ActionListItem-info {
         @include col(6,12);
     }

@@ -44,6 +44,9 @@ export default class CallAssignmentListItem extends React.Component {
         let targetStats = null;
         let goalStats = null;
         let participantList = null;
+        const assignmentDateStart = new Date(assignment.start_date);
+        const assignmentDateEnd = new Date(assignment.end_date);
+        const inPast = (assignmentDateStart < (new Date()) ? true : false);
 
         if (assignment.statsItem && assignment.statsItem.isPending) {
             targetStats = <LoadingIndicator/>;
@@ -76,6 +79,11 @@ export default class CallAssignmentListItem extends React.Component {
         return (
             <div className="CallAssignmentListItem"
                 onClick={ () => {this.props.onItemClick(assignment)} }>
+                <div className="ListItem-date">
+                    <span className="date">
+                        { assignmentDateStart.toDateString() } - 
+                        { assignmentDateEnd.toDateString() }</span>
+                </div>
                 <div className="CallAssignmentListItem-info">
                     <h3 className="CallAssignmentListItem-infoTitle">
                         { assignment.title }</h3>

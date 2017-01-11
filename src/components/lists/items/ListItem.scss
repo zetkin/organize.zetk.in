@@ -19,4 +19,24 @@
         top: 0.6em;
         left: 0.6em;
     }
+
+    .ListItem-date {
+        position: absolute;
+        left: -10em;
+        width: 8em;
+        height: 100%;
+        padding-right: 1em;
+        border-right: 1px solid #000;
+
+        .date, .time {
+            display: block;
+        }
+    }
+
+    &.past {
+        .ListItem-date {
+            color: lighten($c-text, 80);
+            border-right-color: lighten($c-text, 80);
+        }
+    }
 }
