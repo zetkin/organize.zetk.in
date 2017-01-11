@@ -1,5 +1,17 @@
 .List {
     width: 100%;
+    font-size: 1.3em;
+
+    .ListHeader {
+        position: relative;
+        height: 15px;
+
+        li {
+            color: #888;
+            list-style-type: none;
+            display: inline-block;
+        }
+    }
 
     @include medium-screen {
         max-width: 720px;
