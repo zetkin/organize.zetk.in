@@ -13,6 +13,10 @@
         a {
             &:hover {
                 font-weight: bold;
+
+                img {
+                    transform: scale(1.1, 1.1);
+                }
             }
         }
 
@@ -21,6 +25,7 @@
             max-height: 120px;
             width: auto;
             margin: 0 auto 20px;
+            transition: transform 0.1s;
         }
 
         .Shortcut-subSections {
