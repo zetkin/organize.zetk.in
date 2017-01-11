@@ -4,8 +4,34 @@
     .EditTextPane-editor {
         @include card;
         background-color: white;
-        padding: 1.5em;
-        min-height: 300px;
+        padding: 0.5em;
+        min-height: 400px;
+
+        button {
+            border-width: 0;
+        }
+
+        .DraftEditor-editorContainer {
+            * {
+                font-family: franklin-gothic-urw, sans-serif;
+            }
+
+            h1 {
+                font-size: 2.1em;
+            }
+
+            h2 {
+                font-size: 1.7em;
+            }
+
+            h3 {
+                font-size: 1.3em;
+            }
+
+            a {
+                color: $c-brand-main;
+            }
+        }
     }
 
     .Button.EditTextPane-saveButton {

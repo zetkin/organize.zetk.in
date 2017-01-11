@@ -96,6 +96,10 @@ export default class KeyboardShortcuts extends React.Component {
         else if (tagName == 'select') {
             return;
         }
+        else if (ev.target.contentEditable == "true") {
+            // Rich text editors have contentEditable="true".
+            return;
+        }
 
         if (this.state.keyPrefix === 'g') {
             switch (ev.keyCode) {
