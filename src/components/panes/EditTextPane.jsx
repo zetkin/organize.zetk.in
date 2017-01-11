@@ -1,5 +1,4 @@
 import React from 'react';
-import Editor from 'react-medium-editor';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
@@ -8,10 +7,29 @@ import Button from '../misc/Button';
 import { getListItemById } from '../../utils/store';
 import { saveTextDocument, finishTextDocument } from '../../actions/document';
 
+let RichTextEditor = null;
+if (typeof window != 'undefined') {
+    RichTextEditor = require('react-rte').default;
+}
+
 
 @connect(state => state)
 @injectIntl
 export default class EditTextPane extends PaneBase {
+    constructor(props) {
+        super(props);
+
+        let docId = this.getParam(0);
+        let docList = this.props.documents.docList;
+        let docItem = getListItemById(docList, docId);
+        let html = docItem.data.content;
+
+        this.state = {
+            inBrowser: false,
+            value: RichTextEditor.createValueFromString(html, 'html'),
+        };
+    }
+
     getRenderData() {
         let docId = this.getParam(0);
         let docList = this.props.documents.docList;
@@ -27,12 +45,11 @@ export default class EditTextPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        if (data.docItem) {
-            let content = data.docItem.data.content;
-
+        if (this.state.inBrowser) {
             return [
-                <Editor className="EditTextPane-editor"
-                    key="editor" tag="div" text={ content }
+                <RichTextEditor key="editor"
+                    className="EditTextPane-editor"
+                    value={ this.state.value }
                     onChange={ this.onChange.bind(this) }/>,
             ];
         }
@@ -54,8 +71,17 @@ export default class EditTextPane extends PaneBase {
         ];
     }
 
+    componentDidMount() {
+        this.setState({
+            inBrowser: true,
+        });
+    }
+
     onClickFinish(ev) {
         let docId = this.getParam(0);
+        let html = this.state.value.toString('html');
+
+        this.props.dispatch(saveTextDocument(docId, html));
         this.props.dispatch(finishTextDocument(docId));
         this.closePane();
     }
@@ -64,13 +90,7 @@ export default class EditTextPane extends PaneBase {
         this.closePane();
     }
 
-    onChange(text, medium) {
-        let docId = this.getParam(0);
-
-        // TODO: Remove saveSelection/restoreSelection once bug is fixed in the
-        //       react-medium-editor component library.
-        medium.saveSelection();
-        this.props.dispatch(saveTextDocument(docId, text));
-        medium.restoreSelection();
+    onChange(value) {
+        this.setState({ value });
     }
 }
