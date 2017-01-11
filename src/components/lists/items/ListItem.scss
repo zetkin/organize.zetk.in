@@ -33,7 +33,7 @@
         }
     }
 
-    &.past {
+    .past {
         .ListItem-date {
             color: lighten($c-text, 80);
             border-right-color: lighten($c-text, 80);
