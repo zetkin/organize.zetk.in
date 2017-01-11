@@ -8,7 +8,7 @@
     z-index: 1;
 
     .RootPaneBase-filterDrawer {
-        padding: 1em;
+        padding: 0 1em;
         opacity: 0;
         transition: opacity 0.2s 0.2s;
     }
@@ -82,15 +82,19 @@
         display: block;
 
         .RootPaneBase-header {
-            max-height: 50px;
-            overflow: hidden;
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1;
+            z-index: 3;
             background-color: $c-ui-bg;
-            transition: background-color .2s .2s, max-height .3s;
+            transition: background-color .2s .2s;
+        }
+
+        .RootPaneBase-filterDrawer {
+            max-height: 0;
+            transition: max-height .3s, padding 0.3s;
+            overflow: hidden;
         }
 
         &.RootPaneBase-filtersVisible {
@@ -98,11 +102,15 @@
                 background-color: white;
                 max-height: 400px;
                 overflow: visible;
-                transition: background-color .3s, max-height .5s;
+                transition: background-color .3s;
+                box-shadow: 0 0 0.2em rgba(0,0,0,0.1);
             }
 
             .RootPaneBase-filterDrawer {
                 opacity: 1;
+                padding: 1em 1em;
+                max-height: 200px;
+                transition: max-height .5s;
             }
         }
 
