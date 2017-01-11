@@ -52,7 +52,7 @@ export default class CallAssignmentListItem extends React.Component {
         let participantIndicator = null;
         const assignmentDateStart = new Date(assignment.start_date);
         const assignmentDateEnd = new Date(assignment.end_date);
-        const inPast = (assignmentDateStart < (new Date()) ? true : false);
+        const inPast = (assignmentDateEnd < (new Date()) ? true : false);
 
         const classNames = cx({
             'CallAssignmentListItem': true,
