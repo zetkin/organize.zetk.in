@@ -46,10 +46,29 @@ export default class EditTextPane extends PaneBase {
 
     renderPaneContent(data) {
         if (this.state.inBrowser) {
+            let toolbarConfig = {
+                INLINE_STYLE_BUTTONS: [
+                    { label: 'Bold', style: 'BOLD', className: 'custom-css-class' },
+                    { label: 'Italic', style: 'ITALIC' },
+                    { label: 'Underline', style: 'UNDERLINE' },
+                ],
+                BLOCK_TYPE_DROPDOWN: [
+                    { label: 'Normal', style: 'unstyled' },
+                    { label: 'Heading Large', style: 'header-one' },
+                    { label: 'Heading Medium', style: 'header-two' },
+                    { label: 'Heading Small', style: 'header-three' },
+                ],
+                BLOCK_TYPE_BUTTONS: [
+                    { label: 'UL', style: 'unordered-list-item' },
+                    { label: 'OL', style: 'ordered-list-item' },
+                ],
+            };
+
             return [
                 <RichTextEditor key="editor"
                     className="EditTextPane-editor"
                     value={ this.state.value }
+                    toolbarConfig={ toolbarConfig }
                     onChange={ this.onChange.bind(this) }/>,
             ];
         }
