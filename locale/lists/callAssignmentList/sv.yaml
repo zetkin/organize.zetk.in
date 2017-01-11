@@ -6,6 +6,7 @@ item:
     info:
         callers: "{ count } Ringare"
     stats:
+        calls: "Uppringingar"
+        reached: "Nådda"
         target: "Målgrupp"
-        remainingTarget: "Återstående"
-        
+        goal: "Återstående"

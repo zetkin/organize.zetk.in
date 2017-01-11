@@ -43,20 +43,32 @@
                 display: block;
                 font-size: 0.7em;
                 color: lighten($c-text, 50);
+                margin-top: 0.5em;
             }
         }
     }
 
-    .CallAssignmentListItem-targetStats {
+    .CallAssignmentListItem-statsCalls {
+        &::before {
+            @include icon($fa-var-phone);
+        }
+    }
+
+    .CallAssignmentListItem-statsReached {
+        &::before {
+            @include icon($fa-var-check);
+        }
+    }
+
+    .CallAssignmentListItem-statsTarget {
         &::before {
             @include icon($fa-var-users);
         }
     }
 
-    .CallAssignmentListitem-goalStats {
+    .CallAssignmentListitem-statsGoal {
         &::before {
             @include icon($fa-var-flag-checkered);
         }
-
     }
 }

@@ -43,6 +43,8 @@ export default class CallAssignmentListItem extends React.Component {
 
     render() {
         let assignment = this.props.data;
+        let callsStats = null;
+        let reachedStats = null;
         let targetStats = null;
         let goalStats = null;
         let participantIndicator = null;
@@ -63,21 +65,35 @@ export default class CallAssignmentListItem extends React.Component {
             + "/" + assignmentDateEnd.getMonth();
 
         if (assignment.statsItem && assignment.statsItem.isPending) {
+            callsStats = <LoadingIndicator/>;
+            reachedStats = <LoadingIndicator/>;
             targetStats = <LoadingIndicator/>;
             goalStats = <LoadingIndicator/>;
         }
         else if (assignment.statsItem && assignment.statsItem.data) {
             let stats = assignment.statsItem.data;
+            callsStats = (
+                <div className="CallAssignmentListItem-statsCalls">
+                    { stats.num_calls_made }
+                    <Msg id="lists.callAssignmentList.item.stats.calls"/>
+                </div>
+            );
+            reachedStats = (
+                <div className="CallAssignmentListItem-statsReached">
+                    { stats.num_calls_reached }
+                    <Msg id="lists.callAssignmentList.item.stats.reached"/>
+                </div>
+            );
             targetStats = (
-                <div className="CallAssignmentListItem-targetStats">
+                <div className="CallAssignmentListItem-statsTarget">
                     { stats.num_target_matches }
                     <Msg id="lists.callAssignmentList.item.stats.target"/>
                 </div>
             );
             goalStats = (
-                <div className="CallAssignmentListItem-goalStats">
+                <div className="CallAssignmentListItem-statsGoal">
                     { stats.num_remaining_targets }
-                    <Msg id="lists.callAssignmentList.item.stats.remainingTarget"/>
+                    <Msg id="lists.callAssignmentList.item.stats.goal"/>
                 </div>
             );
         }
@@ -110,6 +126,8 @@ export default class CallAssignmentListItem extends React.Component {
                     { participantIndicator }
                 </div>
                 <div className="CallAssignmentListItem-stats">
+                    { callsStats }
+                    { reachedStats }
                     { targetStats }
                     { goalStats }
                 </div>
