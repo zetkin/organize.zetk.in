@@ -41,7 +41,7 @@
 
     @include medium-screen {
 
-        &.PaneBase:first-child .PaneBase-content {
+        .RootPaneBase-content {
             margin-top: 13em;
         }
 
