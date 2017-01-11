@@ -2,3 +2,6 @@ header:
     startTime: "Tid"
     title: "Titel"
     stats: "Statistik"
+item:
+    info:
+        callers: "{ count } Ringare"

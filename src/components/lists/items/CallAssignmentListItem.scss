@@ -10,6 +10,19 @@
         }
 
         .CallAssignmentListItem-infoCallers {
+            position: absolute;
+            bottom: 0;
+            font-size: 1.1em;
+
+            i {
+                font-size: 1.2em;
+                &:after {
+                    @include icon($fa-var-phone);
+                    font-size: 0.7em;
+                }
+            }
+
+
 
         }
     }
