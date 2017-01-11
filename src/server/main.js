@@ -1,8 +1,8 @@
 import Z from 'zetkin';
 import path from 'path';
 
-import initApp from './app';
 import polyfills from '../utils/polyfills';
+import initApp from './app';
 import { loadMessages } from './locale';
 
 var port = process.env.ZETKIN_FRONTEND_PORT || 80;

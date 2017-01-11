@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 import { FormattedMessage as Msg } from 'react-intl';
 
 import Button from '../../misc/Button';
-import PaneBase from '../../panes/PaneBase';
+import RootPaneBase from '../RootPaneBase';
 import ImporterTableSet from '../../misc/importer/ImporterTableSet';
 import LoadingIndicator from '../../misc/LoadingIndicator';
 import { parseImportFile, resetImport } from '../../../actions/importer';
 
 
 @connect(state => ({ importer: state.importer }))
-export default class ImportPane extends PaneBase {
+export default class ImportPane extends RootPaneBase {
     constructor(props) {
         super(props);
 

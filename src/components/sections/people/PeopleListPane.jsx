@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import React from 'react';
 
-import PaneBase from '../../panes/PaneBase';
+import RootPaneBase from '../RootPaneBase';
 import BulkOpSelect from '../../bulk/BulkOpSelect';
 import Button from '../../misc/Button';
 import PersonList from '../../lists/PersonList';
@@ -30,7 +30,7 @@ const mapStateToProps = state => ({
 
 @connect(mapStateToProps)
 @injectIntl
-export default class PeopleListPane extends PaneBase {
+export default class PeopleListPane extends RootPaneBase {
     constructor(props) {
         super(props);
 
@@ -100,6 +100,29 @@ export default class PeopleListPane extends PaneBase {
     }
 
     getPaneTools(data) {
+        let tools = [
+            <Button key="addButton"
+                className="PeopleListPane-addButton"
+                labelMsg="panes.peopleList.addButton"
+                onClick={ this.onAddClick.bind(this) }/>
+        ];
+
+        if (data.selection && data.selection.selectedIds.length) {
+            let ops = [ 'delete', 'tag' ];
+
+            tools.push(
+                <BulkOpSelect key="bulkOps"
+                    objectType="person"
+                    openPane={ this.openPane.bind(this) }
+                    selection={ data.selection }
+                    operations={ ops }/>
+            );
+        }
+
+        return tools;
+    }
+
+    getPaneFilters(data) {
         const formatMessage = this.props.intl.formatMessage;
 
         let queryId = this.state.selectedQueryId;
@@ -114,17 +137,13 @@ export default class PeopleListPane extends PaneBase {
         let querySelectNullLabel = formatMessage(
             { id: 'panes.peopleList.querySelect.nullLabel' });
 
-        let tools = [
+        return [
             <RelSelectInput key="querySelect" name="querySelect"
                 value={ queryId } objects={ queries } showEditLink={ true }
                 allowNull={ true } nullLabel={ querySelectNullLabel }
                 onValueChange={ this.onQueryChange.bind(this) }
                 onCreate={ this.onQueryCreate.bind(this) }
                 onEdit={ this.onQueryEdit.bind(this) }/>,
-            <Button key="addButton"
-                className="PeopleListPane-addButton"
-                labelMsg="panes.peopleList.addButton"
-                onClick={ this.onAddClick.bind(this) }/>
         ];
 
         if (data.selection && data.selection.selectedIds.length) {

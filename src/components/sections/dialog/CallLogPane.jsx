@@ -2,12 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import CallList from '../../lists/CallList';
-import PaneBase from '../../panes/PaneBase';
+import RootPaneBase from '../RootPaneBase';
 import { retrieveCalls } from '../../../actions/call';
 
 
 @connect(state => state)
-export default class CallLogPane extends PaneBase {
+export default class CallLogPane extends RootPaneBase {
     componentDidMount() {
         this.props.dispatch(retrieveCalls());
     }

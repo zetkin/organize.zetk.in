@@ -1,3 +1,7 @@
 viewModes:
     calendar: "Kalender"
     list: "Lista"
+
+filters:
+    afterDate: "Från datum"
+    beforeDate: "Till datum"

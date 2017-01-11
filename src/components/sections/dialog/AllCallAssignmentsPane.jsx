@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Button from '../../misc/Button';
-import PaneBase from '../../panes/PaneBase';
+import RootPaneBase from '../RootPaneBase';
 import { retrieveCallAssignments } from '../../../actions/callAssignment';
 
 import CallAssignmentList from '../../lists/CallAssignmentList'
 
 
 @connect(state => state)
-export default class AllCallAssignmentsPane extends PaneBase {
+export default class AllCallAssignmentsPane extends RootPaneBase {
     componentDidMount() {
         this.props.dispatch(retrieveCallAssignments());
     }

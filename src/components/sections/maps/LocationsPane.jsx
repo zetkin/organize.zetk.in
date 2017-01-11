@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import PaneBase from '../../panes/PaneBase';
+import RootPaneBase from '../RootPaneBase';
 import Button from '../../misc/Button';
 import LocationList from '../../lists/LocationList';
 import { retrieveLocations } from '../../../actions/location';
 
 
 @connect(state => state)
-export default class LocationsPane extends PaneBase {
+export default class LocationsPane extends RootPaneBase {
     componentDidMount() {
         super.componentDidMount();
 

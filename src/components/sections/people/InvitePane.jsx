@@ -6,12 +6,12 @@ import cx from 'classnames';
 import Button from '../../misc/Button';
 import InviteBox from '../../misc/InviteBox';
 import LoadingIndicator from '../../misc/LoadingIndicator';
-import PaneBase from '../../panes/PaneBase';
+import RootPaneBase from '../RootPaneBase';
 import { retrieveInvites, deleteInvite } from '../../../actions/invite';
 
 
 @connect(state => ({ invites: state.invites }))
-export default class InvitePane extends PaneBase {
+export default class InvitePane extends RootPaneBase {
     componentDidMount() {
         this.props.dispatch(retrieveInvites());
     }

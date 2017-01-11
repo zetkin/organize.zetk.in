@@ -70,14 +70,6 @@ export default class ActionDistributionPane extends CampaignSectionPaneBase {
         ];
     }
 
-    getPaneTools(data) {
-        return (
-            <CampaignSelect
-                onCreate={ this.onCreateCampaign.bind(this) }
-                onEdit={ this.onEditCampaign.bind(this) }/>
-        );
-    }
-
     onLocMouseOver(loc) {
         this.props.dispatch(highlightActionLocation(loc.id));
     }

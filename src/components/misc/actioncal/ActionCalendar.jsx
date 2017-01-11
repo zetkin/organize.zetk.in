@@ -26,8 +26,11 @@ export default class ActionCalendar extends React.Component {
         const startDay = startDate.getDay();
         startDate.setDate(startDate.getDate() + 1 - (startDay? startDay : 7));
 
-        // Always end on next Sunday
-        endDate.setDate(endDate.getDate() + (7 - endDate.getDay()));
+        // Always end on a Sunday
+        if (endDate.getDay() != 0) {
+            // End date is not a Sunday, so use next Sunday
+            endDate.setDate(endDate.getDate() + (7 - endDate.getDay()));
+        }
 
         // Always show at least one month
         const duration = endDate.getTime() - startDate.getTime();

@@ -7,18 +7,6 @@
     color: lighten($c-text, .3);
     z-index: 1;
 
-    &.PaneBase-scrolled {
-
-        &:first-child {
-            .PaneBase-header {
-                z-index: 5;
-                background-color: rgba(lighten($c-ui-bg, 20),1);
-                height: 55px;
-                box-shadow: 0 0 0.2em rgba(0,0,0,0.1);
-            }
-        }
-    }
-
     .PaneBase-content {
         padding: 0 2em 2em;
 
@@ -36,12 +24,6 @@
         bottom: 0;
         pointer-events: none;
         z-index: 10;
-    }
-
-    &:first-child {
-        .PaneBase-closeLink {
-            display: none;
-        }
     }
 
     &:not(:last-child) .PaneBase-content {
@@ -120,10 +102,28 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 60px;
             z-index: 1;
             background-color: $c-ui-bg;
-            transition: background-color .3s, height .3s;
+            transition: background-color .2s .2s, max-height .3s;
+        }
+
+        .PaneBase-filterDrawer {
+            padding: 1em;
+            opacity: 0;
+            transition: opacity 0.2s 0.2s;
+        }
+
+        &.PaneBase-filtersVisible {
+            .PaneBase-header {
+                background-color: white;
+                max-height: 400px;
+                overflow: visible;
+                transition: background-color .3s, max-height .5s;
+            }
+
+            .PaneBase-filterDrawer {
+                opacity: 1;
+            }
         }
 
         .PaneBase-closeLink {
@@ -171,23 +171,6 @@
 
         .PaneBase-shader {
             display: block;
-        }
-
-        // Use smaller padding on base pane, which does not have a close
-        // button that needs to be avoided
-        &:first-child {
-            // Base pane, always full-width and not interactive
-            left: 0;
-            right: 0;
-
-            .PaneBase-content {
-                padding-left: 20px;
-                margin-top: 1em;
-            }
-
-            header {
-                margin-top: 0;
-            }
         }
 
         &:last-child {

@@ -12,6 +12,7 @@ import { filteredActionList } from '../../../store/actions';
 
 
 const mapStateToProps = state => ({
+    actions: state.actions,
     locations: state.locations,
     campaigns: state.campaigns,
     filteredActionList: filteredActionList(state)
@@ -49,14 +50,6 @@ export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
             <CampaignPlayer key="player"
                 actions={ actions } locations={ locations }
                 centerLat={ center.lat } centerLng={ center.lng }/>
-        );
-    }
-
-    getPaneTools() {
-        return (
-            <CampaignSelect
-                onCreate={ this.onCreateCampaign.bind(this) }
-                onEdit={ this.onEditCampaign.bind(this) }/>
         );
     }
 }

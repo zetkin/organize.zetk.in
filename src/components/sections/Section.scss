@@ -155,15 +155,6 @@
             background-color: white;
         }
 
-        .Section .PaneBase:first-child {
-            // Base pane, always full-width and not interactive
-            left: 0;
-            right: 0;
-            header {
-                margin-top: 0;
-            }
-        }
-
         &.Section-dialog {
             .Section-navItem-assignments a:before {
                 background-image: url(/static/img/section-nav/dialog-assignments.png);

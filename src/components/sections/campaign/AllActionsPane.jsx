@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import CampaignSectionPaneBase from './CampaignSectionPaneBase';
 import ActionList from '../../lists/ActionList';
-import CampaignSelect from '../../misc/CampaignSelect';
 import ActionCalendar from '../../misc/actioncal/ActionCalendar';
 import ViewSwitch from '../../misc/ViewSwitch';
 import { retrieveCampaigns } from '../../../actions/campaign';
@@ -23,7 +22,7 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         super(props);
 
         this.state = {
-            viewMode: 'cal'
+            viewMode: 'cal',
         };
     }
 
@@ -38,16 +37,19 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         let actionList = this.props.filteredActionList;
         let viewComponent;
 
-        let startDate, endDate;
+        // Use afterDate filter as startDate, or today if it's null
+        let startDate = this.props.actions.filters.afterDate?
+            Date.create(this.props.actions.filters.afterDate) : new Date();
 
-        if (actionList.items.length == 0) {
-            // Use this week and the next month by default
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth();
-            const date = now.getDate();
-            startDate = new Date(year, month, date - 5);
-            endDate = new Date(year, month, date + 30);
+        // Default to no end date (which displays all actions) or, if there
+        // are no actions, use 8 weeks in future. If there is a filter, use
+        // that date.
+        let endDate = null;
+        if (this.props.actions.filters.beforeDate) {
+            endDate = Date.create(this.props.actions.filters.beforeDate);
+        }
+        else if (actionList.items.length == 0) {
+            endDate = startDate.clone().addDays(8 * 7);
         }
 
         if (this.state.viewMode == 'cal') {
@@ -76,12 +78,9 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         };
 
         return [
-            <CampaignSelect key="campaignSelect"
-                onCreate={ this.onCreateCampaign.bind(this) }
-                onEdit={ this.onEditCampaign.bind(this) }/>,
             <ViewSwitch key="viewSwitch" states={ viewStates }
                 selected={ this.state.viewMode }
-                onSwitch={ this.onViewSwitch.bind(this) }/>
+                onSwitch={ this.onViewSwitch.bind(this) }/>,
         ];
     }
 
