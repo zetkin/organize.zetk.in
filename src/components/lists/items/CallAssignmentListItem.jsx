@@ -69,14 +69,16 @@ export default class CallAssignmentListItem extends React.Component {
         else if (assignment.statsItem && assignment.statsItem.data) {
             let stats = assignment.statsItem.data;
             targetStats = (
-                <h1 key="targetStatsHeader">
+                <div className="CallAssignmentListItem-targetStats">
                     { stats.num_target_matches }
-                </h1>
+                    <Msg id="lists.callAssignmentList.item.stats.target"/>
+                </div>
             );
             goalStats = (
-                <h1 key="goalStatsHeader">
+                <div className="CallAssignmentListItem-goalStats">
                     { stats.num_remaining_targets }
-                </h1>
+                    <Msg id="lists.callAssignmentList.item.stats.remainingTarget"/>
+                </div>
             );
         }
 
@@ -108,10 +110,8 @@ export default class CallAssignmentListItem extends React.Component {
                     { participantIndicator }
                 </div>
                 <div className="CallAssignmentListItem-stats">
-                    <div className="CallAssignmentListItem-targetStats">
-                        { targetStats }</div>
-                    <div className="CallAssignmentListItem-goalStats">
-                        { goalStats }</div>
+                    { targetStats }
+                    { goalStats }
                 </div>
             </div>
         );

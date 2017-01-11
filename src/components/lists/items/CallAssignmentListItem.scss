@@ -1,5 +1,6 @@
 .CallAssignmentListItem {
     position: relative;
+    min-height: 5em;
 
     .CallAssignmentListItem-info {
         @include col(6,12);
@@ -31,21 +32,31 @@
 
     .CallAssignmentListItem-stats {
         @include col(6,12);
+        font-size: 1.2em;
+        text-align: center;
+        color: lighten($c-text, 20);
+
+        div {
+            @include col(3,12);
+
+            span {
+                display: block;
+                font-size: 0.7em;
+                color: lighten($c-text, 50);
+            }
+        }
     }
 
     .CallAssignmentListItem-targetStats {
-        h1 {
-            &::before {
-                @include icon($fa-var-users);
-            }
+        &::before {
+            @include icon($fa-var-users);
         }
     }
 
     .CallAssignmentListitem-goalStats {
-        h1 {
-            &::before {
-                @include icon($fa-var-flag-checkered);
-            }
+        &::before {
+            @include icon($fa-var-flag-checkered);
         }
+
     }
 }

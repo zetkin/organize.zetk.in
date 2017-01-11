@@ -5,3 +5,7 @@ header:
 item:
     info:
         callers: "{ count } Ringare"
+    stats:
+        target: "Målgrupp"
+        remainingTarget: "Återstående"
+        
