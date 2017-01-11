@@ -10,7 +10,7 @@
             font-size: 1.3em;
         }
 
-        .CallAssignmentListItem-infoCallers {
+        .CallAssignmentListItem-infoCallers, .LoadingIndicator {
             position: absolute;
             bottom: 0;
             font-size: 1.1em;
@@ -22,8 +22,6 @@
                     font-size: 0.7em;
                 }
             }
-
-
 
         }
     }
@@ -54,6 +52,12 @@
             width: 100%;
             padding: 0;
             text-align: left;
+        }
+
+        .LoadingIndicator {
+            @include col(3,12);
+            font-size: 1.5em;
+            display: inline-block;
         }
     }
 
