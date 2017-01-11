@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 import PaneBase from './PaneBase';
 import LocationForm from '../forms/LocationForm';
 import Button from '../misc/Button';
-import { retrieveLocation, updateLocation, deleteLocation,
-    setPendingLocation, clearPendingLocation } from '../../actions/location';
 import { getListItemById } from '../../utils/store';
+import {
+    retrieveLocation,
+    updateLocation,
+    deleteLocation,
+} from '../../actions/location';
 
 
 @connect(state => state)
@@ -15,10 +18,7 @@ export default class EditLocationPane extends PaneBase {
         let locId = this.getParam(0);
         let locItem = getListItemById(this.props.locations.locationList, locId);
 
-        if (locItem) {
-            this.props.dispatch(setPendingLocation(locItem.data));
-        }
-        else {
+        if (!locItem) {
             this.props.dispatch(retrieveLocation(locId));
         }
     }
@@ -82,13 +82,11 @@ export default class EditLocationPane extends PaneBase {
 
     onDeleteClick(ev) {
         var locationId = this.getParam(0);
-        this.props.dispatch(clearPendingLocation());
         this.props.dispatch(deleteLocation(locationId));
         this.closePane();
     }
 
     onCloseClick() {
-        this.props.dispatch(clearPendingLocation());
         this.closePane();
     }
 }
