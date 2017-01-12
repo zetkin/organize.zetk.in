@@ -92,7 +92,7 @@ export default class LocationPane extends PaneBase {
                         onClick={ this.onMapClick.bind(this) }
                         />
 
-                    <h3>Tags</h3>
+                    <h3 className="LocationPane-tagsHeader">Tags</h3>
                     { tagCloud }
                 </div>
             );

@@ -9,4 +9,10 @@
         padding-left: 1em;
         margin-bottom: 1em;
     }
+
+    h3.LocationPane-tagsHeader {
+        &::before{
+            @include icon($fa-var-tag);
+        }
+    }
 }
