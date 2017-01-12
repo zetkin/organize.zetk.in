@@ -6,6 +6,7 @@ import Link from '../misc/Link';
 import PaneBase from './PaneBase';
 import PersonCollection from '../misc/personcollection/PersonCollection';
 import { PCCallerItem } from '../misc/personcollection/items';
+import ProgressBar from '../misc/ProgressBar';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import { getListItemById } from '../../utils/store';
 import { createTextDocument } from '../../actions/document';
@@ -71,7 +72,7 @@ export default class CallAssignmentPane extends PaneBase {
 
             let targetStats = null;
             let goalStats = null;
-            let progressSum = 0.5;
+            let progress = 0.05;
             if (!assignment.statsItem || assignment.statsItem.isPending) {
                 targetStats = <LoadingIndicator/>;
                 goalStats = <LoadingIndicator/>;
@@ -92,7 +93,7 @@ export default class CallAssignmentPane extends PaneBase {
                         id="panes.callAssignment.target.stats.goal"/>,
                 ];
 
-                progressSum = 100 * (1 - stats.num_remaining_targets / stats.num_target_matches);
+                progress = (1 - stats.num_remaining_targets / stats.num_target_matches);
             }
 
             if (data.queryItem && data.queryItem.data.matchList) {
@@ -161,10 +162,7 @@ export default class CallAssignmentPane extends PaneBase {
                         onClick={ this.onClickEditTarget.bind(this) }/>
                     <Link msgId="panes.callAssignment.target.editGoalLink"
                         onClick={ this.onClickEditGoal.bind(this) }/>
-                    <div className="CallAssignmentPane-progress">
-                        <div style={{ width: progressSum + '%' }} 
-                            className="CallAssignmentPane-progressContent"/>
-                    </div>
+                    <ProgressBar progress={ progress }/>
                 </div>,
 
                 <div key="callers"

@@ -1,3 +1,12 @@
 header:
+    startTime: "Tid"
     title: "Titel"
-    callers: "Ringare"
+    stats: "Statistik"
+item:
+    info:
+        callers: "{ count } ringare"
+    stats:
+        calls: "Uppringingar"
+        reached: "Nådda"
+        target: "Målgrupp"
+        goal: "Återstående"

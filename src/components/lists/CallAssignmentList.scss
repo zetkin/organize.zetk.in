@@ -1,0 +1,18 @@
+.CallAssignmentList {
+
+    .ListHeader {
+
+        li:nth-child(1) {
+            width: 9em;
+            display: inline-block;
+        }
+
+        li:nth-child(2) {
+            @include col(6,12);
+        }
+    }
+
+    .ListItem {
+        margin-left: 9em;
+    }
+}

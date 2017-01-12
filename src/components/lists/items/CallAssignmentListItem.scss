@@ -1,30 +1,100 @@
 .CallAssignmentListItem {
-    height: 10em;
+    position: relative;
+    min-height: 5em;
 
-    .CallAssignmentListItem-info * {
-        position: relative;
-        display: inline-block;
+    .ListItem-date {
+        text-align: center;
     }
 
-    .CallAssignmentListItem-stats * {
-        display: inline-block;
-    }
+    .dateStart {
+        margin-top: 1em;
 
-    .CallAssignmentListItem-targetStats {
-        h1 {
-            &::before {
-                @include icon($fa-var-users);
-            }
+        &:after {
+            @include icon($fa-var-arrows-h);
+            width: 100%;
         }
     }
 
-    .CallAssignmentListitem-goalStats {
-        h1 {
-            &::before {
-                @include icon($fa-var-flag-checkered);
+    .CallAssignmentListItem-info {
+        @include col(6,12);
+
+        .CallAssignmentListItem-infoTitle {
+            margin: 0.5em 0;
+            font-size: 1.3em;
+        }
+
+        .CallAssignmentListItem-infoCallers, .LoadingIndicator {
+            position: absolute;
+            bottom: 0;
+            font-size: 1.1em;
+
+            i {
+                font-size: 1.2em;
+                &:after {
+                    @include icon($fa-var-phone);
+                    font-size: 0.7em;
+                }
+            }
+
+        }
+    }
+
+
+
+    .CallAssignmentListItem-stats {
+        @include col(6,12);
+        font-size: 1.2em;
+        text-align: center;
+        color: lighten($c-text, 20);
+
+        div {
+            @include col(3,12);
+            padding: 0;
+
+            span {
+                display: block;
+                font-size: 0.7em;
+                color: lighten($c-text, 50);
+                margin-top: 0.5em;
             }
         }
-        position: absolute;
-        left: 140px;
+
+        .ProgressBar {
+            font-size: 0.6em;
+            margin: 1.3em 0;
+            width: 100%;
+            padding: 0;
+            text-align: left;
+        }
+
+        .LoadingIndicator {
+            @include col(3,12);
+            font-size: 1.5em;
+            display: inline-block;
+        }
+    }
+
+    .CallAssignmentListItem-statsCalls {
+        &::before {
+            @include icon($fa-var-phone);
+        }
+    }
+
+    .CallAssignmentListItem-statsReached {
+        &::before {
+            @include icon($fa-var-check);
+        }
+    }
+
+    .CallAssignmentListItem-statsTarget {
+        &::before {
+            @include icon($fa-var-users);
+        }
+    }
+
+    .CallAssignmentListitem-statsGoal {
+        &::before {
+            @include icon($fa-var-flag-checkered);
+        }
     }
 }

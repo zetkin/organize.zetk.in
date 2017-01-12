@@ -17,10 +17,13 @@ export default class CallAssignmentList extends React.Component {
     render() {
         let columns = [
             {
+                'start_time': 'lists.callAssignmentList.header.startTime',
+            },
+            {
                 'title': 'lists.callAssignmentList.header.title',
             },
             {
-                'callers': 'lists.callAssignmentList.header.callers',
+                'callers': 'lists.callAssignmentList.header.stats',
             }
         ];
 
