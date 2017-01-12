@@ -59,12 +59,16 @@ export default class CallAssignmentListItem extends React.Component {
             'past': inPast
         });
 
-        const assignmentDateSpan =
-            assignmentDateStart.getDate()
-            + "/" + assignmentDateStart.getMonth()
-            + " - "
-            + assignmentDateEnd.getDate()
-            + "/" + assignmentDateEnd.getMonth();
+        let assignmentDateSpan = (
+            <div className="ListItem-date">
+                <div className="dateStart">
+                    { assignmentDateStart.format('{d}/{M}, {yyyy}') }
+                </div>
+                <div className="dateEnd">
+                    { assignmentDateEnd.format('{d}/{M}, {yyyy}') }
+                </div>
+            </div>
+        );
 
         if (assignment.statsItem && assignment.statsItem.isPending) {
             callsStats = <LoadingIndicator/>;
@@ -127,10 +131,7 @@ export default class CallAssignmentListItem extends React.Component {
         return (
             <div className={ classNames }
                 onClick={ () => {this.props.onItemClick(assignment)} }>
-                <div className="ListItem-date">
-                    <span className="date">
-                        { assignmentDateSpan }</span>
-                </div>
+                    { assignmentDateSpan }
                 <div className="CallAssignmentListItem-info">
                     <h3 className="CallAssignmentListItem-infoTitle">
                         { assignment.title }</h3>
