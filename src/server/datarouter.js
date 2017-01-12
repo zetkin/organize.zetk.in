@@ -61,10 +61,6 @@ export default messages => {
         retrieveLocations()
     ]));
 
-    router.get(/addlocationwithmap$/, waitForActions(req => [
-        retrieveLocations()
-    ]));
-
     router.get(/addlocation$/, waitForActions(req => [
         retrieveLocations()
     ]));
