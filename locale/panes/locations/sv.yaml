@@ -2,3 +2,4 @@ addButton: "Lägg till"
 viewModes:
     map: "Karta"
     list: "Lista"
+edit: "Redigera platsinformation"

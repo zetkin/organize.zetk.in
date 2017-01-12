@@ -1,1 +1,12 @@
-.LocationPane {}
+.LocationPane.PaneBase {
+    min-width: 500px;
+}
+
+.LocationPane {
+    .LocationPane-desc {
+        position: relative;
+        border-left: 3px solid #555;
+        padding-left: 1em;
+        margin-bottom: 1em;
+    }
+}
