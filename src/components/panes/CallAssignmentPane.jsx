@@ -72,7 +72,7 @@ export default class CallAssignmentPane extends PaneBase {
 
             let targetStats = null;
             let goalStats = null;
-            let progressSum = 0.5;
+            let progress = 0.05;
             if (!assignment.statsItem || assignment.statsItem.isPending) {
                 targetStats = <LoadingIndicator/>;
                 goalStats = <LoadingIndicator/>;
@@ -93,7 +93,7 @@ export default class CallAssignmentPane extends PaneBase {
                         id="panes.callAssignment.target.stats.goal"/>,
                 ];
 
-                progressSum = 100 * (1 - stats.num_remaining_targets / stats.num_target_matches);
+                progress = (1 - stats.num_remaining_targets / stats.num_target_matches);
             }
 
             if (data.queryItem && data.queryItem.data.matchList) {
@@ -162,7 +162,7 @@ export default class CallAssignmentPane extends PaneBase {
                         onClick={ this.onClickEditTarget.bind(this) }/>
                     <Link msgId="panes.callAssignment.target.editGoalLink"
                         onClick={ this.onClickEditGoal.bind(this) }/>
-                    <ProgressBar progressSum={ progressSum }/>
+                    <ProgressBar progress={ progress }/>
                 </div>,
 
                 <div key="callers"
