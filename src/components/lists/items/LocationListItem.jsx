@@ -26,7 +26,7 @@ export default class LocationListItem extends React.Component {
                 center: (lat + 0.0002) + ',' + lng,
                 markers: lat + ',' + lng,
                 zoom: 15,
-                size: '120x90',
+                size: '540x200',
                 key: 'AIzaSyAHVagqI3RTd0psf57oA6gzKqVyjp8FS8w',
             }
         });
@@ -35,8 +35,8 @@ export default class LocationListItem extends React.Component {
             <div className="LocationListItem"
                 onClick={ this.props.onItemClick }>
                 <img src={ imgSrc }/>
-                <span className="LocationListItem-title">
-                    { loc.title }</span>
+                <h3 className="LocationListItem-title">
+                    { loc.title }</h3>
             </div>
         );
     }
