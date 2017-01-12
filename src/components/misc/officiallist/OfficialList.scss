@@ -5,13 +5,23 @@
         clear: both;
     }
 
+    li {
+        width: 150px;
+        height: 240px;
+        @include card;
+        margin: 0 1em 1em;
+        padding: 1em;
+        float: left;
+        position: relative;
+    }
+
     .OfficialList-addItem {
         @include ghost-placeholder();
+        margin-left: 1em;
 
-        float: left;
-        width: 100px;
-        height: 150px;
-        padding: 10px;
+        p {
+            margin: 50% 0;
+        }
     }
 
     &.OfficialList-isPersonOver {

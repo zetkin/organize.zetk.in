@@ -27,7 +27,7 @@ export default class OfficialListItem extends React.Component {
                 <DraggableAvatar person={ official }/>
                 <span className="OfficialListItem-name">{ name }</span>
                 <a className="OfficialListItem-removeButton"
-                    onClick={ this.onRemove.bind(this) }><i className="fa fa-remove"></i></a>
+                    onClick={ this.onRemove.bind(this) }></a>
             </li>
         );
     }

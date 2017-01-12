@@ -1,10 +1,33 @@
 .OfficialListItem {
-    float: left;
-    width: 100px;
-    margin: 0 10px 10px 0;
 
     .OfficialListItem-name {
-        font-size: 200%;
+        display: block;
+        font-size: 1.5em;
+        margin: 1em 0;
+    }
+
+    .OfficialListItem-removeButton {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3em;
+        text-align: center;
+        padding: 0.5em;
+        background-color: darken(white, 3);
+        cursor: pointer;
+
+        &:before {
+            @include icon($fa-var-remove);
+            line-height: 2em;
+        }
+    }
+
+    &:hover {
+        .OfficialListItem-removeButton {
+            background-color: darken(white, 5);
+        }
     }
 
     .Avatar {
