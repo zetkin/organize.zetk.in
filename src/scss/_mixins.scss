@@ -255,7 +255,8 @@
     margin-left: percentage($col/$sum);
 }
 
-@mixin circle-button($color: lighten($c-ui-bg, 1), $amount:3, $icon:false, $size:3em) {
+@mixin circle-button($color: lighten($c-ui-bg, 1), $amount:3, $icon:false,
+        $psudo:false, $size:3em) {
     width: $size;
     height: $size;
     padding: 0;
@@ -271,6 +272,14 @@
             line-height: 0.5em;
             height: 0;
         }
+    }
+    @if $psudo {
+        //To be used if button is in psudo element
+        @include icon($icon);
+        width: $size*1.5;
+        height: $size*1.5;
+        line-height: $size*1.5;
+        font-size: $size/1.5;
     }
     &:focus {
         outline: none;

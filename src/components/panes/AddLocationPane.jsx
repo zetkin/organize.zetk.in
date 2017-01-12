@@ -1,5 +1,6 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
+import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
@@ -34,23 +35,13 @@ export default class AddLocationPane extends PaneBase {
     renderPaneContent(data) {
         let map;
 
-        if (this.state.pendingLocation) {
-            map = (
-                <StaticMap key="map"
-                    location={ this.state.pendingLocation }
-                    onClick={ this.onSetPositionClick.bind(this) }
-                    />
-            );
-        }
-        else {
-            map = (
-                <Link key="setPositionLink"
-                    className="AddLocationPane-setPositionLink"
-                    msgId="panes.addLocation.setPositionLink"
-                    onClick={ this.onSetPositionClick.bind(this) }
-                    />
-            );
-        }
+        map = (
+            <StaticMap key="map"
+                location={ this.state.pendingLocation }
+                placeholder={ (this.state.pendingLocation)? false : true }
+                onClick={ this.onSetPositionClick.bind(this) }
+                />
+        );
 
         return [
             <LocationForm key="form" ref="form"
