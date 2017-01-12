@@ -142,7 +142,7 @@ export default class Search extends React.Component {
                 break;
             case 'location':
                 defaultSection = 'maps';
-                paneType = 'editlocationwithmap';
+                paneType = 'location';
                 params = [ match.data.id ];
                 break;
             case 'person':

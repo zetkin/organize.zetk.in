@@ -73,7 +73,7 @@ export default class AddActionPane extends PaneBase {
     }
 
     onEditLocation(loc) {
-        this.openPane('editlocationwithmap', loc.id);
+        this.openPane('editlocation', loc.id);
     }
 
     onEditActivity(activity) {
@@ -85,7 +85,7 @@ export default class AddActionPane extends PaneBase {
     }
 
     onCreateLocation(title) {
-        this.openPane('addlocationwithmap', title);
+        this.openPane('addlocation', title);
     }
 
     onCreateActivity(title) {
