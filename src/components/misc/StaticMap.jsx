@@ -1,6 +1,8 @@
 import React from 'react';
 import url from 'url';
 
+import { convertLatToDMS, convertLngToDMS } from '../../utils/location';
+
 
 export default class StaticMap extends React.Component {
     static propTypes = {
@@ -32,13 +34,21 @@ export default class StaticMap extends React.Component {
             }
         });
 
+        // Convert lat/lng to degrees, minutes and seconds, which is more
+        // readable than the decimal value with tons of decimals.
+        let latDMS = convertLatToDMS(lat), lngDMS = convertLngToDMS(lng);
+        let latStr = latDMS.deg.toString()
+            .concat('° ', latDMS.min, '\' ', latDMS.sec, '" ', latDMS.dir);
+        let lngStr = lngDMS.deg.toString()
+            .concat('° ', lngDMS.min, '\' ', lngDMS.sec, '" ', lngDMS.dir);
+
         return (
             <div className="StaticMap"
                 onClick={ this.onClick.bind(this) }>
                 <img src={ imgSrc }/>
                 <div className="StaticMap-coordinates">
-                    <span className="StaticMap-lat">{ loc.lat }</span>
-                    <span className="StaticMap-lng">{ loc.lng }</span>
+                    <span className="StaticMap-lat">{ latStr }</span>
+                    <span className="StaticMap-lng">{ lngStr }</span>
                 </div>
             </div>
         );
