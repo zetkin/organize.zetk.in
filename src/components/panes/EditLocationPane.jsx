@@ -46,7 +46,8 @@ export default class EditLocationPane extends PaneBase {
             return [
                 <LocationForm key="form" ref="form" loc={ data.locItem.data }
                     onSubmit={ this.onSubmit.bind(this) }/>,
-                <Button className="EditLocationPane-deleteButton"
+                <Button key="deleteButton"
+                    className="EditLocationPane-deleteButton"
                     labelMsg="panes.editLocation.deleteButton"
                     onClick={ this.onDeleteClick.bind(this) }/>
             ];
