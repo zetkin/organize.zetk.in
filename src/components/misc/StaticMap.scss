@@ -7,11 +7,15 @@
     }
 
     .StaticMap-coordinates {
-        margin: 0.5em 0;
+        margin: 1em 0;
+        font-size: 1.3em;
+        color: $c-ui-dark;
+
+        &:before {
+            @include icon($fa-var-location-arrow);
+        }
 
         span {
-            color: $c-ui-dark;
-            font-size: 1.3em;
             padding-right: 1em;
         }
     }
