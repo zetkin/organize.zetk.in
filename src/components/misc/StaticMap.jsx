@@ -10,8 +10,8 @@ export default class StaticMap extends React.Component {
     };
 
     static defaultProps = {
-        width: 400,
-        height: 300,
+        width: 480,
+        height: 200,
     };
 
     render() {

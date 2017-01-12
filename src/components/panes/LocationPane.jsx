@@ -89,8 +89,6 @@ export default class LocationPane extends PaneBase {
 
                     <StaticMap
                         location={ data.locItem.data }
-                        width={ 480 }
-                        height={ 200 }
                         onClick={ this.onMapClick.bind(this) }
                         />
 
