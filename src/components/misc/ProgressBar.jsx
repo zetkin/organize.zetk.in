@@ -2,13 +2,14 @@ import React from 'react';
 
 export default class ProgressBar extends React.Component {
     static propTypes = {
-        progressSum: React.PropTypes.number.isRequired,
+        progress: React.PropTypes.number.isRequired,
     };
 
     render() {
+        const progress = this.props.progress * 100;
         return (
             <div className="ProgressBar">
-                <div style={{ width: this.props.progressSum + '%' }}
+                <div style={{ width: progress + '%' }}
                     className="ProgressBar-content"/>
             </div>
         );

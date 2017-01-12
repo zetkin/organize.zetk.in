@@ -44,7 +44,7 @@ export default class CallAssignmentListItem extends React.Component {
 
     render() {
         let assignment = this.props.data;
-        let progressSum = 0;
+        let progress = 0;
         let callsStats = null;
         let reachedStats = null;
         let targetStats = null;
@@ -79,7 +79,7 @@ export default class CallAssignmentListItem extends React.Component {
         else if (assignment.statsItem && assignment.statsItem.data) {
             let stats = assignment.statsItem.data;
 
-            progressSum = 100 *
+            progress =
                 (1 - stats.num_remaining_targets / stats.num_target_matches);
 
             let successRate = (stats.num_calls_reached > 0)
@@ -138,7 +138,7 @@ export default class CallAssignmentListItem extends React.Component {
                     { participantIndicator }
                 </div>
                 <div className="CallAssignmentListItem-stats">
-                    <ProgressBar progressSum={ progressSum }/>
+                    <ProgressBar progress={ progress }/>
                     { callsStats }
                     { reachedStats }
                     { targetStats }
