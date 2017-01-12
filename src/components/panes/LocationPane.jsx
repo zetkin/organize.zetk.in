@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { FormattedMessage as Msg } from 'react-intl';
 
 import PaneBase from './PaneBase';
 import Link from '../misc/Link';
@@ -84,7 +85,7 @@ export default class LocationPane extends PaneBase {
                         { data.locItem.data.info_text }</p>
                     <Link
                         className="edit"
-                        msgId="panes.locations.edit"
+                        msgId="panes.locations.description.editLink"
                         onClick={ this.onLocationEdit.bind(this) }/>
 
                     <StaticMap
@@ -92,7 +93,9 @@ export default class LocationPane extends PaneBase {
                         onClick={ this.onMapClick.bind(this) }
                         />
 
-                    <h3 className="LocationPane-tagsHeader">Tags</h3>
+                    <h3 className="LocationPane-tagsHeader">
+                        <Msg id="panes.locations.tags"/>
+                    </h3>
                     { tagCloud }
                 </div>
             );
