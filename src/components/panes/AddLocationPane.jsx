@@ -38,7 +38,6 @@ export default class AddLocationPane extends PaneBase {
         map = (
             <StaticMap key="map"
                 location={ this.state.pendingLocation }
-                placeholder={ (this.state.pendingLocation)? false : true }
                 onClick={ this.onSetPositionClick.bind(this) }
                 />
         );

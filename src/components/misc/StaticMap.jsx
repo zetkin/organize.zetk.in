@@ -10,7 +10,6 @@ export default class StaticMap extends React.Component {
         location: React.PropTypes.object.isRequired,
         width: React.PropTypes.number,
         height: React.PropTypes.number,
-        placeholder: React.PropTypes.bool
     };
 
     static defaultProps = {
@@ -19,25 +18,11 @@ export default class StaticMap extends React.Component {
     };
 
     render() {
-        let placeholder = this.props.placeholder;
+        let loc = this.props.location;
         let map = null;
         let coordinates = null;
 
-        if (placeholder) {
-            map = (
-                 <div className="StaticMap-placeholder">
-                    <Msg id="panes.addLocation.setPositionLink"/>
-                </div>
-            );
-
-            coordinates = (
-                <div className="StaticMap-coordinates">
-                    <Msg id="panes.addLocation.noCoordinates"/>
-                </div>
-            );
-        }
-        else {
-            let loc = this.props.location;
+        if (loc) {
             let lat = loc.lat;
             let lng = loc.lng;
 
@@ -70,6 +55,19 @@ export default class StaticMap extends React.Component {
                 <div className="StaticMap-coordinates">
                     <span className="StaticMap-lat">{ latStr }</span>
                     <span className="StaticMap-lng">{ lngStr }</span>
+                </div>
+            );
+        }
+        else {
+            map = (
+                 <div className="StaticMap-placeholder">
+                    <Msg id="panes.addLocation.setPositionLink"/>
+                </div>
+            );
+
+            coordinates = (
+                <div className="StaticMap-coordinates">
+                    <Msg id="panes.addLocation.noCoordinates"/>
                 </div>
             );
         }
