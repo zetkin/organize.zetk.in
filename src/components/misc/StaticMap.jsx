@@ -7,7 +7,7 @@ import { convertLatToDMS, convertLngToDMS } from '../../utils/location';
 
 export default class StaticMap extends React.Component {
     static propTypes = {
-        location: React.PropTypes.object.isRequired,
+        location: React.PropTypes.object,
         width: React.PropTypes.number,
         height: React.PropTypes.number,
     };
