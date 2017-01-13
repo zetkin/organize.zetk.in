@@ -14,13 +14,17 @@
     }
 
     .PaneBase-footer {
-        .Button {
+        .PlaceLocationPane-closeButton {
+            @include button($color: $c-ui-dark, $icon: $fa-var-times);
             float: left;
-            max-width: 200px;
         }
 
-        .Button:last-child {
+        .PlaceLocationPane-saveButton {
+            @include button($icon: $fa-var-check);
             float: right;
+        }
+
+        .Button {
             max-width: 200px;
         }
     }
