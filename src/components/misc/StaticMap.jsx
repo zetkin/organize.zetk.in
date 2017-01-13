@@ -61,13 +61,13 @@ export default class StaticMap extends React.Component {
         else {
             map = (
                  <div className="StaticMap-placeholder">
-                    <Msg id="panes.addLocation.setPositionLink"/>
+                    <Msg id="misc.staticMap.setPositionLink"/>
                 </div>
             );
 
             coordinates = (
                 <div className="StaticMap-coordinates">
-                    <Msg id="panes.addLocation.noCoordinates"/>
+                    <Msg id="misc.staticMap.noCoordinates"/>
                 </div>
             );
         }

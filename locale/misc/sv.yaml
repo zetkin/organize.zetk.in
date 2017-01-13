@@ -28,3 +28,6 @@ callAssignmentTemplates:
                 6 {var sjätte månad}
                 12 {om året}
             }.
+staticMap:
+    setPositionLink: "Klicka för att ange position"
+    noCoordinates: "Ingen position"
