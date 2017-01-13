@@ -90,27 +90,25 @@
             position: relative;
             list-style-type: none;
             cursor: pointer;
-            margin-bottom: 1em;
+            margin-bottom: 2em;
             padding: 0;
 
-            font-size: 1.1em;
+            font-size: 1.3em;
             text-align: center;
-
-            opacity: 0.9;
-            transition: opacity 0.3s;
 
             color: white;
 
             &::before {
                 content: "";
                 display: block;
+                font-size: 0.6em;
                 width: 6.4em;
                 height: 4.8em;
                 margin: 0 auto 0.5em auto;
                 background-repeat: no-repeat;
                 background-size: cover;
 
-                opacity: 0.8;
+                opacity: 0.9;
                 transition: opacity 0.3s;
             }
 
