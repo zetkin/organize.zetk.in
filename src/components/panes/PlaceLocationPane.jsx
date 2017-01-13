@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 
 import PaneBase from './PaneBase';
 import Button from '../misc/Button';
@@ -12,6 +13,7 @@ import {
 
 
 @connect(state => ({ locations: state.locations }))
+@injectIntl
 export default class PlaceLocationPane extends PaneBase {
     getRenderData() {
         let locationList = this.props.locations.locationList;
@@ -22,7 +24,7 @@ export default class PlaceLocationPane extends PaneBase {
     }
 
     getPaneTitle(data) {
-        return '';
+        return this.props.intl.formatMessage({ id: 'panes.placeLocation.instructions' });
     }
 
     renderPaneContent(data) {
