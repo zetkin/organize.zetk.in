@@ -1,35 +1,3 @@
-.AddLocationPane {
-    .AddLocationPane-setPositionLink {
-        position: relative;
-        padding: 120px 0;
-        display: block;
-
-        background-color: lighten($c-ui-dark, 10%);
-        color: white;
-        font-size: 2em;
-        text-align: center;
-        cursor: pointer;
-
-        &:hover {
-            &:after {
-                content: "+";
-                display: block;
-                padding: 0.5em 0;
-                width: 2em;
-                height: 2em;
-
-                position: absolute;
-                bottom: 1em;
-                right: 1em;
-
-                text-align: center;
-                background-color: $c-ui-dark;
-                border-radius: 2em;
-            }
-        }
-    }
-
-    .StaticMap {
-        cursor: pointer;
-    }
+.AddLocationPane.PaneBase {
+    min-width: 500px;
 }

@@ -1,7 +1,13 @@
 .EditLocationPane {
 
+    .Form {
+        textarea {
+            min-height: 6em;
+        }
+    }
+
     .EditLocationPane-saveButton {
-        @include button($icon: $fa-var-map-marker);
+        @include button($icon: $fa-var-floppy-o);
     }
 
     .EditLocationPane-deleteButton {

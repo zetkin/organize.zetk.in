@@ -1,17 +1,55 @@
 .StaticMap {
     max-width: 100%;
+    position: relative;
+
+    &:hover {
+        cursor: pointer;
+        &::after {
+            background-color: lighten($c-brand-main, 5);
+        }
+    }
+
+    &:after {
+        @include circle-button($color: $c-brand-main,
+                $size: 2.2em,
+                $icon: $fa-var-pencil,
+                $psudo:true);
+            position: absolute;
+            bottom: 3em;
+            right: 1em;
+    }
 
     img {
         width: 100%;
         height: auto;
     }
 
-    .StaticMap-coordinates {
-        margin: 0.5em 0;
+    .StaticMap-placeholder {
+        position: relative;
+        height: 183px;
+        background-color: darken(white, 15);
+        color: white;
+        text-align: center;
+        font-size: 2em;
 
         span {
-            color: $c-ui-dark;
-            font-size: 1.3em;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: calc(50% - 1em);
+        }
+    }
+
+    .StaticMap-coordinates {
+        margin: 1em 0;
+        font-size: 1.3em;
+        color: $c-ui-dark;
+
+        &:before {
+            @include icon($fa-var-location-arrow);
+        }
+
+        span {
             padding-right: 1em;
         }
     }

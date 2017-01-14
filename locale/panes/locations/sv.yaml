@@ -2,3 +2,6 @@ addButton: "Lägg till"
 viewModes:
     map: "Karta"
     list: "Lista"
+description:
+    editLink: "Redigera platsinformation"
+tags: "Etiketter"

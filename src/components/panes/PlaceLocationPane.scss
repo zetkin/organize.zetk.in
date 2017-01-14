@@ -3,6 +3,7 @@
 
     .LocationMap {
         position: absolute;
+        z-index: 0;
         top: 0;
         left: 0;
         right: 0;
@@ -11,16 +12,45 @@
 
     .PaneBase-header {
         background-color: transparent;
+
+        .PaneBase-closelink {
+            &:before {
+                color: white;
+                text-shadow: 0px 1px 2px rgba(black, 0.35);
+            }
+        }
+    }
+
+    .PaneBase-content {
+        h2 {
+            position: absolute;
+            z-index: 2;
+            font-size: 1.9em;
+            top: 1em;
+            left: 0;
+            right: 0;
+            margin: 0 8em;
+            padding: 0.5em 1em;
+            border-radius: 30em;
+            text-align: center;
+            color: white;
+            font-weight: 300;
+            background-color: rgba(black, 0.4);
+        }
     }
 
     .PaneBase-footer {
-        .Button {
+        .PlaceLocationPane-closeButton {
+            @include button($color: $c-ui-dark, $icon: $fa-var-times);
             float: left;
-            max-width: 200px;
         }
 
-        .Button:last-child {
+        .PlaceLocationPane-saveButton {
+            @include button($icon: $fa-var-check);
             float: right;
+        }
+
+        .Button {
             max-width: 200px;
         }
     }

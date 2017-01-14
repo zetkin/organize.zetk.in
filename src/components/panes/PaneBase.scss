@@ -167,6 +167,21 @@
             small {
                 font-size: 1.1em;
             }
+
+            .edit {
+                display: block;
+                margin-bottom: 1em;
+                font-size: 1.2em;
+
+                &:before {
+                    @include icon($fa-var-pencil);
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    text-decoration: underline;
+                }
+            }
         }
 
         .PaneBase-shader {

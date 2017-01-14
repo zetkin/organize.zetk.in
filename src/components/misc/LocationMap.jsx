@@ -13,9 +13,9 @@ export default class LocationMap extends React.Component {
         // TODO: create nicer looking svg path
         this.iconSettings =  {
                path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
-               fillColor: 'red',
+               fillColor: '#ee323e',
                fillOpacity: 1,
-               strokeColor: '#000',
+               strokeColor: '#ac0e18',
         }
 
         this.centerSetFromData = false;
@@ -111,7 +111,6 @@ export default class LocationMap extends React.Component {
         // if editable only drag the marker (all info already vibile)
         if (editable) {
             var iconSettings = this.iconSettings;
-            iconSettings.fillColor = 'green';
             marker.setIcon(iconSettings);
             google.maps.event.addListener(marker, 'dragend', 
                     this.onMarkerDragEnd.bind(this, marker, loc));
