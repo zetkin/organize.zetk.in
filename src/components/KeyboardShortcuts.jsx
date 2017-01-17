@@ -53,6 +53,7 @@ export default class KeyboardShortcuts extends React.Component {
                         <li><code>{ '//' }</code> Activate search field</li>
                         <li><code>{ '/p' }</code> Activate search, limiting results to people</li>
                         <li><code>{ '/c' }</code> Activate search, limiting results to campaign</li>
+                        <li><code>{ '/d' }</code> Activate search, limiting results to dialog</li>
                         <li><code>{ '/m' }</code> Activate search, limiting results to maps</li>
                     </ul>
 
@@ -153,6 +154,10 @@ export default class KeyboardShortcuts extends React.Component {
                     this.closeReference();
                     this.props.dispatch(beginSearch(null));
                     break;
+                case 100:    // 'd' == dialog
+                    this.closeReference();
+                    this.props.dispatch(beginSearch('dialog'));
+                    break;
                 case 99:    // 'c' == campaign
                     this.closeReference();
                     this.props.dispatch(beginSearch('campaign'));
@@ -178,7 +183,6 @@ export default class KeyboardShortcuts extends React.Component {
                     this.setKeyPrefix('/');
                     break;
                 case 63: // '?'
-                    // TODO: Show reference
                     this.setState({
                         showMainReference: true
                     });

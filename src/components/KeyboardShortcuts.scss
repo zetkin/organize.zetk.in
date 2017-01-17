@@ -51,10 +51,13 @@
     }
     ul{
         li{
+            clear: left;
             margin-bottom: .5em;
+
             code{
                 float: left;
             }
+
             & > span{
                 display: block;
                 margin-left: 4em;

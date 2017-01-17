@@ -54,6 +54,12 @@
         }
     }
 
+    &.dialog {
+        &::before {
+            @include icon($fa-var-phone);
+        }
+    }
+
     &.maps {
         &::before {
             @include icon($fa-var-map-marker);
@@ -106,6 +112,12 @@
     &.campaign {
         &::before {
             @include icon($fa-var-calendar);
+        }
+    }
+
+    &.dialog {
+        &::before {
+            @include icon($fa-var-phone);
         }
     }
 
