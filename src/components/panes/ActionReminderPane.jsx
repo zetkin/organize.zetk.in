@@ -20,7 +20,7 @@ export default class ActionReminderPane extends PaneBase {
     }
 
     getPaneSubTitle(data) {
-        return data.actionItem?
+        return (data.actionItem && !data.actionItem.isPending)?
             <Action action={ data.actionItem.data }/> : null;
     }
 
