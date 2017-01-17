@@ -65,7 +65,7 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         }
         else {
             viewComponent = <ActionList actionList={ actionList }
-                onItemClick={ item => this.onSelectAction(item.data) }/>
+                onItemClick={ (item, ev) => this.onSelectAction(item.data, ev) }/>
         }
 
         return viewComponent;

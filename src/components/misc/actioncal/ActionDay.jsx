@@ -83,7 +83,7 @@ export default class ActionDay extends React.Component {
                     transitionName="actionitem" component="ul">
                 { actions.map(function(action) {
                     return <ActionItem key={ action.id } action={ action }
-                            onClick={ this.onActionClick.bind(this, action) }/>
+                            onClick={ this.onActionClick.bind(this) }/>
                 }, this) }
                     { overflow }
                     <li className="ActionDay-pseudoItem">
@@ -102,9 +102,9 @@ export default class ActionDay extends React.Component {
         }
     }
 
-    onActionClick(action) {
+    onActionClick(action, ev) {
         if (this.props.onSelectAction) {
-            this.props.onSelectAction(action);
+            this.props.onSelectAction(action, ev);
         }
     }
 

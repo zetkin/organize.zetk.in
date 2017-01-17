@@ -93,9 +93,9 @@ export default class ActionCalendar extends React.Component {
         );
     }
 
-    onSelectAction(action) {
+    onSelectAction(action, ev) {
         if (this.props.onSelectAction) {
-            this.props.onSelectAction(action);
+            this.props.onSelectAction(action, ev);
         }
     }
 
