@@ -7,8 +7,8 @@ import { retrieveLocations } from '../../../actions/location';
 
 let altKeyDown = false;
 
-let onKeyDown = ev => altKeyDown = altKeyDown || ev.keyCode == 18;
-let onKeyUp = ev => altKeyDown = !(altKeyDown && ev.keyCode == 18);
+let onKeyDown = ev => altKeyDown = (ev.keyCode == 18)? true : altKeyDown;
+let onKeyUp = ev => altKeyDown = (ev.keyCode == 18)? false : altKeyDown;
 
 
 @connect(state => state)
