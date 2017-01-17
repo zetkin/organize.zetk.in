@@ -95,8 +95,13 @@ export default class CampaignSectionPaneBase extends RootPaneBase {
         this.openPane('actionday', dateStr);
     }
 
-    onSelectAction(action) {
-        this.openPane('action', action.id);
+    onSelectAction(action, ev) {
+        if (ev && ev.altKey) {
+            this.openPane('editaction', action.id);
+        }
+        else {
+            this.openPane('action', action.id);
+        }
     }
 
     onEditCampaign(campaign) {

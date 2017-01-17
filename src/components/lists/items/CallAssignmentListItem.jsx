@@ -130,7 +130,7 @@ export default class CallAssignmentListItem extends React.Component {
 
         return (
             <div className={ classNames }
-                onClick={ () => {this.props.onItemClick(assignment)} }>
+                onClick={ this.props.onItemClick }>
                     { assignmentDateSpan }
                 <div className="CallAssignmentListItem-info">
                     <h3 className="CallAssignmentListItem-infoTitle">

@@ -24,7 +24,7 @@ export default class AllCallAssignmentsPane extends RootPaneBase {
         return (
             <CallAssignmentList
                 callAssignmentList={ data.assignmentList }
-                onItemClick={ this.onClickAssignment.bind(this) } />
+                onItemClick={ this.onAssignmentClick.bind(this) } />
         );
     }
 
@@ -41,7 +41,12 @@ export default class AllCallAssignmentsPane extends RootPaneBase {
         this.openPane('addcallassignment');
     }
 
-    onClickAssignment(assignment) {
-        this.openPane('callassignment', assignment.data.id);
+    onAssignmentClick(assignment, ev) {
+        if (ev && ev.altKey) {
+            this.openPane('editcallassignment', assignment.data.id);
+        }
+        else {
+            this.openPane('callassignment', assignment.data.id);
+        }
     }
 }

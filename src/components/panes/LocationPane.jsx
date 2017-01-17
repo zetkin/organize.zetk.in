@@ -16,7 +16,6 @@ import {
 } from '../../actions/location';
 
 import { 
-    retrieveLocationTag,
     addTagsToLocation,
     retrieveTagsForLocation,
     removeTagFromLocation
@@ -35,7 +34,6 @@ export default class LocationPane extends PaneBase {
             this.props.dispatch(retrieveLocation(locId));
         }
 
-        this.props.dispatch(retrieveLocationTag(locId))
         this.props.dispatch(retrieveTagsForLocation(locId))
     }
 

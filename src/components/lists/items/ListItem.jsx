@@ -46,10 +46,10 @@ export default class ListItem extends React.Component {
         );
     }
 
-    onItemClick() {
+    onItemClick(ev) {
         if (this.props.onItemClick) {
             let item = this.props.item;
-            this.props.onItemClick(item);
+            this.props.onItemClick(item, ev);
         }
     }
 

@@ -60,8 +60,13 @@ export default class QueryPane extends PaneBase {
         }
     }
 
-    onPersonItemClick(personItem) {
-        this.openPane('person', personItem.data.id);
+    onPersonItemClick(personItem, ev) {
+        if (ev && ev.altKey) {
+            this.openPane('editperson', personItem.data.id);
+        }
+        else {
+            this.openPane('person', personItem.data.id);
+        }
     }
 
     onEditClick(ev) {

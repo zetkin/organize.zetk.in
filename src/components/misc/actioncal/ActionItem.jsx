@@ -56,7 +56,7 @@ export default class ActionItem extends React.Component {
 
     onClick(ev) {
         if (this.props.onClick) {
-            this.props.onClick(this.props.action);
+            this.props.onClick(this.props.action, ev);
         }
     }
 }

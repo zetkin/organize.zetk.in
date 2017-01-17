@@ -22,7 +22,7 @@ export default class LocationsPane extends RootPaneBase {
         return (
             <div>
                 <LocationList locationList={ locationList }
-                    onItemClick={ this.onLocationSelect.bind(this) }/>
+                    onItemClick={ this.onLocationClick.bind(this) }/>
             </div>
         );
     }
@@ -40,7 +40,12 @@ export default class LocationsPane extends RootPaneBase {
         this.openPane('addlocation');
     }
 
-    onLocationSelect(loc) {
-        this.openPane('location', loc.data.id);
+    onLocationClick(loc, ev) {
+        if (ev && ev.altKey) {
+            this.openPane('editlocation', loc.data.id);
+        }
+        else {
+            this.openPane('location', loc.data.id);
+        }
     }
 }
