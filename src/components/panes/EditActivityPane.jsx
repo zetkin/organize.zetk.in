@@ -74,6 +74,7 @@ export default class EditActivityPane extends PaneBase {
         const activityId = this.getParam(0);
 
         this.props.dispatch(updateActivity(activityId, values));
+        this.closePane();
     }
 
     onClickDelete(ev) {

@@ -40,7 +40,7 @@ export default class AddActivityPane extends PaneBase {
         const values = this.refs.form.getValues();
         const activityId = this.getParam(0);
 
-        // TODO: Go to edit pane when done?
         this.props.dispatch(createActivity(values));
+        this.closePane();
     }
 }

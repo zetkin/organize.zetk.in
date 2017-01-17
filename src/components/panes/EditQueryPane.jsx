@@ -83,5 +83,6 @@ export default class EditQueryPane extends PaneBase {
         });
 
         this.props.dispatch(updateQuery(queryId, values));
+        this.closePane();
     }
 }
