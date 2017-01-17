@@ -53,10 +53,6 @@ export default class ActionReminderPane extends PaneBase {
                     return <li><Avatar person={ participant }/></li>;
                 })}
                 </ul>,
-                <Form key="reminderForm" ref="reminderForm"
-                    onSubmit={ this.onRemindersSubmit.bind(this) }>
-                    <TextArea name="message" label="Custom additional info"/>
-                </Form>
             ];
         }
 
