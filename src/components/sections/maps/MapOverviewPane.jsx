@@ -5,6 +5,11 @@ import RootPaneBase from '../RootPaneBase';
 import LocationMap from '../../misc/LocationMap';
 import { retrieveLocations } from '../../../actions/location';
 
+let altKeyDown = false;
+
+let onKeyDown = ev => altKeyDown = altKeyDown || ev.keyCode == 18;
+let onKeyUp = ev => altKeyDown = !(altKeyDown && ev.keyCode == 18);
+
 
 @connect(state => state)
 export default class MapOverviewPane extends RootPaneBase {
@@ -12,6 +17,16 @@ export default class MapOverviewPane extends RootPaneBase {
         super.componentDidMount();
 
         this.props.dispatch(retrieveLocations());
+    }
+
+    componentDidMount() {
+        window.addEventListener('keydown', onKeyDown);
+        window.addEventListener('keyup', onKeyUp);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('keydown', onKeyDown);
+        window.removeEventListener('keyup', onKeyUp);
     }
 
     renderPaneContent() {
@@ -37,6 +52,11 @@ export default class MapOverviewPane extends RootPaneBase {
     }
 
     onLocationSelect(loc) {
-        this.openPane('location', loc.data.id);
+        if (altKeyDown) {
+            this.openPane('editlocation', loc.data.id);
+        }
+        else {
+            this.openPane('location', loc.data.id);
+        }
     }
 }
