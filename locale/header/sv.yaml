@@ -4,6 +4,7 @@ search:
         all: "Allt"
         people: "Människor"
         campaign: "Kampanj"
+        dialog: "Dialog"
         maps: "Kartor"
 
 userMenu:

@@ -77,6 +77,7 @@ export default class EditCampaignPane extends PaneBase {
         const campaignId = this.getParam(0);
 
         this.props.dispatch(updateCampaign(campaignId, values));
+        this.closePane();
     }
 
     onDeleteClick(ev) {

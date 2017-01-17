@@ -37,7 +37,6 @@ export default class AddPersonPane extends PaneBase {
         var values = form.getValues();
 
         this.props.dispatch(createPerson(values));
-
-        // TODO: Somehow navigate to new person
+        this.closePane();
     }
 }

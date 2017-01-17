@@ -71,5 +71,6 @@ export default class EditCallAssignmentPane extends PaneBase {
         let values = this.refs.form.getChangedValues();
 
         this.props.dispatch(updateCallAssignment(assignmentId, values));
+        this.closePane();
     }
 }

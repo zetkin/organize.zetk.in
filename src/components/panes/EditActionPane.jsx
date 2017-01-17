@@ -68,6 +68,7 @@ export default class EditActionPane extends PaneBase {
         var actionId = this.getParam(0);
 
         this.props.dispatch(updateAction(actionId, values));
+        this.closePane();
     }
 
     onEditCampaign(campaign) {

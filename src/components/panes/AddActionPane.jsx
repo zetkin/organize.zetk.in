@@ -66,6 +66,7 @@ export default class AddActionPane extends PaneBase {
         const campaignId = values.campaign_id;
 
         this.props.dispatch(createAction(campaignId, values));
+        this.closePane();
     }
 
     onEditCampaign(campaign) {

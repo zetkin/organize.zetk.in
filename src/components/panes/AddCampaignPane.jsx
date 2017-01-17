@@ -40,5 +40,6 @@ export default class AddCampaignPane extends PaneBase {
         const values = this.refs.form.getValues();
 
         this.props.dispatch(createCampaign(values));
+        this.closePane();
     }
 }

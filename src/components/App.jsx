@@ -3,6 +3,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux';
 
+import GoogleAnalytics from './misc/GoogleAnalytics';
 import Header from './header/Header';
 import Dashboard from './dashboard/Dashboard';
 import NotFoundPage from './NotFoundPage';
@@ -64,6 +65,7 @@ export default class App extends React.Component {
                     <script type="text/json"
                         id="App-initialState"
                         dangerouslySetInnerHTML={{ __html: stateJson }}/>
+                    <GoogleAnalytics/>
                 </body>
             </html>
         );

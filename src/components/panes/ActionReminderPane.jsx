@@ -20,7 +20,7 @@ export default class ActionReminderPane extends PaneBase {
     }
 
     getPaneSubTitle(data) {
-        return data.actionItem?
+        return (data.actionItem && !data.actionItem.isPending)?
             <Action action={ data.actionItem.data }/> : null;
     }
 
@@ -46,24 +46,24 @@ export default class ActionReminderPane extends PaneBase {
         var reminderForm = null;
         if (data.newParticipants.length) {
             reminderForm = [
-                <h3>Rend reminders to participants</h3>,
+                <h3 key="h">Rend reminders to participants</h3>,
                 <ul key="newParticipantsList"
                     className="ActionReminderPane-newParticipants">
                 {data.newParticipants.map(function(participant) {
-                    return <li><Avatar person={ participant }/></li>;
+                    return (
+                        <li key={ participant.id }>
+                            <Avatar person={ participant }/>
+                        </li>
+                    );
                 })}
                 </ul>,
-                <Form key="reminderForm" ref="reminderForm"
-                    onSubmit={ this.onRemindersSubmit.bind(this) }>
-                    <TextArea name="message" label="Custom additional info"/>
-                </Form>
             ];
         }
 
         var remindedList = null;
         if (data.remindedParticipants.length) {
             remindedList = [
-                <h3>Reminders sent</h3>,
+                <h3 key="h">Reminders sent</h3>,
                 <ul key="remindedList" className="ActionReminderPane-reminded">
                 {data.remindedParticipants.map(function(participant) {
                     const timeLabel = Date.utc.create(participant.reminder_sent)
@@ -72,7 +72,7 @@ export default class ActionReminderPane extends PaneBase {
                     const onClick = this.onPersonClick.bind(this, participant);
 
                     return (
-                        <li>
+                        <li key={ participant.id }>
                             <Avatar person={ participant }/>
                             <Person person={ participant } onClick={ onClick }/>
                             <span className="ActionReminderPane-timestamp">

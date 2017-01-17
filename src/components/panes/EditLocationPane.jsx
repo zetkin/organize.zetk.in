@@ -78,6 +78,7 @@ export default class EditLocationPane extends PaneBase {
         }
 
         this.props.dispatch(updateLocation(locationId, values));
+        this.closePane();
     }
 
 
