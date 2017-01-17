@@ -161,9 +161,15 @@ export default class PeopleListPane extends RootPaneBase {
         return tools;
     }
 
-    onItemClick(item) {
+    onItemClick(item, ev) {
         let person = item.data;
-        this.openPane('person', person.id);
+
+        if (ev && ev.altKey) {
+            this.openPane('editperson', person.id);
+        }
+        else {
+            this.openPane('person', person.id);
+        }
     }
 
     onItemSelect(item, selected) {
