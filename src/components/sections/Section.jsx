@@ -120,10 +120,11 @@ export default class Section extends React.Component {
             }
         }
 
-        const sectionType = this.props.section;
-        const helpUrl = '/help/sections/' + sectionType;
-        const classes = cx(componentClassNames(this), 'Section-' + sectionType);
         const formatMessage = this.props.intl.formatMessage;
+        const sectionType = this.props.section;
+        const helpUrl = formatMessage({ id: 'sections.menu.helpLink.href' });
+        const infoUrl = formatMessage({ id: 'sections.menu.infoLink.href' });
+        const classes = cx(componentClassNames(this), 'Section-' + sectionType);
 
         let subMenuItems = subSections.map((subData, idx) => {
             let label = formatMessage({
@@ -158,10 +159,10 @@ export default class Section extends React.Component {
                                 { backLabel }</a></li>
                     </ul>
                     <div className="Section-navMisc">
-                        <Link target="_blank" href="http://zetkin.org"
-                            msgId="sections.menu.aboutLink"/>
+                        <Link target="_blank" href={ infoUrl }
+                            msgId="sections.menu.infoLink.text"/>
                         <Link target="_blank" href={ helpUrl }
-                            msgId="sections.menu.helpLink"/>
+                            msgId="sections.menu.helpLink.text"/>
                     </div>
                 </nav>
                 <div className="Section-container" ref="paneContainer">

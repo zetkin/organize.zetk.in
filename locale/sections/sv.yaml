@@ -11,8 +11,12 @@ labels:
 
 menu:
     backToDashboard: "Tillbaka"
-    aboutLink: "Info"
-    helpLink: "Hjälp"
+    infoLink:
+        text: "Info"
+        href: "http://zetkin.org/sv"
+    helpLink:
+        text: "Hjälp"
+        href: "http://manual.zetkin.org/sv/for-funktionarer"
 
 subSections:
     people:
