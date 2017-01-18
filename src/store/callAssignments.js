@@ -246,6 +246,12 @@ export default function callAssignments(state = null, action) {
                     assignment.id, assignment, { isPending: false, error: null }),
             });
 
+        case types.DELETE_CALL_ASSIGNMENT + '_FULFILLED':
+            return Object.assign({}, state, {
+                assignmentList: removeListItem(state.assignmentList,
+                    action.meta.assignmentId, { pending: false, error: null }),
+            });
+
         default:
             return state || {
                 assignmentList: createList(),

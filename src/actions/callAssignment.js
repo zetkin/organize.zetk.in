@@ -73,6 +73,21 @@ export function updateCallAssignment(id, data) {
     }
 }
 
+export function deleteCallAssignment(assignmentId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.DELETE_CALL_ASSIGNMENT,
+            meta: { assignmentId },
+            payload: {
+                promise: z.resource(
+                    'orgs', orgId, 'call_assignments', assignmentId).del()
+            },
+        });
+    }
+}
+
 export function retrieveCallAssignmentCallers(id) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
