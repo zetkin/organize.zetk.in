@@ -1,6 +1,9 @@
 campaignSelect:
     nullLabel: "Alla kampanjer"
 
+deleteButton:
+    label: "Radera"
+
 inviteBox:
     h: "Skicka inbjudan"
     sendButton: "Skicka"
