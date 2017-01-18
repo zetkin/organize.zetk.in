@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import PaneBase from './PaneBase';
 import CallAssignmentForm from '../forms/CallAssignmentForm';
 import Button from '../misc/Button';
+import DeleteButton from '../misc/DeleteButton';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import { getListItemById } from '../../utils/store';
-import { retrieveCallAssignment, updateCallAssignment }
+import { deleteCallAssignment, retrieveCallAssignment, updateCallAssignment }
     from '../../actions/callAssignment';
 
 
@@ -49,6 +50,8 @@ export default class EditCallAssignmentPane extends PaneBase {
                 <CallAssignmentForm key="form" ref="form"
                     assignment={ assignment }
                     onSubmit={ this.onSubmit.bind(this) }/>,
+                <DeleteButton key="deleteButton"
+                    onClick={ this.onDeleteClick.bind(this) }/>,
             ];
         }
         else {
@@ -72,5 +75,11 @@ export default class EditCallAssignmentPane extends PaneBase {
 
         this.props.dispatch(updateCallAssignment(assignmentId, values));
         this.closePane();
+    }
+
+    onDeleteClick() {
+        let assignmentId = this.getParam(0);
+
+        this.props.dispatch(deleteCallAssignment(assignmentId));
     }
 }
