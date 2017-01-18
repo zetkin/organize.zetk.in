@@ -1,4 +1,6 @@
 .CallListItem {
+    position: relative;
+
     .Avatar {
         @include col(1.5,12, $align:middle);
         &:first-child {

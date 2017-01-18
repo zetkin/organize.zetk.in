@@ -11,7 +11,7 @@ export default class CallListItem extends React.Component {
 
     render() {
         let call = this.props.data;
-        let timestamp = Date.utc.create(call.allocation_time);
+        let timestamp = new Date(call.allocation_time);
         let stateClass = "CallListItem-state";
         let stateLabel = null;
 
@@ -42,6 +42,12 @@ export default class CallListItem extends React.Component {
         return (
             <div className="CallListItem"
                 onClick={ this.props.onItemClick.bind(this, call) }>
+                <div className="ListItem-date">
+                    <span className="date">
+                        { timestamp.format('{d}/{M}, {yyyy}') }</span>
+                    <span className="time">
+                        { timestamp.format('{HH}:{mm}') }</span>
+                </div>
 
                 <span className={ "CallListItem-callIcon " + stateClass } title={ stateLabel }/>
                 <Avatar className="CallListItem-targetAvatar"
