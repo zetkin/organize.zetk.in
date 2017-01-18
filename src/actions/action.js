@@ -76,6 +76,19 @@ export function createAction(campaignId, data) {
     }
 }
 
+export function deleteAction(actionId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.DELETE_ACTION,
+            meta: { actionId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'actions', actionId).del()
+            }
+        });
+    }
+}
+
 export function sendActionReminders(actionId) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
