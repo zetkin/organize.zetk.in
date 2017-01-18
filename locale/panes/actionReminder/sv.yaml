@@ -1,1 +1,5 @@
 saveButton: "Skicka"
+toBeReminded:
+    h: "Deltagare att påminna"
+alreadyReminded:
+    h: "Redan påminda"

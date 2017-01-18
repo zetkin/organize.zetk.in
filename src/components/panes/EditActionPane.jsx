@@ -6,8 +6,13 @@ import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import ActionForm from '../forms/ActionForm';
 import Button from '../misc/Button';
+import DeleteButton from '../misc/DeleteButton';
 import { getListItemById } from '../../utils/store';
-import { retrieveAction, updateAction } from '../../actions/action';
+import {
+    deleteAction,
+    retrieveAction,
+    updateAction
+} from '../../actions/action';
 
 
 @connect(state => state)
@@ -33,8 +38,9 @@ export default class EditActionPane extends PaneBase {
 
     renderPaneContent(data) {
         if (data.actionItem) {
-            return (
-                <ActionForm ref="form" action={ data.actionItem.data }
+            return [
+                <ActionForm key="form" ref="form"
+                    action={ data.actionItem.data }
                     activities={ this.props.activities }
                     campaigns={ this.props.campaigns }
                     locations={ this.props.locations }
@@ -45,8 +51,10 @@ export default class EditActionPane extends PaneBase {
                     onCreateCampaign={ this.onCreateCampaign.bind(this) }
                     onCreateLocation={ this.onCreateLocation.bind(this) }
                     onCreateActivity={ this.onCreateActivity.bind(this) }
-                    onSubmit={ this.onSubmit.bind(this) }/>
-            );
+                    onSubmit={ this.onSubmit.bind(this) }/>,
+                <DeleteButton key="deleteButton"
+                    onClick={ this.onDeleteClick.bind(this) }/>
+            ];
         }
         else {
             return <LoadingIndicator />;
@@ -69,6 +77,11 @@ export default class EditActionPane extends PaneBase {
 
         this.props.dispatch(updateAction(actionId, values));
         this.closePane();
+    }
+
+    onDeleteClick() {
+        let actionId = this.getParam(0);
+        this.props.dispatch(deleteAction(actionId));
     }
 
     onEditCampaign(campaign) {
