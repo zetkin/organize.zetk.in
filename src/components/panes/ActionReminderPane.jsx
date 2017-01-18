@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
@@ -46,7 +47,8 @@ export default class ActionReminderPane extends PaneBase {
         var reminderForm = null;
         if (data.newParticipants.length) {
             reminderForm = [
-                <h3 key="h">Rend reminders to participants</h3>,
+                <Msg key="h" tagName="h3"
+                    id="panes.actionReminder.toBeReminded.h"/>,
                 <ul key="newParticipantsList"
                     className="ActionReminderPane-newParticipants">
                 {data.newParticipants.map(function(participant) {
@@ -63,7 +65,8 @@ export default class ActionReminderPane extends PaneBase {
         var remindedList = null;
         if (data.remindedParticipants.length) {
             remindedList = [
-                <h3 key="h">Reminders sent</h3>,
+                <Msg key="h" tagName="h3"
+                    id="panes.actionReminder.alreadyReminded.h"/>,
                 <ul key="remindedList" className="ActionReminderPane-reminded">
                 {data.remindedParticipants.map(function(participant) {
                     const timeLabel = Date.utc.create(participant.reminder_sent)
