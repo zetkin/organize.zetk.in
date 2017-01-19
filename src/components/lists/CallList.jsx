@@ -17,12 +17,15 @@ export default class CallList extends React.Component {
     render() {
         let columns = [
             {
-                'caller.name': 'lists.callList.header.callerName',
-                'state': 'lists.callList.header.status',
+                'allocation_time': 'lists.callList.header.time',
             },
             {
                 'target.name': 'lists.callList.header.targetName',
-                'allocation_time': 'lists.callList.header.time',
+                'state': 'lists.callList.header.status',
+                'caller.name': 'lists.callList.header.callerName',
+            },
+            {
+                'organizer_action_needed': 'lists.callList.header.action',
             }
         ];
 

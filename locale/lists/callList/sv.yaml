@@ -3,6 +3,7 @@ header:
     targetName: "Mottagare"
     status: "Status"
     time: "Tid"
+    action: 'Åtgärd'
 item:
     status:
         allocated: "Pågår..."
