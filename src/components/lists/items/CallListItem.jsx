@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage as Msg } from 'react-intl';
 
 import Avatar from '../../misc/Avatar';
 
@@ -11,32 +12,22 @@ export default class CallListItem extends React.Component {
 
     render() {
         let call = this.props.data;
-        let timestamp = new Date(call.allocation_time);
+        let timestamp = Date.utc.create(call.allocation_time);
         let stateClass = "CallListItem-state";
         let stateLabel = null;
 
         switch (call.state) {
             case 0:
-                stateLabel = "Allocated"; stateClass += "Allocated";
+                stateLabel = "lists.callList.item.status.allocated";
+                stateClass += "Allocated";
                 break;
             case 1:
-                stateLabel = "Success"; stateClass += "Success";
+                stateLabel = "lists.callList.item.status.reached";
+                stateClass += "Success";
                 break;
-            case 11:
-                stateLabel = "Failed: No response"; stateClass += "Failed";
-                break;
-            case 12:
-                stateLabel = "Failed: Line busy"; stateClass += "Failed";
-                break;
-            case 13:
-                stateLabel = "Failed: Call back later"; stateClass += "Later";
-                break;
-            case 21:
-                stateLabel = "Failed: Invalid number"; stateClass += "Warning";
-                break;
-            case 21:
-                stateLabel = "Failed: Call dropped"; stateClass += "Warning";
-                break;
+            default:
+                stateLabel = "lists.callList.item.status.notReached";
+                stateClass += "Failed";
         }
 
         return (
@@ -56,9 +47,9 @@ export default class CallListItem extends React.Component {
                         { call.target.name }</span>
                 </div>
                 <div className="CallListItem-callInfo">
-                    <span className={ "CallListItem-callStatus " + stateClass }
-                        title={ stateLabel }>
-                        { stateLabel }
+                    <span className={ "CallListItem-callStatus "
+                        + stateClass }>
+                        <Msg id={ stateLabel.toString() }/>
                     </span>
                     <span className="CallListItem-caller">
                         { call.caller.name }</span>

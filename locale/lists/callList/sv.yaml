@@ -3,3 +3,8 @@ header:
     targetName: "Mottagare"
     status: "Status"
     time: "Tid"
+item:
+    status:
+        allocated: "Pågår..."
+        reached: "Nåddes"
+        notReached: "Nåddes inte"
