@@ -15,6 +15,7 @@ export default class CallListItem extends React.Component {
         let timestamp = Date.utc.create(call.allocation_time);
         let stateClass = "CallListItem-state";
         let stateLabel = null;
+        let actionStatus = null;
 
         switch (call.state) {
             case 0:
@@ -29,6 +30,15 @@ export default class CallListItem extends React.Component {
                 stateLabel = "lists.callList.item.status.notReached";
                 stateClass += "Failed";
         }
+
+        if (call.organizer_action_taken) {
+            actionStatus = "taken";
+        }
+        else if (call.organizer_action_needed) {
+            actionStatus = "needed";
+        }
+
+         let actionClassNames  = cx('CallListItem-action', actionStatus );
 
         return (
             <div className="CallListItem"
