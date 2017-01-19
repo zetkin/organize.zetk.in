@@ -49,18 +49,19 @@ export default class CallListItem extends React.Component {
                         { timestamp.format('{HH}:{mm}') }</span>
                 </div>
 
-                <span className={ "CallListItem-callIcon " + stateClass } title={ stateLabel }/>
-                <Avatar className="CallListItem-targetAvatar"
-                    person={ call.target }/>
-                <span className="CallListItem-target">
-                    { call.target.name }</span>
+                <div className="CallListItem-target">
+                    <Avatar className="CallListItem-targetAvatar"
+                        person={ call.target }/>
+                    <span className="CallListItem-targetName">
+                        { call.target.name }</span>
+                </div>
                 <div className="CallListItem-callInfo">
-                    <Avatar className="CallListItem-callerAvatar"
-                        person={ call.caller }/>
+                    <span className={ "CallListItem-callStatus " + stateClass }
+                        title={ stateLabel }>
+                        { stateLabel }
+                    </span>
                     <span className="CallListItem-caller">
                         { call.caller.name }</span>
-                    <span className="CallListItem-time">
-                        { timestamp.long() }</span>
                 </div>
             </div>
         );

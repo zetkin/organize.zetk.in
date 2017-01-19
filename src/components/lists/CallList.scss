@@ -12,4 +12,10 @@
     .ListItem {
         margin-left: 9em;
     }
+
+    @include medium-screen {
+        &.List {
+            max-width: 485px;
+        }
+    }
 }
