@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import { FormattedMessage as Msg } from 'react-intl';
 
 import Avatar from '../../misc/Avatar';

@@ -1,6 +1,16 @@
 .CallListItem {
     position: relative;
+    display: flex;
 
+    .ListItem-date {
+        padding: 1em;
+    }
+
+    .CallListItem-content {
+        @include col(11,12);
+        padding: 1em;
+    }
+    
     .CallListItem-target {
         @include col(12,12);
     }
@@ -23,7 +33,7 @@
         color: lighten($c-text, 20);
 
         .CallListItem-callStatus {
-            @include col(3,12, $align:middle, $first:true);
+            @include col(4,12, $align:middle, $first:true);
 
             &.CallListItem-stateAllocated {
                 &:before {
@@ -48,7 +58,7 @@
         }
 
         .CallListItem-caller {
-            @include col(9,12, $align:middle);
+            @include col(8,12, $align:middle);
 
             &:before {
                 @include icon($fa-var-phone);
