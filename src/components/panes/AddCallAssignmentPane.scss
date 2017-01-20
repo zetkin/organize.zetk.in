@@ -31,7 +31,7 @@
         }
 
         &.past {
-            color: $c-ui-dark;
+            color: lighten($c-ui-dark, 5);
             border-color: $c-ui-darker;
 
             &:before {
@@ -41,7 +41,7 @@
 
         &.current {
             color: $c-ui-darker;
-            font-weight: bold;
+            font-weight: 500;
 
             &:before {
                 background-color: $c-ui-darker;
