@@ -8,7 +8,10 @@ import Avatar from '../misc/Avatar';
 import Button from '../misc/Button';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import { getListItemById } from '../../utils/store';
-import { retrieveCall } from '../../actions/call';
+import {
+    retrieveCall,
+    toggleCallActionTaken,
+} from '../../actions/call';
 
 
 @connect(state => ({ calls: state.calls }))
@@ -79,7 +82,7 @@ export default class CallPane extends PaneBase {
                     actionResponseButton = (
                         <Button className="CallPane-actionResponseButton"
                             labelMsg="panes.call.action.response.unresolve"
-                            onClick=""/>
+                            onClick={ this.onActionTakenClick.bind(this, false) }/>
                         );
                 }
                 else if (call.organizer_action_needed) {
@@ -89,7 +92,7 @@ export default class CallPane extends PaneBase {
                     actionResponseButton = (
                         <Button className="CallPane-actionResponseButton"
                             labelMsg="panes.call.action.response.resolve"
-                            onClick=""/>
+                            onClick={ this.onActionTakenClick.bind(this, true) }/>
                         );
                 }
 
@@ -161,5 +164,10 @@ export default class CallPane extends PaneBase {
         else {
             return <LoadingIndicator/>;
         }
+    }
+
+    onActionTakenClick(actionTaken) {
+        let callId = this.getParam(0);
+        this.props.dispatch(toggleCallActionTaken(callId, actionTaken));
     }
 }
