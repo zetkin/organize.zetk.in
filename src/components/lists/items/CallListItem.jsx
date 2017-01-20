@@ -13,6 +13,8 @@ export default class CallListItem extends React.Component {
 
     render() {
         let call = this.props.data;
+        if (!call) return null;
+
         let timestamp = Date.utc.create(call.allocation_time);
         let stateClass = "CallListItem-state";
         let stateLabel = null;
