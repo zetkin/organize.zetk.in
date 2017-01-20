@@ -3,6 +3,8 @@ import { createList, updateOrAddListItem } from '../utils/store';
 
 
 export default function calls(state = null, action) {
+    let call;
+
     switch(action.type) {
         case types.RETRIEVE_CALLS + '_PENDING':
             return Object.assign({
@@ -22,7 +24,14 @@ export default function calls(state = null, action) {
             });
 
         case types.RETRIEVE_CALL + '_FULFILLED':
-            let call = action.payload.data.data;
+            call = action.payload.data.data;
+            return Object.assign({
+                callList: updateOrAddListItem(state.callList,
+                    call.id, call, { isPending: false, error: null }),
+            });
+
+        case types.TOGGLE_CALL_ACTION_TAKEN + '_FULFILLED':
+            call = action.payload.data.data;
             return Object.assign({
                 callList: updateOrAddListItem(state.callList,
                     call.id, call, { isPending: false, error: null }),

@@ -27,3 +27,18 @@ export function retrieveCall(id) {
         });
     };
 }
+
+export function toggleCallActionTaken(id, actionTaken) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        let data = { organizer_action_taken: !!actionTaken };
+
+        dispatch({
+            type: types.TOGGLE_CALL_ACTION_TAKEN,
+            meta: { id },
+            payload: {
+                promise: z.resource('orgs', orgId, 'calls', id).patch(data),
+            }
+        });
+    }
+}
