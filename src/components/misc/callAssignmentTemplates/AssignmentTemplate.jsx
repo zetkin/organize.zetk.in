@@ -27,7 +27,10 @@ export default class AssignmentTemplate extends React.Component {
             <div className={ classes }
                 onClick={ this.onSelect.bind(this) }>
 
-                <Msg tagName="h2" id={ titleMsg }/>
+                <div className="AssignmentTemplate-header">
+                    <div className="AssignmentTemplate-headerCheck"/>
+                    <Msg tagName="h2" id={ titleMsg }/>
+                </div>
 
                 <div className="AssignmentTemplate-instructions">
                     <Msg tagName="p" id={ instructionsMsg }/>
