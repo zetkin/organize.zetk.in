@@ -45,10 +45,17 @@ export default class EditQueryPane extends PaneBase {
         if (data.queryItem && !data.queryItem.isPending) {
             let query = data.queryItem.data;
             let filters = query.filter_spec;
+            let form = null;
+
+            if (query.type == 'standalone') {
+                form = (
+                    <QueryForm key="form" ref="form" query={ query }
+                        onSubmit={ this.onSubmit.bind(this) }/>
+                );
+            }
 
             return [
-                <QueryForm key="form" ref="form" query={ query }
-                    onSubmit={ this.onSubmit.bind(this) }/>,
+                form,
                 <Msg tagName="h3" key="filterHeader"
                     id="panes.editQuery.filterHeader"/>,
                 <Msg tagName="p" key="filterIntro"
