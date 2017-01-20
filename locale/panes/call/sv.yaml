@@ -1,4 +1,16 @@
-title: "Samtal med { targetName }"
-pendingTitle: "Samtal"
+title: "Rapport från samtal"
+pendingTitle: "Rapport"
 subTitle: "Ringd av { callerName }, { date }"
-notesHeader: "Ringarens anteckningar"
+note:
+    header: "Ringarens anteckningar"
+    noNote: "Ringaren lämnade ingen anteckning"
+action:
+    header:
+        needed: "Åtgärd behövs av organisatör"
+        taken: "Åtgärdad av organisatör"
+    content:
+        header: "Meddelande till organisatör"
+        noMessage: "Ringaren lämnade inget meddelande"
+    response:
+        resolve: "Markera som åtgärdad"
+        unresolve: "Markera som inte åtgärdad"

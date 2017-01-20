@@ -1,0 +1,121 @@
+.CallPane.PaneBase {
+    min-width: 500px;
+}
+
+.CallPane {
+    .PaneBase-content > h2 {
+        color: lighten($c-text, 60);
+        &:before {
+            @include icon($fa-var-phone);
+        }
+    }
+}
+
+.CallPane-target {
+    margin-bottom: 1em;
+
+    .Avatar {
+        @include col(2.5,12, $align:middle);
+    }
+
+    .CallPane-targetName {
+        @include col(9.5,12, $align:middle);
+    }
+}
+
+.CallPane-caller {
+    @include col(6,12, $align:middle);
+
+    .Avatar {
+        @include col(3,12, $align:middle, $first:true);
+    }
+
+    .CallPane-callerName {
+        @include col(9,12, $align:middle);
+        font-size: 1.5em;
+    }
+}
+
+.CallPane-date {
+    @include col(6,12, $align:middle);
+    font-size: 1.5em;
+    text-align: right;
+
+    &:before {
+        @include icon($fa-var-clock-o);
+    }
+}
+
+@mixin message {
+    h3 {
+        margin-bottom: 0.5em;
+        &:before {
+            @include icon($fa-var-sticky-note-o);
+        }
+    }
+
+    p {
+        position: relative;
+        border-left: 3px solid #555;
+        padding-left: 1em;
+        margin-bottom: 1em;
+        margin-left: 1em;
+    }
+
+    .empty {
+        font-style: italic;
+        color: lighten($c-text, 40);
+        p {
+            border-left: 0;
+        }
+    }
+}
+
+.CallPane-callerNote {
+    @include col(12,12);
+    @include message;
+    margin-bottom: 2em;
+}
+
+.CallPane-action {
+    background-color: darken(white, 5);
+    border-radius: 2px;
+    margin-top: 2em;
+
+    &.needed .CallPane-actionHeader {
+        background-color: $c-ui-warning;
+    }
+
+    &.taken .CallPane-actionHeader {
+        background-color: $c-brand-success;
+    }
+
+    .CallPane-actionHeader {
+        color: white;
+        font-size: 1.5em;
+        padding: 0.5em;
+        border-radius: 2px 2px 0 0;
+
+        &:before {
+            @include icon($fa-var-bell-o);
+        }
+    }
+
+    .CallPane-actionContent {
+        @include message;
+        padding: 0 1em;
+    }
+
+    .CallPane-actionResponse {
+        padding: 1em;
+        text-align: right;
+    }
+
+    &.needed .CallPane-actionResponseButton {
+        @include button($icon:$fa-var-check, $color:$c-brand-success);
+    }
+
+    &.taken .CallPane-actionResponseButton {
+        @include inline-button($icon:$fa-var-undo);
+    }
+}
