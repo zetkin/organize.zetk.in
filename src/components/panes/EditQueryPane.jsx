@@ -36,9 +36,12 @@ export default class EditQueryPane extends PaneBase {
     }
 
     getPaneTitle(data) {
-        const formatMessage = this.props.intl.formatMessage;
-        return formatMessage(
-            { id: 'panes.editQuery.title' });
+        let type = (data.queryItem && data.queryItem.data)?
+                data.queryItem.data.type : 'standalone';
+
+        let msgId = 'panes.editQuery.title.' + type;
+
+        return this.props.intl.formatMessage({ id: msgId });
     }
 
     renderPaneContent(data) {

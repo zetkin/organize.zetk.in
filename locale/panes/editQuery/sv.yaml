@@ -1,4 +1,8 @@
-title: "Redigera sökfråga"
+title:
+    standalone: "Redigera smart sökning"
+    callassignment_target: "Redigera målgruppssökning"
+    callassignment_goal: "Redigera syftessökning"
+
 filterHeader: "Filter"
 filterIntro: |
     En sökfråga består av en kedja av filter, där varje filter adderar
