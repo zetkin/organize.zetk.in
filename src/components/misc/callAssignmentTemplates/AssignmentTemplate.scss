@@ -8,8 +8,13 @@
     transition: max-height 0.3s;
     cursor: pointer;
 
+    &:hover {
+        background-color: darken(white, 2);
+    }
+
     &.selected {
         max-height: 20em;
+        cursor: auto;
     }
 
     .AssignmentTemplate-header {
