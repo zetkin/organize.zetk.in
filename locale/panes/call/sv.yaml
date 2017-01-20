@@ -1,6 +1,5 @@
 title: "Rapport från samtal"
 pendingTitle: "Rapport"
-subTitle: "Ringd av { callerName }, { date }"
 summary:
     status0: "Samtalets har inte slutförts."
     status1: "Vi nådde {target}."

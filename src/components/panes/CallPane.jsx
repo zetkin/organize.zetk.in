@@ -6,6 +6,7 @@ import cx from 'classnames';
 import PaneBase from './PaneBase';
 import Avatar from '../misc/Avatar';
 import Button from '../misc/Button';
+import LoadingIndicator from '../misc/LoadingIndicator';
 import { getListItemById } from '../../utils/store';
 import { retrieveCall } from '../../actions/call';
 
@@ -30,30 +31,15 @@ export default class CallPane extends PaneBase {
     getPaneTitle(data) {
         const formatMessage = this.props.intl.formatMessage;
         if (data.callItem && !data.callItem.isPending) {
-            return formatMessage(
-                { id: 'panes.call.title' },
-                { targetName: data.callItem.data.target.name });
+            return formatMessage({ id: 'panes.call.title' });
         }
         else {
             return formatMessage({ id: 'panes.call.pendingTitle' });
         }
     }
 
-    getPaneSubTitle(data) {
-        const formatMessage = this.props.intl.formatMessage;
-
-        if (data.callItem && !data.callItem.isPending) {
-            let call = data.callItem.data;
-            let date = Date.utc.create(call.allocation_time);
-            return formatMessage({ id: 'panes.call.subTitle' }, {
-                callerName: call.caller.name,
-                date: date.long(),
-            });
-        }
-    }
-
     renderPaneContent(data) {
-        if (data.callItem) {
+        if (data.callItem && !data.callItem.isPending) {
             let call = data.callItem.data;
             let timestamp = Date.utc.create(call.allocation_time);
 
@@ -173,8 +159,7 @@ export default class CallPane extends PaneBase {
             );
         }
         else {
-            // TODO: Loading indicator?
-            return null;
+            return <LoadingIndicator/>;
         }
     }
 }
