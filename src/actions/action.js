@@ -76,14 +76,14 @@ export function createAction(campaignId, data) {
     }
 }
 
-export function deleteAction(actionId) {
+export function deleteAction(id) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
         dispatch({
             type: types.DELETE_ACTION,
-            meta: { actionId },
+            meta: { id },
             payload: {
-                promise: z.resource('orgs', orgId, 'actions', actionId).del()
+                promise: z.resource('orgs', orgId, 'actions', id).del()
             }
         });
     }
