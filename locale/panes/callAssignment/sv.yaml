@@ -8,8 +8,8 @@ instructions:
     editLink: "Redigera instruktionerna"
 target:
     h: "Målgrupp"
-    editTargetLink: "Redigera målgruppsfilter"
-    editGoalLink: "Redigera målfilter"
+    editTargetLink: "Redigera målgrupp"
+    editGoalLink: "Redigera syfte"
     stats:
         goal: "Personer återstår"
         target: "Personer i målgruppen"

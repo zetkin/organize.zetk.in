@@ -147,13 +147,15 @@ export default class CallAssignmentPane extends PaneBase {
                     <div className="CallAssignmentPane-stats">
                         <div>
                             <div key="targetStats"
-                                className="CallAssignmentPane-targetStats">
+                                className="CallAssignmentPane-targetStats"
+                                onClick={ this.onClickEditTarget.bind(this) }>
                                 { targetStats }
                             </div>
                         </div>
                         <div>
                             <div key="goalStats"
-                                className="CallAssignmentPane-goalStats">
+                                className="CallAssignmentPane-goalStats"
+                                onClick={ this.onClickEditGoal.bind(this) }>
                                 { goalStats }
                             </div>
                         </div>

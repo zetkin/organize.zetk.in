@@ -59,7 +59,7 @@ export default class CampaignFilter extends FilterBase {
         let campaignSelect = null;
         if (this.state.op == 'in_spec' || this.state.op == 'notin_spec') {
             campaignSelect = (
-                <RelSelectInput name="campaign"
+                <RelSelectInput name="campaign" key="campaignSelect"
                     labelMsg="filters.campaign.campaign"
                     objects={ campaigns } value={ this.state.campaign }
                     onValueChange={ this.onChangeSimpleField.bind(this) }
