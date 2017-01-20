@@ -21,6 +21,7 @@ export default class CallLogPane extends RootPaneBase {
     renderPaneContent(data) {
         return [
             <CallList key="list" callList={ data.callList }
+                onLoadPage={ this.onLoadPage.bind(this) }
                 onItemClick={ this.onItemClick.bind(this) }/>
         ];
     }
@@ -28,5 +29,9 @@ export default class CallLogPane extends RootPaneBase {
     onItemClick(item) {
         let call = item.data;
         this.openPane('call', call.id);
+    }
+
+    onLoadPage(page) {
+        this.props.dispatch(retrieveCalls(page));
     }
 }

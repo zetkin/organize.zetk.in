@@ -1,83 +1,102 @@
 .CallListItem {
+    position: relative;
+    display: flex;
+
+    .ListItem-date {
+        padding: 1em;
+    }
+
+    .CallListItem-content {
+        @include col(11,12);
+        padding: 1em;
+    }
+    
+    .CallListItem-target {
+        @include col(12,12);
+    }
+
     .Avatar {
         @include col(1.5,12, $align:middle);
         &:first-child {
-            @include col(1,12, $align:middle, $first:true);
+            @include col(1.5,12, $align:middle, $first:true);
         }
     }
 
-    @mixin callStatusIcon {
-        font-size: 0.5em;
-        position: absolute;
-        right: 0.8em;
-        top: 0.5em;
-    }
-
-    .CallListItem-callIcon {
-        @include col(1.5,12, $align:middle, $first:true);
-        font-size: 2.5em;
-        position: relative;
-        &:before {
-            @include icon($fa-var-phone);
-            margin-right: 0;
-        }
-
-        &.CallListItem-stateAllocated {
-            color: $c-ui-darker;
-            &:after {
-                @include icon($fa-var-hourglass-half);
-                @include callStatusIcon;
-            }
-        }
-        &.CallListItem-stateSuccess:after {
-            @include icon($fa-var-arrow-right);
-            @include callStatusIcon;
-        }
-        &.CallListItem-stateFailed:after {
-            @include icon($fa-var-remove);
-            color: $c-brand-delete;
-            @include callStatusIcon;
-        }
-        &.CallListItem-stateLater:after {
-            @include icon($fa-var-undo);
-            color: $c-ui-darker;
-            @include callStatusIcon;
-        }
-        &.CallListItem-stateWarning:after {
-            @include icon($fa-var-exclamation-triangle);
-            color: $c-brand-delete;
-            @include callStatusIcon;
-        }
-
-
-    }
-
-    .CallListItem-target {
-        @include col(4,12, $align:middle);
+    .CallListItem-targetName {
+        @include col(10.5,12, $align:middle);
         font-size: 1.5em;
     }
 
     .CallListItem-callInfo {
-        @include col(5,12, $align: middle);
-        font-size: 1.3em;
+        @include col(12,12, $align: middle);
+        margin: 0.5em 0 0.25em; 
+        color: lighten($c-text, 20);
 
-        .Avatar {
-            @include col(2,12, $align:middle);
+        .CallListItem-callStatus {
+            @include col(4,12, $align:middle, $first:true);
+
+            &.CallListItem-stateAllocated {
+                &:before {
+                    @include icon($fa-var-hourglass-half);
+                    color: darken(white, 10);
+                }
+            }
+
+            &.CallListItem-stateSuccess {
+                &:before {
+                    @include icon($fa-var-check);
+                    color: $c-brand-success;
+                }
+            }
+
+            &.CallListItem-stateFailed {
+                &:before {
+                    @include icon($fa-var-times);
+                    color: $c-brand-delete;
+                }
+            }
         }
 
         .CallListItem-caller {
-            @include col(10,12, $align:middle);
+            @include col(8,12, $align:middle);
+
+            &:before {
+                @include icon($fa-var-phone);
+            }
+        }
+    }
+
+    .CallListItem-action {
+        @include col(1,12, $first:true, $last:true);
+        background-color: darken(white, 5);
+        color: white;
+        text-align: center;
+
+        &.taken {
+            color: $c-ui-darker;
+            &::before {
+                @include icon($fa-var-check);
+            }
+            &::after {
+                @include icon($fa-var-bell-o);
+            }
         }
 
-        .CallListItem-time {
-            @include col(12,12, $align:middle);
-            font-size: 0.9em;
-            margin-top: 0.5em;
-            &:before {
-                @include icon($fa-var-clock-o);
-                @include col(2, 12, $first:true);
-                padding-right: 1em;
+        &.needed {
+            background-color: $c-ui-warning;
+            &::before {
+                @include icon($fa-var-exclamation-circle);
             }
+            &::after {
+                @include icon($fa-var-bell-o);
+            }
+        }
+        &::before {
+            margin-top: 2em;
+            margin-right:0!important;
+        }
+        &::after {
+            margin-right:0!important;
         }
     }
 }

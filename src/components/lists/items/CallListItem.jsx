@@ -1,4 +1,6 @@
 import React from 'react';
+import cx from 'classnames';
+import { FormattedMessage as Msg } from 'react-intl';
 
 import Avatar from '../../misc/Avatar';
 
@@ -11,51 +13,64 @@ export default class CallListItem extends React.Component {
 
     render() {
         let call = this.props.data;
+        if (!call) return null;
+
         let timestamp = Date.utc.create(call.allocation_time);
         let stateClass = "CallListItem-state";
         let stateLabel = null;
+        let actionStatus = null;
 
         switch (call.state) {
             case 0:
-                stateLabel = "Allocated"; stateClass += "Allocated";
+                stateLabel = "lists.callList.item.status.allocated";
+                stateClass += "Allocated";
                 break;
             case 1:
-                stateLabel = "Success"; stateClass += "Success";
+                stateLabel = "lists.callList.item.status.reached";
+                stateClass += "Success";
                 break;
-            case 11:
-                stateLabel = "Failed: No response"; stateClass += "Failed";
-                break;
-            case 12:
-                stateLabel = "Failed: Line busy"; stateClass += "Failed";
-                break;
-            case 13:
-                stateLabel = "Failed: Call back later"; stateClass += "Later";
-                break;
-            case 21:
-                stateLabel = "Failed: Invalid number"; stateClass += "Warning";
-                break;
-            case 21:
-                stateLabel = "Failed: Call dropped"; stateClass += "Warning";
-                break;
+            default:
+                stateLabel = "lists.callList.item.status.notReached";
+                stateClass += "Failed";
         }
+
+        if (call.organizer_action_taken) {
+            actionStatus = "taken";
+        }
+        else if (call.organizer_action_needed) {
+            actionStatus = "needed";
+        }
+
+         let actionClassNames  = cx('CallListItem-action', actionStatus );
 
         return (
             <div className="CallListItem"
                 onClick={ this.props.onItemClick.bind(this, call) }>
-
-                <span className={ "CallListItem-callIcon " + stateClass } title={ stateLabel }/>
-                <Avatar className="CallListItem-targetAvatar"
-                    person={ call.target }/>
-                <span className="CallListItem-target">
-                    { call.target.name }</span>
-                <div className="CallListItem-callInfo">
-                    <Avatar className="CallListItem-callerAvatar"
-                        person={ call.caller }/>
-                    <span className="CallListItem-caller">
-                        { call.caller.name }</span>
-                    <span className="CallListItem-time">
-                        { timestamp.long() }</span>
+                <div className="ListItem-date">
+                    <span className="date">
+                        { timestamp.format('{d}/{M}, {yyyy}') }</span>
+                    <span className="time">
+                        { timestamp.format('{HH}:{mm}') }</span>
                 </div>
+                <div className="CallListItem-content">
+                    <div className="CallListItem-target">
+                        <Avatar className="CallListItem-targetAvatar"
+                            person={ call.target }/>
+                        <span className="CallListItem-targetName">
+                            { call.target.name }</span>
+                    </div>
+                    <div className="CallListItem-callInfo">
+                        <span className={ "CallListItem-callStatus "
+                            + stateClass }>
+                            <Msg id={ stateLabel.toString() }/>
+                        </span>
+                        <span className="CallListItem-caller">
+                            { call.caller.name }</span>
+                    </div>
+                    <div className="CallListItem-callStatuses"/>
+                    <div className="CallListItem-organizerStatuses"/>
+                </div>
+                <div className={ actionClassNames }></div>
             </div>
         );
     }
