@@ -75,12 +75,14 @@
         a {
             @include col(6,12);
             text-align: center;
+            cursor: pointer;
         }
 
         .CallAssignmentPane-stats {
             min-height: 92px;
             margin-bottom: 10px;
             & > div {
+                cursor: pointer;
                 @include col(6,12);
             }
             div > div {
