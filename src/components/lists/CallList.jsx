@@ -32,6 +32,7 @@ export default class CallList extends React.Component {
         return (
             <List className="CallList"
                 headerColumns={ columns } itemComponent={ CallListItem }
+                enablePagination={ true } onLoadPage={ this.props.onLoadPage }
                 list={ this.props.callList } onItemClick={ this.props.onItemClick }/>
         );
     }

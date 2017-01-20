@@ -1,14 +1,16 @@
 import * as types from '.';
 
 
-export function retrieveCalls() {
+export function retrieveCalls(page = 0, perPage = 100) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
 
         dispatch({
             type: types.RETRIEVE_CALLS,
+            meta: { page },
             payload: {
-                promise: z.resource('orgs', orgId, 'calls').get(),
+                promise: z.resource('orgs', orgId, 'calls')
+                    .get(page, perPage),
             }
         });
     };
