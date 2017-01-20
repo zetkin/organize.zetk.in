@@ -1,6 +1,16 @@
 title: "Rapport från samtal"
 pendingTitle: "Rapport"
 subTitle: "Ringd av { callerName }, { date }"
+summary:
+    status0: "Samtalets har inte slutförts."
+    status1: "Vi nådde {target}."
+    status11: "{target} svarade inte."
+    status12: "Linjen var upptagen."
+    status13: "{target} bad oss ringa tillbaka."
+    status14: "{target} var inte tillgänglig just nu."
+    status15: "Vi lämnade meddelande på telefonsvarare."
+    status21: "Vi hade fel nummer."
+    status22: "Samtalet bröts."
 note:
     header: "Ringarens anteckningar"
     noNote: "Ringaren lämnade ingen anteckning"

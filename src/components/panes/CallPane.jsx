@@ -60,6 +60,14 @@ export default class CallPane extends PaneBase {
             let callerNote = null;
             let action = null;
 
+            let classes = cx('CallPane-content', 'status' + call.state);
+
+            let summaryMsg = 'panes.call.summary.status' + call.state;
+            let summaryValues = {
+                caller: call.caller.name,
+                target: call.target.name,
+            };
+
             if (call.notes) {
                 callerNote = <p>{ call.notes }</p>;
             }
@@ -131,11 +139,20 @@ export default class CallPane extends PaneBase {
             }
 
             return (
-                <div>
+                <div className={ classes }>
                     <div className="CallPane-target">
                         <Avatar key="targetAvatar" person={ call.target }/>
                         <h1 key="targetName" className="CallPane-targetName">
                             { call.target.name } </h1>
+                    </div>
+                    <div className="CallPane-status">
+                        <span className="CallPane-statusBar0"/>
+                        <span className="CallPane-statusBar1"/>
+                    </div>
+                     <div className="CallPane-summary">
+                        <Msg id={ summaryMsg }
+                            values={ summaryValues }
+                            />
                     </div>
                     <div className="CallPane-caller">
                         <Avatar key="callerAvatar" className="CallPane-callerAvatar"
