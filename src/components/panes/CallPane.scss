@@ -4,7 +4,7 @@
 
 .CallPane {
     .PaneBase-content > h2 {
-        color: lighten($c-text, 40);
+        color: lighten($c-text, 30);
         &:before {
             @include icon($fa-var-phone);
         }
