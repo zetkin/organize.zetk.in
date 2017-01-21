@@ -85,7 +85,7 @@ export default class EditQueryPane extends PaneBase {
         ev.preventDefault();
 
         let queryId = this.getParam(0);
-        let values = this.refs.form.getValues();
+        let values = this.refs.form? this.refs.form.getValues() : {};
         let listComponent = this.refs.filters.decoratedComponentInstance;
 
         values = Object.assign({}, values, {
