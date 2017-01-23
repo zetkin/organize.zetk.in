@@ -91,6 +91,10 @@
             transition: background-color .2s .2s;
         }
 
+        .RootPaneBase-filterButton {
+            @include inline-button($icon:$fa-var-filter);
+        }
+
         .RootPaneBase-filterDrawer {
             max-height: 0;
             transition: max-height .3s, padding 0.3s;
