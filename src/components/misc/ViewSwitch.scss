@@ -1,10 +1,6 @@
 .ViewSwitch{
     display: inline-block;
     button {
-        @include inline-button;
-        width: auto;
-        margin-bottom: inherit;
-
         &:focus {
             outline: 0;
         }
@@ -26,7 +22,7 @@
     .ViewSwitch-state-cal {
         @include icon-button-only();
     }
-    
+
     .ViewSwitch-state-list:before{
         @include icon($fa-var-list-alt);
     }
