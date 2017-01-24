@@ -14,9 +14,6 @@ import {
 export default class CampaignSectionPaneBase extends RootPaneBase {
     getPaneFilters(data) {
         return [
-            <CampaignSelect key="campaignSelect"
-                onCreate={ this.onCreateCampaign.bind(this) }
-                onEdit={ this.onEditCampaign.bind(this) }/>,
             <div key="dateFilter" className="AllActionsPane-dateFilter">
                 <DateInput name="afterDate"
                     value={ this.props.actions.filters.afterDate }
@@ -28,7 +25,10 @@ export default class CampaignSectionPaneBase extends RootPaneBase {
                     labelMsg="panes.allActions.filters.beforeDate"
                     onValueChange={ this.onFilterBeforeDateChange.bind(this) }
                     />
-            </div>
+            </div>,
+            <CampaignSelect key="campaignSelect"
+                onCreate={ this.onCreateCampaign.bind(this) }
+                onEdit={ this.onEditCampaign.bind(this) }/>
         ];
     }
 
