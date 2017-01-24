@@ -1,5 +1,5 @@
 import React from 'react';
-import { injectIntl } from 'react-intl';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import RelSelectInput from '../forms/inputs/RelSelectInput';
@@ -18,13 +18,16 @@ export default class CampaignSelect extends React.Component {
             { id: 'misc.campaignSelect.nullLabel' });
 
         return (
-            <RelSelectInput value={ selectedId } objects={ campaigns }
-                className='CampaignSelect'
-                showEditLink={ true } allowNull={ true }
-                nullLabel={ nullLabel }
-                onEdit={ this.props.onEdit }
-                onCreate={ this.props.onCreate }
-                onValueChange={ this.onChange.bind(this) }/>
+            <div>
+                <Msg tagName="label" id="misc.campaignSelect.header" />
+                <RelSelectInput value={ selectedId } objects={ campaigns }
+                    className='CampaignSelect'
+                    showEditLink={ true } allowNull={ true }
+                    nullLabel={ nullLabel }
+                    onEdit={ this.props.onEdit }
+                    onCreate={ this.props.onCreate }
+                    onValueChange={ this.onChange.bind(this) }/>
+            </div>
         );
     }
 

@@ -107,13 +107,12 @@
     padding: .5em 1em .4em;
     cursor: pointer;
     margin-bottom: inherit;
+    line-height: 1.6em;
     @include button-color($color, $amount);
     @if $icon {
         padding-left: .3em;
         &:before {
             @include icon($icon);
-            line-height: 0;
-            height: 0;
         }
     }
 }

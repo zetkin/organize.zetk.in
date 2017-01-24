@@ -1,5 +1,6 @@
 campaignSelect:
     nullLabel: "Alla kampanjer"
+    header: "Väl kampanj"
 
 deleteButton:
     label: "Radera"

@@ -1,5 +1,6 @@
 .RelSelectInput {
     position: relative;
+    width: 100%;
 
     input[type=text] {
         @include input-base;
@@ -21,6 +22,7 @@
         overflow-x: hidden;
 
         li {
+            position: relative;
             cursor: pointer;
             padding: 0.5em 1em 0.5em 2em;
             font-size: 1.1em;
@@ -56,12 +58,21 @@
             }
 
             .RelSelectInput-editLink {
-                float: right;
+                position: absolute;
+                right: 0;
+                top: 0;
                 text-decoration: underline;
                 color: #888;
                 text-align: right;
                 width: 30px;
                 display: none;
+                height: 100%;
+
+                &:before {
+                    @include icon($fa-var-pencil);
+                    line-height: 2.4em;
+                }
+
                 &:hover {
                     color: darken(#888, 30)
                 }
@@ -83,8 +94,8 @@
 
     &:after {
         position: absolute;
-        width: 31px;
-        height: 31px;
+        width: 32px;
+        height: 32px;
         background-color: #eee;
         top: 1px;
         right: 1px;

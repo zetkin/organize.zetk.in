@@ -1,1 +1,3 @@
-filterButton: "Visa/dölj filter"
+filterButtonShow: "Visa filter"
+filterButtonHide: "Dölj filter"
+filterApplyButton: "Tillämpa filter"

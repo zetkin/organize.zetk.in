@@ -1,3 +1,4 @@
 addButton: "Lägg till"
 querySelect:
+    header: "Smarta sökningar"
     nullLabel: "(Visa alla människor)"

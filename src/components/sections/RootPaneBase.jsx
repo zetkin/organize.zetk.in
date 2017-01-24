@@ -61,14 +61,25 @@ export default class RootPaneBase extends React.Component {
             if (filters) {
                 filterDrawer = (
                     <div className="RootPaneBase-filterDrawer">
-                        { filters }
+                        <div className="RootPaneBase-filterContent">
+                            { filters }
+                        </div>
+                        <div className="RootPaneBase-filterFooter">
+                        <Button key="filterButton"
+                            className="RootPaneBase-filterApplyButton"
+                            labelMsg="panes.filterApplyButton"
+                            onClick={ this.onFilterButtonClick.bind(this) }/>
+                        </div>
                     </div>
                 );
+
+                let filterButtonLabel = this.state.showFilters ?
+                    "panes.filterButtonHide" : "panes.filterButtonShow";
 
                 filterButton = (
                     <Button key="filterButton"
                         className="RootPaneBase-filterButton"
-                        labelMsg="panes.filterButton"
+                        labelMsg={ filterButtonLabel }
                         onClick={ this.onFilterButtonClick.bind(this) }/>
                 );
             }
