@@ -73,10 +73,13 @@ export default class RootPaneBase extends React.Component {
                     </div>
                 );
 
+                let filterButtonLabel = this.state.showFilters ?
+                    "panes.filterButtonHide" : "panes.filterButtonShow";
+
                 filterButton = (
                     <Button key="filterButton"
                         className="RootPaneBase-filterButton"
-                        labelMsg="panes.filterButtonShow"
+                        labelMsg={ filterButtonLabel }
                         onClick={ this.onFilterButtonClick.bind(this) }/>
                 );
             }
