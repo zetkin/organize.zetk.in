@@ -1,5 +1,6 @@
 .RelSelectInput {
     position: relative;
+    width: 100%;
 
     input[type=text] {
         @include input-base;
