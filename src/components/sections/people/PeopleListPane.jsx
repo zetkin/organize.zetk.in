@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { injectIntl } from 'react-intl';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import React from 'react';
 
 import RootPaneBase from '../RootPaneBase';
@@ -137,14 +137,17 @@ export default class PeopleListPane extends RootPaneBase {
         let querySelectNullLabel = formatMessage(
             { id: 'panes.peopleList.querySelect.nullLabel' });
 
-        return [
-            <RelSelectInput key="querySelect" name="querySelect"
-                value={ queryId } objects={ queries } showEditLink={ true }
-                allowNull={ true } nullLabel={ querySelectNullLabel }
-                onValueChange={ this.onQueryChange.bind(this) }
-                onCreate={ this.onQueryCreate.bind(this) }
-                onEdit={ this.onQueryEdit.bind(this) }/>,
-        ];
+        return (
+            <div>
+                <Msg tagName="label" id="panes.peopleList.querySelect.header" />
+                <RelSelectInput key="querySelect" name="querySelect"
+                    value={ queryId } objects={ queries } showEditLink={ true }
+                    allowNull={ true } nullLabel={ querySelectNullLabel }
+                    onValueChange={ this.onQueryChange.bind(this) }
+                    onCreate={ this.onQueryCreate.bind(this) }
+                    onEdit={ this.onQueryEdit.bind(this) }/>
+            </div>
+        );
 
         if (data.selection && data.selection.selectedIds.length) {
             let ops = [ 'delete', 'tag', 'export' ];
