@@ -3,6 +3,7 @@ title: "Skapa ringuppdrag"
 breadcrumbs:
     target: |
         Målgrupp{targetType, select,
+            allTarget {: Ring alla}
             tagTarget {: Ring alla med en viss etikett}
             custom {: Ingen mall}
             other {}
@@ -20,6 +21,7 @@ breadcrumbs:
 target:
     saveButton: |
         {targetType, select,
+            allTarget {Välj alla som målgrupp}
             tagTarget {Välj målgrupp utifrån etikett}
         }
     customLink: "Definiera urvalsregler manuellt senare"
@@ -45,6 +47,11 @@ form:
         för ringuppdraget.
 
 templates:
+    allTarget:
+        title: "Alla i databasen"
+        instructions: |
+            Målgruppen utgörs av alla personer i databasen.
+
     tagTarget:
         title: "Alla med en viss etikett"
         instructions: |
