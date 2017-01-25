@@ -230,17 +230,17 @@ export default class RelSelectInput extends InputBase {
     }
 
     onBlur(ev) {
-        const listDOMNode = ReactDOM.findDOMNode(this.refs.objectList);
-        listDOMNode.scrollTop = 0;
-
         // TODO: This is a smelly solution to the onClick/onMouseDown problem
         //       The blur event fires on mouse down, so the click event never
         //       fires if blurring hides the menu.
         setTimeout(() => {
+            const listDOMNode = ReactDOM.findDOMNode(this.refs.objectList);
+            listDOMNode.scrollTop = 0;
+
             this.setState({
                 inputFocused: false
             });
-        }, 250);
+        }, 200);
     }
 
     createObject() {
