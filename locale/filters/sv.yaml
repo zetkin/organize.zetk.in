@@ -1,6 +1,7 @@
 addFilter: "Lägg till filter"
 dropInstructions: "Släpp filter här för att byta ordning"
 types:
+    all: "Alla i organisationen"
     callHistory: "Ringhistorik"
     campaignParticipation: "Kampanjdeltagande"
     joinDate: "Inträdesdatum"

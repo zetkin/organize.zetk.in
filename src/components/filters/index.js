@@ -1,3 +1,4 @@
+import AllFilter from './AllFilter';
 import CallHistoryFilter from './CallHistoryFilter';
 import CampaignFilter from './CampaignFilter';
 import JoinDateFilter from './JoinDateFilter';
@@ -5,6 +6,7 @@ import PersonDataFilter from './PersonDataFilter';
 import PersonTagsFilter from './PersonTagsFilter';
 
 const filterComponents = {
+    'all': AllFilter,
     'call_history': CallHistoryFilter,
     'campaign_participation': CampaignFilter,
     'join_date': JoinDateFilter,

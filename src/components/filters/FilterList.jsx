@@ -67,6 +67,7 @@ export default class FilterList extends React.Component {
         const msg = id => this.context.intl.formatMessage({ id });
 
         const filterTypes = {
+            'all': msg('filters.types.all'),
             'call_history': msg('filters.types.callHistory'),
             'campaign_participation': msg('filters.types.campaignParticipation'),
             'join_date': msg('filters.types.joinDate'),
