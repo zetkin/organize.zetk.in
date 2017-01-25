@@ -26,8 +26,12 @@ const participantSource = {
             dropResult.onSetContact(person, oldAction);
         }
 
-        if (oldAction && oldAction.id != newAction.id && dropResult.onMoveParticipant) {
+        if (oldAction && newAction && oldAction.id != newAction.id && dropResult.onMoveParticipant) {
             dropResult.onMoveParticipant(person, oldAction);
+        }
+
+        if (dropResult.onDropPerson) {
+            dropResult.onDropPerson(person, targetType);
         }
     }
 }
