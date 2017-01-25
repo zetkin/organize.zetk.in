@@ -4,6 +4,7 @@ import CampaignFilter from './CampaignFilter';
 import JoinDateFilter from './JoinDateFilter';
 import PersonDataFilter from './PersonDataFilter';
 import PersonTagsFilter from './PersonTagsFilter';
+import RandomFilter from './RandomFilter';
 
 const filterComponents = {
     'all': AllFilter,
@@ -12,6 +13,7 @@ const filterComponents = {
     'join_date': JoinDateFilter,
     'person_data': PersonDataFilter,
     'person_tags': PersonTagsFilter,
+    'random': RandomFilter,
 };
 
 export function resolveFilterComponent(type) {

@@ -7,3 +7,4 @@ types:
     joinDate: "Inträdesdatum"
     personData: "Personuppgifter"
     personTags: "Etiketter"
+    random: "Slumpmässigt urval"

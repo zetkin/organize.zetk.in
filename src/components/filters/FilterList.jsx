@@ -73,6 +73,7 @@ export default class FilterList extends React.Component {
             'join_date': msg('filters.types.joinDate'),
             'person_data': msg('filters.types.personData'),
             'person_tags': msg('filters.types.personTags'),
+            'random': msg('filters.types.random'),
         };
 
         let items = [];
