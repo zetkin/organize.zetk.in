@@ -16,6 +16,8 @@ import InformTemplate from '../misc/callAssignmentTemplates/InformTemplate';
 import MobilizeTemplate from '../misc/callAssignmentTemplates/MobilizeTemplate';
 import StayInTouchTemplate from '../misc/callAssignmentTemplates/StayInTouchTemplate';
 import TagTargetTemplate from '../misc/callAssignmentTemplates/TagTargetTemplate';
+import AllTargetTemplate from '../misc/callAssignmentTemplates/AllTargetTemplate';
+import RandomTargetTemplate from '../misc/callAssignmentTemplates/RandomTargetTemplate';
 
 
 const STEPS = [ 'target', 'goal', 'form' ];
@@ -81,9 +83,19 @@ export default class AddCallAssignmentPane extends PaneBase {
                 <Msg tagName="p" key="instructions"
                     id="panes.addCallAssignment.target.instructions"/>,
                 <div key="templates">
+                    <AllTargetTemplate tags={ data.tags }
+                        config={ this.state.targetConfig }
+                        selected={ this.state.targetType == 'allTarget' }
+                        onConfigChange={ this.onTargetConfigChange.bind(this) }
+                        onSelect={ this.onTargetSelect.bind(this) }/>
                     <TagTargetTemplate tags={ data.tags }
                         config={ this.state.targetConfig }
                         selected={ this.state.targetType == 'tagTarget' }
+                        onConfigChange={ this.onTargetConfigChange.bind(this) }
+                        onSelect={ this.onTargetSelect.bind(this) }/>
+                    <RandomTargetTemplate tags={ data.tags }
+                        config={ this.state.targetConfig }
+                        selected={ this.state.targetType == 'randomTarget' }
                         onConfigChange={ this.onTargetConfigChange.bind(this) }
                         onSelect={ this.onTargetSelect.bind(this) }/>
                     <Link className="AddCallAssignmentPane-customLink"
@@ -264,7 +276,21 @@ export default class AddCallAssignmentPane extends PaneBase {
 
             let values = this.refs.form.getValues();
 
-            if (this.state.targetType == 'tagTarget') {
+            if (this.state.targetType == 'allTarget') {
+                values.target_filters = [{
+                    type: 'all',
+                    config: null,
+                }];
+            }
+            else if (this.state.targetType == 'randomTarget') {
+                values.target_filters = [{
+                    type: 'random',
+                    config: {
+                        'size': this.state.targetConfig.size,
+                    }
+                }];
+            }
+            else if (this.state.targetType == 'tagTarget') {
                 values.target_filters = [{
                     type: 'person_tags',
                     config: {
