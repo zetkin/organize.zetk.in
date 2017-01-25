@@ -5,6 +5,7 @@ breadcrumbs:
         Målgrupp{targetType, select,
             allTarget {: Ring alla}
             tagTarget {: Ring alla med en viss etikett}
+            randomTarget {: Ring slumpmässigt urval}
             custom {: Ingen mall}
             other {}
         }
@@ -23,6 +24,7 @@ target:
         {targetType, select,
             allTarget {Välj alla som målgrupp}
             tagTarget {Välj målgrupp utifrån etikett}
+            randomTarget {Välj slumpmässig målgrupp}
         }
     customLink: "Definiera urvalsregler manuellt senare"
     instructions: |
@@ -51,6 +53,12 @@ templates:
         title: "Alla i databasen"
         instructions: |
             Målgruppen utgörs av alla personer i databasen.
+
+    randomTarget:
+        title: "Slumpmässigt urval"
+        instructions: |
+            Målgruppen består av ett slumpmässigt urval. Hur många vill du
+            ska bli ringda?
 
     tagTarget:
         title: "Alla med en viss etikett"

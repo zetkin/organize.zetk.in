@@ -17,6 +17,7 @@ import MobilizeTemplate from '../misc/callAssignmentTemplates/MobilizeTemplate';
 import StayInTouchTemplate from '../misc/callAssignmentTemplates/StayInTouchTemplate';
 import TagTargetTemplate from '../misc/callAssignmentTemplates/TagTargetTemplate';
 import AllTargetTemplate from '../misc/callAssignmentTemplates/AllTargetTemplate';
+import RandomTargetTemplate from '../misc/callAssignmentTemplates/RandomTargetTemplate';
 
 
 const STEPS = [ 'target', 'goal', 'form' ];
@@ -90,6 +91,11 @@ export default class AddCallAssignmentPane extends PaneBase {
                     <TagTargetTemplate tags={ data.tags }
                         config={ this.state.targetConfig }
                         selected={ this.state.targetType == 'tagTarget' }
+                        onConfigChange={ this.onTargetConfigChange.bind(this) }
+                        onSelect={ this.onTargetSelect.bind(this) }/>
+                    <RandomTargetTemplate tags={ data.tags }
+                        config={ this.state.targetConfig }
+                        selected={ this.state.targetType == 'randomTarget' }
                         onConfigChange={ this.onTargetConfigChange.bind(this) }
                         onSelect={ this.onTargetSelect.bind(this) }/>
                     <Link className="AddCallAssignmentPane-customLink"
@@ -274,6 +280,14 @@ export default class AddCallAssignmentPane extends PaneBase {
                 values.target_filters = [{
                     type: 'all',
                     config: null,
+                }];
+            }
+            else if (this.state.targetType == 'randomTarget') {
+                values.target_filters = [{
+                    type: 'random',
+                    config: {
+                        'size': this.state.targetConfig.size,
+                    }
                 }];
             }
             else if (this.state.targetType == 'tagTarget') {
