@@ -1,25 +1,43 @@
-# Zetkin Organizer Dashboard
-The Organizer Dashboard is the Zetkin interface for organizers. It's built in
-javascript and runs [React](http://facebook.github.io/react) both on the client
-and on the server.
+# Zetkin Organize, organize.zetk.in
+Zetkin Organize is the Zetkin interface for organizers. Zetkin is a platform
+for organizing activism.
 
-## Developing Zetkin
-We use [Docker](http://docker.com) to configure our development and deployment
-environments. You can use something else, e.g. running everything in your local
-userspace, but we don't encourage or support that. Read more about how to get
-up and running with Docker in the [`env`](./env) folder.
+Zetkin is developed by the Zetkin Foundation and friends. If you want to learn
+more about Zetkin or help out with development, you can find more information
+at [the Zetkin Foundation website](http://www.zetkin.org) or
+[The Zetkin Manual](http://manual.zetkin.org).
 
-## Repository contents
-- `env`: Contains files related to the Docker image configuration
-- `gulpfile.js`: Tasks for the Gulp task runner
-- `package.json`: NPM package configuration (dependencies et c)
-- `src`: All application code resides within this directory
-- `tests`: Test suite (currently not set up properly)
+## Getting started
+To get started with development you need [Docker](https://www.docker.com).
+Once you have Docker installed, build the container:
 
-## Install
-    brew install npm
-    npm install
-    npm config set prefix /usr/local
-    npm install -g gulp
-    gulp
-    gulp watch
+```bash
+$ ./bin/build_dev
+```
+
+Docker will download all the requirements and create an image which you can
+then use to run the Zetkin Activist portal on your local port 80.
+
+```bash
+$ ./bin/run_dev
+```
+
+The development version contains build scripts, component hot loading and
+other features to ease development.
+
+Edit your hosts file (e.g. `/etc/hosts`) to contain a line that maps
+www.dev.zetkin.org to your localhost.
+
+```
+127.0.0.1       organize.dev.zetkin.org
+```
+
+This ensures that you can sign in to your local version of the portal using the
+development version of the Zetkin Platform API (api.dev.zetkin.org). Just point
+your browser to organize.dev.zetkin.org, which is now your local version, and
+start using it. Edit javascript code and components will be reloaded instantly
+in your browser.
+
+__NOTE__: SCSS files are not hot reloaded. You must reload the page, or install
+a browser extension to reload just the CSS files, to see changes after editing
+SCSS.
