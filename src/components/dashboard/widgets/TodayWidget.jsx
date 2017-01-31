@@ -6,7 +6,7 @@ export default class TodayWidget extends React.Component {
         let data = this.props.data;
 
         const tempLabel = Math.round(data.weather.temp) + '°C';
-        const weatherIcon = '/static/img/weather/'
+        const weatherIcon = '/static/images/weather/'
             .concat(data.weather.forecast.icon + '.png');
 
         const locations = {};

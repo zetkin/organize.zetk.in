@@ -48,7 +48,7 @@ export default class App extends React.Component {
                     <script src="https://use.typekit.net/tqq3ylv.js"></script>
                     <script>{"try{Typekit.load({ async: true })}catch(e){}"}</script>
                     <title>Zetkin Organize</title>
-                    <script src="/static/js/main.js"></script>
+                    <script src="/static/main.js"></script>
                     <link rel="stylesheet" type="text/css"
                         href="/static/css/style.css"/>
                     <script type="text/javascript"

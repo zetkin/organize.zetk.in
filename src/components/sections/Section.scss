@@ -156,64 +156,64 @@
 
         &.Section-dialog {
             .Section-navItem-assignments a:before {
-                background-image: url(/static/img/section-nav/dialog-assignments.png);
+                background-image: url(/static/images/section-nav/dialog-assignments.png);
             }
 
             .Section-navItem-calls a:before {
-                background-image: url(/static/img/section-nav/dialog-calls.png);
+                background-image: url(/static/images/section-nav/dialog-calls.png);
             }
 
             .Section-navItem-startassignment a:before {
-                background-image: url(/static/img/section-nav/dialog-startassignment.png);
+                background-image: url(/static/images/section-nav/dialog-startassignment.png);
             }
         }
 
         &.Section-campaign {
             .Section-navItem-actions a:before {
-                background-image: url(/static/img/section-nav/campaign-actions.png);
+                background-image: url(/static/images/section-nav/campaign-actions.png);
             }
 
             .Section-navItem-distribution a:before {
-                background-image: url(/static/img/section-nav/campaign-distribution.png);
+                background-image: url(/static/images/section-nav/campaign-distribution.png);
             }
 
             .Section-navItem-playback a:before {
-                background-image: url(/static/img/section-nav/campaign-playback.png);
+                background-image: url(/static/images/section-nav/campaign-playback.png);
             }
         }
 
         &.Section-maps {
             .Section-navItem-overview a:before {
-                background-image: url(/static/img/section-nav/maps-overview.png);
+                background-image: url(/static/images/section-nav/maps-overview.png);
             }
 
             .Section-navItem-locations a:before {
-                background-image: url(/static/img/section-nav/maps-locations.png);
+                background-image: url(/static/images/section-nav/maps-locations.png);
             }
         }
 
         &.Section-people {
             .Section-navItem-list a:before {
-                background-image: url(/static/img/section-nav/people-list.png);
+                background-image: url(/static/images/section-nav/people-list.png);
             }
 
             .Section-navItem-invite a:before {
-                background-image: url(/static/img/section-nav/people-invite.png);
+                background-image: url(/static/images/section-nav/people-invite.png);
             }
 
             .Section-navItem-import a:before {
-                background-image: url(/static/img/section-nav/people-import.png);
+                background-image: url(/static/images/section-nav/people-import.png);
             }
         }
 
         &.Section-settings {
             .Section-navItem-officials a:before {
-                background-image: url(/static/img/section-nav/settings-officials.png);
+                background-image: url(/static/images/section-nav/settings-officials.png);
             }
         }
 
         .Section-navBack a:before {
-            background-image: url(/static/img/section-nav/back.png);
+            background-image: url(/static/images/section-nav/back.png);
         }
     }
 }

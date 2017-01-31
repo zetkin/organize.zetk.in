@@ -23,7 +23,7 @@ export default class Shortcut extends React.Component {
         let img = null;
         let subList = null;
         if (this.props.expanded) {
-            let src = '/static/img/sections/' + section + '.png';
+            let src = '/static/images/sections/' + section + '.png';
             img = <img src={ src }/>;
 
             let subListItems = SECTIONS[section].subSections.map(sub => {
