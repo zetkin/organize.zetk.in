@@ -1,0 +1,19 @@
+#! /bin/bash -ex
+
+docker run \
+    -v $PWD/static:/var/app/static \
+    -v $PWD/bin:/var/app/bin \
+    -v $PWD/locale:/var/app/locale \
+    -v $PWD/src:/var/app/src \
+    --name organize_zetk_in \
+    --env ZETKIN_LOGIN_URL=http://login.dev.zetkin.org \
+    --env ZETKIN_APP_ID=a3 \
+    --env ZETKIN_APP_KEY=def456 \
+    --env ZETKIN_DOMAIN=dev.zetkin.org \
+    -p 80:80 \
+    -p 81:81 \
+    -t \
+    -i \
+    --rm \
+    "$@" \
+    organize_zetk_in

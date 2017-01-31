@@ -1,19 +1,38 @@
-FROM phusion/baseimage:0.9.16
+FROM phusion/baseimage:0.9.19
 MAINTAINER Richard Olsson <r@richardolsson.se>
 
+ARG NODE_ENV=production
+
+# Install node
+
 ENV DEBIAN_FRONTEND noninteractive
-RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo bash -
-RUN apt-get update && apt-get install -q -y --force-yes --fix-missing \
-        build-essential nodejs git
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+RUN \
+	apt-get update && \
+	apt-get install -q -y --allow-downgrades --allow-remove-essential \
+		--allow-change-held-packages --fix-missing build-essential nodejs git libpng-dev
 
-RUN npm install npm -g
-RUN npm install -g gulp
-RUN npm install -g gulp-cli
+# Setup app service
 
-RUN mkdir /etc/service/organize.zetk.in
-ADD run.sh /etc/service/organize.zetk.in/run
+RUN mkdir /etc/service/app
+ADD env/app/run.sh /etc/service/app/run
 
-# Need to be in right working directory for tests to run
+# Install app
+
 WORKDIR /var/app
+
+ENV NODE_ENV ${NODE_ENV}
+
+## First install deps only, to improve image rebuild performance
+
+COPY package.json ./
+RUN npm install
+
+## Install the app itself
+
+COPY . ./
+RUN npm install --unsafe-perm
+
+# Init
 
 CMD /sbin/my_init

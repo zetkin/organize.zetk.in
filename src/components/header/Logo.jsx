@@ -10,7 +10,7 @@ export default class Logo extends React.Component {
         return (
             <a className="Logo" href="/"
                 onClick={ this.onClick.bind(this) }>
-                <img src="/static/img/logo-white.png"
+                <img src="/static/images/logo-white.png"
                     alt="Zetkin"/>
             </a>
         );

@@ -5,6 +5,7 @@ import ReactDOMServer from 'react-dom/server';
 import express from 'express';
 import expressWs from 'express-ws';
 import http from 'http';
+import url from 'url';
 import path from 'path';
 
 import api from './api';
@@ -29,6 +30,20 @@ const authOpts = {
 
 export default function initApp(messages) {
     let app = express();
+
+    if (process.env.NODE_ENV !== 'production') {
+        // When not in production, redirect requests for the main JS file to the
+        // Webpack dev server running on localhost.
+        app.get('/static/main.js', function(req, res) {
+            let wpMainJs = url.format({
+                hostname: req.host,
+                port: process.env.WEBPACK_PORT || 81,
+                pathname: '/static/main.js',
+            });
+
+            res.redirect(303, wpMainJs);
+        });
+    }
 
     app.use('/favicon.ico', (req, res) =>
         res.status(404).type('txt').send('Not found'));
