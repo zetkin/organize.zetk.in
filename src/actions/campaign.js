@@ -4,6 +4,12 @@ import * as types from './';
 export function createCampaign(data) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
+
+        // TODO: Remove this when interface exposes option
+        data = Object.assign({}, data, {
+            published: true,
+        });
+
         dispatch({
             type: types.CREATE_CAMPAIGN,
             payload: {
