@@ -5,29 +5,65 @@ const webpack = require('webpack');
 const appId = process.env.ZETKIN_APP_ID || 'a4';
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
+const WEBPACK_HOST = process.env.WEBPACK_HOST || 'organize.dev.zetkin.org';
 const WEBPACK_PORT = process.env.WEBPACK_PORT || 81;
 
 const config = {
     entry: [
-        path.join(__dirname, './build/app/client/main')
+        path.join(__dirname, 'src/client/main'),
     ],
+    resolve: {
+        extensions: [
+            '.js',
+            '.jsx',
+        ],
+    },
     module: {
-        loaders: [
+        rules: [
             {
-                test: /\.eot(\?v=.*)?$/,
-                loader: 'file-loader'
+                test: /\.jsx?$/,
+                include: path.join(__dirname, 'src'),
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            babelrc: false,
+                            plugins: [
+                                'transform-decorators-legacy',
+                            ],
+                            presets: [
+                                ['env', {
+                                    targets: {
+                                        browsers: false,
+                                    },
+                                    modules: false,
+                                }],
+                                'stage-1',
+                                'react',
+                            ],
+                        },
+                    },
+                ],
             },
             {
-                test: /\.svg(\?v=.*)?$/,
-                loader: 'file-loader'
-            },
-            {
-                test: /\.ttf(\?v=.*)?$/,
-                loader: 'file-loader'
-            },
-            {
-                test: /\.woff2?(\?v=.*)?$/,
-                loader: 'url-loader?limit=5000'
+                test: /\.js$/,
+                include: path.join(__dirname, 'node_modules'),
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            babelrc: false,
+                            presets: [
+                                ['env', {
+                                    targets: {
+                                        browsers: true,
+                                    },
+                                    modules: false,
+                                }],
+                            ],
+                        },
+                    },
+                ],
             },
         ]
     },
@@ -37,6 +73,7 @@ const config = {
             'process.env.ZETKIN_DOMAIN': JSON.stringify('dev.zetkin.org'),
             'process.env.ZETKIN_APP_ID': JSON.stringify(appId),
         }),
+        new webpack.NoEmitOnErrorsPlugin(),
     ],
     output: {
         path: path.join(__dirname, 'build/static'),
@@ -58,44 +95,34 @@ if (NODE_ENV === 'production') {
 
     config.plugins = [
         ...config.plugins,
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false,
-            },
-            mangle: true,
-            screw_ie8: true,
+        new webpack.LoaderOptionsPlugin({
+            minimize: true
         }),
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true,
+        }),
     ];
 } else {
     config.devtool = '#eval-source-map';
 
     config.entry = [
         ...config.entry,
-        'webpack-dev-server/client?http://localhost:' + WEBPACK_PORT,
-        'webpack/hot/only-dev-server'
+        `webpack-dev-server/client?http://${WEBPACK_HOST}:${WEBPACK_PORT}`,
+        'webpack/hot/only-dev-server',
     ];
 
-    config.module.loaders = [
-        ...config.module.loaders,
-        {
-            test: /\.jsx?$/,
-            exclude: /\/node_modules\//,
-            loaders: [
-                'react-hot'
-            ]
-        },
-    ];
+    config.module.rules[0].use[0].options.presets[0][1].modules = 'commonjs';
+    config.module.rules[0].use.unshift({
+        loader: 'react-hot-loader',
+    });
 
     config.plugins = [
         ...config.plugins,
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
-        new webpack.NoErrorsPlugin(),
     ];
 
-    config.output.publicPath = 'http://organize.dev.zetkin.org:' + WEBPACK_PORT + '/static/';
+    config.output.publicPath = `http://${WEBPACK_HOST}:${WEBPACK_PORT}/static/`;
 
     config.devServer = {
         host: '0.0.0.0',

@@ -1,0 +1,15 @@
+{
+    "plugins": [
+      "transform-decorators-legacy",
+    ],
+    "presets": [
+        ["env", {
+            "targets": {
+                "node": true,
+            }
+        }],
+        "stage-1",
+        "react"
+    ],
+    "sourceMaps": "inline"
+}
