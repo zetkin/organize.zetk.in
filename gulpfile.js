@@ -15,10 +15,6 @@ var uglify = require('gulp-uglify');
 var webpack = require('webpack');
 var webpackConfig = require('./webpack.config.js');
 
-const babelConfig = {
-    stage: 1,
-};
-
 const jsSrc = 'src/**/*.@(js|jsx)';
 const jsDest = 'build/app';
 
@@ -62,7 +58,7 @@ gulp.task('js', function() {
 
     return gulp.src(jsSrc)
         .pipe(newer(newerConfig))
-        .pipe(babel(babelConfig))
+        .pipe(babel())
         .pipe(gulp.dest(jsDest));
 });
 
