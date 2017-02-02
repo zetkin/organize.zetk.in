@@ -6,7 +6,7 @@ const appId = process.env.ZETKIN_APP_ID || 'a4';
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const WEBPACK_HOST = process.env.WEBPACK_HOST || 'organize.dev.zetkin.org';
-const WEBPACK_PORT = process.env.WEBPACK_PORT || 81;
+const WEBPACK_PORT = parseInt(process.env.WEBPACK_PORT) || 81;
 
 const config = {
     entry: [
