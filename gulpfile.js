@@ -12,8 +12,6 @@ var rename = require('gulp-rename');
 var runSequence = require('run-sequence');
 var streamify = require('gulp-streamify');
 var uglify = require('gulp-uglify');
-var webpack = require('webpack');
-var webpackConfig = require('./webpack.config.js');
 
 const jsSrc = 'src/**/*.@(js|jsx)';
 const jsDest = 'build/app';
@@ -62,16 +60,6 @@ gulp.task('js', function() {
         .pipe(gulp.dest(jsDest));
 });
 
-gulp.task('bundleJs', [ 'js' ], function(cb) {
-    webpack(webpackConfig, function(err, stats) {
-        if (err) {
-            console.log('WEBPACK ERROR: ' + err);
-        }
-
-        cb();
-    });
-});
-
 gulp.task('buildSass', [ 'cleanSass' ], function() {
     return gulp.src([
             'src/scss/_mixins.scss',
@@ -99,7 +87,7 @@ gulp.task('minify', function() {
 });
 
 gulp.task('default', [ 'clean' ], function(cb) {
-    return runSequence('bundleJs', 'buildSass',
+    return runSequence('js', 'buildSass',
         'minifyImages', 'copyFonts', 'copyMessages', cb);
 });
 
@@ -108,7 +96,7 @@ gulp.task('watch', function() {
     var watch = require('gulp-watch');
 
     watch('src/**/*.@(js|jsx)', function() {
-        return runSequence('bundleJs');
+        return runSequence('js');
     });
 
     watch('src/**/*.scss', function() {

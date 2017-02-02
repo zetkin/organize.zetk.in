@@ -1,3 +1,8 @@
 #! /bin/bash -ex
 
 ./node_modules/.bin/gulp
+
+if [ "$NODE_ENV" == "production" ]
+then
+    ./node_modules/.bin/webpack
+fi
