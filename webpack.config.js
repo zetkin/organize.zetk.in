@@ -2,7 +2,8 @@ const path = require('path');
 
 const webpack = require('webpack');
 
-const appId = process.env.ZETKIN_APP_ID || 'a4';
+const APP_ID = process.env.ZETKIN_APP_ID || 'a4';
+const USE_TLS = process.env.ZETKIN_USE_TLS || 0;
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const WEBPACK_HOST = process.env.WEBPACK_HOST || 'organize.dev.zetkin.org';
@@ -71,7 +72,8 @@ const config = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
             'process.env.ZETKIN_DOMAIN': JSON.stringify('dev.zetkin.org'),
-            'process.env.ZETKIN_APP_ID': JSON.stringify(appId),
+            'process.env.ZETKIN_APP_ID': JSON.stringify(APP_ID),
+            'process.env.ZETKIN_USE_TLS': JSON.stringify(USE_TLS),
         }),
         new webpack.NoEmitOnErrorsPlugin(),
     ],
