@@ -67,7 +67,8 @@ function execSearch(getState, dispatch, query) {
     };
 
     if (!wsOpen) {
-        let url = 'ws://' + window.location.host + '/search';
+        let protocol = (window.location.protocol == 'https:')? 'wss' : 'ws';
+        let url = protocol + '://' + window.location.host + '/search';
 
         ws = new WebSocket(url);
         ws.onopen = function() {
