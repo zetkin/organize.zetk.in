@@ -15,7 +15,7 @@ export const filteredActionList = state => {
 
     return Object.assign({}, state.actions.actionList, {
         items: state.actions.actionList.items.filter(i =>
-            i.data.campaign.id === selectedCampaign),
+            i.data.campaign && i.data.campaign.id === selectedCampaign),
     });
 };
 
