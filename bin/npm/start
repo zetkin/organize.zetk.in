@@ -2,7 +2,7 @@
 
 if [ "$NODE_ENV" == "production" ]
 then
-    ./node_modules/.bin/webpack
+    #./node_modules/.bin/webpack
     node build/app/server/main
 else
     ./node_modules/.bin/concurrently \
