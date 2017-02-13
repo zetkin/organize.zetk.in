@@ -9,7 +9,6 @@
   "main": "app",
   "scripts": {
     "postinstall": "./bin/npm/postinstall",
-    "start": "./bin/npm/start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
