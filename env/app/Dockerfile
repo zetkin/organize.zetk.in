@@ -2,6 +2,8 @@ FROM phusion/baseimage:0.9.19
 MAINTAINER Richard Olsson <r@richardolsson.se>
 
 ARG NODE_ENV=production
+ARG ZETKIN_DOMAIN=dev.zetkin.org
+ARG ZETKIN_USE_TLS=1
 
 # Install node
 
@@ -22,6 +24,8 @@ ADD env/app/run.sh /etc/service/app/run
 WORKDIR /var/app
 
 ENV NODE_ENV ${NODE_ENV}
+ENV ZETKIN_DOMAIN ${ZETKIN_DOMAIN}
+ENV ZETKIN_USE_TLS ${ZETKIN_USE_TLS}
 
 ## First install deps only, to improve image rebuild performance
 

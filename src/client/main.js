@@ -17,7 +17,7 @@ import IntlReduxProvider from '../components/IntlReduxProvider';
 import { subscribeToUrlChanges } from '../store/middleware/url';
 
 
-const USE_TLS = !!process.env.ZETKIN_USE_TLS;
+const USE_TLS = (process.env.ZETKIN_USE_TLS == '1');
 
 
 window.onload = function() {
