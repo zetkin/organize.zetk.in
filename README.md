@@ -9,7 +9,24 @@ at [the Zetkin Foundation website](http://www.zetkin.org) or
 
 ## Getting started
 To get started with development you need [Docker](https://www.docker.com).
-Once you have Docker installed, build the container:
+Install Docker for your platform before proceeding.
+
+First clone the repository. Make sure that you include the git submodules by
+including the `--recursive` flag.
+
+```bash
+$ git clone --recursive https://github.com/zetkin/organize.zetk.in.git
+```
+
+If you have already cloned the repository without `--recursive`, you can achieve
+the same effect manually. You also need to do this after every new pull.
+
+```bash
+$ git submodule init
+$ git submodule update
+```
+
+Once you have cloned the repository, build the Docker image:
 
 ```bash
 $ ./bin/build_dev
