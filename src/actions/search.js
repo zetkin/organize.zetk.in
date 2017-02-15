@@ -53,6 +53,7 @@ let wsOpen = false;
 function execSearch(getState, dispatch, query) {
     let orgId = getState().org.activeId;
     let scope = getState().search.scope;
+    let lang = getState().intl.locale;
 
     let sendQuery = function(query) {
         // Don't search for really short query strings
@@ -60,6 +61,7 @@ function execSearch(getState, dispatch, query) {
             ws.send(JSON.stringify({
                 'cmd': 'search',
                 'scope': scope,
+                'lang': lang,
                 'org': orgId,
                 'query': query
             }));
