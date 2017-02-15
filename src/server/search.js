@@ -1,5 +1,8 @@
 import searchMatches from '../utils/searchMatches';
 
+// Include Date locales for search
+require('sugar-date/locales/sv');
+
 
 function search(ws, req) {
     var queue;
@@ -83,8 +86,8 @@ function SearchQueue(z, orgId, query, writeMatch, searchFuncs, lang) {
     }
 }
 
-function searchActions(z, orgId, q, writeMatch) {
-    var date = Date.utc.create(q);
+function searchActions(z, orgId, q, writeMatch, lang) {
+    var date = Date.create(q, lang);
     if (date.isValid()) {
         const dateStr = date.format('{yyyy}-{MM}-{dd}');
         const endStr = date.addDays(1).format('{yyyy}-{MM}-{dd}');
