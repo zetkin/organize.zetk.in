@@ -1,5 +1,7 @@
 require('array.prototype.find');
-require('sugar-date');
+
+// Extend standard Date API using sugar-date
+require('sugar-date').Date.extend();
 
 Date.prototype.getWeekNumber = function(){
     var d = new Date(+this);

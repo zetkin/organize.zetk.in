@@ -12,7 +12,7 @@ export default class Transport extends React.Component {
             'CampaignPlayerTransport-stopButton': this.props.playing
         });
 
-        const d = Date.utc.create(this.props.time);
+        const d = Date.create(this.props.time);
         const timeLabel = d.setUTC(true).format('{yyyy}-{MM}-{dd} {HH}:{mm}');
 
         return (

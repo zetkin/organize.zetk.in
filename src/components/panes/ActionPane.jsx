@@ -102,7 +102,7 @@ export default class ActionPane extends PaneBase {
     getPaneSubTitle(data) {
         if (data.actionItem && data.actionItem.data) {
             let action = data.actionItem.data;
-            let startDate = Date.utc.create(action.start_time);
+            let startDate = Date.create(action.start_time);
             let timeLabel = startDate.setUTC(true)
                 .format('{yyyy}-{MM}-{dd}, {HH}:{mm}');
 

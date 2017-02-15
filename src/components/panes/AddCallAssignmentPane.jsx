@@ -225,8 +225,8 @@ export default class AddCallAssignmentPane extends PaneBase {
                 };
             }
 
-            let startDate = Date.utc.create();
-            let endDate = (30).daysAfter(startDate);
+            let startDate = Date.create();
+            let endDate = startDate.clone().addMonths(1);
 
             extraState.assignment.start_date = startDate.format('{yyyy}-{MM}-{dd}');
             extraState.assignment.end_date = endDate.format('{yyyy}-{MM}-{dd}');
