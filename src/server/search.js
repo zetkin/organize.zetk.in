@@ -87,27 +87,20 @@ function searchActions(z, orgId, q, writeMatch) {
     var date = Date.utc.create(q);
     if (date.isValid()) {
         const dateStr = date.format('{yyyy}-{MM}-{dd}');
+        const endStr = date.addDays(1).format('{yyyy}-{MM}-{dd}');
 
         // Searching for date
         // TODO: Search using backend filtering
-        return z.resource('orgs', orgId, 'actions').get()
+        return z.resource('orgs', orgId, 'actions')
+            .get(null, null, [['start_time', '>=', dateStr], ['end_time', '<', endStr]])
             .then(function(result) {
                 const actions = result.data.data;
-                const dayActions = [];
+                console.log(actions);
 
-                var i;
-                for (i = 0; i < actions.length; i++) {
-                    var action = actions[i];
-                    var actionDate = new Date(action.start_time);
-                    if (actionDate.is(dateStr)) {
-                        dayActions.push(action);
-                    }
-                }
-
-                if (dayActions.length > 0) {
+                if (actions.length > 0) {
                     const matchData = {
                         date: dateStr,
-                        action_count: dayActions.length
+                        action_count: actions.length,
                     };
 
                     writeMatch(q, 'actionday', matchData);
