@@ -49,7 +49,7 @@ export default function dashboard(state = null, action) {
                     { type: 'organizer_notes' }
                 ],
                 widgetDataList: createList(),
-                shortcuts: [ 'people', 'campaign', 'dialog', 'maps',
+                shortcuts: [ 'people', 'campaign', 'dialog', 'maps', 'survey',
                     'settings' ]
             };
     }

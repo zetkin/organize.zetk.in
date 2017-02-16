@@ -28,6 +28,7 @@ export default class App extends React.Component {
             case 'campaign':
             case 'dialog':
             case 'maps':
+            case 'survey':
             case 'settings':
                 SectionComponent = Section;
                 break;
