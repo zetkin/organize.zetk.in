@@ -28,8 +28,8 @@ export default class ActionForm extends React.Component {
         const campaigns = this.props.campaigns.campaignList.items.map(i => i.data);
         const locations = this.props.locations.locationList.items.map(i => i.data);
         const activities = this.props.activities.activityList.items.map(i => i.data);
-        const startDate = Date.utc.create(action.start_time);
-        const endDate = Date.utc.create(action.end_time);
+        const startDate = Date.create(action.start_time);
+        const endDate = Date.create(action.end_time);
 
         const date = startDate.isValid()?
             startDate.setUTC(true).format('{yyyy}-{MM}-{dd}') : undefined;

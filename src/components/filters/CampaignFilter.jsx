@@ -136,7 +136,7 @@ export default class CampaignFilter extends FilterBase {
     onSelectTimeframe(name, value) {
         let before = undefined;
         let after = undefined;
-        let today = Date.utc.create().format('{yyyy}-{MM}-{dd}');
+        let today = Date.create().format('{yyyy}-{MM}-{dd}');
 
         switch (value) {
             case 'future':

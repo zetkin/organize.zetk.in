@@ -15,7 +15,7 @@ export default class CallListItem extends React.Component {
         let call = this.props.data;
         if (!call) return null;
 
-        let timestamp = Date.utc.create(call.allocation_time);
+        let timestamp = Date.create(call.allocation_time);
         let stateClass = "CallListItem-state";
         let stateLabel = null;
         let actionStatus = null;

@@ -69,7 +69,7 @@ export default class ActionReminderPane extends PaneBase {
                     id="panes.actionReminder.alreadyReminded.h"/>,
                 <ul key="remindedList" className="ActionReminderPane-reminded">
                 {data.remindedParticipants.map(function(participant) {
-                    const timeLabel = Date.utc.create(participant.reminder_sent)
+                    const timeLabel = Date.create(participant.reminder_sent)
                         .format('{yyyy}-{MM}-{dd} {HH}:{mm}:{ss}');
 
                     const onClick = this.onPersonClick.bind(this, participant);

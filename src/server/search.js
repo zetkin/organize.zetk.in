@@ -1,5 +1,8 @@
 import searchMatches from '../utils/searchMatches';
 
+// Include Date locales for search
+require('sugar-date/locales/sv');
+
 
 function search(ws, req) {
     var queue;
@@ -42,19 +45,19 @@ function search(ws, req) {
             searchFuncs.push(searchCallAssignments);
         }
 
-        queue = new SearchQueue(req.z, msg.org, msg.query, writeFunc, searchFuncs);
+        queue = new SearchQueue(req.z, msg.org, msg.query, writeFunc, searchFuncs, msg.lang);
         queue.run();
     });
 }
 
-function SearchQueue(z, orgId, query, writeMatch, searchFuncs) {
+function SearchQueue(z, orgId, query, writeMatch, searchFuncs, lang) {
     var _idx = 0;
     var _writeMatch = writeMatch;
 
     var _proceed = function() {
         if (_idx < searchFuncs.length) {
             const searchFunc = searchFuncs[_idx++];
-            const promise = searchFunc(z, orgId, query, writeMatch)
+            const promise = searchFunc(z, orgId, query, writeMatch, lang)
 
             if (promise) {
                 promise.then(function() {
@@ -83,31 +86,23 @@ function SearchQueue(z, orgId, query, writeMatch, searchFuncs) {
     }
 }
 
-function searchActions(z, orgId, q, writeMatch) {
-    var date = Date.utc.create(q);
+function searchActions(z, orgId, q, writeMatch, lang) {
+    var date = Date.create(q, lang);
     if (date.isValid()) {
         const dateStr = date.format('{yyyy}-{MM}-{dd}');
+        const endStr = date.addDays(1).format('{yyyy}-{MM}-{dd}');
 
         // Searching for date
         // TODO: Search using backend filtering
-        return z.resource('orgs', orgId, 'actions').get()
+        return z.resource('orgs', orgId, 'actions')
+            .get(null, null, [['start_time', '>=', dateStr], ['end_time', '<', endStr]])
             .then(function(result) {
                 const actions = result.data.data;
-                const dayActions = [];
 
-                var i;
-                for (i = 0; i < actions.length; i++) {
-                    var action = actions[i];
-                    var actionDate = new Date(action.start_time);
-                    if (actionDate.is(dateStr)) {
-                        dayActions.push(action);
-                    }
-                }
-
-                if (dayActions.length > 0) {
+                if (actions.length > 0) {
                     const matchData = {
                         date: dateStr,
-                        action_count: dayActions.length
+                        action_count: actions.length,
                     };
 
                     writeMatch(q, 'actionday', matchData);

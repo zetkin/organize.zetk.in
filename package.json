@@ -62,10 +62,10 @@
     "redux": "^3.5.2",
     "redux-promise-middleware": "^3.0.0",
     "run-sequence": "^1.0.2",
-    "sugar-date": "^1.5.1",
+    "sugar-date": "^2.0.4",
+    "webpack": "^2.2.1",
     "ws": "^0.7.2",
     "xlsx": "^0.8.0",
-    "webpack": "^2.2.1",
     "zetkin": "git://github.com/zetkin/zetkin.js.git"
   },
   "devDependencies": {

@@ -44,7 +44,7 @@ export default class CallPane extends PaneBase {
     renderPaneContent(data) {
         if (data.callItem && !data.callItem.isPending) {
             let call = data.callItem.data;
-            let timestamp = Date.utc.create(call.allocation_time);
+            let timestamp = Date.create(call.allocation_time);
 
             let callerNote = null;
             let action = null;

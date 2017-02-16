@@ -158,7 +158,7 @@ export default class CallHistoryFilter extends FilterBase {
         let before = undefined;
         let after = undefined;
         let days = undefined;
-        let today = Date.utc.create().format('{yyyy}-{MM}-{dd}');
+        let today = Date.create().format('{yyyy}-{MM}-{dd}');
 
         switch (value) {
             case 'after':
