@@ -98,7 +98,6 @@ function searchActions(z, orgId, q, writeMatch, lang) {
             .get(null, null, [['start_time', '>=', dateStr], ['end_time', '<', endStr]])
             .then(function(result) {
                 const actions = result.data.data;
-                console.log(actions);
 
                 if (actions.length > 0) {
                     const matchData = {
