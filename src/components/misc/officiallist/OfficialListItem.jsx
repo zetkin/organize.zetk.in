@@ -3,6 +3,7 @@ import { FormattedMessage as Msg } from 'react-intl';
 import cx from 'classnames';
 
 import DraggableAvatar from '../DraggableAvatar';
+import Avatar from '../Avatar';
 
 
 export default class OfficialListItem extends React.Component {
@@ -26,26 +27,31 @@ export default class OfficialListItem extends React.Component {
             user: this.props.isUser,
         });
 
-        let removeButton = null;
+        let avatar;
+        let removeButton;
+
         if (this.props.isUser) {
             removeButton = (
                 <div className="OfficialListItem-userLabel">
                     <Msg id="misc.officialList.userLabel"/>
                 </div>
             );
+
+            avatar = <Avatar person={ official }/>;
         }
         else {
             removeButton = (
                 <a className="OfficialListItem-removeButton"
                     onClick={ this.onRemove.bind(this) }></a>
             );
+
+            avatar = <DraggableAvatar person={ official }/>;
         }
 
         return (
             <li className={ classes }
                 onClick={ this.props.onSelect.bind(this, official) }>
-
-                <DraggableAvatar person={ official }/>
+                { avatar }
                 <span className="OfficialListItem-name">{ name }</span>
                 { removeButton }
             </li>
