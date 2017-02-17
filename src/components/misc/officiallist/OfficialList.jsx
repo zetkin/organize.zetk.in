@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import React from 'react';
+import { connect } from 'react-redux';
 import { DropTarget } from 'react-dnd';
 
 import OfficialListItem from './OfficialListItem';
@@ -40,6 +41,7 @@ export default class OfficialList extends React.Component {
         addMsg: React.PropTypes.string.isRequired,
         selectLinkMsg: React.PropTypes.string.isRequired,
         officials: React.PropTypes.array.isRequired,
+        userProfile: React.PropTypes.object.isRequired,
         onSelect: React.PropTypes.func.isRequired,
         onRemove: React.PropTypes.func.isRequired,
         onAdd: React.PropTypes.func,
@@ -66,11 +68,16 @@ export default class OfficialList extends React.Component {
 
         return (
             <ul className={ classes }>
-            { this.props.officials.map(o => (
-                <OfficialListItem key={ o.id } official={ o }
-                    onSelect={ this.props.onSelect.bind(this) }
-                    onRemove={ this.props.onRemove.bind(this) }/>
-            )) }
+            { this.props.officials.map(o => {
+                let isUser = (o.id == this.props.userProfile.id);
+
+                return (
+                    <OfficialListItem key={ o.id } official={ o }
+                        isUser={ isUser }
+                        onSelect={ this.props.onSelect.bind(this) }
+                        onRemove={ this.props.onRemove.bind(this) }/>
+                );
+            }) }
                 { addItem }
             </ul>
         );
