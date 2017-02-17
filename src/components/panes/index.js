@@ -33,6 +33,7 @@ import QueryPane from './QueryPane';
 import SelectPeoplePane from './SelectPeoplePane';
 import SelectLocationTagsPane from './SelectLocationTagsPane';
 import SelectPersonTagsPane from './SelectPersonTagsPane';
+import SurveySubmissionPane from './SurveySubmissionPane';
 
 var _panes = {
     'action': ActionPane,
@@ -70,6 +71,7 @@ var _panes = {
     'selectpeople': SelectPeoplePane,
     'selectlocationtags': SelectLocationTagsPane,
     'selectpersontags': SelectPersonTagsPane,
+    'surveysubmission': SurveySubmissionPane,
 };
 
 export function resolvePane(name) {

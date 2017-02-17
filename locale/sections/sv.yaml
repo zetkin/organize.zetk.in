@@ -40,3 +40,6 @@ subSections:
 
     settings:
         officials: "Funktionärer"
+
+    survey:
+        submissions: "Enkätsvar"

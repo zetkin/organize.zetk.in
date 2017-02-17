@@ -45,6 +45,7 @@ export default class KeyboardShortcuts extends React.Component {
                         <li><code>gc</code> Go to campaign section</li>
                         <li><code>gd</code> Go to dialog section</li>
                         <li><code>gm</code> Go to maps section</li>
+                        <li><code>gs</code> Go to survey section</li>
                         <li><code>g{'<N>'}</code> Go to Nth sub-section of current section</li>
                     </ul>
 
@@ -75,6 +76,7 @@ export default class KeyboardShortcuts extends React.Component {
                         <li><code>c</code> campaign</li>
                         <li><code>d</code> dialog</li>
                         <li><code>m</code> maps</li>
+                        <li><code>s</code> survey</li>
                         <li><code>1-7</code> sub-section</li>
                     </ul>
                 </div>
@@ -140,6 +142,9 @@ export default class KeyboardShortcuts extends React.Component {
                     break;
                 case 112:   // 'p' == people
                     this.props.dispatch(gotoSection('people'));
+                    break;
+                case 115:   // 's' == people
+                    this.props.dispatch(gotoSection('survey'));
                     break;
             }
 
