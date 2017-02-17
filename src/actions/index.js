@@ -161,3 +161,7 @@ export const REMOVE_TAG_FROM_LOCATION = 'REMOVE_TAG_FROM_LOCATION';
 
 // Redux actions related to bulk operations
 export const EXECUTE_BULK_OPERATION = 'EXECUTE_BULK_OPERATION';
+
+// Redux actions related to surveys
+export const RETRIEVE_SURVEY_SUBMISSIONS = 'RETRIEVE_SURVEY_SUBMISSIONS';
+export const RETRIEVE_SURVEY_SUBMISSION = 'RETRIEVE_SURVEY_SUBMISSION';
