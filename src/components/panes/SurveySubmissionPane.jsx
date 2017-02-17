@@ -8,30 +8,42 @@ import Avatar from '../misc/Avatar';
 import Button from '../misc/Button';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import { getListItemById } from '../../utils/store';
-import {
-    retrieveSurveySubmission,
-} from '../../actions/surveySubmission';
+import { retrieveSurvey } from '../../actions/survey';
+import { retrieveSurveySubmission } from '../../actions/surveySubmission';
 
 
-const mapStateToProps = state => ({
-    surveySubmissions: state.surveySubmissions,
-});
+const mapStateToProps = (state, props) => {
+    let submissionItem = getListItemById(
+        state.surveySubmissions.submissionList,
+        props.paneData.params[0]);
+
+    let surveyItem = null;
+    if (submissionItem && submissionItem.data && submissionItem.data.survey) {
+        surveyItem = getListItemById(
+            state.surveys.surveyList, submissionItem.data.survey.id);
+    }
+
+    return { submissionItem, surveyItem };
+};
 
 
 @connect(mapStateToProps)
 @injectIntl
 export default class SurveySubmissionPane extends PaneBase {
     componentDidMount() {
-        let subId = this.getParam(0);
-        this.props.dispatch(retrieveSurveySubmission(subId));
+        let subItem = this.props.submissionItem;
+
+        this.props.dispatch(retrieveSurveySubmission(this.getParam(0)));
+
+        if (subItem && subItem.data && subItem.data.survey) {
+            this.props.dispatch(retrieveSurvey(subItem.data.survey.id));
+        }
     }
 
     getRenderData() {
-        let subId = this.getParam(0);
-        let subList = this.props.surveySubmissions.submissionList;
-
         return {
-            submissionItem: getListItemById(subList, subId),
+            submissionItem: this.props.submissionItem,
+            surveyItem: this.props.surveyItem,
         };
     }
 
@@ -45,13 +57,43 @@ export default class SurveySubmissionPane extends PaneBase {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        let subItem = nextProps.submissionItem;
+        if (!nextProps.surveyItem && subItem && subItem.data && subItem.data.survey) {
+            this.props.dispatch(retrieveSurvey(subItem.data.survey.id));
+        }
+    }
+
     renderPaneContent(data) {
         if (data.submissionItem && !data.submissionItem.isPending) {
             let sub = data.submissionItem.data;
+            let survey = data.surveyItem? data.surveyItem.data : null;
             let respondent = <Msg id="panes.surveySubmission.anonymous"/>;
 
             if (sub.respondent) {
-                respondent = sub.respondent.first_name + ' ' + sub.respondent.last_name;
+                respondent = sub.respondent.first_name
+                    + ' ' + sub.respondent.last_name;
+            }
+
+            let responses = <LoadingIndicator />;
+            if (survey && survey.elements) {
+                responses = survey.elements
+                    .filter(element => element.type == 'question')
+                    .map(element => {
+                        let response = null;
+
+                        if (this.props.submissionItem.data.responses) {
+                            response = this.props.submissionItem.data.responses
+                                .find(r => r.question_id == element.id);
+                        }
+
+                        return (
+                            <SubmissionResponse key={ element.id }
+                                question={ element.question }
+                                response={ response }
+                                />
+                        );
+                    });
             }
 
             return [
@@ -60,6 +102,10 @@ export default class SurveySubmissionPane extends PaneBase {
                         <li>{ sub.survey.title }</li>
                         <li>{ respondent }</li>
                     </ul>
+                </div>,
+                <div key="responses" className="SurveySubmissionPane-responses">
+                    <Msg tagName="h3" id="panes.surveySubmission.responses.h"/>
+                    { responses }
                 </div>
             ];
         }
@@ -67,4 +113,52 @@ export default class SurveySubmissionPane extends PaneBase {
             return <LoadingIndicator/>;
         }
     }
+}
+
+let SubmissionResponse = props => {
+    let responseContent;
+
+    if (props.response) {
+        responseContent = [];
+
+        if (props.response.options && props.response.options.length) {
+            let optionItems = (props.response.options || []).map(oid => {
+                let qo = props.question.options.find(o => o.id == oid);
+
+                return (
+                    <li key={ oid }>{ qo.text }</li>
+                );
+            });
+
+            responseContent.push(
+                <ul key="options"
+                    className="SurveySubmissionPane-responseOptions">
+                    { optionItems }
+                </ul>
+            );
+        }
+
+        if (props.response.response && props.response.response.length) {
+            responseContent.push(
+                <span key="text"
+                    className="SurveySubmissionPane-responseText">
+                    { props.response.response }
+                </span>
+            );
+        }
+    }
+    else {
+        responseContent = (
+            <div className="SurveySubmissionPane-responseEmpty">
+                <Msg id="panes.surveySubmission.responses.emptyResponse"/>
+            </div>
+        );
+    }
+
+    return (
+        <div className="SurveySubmissionPane-response">
+            <h4>{ props.question.question }</h4>
+            { responseContent }
+        </div>
+    );
 }
