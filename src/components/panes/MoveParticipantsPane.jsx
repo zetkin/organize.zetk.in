@@ -41,7 +41,7 @@ export default class MoveParticipantsPane extends PaneBase {
             <Button key="cancelAllButton"
                 labelMsg="panes.moveParticipants.cancelAllButton"
                 onClick={ this.onResetClick.bind(this) }/>,
-            <ul className="MoveParticipantsPane-moveList">
+            <ul key="moveList" className="MoveParticipantsPane-moveList">
             {data.moves.map(function(move) {
                 const key = [move.person, move.from, move.to].join(',');
                 const person = getListItemById(personList, move.person).data;
