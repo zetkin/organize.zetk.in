@@ -126,6 +126,15 @@ export default function viewState(state = null, action) {
             }),
         });
     }
+    else if (action.type == types.CREATE_QUERY + '_FULFILLED') {
+        return Object.assign({}, state, {
+            panes: state.panes.concat([{
+                id: '$' + makeRandomString(6),
+                type: 'editquery',
+                params: [ action.payload.data.data.id ]
+            }])
+        });
+    }
     else if (action.type == types.MOVE_ACTION_PARTICIPANT) {
         // TODO: Display move pane if more than one move
         return state;
