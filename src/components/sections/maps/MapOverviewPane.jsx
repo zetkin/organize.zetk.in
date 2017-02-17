@@ -11,17 +11,19 @@ let onKeyDown = ev => altKeyDown = (ev.keyCode == 18)? true : altKeyDown;
 let onKeyUp = ev => altKeyDown = (ev.keyCode == 18)? false : altKeyDown;
 
 
-@connect(state => state)
+const mapStateToProps = state => ({
+    locationList: state.locations.locationList,
+});
+
+
+@connect(mapStateToProps)
 export default class MapOverviewPane extends RootPaneBase {
     componentDidMount() {
         super.componentDidMount();
-
-        this.props.dispatch(retrieveLocations());
-    }
-
-    componentDidMount() {
         window.addEventListener('keydown', onKeyDown);
         window.addEventListener('keyup', onKeyUp);
+
+        this.props.dispatch(retrieveLocations());
     }
 
     componentWillUnmount() {
@@ -31,7 +33,7 @@ export default class MapOverviewPane extends RootPaneBase {
 
     renderPaneContent() {
         let content = null;
-        let locationList = this.props.locations.locationList;
+        let locationList = this.props.locationList;
 
         var style = {
             position: 'absolute',
