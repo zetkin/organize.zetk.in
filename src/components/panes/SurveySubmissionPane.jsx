@@ -68,12 +68,6 @@ export default class SurveySubmissionPane extends PaneBase {
         if (data.submissionItem && !data.submissionItem.isPending) {
             let sub = data.submissionItem.data;
             let survey = data.surveyItem? data.surveyItem.data : null;
-            let respondent = <Msg id="panes.surveySubmission.anonymous"/>;
-
-            if (sub.respondent) {
-                respondent = sub.respondent.first_name
-                    + ' ' + sub.respondent.last_name;
-            }
 
             let responses = <LoadingIndicator />;
             if (survey && survey.elements) {
@@ -98,10 +92,8 @@ export default class SurveySubmissionPane extends PaneBase {
 
             return [
                 <div key="info" className="SurveySubmissionPane-info">
-                    <ul>
-                        <li>{ sub.survey.title }</li>
-                        <li>{ respondent }</li>
-                    </ul>
+                    <h3>{ sub.survey.title }</h3>
+                    <SubmissionRespondent submission={ sub }/>
                 </div>,
                 <div key="responses" className="SurveySubmissionPane-responses">
                     <Msg tagName="h3" id="panes.surveySubmission.responses.h"/>
@@ -114,6 +106,40 @@ export default class SurveySubmissionPane extends PaneBase {
         }
     }
 }
+
+let SubmissionRespondent = props => {
+    let sub = props.submission;
+
+    let name = <Msg id="panes.surveySubmission.info.anonymous"/>;
+    let avatar = (
+        <figure className="SurveySubmissionPane-anonymousAvatar">
+            ?
+        </figure>
+    );
+
+    if (sub.respondent) {
+        name = (
+            <span>
+                { sub.respondent.first_name + ' ' + sub.respondent.last_name }
+            </span>
+        );
+
+        if (sub.respondent.id) {
+            avatar = <Avatar person={ sub.respondent }/>;
+        }
+    }
+
+    let classes = cx('SurveySubmissionPane-respondent', {
+        anonymous: !sub.respondent,
+    });
+
+    return (
+        <div className={ classes }>
+            { avatar }
+            { name }
+        </div>
+    );
+};
 
 let SubmissionResponse = props => {
     let responseContent;

@@ -1,0 +1,34 @@
+.SurveySubmissionPane {
+    .SurveySubmissionPane-respondent {
+        &:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        span {
+            font-size: 1.2em;
+        }
+
+        &.anonymous {
+            span {
+                font-style: italic;
+            }
+        }
+
+        figure, .Avatar {
+            display: block;
+            margin: 0 10px 0 0;
+            float: left;
+            width: 60px;
+            height: 60px;
+        }
+
+        figure {
+            background-color: $c-ui-dark;
+            color: $c-ui-darker;
+            font-size: 4em;
+            text-align: center;
+        }
+    }
+}
