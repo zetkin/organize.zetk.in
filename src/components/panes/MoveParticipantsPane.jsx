@@ -1,6 +1,8 @@
 import React from 'react';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
+import Button from '../misc/Button';
 import PaneBase from './PaneBase';
 import PersonForm from '../forms/PersonForm';
 import Person from '../misc/elements/Person';
@@ -13,6 +15,7 @@ import {
 
 
 @connect(state => state)
+@injectIntl
 export default class MoveParticipantsPane extends PaneBase {
     getRenderData() {
         var participantStore = this.props.participants;
@@ -23,7 +26,8 @@ export default class MoveParticipantsPane extends PaneBase {
     }
 
     getPaneTitle(data) {
-        return 'Move participants';
+        return this.props.intl.formatMessage(
+            { id: 'panes.moveParticipants.title' });
     }
 
     renderPaneContent(data) {
@@ -31,10 +35,12 @@ export default class MoveParticipantsPane extends PaneBase {
         let personList = this.props.people.personList;
 
         return [
-            <button onClick={ this.onExecuteClick.bind(this) }>
-                Confirm all</button>,
-            <button onClick={ this.onResetClick.bind(this) }>
-                Cancel all</button>,
+            <Button key="confirmAllButton"
+                labelMsg="panes.moveParticipants.confirmAllButton"
+                onClick={ this.onExecuteClick.bind(this) }/>,
+            <Button key="cancelAllButton"
+                labelMsg="panes.moveParticipants.cancelAllButton"
+                onClick={ this.onResetClick.bind(this) }/>,
             <ul className="MoveParticipantsPane-moveList">
             {data.moves.map(function(move) {
                 const key = [move.person, move.from, move.to].join(',');
@@ -49,10 +55,12 @@ export default class MoveParticipantsPane extends PaneBase {
                         <Action action={ fromAction }/>
                         <Action action={ toAction }/>
 
-                        <button onClick={ this.onMoveConfirm.bind(this, move) }>
-                            Confirm</button>
-                        <button onClick={ this.onMoveCancel.bind(this, move) }>
-                            Cancel</button>
+                        <Button
+                            labelMsg="panes.moveParticipants.move.confirmButton"
+                            onClick={ this.onMoveConfirm.bind(this, move) }/>
+                        <Button
+                            labelMsg="panes.moveParticipants.move.cancelButton"
+                            onClick={ this.onMoveCancel.bind(this, move) }/>
                     </li>
                 );
             }, this)}
