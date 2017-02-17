@@ -13,14 +13,19 @@ import {
 } from '../../../actions/official';
 
 
-@connect(state => ({ officials: state.officials }))
+const mapStateToProps = state => ({
+    activeMembership: state.user.activeMembership,
+    officialList: state.officials.officialList,
+});
+
+@connect(mapStateToProps)
 export default class OfficialsPane extends RootPaneBase {
     componentDidMount() {
         this.props.dispatch(retrieveOfficials());
     }
 
     renderPaneContent() {
-        let officialList = this.props.officials.officialList;
+        let officialList = this.props.officialList;
         let admins = officialList.items
             .filter(i => i.data.role === 'admin')
             .map(i => i.data);
@@ -29,11 +34,14 @@ export default class OfficialsPane extends RootPaneBase {
             .filter(i => i.data.role === 'organizer')
             .map(i => i.data);
 
+        let userProfile = this.props.activeMembership.profile;
+
         return [
             <div className="OfficialsPane-admins" key="admins">
                 <Msg tagName="h1" id="panes.officials.admins.h"/>
                 <Msg tagName="p" id="panes.officials.admins.desc"/>
                 <OfficialList officials={ admins }
+                    userProfile={ userProfile }
                     addMsg="panes.officials.admins.add"
                     selectLinkMsg="panes.officials.admins.selectLink"
                     onAdd={ this.onAdd.bind(this, 'admin') }
@@ -45,6 +53,7 @@ export default class OfficialsPane extends RootPaneBase {
                 <Msg tagName="h1" id="panes.officials.organizers.h"/>
                 <Msg tagName="p" id="panes.officials.organizers.desc"/>
                 <OfficialList officials={ organizers }
+                    userProfile={ userProfile }
                     addMsg="panes.officials.organizers.add"
                     selectLinkMsg="panes.officials.organizers.selectLink"
                     onAdd={ this.onAdd.bind(this, 'organizer') }

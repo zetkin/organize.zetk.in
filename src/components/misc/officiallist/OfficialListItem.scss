@@ -6,7 +6,7 @@
         margin: 1em 0;
     }
 
-    .OfficialListItem-removeButton {
+    .OfficialListItem-removeButton, .OfficialListItem-userLabel {
         display: block;
         position: absolute;
         bottom: 0;
@@ -15,6 +15,9 @@
         height: 3em;
         text-align: center;
         padding: 0.5em;
+    }
+
+    .OfficialListItem-removeButton {
         background-color: darken(white, 3);
         cursor: pointer;
 
@@ -22,6 +25,11 @@
             @include icon($fa-var-remove);
             line-height: 2em;
         }
+    }
+
+    .OfficialListItem-userLabel {
+        color: white;
+        transition: color 0.3s;
     }
 
     &:hover {
@@ -33,5 +41,17 @@
     .Avatar {
         width: 100%;
         height: auto;
+    }
+
+    &.user {
+        &:hover {
+            .OfficialListItem-userLabel {
+                color: $c-ui-dark;
+            }
+        }
+
+        .DraggableAvatar {
+            cursor: default;
+        }
     }
 }

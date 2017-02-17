@@ -1,4 +1,6 @@
 import React from 'react';
+import { FormattedMessage as Msg } from 'react-intl';
+import cx from 'classnames';
 
 import DraggableAvatar from '../DraggableAvatar';
 
@@ -7,6 +9,7 @@ export default class OfficialListItem extends React.Component {
     static propTypes = {
         onSelect: React.PropTypes.func.isRequired,
         onRemove: React.PropTypes.func,
+        isUser: React.PropTypes.bool,
         official: React.PropTypes.shape({
             role: React.PropTypes.string.isRequired,
             id: React.PropTypes.any.isRequired,     // TODO: Use string
@@ -19,15 +22,32 @@ export default class OfficialListItem extends React.Component {
         let official = this.props.official;
         let name = official.first_name + ' ' + official.last_name;
 
-        // TODO: Add buttons to edit or remove from list
+        let classes = cx('OfficialListItem', {
+            user: this.props.isUser,
+        });
+
+        let removeButton = null;
+        if (this.props.isUser) {
+            removeButton = (
+                <div className="OfficialListItem-userLabel">
+                    <Msg id="misc.officialList.userLabel"/>
+                </div>
+            );
+        }
+        else {
+            removeButton = (
+                <a className="OfficialListItem-removeButton"
+                    onClick={ this.onRemove.bind(this) }></a>
+            );
+        }
+
         return (
-            <li className="OfficialListItem"
+            <li className={ classes }
                 onClick={ this.props.onSelect.bind(this, official) }>
 
                 <DraggableAvatar person={ official }/>
                 <span className="OfficialListItem-name">{ name }</span>
-                <a className="OfficialListItem-removeButton"
-                    onClick={ this.onRemove.bind(this) }></a>
+                { removeButton }
             </li>
         );
     }
