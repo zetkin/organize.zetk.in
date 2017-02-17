@@ -10,9 +10,33 @@
         margin: 20px 1%;
         display: block;
 
-        a {
+        & > a {
+            display: block;
+            position: relative;
+
+            &:after {
+                position: absolute;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                top: 64px;
+                content: "";
+                display: block;
+                background-color: darken($c-ui-bg, 5);
+                border-radius: 100em;
+                width: 160px;
+                height: 160px;
+                z-index: -1;
+
+                transition: width 0.2s, height 0.2s;
+            }
+
             &:hover {
                 font-weight: bold;
+
+                &:after {
+                    width: 150px;
+                    height: 150px;
+                }
 
                 img {
                     transform: scale(1.1, 1.1);
@@ -24,7 +48,7 @@
             display: block;
             max-height: 120px;
             width: auto;
-            margin: 0 auto 20px;
+            margin: 0 auto 2em;
             transition: transform 0.1s;
         }
 
