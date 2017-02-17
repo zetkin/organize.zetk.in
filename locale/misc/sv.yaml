@@ -35,3 +35,6 @@ callAssignmentTemplates:
 staticMap:
     setPositionLink: "Klicka för att ange position"
     noCoordinates: "Ingen position"
+
+officialList:
+    userLabel: "Din egen roll är låst"
