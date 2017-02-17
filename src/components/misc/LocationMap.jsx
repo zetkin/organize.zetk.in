@@ -64,6 +64,13 @@ export default class LocationMap extends React.Component {
         if (this.props.pendingLocation) {
             this.createMarker({data: this.props.pendingLocation}, true);
             pendingId = this.props.pendingLocation.id;
+
+            this.map.setZoom(16);
+            this.map.setCenter(new google.maps.LatLng(
+                this.props.pendingLocation.lat,
+                this.props.pendingLocation.lng));
+
+            this.centerSetFromData = true;
         }
 
         if (locations) {
