@@ -23,7 +23,13 @@ export default class SurveySubmissionsPane extends RootPaneBase {
         return (
             <SurveySubmissionList
                 submissionList={ this.props.submissionList }
+                onItemClick={ this.onItemClick.bind(this) }
                 />
         );
+    }
+
+    onItemClick(item, ev) {
+        let sub = item.data;
+        this.openPane('surveysubmission', sub.id);
     }
 }
