@@ -5,12 +5,17 @@
     min-height: 5em;
 
     .ActionDistributionItem-title {
+        display: block;
+        overflow: hidden;
+        font-size: 1.3em;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 75%;
+
         &::before {
             @include icon($fa-var-map-marker);
             // Overwritten in parent
         }
-
-        font-size: 1.4em;
     }
 
     .ActionDistributionItem-count {
