@@ -20,6 +20,14 @@ export default class CampaignPlayer extends React.Component {
     componentWillReceiveProps(nextProps) {
         const actions = nextProps.actions;
 
+        if (this.props.centerLat != nextProps.centerLat
+            || this.props.centerLng != nextProps.centerLng) {
+
+            this.map.setCenter(new google.maps.LatLng(
+                nextProps.centerLat, nextProps.centerLng
+            ));
+        }
+
         if (actions.length) {
             const startDate = new Date(actions[0].start_time);
             const endDate = new Date(actions[actions.length-1].end_time);
@@ -52,7 +60,7 @@ export default class CampaignPlayer extends React.Component {
         const ctrDOMNode = ReactDOM.findDOMNode(this.refs.mapContainer);
         const mapOptions = {
             center: { lat: centerLat, lng: centerLng },
-            zoom: 11,
+            zoom: 12,
             disableDefaultUI: true,
             zoomControl: true,
             zoomControlOptions: {
