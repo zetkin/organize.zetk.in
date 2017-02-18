@@ -4,7 +4,7 @@ import cx from 'classnames';
 import Scrubber from './Scrubber';
 
 
-export default class Transport extends React.Component {
+export default class CampaignPlayerTransport extends React.Component {
     render() {
         const btnClass = cx({
             'CampaignPlayerTransport-button': true,
@@ -42,7 +42,7 @@ export default class Transport extends React.Component {
     }
 }
 
-Transport.propTypes = {
+CampaignPlayerTransport.propTypes = {
     time: React.PropTypes.number.isRequired,
     startTime: React.PropTypes.number.isRequired,
     endTime: React.PropTypes.number.isRequired,
