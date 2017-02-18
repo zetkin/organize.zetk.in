@@ -28,12 +28,16 @@
     }
 
     .location {
-        font-size: 1.2em;
+        display: block;
+        font-size: 1.1em;
         text-overflow: ellipsis;
         white-space: nowrap;
+        overflow: hidden;
 
         &:before {
             @include icon($fa-var-map-marker);
+            width: 0.8em;
+            text-align: left;
         }
     }
 
