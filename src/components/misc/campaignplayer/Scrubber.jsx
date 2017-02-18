@@ -66,7 +66,7 @@ export default class Scrubber extends React.Component {
         }
 
         function onMouseUp(ev) {
-            scrubber.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mousemove', onMouseMove);
             document.removeEventListener('mouseup', onMouseUp);
 
             component.setState({
@@ -78,7 +78,7 @@ export default class Scrubber extends React.Component {
             }
         }
 
-        scrubber.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
     }
 }
