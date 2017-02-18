@@ -34,6 +34,9 @@ export default class AddLocationPane extends PaneBase {
 
     renderPaneContent(data) {
         let map;
+        let initialData = {
+            title: this.getParam(0)
+        };
 
         map = (
             <StaticMap key="map"
@@ -44,6 +47,7 @@ export default class AddLocationPane extends PaneBase {
 
         return [
             <LocationForm key="form" ref="form"
+                loc={ initialData }
                 onSubmit={ this.onSubmit.bind(this) }/>,
             map,
         ];
