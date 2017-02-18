@@ -9,7 +9,7 @@ export default class PersonTagForm extends React.Component {
     static propTypes = {
         tag: React.PropTypes.shape({
             title: React.PropTypes.string,
-            info_text: React.PropTypes.string,
+            description: React.PropTypes.string,
         }),
     };
 
@@ -20,8 +20,8 @@ export default class PersonTagForm extends React.Component {
             <Form ref="form" {...this.props }>
                 <TextInput labelMsg="forms.personTag.title" name="title"
                     initialValue={ tag.title }/>
-                <TextArea labelMsg="forms.personTag.info" name="info_text"
-                    initialValue={ tag.info_text }/>
+                <TextArea labelMsg="forms.personTag.info" name="description"
+                    initialValue={ tag.description }/>
             </Form>
         );
     }
