@@ -94,6 +94,8 @@ export default class EditTextPane extends PaneBase {
     }
 
     componentDidMount() {
+        super.componentDidMount();
+
         this.setState({
             inBrowser: true,
         });

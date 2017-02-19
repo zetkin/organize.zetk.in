@@ -18,6 +18,8 @@ import {
 @injectIntl
 export default class EditActivityPane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         this.props.dispatch(retrieveActivity(this.getParam(0)));
     }
 

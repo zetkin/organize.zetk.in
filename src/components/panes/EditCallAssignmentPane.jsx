@@ -16,6 +16,8 @@ import { deleteCallAssignment, retrieveCallAssignment, updateCallAssignment }
 @injectIntl
 export default class EditCallAssignmentPane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         let assignmentId = this.getParam(0);
         this.props.dispatch(retrieveCallAssignment(assignmentId));
     }

@@ -18,6 +18,8 @@ import {
 @injectIntl
 export default class SelectPeoplePane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         this.props.dispatch(retrievePeople(null, null));
     }
 

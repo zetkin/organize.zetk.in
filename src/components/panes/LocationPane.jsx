@@ -27,6 +27,8 @@ import { createSelection } from '../../actions/selection';
 @connect(state => state)
 export default class LocationPane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         let locId = this.getParam(0);
         let locItem = getListItemById(this.props.locations.locationList, locId);
 

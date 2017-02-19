@@ -144,6 +144,8 @@ export default class AddCallAssignmentPane extends PaneBase {
     }
 
     componentDidMount() {
+        super.componentDidMount();
+
         this.props.dispatch(retrieveCampaigns());
         this.props.dispatch(retrievePersonTags());
     }

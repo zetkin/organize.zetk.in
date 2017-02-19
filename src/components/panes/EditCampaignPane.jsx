@@ -15,6 +15,8 @@ import { retrieveCampaign, updateCampaign, deleteCampaign }
 @injectIntl
 export default class EditCampaignPane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         let campaignId = this.getParam(0);
         let campaignItem = getListItemById(
             this.props.campaigns.campaignList, campaignId);

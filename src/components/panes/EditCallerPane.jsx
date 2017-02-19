@@ -20,6 +20,8 @@ import {
 @injectIntl
 export default class EditCallerPane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         let assignmentId = this.getParam(0);
 
         this.props.dispatch(retrieveCallAssignment(assignmentId));

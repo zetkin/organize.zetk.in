@@ -14,6 +14,8 @@ import { getListItemById } from '../../utils/store';
 @connect(state => state)
 export default class EditPersonPane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         let personId = this.getParam(0);
         let person = getListItemById(this.props.people.personList, personId);
 

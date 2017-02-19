@@ -14,6 +14,8 @@ import {
 @connect(state => ({ locationTags: state.locationTags }))
 export default class EditLocationTagPane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         let tagId = this.getParam(0);
         this.props.dispatch(retrieveLocationTag(tagId));
     }
