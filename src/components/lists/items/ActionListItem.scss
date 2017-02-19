@@ -25,6 +25,9 @@
     .activity {
         margin: 0.5em 0;
         font-size: 1.3em!important;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
 
     .location {
