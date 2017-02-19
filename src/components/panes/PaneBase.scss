@@ -148,6 +148,8 @@
             bottom: 0;
             overflow-y: scroll;
             overflow-x: hidden;
+            outline: none;
+
             &::-webkit-scrollbar { // hides scrollbar in webkit browsers.
                 width: 0px;
                 background: transparent;
