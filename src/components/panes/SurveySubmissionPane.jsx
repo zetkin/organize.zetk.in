@@ -31,6 +31,8 @@ const mapStateToProps = (state, props) => {
 @injectIntl
 export default class SurveySubmissionPane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         let subItem = this.props.submissionItem;
 
         this.props.dispatch(retrieveSurveySubmission(this.getParam(0)));

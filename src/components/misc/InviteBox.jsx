@@ -18,7 +18,7 @@ export default class InviteBox extends React.Component {
         super(props);
 
         this.state = {
-            inviteEmail: null,
+            inviteEmail: '',
         };
     }
 
@@ -79,7 +79,7 @@ export default class InviteBox extends React.Component {
     onClickSend() {
         this.props.dispatch(createInvite(this.state.inviteEmail));
         this.setState({
-            inviteEmail: null,
+            inviteEmail: '',
         });
     }
 }

@@ -29,7 +29,11 @@ export default class ActionDistributionItem extends React.Component {
             <li className={ classes }
                 onMouseOver={ this.onMouseOver.bind(this) }
                 onMouseOut={ this.props.onMouseOut }>
-                <span className="ActionDistributionItem-title">{ inst.title }</span>
+                <span
+                    className="ActionDistributionItem-title"
+                    title={ inst.title }>
+                    { inst.title }
+                </span>
                 <span style={ countStyle } className="ActionDistributionItem-count">
                     <span>{ totalCount }</span>
                 </span>

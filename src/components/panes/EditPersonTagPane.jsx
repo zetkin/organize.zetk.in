@@ -16,6 +16,8 @@ import {
 @injectIntl
 export default class EditPersonTagPane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         let tagId = this.getParam(0);
         this.props.dispatch(retrievePersonTag(tagId));
     }

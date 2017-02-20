@@ -12,6 +12,8 @@ import { addToSelection, removeFromSelection, finishSelection }
 @connect(state => state)
 export default class SelectLocationTagsPane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         this.props.dispatch(retrieveLocationTags());
     }
 

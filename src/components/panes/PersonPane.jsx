@@ -23,6 +23,8 @@ const ADDR_FIELDS = [ 'co_address', 'street_address', 'zip_code', 'city' ];
 @connect(state => ({ people: state.people, personTags: state.personTags }))
 export default class PersonPane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         let personId = this.getParam(0);
         this.props.dispatch(retrievePerson(personId));
         this.props.dispatch(retrieveTagsForPerson(personId));

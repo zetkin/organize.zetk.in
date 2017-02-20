@@ -28,6 +28,7 @@ export default class PaneBase extends React.Component {
 
         const contentDOMNode = ReactDOM.findDOMNode(this.refs.content);
         contentDOMNode.addEventListener('scroll', this.onPaneScroll);
+        contentDOMNode.focus();
 
         const scrolled = (contentDOMNode.scrollTop > 2);
         if (scrolled != this.state.scrolled) {
@@ -80,7 +81,7 @@ export default class PaneBase extends React.Component {
                     </div>
                     { closeButton }
                 </header>
-                <div ref="content" className="PaneBase-content">
+                <div ref="content" tabIndex="0" className="PaneBase-content">
                     { title }
                     { subTitle }
                     { this.renderPaneContent(data) }

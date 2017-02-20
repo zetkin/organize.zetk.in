@@ -15,6 +15,8 @@ import { moveActionParticipant } from '../../actions/participant';
 @injectIntl
 export default class ActionDayPane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         if (this.props.actions.actionList.items.length == 0) {
             this.props.dispatch(retrieveActions());
         }

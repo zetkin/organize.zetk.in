@@ -2,6 +2,7 @@ import React from 'react';
 
 import FilterBase from './FilterBase';
 import IntInput from '../forms/inputs/IntInput';
+import makeRandomString from '../../utils/makeRandomString';
 
 
 export default class RandomFilter extends FilterBase {
@@ -10,6 +11,7 @@ export default class RandomFilter extends FilterBase {
 
         this.state = {
             size: props.config.size || 20,
+            seed: props.config.seed || makeRandomString(6),
         };
     }
 
@@ -17,6 +19,7 @@ export default class RandomFilter extends FilterBase {
         if (nextProps.config !== this.props.config) {
             this.setState({
                 size: nextProps.config.size,
+                seed: nextProps.config.seed,
             });
         }
     }
@@ -34,6 +37,7 @@ export default class RandomFilter extends FilterBase {
     getConfig() {
         return {
             size: this.state.size,
+            seed: this.state.seed,
         };
     }
 

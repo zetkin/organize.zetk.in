@@ -18,6 +18,8 @@ import {
 @injectIntl
 export default class CallPane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         let callId = this.getParam(0);
         this.props.dispatch(retrieveCall(callId));
     }

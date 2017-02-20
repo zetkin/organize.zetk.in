@@ -15,6 +15,8 @@ import { addToSelection, removeFromSelection, finishSelection }
 @injectIntl
 export default class SelectPersonTagsPane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         this.props.dispatch(retrievePersonTags());
     }
 

@@ -24,6 +24,8 @@ import {
 @injectIntl
 export default class CallAssignmentPane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         let assignmentId = this.getParam(0);
         this.props.dispatch(retrieveCallAssignment(assignmentId));
         this.props.dispatch(retrieveCallAssignmentStats(assignmentId));

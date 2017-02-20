@@ -65,6 +65,8 @@ let mapStateToProps = state => ({
 @injectIntl
 export default class ActionPane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         let actionId = this.getParam(0);
 
         this.props.dispatch(retrieveAction(actionId));

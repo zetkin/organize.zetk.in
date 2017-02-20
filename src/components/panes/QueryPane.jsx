@@ -10,6 +10,8 @@ import { retrieveQuery, retrieveQueryMatches } from '../../actions/query';
 @connect(state => ({ queries: state.queries }))
 export default class QueryPane extends PaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         let queryId = this.getParam(0);
         this.props.dispatch(retrieveQuery(queryId));
         this.props.dispatch(retrieveQueryMatches(queryId));
