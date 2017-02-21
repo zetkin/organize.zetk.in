@@ -38,3 +38,9 @@ staticMap:
 
 officialList:
     userLabel: "Din egen roll är låst"
+
+surveyOutline:
+    element:
+        types:
+            question: "Fråga"
+            text: "Textblock"

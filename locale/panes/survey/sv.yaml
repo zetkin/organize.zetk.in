@@ -4,3 +4,6 @@ summary:
         auth: "Öppen endast för anslutna användare"
         list: "Öppen endast för specifika personer"
     editLink: "Redigera inställningar"
+content:
+    h: "Innehåll"
+    editLink: "Redigera innehåll"
