@@ -55,5 +55,6 @@ export default class SurveyPane extends PaneBase {
     }
 
     onEditSummaryClick(ev) {
+        this.openPane('editsurvey', this.getParam(0));
     }
 }
