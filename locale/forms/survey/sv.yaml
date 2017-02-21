@@ -1,0 +1,6 @@
+title: "Titel"
+info_text: "Beskrivning"
+access: "Åtkomst"
+accessOptions:
+    open: "Öppen för vem som helst"
+    auth: "Endast för anslutna användare"

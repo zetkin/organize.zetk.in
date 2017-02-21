@@ -1,0 +1,6 @@
+summary:
+    access:
+        open: "Öppen för vem som helst"
+        auth: "Öppen endast för anslutna användare"
+        list: "Öppen endast för specifika personer"
+    editLink: "Redigera inställningar"
