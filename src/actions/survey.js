@@ -38,3 +38,16 @@ export function updateSurvey(id, data) {
         });
     };
 }
+
+export function deleteSurvey(id) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.DELETE_SURVEY,
+            meta: { id },
+            payload: {
+                promise: z.resource('orgs', orgId, 'surveys', id).del()
+            }
+        });
+    };
+}

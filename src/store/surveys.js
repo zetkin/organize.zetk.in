@@ -50,6 +50,11 @@ export default function surveys(state = null, action) {
                     surveyData.id, surveyData, { isPending: false, error: null }),
             });
 
+        case types.DELETE_SURVEY + '_FULFILLED':
+            return Object.assign({}, state, {
+                surveyList: removeListItem(state.surveyList, action.meta.id)
+            });
+
         default:
             return state || {
                 surveyList: createList(),
