@@ -9,6 +9,7 @@ import LocationsPane from './maps/LocationsPane';
 import MapOverviewPane from './maps/MapOverviewPane';
 import OfficialsPane from './settings/OfficialsPane';
 import PeopleListPane from './people/PeopleListPane';
+import SurveyListPane from './survey/SurveyListPane';
 import SurveySubmissionsPane from './survey/SurveySubmissionsPane';
 
 
@@ -51,6 +52,8 @@ export const SECTIONS = {
     },
     survey: {
         subSections: [
+            { path: 'surveys',
+                startPane: SurveyListPane },
             { path: 'submissions',
                 startPane: SurveySubmissionsPane },
         ],
