@@ -56,6 +56,12 @@ export default class SurveyPane extends PaneBase {
                     <Link msgId="panes.survey.summary.editLink"
                         onClick={ this.onEditSummaryClick.bind(this) }/>
                 </div>,
+                <div key="content"
+                    className="SurveyPane-content">
+                    <Msg tagName="h3" id="panes.survey.content.h"/>
+                    <Link msgId="panes.survey.content.editLink"
+                        onClick={ this.onEditContentClick.bind(this) }/>
+                </div>
             ];
         }
         else {
@@ -65,5 +71,9 @@ export default class SurveyPane extends PaneBase {
 
     onEditSummaryClick(ev) {
         this.openPane('editsurvey', this.getParam(0));
+    }
+
+    onEditContentClick(ev) {
+        this.openPane('surveyoutline', this.getParam(0));
     }
 }

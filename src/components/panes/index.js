@@ -35,6 +35,7 @@ import SelectPeoplePane from './SelectPeoplePane';
 import SelectLocationTagsPane from './SelectLocationTagsPane';
 import SelectPersonTagsPane from './SelectPersonTagsPane';
 import SurveyPane from './SurveyPane';
+import SurveyOutlinePane from './SurveyOutlinePane';
 import SurveySubmissionPane from './SurveySubmissionPane';
 
 var _panes = {
@@ -75,6 +76,7 @@ var _panes = {
     'selectlocationtags': SelectLocationTagsPane,
     'selectpersontags': SelectPersonTagsPane,
     'survey': SurveyPane,
+    'surveyoutline': SurveyOutlinePane,
     'surveysubmission': SurveySubmissionPane,
 };
 
