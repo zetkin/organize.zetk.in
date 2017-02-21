@@ -30,6 +30,11 @@ export default class SurveyListPane extends RootPaneBase {
 
     onItemClick(item, ev) {
         let survey = item.data;
-        this.openPane('survey', survey.id);
+        if (ev && ev.altKey) {
+            this.openPane('editsurvey', survey.id);
+        }
+        else {
+            this.openPane('survey', survey.id);
+        }
     }
 }
