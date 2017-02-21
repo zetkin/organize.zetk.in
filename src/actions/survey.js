@@ -25,3 +25,16 @@ export function retrieveSurvey(id) {
         });
     };
 }
+
+export function updateSurvey(id, data) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.UPDATE_SURVEY,
+            meta: { id },
+            payload: {
+                promise: z.resource('orgs', orgId, 'surveys', id).patch(data)
+            }
+        });
+    };
+}
