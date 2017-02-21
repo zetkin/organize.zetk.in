@@ -19,6 +19,15 @@ const mapStateToProps = (state, props) => ({
 @connect(mapStateToProps)
 @injectIntl
 export default class SurveyPane extends PaneBase {
+    componentDidMount() {
+        super.componentDidMount();
+
+        let surveyItem = this.props.surveyItem;
+        if (!surveyItem || surveyItem.data || !surveyItem.data.elements) {
+            this.props.dispatch(retrieveSurvey(this.getParam(0)));
+        }
+    }
+
     getPaneTitle(data) {
         let surveyItem = this.props.surveyItem;
         if (surveyItem && surveyItem.data && !surveyItem.isPending) {
