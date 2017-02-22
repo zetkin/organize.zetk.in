@@ -72,7 +72,7 @@ export default class SurveyOutlinePane extends PaneBase {
             this.openPane('editsurveyquestion', survey.id, element.id);
         }
         else if (element.type == 'text') {
-            // TODO: Open edit pane for the correct type
+            this.openPane('editsurveytextblock', survey.id, element.id);
         }
     }
 }
