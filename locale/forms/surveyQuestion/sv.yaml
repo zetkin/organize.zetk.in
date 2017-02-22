@@ -1,0 +1,6 @@
+question: Fråga
+description: Beskrivning/hjälptext
+responseType: Svarstyp
+responseTypeOptions:
+    options: Svarsalternativ
+    text: Fritext
