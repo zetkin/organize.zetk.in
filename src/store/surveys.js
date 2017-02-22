@@ -64,6 +64,17 @@ export default function surveys(state = null, action) {
                 surveyList: removeListItem(state.surveyList, action.meta.id)
             });
 
+        case types.UPDATE_SURVEY_ELEMENT + '_FULFILLED':
+            let surveyId = action.meta.surveyId.toString();
+            return Object.assign({}, state, {
+                elementsBySurvey: Object.assign({}, state.elementsBySurvey, {
+                    [surveyId]: updateOrAddListItem(
+                        state.elementsBySurvey[surveyId],
+                        action.payload.data.data.id,
+                        action.payload.data.data),
+                })
+            });
+
         default:
             return state || {
                 surveyList: createList(),

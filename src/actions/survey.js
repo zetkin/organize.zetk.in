@@ -51,3 +51,17 @@ export function deleteSurvey(id) {
         });
     };
 }
+
+export function updateSurveyElement(surveyId, elementId, data) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.UPDATE_SURVEY_ELEMENT,
+            meta: { surveyId, elementId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'surveys', surveyId,
+                    'elements', elementId).patch(data)
+            }
+        });
+    };
+}
