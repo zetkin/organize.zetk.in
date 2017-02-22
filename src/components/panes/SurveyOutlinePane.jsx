@@ -66,6 +66,13 @@ export default class SurveyOutlinePane extends PaneBase {
     }
 
     onElementSelect(element) {
-        // TODO: Open edit pane for the correct type
+        let survey = this.props.surveyItem.data;
+
+        if (element.type == 'question') {
+            this.openPane('editsurveyquestion', survey.id, element.id);
+        }
+        else if (element.type == 'text') {
+            // TODO: Open edit pane for the correct type
+        }
     }
 }
