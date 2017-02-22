@@ -18,12 +18,17 @@ const mapStateToProps = (state, props) => {
         props.paneData.params[0]);
 
     let surveyItem = null;
+    let elementList = null;
     if (submissionItem && submissionItem.data && submissionItem.data.survey) {
         surveyItem = getListItemById(
             state.surveys.surveyList, submissionItem.data.survey.id);
+
+        if (surveyItem && surveyItem.data) {
+            elementList = state.surveys.elementsBySurvey[surveyItem.data.id];
+        }
     }
 
-    return { submissionItem, surveyItem };
+    return { submissionItem, surveyItem, elementList };
 };
 
 
@@ -72,8 +77,9 @@ export default class SurveySubmissionPane extends PaneBase {
             let survey = data.surveyItem? data.surveyItem.data : null;
 
             let responses = <LoadingIndicator />;
-            if (survey && survey.elements) {
-                responses = survey.elements
+            if (this.props.elementList) {
+                responses = this.props.elementList.items
+                    .map(i => i.data)
                     .filter(element => element.type == 'question')
                     .map(element => {
                         let response = null;

@@ -11,6 +11,7 @@ import {
 
 export default function surveys(state = null, action) {
     let surveyData;
+    let elements;
 
     switch (action.type) {
         case types.RETRIEVE_SURVEYS + '_PENDING':
@@ -45,7 +46,15 @@ export default function surveys(state = null, action) {
         case types.UPDATE_SURVEY + '_FULFILLED':
         case types.RETRIEVE_SURVEY + '_FULFILLED':
             surveyData = action.payload.data.data
+            elements = surveyData.elements;
+
+            // Elements go in separate list
+            delete surveyData['elements'];
+
             return Object.assign({}, state, {
+                elementsBySurvey: Object.assign({}, state.elementsBySurvey, {
+                    [surveyData.id.toString()]: createList(elements),
+                }),
                 surveyList: updateOrAddListItem(state.surveyList,
                     surveyData.id, surveyData, { isPending: false, error: null }),
             });
@@ -58,6 +67,7 @@ export default function surveys(state = null, action) {
         default:
             return state || {
                 surveyList: createList(),
+                elementsBySurvey: {},
             };
     }
 }

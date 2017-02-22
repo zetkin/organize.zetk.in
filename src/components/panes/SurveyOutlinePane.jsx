@@ -12,6 +12,7 @@ import { retrieveSurvey } from '../../actions/survey';
 
 
 const mapStateToProps = (state, props) => ({
+    elementList: state.surveys.elementsBySurvey[props.paneData.params[0]],
     surveyItem: getListItemById(state.surveys.surveyList,
         props.paneData.params[0]),
 });
@@ -44,14 +45,16 @@ export default class SurveyOutlinePane extends PaneBase {
 
     renderPaneContent(data) {
         let surveyItem = this.props.surveyItem;
-        if (surveyItem && surveyItem.data && surveyItem.data.elements) {
+        let elementList = this.props.elementList;
+        if (surveyItem && surveyItem.data && elementList) {
             let survey = surveyItem.data;
+            let elements = elementList.items.map(i => i.data);
 
             return [
                 <div key="elements"
                     className="SurveyOutlinePane-elements">
                     <SurveyOutline survey={ survey }
-                        elements={ survey.elements }
+                        elements={ elements }
                         onElementSelect={ this.onElementSelect.bind(this) }
                         />
                 </div>,
