@@ -117,3 +117,9 @@ export function resetImport() {
         type: types.RESET_IMPORT,
     };
 }
+
+export function resetImportError() {
+    return {
+        type: types.RESET_IMPORT_ERROR,
+    }
+}
