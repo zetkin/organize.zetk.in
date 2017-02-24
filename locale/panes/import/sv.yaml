@@ -2,6 +2,41 @@ importButton: "Importera"
 importMoreButton: "Importera mer"
 importDropZoneMessage: "Dra och släpp en fil här, eller klicka och välj en för att importera."
 
+error:
+    h: "Ett fel inträffade"
+    p: |
+        Något gick fel och importen avbröts. Inga personer har importerats. Du
+        kan gå tillbaka och kontrollera importinställningarna eller välja en ny
+        fil att importera.
+    backButton: "Ändra inställningar"
+    resetButton: "Välj en annan fil"
+
+report:
+    h: |
+        { count, plural,
+            =0 {Inga rader importerades}
+            =1 {En rad importerades}
+            other {# rader importerades}
+        }
+    numCreated: |
+        { count, plural,
+            =0 {Inga nya personer skapades}
+            =1 {En ny person skapades}
+            other {# nya personer skapades}
+        }
+    numUpdated: |
+        { count, plural,
+            =0 {Inga befintliga personer uppdaterades}
+            =1 {En befintlig person uppdaterades}
+            other {# befintliga personer uppdaterades}
+        }
+    numTagged: |
+        { count, plural,
+            =0 {Satte inga etiketter}
+            =1 {Satte etiketter på en person}
+            other {Satte etiketter på # personer}
+        }
+
 table:
     tableSelectLabel: "Ark att importera:"
     firstRowAsHeader: "Första raden innehåller rubriker"
