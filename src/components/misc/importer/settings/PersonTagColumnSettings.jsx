@@ -37,7 +37,7 @@ export default class PersonTagColumnSettings extends React.Component {
                         .map(i => i.data);
 
                     return (
-                        <li key={ value }
+                        <li key={ value || 0 }
                             className="PersonTagColumnSettings-mapping">
                             <Msg tagName="h3" id={ labelMsg }
                                 values={{ value }}/>
