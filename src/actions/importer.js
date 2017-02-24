@@ -78,7 +78,7 @@ export function updateImportColumn(tableId, columnId, props) {
 }
 
 export function executeImport(tableId) {
-    return ({ dispatch, getState }) => {
+    return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
         let tableSet = getState().importer.tableSet;
         let tableItem = getListItemById(tableSet.tableList, tableId);
@@ -100,21 +100,13 @@ export function executeImport(tableId) {
                 .filter((c, idx) => table.columnList.items[idx].data.included)
             );
 
-        let data = { columns, rows, orgId };
+        let data = { columns, rows };
 
         // TODO: Add fetch polyfill
         dispatch({
             type: types.EXECUTE_IMPORT,
             payload: {
-                promise: fetch('/api/import', {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                })
-                .then(res => res.json())
+                promise: z.resource('orgs', orgId, 'imports').post(data)
             }
         });
     };
