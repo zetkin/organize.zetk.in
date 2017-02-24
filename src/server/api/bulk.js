@@ -60,6 +60,7 @@ let operations = {
 
         const FIELDS = {
             id: 'ID',
+            ext_id: 'External ID',
             first_name: 'First name',
             last_name: 'Last name',
             gender: 'Gender',
