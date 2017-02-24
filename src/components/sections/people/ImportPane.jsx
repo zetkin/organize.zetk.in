@@ -60,18 +60,22 @@ export default class ImportPane extends RootPaneBase {
             );
         }
         else if (stats) {
-            return [
-                <h1>Import complete</h1>,
-                <ul>
-                    <li>Imported: { stats.num_imported }</li>
-                    <li>Created: { stats.num_created }</li>
-                    <li>Updated: { stats.num_updated }</li>
-                    <li>Tagged: { stats.num_tagged }</li>
-                </ul>,
-                <Button key="importMoreButton"
-                    labelMsg="panes.import.importMoreButton"
-                    onClick={ this.onClickReset.bind(this) }/>
-            ];
+            return (
+                <div className="ImportPane-report">
+                    <Msg tagName="h1" id="panes.import.report.h"
+                        values={{ count: stats.imported }}/>
+                    <ul>
+                        <li><Msg id="panes.import.report.numCreated"
+                            values={{ count: stats.created }}/></li>
+                        <li><Msg id="panes.import.report.numUpdated"
+                            values={{ count: stats.updated }}/></li>
+                        <li><Msg id="panes.import.report.numTagged"
+                            values={{ count: stats.tagged }}/></li>
+                    </ul>
+                    <Button labelMsg="panes.import.importMoreButton"
+                        onClick={ this.onClickReset.bind(this) }/>
+                </div>
+            );
         }
         else {
             return [
