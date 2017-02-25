@@ -8,7 +8,11 @@ import Button from '../../misc/Button';
 import RootPaneBase from '../RootPaneBase';
 import ImporterTableSet from '../../misc/importer/ImporterTableSet';
 import LoadingIndicator from '../../misc/LoadingIndicator';
-import { parseImportFile, resetImport } from '../../../actions/importer';
+import {
+    parseImportFile,
+    resetImport,
+    resetImportError
+} from '../../../actions/importer';
 
 
 @connect(state => ({ importer: state.importer }))
@@ -29,9 +33,24 @@ export default class ImportPane extends RootPaneBase {
         let tableSet = this.props.importer.tableSet;
         let stats = this.props.importer.importStats;
         let isPending = this.props.importer.importIsPending;
+        let error = this.props.importer.importError;
 
         if (isPending) {
             return <LoadingIndicator />;
+        }
+        else if (error) {
+            return (
+                <div className="ImportPane-error">
+                    <Msg tagName="h1" id="panes.import.error.h"/>
+                    <Msg tagName="p" id="panes.import.error.p"/>
+                    <Button labelMsg="panes.import.error.backButton"
+                        onClick={ this.onErrorBackButtonClick.bind(this) }
+                        />
+                    <Button labelMsg="panes.import.error.resetButton"
+                        onClick={ this.onErrorResetButtonClick.bind(this) }
+                        />
+                </div>
+            );
         }
         else if (tableSet) {
             return (
@@ -41,18 +60,22 @@ export default class ImportPane extends RootPaneBase {
             );
         }
         else if (stats) {
-            return [
-                <h1>Import complete</h1>,
-                <ul>
-                    <li>Imported: { stats.num_imported }</li>
-                    <li>Created: { stats.num_created }</li>
-                    <li>Updated: { stats.num_updated }</li>
-                    <li>Tagged: { stats.num_tagged }</li>
-                </ul>,
-                <Button key="importMoreButton"
-                    labelMsg="panes.import.importMoreButton"
-                    onClick={ this.onClickReset.bind(this) }/>
-            ];
+            return (
+                <div className="ImportPane-report">
+                    <Msg tagName="h1" id="panes.import.report.h"
+                        values={{ count: stats.imported }}/>
+                    <ul>
+                        <li><Msg id="panes.import.report.numCreated"
+                            values={{ count: stats.created }}/></li>
+                        <li><Msg id="panes.import.report.numUpdated"
+                            values={{ count: stats.updated }}/></li>
+                        <li><Msg id="panes.import.report.numTagged"
+                            values={{ count: stats.tagged }}/></li>
+                    </ul>
+                    <Button labelMsg="panes.import.importMoreButton"
+                        onClick={ this.onClickReset.bind(this) }/>
+                </div>
+            );
         }
         else {
             return [
@@ -96,6 +119,14 @@ export default class ImportPane extends RootPaneBase {
     }
 
     onClickReset() {
+        this.props.dispatch(resetImport());
+    }
+
+    onErrorBackButtonClick() {
+        this.props.dispatch(resetImportError());
+    }
+
+    onErrorResetButtonClick() {
         this.props.dispatch(resetImport());
     }
 }

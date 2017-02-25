@@ -16,9 +16,16 @@ export default function importer(state = null, action) {
     else if (action.type == types.EXECUTE_IMPORT + '_FULFILLED') {
         return Object.assign({}, state, {
             importIsPending: false,
-            importStats: action.payload.report,
+            importStats: action.payload.data.data.report,
             importError: false,
             tableSet: null,
+        });
+    }
+    else if (action.type == types.EXECUTE_IMPORT + '_REJECTED') {
+        return Object.assign({}, state, {
+            importIsPending: false,
+            importStats: null,
+            importError: action.payload.data,
         });
     }
     else if (action.type == types.PARSE_IMPORT_FILE + '_FULFILLED') {
@@ -86,6 +93,11 @@ export default function importer(state = null, action) {
                 tableList: updateOrAddListItem(state.tableSet.tableList,
                     table.id, table),
             }),
+        });
+    }
+    else if (action.type == types.RESET_IMPORT_ERROR) {
+        return Object.assign({}, state, {
+            importError: null,
         });
     }
     else if (action.type == types.RESET_IMPORT) {
