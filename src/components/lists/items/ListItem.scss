@@ -5,19 +5,32 @@
     @include card;
 
     &.ListItem-withCheckbox {
-        padding-left: 3em;
         position: relative;
+        display: flex;
+        padding: 0;
+
+        .ListItem-selection {
+            @include col(1,12, $first:true, $last:true);
+            background-color: darken(white, 5);
+            color: white;
+            text-align: center;
+
+            .ListItem-checkbox {
+                margin-top: 3em;
+                cursor: pointer;
+            }
+
+        }
+
+        & >:nth-child(2) {
+            @include col(11,12);
+            padding: 1em;
+        }
     }
 
     &:hover {
         background-color: darken($c-ui-bg, 1);
         cursor: pointer;
-    }
-
-    .ListItem-checkbox {
-        position: absolute;
-        top: 0.6em;
-        left: 0.6em;
     }
 
     .ListItem-date {

@@ -26,10 +26,12 @@ export default class ListItem extends React.Component {
         let checkbox = null;
         if (this.props.showCheckbox) {
             checkbox = (
-                <input type="checkbox"
-                    checked={ this.props.selected }
-                    className="ListItem-checkbox"
-                    onChange={ this.onSelectChange.bind(this) }/>
+                <div className="ListItem-selection">
+                    <input type="checkbox"
+                        checked={ this.props.selected }
+                        className="ListItem-checkbox"
+                        onChange={ this.onSelectChange.bind(this) }/>
+                </div>
             );
         }
 
