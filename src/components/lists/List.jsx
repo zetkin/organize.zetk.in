@@ -87,8 +87,34 @@ export default class List extends React.Component {
             }
         }
 
+        let selectAllCheckbox;
+        if (this.props.allowBulkSelection) {
+            let allSelected = false;
+
+            if (selectedIds.length && selectedIds.length == items.length) {
+                allSelected = true;
+                for (let i = 0; i < items.length; i++) {
+                    let item = items[i];
+                    if (!item.data || selectedIds.indexOf(item.data.id) < 0) {
+                        allSelected = false;
+                        break;
+                    }
+                }
+            }
+
+            selectAllCheckbox = (
+                <div className="List-selectAllCheckbox">
+                    <input type="checkbox"
+                        checked={ allSelected }
+                        onChange={ this.onSelectAllChange.bind(this) }
+                        />
+                </div>
+            );
+        }
+
         return (
             <div className={ classes }>
+                { selectAllCheckbox }
                 { header }
 
                 <ul key="List-items">
@@ -110,6 +136,14 @@ export default class List extends React.Component {
                 { loadMoreLink }
             </div>
         );
+    }
+
+    onSelectAllChange(ev) {
+        this.props.list.items
+            .filter(i => !!i.data)
+            .forEach(i => {
+                this.props.onItemSelect(i, ev.target.checked);
+            });
     }
 
     onLoadMoreClick() {
