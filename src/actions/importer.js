@@ -102,7 +102,6 @@ export function executeImport(tableId) {
 
         let data = { columns, rows };
 
-        // TODO: Add fetch polyfill
         dispatch({
             type: types.EXECUTE_IMPORT,
             payload: {

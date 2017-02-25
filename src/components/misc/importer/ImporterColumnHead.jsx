@@ -37,7 +37,10 @@ export default class ImporterColumnHead extends React.Component {
         let column = this.props.column;
         let type = column.type;
 
-        if (type == 'person_data') {
+        if (type == 'id') {
+            type = 'id.' + column.config.origin;
+        }
+        else if (type == 'person_data') {
             // Use "person.<field_name>" as the type, which is how it's defined
             // in the PERSON_OPTIONS dictionary.
             type = 'person.' + column.config.field;
@@ -57,7 +60,10 @@ export default class ImporterColumnHead extends React.Component {
         }
 
         let unknownLabel = col('unknown');
-        let idLabel = col('id');
+        let idLabel = col('colOptions.id.zetkin');
+        let extIdLabel = col('colOptions.id.external');
+        let idFieldsLabel = formatMessage(
+            { id: 'panes.import.column.idFields' });
         let personFieldsLabel = formatMessage(
             { id: 'panes.import.column.personFields' });
 
@@ -77,7 +83,10 @@ export default class ImporterColumnHead extends React.Component {
                 <select value={ type }
                     onChange={ this.onChangeColumn.bind(this) }>
                     <option value="unknown">{ unknownLabel }</option>
-                    <option value="person.id">{ idLabel }</option>
+                    <optgroup label={ idFieldsLabel }>
+                        <option value="id.zetkin">{ idLabel }</option>
+                        <option value="id.external">{ extIdLabel }</option>
+                    </optgroup>
                     <optgroup label={ personFieldsLabel }>
                     { Object.keys(PERSON_OPTIONS).map(value => (
                         <option key={ value } value={ value }>
@@ -115,7 +124,13 @@ export default class ImporterColumnHead extends React.Component {
                 type: value,
             };
 
-            if (value.indexOf('person.') === 0) {
+            if (value.indexOf('id.') === 0) {
+                props.type = 'id';
+                props.config = {
+                    origin: value.substr(3),
+                };
+            }
+            else if (value.indexOf('person.') === 0) {
                 // This is a short hand for a person_data column with a known
                 // field. Convert to the correct type and config
                 props.type = 'person_data';
