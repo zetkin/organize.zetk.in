@@ -206,6 +206,16 @@
             }
         }
 
+        &.Section-survey {
+            .Section-navItem-list a:before {
+                background-image: url(/static/images/section-nav/survey-list.png);
+            }
+
+            .Section-navItem-submissions a:before {
+                background-image: url(/static/images/section-nav/survey-submissions.png);
+            }
+        }
+
         &.Section-settings {
             .Section-navItem-officials a:before {
                 background-image: url(/static/images/section-nav/settings-officials.png);
