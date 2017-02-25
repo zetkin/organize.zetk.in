@@ -36,7 +36,6 @@ export default class PeopleListPane extends RootPaneBase {
 
         this.state = {
             selectedQueryId: undefined,
-            bulkSelectionId: undefined,
         };
     }
 
@@ -62,7 +61,7 @@ export default class PeopleListPane extends RootPaneBase {
     }
 
     getRenderData() {
-        let selectionId = this.state.bulkSelectionId;
+        let selectionId = this.bulkSelectionId;
         let selectionList = this.props.selections.selectionList;
         let selectionItem = getListItemById(selectionList, selectionId);
 
@@ -176,15 +175,13 @@ export default class PeopleListPane extends RootPaneBase {
     }
 
     onItemSelect(item, selected) {
-        let selectionId = this.state.bulkSelectionId;
+        let selectionId = this.bulkSelectionId;
         if (!selectionId) {
             let action = createSelection('bulk', null, null);
             selectionId = action.payload.id;
 
+            this.bulkSelectionId = selectionId
             this.props.dispatch(action);
-            this.setState({
-                bulkSelectionId: selectionId
-            });
         }
 
         if (selected) {
