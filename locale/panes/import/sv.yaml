@@ -47,12 +47,15 @@ table:
         }
 
 column:
-    id: "Zetkin-ID"
     unknown: "Hoppa över kolumn"
+    idFields: "ID för sammanslagning"
     personFields: "Personfält"
     otherFields: "Annan data"
     editSettingsLink: "Redigera kolumninställningar"
     colOptions:
+        id:
+            zetkin: "Zetkin-ID"
+            external: "Externt ID"
         person:
             firstName: "Förnamn"
             lastName: "Efternamn"
