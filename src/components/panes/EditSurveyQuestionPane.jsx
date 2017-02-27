@@ -1,13 +1,18 @@
 import React from 'react';
-import { injectIntl } from 'react-intl';
+import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import Button from '../misc/Button';
 import PaneBase from './PaneBase';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import SurveyQuestionForm from '../forms/SurveyQuestionForm';
+import SurveyQuestionOutline from '../misc/surveyOutline/SurveyQuestionOutline';
 import { getListItemById } from '../../utils/store';
-import { retrieveSurvey, updateSurveyElement } from '../../actions/survey';
+import {
+    retrieveSurvey,
+    updateSurveyElement,
+    updateSurveyOption,
+} from '../../actions/survey';
 
 
 const mapStateToProps = (state, props) => {
@@ -45,10 +50,25 @@ export default class EditSurveyQuestionPane extends PaneBase {
         if (elementItem && elementItem.data) {
             let question = elementItem.data.question;
 
+            let optionContainer = null;
+            if (question.response_type == 'options' && question.options) {
+                optionContainer = (
+                    <div key="options">
+                        <Msg tagName="h3" id="panes.editSurveyQuestion.options.h"/>
+                        <SurveyQuestionOutline
+                            options={ question.options }
+                            onOptionTextChange={ this.onOptionTextChange.bind(this) }
+                            />
+                    </div>
+                );
+            }
+
             return [
                 <SurveyQuestionForm key="form" ref="form"
                     question={ question }
                     onSubmit={ this.onSubmit.bind(this) }/>,
+
+                optionContainer,
             ];
         }
     }
@@ -59,6 +79,15 @@ export default class EditSurveyQuestionPane extends PaneBase {
                 labelMsg="panes.editSurveyQuestion.saveButton"
                 onClick={ this.onSubmit.bind(this) }/>
         );
+    }
+
+    onOptionTextChange(option, text) {
+        let surveyId = this.getParam(0);
+        let elementId = this.getParam(1);
+        let data = { text };
+
+        this.props.dispatch(updateSurveyOption(
+            surveyId, elementId, option.id, data));
     }
 
     onSubmit(ev) {
