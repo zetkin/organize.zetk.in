@@ -52,6 +52,20 @@ export function deleteSurvey(id) {
     };
 }
 
+export function createSurveyElement(surveyId, data) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.CREATE_SURVEY_ELEMENT,
+            meta: { surveyId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'surveys', surveyId,
+                    'elements').post(data)
+            }
+        });
+    };
+}
+
 export function updateSurveyElement(surveyId, elementId, data) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;

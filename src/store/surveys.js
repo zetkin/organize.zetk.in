@@ -64,6 +64,7 @@ export default function surveys(state = null, action) {
                 surveyList: removeListItem(state.surveyList, action.meta.id)
             });
 
+        case types.CREATE_SURVEY_ELEMENT + '_FULFILLED':
         case types.UPDATE_SURVEY_ELEMENT + '_FULFILLED':
             let surveyId = action.meta.surveyId.toString();
             return Object.assign({}, state, {
