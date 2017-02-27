@@ -56,6 +56,7 @@ export default class SurveyOutlinePane extends PaneBase {
                     <SurveyOutline survey={ survey }
                         elements={ elements }
                         onElementSelect={ this.onElementSelect.bind(this) }
+                        onElementCreate={ this.onElementCreate.bind(this) }
                         />
                 </div>,
             ];
@@ -73,6 +74,14 @@ export default class SurveyOutlinePane extends PaneBase {
         }
         else if (element.type == 'text') {
             this.openPane('editsurveytextblock', survey.id, element.id);
+        }
+    }
+
+    onElementCreate(type) {
+        let survey = this.props.surveyItem.data;
+
+        if (type == 'question') {
+            this.openPane('addsurveyquestion', survey.id);
         }
     }
 }
