@@ -44,10 +44,13 @@ export function parseWorkbook(data) {
                     return cell? cell.v : undefined;
                 });
 
-                table.rows.push({
-                    included: true,
-                    values: rowValues,
-                });
+                // Only include if there are non-null values in the row
+                if (!!rowValues.find(v => v != null)) {
+                    table.rows.push({
+                        included: true,
+                        values: rowValues,
+                    });
+                }
             }
 
             // Iterate from right to left, finding completely empty columns
