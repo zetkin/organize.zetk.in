@@ -80,6 +80,20 @@ export function updateSurveyElement(surveyId, elementId, data) {
     };
 }
 
+export function createSurveyOption(surveyId, elementId, data) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.CREATE_SURVEY_OPTION,
+            meta: { surveyId, elementId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'surveys', surveyId,
+                    'elements', elementId, 'options').post(data)
+            }
+        });
+    };
+}
+
 export function updateSurveyOption(surveyId, elementId, optionId, data) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
