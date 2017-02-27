@@ -79,3 +79,17 @@ export function updateSurveyElement(surveyId, elementId, data) {
         });
     };
 }
+
+export function updateSurveyOption(surveyId, elementId, optionId, data) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.UPDATE_SURVEY_OPTION,
+            meta: { surveyId, elementId, optionId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'surveys', surveyId,
+                    'elements', elementId, 'options', optionId).patch(data)
+            }
+        });
+    };
+}

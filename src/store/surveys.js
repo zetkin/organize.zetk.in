@@ -12,6 +12,7 @@ import {
 export default function surveys(state = null, action) {
     let surveyData;
     let elements;
+    let surveyId, elementId, optionId;
 
     switch (action.type) {
         case types.RETRIEVE_SURVEYS + '_PENDING':
@@ -66,13 +67,37 @@ export default function surveys(state = null, action) {
 
         case types.CREATE_SURVEY_ELEMENT + '_FULFILLED':
         case types.UPDATE_SURVEY_ELEMENT + '_FULFILLED':
-            let surveyId = action.meta.surveyId.toString();
+            surveyId = action.meta.surveyId.toString();
             return Object.assign({}, state, {
                 elementsBySurvey: Object.assign({}, state.elementsBySurvey, {
                     [surveyId]: updateOrAddListItem(
                         state.elementsBySurvey[surveyId],
                         action.payload.data.data.id,
                         action.payload.data.data),
+                })
+            });
+
+        case types.UPDATE_SURVEY_OPTION + '_FULFILLED':
+            surveyId = action.meta.surveyId;
+            elementId = action.meta.elementId;
+            optionId = action.meta.optionId;
+            let element = state.elementsBySurvey[surveyId].items
+                .find(i => i.data.id == elementId).data;
+            let option = element.question.options
+                .find(o => o.id == optionId);
+            let optionIdx = element.question.options.indexOf(option);
+            let options = element.question.options.concat();
+            options[optionIdx] = action.payload.data.data;
+
+            return Object.assign({}, state, {
+                elementsBySurvey: Object.assign({}, state.elementsBySurvey, {
+                    [surveyId]: updateOrAddListItem(
+                        state.elementsBySurvey[surveyId],
+                        elementId, Object.assign({}, element, {
+                            question: Object.assign({}, element.question, {
+                                options: options,
+                            }),
+                        })),
                 })
             });
 
