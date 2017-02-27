@@ -83,5 +83,8 @@ export default class SurveyOutlinePane extends PaneBase {
         if (type == 'question') {
             this.openPane('addsurveyquestion', survey.id);
         }
+        else if (type == 'text') {
+            this.openPane('addsurveytextblock', survey.id);
+        }
     }
 }
