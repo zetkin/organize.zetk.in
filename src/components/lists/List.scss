@@ -1,9 +1,11 @@
 .List {
     width: 100%;
     font-size: 1.3em;
+    position: relative;
 
     .ListHeader {
         position: relative;
+        z-index: 0;
         height: 15px;
 
         li {
@@ -15,6 +17,13 @@
 
     @include medium-screen {
         max-width: 720px;
+    }
+
+    .List-selectAllCheckbox {
+        @include col(1,12, $first:true, $last:true);
+        position: absolute;
+        z-index: 1;
+        text-align: center;
     }
 
     .List-loadMoreLink {

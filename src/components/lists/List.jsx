@@ -12,6 +12,17 @@ function r(obj, fieldPath) {
     return path.reduce((o, e) => o[e], obj);
 }
 
+
+let shiftKeyDown = false;
+
+const onKeyDown = ev => {
+    if (ev.keyCode == 16) shiftKeyDown = true;
+};
+
+const onKeyUp = ev => {
+    if (ev.keyCode == 16) shiftKeyDown = false;
+};
+
 export default class List extends React.Component {
     static propTypes = {
         list: React.PropTypes.shape({
@@ -37,6 +48,18 @@ export default class List extends React.Component {
         super(props);
 
         this.state = {};
+        this.lastSelectedId = null;
+    }
+
+    componentDidMount() {
+        shiftKeyDown = false;
+        window.addEventListener('keydown', onKeyDown);
+        window.addEventListener('keyup', onKeyUp);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('keydown', onKeyDown);
+        window.removeEventListener('keyup', onKeyUp);
     }
 
     render() {
@@ -87,8 +110,34 @@ export default class List extends React.Component {
             }
         }
 
+        let selectAllCheckbox;
+        if (this.props.allowBulkSelection) {
+            let allSelected = false;
+
+            if (selectedIds.length && selectedIds.length == items.length) {
+                allSelected = true;
+                for (let i = 0; i < items.length; i++) {
+                    let item = items[i];
+                    if (!item.data || selectedIds.indexOf(item.data.id) < 0) {
+                        allSelected = false;
+                        break;
+                    }
+                }
+            }
+
+            selectAllCheckbox = (
+                <div className="List-selectAllCheckbox">
+                    <input type="checkbox"
+                        checked={ allSelected }
+                        onChange={ this.onSelectAllChange.bind(this) }
+                        />
+                </div>
+            );
+        }
+
         return (
             <div className={ classes }>
+                { selectAllCheckbox }
                 { header }
 
                 <ul key="List-items">
@@ -102,7 +151,7 @@ export default class List extends React.Component {
                             itemComponent={ this.props.itemComponent }
                             showCheckbox={ this.props.allowBulkSelection }
                             selected={ selected }
-                            onItemSelect={ this.props.onItemSelect }
+                            onItemSelect={ this.onItemSelect.bind(this) }
                             onItemClick={ this.props.onItemClick }/>
                     );
                 }) }
@@ -110,6 +159,38 @@ export default class List extends React.Component {
                 { loadMoreLink }
             </div>
         );
+    }
+
+    onSelectAllChange(ev) {
+        this.props.list.items
+            .filter(i => !!i.data)
+            .forEach(i => {
+                this.props.onItemSelect(i, ev.target.checked);
+            });
+    }
+
+    onItemSelect(item, selected) {
+        if (this.props.onItemSelect) {
+            let prevItem = this.props.list.items.find(i =>
+                i.data && i.data.id === this.lastSelectedId);
+
+            if (selected && shiftKeyDown && prevItem) {
+                let prevIdx = this.props.list.items.indexOf(prevItem);
+                let curIdx = this.props.list.items.indexOf(item);
+
+                let start = Math.min(prevIdx, curIdx);
+                let end = Math.max(prevIdx, curIdx);
+
+                for (let i = start; i <= end; i++) {
+                    this.props.onItemSelect(this.props.list.items[i], true);
+                }
+            }
+            else {
+                this.props.onItemSelect(item, selected);
+            }
+
+            this.lastSelectedId = selected? item.data.id : null;
+        }
     }
 
     onLoadMoreClick() {
