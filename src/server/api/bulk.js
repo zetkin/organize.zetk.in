@@ -78,7 +78,7 @@ let operations = {
                     req.body.objects.indexOf(p.id) >= 0);
 
                 let lastCell = xlsx.utils.encode_cell(
-                    { c: Object.keys(FIELDS).length, r: people.length + 1 });
+                    { c: Object.keys(FIELDS).length, r: people.length });
 
                 let wb = {
                     SheetNames: ['Zetkin'],
