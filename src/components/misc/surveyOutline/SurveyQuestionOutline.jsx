@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Button from '../Button';
 import SurveyQuestionOption from './SurveyQuestionOption';
 
 
@@ -9,18 +10,47 @@ export default class SurveyQuestionOutline extends React.Component {
         onOptionTextChange: React.PropTypes.func,
     };
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            adding: false,
+        }
+    }
+
     render() {
         let items = this.props.options.map(o => (
-            <SurveyQuestionOption key={ o.id } option={ o }
-                onTextChange={ this.onOptionTextChange.bind(this, o) }
-                />
+            <li key={ o.id }>
+                <SurveyQuestionOption option={ o }
+                    onTextChange={ this.onOptionTextChange.bind(this, o) }
+                    />
+            </li>
         ));
+
+        let addSection;
+
+        if (this.state.adding) {
+            addSection = (
+                <SurveyQuestionOption
+                    option={{ text: '' }} editMode={ true }
+                    onTextChange={ this.onNewOptionTextChange.bind(this) }
+                    />
+            );
+        }
+        else {
+            addSection = (
+                <Button labelMsg="misc.surveyOutline.option.addButton"
+                    onClick={ this.onAddButtonClick.bind(this) }
+                    />
+            );
+        }
 
         return (
             <div className="SurveyQuestionOutline">
                 <ul>
                     { items }
                 </ul>
+                { addSection }
             </div>
         );
     }
@@ -29,5 +59,21 @@ export default class SurveyQuestionOutline extends React.Component {
         if (this.props.onOptionTextChange) {
             this.props.onOptionTextChange(option, text);
         }
+    }
+
+    onAddButtonClick() {
+        this.setState({
+            adding: true,
+        });
+    }
+
+    onNewOptionTextChange(text) {
+        if (this.props.onOptionCreate) {
+            this.props.onOptionCreate(text);
+        }
+
+        this.setState({
+            adding: false,
+        });
     }
 }

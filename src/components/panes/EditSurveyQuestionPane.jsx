@@ -12,6 +12,7 @@ import {
     retrieveSurvey,
     updateSurveyElement,
     updateSurveyOption,
+    createSurveyOption,
 } from '../../actions/survey';
 
 
@@ -57,6 +58,7 @@ export default class EditSurveyQuestionPane extends PaneBase {
                         <Msg tagName="h3" id="panes.editSurveyQuestion.options.h"/>
                         <SurveyQuestionOutline
                             options={ question.options }
+                            onOptionCreate={ this.onOptionCreate.bind(this) }
                             onOptionTextChange={ this.onOptionTextChange.bind(this) }
                             />
                     </div>
@@ -88,6 +90,15 @@ export default class EditSurveyQuestionPane extends PaneBase {
 
         this.props.dispatch(updateSurveyOption(
             surveyId, elementId, option.id, data));
+    }
+
+    onOptionCreate(text) {
+        let surveyId = this.getParam(0);
+        let elementId = this.getParam(1);
+        let data = { text };
+
+        this.props.dispatch(createSurveyOption(
+            surveyId, elementId, data));
     }
 
     onSubmit(ev) {

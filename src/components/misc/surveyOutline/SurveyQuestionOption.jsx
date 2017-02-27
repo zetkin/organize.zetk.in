@@ -13,7 +13,8 @@ export default class SurveyQuestionOption extends React.Component {
         super(props);
 
         this.state = {
-            editing: false,
+            text: '',
+            editing: !!props.editMode,
         };
     }
 
@@ -42,10 +43,10 @@ export default class SurveyQuestionOption extends React.Component {
         }
 
         return (
-            <li className="SurveyQuestionOption"
+            <div className="SurveyQuestionOption"
                 onClick={ this.onClick.bind(this) }>
                 { content }
-            </li>
+            </div>
         );
     }
 
