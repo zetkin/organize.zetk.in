@@ -34,6 +34,7 @@ export default class SurveyQuestionOutline extends React.Component {
                 <SurveyQuestionOption
                     option={{ text: '' }} editMode={ true }
                     onTextChange={ this.onNewOptionTextChange.bind(this) }
+                    onCancel={ this.onNewOptionCancel.bind(this) }
                     />
             );
         }
@@ -72,6 +73,12 @@ export default class SurveyQuestionOutline extends React.Component {
             this.props.onOptionCreate(text);
         }
 
+        this.setState({
+            adding: false,
+        });
+    }
+
+    onNewOptionCancel() {
         this.setState({
             adding: false,
         });

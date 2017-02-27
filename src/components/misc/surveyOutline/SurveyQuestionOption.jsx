@@ -7,6 +7,7 @@ export default class SurveyQuestionOption extends React.Component {
     static propTypes = {
         option: React.PropTypes.object.isRequired,
         onTextChange: React.PropTypes.func,
+        onCancel: React.PropTypes.func,
     };
 
     constructor(props) {
@@ -66,6 +67,10 @@ export default class SurveyQuestionOption extends React.Component {
     }
 
     onCancelButtonClick(ev) {
+        if (this.props.onCancel) {
+            this.props.onCancel();
+        }
+
         this.setState({
             editing: false,
         });
