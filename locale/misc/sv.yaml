@@ -50,3 +50,8 @@ surveyOutline:
         types:
             question: "Fråga"
             text: "Textblock"
+
+    option:
+        addButton: "Lägg till svarsalternativ"
+        cancelButton: "Avbryt"
+        saveButton: "Spara"
