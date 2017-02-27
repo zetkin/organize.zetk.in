@@ -40,6 +40,12 @@ officialList:
     userLabel: "Din egen roll är låst"
 
 surveyOutline:
+    add:
+        label: "Välj typ för att lägga till"
+        types:
+            question: "Enkätfråga"
+            text: "Textblock"
+
     element:
         types:
             question: "Fråga"
