@@ -10,6 +10,7 @@ import LoadingIndicator from '../misc/LoadingIndicator';
 import { getListItemById } from '../../utils/store';
 import { retrieveSurvey } from '../../actions/survey';
 import { retrieveSurveySubmission } from '../../actions/surveySubmission';
+import hasData from '../../utils/hasData';
 
 
 const mapStateToProps = (state, props) => {
@@ -66,9 +67,20 @@ export default class SurveySubmissionPane extends PaneBase {
 
     componentWillReceiveProps(nextProps) {
         let subItem = nextProps.submissionItem;
-        if (!nextProps.surveyItem && subItem && subItem.data && subItem.data.survey) {
-            this.props.dispatch(retrieveSurvey(subItem.data.survey.id));
-        }
+
+        // Can't load survey until we know which one to load
+        if (!hasData(subItem, ['data', 'survey', 'id']))
+            return;
+
+        // Shouldn't load survey if it already exists
+        if (nextProps.elementList)
+            return;
+
+        // Shouldn't load if already loading
+        if (nextProps.surveyItem && nextProps.surveyItem.isPending)
+            return;
+
+        this.props.dispatch(retrieveSurvey(subItem.data.survey.id));
     }
 
     renderPaneContent(data) {
