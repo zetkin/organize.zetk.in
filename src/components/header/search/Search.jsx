@@ -127,6 +127,11 @@ export default class Search extends React.Component {
                 paneType = 'person';
                 params = [ match.data.id ];
                 break;
+            case 'survey':
+                defaultSection = 'survey';
+                paneType = 'survey';
+                params = [ match.data.id ];
+                break;
             case 'query':
                 defaultSection = 'people';
                 paneType = 'query';
