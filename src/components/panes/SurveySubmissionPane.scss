@@ -1,5 +1,49 @@
 .SurveySubmissionPane {
+
+    &.PaneBase {
+        min-width: 500px;
+    }
+
+    .PaneBase-content > h2 {
+        color: lighten($c-text, 30);
+        &:before {
+            @include icon($fa-var-inbox);
+        }
+    }
+
+    .SurveySubmissionPane-infoSurvey {
+        &:before {
+            @include icon($fa-var-list-ul);
+        }
+    }
+
+    .SurveySubmissionPane-infoDate {
+        &:before {
+            @include icon($fa-var-clock-o);
+        }
+    }
+
     .SurveySubmissionPane-respondent {
+        @include col(9,12, $align:middle);
+
+        .Avatar {
+            @include col(3,12, $align:middle, $first:true);
+        }
+
+        .SurveySubmissionPane-respondentInfo {
+            @include col(8,12, $align:middle);
+        }
+
+        .SurveySubmissionPane-name {
+            @include col(12,12, $first:true);
+            font-size: 1.8em;
+        }
+
+        .SurveySubmissionPane-mail {
+            @include col(12,12, $first:true);
+            font-size: 1.5em;
+        }
+
         &:after {
             content: "";
             display: block;
@@ -29,6 +73,16 @@
             color: $c-ui-darker;
             font-size: 4em;
             text-align: center;
+        }
+    }
+
+    .SurveySubmissionPane-connected {
+        @include col(3,12, $last:true);
+    }
+
+    .SurveySubmissionPane-responses {
+        h3:before {
+            @include icon($fa-var-comments-o);
         }
     }
 }

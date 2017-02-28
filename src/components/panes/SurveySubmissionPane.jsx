@@ -71,6 +71,8 @@ export default class SurveySubmissionPane extends PaneBase {
             let sub = data.submissionItem.data;
             let survey = data.surveyItem? data.surveyItem.data : null;
 
+            let timestamp = Date.create(sub.survey.submitted);
+
             let responses = <LoadingIndicator />;
             if (survey && survey.elements) {
                 responses = survey.elements
@@ -94,7 +96,12 @@ export default class SurveySubmissionPane extends PaneBase {
 
             return [
                 <div key="info" className="SurveySubmissionPane-info">
-                    <h3>{ sub.survey.title }</h3>
+                    <p className="SurveySubmissionPane-infoSurvey">
+                        { sub.survey.title }</p>
+                    <p className="SurveySubmissionPane-infoDate">
+                        { timestamp.format('{d}/{M}, {yyyy} {HH}:{MM}') }
+                    </p>
+
                     <SubmissionRespondent submission={ sub }/>
                 </div>,
                 <div key="responses" className="SurveySubmissionPane-responses">
@@ -118,12 +125,18 @@ let SubmissionRespondent = props => {
             ?
         </figure>
     );
+    let email = null;
 
     if (sub.respondent) {
         name = (
-            <span>
+            <span className="SurveySubmissionPane-name">
                 { sub.respondent.first_name + ' ' + sub.respondent.last_name }
             </span>
+        );
+
+        email = (
+            <span className ="SurveySubmissionPane-email">
+                { sub.respondent.email }</span>
         );
 
         if (sub.respondent.id) {
@@ -138,7 +151,10 @@ let SubmissionRespondent = props => {
     return (
         <div className={ classes }>
             { avatar }
-            { name }
+            <div className="SurveySubmissionPane-respondentInfo">
+                { name }
+                { email }
+            </div>
         </div>
     );
 };
