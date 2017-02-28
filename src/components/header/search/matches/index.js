@@ -4,6 +4,7 @@ import CampaignMatch from './CampaignMatch';
 import LocationMatch from './LocationMatch';
 import PersonMatch from './PersonMatch';
 import SurveyMatch from './SurveyMatch';
+import SurveySubmissionMatch from './SurveySubmissionMatch';
 import QueryMatch from './QueryMatch';
 
 let _matches = {
@@ -13,6 +14,7 @@ let _matches = {
     'location': LocationMatch,
     'person': PersonMatch,
     'survey': SurveyMatch,
+    'survey_submission': SurveySubmissionMatch,
     'query': QueryMatch,
 };
 

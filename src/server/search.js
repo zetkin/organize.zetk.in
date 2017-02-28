@@ -47,6 +47,7 @@ function search(ws, req) {
 
         if (!msg.scope || msg.scope == 'survey') {
             searchFuncs.push(searchSurveys);
+            searchFuncs.push(searchSurveySubmissions);
         }
 
         queue = new SearchQueue(req.z, msg.org, msg.query, writeFunc, searchFuncs, msg.lang);
@@ -198,6 +199,18 @@ function searchSurveys(z, orgId, q, writeMatch) {
             result.data.data.forEach(survey => {
                 if (searchMatches(q, survey)) {
                     writeMatch(q, 'survey', survey);
+                }
+            });
+        });
+}
+
+function searchSurveySubmissions(z, orgId, q, writeMatch) {
+    // TODO: Filter in API
+    return z.resource('orgs', orgId, 'survey_submissions').get()
+        .then(result => {
+            result.data.data.forEach(sub => {
+                if (sub.respondent && searchMatches(q, sub.respondent)) {
+                    writeMatch(q, 'survey_submission', sub);
                 }
             });
         });
