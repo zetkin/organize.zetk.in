@@ -1,2 +1,7 @@
+header:
+    connected: "Koppling"
+    respondent: "Avsändare"
+    survey: "Enkät"
+    time: "Tid"
 item:
     anonymous: "Anonym"
