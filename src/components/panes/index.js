@@ -9,6 +9,9 @@ import AddPersonPane from './AddPersonPane';
 import AddPersonTagPane from './AddPersonTagPane';
 import AddLocationPane from './AddLocationPane';
 import AddLocationTagPane from './AddLocationTagPane'
+import AddSurveyPane from './AddSurveyPane';
+import AddSurveyQuestionPane from './AddSurveyQuestionPane';
+import AddSurveyTextBlockPane from './AddSurveyTextBlockPane';
 import BulkOpPane from './BulkOpPane';
 import CallPane from './CallPane';
 import CallAssignmentPane from './CallAssignmentPane';
@@ -22,8 +25,11 @@ import EditLocationPane from './EditLocationPane';
 import EditLocationTagPane from './EditLocationTagPane';
 import EditPersonPane from './EditPersonPane';
 import EditPersonTagPane from './EditPersonTagPane';
-import EditTextPane from './EditTextPane';
 import EditQueryPane from './EditQueryPane';
+import EditSurveyPane from './EditSurveyPane';
+import EditSurveyQuestionPane from './EditSurveyQuestionPane';
+import EditSurveyTextBlockPane from './EditSurveyTextBlockPane';
+import EditTextPane from './EditTextPane';
 import LocationPane from './LocationPane';
 import ImporterColumnPane from './ImporterColumnPane';
 import MoveParticipantsPane from './MoveParticipantsPane';
@@ -33,6 +39,8 @@ import QueryPane from './QueryPane';
 import SelectPeoplePane from './SelectPeoplePane';
 import SelectLocationTagsPane from './SelectLocationTagsPane';
 import SelectPersonTagsPane from './SelectPersonTagsPane';
+import SurveyPane from './SurveyPane';
+import SurveyOutlinePane from './SurveyOutlinePane';
 import SurveySubmissionPane from './SurveySubmissionPane';
 
 var _panes = {
@@ -47,6 +55,9 @@ var _panes = {
     'addlocationtag': AddLocationTagPane,
     'addperson': AddPersonPane,
     'addpersontag': AddPersonTagPane,
+    'addsurvey': AddSurveyPane,
+    'addsurveyquestion': AddSurveyQuestionPane,
+    'addsurveytextblock': AddSurveyTextBlockPane,
     'bulk': BulkOpPane,
     'call': CallPane,
     'callassignment': CallAssignmentPane,
@@ -61,6 +72,9 @@ var _panes = {
     'editperson': EditPersonPane,
     'editpersontag': EditPersonTagPane,
     'editquery': EditQueryPane,
+    'editsurvey': EditSurveyPane,
+    'editsurveyquestion': EditSurveyQuestionPane,
+    'editsurveytextblock': EditSurveyTextBlockPane,
     'edittext': EditTextPane,
     'importercolumn': ImporterColumnPane,
     'location': LocationPane,
@@ -71,6 +85,8 @@ var _panes = {
     'selectpeople': SelectPeoplePane,
     'selectlocationtags': SelectLocationTagsPane,
     'selectpersontags': SelectPersonTagsPane,
+    'survey': SurveyPane,
+    'surveyoutline': SurveyOutlinePane,
     'surveysubmission': SurveySubmissionPane,
 };
 

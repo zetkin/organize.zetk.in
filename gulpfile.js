@@ -44,7 +44,13 @@ gulp.task('copyFonts', function() {
 });
 
 gulp.task('copyMessages', function() {
+    const newerConfig = {
+        dest: './build/locale',
+        ext: '.yaml'
+    };
+
     return gulp.src('./locale/**/*')
+        .pipe(newer(newerConfig))
         .pipe(gulp.dest('./build/locale'));
 });
 

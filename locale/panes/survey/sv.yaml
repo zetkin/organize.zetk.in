@@ -1,0 +1,22 @@
+summary:
+    access:
+        open: "Öppen för vem som helst"
+        auth: "Öppen endast för anslutna användare"
+        list: "Öppen endast för specifika personer"
+    editLink: "Redigera inställningar"
+    viewLink: "Visa i aktivistportalen"
+content:
+    h: "Innehåll"
+    numQuestions: |
+        {count, plural,
+            =0 {Inga frågor}
+            =1 {En fråga}
+            other {# frågor}
+        }
+    numTextBlocks: |
+        {count, plural,
+            =0 {Inga textblock}
+            =1 {Ett textblock}
+            other {# textblock}
+        }
+    editLink: "Redigera innehåll"

@@ -1,0 +1,9 @@
+.SurveyOutlineElement {
+    @include card;
+    padding: 1em;
+    margin: 1em 0;
+
+    .SurveyOutlineElement-content {
+        font-size: 1.5em;
+    }
+}

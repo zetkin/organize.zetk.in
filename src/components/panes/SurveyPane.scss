@@ -1,0 +1,38 @@
+.SurveyPane {
+    .SurveyPane-summary {
+        padding-bottom: 2em;
+        margin-bottom: 2em;
+        border-bottom: 1px solid #ececec;
+        span {
+            display: flex;
+            font-size: 1.3em;
+            line-height: 1.6em;
+            margin: 10px 0;
+
+            &::before {
+                margin-right: 10px;
+                display: flex;
+                min-width: 1.6em;
+            }
+        }
+    }
+
+    .SurveyPane-summaryDesc {
+        font-style: italic;
+        &::before {
+            @include icon($fa-var-info-circle);
+        }
+    }
+
+    .SurveyPane-summaryAccess {
+        &::before {
+            @include icon($fa-var-lock);
+        }
+    }
+
+    .SurveyPane-link {
+        &::before {
+            @include icon($fa-var-external-link);
+        }
+    }
+}
