@@ -9,6 +9,7 @@ import AddPersonPane from './AddPersonPane';
 import AddPersonTagPane from './AddPersonTagPane';
 import AddLocationPane from './AddLocationPane';
 import AddLocationTagPane from './AddLocationTagPane'
+import AddSurveyPane from './AddSurveyPane';
 import AddSurveyQuestionPane from './AddSurveyQuestionPane';
 import AddSurveyTextBlockPane from './AddSurveyTextBlockPane';
 import BulkOpPane from './BulkOpPane';
@@ -54,6 +55,7 @@ var _panes = {
     'addlocationtag': AddLocationTagPane,
     'addperson': AddPersonPane,
     'addpersontag': AddPersonTagPane,
+    'addsurvey': AddSurveyPane,
     'addsurveyquestion': AddSurveyQuestionPane,
     'addsurveytextblock': AddSurveyTextBlockPane,
     'bulk': BulkOpPane,

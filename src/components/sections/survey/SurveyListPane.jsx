@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import React from 'react';
 
+import Button from '../../misc/Button';
 import RootPaneBase from '../RootPaneBase';
 import SurveyList from '../../lists/SurveyList';
 import { retrieveSurveys } from '../../../actions/survey';
@@ -26,6 +27,19 @@ export default class SurveyListPane extends RootPaneBase {
                 onItemClick={ this.onItemClick.bind(this) }
                 />
         );
+    }
+
+    getPaneTools(data) {
+        return [
+            <Button key="addButton"
+                className="SurveyListPane-addButton"
+                labelMsg="panes.surveyList.addButton"
+                onClick={ this.onAddClick.bind(this) }/>,
+        ];
+    }
+
+    onAddClick() {
+        this.openPane('addsurvey');
     }
 
     onItemClick(item, ev) {
