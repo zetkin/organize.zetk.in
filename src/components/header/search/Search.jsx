@@ -4,12 +4,7 @@ import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 
 import ScopeSelect from './ScopeSelect';
-import ActionDayMatch from './ActionDayMatch';
-import CallAssignmentMatch from './CallAssignmentMatch';
-import CampaignMatch from './CampaignMatch';
-import LocationMatch from './LocationMatch';
-import PersonMatch from './PersonMatch';
-import QueryMatch from './QueryMatch';
+import matches from './matches';
 import { gotoSection, pushPane } from '../../../actions/view';
 import {
     beginSearch,
@@ -62,28 +57,10 @@ export default class Search extends React.Component {
                     const key = match.type + ':' + match.data.id;
                     const focused = (this.state.focusedIndex === idx);
 
-                    var Match;
-
-                    // TODO: Move this to separate index.js?
-                    switch(match.type) {
-                        case 'actionday':
-                            Match = ActionDayMatch;
-                            break;
-                        case 'call_assignment':
-                            Match = CallAssignmentMatch;
-                            break;
-                        case 'campaign':
-                            Match = CampaignMatch;
-                            break;
-                        case 'location':
-                            Match = LocationMatch;
-                            break;
-                        case 'person':
-                            Match = PersonMatch;
-                            break;
-                        case 'query':
-                            Match = QueryMatch;
-                            break;
+                    var Match = matches.resolve(match.type);
+                    if (!Match) {
+                        console.warn('Unknown search match type', match.type);
+                        return null;
                     }
 
                     return <Match key={ key } data={ match.data }

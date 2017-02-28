@@ -1,7 +1,7 @@
 import React from 'react';
 
 import MatchBase from './MatchBase';
-import Avatar from '../../misc/Avatar';
+import Avatar from '../../../misc/Avatar';
 
 
 export default class PersonMatch extends MatchBase {
