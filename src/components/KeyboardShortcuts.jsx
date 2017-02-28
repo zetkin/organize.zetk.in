@@ -143,7 +143,7 @@ export default class KeyboardShortcuts extends React.Component {
                 case 112:   // 'p' == people
                     this.props.dispatch(gotoSection('people'));
                     break;
-                case 115:   // 's' == people
+                case 115:   // 's' == survey
                     this.props.dispatch(gotoSection('survey'));
                     break;
             }
@@ -174,6 +174,10 @@ export default class KeyboardShortcuts extends React.Component {
                 case 112:   // 'p' == people
                     this.closeReference();
                     this.props.dispatch(beginSearch('people'));
+                    break;
+                case 115:   // 's' == survey
+                    this.closeReference();
+                    this.props.dispatch(beginSearch('survey'));
                     break;
             }
 
