@@ -13,6 +13,7 @@
         .SurveySubmissionListItem-survey {
             @include col(12,12);
             text-align: right;
+            color: lighten($c-text, 60);
 
             &:before {
                 @include icon($fa-var-list-ul);
