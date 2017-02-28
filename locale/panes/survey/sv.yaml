@@ -7,4 +7,16 @@ summary:
     viewLink: "Visa i aktivistportalen"
 content:
     h: "Innehåll"
+    numQuestions: |
+        {count, plural,
+            =0 {Inga frågor}
+            =1 {En fråga}
+            other {# frågor}
+        }
+    numTextBlocks: |
+        {count, plural,
+            =0 {Inga textblock}
+            =1 {Ett textblock}
+            other {# textblock}
+        }
     editLink: "Redigera innehåll"

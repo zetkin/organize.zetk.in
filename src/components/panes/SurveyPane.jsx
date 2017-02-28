@@ -10,10 +10,14 @@ import { getListItemById } from '../../utils/store';
 import { retrieveSurvey } from '../../actions/survey';
 
 
-const mapStateToProps = (state, props) => ({
-    surveyItem: getListItemById(state.surveys.surveyList,
-        props.paneData.params[0]),
-});
+const mapStateToProps = (state, props) => {
+    let surveyId = props.paneData.params[0];
+
+    return {
+        elementList: state.surveys.elementsBySurvey[surveyId.toString()],
+        surveyItem: getListItemById(state.surveys.surveyList, surveyId),
+    };
+};
 
 
 @connect(mapStateToProps)
@@ -49,6 +53,30 @@ export default class SurveyPane extends PaneBase {
             let linkUrl = '//www.' + process.env.ZETKIN_DOMAIN + '/o/'
                 + survey.organization.id + '/surveys/' + survey.id;
 
+            let contentBreakdown = null;
+            if (this.props.elementList && this.props.elementList.items) {
+                let numQuestions = this.props.elementList.items
+                    .filter(i => i.data.type == 'question')
+                    .length;
+
+                let numTextBlocks = this.props.elementList.items
+                    .filter(i => i.data.type == 'text')
+                    .length;
+
+                contentBreakdown = (
+                    <ul className="SurveyPane-contentBreakdown">
+                        <li className="SurveyPane-contentBreakdown-questions">
+                            <Msg id="panes.survey.content.numQuestions"
+                                values={{ count: numQuestions }}/>
+                        </li>
+                        <li className="SurveyPane-contentBreakdown-text">
+                            <Msg id="panes.survey.content.numTextBlocks"
+                                values={{ count: numTextBlocks }}/>
+                        </li>
+                    </ul>
+                );
+            }
+
             return [
                 <div key="summary"
                     className="SurveyPane-summary">
@@ -66,6 +94,7 @@ export default class SurveyPane extends PaneBase {
                 <div key="content"
                     className="SurveyPane-content">
                     <Msg tagName="h3" id="panes.survey.content.h"/>
+                    { contentBreakdown }
                     <Link msgId="panes.survey.content.editLink"
                         onClick={ this.onEditContentClick.bind(this) }/>
                 </div>
