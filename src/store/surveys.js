@@ -44,6 +44,7 @@ export default function surveys(state = null, action) {
                         surveyData.id, surveyData, { isPending: true }),
             });
 
+        case types.CREATE_SURVEY + '_FULFILLED':
         case types.UPDATE_SURVEY + '_FULFILLED':
         case types.RETRIEVE_SURVEY + '_FULFILLED':
             surveyData = action.payload.data.data

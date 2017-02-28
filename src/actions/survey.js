@@ -13,6 +13,18 @@ export function retrieveSurveys() {
     };
 }
 
+export function createSurvey(data) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.CREATE_SURVEY,
+            payload: {
+                promise: z.resource('orgs', orgId, 'surveys').post(data),
+            }
+        });
+    };
+}
+
 export function retrieveSurvey(id) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
