@@ -46,6 +46,9 @@ export default class SurveyPane extends PaneBase {
             let accessLabel = this.props.intl.formatMessage(
                 { id: accessLabelMsg });
 
+            let linkUrl = '//www.' + process.env.ZETKIN_DOMAIN + '/o/'
+                + survey.organization.id + '/surveys/' + survey.id;
+
             return [
                 <div key="summary"
                     className="SurveyPane-summary">
@@ -53,6 +56,10 @@ export default class SurveyPane extends PaneBase {
                         { survey.info_text }</span>
                     <span className="SurveyPane-summaryAccess">
                         { accessLabel }</span>
+                    <span className="SurveyPane-link">
+                        <Link href={ linkUrl } target="_blank"
+                            msgId="panes.survey.summary.viewLink"/>
+                    </span>
                     <Link msgId="panes.survey.summary.editLink"
                         onClick={ this.onEditSummaryClick.bind(this) }/>
                 </div>,

@@ -29,4 +29,10 @@
             @include icon($fa-var-lock);
         }
     }
+
+    .SurveyPane-link {
+        &::before {
+            @include icon($fa-var-external-link);
+        }
+    }
 }

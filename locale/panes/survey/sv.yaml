@@ -4,6 +4,7 @@ summary:
         auth: "Öppen endast för anslutna användare"
         list: "Öppen endast för specifika personer"
     editLink: "Redigera inställningar"
+    viewLink: "Visa i aktivistportalen"
 content:
     h: "Innehåll"
     editLink: "Redigera innehåll"
