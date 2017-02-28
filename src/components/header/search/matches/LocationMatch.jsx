@@ -21,7 +21,8 @@ export default class LocationMatch extends MatchBase {
                 center: (lat + 0.004) + ',' + lng,
                 markers: lat + ',' + lng,
                 zoom: 11,
-                size: '50x50'
+                size: '50x50',
+                key: 'AIzaSyAHVagqI3RTd0psf57oA6gzKqVyjp8FS8w',
             }
         });
 

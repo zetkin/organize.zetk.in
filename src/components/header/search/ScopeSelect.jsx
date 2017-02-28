@@ -3,7 +3,7 @@ import React from 'react';
 import cx from 'classnames';
 
 
-const SCOPES = [ 'all', 'people', 'campaign', 'dialog', 'maps' ];
+const SCOPES = [ 'all', 'people', 'campaign', 'dialog', 'maps', 'survey' ];
 
 export default class ScopeSelect extends React.Component {
     constructor(props) {

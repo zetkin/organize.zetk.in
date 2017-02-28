@@ -65,6 +65,12 @@
             @include icon($fa-var-map-marker);
         }
     }
+
+    &.survey {
+        &::before {
+            @include icon($fa-var-check-square-o);
+        }
+    }
 }
 .ScopeSelect-item {
     position: relative;
@@ -126,6 +132,13 @@
             @include icon($fa-var-map-marker);
         }
     }
+
+    &.survey {
+        &::before {
+            @include icon($fa-var-check-square-o);
+        }
+    }
+
     &.selected {
         font-weight: 700;
     }

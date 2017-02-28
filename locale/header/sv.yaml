@@ -6,6 +6,15 @@ search:
         campaign: "Kampanj"
         dialog: "Dialog"
         maps: "Kartor"
+        survey: "Enkät"
+    matches:
+        actionDay: |
+            {count, plural,
+                =1 {En aktion {date}}
+                other {# aktioner {date}}
+            }
+        query: "Smart sökning: {title}"
+        surveySubmission: "Svar från {respondent} på {survey}"
 
 userMenu:
     logOutLink: "Logga ut"
