@@ -84,5 +84,34 @@
         background-color: darken(white, 5);
         color: white;
         text-align: center;
+
+        &.linked {
+            color: $c-ui-darker;
+            &::before {
+                @include icon($fa-var-check);
+            }
+            &::after {
+                @include icon($fa-var-user);
+            }
+        }
+
+        &.unknown {
+            background-color: $c-ui-warning;
+            &::before {
+                @include icon($fa-var-link);
+            }
+            &::after {
+                @include icon($fa-var-user);
+            }
+        }
+
+        &::before {
+            margin-top: 2em;
+            margin-right:0!important;
+        }
+
+        &::after {
+            margin-right:0!important;
+        }
     }
 }

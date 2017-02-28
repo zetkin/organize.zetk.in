@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 
 import Avatar from '../../misc/Avatar';
 import DraggableAvatar from '../../misc/DraggableAvatar';
@@ -16,9 +17,9 @@ export default class SurveySubmissionListItem extends React.Component {
 
         let timestamp = Date.create(submission.submitted);
 
-        let respondent = '';
         let respondentAvatar = null;
         let respondentName = null;
+        let actionStatus = null;
 
         if (submission.respondent) {
             respondentName =
@@ -29,10 +30,12 @@ export default class SurveySubmissionListItem extends React.Component {
             if (submission.respondent.id) {
                 respondentAvatar =
                     <Avatar person={ submission.respondent }/>;
+                actionStatus = "linked";
             }
             else {
                 respondentAvatar =
                     <div className="SurveySubmissionListItem-unknown"/>;
+                actionStatus = "unknown";
             }
         }
         else {
@@ -45,6 +48,8 @@ export default class SurveySubmissionListItem extends React.Component {
         if (submission.survey) {
             surveyTitle = submission.survey.title;
         }
+
+        let actionClassNames  = cx('SurveySubmissionListItem-action', actionStatus );
 
         return (
             <div className="SurveySubmissionListItem"
@@ -68,7 +73,7 @@ export default class SurveySubmissionListItem extends React.Component {
                         </div>
                     <div className="SurveySubmissionListItem-progress"/>
                 </div>
-                <div className="SurveySubmissionListItem-action"/>
+                <div className={ actionClassNames }/>
             </div>
         );
     }
