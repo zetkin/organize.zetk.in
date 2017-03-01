@@ -88,6 +88,8 @@ export default class SurveySubmissionPane extends PaneBase {
             let sub = data.submissionItem.data;
             let survey = data.surveyItem? data.surveyItem.data : null;
 
+            let timestamp = Date.create(sub.survey.submitted);
+
             let responses = <LoadingIndicator />;
             if (this.props.elementList) {
                 responses = this.props.elementList.items
@@ -112,7 +114,12 @@ export default class SurveySubmissionPane extends PaneBase {
 
             return [
                 <div key="info" className="SurveySubmissionPane-info">
-                    <h3>{ sub.survey.title }</h3>
+                    <p className="SurveySubmissionPane-infoSurvey">
+                        { sub.survey.title }</p>
+                    <p className="SurveySubmissionPane-infoDate">
+                        { timestamp.format('{d}/{M}, {yyyy} {HH}:{MM}') }
+                    </p>
+
                     <SubmissionRespondent submission={ sub }/>
                 </div>,
                 <div key="responses" className="SurveySubmissionPane-responses">
@@ -132,20 +139,31 @@ let SubmissionRespondent = props => {
 
     let name = <Msg id="panes.surveySubmission.info.anonymous"/>;
     let avatar = (
-        <figure className="SurveySubmissionPane-anonymousAvatar">
-            ?
-        </figure>
+        <div className="SurveySubmissionPane-unknown"/>
     );
+    let email = null;
+    let connection = null;
 
     if (sub.respondent) {
-        name = (
-            <span>
-                { sub.respondent.first_name + ' ' + sub.respondent.last_name }
-            </span>
+        name = sub.respondent.first_name + ' ' + sub.respondent.last_name;
+
+        email = (
+            <span className ="SurveySubmissionPane-email">
+                { sub.respondent.email }</span>
         );
 
         if (sub.respondent.id) {
             avatar = <Avatar person={ sub.respondent }/>;
+            connection = (
+                <div className="SurveySubmissionPane-connection">
+                    <Msg id="panes.surveySubmission.info.connected"/>
+                </div>
+            );
+        }
+        else {
+            // TODO: Search for person
+            // TODO: Show message
+            // TODO: Submit pairing
         }
     }
 
@@ -155,8 +173,16 @@ let SubmissionRespondent = props => {
 
     return (
         <div className={ classes }>
-            { avatar }
-            { name }
+            <div className="SurveySubmissionPane-signed">
+                { avatar }
+                <div className="SurveySubmissionPane-respondentInfo">
+                    <span className="SurveySubmissionPane-name">
+                        { name }
+                    </span>
+                    { email }
+                </div>
+            </div>
+            { connection }
         </div>
     );
 };

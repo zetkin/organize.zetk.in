@@ -1,0 +1,102 @@
+.SurveySubmissionListItem {
+    position: relative;
+    display: flex;
+
+    .ListItem-date {
+        padding: 1em;
+    }
+
+    .SurveySubmissionListItem-content {
+        @include col(11,12);
+        padding: 1em;
+
+        .SurveySubmissionListItem-survey {
+            @include col(12,12);
+            text-align: right;
+            color: lighten($c-text, 60);
+
+            &:before {
+                @include icon($fa-var-list-ul);
+            }
+        }
+
+        .SurveySubmissionListItem-respondent {
+            @include col(12,12);
+            text-align: left;
+        }
+
+        .SurveySubmissionListItem-avatar {
+            @include col(1.5,12, $align:middle, $first:true);
+
+            .Avatar {
+                width: 100%;
+                max-height: 43px; // Keep ratio if image is broken
+            }
+
+            .SurveySubmissionListItem-unknown {
+                @include unknown;
+
+                &:after {
+                    padding-top: 25%;
+                    font-size: 1.5em;
+                }
+            }
+
+            .SurveySubmissionListItem-anonymous {
+                &:before {
+                    @include icon($fa-var-user-secret);
+                    font-size: 1.5em;
+                    margin-right: 0;
+                    width: 100%;
+                    text-align: center;
+                }
+            }
+        }
+
+        .SurveySubmissionListItem-name {
+            @include col(10.5,12, $align:middle);
+            font-size: 1.5em;
+        }
+
+        .SurveySubmissionListItem-progress {
+            @include col(12,12);
+            text-align: left;
+        }
+    }
+
+    .SurveySubmissionListItem-action {
+        @include col(1,12, $first:true, $last:true);
+        background-color: darken(white, 5);
+        color: white;
+        text-align: center;
+
+        &.linked {
+            color: $c-ui-darker;
+            &::before {
+                @include icon($fa-var-check);
+            }
+            &::after {
+                @include icon($fa-var-user);
+            }
+        }
+
+        &.unknown {
+            background-color: $c-ui-warning;
+            &::before {
+                @include icon($fa-var-link);
+            }
+            &::after {
+                @include icon($fa-var-user);
+            }
+        }
+
+        &::before {
+            margin-top: 2em;
+            margin-right:0!important;
+        }
+
+        &::after {
+            margin-right:0!important;
+        }
+    }
+}

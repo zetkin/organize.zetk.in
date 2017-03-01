@@ -1,13 +1,91 @@
 .SurveySubmissionPane {
+
+    &.PaneBase {
+        min-width: 520px;
+    }
+
+    .PaneBase-content > h2 {
+        color: lighten($c-text, 30);
+        &:before {
+            @include icon($fa-var-inbox);
+        }
+    }
+
+    .SurveySubmissionPane-info {
+        color: lighten($c-text, 40);
+    }
+
+    .SurveySubmissionPane-infoSurvey {
+        &:before {
+            @include icon($fa-var-list-ul);
+        }
+    }
+
+    .SurveySubmissionPane-infoDate {
+        &:before {
+            @include icon($fa-var-clock-o);
+        }
+    }
+
     .SurveySubmissionPane-respondent {
+        position: relative;
+
+        .SurveySubmissionPane-signed {
+            @include col(12,12, $align:middle);
+        }
+
+        .Avatar {
+            @include col(2,12, $align:middle, $first:true);
+            max-height: 70px; // Keep ratio if image is broken
+        }
+
+        .SurveySubmissionPane-unknown {
+            @include unknown;
+            @include col(2,12, $align:middle, $first:true);
+            margin-right: 0.5em;
+        }
+
+        &.anonymous {
+            .SurveySubmissionPane-unknown {
+                @include unknown($icon:$fa-var-user-secret);
+                @include col(2,12, $align:middle, $first:true);
+                margin-right: 0.5em;
+            }
+        }
+
+        .SurveySubmissionPane-respondentInfo {
+            @include col(7,12, $align:middle);
+        }
+
+        .SurveySubmissionPane-name {
+            @include col(12,12, $first:true, $last:true);
+            font-size: 1.8em;
+            color: lighten($c-text, 30);
+            margin-bottom: 0.2em;
+        }
+
+        .SurveySubmissionPane-email {
+            @include col(12,12, $first:true, $last:true);
+            font-size: 1.3em;
+            color: lighten($c-text, 50);
+        }
+
+        .SurveySubmissionPane-connection {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 1.3em;
+
+            &:before {
+                @include icon($fa-var-check);
+                color: $c-brand-success;
+            }
+        }
+
         &:after {
             content: "";
             display: block;
             clear: both;
-        }
-
-        span {
-            font-size: 1.2em;
         }
 
         &.anonymous {
@@ -15,20 +93,58 @@
                 font-style: italic;
             }
         }
+    }
 
-        figure, .Avatar {
-            display: block;
-            margin: 0 10px 0 0;
-            float: left;
-            width: 60px;
-            height: 60px;
+    .SurveySubmissionPane-responses {
+        margin-top: 4em;
+
+        h3:before {
+            @include icon($fa-var-comments-o);
+        }
+    }
+
+    .SurveySubmissionPane-response {
+        font-size: 1.4em;
+        color: lighten($c-text, 40);
+        h4 {
+            font-size: 1.1em;
+            color: lighten($c-text, 20);
+            margin-bottom: 0.5em;
+
+            &:before {
+                @include icon($fa-var-question);
+                display: block;
+                float: left;
+                line-height: 1.3em;
+            }
         }
 
-        figure {
-            background-color: $c-ui-dark;
-            color: $c-ui-darker;
-            font-size: 4em;
-            text-align: center;
+        .SurveySubmissionPane-responseOptions {
+            margin-left: 2em;
+            li {
+                line-height: 1.4em;
+                clear: left;
+
+                &:before {
+                    @include icon($fa-var-check-square-o);
+                    display: block;
+                    float: left;
+                }
+            }
+        }
+
+        .SurveySubmissionPane-responseText,
+        .SurveySubmissionPane-responseEmpty {
+            display: block;
+            border-left: 2px solid #555;
+            margin-left: 2.6em;
+            padding-left: 1em;
+            line-height: 1.4em;
+        }
+
+        .SurveySubmissionPane-responseEmpty {
+            color: lighten($c-text, 60);
+            font-style: italic;
         }
     }
 }

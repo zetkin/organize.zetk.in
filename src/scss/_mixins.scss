@@ -196,6 +196,43 @@
     }
 }
 
+@mixin unknown($icon:false) {
+    width: 100%;
+    position: relative;
+    background-color: darken($c-ui-bg, 10);
+    text-align: center;
+    color: darken($c-ui-bg, 30);
+
+    &:before{
+        //Set ratio to 1:1
+        content: "";
+        display: block;
+        padding-top: 100%;
+    }
+
+    @if $icon {
+        &:after {
+            @include icon($icon);
+            width: 100%;
+        }
+    }
+    @else {
+        &:after {
+            content: "?";
+        }
+    }
+
+    &:after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding-top: 20%;
+            font-size: 3em;
+        }
+}
+
 @mixin flex-container($direction: row, $wrapping: none){
     display: -webkit-box;
     display: -moz-box;
