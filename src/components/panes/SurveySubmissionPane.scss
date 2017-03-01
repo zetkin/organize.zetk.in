@@ -113,6 +113,9 @@
 
             &:before {
                 @include icon($fa-var-question);
+                display: block;
+                float: left;
+                line-height: 1.3em;
             }
         }
 
