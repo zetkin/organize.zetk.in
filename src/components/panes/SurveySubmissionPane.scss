@@ -11,6 +11,10 @@
         }
     }
 
+    .SurveySubmissionPane-info {
+        color: lighten($c-text, 40);
+    }
+
     .SurveySubmissionPane-infoSurvey {
         &:before {
             @include icon($fa-var-list-ul);
@@ -51,12 +55,14 @@
         .SurveySubmissionPane-name {
             @include col(12,12, $first:true, $last:true);
             font-size: 1.8em;
+            color: lighten($c-text, 30);
             margin-bottom: 0.2em;
         }
 
         .SurveySubmissionPane-email {
             @include col(12,12, $first:true, $last:true);
             font-size: 1.3em;
+            color: lighten($c-text, 50);
         }
 
         .SurveySubmissionPane-connected {
@@ -89,8 +95,10 @@
 
     .SurveySubmissionPane-response {
         font-size: 1.4em;
+        color: lighten($c-text, 40);
         h4 {
             font-size: 1.1em;
+            color: lighten($c-text, 20);
             &:before {
                 @include icon($fa-var-question);
             }
