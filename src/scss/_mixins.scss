@@ -199,9 +199,9 @@
 @mixin unknown($icon:false) {
     width: 100%;
     position: relative;
-    background-color: $c-ui-dark;
+    background-color: darken($c-ui-bg, 10);
     text-align: center;
-    color: white;
+    color: darken($c-ui-bg, 30);
 
     &:before{
         //Set ratio to 1:1
