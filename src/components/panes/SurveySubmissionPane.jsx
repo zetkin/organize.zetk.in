@@ -127,11 +127,7 @@ let SubmissionRespondent = props => {
     let is_connected = null;
 
     if (sub.respondent) {
-        name = (
-            <span className="SurveySubmissionPane-name">
-                { sub.respondent.first_name + ' ' + sub.respondent.last_name }
-            </span>
-        );
+        name = sub.respondent.first_name + ' ' + sub.respondent.last_name;
 
         email = (
             <span className ="SurveySubmissionPane-email">
@@ -156,7 +152,9 @@ let SubmissionRespondent = props => {
         <div className={ classes }>
             { avatar }
             <div className="SurveySubmissionPane-respondentInfo">
-                { name }
+                <span className="SurveySubmissionPane-name">
+                    { name }
+                </span>
                 { email }
             </div>
             { is_connected }
