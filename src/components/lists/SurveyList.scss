@@ -1,0 +1,7 @@
+.SurveyList {
+    @include medium-screen {
+        &.List {
+            max-width: 550px;
+        }
+    }
+}
