@@ -66,10 +66,6 @@
             clear: both;
         }
 
-        span {
-            font-size: 1.2em;
-        }
-
         &.anonymous {
             span {
                 font-style: italic;
@@ -80,6 +76,31 @@
     .SurveySubmissionPane-responses {
         h3:before {
             @include icon($fa-var-comments-o);
+        }
+    }
+
+    .SurveySubmissionPane-response {
+        font-size: 1.4em;
+        h4 {
+            font-size: 1.1em;
+            &:before {
+                @include icon($fa-var-question);
+            }
+        }
+
+        ul {
+            margin-left: 2em;
+            li {
+                &:before {
+                    @include icon($fa-var-check-square-o);
+                }
+            }
+        }
+
+        .SurveySubmissionPane-responseText {
+            border-left: 2px solid #000;
+            margin-left: 2em;
+            padding-left: 0.5em;
         }
     }
 }
