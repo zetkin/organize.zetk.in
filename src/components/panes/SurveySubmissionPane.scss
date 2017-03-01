@@ -1,7 +1,7 @@
 .SurveySubmissionPane {
 
     &.PaneBase {
-        min-width: 500px;
+        min-width: 520px;
     }
 
     .PaneBase-content > h2 {
@@ -24,24 +24,40 @@
     }
 
     .SurveySubmissionPane-respondent {
-        @include col(9,12, $align:middle);
+        @include col(12,12, $align:middle);
 
         .Avatar {
-            @include col(3,12, $align:middle, $first:true);
+            @include col(2,12, $align:middle, $first:true);
+        }
+
+        .SurveySubmissionPane-unknown {
+            @include unknown;
+            @include col(2,12, $align:middle, $first:true);
+            margin-right: 0.5em;
         }
 
         .SurveySubmissionPane-respondentInfo {
-            @include col(8,12, $align:middle);
+            @include col(7,12, $align:middle);
         }
 
         .SurveySubmissionPane-name {
-            @include col(12,12, $first:true);
+            @include col(12,12, $first:true, $last:true);
             font-size: 1.8em;
+            margin-bottom: 0.2em;
         }
 
-        .SurveySubmissionPane-mail {
-            @include col(12,12, $first:true);
-            font-size: 1.5em;
+        .SurveySubmissionPane-email {
+            @include col(12,12, $first:true, $last:true);
+            font-size: 1.3em;
+        }
+
+        .SurveySubmissionPane-connected {
+            @include col(3,12, $last:true);
+            font-size: 1.3em;
+
+            &:before {
+                @include icon($fa-var-check);
+            }
         }
 
         &:after {
@@ -59,25 +75,6 @@
                 font-style: italic;
             }
         }
-
-        figure, .Avatar {
-            display: block;
-            margin: 0 10px 0 0;
-            float: left;
-            width: 60px;
-            height: 60px;
-        }
-
-        figure {
-            background-color: $c-ui-dark;
-            color: $c-ui-darker;
-            font-size: 4em;
-            text-align: center;
-        }
-    }
-
-    .SurveySubmissionPane-connected {
-        @include col(3,12, $last:true);
     }
 
     .SurveySubmissionPane-responses {

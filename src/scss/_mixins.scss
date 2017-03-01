@@ -196,6 +196,32 @@
     }
 }
 
+@mixin unknown {
+    width: 100%;
+    position: relative;
+    background-color: $c-ui-dark;
+    text-align: center;
+    color: white;
+
+    &:before{
+        //Set ratio to 1:1
+        content: "";
+        display: block;
+        padding-top: 100%;
+    }
+
+    &:after {
+        content: "?";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding-top: 20%;
+        font-size: 3em;
+    }
+}
+
 @mixin flex-container($direction: row, $wrapping: none){
     display: -webkit-box;
     display: -moz-box;

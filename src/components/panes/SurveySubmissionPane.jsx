@@ -121,11 +121,10 @@ let SubmissionRespondent = props => {
 
     let name = <Msg id="panes.surveySubmission.info.anonymous"/>;
     let avatar = (
-        <figure className="SurveySubmissionPane-anonymousAvatar">
-            ?
-        </figure>
+        <div className="SurveySubmissionPane-unknown"/>
     );
     let email = null;
+    let is_connected = null;
 
     if (sub.respondent) {
         name = (
@@ -141,6 +140,11 @@ let SubmissionRespondent = props => {
 
         if (sub.respondent.id) {
             avatar = <Avatar person={ sub.respondent }/>;
+            is_connected = (
+                <div className="SurveySubmissionPane-connected">
+                    Connected
+                </div>
+            );
         }
     }
 
@@ -155,6 +159,7 @@ let SubmissionRespondent = props => {
                 { name }
                 { email }
             </div>
+            { is_connected }
         </div>
     );
 };

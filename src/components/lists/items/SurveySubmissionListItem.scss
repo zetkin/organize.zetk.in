@@ -33,26 +33,9 @@
             }
 
             .SurveySubmissionListItem-unknown {
-                position: relative;
-                width: 100%;
-                background-color: $c-ui-dark;
-                text-align: center;
-                color: white;
-
-                &:before{
-                    //Set ratio to 1:1
-                    content: "";
-                    display: block;
-                    padding-top: 100%;
-                }
+                @include unknown;
 
                 &:after {
-                    content: "?";
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
                     padding-top: 25%;
                     font-size: 1.5em;
                 }
