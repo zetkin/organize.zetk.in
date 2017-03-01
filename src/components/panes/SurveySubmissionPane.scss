@@ -28,7 +28,11 @@
     }
 
     .SurveySubmissionPane-respondent {
-        @include col(12,12, $align:middle);
+        position: relative;
+
+        .SurveySubmissionPane-signed {
+            @include col(12,12, $align:middle);
+        }
 
         .Avatar {
             @include col(2,12, $align:middle, $first:true);
@@ -66,9 +70,10 @@
         }
 
         .SurveySubmissionPane-connected {
-            @include col(3,12, $last:true);
+            position: absolute;
+            top: 0;
+            right: 0;
             font-size: 1.3em;
-            text-align: right;
 
             &:before {
                 @include icon($fa-var-check);

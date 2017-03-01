@@ -150,12 +150,14 @@ let SubmissionRespondent = props => {
 
     return (
         <div className={ classes }>
-            { avatar }
-            <div className="SurveySubmissionPane-respondentInfo">
-                <span className="SurveySubmissionPane-name">
-                    { name }
-                </span>
-                { email }
+            <div className="SurveySubmissionPane-signed">
+                { avatar }
+                <div className="SurveySubmissionPane-respondentInfo">
+                    <span className="SurveySubmissionPane-name">
+                        { name }
+                    </span>
+                    { email }
+                </div>
             </div>
             { is_connected }
         </div>
