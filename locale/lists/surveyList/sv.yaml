@@ -1,0 +1,9 @@
+header:
+    access: "Åtkomst"
+    callersOnly: "Endast ringare"
+    survey: "Enkät"
+item:
+    access:
+        open: "Vem som helst"
+        auth: "Endast inloggade"
+    callersOnly: "Endast för ringare"
