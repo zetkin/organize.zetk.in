@@ -1,6 +1,7 @@
 title: "Inskickad enkät"
 info:
     anonymous: "Anonym svarande"
+    connected: "Kopplad"
 responses:
     h: "Frågor och svar"
     emptyResponse: "Frågan besvarades inte"

@@ -68,9 +68,11 @@
         .SurveySubmissionPane-connected {
             @include col(3,12, $last:true);
             font-size: 1.3em;
+            text-align: right;
 
             &:before {
                 @include icon($fa-var-check);
+                color: $c-brand-success;
             }
         }
 
@@ -88,6 +90,8 @@
     }
 
     .SurveySubmissionPane-responses {
+        margin-top: 4em;
+
         h3:before {
             @include icon($fa-var-comments-o);
         }
@@ -104,7 +108,7 @@
             }
         }
 
-        ul {
+        .SurveySubmissionPane-responseOptions {
             margin-left: 2em;
             li {
                 &:before {
@@ -113,10 +117,16 @@
             }
         }
 
-        .SurveySubmissionPane-responseText {
-            border-left: 2px solid #000;
+        .SurveySubmissionPane-responseText,
+        .SurveySubmissionPane-responseEmpty {
+            border-left: 2px solid #555;
             margin-left: 2em;
             padding-left: 0.5em;
+        }
+
+        .SurveySubmissionPane-responseEmpty {
+            color: lighten($c-text, 60);
+            font-style: italic;
         }
     }
 }

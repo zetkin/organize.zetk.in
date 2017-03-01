@@ -138,7 +138,7 @@ let SubmissionRespondent = props => {
             avatar = <Avatar person={ sub.respondent }/>;
             is_connected = (
                 <div className="SurveySubmissionPane-connected">
-                    Connected
+                    <Msg id="panes.surveySubmission.info.connected"/>
                 </div>
             );
         }
