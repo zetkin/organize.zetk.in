@@ -109,6 +109,8 @@
         h4 {
             font-size: 1.1em;
             color: lighten($c-text, 20);
+            margin-bottom: 0.5em;
+
             &:before {
                 @include icon($fa-var-question);
             }
@@ -117,17 +119,24 @@
         .SurveySubmissionPane-responseOptions {
             margin-left: 2em;
             li {
+                line-height: 1.4em;
+                clear: left;
+
                 &:before {
                     @include icon($fa-var-check-square-o);
+                    display: block;
+                    float: left;
                 }
             }
         }
 
         .SurveySubmissionPane-responseText,
         .SurveySubmissionPane-responseEmpty {
+            display: block;
             border-left: 2px solid #555;
             margin-left: 2.6em;
             padding-left: 1em;
+            line-height: 1.4em;
         }
 
         .SurveySubmissionPane-responseEmpty {
