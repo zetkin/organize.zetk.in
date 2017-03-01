@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import cx from 'classnames';
 
 import PaneBase from './PaneBase';
+import Button from '../misc/Button';
 import Link from '../misc/Link';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import { getListItemById } from '../../utils/store';
@@ -95,7 +96,8 @@ export default class SurveyPane extends PaneBase {
                     className="SurveyPane-content">
                     <Msg tagName="h3" id="panes.survey.content.h"/>
                     { contentBreakdown }
-                    <Link msgId="panes.survey.content.editLink"
+                    <Button className="SurveyPane-contentEdit"
+                        labelMsg="panes.survey.content.editLink"
                         onClick={ this.onEditContentClick.bind(this) }/>
                 </div>
             ];

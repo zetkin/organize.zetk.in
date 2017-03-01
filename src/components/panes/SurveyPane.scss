@@ -35,4 +35,25 @@
             @include icon($fa-var-external-link);
         }
     }
+
+    .SurveyPane-contentBreakdown {
+        font-size: 1.5em;
+    }
+
+    .SurveyPane-contentBreakdown-questions {
+        &:before {
+            @include icon($fa-var-question);
+        }
+    }
+
+    .SurveyPane-contentBreakdown-text {
+        &:before {
+            @include icon($fa-var-align-left);
+        }
+    }
+
+    .SurveyPane-contentEdit {
+        @include inline-button($icon:$fa-var-pencil);
+        margin-top: 1em;
+    }
 }
