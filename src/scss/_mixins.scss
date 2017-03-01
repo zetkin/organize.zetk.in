@@ -211,7 +211,6 @@
     }
 
     @if $icon {
-        // padding-left: .3em;
         &:after {
             @include icon($icon);
             width: 100%;
