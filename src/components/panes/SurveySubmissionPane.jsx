@@ -124,7 +124,7 @@ let SubmissionRespondent = props => {
         <div className="SurveySubmissionPane-unknown"/>
     );
     let email = null;
-    let is_connected = null;
+    let connection = null;
 
     if (sub.respondent) {
         name = sub.respondent.first_name + ' ' + sub.respondent.last_name;
@@ -136,11 +136,16 @@ let SubmissionRespondent = props => {
 
         if (sub.respondent.id) {
             avatar = <Avatar person={ sub.respondent }/>;
-            is_connected = (
-                <div className="SurveySubmissionPane-connected">
+            connection = (
+                <div className="SurveySubmissionPane-connection">
                     <Msg id="panes.surveySubmission.info.connected"/>
                 </div>
             );
+        }
+        else {
+            // TODO: Search for person
+            // TODO: Show message
+            // TODO: Submit pairing
         }
     }
 
@@ -159,7 +164,7 @@ let SubmissionRespondent = props => {
                     { email }
                 </div>
             </div>
-            { is_connected }
+            { connection }
         </div>
     );
 };
