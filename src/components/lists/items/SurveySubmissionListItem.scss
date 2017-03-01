@@ -30,6 +30,7 @@
 
             .Avatar {
                 width: 100%;
+                max-height: 43px; // Keep ratio if image is broken
             }
 
             .SurveySubmissionListItem-unknown {
