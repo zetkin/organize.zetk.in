@@ -196,7 +196,7 @@
     }
 }
 
-@mixin unknown {
+@mixin unknown($icon:false) {
     width: 100%;
     position: relative;
     background-color: $c-ui-dark;
@@ -210,16 +210,28 @@
         padding-top: 100%;
     }
 
-    &:after {
-        content: "?";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        padding-top: 20%;
-        font-size: 3em;
+    @if $icon {
+        // padding-left: .3em;
+        &:after {
+            @include icon($icon);
+            width: 100%;
+        }
     }
+    @else {
+        &:after {
+            content: "?";
+        }
+    }
+
+    &:after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding-top: 20%;
+            font-size: 3em;
+        }
 }
 
 @mixin flex-container($direction: row, $wrapping: none){
