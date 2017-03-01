@@ -1,0 +1,30 @@
+.SurveyListItem {
+    .SurveyListItem-title {
+        @include col(12,12, $first:true, $last:true);
+        font-size: 1.5em;
+
+        &:before {
+            @include icon($fa-var-list-ul);
+        }
+    }
+
+    .SurveyListItem-access {
+        @include col(4,12, $first:true);
+
+        &.open:before {
+            @include icon($fa-var-eye);
+        }
+
+        &.auth:before {
+            @include icon($fa-var-user);
+        }
+    }
+
+    .SurveyListItem-callers {
+        @include col(4,12);
+
+        &:before {
+            @include icon($fa-var-phone);
+        }
+    }
+}
