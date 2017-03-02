@@ -26,7 +26,7 @@
 
     .SurveyPane-summaryAccess {
         &::before {
-            @include icon($fa-var-lock);
+            @include icon($fa-var-eye);
         }
     }
 
