@@ -3,6 +3,19 @@
     padding: 1em;
     margin: 1em 0;
 
+    &:hover {
+        position: relative;
+        cursor: pointer;
+        background: darken(white, 2);
+
+        &:after {
+            @include icon($fa-var-pencil);
+            position: absolute;
+            top: 1em;
+            right: 1em;
+        }
+    }
+
     .SurveyOutlineElement-content {
         font-size: 1.5em;
     }
