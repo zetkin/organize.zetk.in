@@ -33,27 +33,25 @@
             position: relative;
             margin: 1em 0;
             padding: 0.5em;
-            height: 6em;
 
             .Avatar {
-                width: 5em;
-                height: auto;
+                @include col(2,12, $align:middle, $first:true);
+                max-height: 6em;
+            }
+
+            .ActionReminderPane-remindedInfo {
+                @include col(10,12, $align:middle, $last:true);
             }
 
             .Person {
-                position: absolute;
-                top: 10px;
-                left: 60px;
-
                 cursor: pointer;
-                font-size: 1.1em;
-                font-weight: bold;
+                font-size: 1.7em;
             }
 
-            .ActionReminderPane-timestamp {
-                position: absolute;
-                top: 25px;
-                left: 60px;
+            &:after {
+                content: "";
+                display: block;
+                clear: both;
             }
         }
     }

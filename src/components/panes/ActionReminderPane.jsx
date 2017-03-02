@@ -1,6 +1,10 @@
 import React from 'react';
-import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
+import {
+    FormattedMessage as Msg,
+    FormattedRelative,
+    injectIntl
+} from 'react-intl';
 
 import PaneBase from './PaneBase';
 import Form from '../forms/Form';
@@ -15,9 +19,11 @@ import { getListItemById } from '../../utils/store';
 
 
 @connect(state => state)
+@injectIntl
 export default class ActionReminderPane extends PaneBase {
     getPaneTitle() {
-        return 'Action reminders';
+        return this.props.intl.formatMessage(
+            { id: 'panes.actionReminder.title' });
     }
 
     getPaneSubTitle(data) {
@@ -64,22 +70,43 @@ export default class ActionReminderPane extends PaneBase {
 
         var remindedList = null;
         if (data.remindedParticipants.length) {
+            let remindedParticipants = data.remindedParticipants
+                .concat()
+                .sort((a, b) => {
+                    if (a.reminder_sent < b.reminder_sent) {
+                        return 1;
+                    }
+                    else if (a.reminder_sent == b.reminder_sent) {
+                        return 0;
+                    }
+                    else {
+                        return -1;
+                    }
+                });
+
             remindedList = [
                 <Msg key="h" tagName="h3"
                     id="panes.actionReminder.alreadyReminded.h"/>,
                 <ul key="remindedList" className="ActionReminderPane-reminded">
-                {data.remindedParticipants.map(function(participant) {
-                    const timeLabel = Date.create(participant.reminder_sent)
-                        .format('{yyyy}-{MM}-{dd} {HH}:{mm}:{ss}');
-
+                {remindedParticipants.map(function(participant) {
                     const onClick = this.onPersonClick.bind(this, participant);
+
+                    let date = Date.create(participant.reminder_sent);
+                    let now = new Date();
+                    if (date > now) {
+                        date = now;
+                    }
 
                     return (
                         <li key={ participant.id }>
                             <Avatar person={ participant }/>
-                            <Person person={ participant } onClick={ onClick }/>
-                            <span className="ActionReminderPane-timestamp">
-                                { timeLabel }</span>
+                            <div className="ActionReminderPane-remindedInfo">
+                                <Person person={ participant }
+                                    onClick={ onClick }/>
+                                <div className="ActionReminderPane-timestamp">
+                                    <FormattedRelative value={ date }/>
+                                </div>
+                            </div>
                         </li>
                     );
                 }, this)}
