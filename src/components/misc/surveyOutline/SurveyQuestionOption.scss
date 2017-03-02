@@ -4,6 +4,21 @@
     margin: 0 0 1em;
     font-size: 1.3em;
 
+    &.editable {
+        &:hover {
+            position: relative;
+            cursor: pointer;
+            background: darken(white, 2);
+
+            &:after {
+                @include icon($fa-var-pencil);
+                position: absolute;
+                top: 0.5em;
+                right: 0.5em;
+            }
+        }
+    }
+
     span {
         display: block;
         padding: 0.3em 0.4em;

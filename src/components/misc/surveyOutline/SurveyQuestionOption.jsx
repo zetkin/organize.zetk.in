@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 
 import Button from '../Button';
 
@@ -21,6 +22,9 @@ export default class SurveyQuestionOption extends React.Component {
 
     render() {
         let option = this.props.option;
+        let classes = cx('SurveyQuestionOption', {
+            editable: !this.state.editing,
+        });
 
         let content = (
             <span>{ option.text }</span>
@@ -44,7 +48,7 @@ export default class SurveyQuestionOption extends React.Component {
         }
 
         return (
-            <div className="SurveyQuestionOption"
+            <div className={ classes }
                 onClick={ this.onClick.bind(this) }>
                 { content }
             </div>
