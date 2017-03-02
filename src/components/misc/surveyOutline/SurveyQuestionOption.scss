@@ -2,7 +2,6 @@
     @include card;
     padding: 0.5em;
     margin: 0 0 1em;
-    font-size: 1.3em;
 
     &.editable {
         &:hover {
@@ -20,20 +19,30 @@
     }
 
     span {
+        font-size: 1.3em;
         display: block;
         padding: 0.3em 0.4em;
         border: 2px solid transparent;
     }
 
     input[type=text] {
-        width: 100%;
-        font-size: inherit;
-        padding: 0.5em 0.4em;
-        margin: 0 0 0.5em;
+        @include input-base;
     }
 
     button {
-        @include inline-button;
-        margin: 0 0.5em 0 0;
+        &:first-of-type {
+            @include inline-button($icon:$fa-var-times);
+            margin: 0;
+        }
+
+        &:last-of-type {
+            @include inline-button($icon:$fa-var-floppy-o,
+                $color: $c-brand-comp-light);
+            margin: 0;
+        }
+
+        &:last-of-type {
+            float: right;
+        }
     }
 }
