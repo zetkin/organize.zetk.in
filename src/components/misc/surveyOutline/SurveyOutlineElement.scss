@@ -2,6 +2,7 @@
     @include card;
     padding: 1em;
     margin: 1em 0;
+    font-size: 1.2em;
 
     &:hover {
         position: relative;
@@ -16,7 +17,28 @@
         }
     }
 
+    .SurveyOutlineElement-type {
+        margin-bottom: 0.5em;
+        color: lighten($c-text, 40);
+
+        &.question {
+            &:before {
+                @include icon($fa-var-question);
+            }
+        }
+
+        &.text {
+            &:before {
+                @include icon($fa-var-align-left);
+            }
+        }
+    }
+
     .SurveyOutlineElement-content {
-        font-size: 1.5em;
+        font-size: 1.3em;
+
+        .SurveyOutlineQuestion {
+            margin-left: 0.5em;
+        }
     }
 }
