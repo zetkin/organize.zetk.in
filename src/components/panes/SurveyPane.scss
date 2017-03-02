@@ -30,6 +30,12 @@
         }
     }
 
+    .SurveyPane-summaryAnonymous {
+        &::before {
+            @include icon($fa-var-pencil-square-o);
+        }
+    }
+
     .SurveyPane-link {
         &::before {
             @include icon($fa-var-external-link);
