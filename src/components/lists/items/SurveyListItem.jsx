@@ -33,7 +33,7 @@ export default class SurveyListItem extends React.Component {
             allow_anonymous = <Msg id="lists.surveyList.item.anonymous.deny"/>;
         }
 
-        if (!survey.callers_only) {
+        if (survey.callers_only) {
             callers_only = (
                 <span className="SurveyListItem-callers">
                     <Msg id="lists.surveyList.item.callersOnly"/>
