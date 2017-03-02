@@ -15,9 +15,11 @@ import { getListItemById } from '../../utils/store';
 
 
 @connect(state => state)
+@injectIntl
 export default class ActionReminderPane extends PaneBase {
     getPaneTitle() {
-        return 'Action reminders';
+        return this.props.intl.formatMessage(
+            { id: 'panes.actionReminder.title' });
     }
 
     getPaneSubTitle(data) {
