@@ -18,9 +18,24 @@
     }
 
     .SurveyPane-summaryDesc {
+        position: relative;
+        max-height: 8em;
+        overflow: hidden;
         font-style: italic;
+
         &::before {
             @include icon($fa-var-info-circle);
+        }
+
+        &::after {
+            // Fade out if too long text
+            content:'';
+            width:100%;
+            height:100%;
+            position:absolute;
+            left:0;
+            top:0;
+            background:linear-gradient(transparent 4em, #f9f9f9);
         }
     }
 
