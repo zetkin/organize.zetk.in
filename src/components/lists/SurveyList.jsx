@@ -23,6 +23,12 @@ export default class SurveyList extends React.Component {
                     'lists.surveyList.header.survey',
                 'access':
                     'lists.surveyList.header.access',
+            },
+            {
+                'allow_anonymous':
+                    'lists.surveyList.header.allowAnonymous',
+            },
+            {
                 'callers_only':
                     'lists.surveyList.header.callersOnly',
             }
