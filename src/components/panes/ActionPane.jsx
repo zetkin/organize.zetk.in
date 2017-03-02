@@ -90,7 +90,7 @@ export default class ActionPane extends PaneBase {
     }
 
     getPaneTitle(data) {
-        if (data.actionItem && data.actionItem.data) {
+        if (data.actionItem && data.actionItem.data && !data.actionItem.isPending) {
             let action = data.actionItem.data;
             return this.props.intl.formatMessage({ id: 'panes.action.title' }, {
                 activity: action.activity.title,
@@ -102,7 +102,7 @@ export default class ActionPane extends PaneBase {
     }
 
     getPaneSubTitle(data) {
-        if (data.actionItem && data.actionItem.data) {
+        if (data.actionItem && data.actionItem.data && !data.actionItem.isPending) {
             let action = data.actionItem.data;
             let startDate = Date.create(action.start_time);
             let timeLabel = startDate.setUTC(true)
