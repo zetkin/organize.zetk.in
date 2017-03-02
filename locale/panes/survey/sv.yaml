@@ -3,6 +3,9 @@ summary:
         open: "Öppen för vem som helst"
         auth: "Öppen endast för anslutna användare"
         list: "Öppen endast för specifika personer"
+    anonymous:
+        allow: "Tillåt anonyma svar"
+        deny: "Tillåt endast signerade svar"
     editLink: "Redigera inställningar"
     viewLink: "Visa i aktivistportalen"
 content:

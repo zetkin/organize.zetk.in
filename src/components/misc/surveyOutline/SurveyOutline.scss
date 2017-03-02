@@ -1,0 +1,9 @@
+.SurveyOutline {
+    .SurveyOutline-add {
+        @include ghost-placeholder;
+
+        select {
+            margin: 0;
+        }
+    }
+}

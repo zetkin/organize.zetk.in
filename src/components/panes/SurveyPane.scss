@@ -18,15 +18,36 @@
     }
 
     .SurveyPane-summaryDesc {
+        position: relative;
+        max-height: 8em;
+        overflow: hidden;
         font-style: italic;
+
         &::before {
             @include icon($fa-var-info-circle);
+        }
+
+        &::after {
+            // Fade out if too long text
+            content:'';
+            width:100%;
+            height:100%;
+            position:absolute;
+            left:0;
+            top:0;
+            background:linear-gradient(transparent 4em, #f9f9f9);
         }
     }
 
     .SurveyPane-summaryAccess {
         &::before {
-            @include icon($fa-var-lock);
+            @include icon($fa-var-eye);
+        }
+    }
+
+    .SurveyPane-summaryAnonymous {
+        &::before {
+            @include icon($fa-var-pencil-square-o);
         }
     }
 
@@ -34,5 +55,26 @@
         &::before {
             @include icon($fa-var-external-link);
         }
+    }
+
+    .SurveyPane-contentBreakdown {
+        font-size: 1.5em;
+    }
+
+    .SurveyPane-contentBreakdown-questions {
+        &:before {
+            @include icon($fa-var-question);
+        }
+    }
+
+    .SurveyPane-contentBreakdown-text {
+        &:before {
+            @include icon($fa-var-align-left);
+        }
+    }
+
+    .SurveyPane-contentEdit {
+        @include inline-button($icon:$fa-var-pencil);
+        margin-top: 1em;
     }
 }

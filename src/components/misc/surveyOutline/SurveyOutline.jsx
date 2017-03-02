@@ -32,7 +32,7 @@ export default class SurveyOutline extends React.Component {
         return (
             <div className="SurveyOutline">
                 { elements }
-                <div key="addSection">
+                <div key="addSection" className="SurveyOutline-add">
                     <SelectInput
                         value="label"
                         options={ typeOptions }

@@ -17,8 +17,26 @@ export default class SurveyList extends React.Component {
     }
 
     render() {
+        let columns = [
+            {
+                'title':
+                    'lists.surveyList.header.survey',
+                'access':
+                    'lists.surveyList.header.access',
+            },
+            {
+                'allow_anonymous':
+                    'lists.surveyList.header.allowAnonymous',
+            },
+            {
+                'callers_only':
+                    'lists.surveyList.header.callersOnly',
+            }
+        ];
+
         return (
             <List className="SurveyList"
+                headerColumns={ columns }
                 itemComponent={ SurveyListItem }
                 list={ this.props.surveyList }
                 onItemClick={ this.props.onItemClick }

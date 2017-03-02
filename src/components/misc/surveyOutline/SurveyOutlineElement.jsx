@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import { FormattedMessage as Msg } from 'react-intl';
 
 import SurveyOutlineQuestion from './SurveyOutlineQuestion';
@@ -31,10 +32,12 @@ export default class SurveyOutlineElement extends React.Component {
             );
         }
 
+        let typeClassNames  = cx('SurveyOutlineElement-type', element.type );
+
         return (
             <div className="SurveyOutlineElement"
                 onClick={ this.props.onSelect }>
-                <div className="SurveyOutlineElement-type">
+                <div className={ typeClassNames }>
                     <Msg id={ typeMsg }/>
                 </div>
                 <div className="SurveyOutlineElement-content">

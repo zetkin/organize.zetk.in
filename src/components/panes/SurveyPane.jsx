@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import cx from 'classnames';
 
 import PaneBase from './PaneBase';
+import Button from '../misc/Button';
 import Link from '../misc/Link';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import { getListItemById } from '../../utils/store';
@@ -50,6 +51,17 @@ export default class SurveyPane extends PaneBase {
             let accessLabel = this.props.intl.formatMessage(
                 { id: accessLabelMsg });
 
+            let anonymousLabelMsg = null;
+            if (survey.allow_anonymous) {
+                anonymousLabelMsg = 'panes.survey.summary.anonymous.allow';
+            }
+            else {
+                anonymousLabelMsg = 'panes.survey.summary.anonymous.deny';
+            }
+
+            let anonymousLabel = this.props.intl.formatMessage(
+                { id: anonymousLabelMsg });
+
             let linkUrl = '//www.' + process.env.ZETKIN_DOMAIN + '/o/'
                 + survey.organization.id + '/surveys/' + survey.id;
 
@@ -84,6 +96,8 @@ export default class SurveyPane extends PaneBase {
                         { survey.info_text }</span>
                     <span className="SurveyPane-summaryAccess">
                         { accessLabel }</span>
+                    <span className="SurveyPane-summaryAnonymous">
+                        { anonymousLabel }</span>
                     <span className="SurveyPane-link">
                         <Link href={ linkUrl } target="_blank"
                             msgId="panes.survey.summary.viewLink"/>
@@ -95,7 +109,8 @@ export default class SurveyPane extends PaneBase {
                     className="SurveyPane-content">
                     <Msg tagName="h3" id="panes.survey.content.h"/>
                     { contentBreakdown }
-                    <Link msgId="panes.survey.content.editLink"
+                    <Button className="SurveyPane-contentEdit"
+                        labelMsg="panes.survey.content.editLink"
                         onClick={ this.onEditContentClick.bind(this) }/>
                 </div>
             ];
