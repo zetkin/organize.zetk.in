@@ -70,11 +70,25 @@ export default class ActionReminderPane extends PaneBase {
 
         var remindedList = null;
         if (data.remindedParticipants.length) {
+            let remindedParticipants = data.remindedParticipants
+                .concat()
+                .sort((a, b) => {
+                    if (a.reminder_sent < b.reminder_sent) {
+                        return 1;
+                    }
+                    else if (a.reminder_sent == b.reminder_sent) {
+                        return 0;
+                    }
+                    else {
+                        return -1;
+                    }
+                });
+
             remindedList = [
                 <Msg key="h" tagName="h3"
                     id="panes.actionReminder.alreadyReminded.h"/>,
                 <ul key="remindedList" className="ActionReminderPane-reminded">
-                {data.remindedParticipants.map(function(participant) {
+                {remindedParticipants.map(function(participant) {
                     const onClick = this.onPersonClick.bind(this, participant);
 
                     let date = Date.create(participant.reminder_sent);
