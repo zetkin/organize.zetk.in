@@ -1,6 +1,10 @@
 import React from 'react';
-import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
+import {
+    FormattedMessage as Msg,
+    FormattedRelative,
+    injectIntl
+} from 'react-intl';
 
 import PaneBase from './PaneBase';
 import Form from '../forms/Form';
@@ -71,17 +75,19 @@ export default class ActionReminderPane extends PaneBase {
                     id="panes.actionReminder.alreadyReminded.h"/>,
                 <ul key="remindedList" className="ActionReminderPane-reminded">
                 {data.remindedParticipants.map(function(participant) {
-                    const timeLabel = Date.create(participant.reminder_sent)
-                        .format('{yyyy}-{MM}-{dd} {HH}:{mm}:{ss}');
-
+                    const date = Date.create(participant.reminder_sent);
                     const onClick = this.onPersonClick.bind(this, participant);
 
                     return (
                         <li key={ participant.id }>
                             <Avatar person={ participant }/>
-                            <Person person={ participant } onClick={ onClick }/>
-                            <span className="ActionReminderPane-timestamp">
-                                { timeLabel }</span>
+                            <div className="ActionReminderPane-remindedInfo">
+                                <Person person={ participant }
+                                    onClick={ onClick }/>
+                                <div className="ActionReminderPane-timestamp">
+                                    <FormattedRelative value={ date }/>
+                                </div>
+                            </div>
                         </li>
                     );
                 }, this)}

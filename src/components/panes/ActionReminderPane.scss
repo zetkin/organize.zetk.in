@@ -37,23 +37,25 @@
 
             .Avatar {
                 width: 5em;
-                height: auto;
+                height: 5em;
+                float: left;
+            }
+
+            .ActionReminderPane-remindedInfo {
+                float: left;
+                margin-left: 1em;
             }
 
             .Person {
-                position: absolute;
-                top: 10px;
-                left: 60px;
-
                 cursor: pointer;
-                font-size: 1.1em;
+                font-size: 1.4em;
                 font-weight: bold;
             }
 
-            .ActionReminderPane-timestamp {
-                position: absolute;
-                top: 25px;
-                left: 60px;
+            &:after {
+                content: "";
+                display: block;
+                clear: both;
             }
         }
     }
