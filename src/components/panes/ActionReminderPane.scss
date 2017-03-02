@@ -33,23 +33,19 @@
             position: relative;
             margin: 1em 0;
             padding: 0.5em;
-            height: 6em;
 
             .Avatar {
-                width: 5em;
-                height: 5em;
-                float: left;
+                @include col(2,12, $align:middle, $first:true);
+                max-height: 6em;
             }
 
             .ActionReminderPane-remindedInfo {
-                float: left;
-                margin-left: 1em;
+                @include col(10,12, $align:middle, $last:true);
             }
 
             .Person {
                 cursor: pointer;
-                font-size: 1.4em;
-                font-weight: bold;
+                font-size: 1.7em;
             }
 
             &:after {
