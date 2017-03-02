@@ -1,0 +1,5 @@
+.SurveyQuestionOutline {
+    button {
+        @include inline-button($icon:$fa-var-plus);
+    }
+}
