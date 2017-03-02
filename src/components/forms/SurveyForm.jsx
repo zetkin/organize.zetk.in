@@ -51,7 +51,6 @@ export default class SurveyForm extends React.Component {
         values.allow_anonymous = (values.signature == 'anon');
         delete values['signature'];
 
-        console.log(values);
         return values;
     }
 
@@ -62,7 +61,6 @@ export default class SurveyForm extends React.Component {
             delete values['signature'];
         }
 
-        console.log(values);
         return values;
     }
 }
