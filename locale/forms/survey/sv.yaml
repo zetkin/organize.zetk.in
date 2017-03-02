@@ -4,3 +4,7 @@ access: "Åtkomst"
 accessOptions:
     open: "Öppen för vem som helst"
     auth: "Endast för anslutna användare"
+signature: "Policy för signering"
+signatureOptions:
+    anon: "Tillåt anonyma svar"
+    sign: "Kräv signatur med namn och e-post"
