@@ -74,8 +74,23 @@ export default function participants(state = null, action) {
         case types.SEND_ACTION_REMINDERS + '_FULFILLED':
             actionId = action.meta.actionId;
             byAction = Object.assign({}, state.byAction);
-            byAction[actionId] = byAction[actionId].map(p =>
-                Object.assign({}, p, { reminder_sent: true }));
+            action.payload.data.data.forEach(p => {
+                byAction[actionId]
+            })
+            byAction[actionId] = byAction[actionId].map(p => {
+                let updated = action.payload.data.data.find(res =>
+                    res.person.id == p.id);
+
+                if (updated) {
+                    return Object.assign({}, p, {
+                        reminder_sent: updated.sent,
+                    });
+                }
+                else {
+                    return p;
+                }
+            });
+
             return Object.assign({}, state, { byAction });
 
         default:
