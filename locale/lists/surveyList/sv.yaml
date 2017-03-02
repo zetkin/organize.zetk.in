@@ -1,9 +1,13 @@
 header:
     access: "Åtkomst"
+    allowAnonymous: "Tillåten signering"
     callersOnly: "Endast ringare"
     survey: "Enkät"
 item:
     access:
         open: "Vem som helst"
         auth: "Endast inloggade"
+    anonymous:
+        allow: "Tillåt anonyma svar"
+        deny: "Endast signerade svar"
     callersOnly: "Endast för ringare"
