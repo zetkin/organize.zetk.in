@@ -18,10 +18,17 @@ export default class SurveyForm extends React.Component {
 
     render() {
         let survey = this.props.survey || {};
-        let options = {
+        let accessOptions = {
             'open': 'forms.survey.accessOptions.open',
             'auth': 'forms.survey.accessOptions.auth',
         };
+
+        let signatureOptions = {
+            'anon': 'forms.survey.signatureOptions.anon',
+            'sign': 'forms.survey.signatureOptions.sign',
+        };
+
+        survey.signature = survey.allow_anonymous? 'anon' : 'sign';
 
         return (
             <Form className="SurveyForm" ref="form" { ...this.props }>
@@ -31,16 +38,29 @@ export default class SurveyForm extends React.Component {
                     initialValue={ survey.info_text }/>
                 <SelectInput labelMsg="forms.survey.access" name="access"
                     initialValue={ survey.access }
-                    options={ options } optionLabelsAreMessages={ true }/>
+                    options={ accessOptions } optionLabelsAreMessages={ true }/>
+                <SelectInput labelMsg="forms.survey.signature" name="signature"
+                    initialValue={ survey.signature }
+                    options={ signatureOptions } optionLabelsAreMessages={ true }/>
             </Form>
         );
     }
 
     getValues() {
-        return this.refs.form.getValues();
+        let values = this.refs.form.getValues();
+        values.allow_anonymous = (values.signature == 'anon');
+        delete values['signature'];
+
+        return values;
     }
 
     getChangedValues() {
-        return this.refs.form.getChangedValues();
+        let values = this.refs.form.getChangedValues();
+        if ('signature' in values) {
+            values.allow_anonymous = (values.signature == 'anon');
+            delete values['signature'];
+        }
+
+        return values;
     }
 }

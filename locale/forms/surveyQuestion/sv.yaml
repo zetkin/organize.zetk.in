@@ -4,3 +4,11 @@ responseType: Svarstyp
 responseTypeOptions:
     options: Svarsalternativ
     text: Fritext
+textWidget: Typ av textfält
+textWidgetOptions:
+    multi: Flera rader
+    single: Enkelrad
+optionsWidget: Flervalsregler
+optionsWidgetOptions:
+    checkbox: Tillåt flera svarsalternativ
+    radio: Tillåt bara ett svarsalternativ
