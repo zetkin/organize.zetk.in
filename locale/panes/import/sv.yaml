@@ -78,7 +78,6 @@ settings:
         h: "Välj fält"
         instructions: "Vilka personuppgifter finns i den här kolumnen?"
         fields:
-            id: "Zetkin-ID"
             firstName: "Förnamn"
             lastName: "Efternamn"
             email: "E-post"

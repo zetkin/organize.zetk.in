@@ -11,6 +11,10 @@ export default class PersonDataColumnSettings extends React.Component {
         onChangeConfig: React.PropTypes.func,
     };
 
+    componentDidMount() {
+        this.onChangeField('field', 'first_name');
+    }
+
     render() {
         let field = this.props.config.field;
 
@@ -18,7 +22,6 @@ export default class PersonDataColumnSettings extends React.Component {
             { id: 'panes.import.settings.personData.fields.' + id })
 
         const FIELD_OPTIONS = {
-            'id': col('id'),
             'first_name': col('firstName'),
             'last_name': col('lastName'),
             'email': col('email'),
