@@ -1,4 +1,5 @@
 import { flatten } from 'flat';
+import Negotiator from 'negotiator';
 import subset from 'object-subset';
 import recurse from 'recursive-readdir';
 import yaml from 'node-yaml';
@@ -20,12 +21,15 @@ export function getMessageSubset(messages, scope, locale) {
 
 export function createLocalizeHandler(messages) {
     return scope => (req, res, next) => {
-        // TODO: Negotiate locale
-        let locale = 'sv';
+        let state = req.store.getState();
+        let negotiator = new Negotiator(req);
+
+        let browserLocale = negotiator.language(['en', 'sv']) || 'en';
+        let locale = state.user.user.lang || browserLocale;
 
         req.store.dispatch(setIntlData({
             locale,
-            messages: getMessageSubset(messages, scope, locale)
+            messages: getMessageSubset(messages, scope, locale),
         }));
 
         next();

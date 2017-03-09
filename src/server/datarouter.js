@@ -18,26 +18,21 @@ export default messages => {
 
     const localizeHandler = createLocalizeHandler(messages);
 
-    // TODO: Change scope depending on URL
-    router.use(localizeHandler());
-
     router.all(/.*/, function(req, res, next) {
-        let initialState = {
-            intl: {
-                locale: req.intl.locale,
-                messages: req.intl.messages,
-            },
-        };
+        let initialState = {};
 
         req.store = configureStore(initialState, req.z);
 
         next();
     });
 
-    router.get('*', waitForActions(req => [
+    router.use('*', waitForActions(req => [
         getUserInfo(),
         getUserMemberships(),
     ]));
+
+    // TODO: Change scope depending on URL
+    router.use(localizeHandler());
 
     router.get(/action:(\d+)$/, waitForActions(req => [
         retrieveAction(req.params[0]),
