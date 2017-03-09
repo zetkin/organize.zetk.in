@@ -1,0 +1,14 @@
+availableHeader: Select people
+okButton: |-
+    { numSelected, plural,
+        =0 {Close without selecting}
+        =1 {Select one person}
+        other {Select # people}
+    }
+selectedHeader: |-
+    {numSelected, plural,
+        =0 {None selected}
+        =1 {One person selected}
+        other {# people selected}
+    }
+title: Select people

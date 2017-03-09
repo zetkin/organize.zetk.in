@@ -1,0 +1,4 @@
+opOptions:
+    eq: Exact date
+    gt: After
+    lt: Before

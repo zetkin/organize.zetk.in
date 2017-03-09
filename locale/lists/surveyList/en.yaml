@@ -1,0 +1,13 @@
+header:
+    access: Access
+    allowAnonymous: Signature policy
+    callersOnly: Callers only
+    survey: Survey
+item:
+    access:
+        auth: Connected only
+        open: Anyone
+    anonymous:
+        allow: Allow anonymous submissions
+        deny: Signed submissions only
+    callersOnly: Callers only

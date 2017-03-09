@@ -1,0 +1,91 @@
+column:
+    colOptions:
+        complex:
+            tag: Tags
+        id:
+            external: External ID
+            zetkin: Zetkin ID
+        person:
+            city: City
+            coAddress: C/O address
+            email: E-mail address
+            firstName: First name
+            gender: Gender
+            lastName: Last name
+            phone: Phone number
+            streetAddress: Street address
+            zip: Zip code
+    editSettingsLink: Edit column settings
+    idFields: ID for merging
+    otherFields: Other data
+    personFields: Personal data fields
+    unknown: Skip column
+error:
+    backButton: Change import settings
+    h: An error ocurred
+    p: >-
+        Something went wrong and the import was cancelled. No data has been
+        imported. You can go back and verify the import settings, or select a
+        new file for import
+    resetButton: Select another file
+importButton: Import
+importDropZoneMessage: 'Drag and drop a file here, or click to select a file to import.'
+importMoreButton: Import more
+report:
+    h: |-
+        { count, plural,
+            =0 {No rows imported}
+            =1 {One row imported}
+            other {# rows imported}
+        }
+    numCreated: |-
+        { count, plural,
+            =0 {No new people added}
+            =1 {One new person added}
+            other {# new people added}
+        }
+    numTagged: |-
+        { count, plural,
+            =0 {No tags were set}
+            =1 {Tagged one person}
+            other {Tagged # people}
+        }
+    numUpdated: |-
+        { count, plural,
+            =0 {No existing people updated}
+            =1 {One existing person updated}
+            other {# existing people updated}
+        }
+settings:
+    personData:
+        fields:
+            city: City
+            coAddress: C/O address
+            email: E-mail address
+            firstName: First name
+            gender: Gender
+            lastName: Last name
+            phone: Phone number
+            streetAddress: Street address
+            zip: Zip code
+        h: Select field
+        instructions: What personal data is in this column?
+    personTag:
+        emptyLabel: Tags for empty rows
+        valueLabel: 'Tags for rows with value: {value}'
+summary:
+    personTag:
+        summary: |-
+            {numTagged, plural,
+                =0 {No values translated, change settings.}
+                =1 {Translating one value to tags}
+                other {Translating # values to tags}
+            }
+table:
+    emptyColumnsRemoved: |-
+        { numRemoved, plural,
+            =1 {One empty column ignored}
+            other {# empty columns ignored}
+        }
+    firstRowAsHeader: First row contains headers
+    tableSelectLabel: 'Import from sheet:'

@@ -1,0 +1,6 @@
+instructions: Select a column type and edit settings here.
+title: 'Settings for column: { column }'
+typeOptions:
+    personData: Personal data
+    personTag: Tags
+    unknown: Select a column type

@@ -1,0 +1,14 @@
+description: Description/help text
+optionsWidget: Rules for options
+optionsWidgetOptions:
+    checkbox: Allow multiple selected options
+    radio: Allow one selected option only
+question: Question
+responseType: Response type
+responseTypeOptions:
+    options: Options
+    text: Free text
+textWidget: Text field type
+textWidgetOptions:
+    multi: Multiple-line field
+    single: Single-line field

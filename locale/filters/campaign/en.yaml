@@ -1,0 +1,14 @@
+campaign: What campaign?
+dateOptions:
+    after: after a certain date
+    any: at all
+    before: before a certain date
+    between: between certain dates
+    future: in the future
+    past: before today
+opOptions:
+    inAny: participate in any campaign
+    inSpec: participate in specific campaign
+    notInAny: don't participate in any campaign
+    notInSpec: don't participate in specific campaign
+participantStatus: Match people who

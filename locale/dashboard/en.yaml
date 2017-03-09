@@ -1,0 +1,10 @@
+footer:
+    foundationLink:
+        href: 'http://zetkin.org/en'
+        text: About Zetkin Foundation
+    helpLink:
+        href: 'http://manual.zetkin.org/en'
+        text: Read more in the Zetkin Manual
+    info: >-
+        Zetkin is developed by Zetkin Foundation, to improve organizing in
+        activist organizations.

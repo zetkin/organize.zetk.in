@@ -1,0 +1,20 @@
+search:
+    matches:
+        actionDay: |-
+            {count, plural,
+                =1 {One action on {date}}
+                other {# actions on {date}}
+            }
+        query: 'Smart search: {title}'
+        surveySubmission: 'Submission by {respondent} for {survey}'
+    scopes:
+        all: Anything
+        campaign: Campaign
+        dialog: Dialog
+        maps: Maps
+        people: People
+        survey: Survey
+    typeToSearch: Start typing to search
+userMenu:
+    accountLink: Account settings
+    logOutLink: Log out

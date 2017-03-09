@@ -1,0 +1,15 @@
+ops:
+    person:
+        delete: |-
+            Delete {count, plural,
+              =1 {one person}
+              other {# persons}}
+        export: |-
+            Export {count, plural,
+              =1 {one person}
+              other {# persons}}
+        tag: |-
+            Tag {count, plural,
+              =1 {one person}
+              other {# persons}}
+selectLabel: Select operation

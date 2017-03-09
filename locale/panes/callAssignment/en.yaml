@@ -1,0 +1,18 @@
+callers:
+    addCaller: 'Drag and drop people here or {selectLink}'
+    h: Callers
+    selectLink: select callers
+instructions:
+    editLink: Edit instructions
+    h: Instructions
+summary:
+    cooldown: '{cooldown, plural, =0 { none } =1 { one hour } other {# hours}}'
+    editLink: Edit settings
+target:
+    editGoalLink: Edit goal
+    editTargetLink: Edit target
+    h: Target group
+    stats:
+        goal: People remaining
+        target: Targets
+title: Call assignment

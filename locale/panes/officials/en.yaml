@@ -1,0 +1,14 @@
+admins:
+    add: 'Drop or {selectLink}.'
+    desc: >-
+        Administrators have full access to creating, editing and deleting any
+        type of content.
+    h: Administrators
+    selectLink: select admins
+organizers:
+    add: 'Drop or {selectLink}.'
+    desc: >-
+        Organizers have enough privileges to do things like organizing campaigns
+        and managing existing call assignments.
+    h: Organizers
+    selectLink: select organizers

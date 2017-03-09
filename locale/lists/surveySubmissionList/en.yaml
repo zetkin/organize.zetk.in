@@ -1,0 +1,7 @@
+header:
+    connected: Connected
+    respondent: Respondent
+    survey: Survey
+    time: Time
+item:
+    anonymous: Anonymous
