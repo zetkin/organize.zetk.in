@@ -3,6 +3,8 @@ import subset from 'object-subset';
 import recurse from 'recursive-readdir';
 import yaml from 'node-yaml';
 
+import { setIntlData } from '../actions/intl';
+
 
 export function getMessageSubset(messages, scope, locale) {
     if (typeof scope === 'string' || scope instanceof String) {
@@ -21,10 +23,10 @@ export function createLocalizeHandler(messages) {
         // TODO: Negotiate locale
         let locale = 'sv';
 
-        req.intl = {
+        req.store.dispatch(setIntlData({
             locale,
             messages: getMessageSubset(messages, scope, locale)
-        };
+        }));
 
         next();
     };
