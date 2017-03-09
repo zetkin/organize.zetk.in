@@ -1,16 +1,13 @@
-title: "Redigera text"
-saveButton: "Spara och stäng"
-closeButton: "Stäng utan att spara"
-
+closeButton: Stäng utan att spara
 editor:
-    bold: "Fet"
-    italic: "Kursiv"
-    underline: "Understruken"
-
-    p: "Brödtext"
-    h1: "Rubrik 1"
-    h2: "Rubrik 2"
-    h3: "Rubrik 3"
-
-    ul: "Punktlista"
-    ol: "Numrerad lista"
+    bold: Fet
+    h1: Rubrik 1
+    h2: Rubrik 2
+    h3: Rubrik 3
+    italic: Kursiv
+    ol: Numrerad lista
+    p: Brödtext
+    ul: Punktlista
+    underline: Understruken
+saveButton: Spara och stäng
+title: Redigera text

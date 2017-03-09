@@ -1,10 +1,10 @@
-title: "Titel"
-info_text: "Beskrivning"
-access: "Åtkomst"
+access: Åtkomst
 accessOptions:
-    open: "Öppen för vem som helst"
-    auth: "Endast för anslutna användare"
-signature: "Policy för signering"
+    auth: Endast för anslutna användare
+    open: Öppen för vem som helst
+info_text: Beskrivning
+signature: Policy för signering
 signatureOptions:
-    anon: "Tillåt anonyma svar"
-    sign: "Kräv signatur med namn och e-post"
+    anon: Tillåt anonyma svar
+    sign: Kräv signatur med namn och e-post
+title: Titel

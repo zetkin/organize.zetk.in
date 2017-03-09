@@ -1,99 +1,91 @@
-importButton: "Importera"
-importMoreButton: "Importera mer"
-importDropZoneMessage: "Dra och släpp en fil här, eller klicka och välj en för att importera."
-
+column:
+    colOptions:
+        complex:
+            tag: Etiketter
+        id:
+            external: Externt ID
+            zetkin: Zetkin-ID
+        person:
+            city: Ort
+            coAddress: C/O-adress
+            email: E-post
+            firstName: Förnamn
+            gender: Kön
+            lastName: Efternamn
+            phone: Telefon
+            streetAddress: Gatuadress
+            zip: Postnummer
+    editSettingsLink: Redigera kolumninställningar
+    idFields: ID för sammanslagning
+    otherFields: Annan data
+    personFields: Personfält
+    unknown: Hoppa över kolumn
 error:
-    h: "Ett fel inträffade"
-    p: |
+    backButton: Ändra inställningar
+    h: Ett fel inträffade
+    p: >-
         Något gick fel och importen avbröts. Inga personer har importerats. Du
         kan gå tillbaka och kontrollera importinställningarna eller välja en ny
         fil att importera.
-    backButton: "Ändra inställningar"
-    resetButton: "Välj en annan fil"
-
+    resetButton: Välj en annan fil
+importButton: Importera
+importDropZoneMessage: 'Dra och släpp en fil här, eller klicka och välj en för att importera.'
+importMoreButton: Importera mer
 report:
-    h: |
+    h: |-
         { count, plural,
             =0 {Inga rader importerades}
             =1 {En rad importerades}
             other {# rader importerades}
         }
-    numCreated: |
+    numCreated: |-
         { count, plural,
             =0 {Inga nya personer skapades}
             =1 {En ny person skapades}
             other {# nya personer skapades}
         }
-    numUpdated: |
-        { count, plural,
-            =0 {Inga befintliga personer uppdaterades}
-            =1 {En befintlig person uppdaterades}
-            other {# befintliga personer uppdaterades}
-        }
-    numTagged: |
+    numTagged: |-
         { count, plural,
             =0 {Satte inga etiketter}
             =1 {Satte etiketter på en person}
             other {Satte etiketter på # personer}
         }
-
-table:
-    tableSelectLabel: "Ark att importera:"
-    firstRowAsHeader: "Första raden innehåller rubriker"
-    emptyColumnsRemoved: |
-        { numRemoved, plural,
-            =1 {Ignorerade en tom kolumn}
-            other {Ignorerade # tomma kolumner}
+    numUpdated: |-
+        { count, plural,
+            =0 {Inga befintliga personer uppdaterades}
+            =1 {En befintlig person uppdaterades}
+            other {# befintliga personer uppdaterades}
         }
-
-column:
-    unknown: "Hoppa över kolumn"
-    idFields: "ID för sammanslagning"
-    personFields: "Personfält"
-    otherFields: "Annan data"
-    editSettingsLink: "Redigera kolumninställningar"
-    colOptions:
-        id:
-            zetkin: "Zetkin-ID"
-            external: "Externt ID"
-        person:
-            firstName: "Förnamn"
-            lastName: "Efternamn"
-            email: "E-post"
-            phone: "Telefon"
-            coAddress: "C/O-adress"
-            streetAddress: "Gatuadress"
-            zip: "Postnummer"
-            city: "Ort"
-            gender: "Kön"
-        complex:
-            tag: "Etiketter"
-
 settings:
-    personTag:
-        valueLabel: "Etiketter för rader med värde: { value }"
-        emptyLabel: "Etiketter för tomma rader"
-
     personData:
-        h: "Välj fält"
-        instructions: "Vilka personuppgifter finns i den här kolumnen?"
         fields:
-            firstName: "Förnamn"
-            lastName: "Efternamn"
-            email: "E-post"
-            phone: "Telefon"
-            coAddress: "C/O-adress"
-            streetAddress: "Gatuadress"
-            zip: "Postnummer"
-            city: "Ort"
-            gender: "Kön"
-
+            city: Ort
+            coAddress: C/O-adress
+            email: E-post
+            firstName: Förnamn
+            gender: Kön
+            lastName: Efternamn
+            phone: Telefon
+            streetAddress: Gatuadress
+            zip: Postnummer
+        h: Välj fält
+        instructions: Vilka personuppgifter finns i den här kolumnen?
+    personTag:
+        emptyLabel: Etiketter för tomma rader
+        valueLabel: 'Etiketter för rader med värde: { value }'
 summary:
     personTag:
-        summary: |
+        summary: |-
             {numTagged, plural,
                 =0 {Inga värden översatta, ändra inställningarna.}
                 =1 {Översätter ett värde till etiketter}
                 other {Översätter # värden till etiketter}
             }
-        untaggedWarning: |
+table:
+    emptyColumnsRemoved: |-
+        { numRemoved, plural,
+            =1 {Ignorerade en tom kolumn}
+            other {Ignorerade # tomma kolumner}
+        }
+    firstRowAsHeader: Första raden innehåller rubriker
+    tableSelectLabel: 'Ark att importera:'

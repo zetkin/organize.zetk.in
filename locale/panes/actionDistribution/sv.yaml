@@ -1,5 +1,4 @@
-locations:
-    h: "Platser"
-
 activities:
-    h: "Aktiviteter"
+    h: Aktiviteter
+locations:
+    h: Platser

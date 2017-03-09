@@ -1,4 +1,4 @@
 opOptions:
-    lt: "Före"
-    gt: "Efter"
-    eq: "Exakt datum"
+    eq: Exakt datum
+    gt: Efter
+    lt: Före

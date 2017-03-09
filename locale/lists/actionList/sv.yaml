@@ -1,6 +1,6 @@
 header:
-    startTime: "Tid"
-    activity: "Aktivitet"
-    location: "Plats"
-    contact: "Ansvarig"
-    participants: "Deltagare"
+    activity: Aktivitet
+    contact: Ansvarig
+    location: Plats
+    participants: Deltagare
+    startTime: Tid

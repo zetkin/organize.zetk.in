@@ -1,57 +1,49 @@
-campaignSelect:
-    nullLabel: "Alla kampanjer"
-    header: "Väl kampanj"
-
-deleteButton:
-    label: "Radera"
-
-inviteBox:
-    h: "Skicka inbjudan"
-    sendButton: "Skicka"
-    instructions: |
-        Fyll i e-postadress till den person du vill bjuda in.
-
-tagCloud:
-    addButton: "Lägg till"
-
 callAssignmentTemplates:
     inform:
-        title: "Informera om..."
         desc: |
             Vi ringer runt tills vi pratat med alla en gång för att
             informera om...
+        title: Informera om...
     mobilize:
-        title: "Mobilisera till {campaign}"
-        desc: |
-            Vi ringer runt och mobiliserar aktivister till vår kampanj {campaign}.
+        desc: >
+            Vi ringer runt och mobiliserar aktivister till vår kampanj
+            {campaign}.
+        title: 'Mobilisera till {campaign}'
     stayintouch:
-        title: "Håll kontakten"
-        desc: |
+        desc: |-
             Vi pratar med alla i målgruppen en gång {months, select,
                 3 {var tredje månad}
                 6 {var sjätte månad}
                 12 {om året}
             }.
-staticMap:
-    setPositionLink: "Klicka för att ange position"
-    noCoordinates: "Ingen position"
-
+        title: Håll kontakten
+campaignSelect:
+    header: Välj kampanj
+    nullLabel: Alla kampanjer
+deleteButton:
+    label: Radera
+inviteBox:
+    h: Skicka inbjudan
+    instructions: Fyll i e-postadress till den person du vill bjuda in.
+    sendButton: Skicka
 officialList:
-    userLabel: "Din egen roll är låst"
-
+    userLabel: Din egen roll är låst
+staticMap:
+    noCoordinates: Ingen position
+    setPositionLink: Klicka för att ange position
 surveyOutline:
     add:
-        label: "Välj typ för att lägga till"
+        label: Välj typ för att lägga till
         types:
-            question: "Enkätfråga"
-            text: "Textblock"
-
+            question: Enkätfråga
+            text: Textblock
     element:
         types:
-            question: "Fråga"
-            text: "Textblock"
-
+            question: Fråga
+            text: Textblock
     option:
-        addButton: "Lägg till svarsalternativ"
-        cancelButton: "Avbryt"
-        saveButton: "Spara"
+        addButton: Lägg till svarsalternativ
+        cancelButton: Avbryt
+        saveButton: Spara
+tagCloud:
+    addButton: Lägg till

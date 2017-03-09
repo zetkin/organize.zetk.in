@@ -1,19 +1,18 @@
-title: "Ringuppdrag"
-summary:
-    cooldown: |
-        { cooldown, plural, =0 { ingen } =1 {en timme} other {# timmar}}
-    editLink: "Redigera inställningar"
-instructions:
-    h: "Instruktioner"
-    editLink: "Redigera instruktionerna"
-target:
-    h: "Målgrupp"
-    editTargetLink: "Redigera målgrupp"
-    editGoalLink: "Redigera syfte"
-    stats:
-        goal: "Personer återstår"
-        target: "Personer i målgruppen"
 callers:
-    h: "Ringare"
-    selectLink: "välj ringare"
-    addCaller: "Dra och släpp personer här eller { selectLink }"
+    addCaller: 'Dra och släpp personer här eller { selectLink }'
+    h: Ringare
+    selectLink: välj ringare
+instructions:
+    editLink: Redigera instruktionerna
+    h: Instruktioner
+summary:
+    cooldown: '{ cooldown, plural, =0 { ingen } =1 {en timme} other {# timmar}}'
+    editLink: Redigera inställningar
+target:
+    editGoalLink: Redigera syfte
+    editTargetLink: Redigera målgrupp
+    h: Målgrupp
+    stats:
+        goal: Personer återstår
+        target: Personer i målgruppen
+title: Ringuppdrag

@@ -1,11 +1,11 @@
 header:
-    callerName: "Ringare"
-    targetName: "Mottagare"
-    status: "Status"
-    time: "Tid"
-    action: 'Åtgärd'
+    action: Åtgärd
+    callerName: Ringare
+    status: Status
+    targetName: Mottagare
+    time: Tid
 item:
     status:
-        allocated: "Pågår..."
-        reached: "Nåddes"
-        notReached: "Nåddes inte"
+        allocated: Pågår...
+        notReached: Nåddes inte
+        reached: Nåddes

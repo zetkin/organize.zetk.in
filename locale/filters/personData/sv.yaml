@@ -1,10 +1,10 @@
-selectFields: "Välj fler fält att söka på"
 fields:
-    first_name: "Förnamn"
-    last_name: "Efternamn"
-    email: "E-postadress"
-    phone: "Telefonnummer"
-    co_address: "C/O-address"
-    street_address: "Gatuadress"
-    zip: "Postnummer"
-    city: "Stad"
+    city: Stad
+    co_address: C/O-address
+    email: E-postadress
+    first_name: Förnamn
+    last_name: Efternamn
+    phone: Telefonnummer
+    street_address: Gatuadress
+    zip: Postnummer
+selectFields: Välj fler fält att söka på
