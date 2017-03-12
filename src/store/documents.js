@@ -14,7 +14,7 @@ export default function documents(state = null, action) {
                 docList: updateOrAddListItem(state.docList, doc.id, doc),
             });
 
-        case types.FINISH_DOCUMENT:
+        case types.FINISH_TEXT_DOCUMENT:
             let id = action.payload.id;
             return Object.assign({}, state, {
                 docList: removeListItem(state.docList, id),
