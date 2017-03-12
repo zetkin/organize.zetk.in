@@ -187,13 +187,6 @@ export default class ActionListItem extends React.Component {
             </div>
         );
 
-        const numParticipantRows = Math.ceil(filteredParticipants.length/4);
-        const height = large? Math.max(9, 0.5 + numParticipantRows * 5.25) : 6;
-
-        const style = {
-            height: height + 'em'
-        };
-
         let bookedParticipants = ( participants.length + "/" + action.num_participants_required );
 
         const bookingDiff = (action.num_participants_required - participants.length);
@@ -248,7 +241,7 @@ export default class ActionListItem extends React.Component {
         );
 
         return (
-            <div className={ classNames } style={ style }
+            <div className={ classNames }
                 onClick={ this.onClick.bind(this) }>
 
                 <div className="ListItem-date">
