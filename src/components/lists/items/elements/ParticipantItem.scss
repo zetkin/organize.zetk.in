@@ -1,7 +1,5 @@
 .ParticipantItem {
-    &.hidden {
-        display: none;
-    }
+    cursor: -webkit-grab;
 
     figure {
         margin: 0;

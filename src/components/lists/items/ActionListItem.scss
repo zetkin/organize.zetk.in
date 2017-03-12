@@ -1,6 +1,5 @@
 .ActionListItem {
     position: relative;
-    transition: height 0.1s;
 
     &.expanded {
         .ActionListItem-operations {
@@ -52,6 +51,37 @@
     .ActionListItem-participantList {
         @include col(4.5,12);
         padding-right: 0;
+        margin-bottom: 1em;
+        transition: padding-bottom 0.2s ease-out;
+        border: 1px dashed white;
+
+        .ParticipantList {
+            max-height: 3.5em;
+            min-height: auto;
+            overflow: hidden;
+            transition: max-height .2s ease-out;
+            .ParticipantItem {
+                &:nth-child(n+4){
+                    visibility: hidden;
+                }
+            }
+
+        }
+    }
+
+    &.expanded, &.dragOver {
+        .ActionListItem-participantList {
+            padding-bottom: 2em;
+            border: 1px dashed #CCC;
+            background: darken(white, 3);
+            .ParticipantList {
+                max-height: 10em;
+                transition: max-height .2s ease-out;
+                .ParticipantItem {
+                    visibility: visible;
+                }
+            }
+        }
     }
 
     .ActionListItem-actionStatuses {

@@ -22,15 +22,20 @@
     }
 
     .ParticipantList-moreParticipants {
-        margin: 0.25em 0 0.25em 0.25em;
+        position: absolute;
+        top: 0;
+        right: 0.25em;
+        width: 3em;
         height: 3em;
         line-height: 3em;
-        vertical-align: middle;
+        margin: 0.25em;
         text-align: center;
-        font-weight: bold;
-        color: #ccc;
-        cursor: pointer;
+        background: darken($c-ui-bg, 5);
         color: #aaa;
+
+        &:hover {
+            background: darken($c-ui-bg, 7);
+        }
 
         &::before {
             content: "+";
