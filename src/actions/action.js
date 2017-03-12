@@ -36,6 +36,33 @@ export function retrieveActions(afterDate, beforeDate) {
     };
 }
 
+export function retrieveActionsOnDay(date) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        // Add one day to beforeDate, to include all actions
+        // on that day
+        let beforeDateNext = Date
+            .create(date)
+            .addDays(1)
+            .format('{yyyy}-{MM}-{dd}');
+
+        let filters = [
+            ['start_time', '>', date],
+            ['end_time', '<', beforeDateNext],
+        ];
+
+        dispatch({
+            type: types.RETRIEVE_ACTIONS_ON_DAY,
+            meta: { date },
+            payload: {
+                promise: z.resource('orgs', orgId, 'actions').get(
+                    null, null, filters),
+            }
+        });
+    };
+}
+
 export function retrieveAction(id) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;

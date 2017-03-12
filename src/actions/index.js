@@ -54,6 +54,7 @@ export const DELETE_ACTIVITY = 'DELETE_ACTIVITY';
 
 // Redux actions related to campaign actions
 export const RETRIEVE_ACTIONS = 'RETRIEVE_ACTIONS';
+export const RETRIEVE_ACTIONS_ON_DAY = 'RETRIEVE_ACTIONS_ON_DAY';
 export const RETRIEVE_ACTION = 'RETRIEVE_ACTION';
 export const UPDATE_ACTION = 'UPDATE_ACTION';
 export const CREATE_ACTION = 'CREATE_ACTION';
