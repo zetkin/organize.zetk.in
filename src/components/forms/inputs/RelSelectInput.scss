@@ -24,36 +24,46 @@
         li {
             position: relative;
             cursor: pointer;
-            padding: 0.5em 1em 0.5em 2em;
             font-size: 1.1em;
 
-            &::before {
-                content: "";
+            label {
                 display: block;
-                float: left;
-                width: 1em;
-                height: 1em;
-                margin-left: -1.5em;
+                margin: 0;
+                padding: 0.5em 1em 0.5em 2em;
+
+                &::before {
+                    content: "";
+                    display: block;
+                    float: left;
+                    width: 1em;
+                    height: 1em;
+                    margin-left: -1.5em;
+                }
             }
 
             &:hover, &.focused {
-                background-color: darken(white, 5);
+                label {
+                    background-color: darken(white, 5);
 
-                &::before {
-                    color: #ddd;
-                    content: "\f00c";
-                    font: normal normal normal 10px FontAwesome;
+                    &::before {
+                        color: #ddd;
+                        content: "\f00c";
+                        font: normal normal normal 10px FontAwesome;
+                    }
                 }
+
                 .RelSelectInput-editLink {
                     display: block;
                 }
             }
 
             &.selected {
-                &::before {
-                    color: #2a0;
-                    content: "\f00c";
-                    font: normal normal normal 10px FontAwesome;
+                label {
+                    &::before {
+                        color: #2a0;
+                        content: "\f00c";
+                        font: normal normal normal 10px FontAwesome;
+                    }
                 }
             }
 
@@ -66,7 +76,7 @@
                 text-align: right;
                 width: 30px;
                 display: none;
-                height: 100%;
+                height: 30px;
 
                 &:before {
                     @include icon($fa-var-pencil);

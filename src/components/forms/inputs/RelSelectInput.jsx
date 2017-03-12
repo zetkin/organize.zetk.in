@@ -73,7 +73,8 @@ export default class RelSelectInput extends InputBase {
             createOption = (
                 <li key="create" className={ createOptionClasses }
                     onMouseDown={ this.onClickCreate.bind(this) }>
-                    <Msg id="forms.relSelectInput.addLabel"
+                    <Msg tagName="label"
+                        id="forms.relSelectInput.addLabel"
                         values={{ value }}/>
                 </li>
             );
@@ -121,9 +122,11 @@ export default class RelSelectInput extends InputBase {
                     }
 
                     return (
-                        <li key={ value } className={ classes }
-                            onMouseDown={ this.onClickOption.bind(this, obj) }>
-                            { label }
+                        <li key={ value } className={ classes }>
+                            <label className="RelSelectInput-itemLabel"
+                                onMouseDown={ this.onClickOption.bind(this, obj) }>
+                                { label }
+                            </label>
                             { editLink }
                         </li>
                     );
