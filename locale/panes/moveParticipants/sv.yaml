@@ -1,6 +1,6 @@
-title: "Flytta deltagare"
-confirmAllButton: "Bekräfta och utför alla"
-cancelAllButton: "Ångra alla"
+cancelAllButton: Ångra alla
+confirmAllButton: Bekräfta och utför alla
 move:
-    confirmButton: "Utför flytt"
-    cancelButton: "Ångra"
+    cancelButton: Ångra
+    confirmButton: Utför flytt
+title: Flytta deltagare

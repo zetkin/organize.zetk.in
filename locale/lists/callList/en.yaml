@@ -1,0 +1,11 @@
+header:
+    action: Action
+    callerName: Caller
+    status: Status
+    targetName: Target
+    time: Time
+item:
+    status:
+        allocated: On-going...
+        notReached: Not reached
+        reached: Reached

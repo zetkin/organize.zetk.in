@@ -1,21 +1,20 @@
 search:
-    typeToSearch: "Börja skriva för att söka"
-    scopes:
-        all: "Allt"
-        people: "Människor"
-        campaign: "Kampanj"
-        dialog: "Dialog"
-        maps: "Kartor"
-        survey: "Enkät"
     matches:
-        actionDay: |
+        actionDay: |-
             {count, plural,
                 =1 {En aktion {date}}
                 other {# aktioner {date}}
             }
-        query: "Smart sökning: {title}"
-        surveySubmission: "Svar från {respondent} på {survey}"
-
+        query: 'Smart sökning: {title}'
+        surveySubmission: 'Svar från {respondent} på {survey}'
+    scopes:
+        all: Allt
+        campaign: Kampanj
+        dialog: Dialog
+        maps: Kartor
+        people: Människor
+        survey: Enkät
+    typeToSearch: Börja skriva för att söka
 userMenu:
-    logOutLink: "Logga ut"
-    accountLink: "Konto-inställningar"
+    accountLink: Konto-inställningar
+    logOutLink: Logga ut

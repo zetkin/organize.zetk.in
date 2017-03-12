@@ -1,0 +1,12 @@
+header:
+    startTime: Time
+    stats: Statistics
+    title: Title
+item:
+    info:
+        callers: '{ count } callers'
+    stats:
+        calls: Calls made
+        goal: Remaining
+        reached: Reached
+        target: Targets

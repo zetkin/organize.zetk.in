@@ -1,0 +1,4 @@
+addButton: Add person
+querySelect:
+    header: Smart searches
+    nullLabel: (Show all people)

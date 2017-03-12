@@ -1,0 +1,5 @@
+coolDown: Hours between retries
+description: Description
+endDate: End date
+startDate: Start date
+title: Title

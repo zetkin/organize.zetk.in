@@ -1,7 +1,6 @@
-viewModes:
-    calendar: "Kalender"
-    list: "Lista"
-
 filters:
-    afterDate: "Från datum"
-    beforeDate: "Till datum"
+    afterDate: Från datum
+    beforeDate: Till datum
+viewModes:
+    calendar: Kalender
+    list: Lista

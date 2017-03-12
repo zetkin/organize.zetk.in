@@ -1,0 +1,8 @@
+ex:
+    h: Tags to exclude
+    instructions: '{firstName} will never call people with these tags.'
+pendingTitle: Edit callers
+prio:
+    h: Prioritized tags
+    instructions: '{firstName} will call people with these tags before others.'
+title: 'Edit caller: { firstName } { lastName }'

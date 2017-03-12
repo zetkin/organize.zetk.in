@@ -1,4 +1,4 @@
-title: "Redigera enkätfråga"
-saveButton: "Spara fråga"
 options:
-    h: "Svarsalternativ"
+    h: Svarsalternativ
+saveButton: Spara fråga
+title: Redigera enkätfråga

@@ -1,0 +1,73 @@
+breadcrumbs:
+    form: Settings
+    goal: |-
+        Goal{goalType, select,
+            inform {: Inform}
+            mobilize {: Mobilize for campaign}
+            stayintouch {: Stay in touch}
+            custom {: No template}
+            other {}
+        }
+    target: |-
+        Target group{targetType, select,
+            allTarget {: Everyone}
+            tagTarget {: Everyone with a certain tag}
+            randomTarget {: Random selection}
+            custom {: No template}
+            other {}
+        }
+form:
+    instructions: >-
+        Step 3 of 3. Define the title, description and settings for the
+        assignment.
+    saveButton: Create assignment
+goal:
+    customLink: Define selection manually later
+    instructions: >-
+        Step 2 of 3. Select the goal of the assignment to create goal query
+        automatically.
+    saveButton: |-
+        {goalType, select,
+            inform {Create assignment to inform}
+            mobilize {Create assignment to mobilize}
+            stayintouch {Create assignment to stay in touch}
+        }
+target:
+    customLink: Define selection manually later
+    instructions: Step 1 of 3. Define the target group of the assignment.
+    saveButton: |-
+        {targetType, select,
+            allTarget {Select everyone as target group}
+            tagTarget {Select target group based on tag}
+            randomTarget {Select random target group}
+        }
+templates:
+    allTarget:
+        instructions: The target group is made up of all people in the database.
+        title: Everyone
+    inform:
+        instructions: Everyone is called until they've been reached once.
+        title: Inform
+    mobilize:
+        instructions: >-
+            Select a campaign. People who already have upcoming bookings in the
+            campaign will not be called.
+        title: Mobilize for campaign
+    randomTarget:
+        instructions: >-
+            The target group is selected randomly. How many do you want to
+            include?
+        title: Random selection
+    stayintouch:
+        instructions: How often should they hear from us?
+        intervalSelect:
+            six: Every six months
+            three: Every three months
+            twelve: Once a year
+        title: Stay in touch
+    tagTarget:
+        instructions: >-
+            Select a tag. The target group will be made up of all people with
+            the selected tag.
+        title: By tag
+title: Create assignment

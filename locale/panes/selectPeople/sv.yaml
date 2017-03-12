@@ -1,14 +1,14 @@
-title: "Välj personer"
-selectedHeader: |
-    {numSelected, plural,
-        =0 {Ingen vald}
-        =1 {En person vald}
-        other {# personer valda}
-    }
-availableHeader: "Välj personer"
-okButton: |
+availableHeader: Välj personer
+okButton: |-
     { numSelected, plural,
         =0 {Stäng utan att välja}
         =1 {Välj en person}
         other {Välj # personer}
     }
+selectedHeader: |-
+    {numSelected, plural,
+        =0 {Ingen vald}
+        =1 {En person vald}
+        other {# personer valda}
+    }
+title: Välj personer

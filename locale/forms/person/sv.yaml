@@ -1,13 +1,13 @@
-firstName: "Förnamn"
-lastName: "Efternamn"
-gender: "Kön"
+city: Stad
+coAddress: C/O-adress
+email: E-post
+firstName: Förnamn
+gender: Kön
 genderOptions:
-    female: "Kvinna"
-    male: "Man"
-    other: "Annat"
-email: "E-post"
-phone: "Telefonnummer"
-coAddress: "C/O-adress"
-streetAddress: "Gatuadress"
-zip: "Postnummer"
-city: "Stad"
+    female: Kvinna
+    male: Man
+    other: Annat
+lastName: Efternamn
+phone: Telefonnummer
+streetAddress: Gatuadress
+zip: Postnummer

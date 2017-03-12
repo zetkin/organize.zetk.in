@@ -1,6 +1,6 @@
-title: "Aktionspåminnelser"
-saveButton: "Skicka"
-toBeReminded:
-    h: "Deltagare att påminna"
 alreadyReminded:
-    h: "Redan påminda"
+    h: Redan påminda
+saveButton: Skicka
+title: Aktionspåminnelser
+toBeReminded:
+    h: Deltagare att påminna

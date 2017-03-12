@@ -1,14 +1,11 @@
-title: "Aktion: { activity }"
-editLink: "Redigera aktion"
-sendRemindersButton: "Skicka påminnelser"
-
 contact:
-    h: "Ansvarig"
-
+    h: Ansvarig
+editLink: Redigera aktion
 participants:
-    h: "Bokade deltagare"
-    selectLink: "välj deltagare"
-    addPerson: "Släpp en person här eller { selectLink }."
-
+    addPerson: 'Släpp en person här eller { selectLink }.'
+    h: Bokade deltagare
+    selectLink: välj deltagare
 responses:
-    h: "Anmälningar"
+    h: Anmälningar
+sendRemindersButton: Skicka påminnelser
+title: 'Aktion: { activity }'

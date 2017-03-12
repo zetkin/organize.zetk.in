@@ -1,5 +1,5 @@
-title: "Titel"
-description: "Beskrivning"
-startDate: "Startdatum"
-endDate: "Slutdatum"
-coolDown: "Timmar mellan återförsök"
+coolDown: Timmar mellan återförsök
+description: Beskrivning
+endDate: Slutdatum
+startDate: Startdatum
+title: Titel

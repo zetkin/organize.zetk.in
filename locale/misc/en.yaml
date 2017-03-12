@@ -1,0 +1,45 @@
+callAssignmentTemplates:
+    inform:
+        desc: We call until we've spoken to everyone once to inform them about…
+        title: Spread the word about…
+    mobilize:
+        desc: 'We call to mobilize activists for our campaign {campaign}.'
+        title: 'Mobilize for {campaign}'
+    stayintouch:
+        desc: |-
+            We talk to everyone in the target group once {months, select,
+              3 {every three months}
+              6 {every six months}
+              12 {a year}
+            }
+        title: Stay in touch
+campaignSelect:
+    header: Choose campaign
+    nullLabel: All campaigns
+deleteButton:
+    label: Delete
+inviteBox:
+    h: Send invite
+    instructions: Fill out the e-mail address of the person you wish to invite.
+    sendButton: Send
+officialList:
+    userLabel: Can't change own role
+staticMap:
+    noCoordinates: No position
+    setPositionLink: Click to set position
+surveyOutline:
+    add:
+        label: Choose type to add
+        types:
+            question: Survey question
+            text: Text block
+    element:
+        types:
+            question: Question
+            text: Text
+    option:
+        addButton: Add response option
+        cancelButton: Cancel
+        saveButton: Save
+tagCloud:
+    addButton: Add tag

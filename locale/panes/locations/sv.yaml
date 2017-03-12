@@ -1,7 +1,4 @@
-addButton: "Lägg till"
-viewModes:
-    map: "Karta"
-    list: "Lista"
+addButton: Lägg till
 description:
-    editLink: "Redigera platsinformation"
-tags: "Etiketter"
+    editLink: Redigera platsinformation
+tags: Etiketter

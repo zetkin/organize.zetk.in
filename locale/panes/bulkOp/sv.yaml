@@ -1,15 +1,15 @@
-submitButton: "Utför"
 headers:
     person:
-        tag: |
-            Tagga {count, plural,
-                =1 {en person}
-                other {# personer}}
-        delete: |
+        delete: |-
             Radera {count, plural,
                 =1 {en person}
                 other {# personer}}
-        export: |
+        export: |-
             Exportera {count, plural,
                 =1 {en person}
                 other {# personer}}
+        tag: |-
+            Tagga {count, plural,
+                =1 {en person}
+                other {# personer}}
+submitButton: Utför

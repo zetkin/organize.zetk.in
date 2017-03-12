@@ -1,0 +1,14 @@
+assignment: What call assignment?
+dateOptions:
+    after: after a certain date
+    any: whenever
+    before: before a certain date
+    between: between certain dates
+    inLast: during the last few days
+opOptions:
+    calledAny: Called at all
+    calledSpec: Called during a certain assignment
+    notReachedAny: Not reached at all
+    notReachedSpec: Not reached during a certain assignment
+    reachedAny: Reached at all
+    reachedSpec: Reached during a certain assignment

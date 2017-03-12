@@ -1,0 +1,7 @@
+sentHeader: Invites sent
+table:
+    header:
+        email: To e-mail address
+        official: Sent by
+        sent: Sent by
+    removeButton: Delete

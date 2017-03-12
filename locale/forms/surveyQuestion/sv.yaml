@@ -1,5 +1,9 @@
-question: Fråga
 description: Beskrivning/hjälptext
+optionsWidget: Flervalsregler
+optionsWidgetOptions:
+    checkbox: Tillåt flera svarsalternativ
+    radio: Tillåt bara ett svarsalternativ
+question: Fråga
 responseType: Svarstyp
 responseTypeOptions:
     options: Svarsalternativ
@@ -8,7 +12,3 @@ textWidget: Typ av textfält
 textWidgetOptions:
     multi: Flera rader
     single: Enkelrad
-optionsWidget: Flervalsregler
-optionsWidgetOptions:
-    checkbox: Tillåt flera svarsalternativ
-    radio: Tillåt bara ett svarsalternativ

@@ -1,19 +1,19 @@
-title: "Välj personetiketter"
-selectedHeader: |
-    {numSelected, plural,
-        =0 {Ingen vald}
-        =1 {En etikett vald}
-        other {# etiketter valda}
-    }
-availableHeader: |
+availableHeader: |-
     {numSelected, plural,
         =0 {Välj etiketter}
         other {Välj fler etiketter}
     }
-createButton: "Skapa ny etikett"
-okButton: |
+createButton: Skapa ny etikett
+okButton: |-
     { numSelected, plural,
         =0 {Stäng utan att välja}
         =1 {Välj en etikett}
         other {Välj # etiketter}
     }
+selectedHeader: |-
+    {numSelected, plural,
+        =0 {Ingen vald}
+        =1 {En etikett vald}
+        other {# etiketter valda}
+    }
+title: Välj personetiketter

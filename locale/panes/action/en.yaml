@@ -1,0 +1,11 @@
+contact:
+    h: Contact person
+editLink: Edit action
+participants:
+    addPerson: 'Drop person here or {selectLink}.'
+    h: Booked participants
+    selectLink: select participant
+responses:
+    h: Sign-ups
+sendRemindersButton: Send reminders
+title: 'Action: { activity }'

@@ -1,0 +1,8 @@
+activity: Activity
+campaign: Campaign
+date: Date
+endTime: End time
+info: Information at sign-up
+location: Location
+requiredParticipants: Minimum number of participants
+startTime: Start time

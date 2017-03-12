@@ -1,0 +1,25 @@
+content:
+    editLink: Edit content
+    h: Content
+    numQuestions: |-
+        {count, plural,
+            =0 {No questions}
+            =1 {One question}
+            other {# questions}
+        }
+    numTextBlocks: |-
+        {count, plural,
+            =0 {No text blocks}
+            =1 {One text block}
+            other {# text blocks}
+        }
+summary:
+    access:
+        auth: Open for connected users only
+        list: Open for specific people only
+        open: Open for anyone
+    anonymous:
+        allow: Allow anonymous submissions
+        deny: Only allow signed submissions
+    editLink: Edit settings
+    viewLink: Open in activist portal

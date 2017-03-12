@@ -1,11 +1,10 @@
-title: "Redigera ringare: { firstName } { lastName }"
-pendingTitle: "Redigera ringare"
+ex:
+    h: Etiketter att exkludera
+    instructions: '{ firstName } kommer aldrig att ringa personer med dessa etiketter.'
+pendingTitle: Redigera ringare
 prio:
-    h: "Prioriterade etiketter"
-    instructions: |
+    h: Prioriterade etiketter
+    instructions: |-
         { firstName } kommer i först hand att ringa personer med dessa
         etiketter.
-ex:
-    h: "Etiketter att exkludera"
-    instructions: |
-        { firstName } kommer aldrig att ringa personer med dessa etiketter.
+title: 'Redigera ringare: { firstName } { lastName }'

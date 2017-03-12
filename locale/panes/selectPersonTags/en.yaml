@@ -1,0 +1,19 @@
+availableHeader: |-
+    {numSelected, plural,
+        =0 {Select tags}
+        other {Select more tags}
+    }
+createButton: Create new tag
+okButton: |-
+    { numSelected, plural,
+        =0 {Close without selecting}
+        =1 {Select one tag}
+        other {Select # tags}
+    }
+selectedHeader: |-
+    {numSelected, plural,
+        =0 {None selected}
+        =1 {One tag selected}
+        other {# tags selected}
+    }
+title: Select person tags

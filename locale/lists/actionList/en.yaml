@@ -1,0 +1,6 @@
+header:
+    activity: Activity
+    contact: Contact person
+    location: Location
+    participants: Participants
+    startTime: Time

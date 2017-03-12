@@ -1,0 +1,10 @@
+addFilter: Add filter
+dropInstructions: Drop filter here to re-order
+types:
+    all: Everyone
+    callHistory: Call history
+    campaignParticipation: Campaign participation
+    joinDate: Join date
+    personData: Personal data
+    personTags: Tags
+    random: Random selection

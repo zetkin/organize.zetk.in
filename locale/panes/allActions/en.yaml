@@ -1,0 +1,6 @@
+filters:
+    afterDate: After date
+    beforeDate: Before date
+viewModes:
+    calendar: Calendar
+    list: List

@@ -1,15 +1,6 @@
-title: "Skapa ringuppdrag"
-
 breadcrumbs:
-    target: |
-        Målgrupp{targetType, select,
-            allTarget {: Ring alla}
-            tagTarget {: Ring alla med en viss etikett}
-            randomTarget {: Ring slumpmässigt urval}
-            custom {: Ingen mall}
-            other {}
-        }
-    goal: |
+    form: Inställningar
+    goal: |-
         Syfte{goalType, select,
             inform {: Informera}
             mobilize {: Mobilisera till kampanj}
@@ -17,71 +8,67 @@ breadcrumbs:
             custom {: Ingen mall}
             other {}
         }
-    form: "Inställningar"
-
-target:
-    saveButton: |
-        {targetType, select,
-            allTarget {Välj alla som målgrupp}
-            tagTarget {Välj målgrupp utifrån etikett}
-            randomTarget {Välj slumpmässig målgrupp}
+    target: |-
+        Målgrupp{targetType, select,
+            allTarget {: Ring alla}
+            tagTarget {: Ring alla med en viss etikett}
+            randomTarget {: Ring slumpmässigt urval}
+            custom {: Ingen mall}
+            other {}
         }
-    customLink: "Definiera urvalsregler manuellt senare"
+form:
     instructions: |
-        Steg 1 av 3. Välj ringuppdragets målgrupp.
-
+        Steg 3 av 3. Fyll i och kontrollera titel, beskrivning och inställningar
+        för ringuppdraget.
+    saveButton: Skapa ringuppdrag
 goal:
-    saveButton: |
+    customLink: Definiera urvalsregler manuellt senare
+    instructions: |
+        Steg 2 av 3. Välj syfte med ringuppdraget för att skapa urvalsregler
+        automatiskt.
+    saveButton: |-
         {goalType, select,
             inform {Skapa uppdrag för att informera}
             mobilize {Skapa mobiliseringsuppdrag}
             stayintouch {Skapa uppdrag för att hålla kontakten}
         }
-    customLink: "Definiera urvalsregler manuellt senare"
+target:
+    customLink: Definiera urvalsregler manuellt senare
     instructions: |
-        Steg 2 av 3. Välj syfte med ringuppdraget för att skapa urvalsregler
-        automatiskt.
-
-form:
-    saveButton: "Skapa ringuppdrag"
-    instructions: |
-        Steg 3 av 3. Fyll i och kontrollera titel, beskrivning och inställningar
-        för ringuppdraget.
-
+        Steg 1 av 3. Välj ringuppdragets målgrupp.
+    saveButton: |-
+        {targetType, select,
+            allTarget {Välj alla som målgrupp}
+            tagTarget {Välj målgrupp utifrån etikett}
+            randomTarget {Välj slumpmässig målgrupp}
+        }
 templates:
     allTarget:
-        title: "Alla i databasen"
-        instructions: |
-            Målgruppen utgörs av alla personer i databasen.
-
-    randomTarget:
-        title: "Slumpmässigt urval"
-        instructions: |
-            Målgruppen består av ett slumpmässigt urval. Hur många vill du
-            ska bli ringda?
-
-    tagTarget:
-        title: "Alla med en viss etikett"
-        instructions: |
-            Välj en etikett. Målgruppen kommer bestå av alla personer med den
-            här etiketten.
-
+        instructions: Målgruppen utgörs av alla personer i databasen.
+        title: Alla i databasen
+    inform:
+        instructions: Alla blir ringda tills de blivit nådda och informerade en gång.
+        title: Informera
     mobilize:
-        title: "Mobilisera till kampanj"
-        instructions: |
+        instructions: |-
             Välj en kampanj. Personer som redan har kommande bokningar i
             kampanjen kommer inte att bli ringda.
-
+        title: Mobilisera till kampanj
+    randomTarget:
+        instructions: |-
+            Målgruppen består av ett slumpmässigt urval. Hur många vill du
+            ska bli ringda?
+        title: Slumpmässigt urval
     stayintouch:
-        title: "Håll kontakten"
-        instructions: |
-            Hur ofta ska vi höra av oss?
+        instructions: Hur ofta ska vi höra av oss?
         intervalSelect:
-            three: "Var tredje månad"
-            six: "Var sjätte månad"
-            twelve: "En gång om året"
-
-    inform:
-        title: "Informera"
-        instructions: |
-            Alla blir ringda tills de blivit nådda och informerade en gång.
+            six: Var sjätte månad
+            three: Var tredje månad
+            twelve: En gång om året
+        title: Håll kontakten
+    tagTarget:
+        instructions: |-
+            Välj en etikett. Målgruppen kommer bestå av alla personer med den
+            här etiketten.
+        title: Alla med en viss etikett
+title: Skapa ringuppdrag

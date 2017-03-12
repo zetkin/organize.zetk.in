@@ -1,0 +1,25 @@
+action:
+    content:
+        header: Message to organizer
+        noMessage: Caller did not leave a message
+    header:
+        needed: Organizer action needed
+        taken: Organizer action taken
+    response:
+        resolve: Mark as resolved
+        unresolve: Mark as unresolved
+note:
+    header: Caller notes
+    noNote: Caller did not leave a note
+pendingTitle: Report
+summary:
+    status0: Call not completed
+    status1: 'We reached {target}.'
+    status11: '{target} did not pick up.'
+    status12: Line busy.
+    status13: '{target} asked us to call back.'
+    status14: '{target} was not available.'
+    status15: We left a message.
+    status21: We had the wrong number.
+    status22: The call was dropped.
+title: Report from call

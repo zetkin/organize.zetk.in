@@ -1,5 +1,4 @@
 import { combineReducers, compose, applyMiddleware, createStore } from 'redux';
-import { intlReducer } from 'react-intl-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 
 import loginRedirect from '../common/redux/middleware/loginRedirect';
@@ -12,6 +11,7 @@ import calls from './calls';
 import campaigns from './campaigns';
 import dashboard from './dashboard';
 import documents from './documents';
+import intl from './intl';
 import invites from './invites';
 import locations from './locations';
 import locationTags from './locationTags';
@@ -33,7 +33,6 @@ import { urlMiddleware } from './middleware/url';
 
 
 const appReducer = combineReducers({
-    intl: intlReducer,
     actions,
     actionResponses,
     activities,
@@ -43,6 +42,7 @@ const appReducer = combineReducers({
     dashboard,
     documents,
     invites,
+    intl,
     locations,
     officials,
     org,

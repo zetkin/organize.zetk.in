@@ -1,0 +1,35 @@
+labels:
+    campaign: Campaign
+    dialog: Dialog
+    maps: Maps
+    people: People
+    settings: Settings
+    survey: Survey
+menu:
+    backToDashboard: To dashboard
+    helpLink:
+        href: 'http://manual.zetkin.org/en'
+        text: Help
+    infoLink:
+        href: 'http://zetkin.org/en'
+        text: Info
+subSections:
+    campaign:
+        actions: Actions
+        distribution: Distribution
+        playback: Playback
+    dialog:
+        assignments: Assignments
+        calls: Call log
+    maps:
+        locations: Locations
+        overview: Overview
+    people:
+        import: Import
+        invite: Invite
+        list: People
+    settings:
+        officials: Officials
+    survey:
+        submissions: Submissions
+        surveys: Surveys

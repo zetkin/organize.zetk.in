@@ -1,0 +1,6 @@
+cancelAllButton: Undo all
+confirmAllButton: Confirm all
+move:
+    cancelButton: Undo
+    confirmButton: Confirm
+title: Move participants

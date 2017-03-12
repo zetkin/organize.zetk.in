@@ -1,0 +1,10 @@
+access: Access
+accessOptions:
+    auth: Open to connected users only
+    open: Open to anyone
+info_text: Description
+signature: Signature policy
+signatureOptions:
+    anon: Allow anonymous submissions
+    sign: Require name and e-mail signature
+title: Title

@@ -1,46 +1,35 @@
 labels:
-    people: "Människor"
-    campaign: "Kampanj"
-    dialog: "Dialog"
-    maps: "Kartor"
-    survey: "Enkät"
-    resources: "Resurser"
-    meetups: "Meetups"
-    finance: "Ekonomi"
-    settings: "Inställningar"
-
+    campaign: Kampanj
+    dialog: Dialog
+    maps: Kartor
+    people: Människor
+    settings: Inställningar
+    survey: Enkät
 menu:
-    backToDashboard: "Tillbaka"
-    infoLink:
-        text: "Info"
-        href: "http://zetkin.org/sv"
+    backToDashboard: Tillbaka
     helpLink:
-        text: "Hjälp"
-        href: "http://manual.zetkin.org/sv/for-funktionarer"
-
+        href: 'http://manual.zetkin.org/sv/for-funktionarer'
+        text: Hjälp
+    infoLink:
+        href: 'http://zetkin.org/sv'
+        text: Info
 subSections:
-    people:
-        list: "Människor"
-        invite: "Inbjudan"
-        import: "Importera"
-
     campaign:
-        actions: "Aktioner"
-        distribution: "Spridning"
-        playback: "Spela upp"
-
+        actions: Aktioner
+        distribution: Spridning
+        playback: Spela upp
     dialog:
-        assignments: "Ringuppdrag"
-        calls: "Samtalslogg"
-        startassignment: "Skapa uppdrag"
-
+        assignments: Ringuppdrag
+        calls: Samtalslogg
     maps:
-        overview: "Överblick"
-        locations: "Platser"
-
+        locations: Platser
+        overview: Överblick
+    people:
+        import: Importera
+        invite: Inbjudan
+        list: Människor
     settings:
-        officials: "Funktionärer"
-
+        officials: Funktionärer
     survey:
-        surveys: "Enkäter"
-        submissions: "Enkätsvar"
+        submissions: Enkätsvar
+        surveys: Enkäter
