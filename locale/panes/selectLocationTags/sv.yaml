@@ -1,10 +1,3 @@
-title: Välj platsetiketter
-selectedHeader: |
-    {numSelected, plural,
-        =0 {Ingen vald}
-        =1 {En etikett vald}
-        other {# etiketter valda}
-    }
 availableHeader: |
     {numSelected, plural,
         =0 {Välj etiketter}
@@ -17,3 +10,10 @@ saveButton: |
         =1 {Välj en etikett}
         other {Välj # etiketter}
     }
+selectedHeader: |
+    {numSelected, plural,
+        =0 {Ingen vald}
+        =1 {En etikett vald}
+        other {# etiketter valda}
+    }
+title: Välj platsetiketter
