@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 
+import LoadingIndicator from '../../misc/LoadingIndicator';
 import ScopeSelect from './ScopeSelect';
 import matches from './matches';
 import { gotoSection, pushPane } from '../../../actions/view';
@@ -50,7 +51,16 @@ export default class Search extends React.Component {
             classes.push('focused');
         }
 
-        if (results.length) {
+        if (results.length || searchStore.isPending) {
+            let loadingIndicator = null;
+            if (searchStore.isPending) {
+                loadingIndicator = (
+                    <li key="pending" className="Search-loadingIndicator">
+                        <LoadingIndicator/>
+                    </li>
+                );
+            }
+
             resultList = (
                 <ul className="Search-results">
                 {results.map(function(match, idx) {
@@ -67,6 +77,8 @@ export default class Search extends React.Component {
                         onSelect={ this.onMatchSelect.bind(this, match) }
                         focused={ focused }/>;
                 }, this)}
+
+                    { loadingIndicator }
                 </ul>
             );
         }
