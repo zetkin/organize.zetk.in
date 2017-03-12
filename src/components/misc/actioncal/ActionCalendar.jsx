@@ -6,7 +6,7 @@ import ActionDay from './ActionDay';
 
 export default class ActionCalendar extends React.Component {
     render() {
-        const actions = this.props.actions;
+        let actions = this.props.actions;
 
         actions.sort((a0, a1) =>
             (new Date(a0.start_time)) - (new Date(a1.start_time)));
@@ -31,6 +31,10 @@ export default class ActionCalendar extends React.Component {
             // End date is not a Sunday, so use next Sunday
             endDate.setDate(endDate.getDate() + (7 - endDate.getDay()));
         }
+
+        // Get rid of actions before/after start/end dates
+        actions = actions.filter(a =>
+            (new Date(a.start_time) > startDate && new Date(a.end_time) < endDate));
 
         // Always show at least one month
         const duration = endDate.getTime() - startDate.getTime();

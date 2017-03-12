@@ -1,4 +1,3 @@
-import moment from 'moment';
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -7,40 +6,47 @@ import ActionList from '../lists/ActionList';
 import Button from '../misc/Button';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
-import { retrieveActions } from '../../actions/action';
+import { retrieveActionsOnDay } from '../../actions/action';
 import { moveActionParticipant } from '../../actions/participant';
 
 
-@connect(state => state)
+const mapStateToProps = (state, props) => {
+    let day = props.paneData.params[0];
+    return {
+        actionList: Object.assign({}, state.actions.actionList, {
+            items: state.actions.actionList.items.filter(i => {
+                let d = new Date(i.data.start_time);
+                return d.is(day);
+            }),
+        }),
+    };
+};
+
+@connect(mapStateToProps)
 @injectIntl
 export default class ActionDayPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        if (this.props.actions.actionList.items.length == 0) {
-            this.props.dispatch(retrieveActions());
+        if (this.props.actionList.items.length == 0) {
+            let date = this.getParam(0);
+            this.props.dispatch(retrieveActionsOnDay(date));
         }
     }
 
     getPaneTitle(data) {
         const formatMessage = this.props.intl.formatMessage;
-        const d = moment(this.getParam(0));
+        const d = new Date(this.getParam(0));
 
         return formatMessage({ id: 'panes.actionDay.title' }, {
-            day: d.format('YYYY-MM-DD'),
+            day: d.format('{yyyy}-{MM}-{dd}'),
         });
     }
 
     renderPaneContent(data) {
-        let date = moment(this.getParam(0));
-        let actionList = this.props.actions.actionList;
+        let actionList = this.props.actionList;
 
-        if (actionList.items) {
-            actionList = Object.assign({}, actionList, {
-                items: actionList.items.filter(i =>
-                    moment(i.data.start_time).isSame(date, 'day'))
-            });
-
+        if (actionList && actionList.items.length) {
             return (
                 <ActionList key="actionList" actionList={ actionList }
                     onItemClick={ this.onItemClick.bind(this) }
@@ -54,8 +60,8 @@ export default class ActionDayPane extends PaneBase {
     }
 
     renderPaneFooter(data) {
-        const d = moment(this.getParam(0));
-        let dateStr = d.format('YYYY-MM-DD');
+        const d = new Date(this.getParam(0));
+        let dateStr = d.format('{yyyy}-{MM}-{dd}');
 
         return [
             <Button key="prevButton"
