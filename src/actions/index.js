@@ -56,6 +56,7 @@ export const DELETE_ACTIVITY = 'DELETE_ACTIVITY';
 
 // Redux actions related to campaign actions
 export const RETRIEVE_ACTIONS = 'RETRIEVE_ACTIONS';
+export const RETRIEVE_ACTIONS_ON_DAY = 'RETRIEVE_ACTIONS_ON_DAY';
 export const RETRIEVE_ACTION = 'RETRIEVE_ACTION';
 export const UPDATE_ACTION = 'UPDATE_ACTION';
 export const CREATE_ACTION = 'CREATE_ACTION';
@@ -89,6 +90,8 @@ export const MOVE_WIDGET = 'MOVE_WIDGET';
 export const SEARCH = 'SEARCH';
 export const BEGIN_SEARCH = 'BEGIN_SEARCH';
 export const SEARCH_MATCH_FOUND = 'SEARCH_MATCH_FOUND';
+export const SEARCH_PENDING = 'SEARCH_PENDING';
+export const SEARCH_COMPLETE = 'SEARCH_COMPLETE';
 export const CHANGE_SEARCH_SCOPE = 'CHANGE_SEARCH_SCOPE';
 export const END_SEARCH = 'END_SEARCH';
 export const CLEAR_SEARCH = 'CLEAR_SEARCH';

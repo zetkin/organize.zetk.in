@@ -22,9 +22,20 @@ export default function search(state = null, action) {
                 isActive: true,
             });
 
+
+        case types.SEARCH_PENDING:
+            return Object.assign({}, state, {
+                isPending: true,
+            });
+
         case types.SEARCH_MATCH_FOUND:
             return Object.assign({}, state, {
                 results: state.results.concat([ action.payload.match ]),
+            });
+
+        case types.SEARCH_COMPLETE:
+            return Object.assign({}, state, {
+                isPending: false,
             });
 
         case types.END_SEARCH:
@@ -39,6 +50,7 @@ export default function search(state = null, action) {
             return Object.assign({}, state, {
                 query: '',
                 isActive: false,
+                isPending: false,
                 scope: null,
                 results: []
             });
@@ -52,6 +64,7 @@ export default function search(state = null, action) {
             return state || {
                 query: '',
                 isActive: false,
+                isPending: false,
                 scope: null,
                 results: [],
             };

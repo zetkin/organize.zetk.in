@@ -2,6 +2,7 @@ import {
     createList,
     createListItems,
     updateOrAddListItem,
+    updateOrAddListItems,
     removeListItem,
 } from '../utils/store';
 import * as types from '../actions';
@@ -43,6 +44,12 @@ export default function actions(state = null, action) {
                     error: null,
                     items: createListItems(action.payload.data.data)
                 }
+            });
+
+        case types.RETRIEVE_ACTIONS_ON_DAY + '_FULFILLED':
+            return Object.assign({}, state, {
+                actionList: updateOrAddListItems(state.actionList,
+                    action.payload.data.data),
             });
 
         case types.RETRIEVE_ACTIONS + '_REJECTED':

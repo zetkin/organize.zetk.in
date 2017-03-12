@@ -27,6 +27,18 @@ export function searchMatchFound(match) {
     }
 }
 
+export function searchPending() {
+    return {
+        type: types.SEARCH_PENDING,
+    };
+}
+
+export function searchComplete() {
+    return {
+        type: types.SEARCH_COMPLETE,
+    };
+}
+
 export function changeSearchScope(scope) {
     return {
         type: types.CHANGE_SEARCH_SCOPE,
@@ -58,6 +70,8 @@ function execSearch(getState, dispatch, query) {
     let sendQuery = function(query) {
         // Don't search for really short query strings
         if (query.length >= 3) {
+            dispatch(searchPending());
+
             ws.send(JSON.stringify({
                 'cmd': 'search',
                 'scope': scope,
@@ -78,9 +92,11 @@ function execSearch(getState, dispatch, query) {
             sendQuery(query);
         };
         ws.onerror = function() {
+            dispatch(searchComplete());
             wsOpen = false;
         };
         ws.onclose = function() {
+            dispatch(searchComplete());
             wsOpen = false;
         };
 
@@ -98,7 +114,9 @@ function execSearch(getState, dispatch, query) {
                     dispatch(searchMatchFound(msg.match));
                 }
             }
-
+            else if (msg.cmd == 'complete' && msg.query == currentQuery) {
+                dispatch(searchComplete());
+            }
         };
     }
     else {
