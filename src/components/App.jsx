@@ -54,6 +54,8 @@ export default class App extends React.Component {
                         href="/static/css/style.css"/>
                     <script type="text/javascript"
                           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCih1zeZELzFJxP2SFkNJVDLs2ZCT_y3gY&libraries=visualization"/>
+                    <link rel="icon" type="image/png"
+                        href="/static/images/favicon.png"/>
                 </head>
                 <body>
                     <div className="App">

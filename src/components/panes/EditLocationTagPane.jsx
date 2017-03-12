@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
@@ -12,6 +13,7 @@ import {
 
 
 @connect(state => ({ locationTags: state.locationTags }))
+@injectIntl
 export default class EditLocationTagPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
@@ -30,12 +32,8 @@ export default class EditLocationTagPane extends PaneBase {
     }
 
     getPaneTitle(data) {
-        if (data.tagItem && data.tagItem.data) {
-            return data.tagItem.data.title;
-        }
-        else {
-            return 'Edit location tag';
-        }
+        return this.props.intl
+            .formatMessage({ id: 'panes.editLocationTag.title' });
     }
 
     renderPaneContent(data) {
@@ -55,7 +53,7 @@ export default class EditLocationTagPane extends PaneBase {
     renderPaneFooter(data) {
         return (
             <Button className="EditLocationTagPane-saveButton"
-                label="Save tag"
+                labelMsg="panes.editLocationTag.saveButton"
                 onClick={ this.onSubmit.bind(this) }/>
         );
     }

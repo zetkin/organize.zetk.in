@@ -178,7 +178,7 @@ export default class Search extends React.Component {
             inputDOMNode.blur();
             this.props.dispatch(clearSearch());
         }
-        else if (ev.keyCode == 40) {
+        else if (ev.keyCode == 40 && searchStore.isActive) {
             // Down
             this.setState({
                 focusedIndex: Math.min(results.length,
@@ -187,7 +187,7 @@ export default class Search extends React.Component {
 
             ev.preventDefault();
         }
-        else if (ev.keyCode == 38) {
+        else if (ev.keyCode == 38 && searchStore.isActive) {
             // Up
             this.setState({
                 focusedIndex: Math.max(0, (focusedIndex === undefined)?

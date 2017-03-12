@@ -45,8 +45,10 @@ export default class SelectPersonTagsPane extends PaneBase {
             tagsSelected = selection.selectedIds.map(id =>
                 getListItemById(data.tagList, id).data);
 
-            tagsAvailable = data.tagList.items.map(i => i.data).filter(d =>
-                selection.selectedIds.indexOf(d.id) < 0);
+            tagsAvailable = data.tagList.items
+                .map(i => i.data)
+                .filter(d => selection.selectedIds.indexOf(d.id) < 0)
+                .sort((t0, t1) => t0.title.localeCompare(t1.title));
         }
 
         let numSelected = tagsSelected.length;
