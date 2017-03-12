@@ -51,6 +51,13 @@ function search(ws, req) {
         }
 
         queue = new SearchQueue(req.z, msg.org, msg.query, writeFunc, searchFuncs, msg.lang);
+        queue.onComplete = (query) => {
+            ws.send(JSON.stringify({
+                cmd: 'complete',
+                query: query,
+            }));
+        };
+
         queue.run();
     });
 }
@@ -59,7 +66,7 @@ function SearchQueue(z, orgId, query, writeMatch, searchFuncs, lang) {
     var _idx = 0;
     var _writeMatch = writeMatch;
 
-    var _proceed = function() {
+    var _proceed = () => {
         if (_idx < searchFuncs.length) {
             const searchFunc = searchFuncs[_idx++];
             const promise = searchFunc(z, orgId, query, writeMatch, lang)
@@ -78,6 +85,7 @@ function SearchQueue(z, orgId, query, writeMatch, searchFuncs, lang) {
         }
         else {
             // Done!
+            this.onComplete(query);
         }
     };
 
