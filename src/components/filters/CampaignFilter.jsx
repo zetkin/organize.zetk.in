@@ -136,7 +136,8 @@ export default class CampaignFilter extends FilterBase {
     onSelectTimeframe(name, value) {
         let before = undefined;
         let after = undefined;
-        let today = Date.create().format('{yyyy}-{MM}-{dd}');
+        let today = Date.create();
+        let todayStr = today.format('{yyyy}-{MM}-{dd}');
 
         switch (value) {
             case 'future':
@@ -146,14 +147,14 @@ export default class CampaignFilter extends FilterBase {
                 before = 'now';
                 break;
             case 'after':
-                after = today;
+                after = todayStr;
                 break;
             case 'before':
-                before = today;
+                before = todayStr;
                 break;
             case 'between':
-                after = today;
-                before = (30).daysAfter(today).format('{yyyy}-{MM}-{dd}');
+                after = todayStr;
+                before = today.addDays(30).format('{yyyy}-{MM}-{dd}');
                 break;
         }
 
