@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
@@ -7,9 +8,11 @@ import Button from '../misc/Button';
 import { createLocationTag } from '../../actions/locationTag';
 
 @connect(state => state)
+@injectIntl
 export default class AddLocationTagPane extends PaneBase {
     getPaneTitle(data) {
-        return 'Add location tag';
+        return this.props.intl
+            .formatMessage({ id: 'panes.addLocationTag.title' });
     }
 
     renderPaneContent(data) {
@@ -25,7 +28,8 @@ export default class AddLocationTagPane extends PaneBase {
 
     renderPaneFooter(data) {
         return (
-            <Button label="Add tag"
+            <Button
+                labelMsg="panes.addPersonTag.saveButton"
                 onClick={ this.onSubmit.bind(this) }
                 className="AddLocationTagPane-saveButton"/>
         );
