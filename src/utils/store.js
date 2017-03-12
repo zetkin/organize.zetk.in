@@ -36,7 +36,7 @@ export function updateOrAddListItem(list, id, newData, meta) {
     }
 
     if (!updated) {
-        items.push(createListItem(newData, meta));
+        items = items.concat([ createListItem(newData, meta) ]);
     }
 
     return Object.assign({}, list, {
