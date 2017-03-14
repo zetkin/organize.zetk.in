@@ -1,5 +1,7 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { FormattedMessage as Msg } from 'react-intl';
+import scroll from 'scroll';
 
 import ImporterTableHead from './ImporterTableHead';
 import ImporterTableBody from './ImporterTableBody';
@@ -16,6 +18,29 @@ export default class ImporterTable extends React.Component {
         maxRows: React.PropTypes.number.isRequired,
         onEditColumn: React.PropTypes.func,
     };
+
+    componentWillReceiveProps(nextProps) {
+        nextProps.table.columnList.items.forEach((item, idx) => {
+            let next = item.data;
+            let prev = this.props.table.columnList.items[idx].data;
+
+            if (next.type != prev.type) {
+                let tableNode = ReactDOM.findDOMNode(this.refs.table);
+                let tableRect = tableNode.getBoundingClientRect();
+
+                let colWidth = document.querySelector('.ImporterColumnHead')
+                    .getBoundingClientRect()
+                    .width;
+
+                let right = (idx + 1.5) * colWidth;
+                let dx = right - (tableRect.width - colWidth);
+
+                if (dx > 0) {
+                    scroll.left(tableNode, dx);
+                }
+            }
+        });
+    }
 
     render() {
         let table = this.props.table;
@@ -45,7 +70,7 @@ export default class ImporterTable extends React.Component {
                     <Msg id="panes.import.table.firstRowAsHeader"/>
                 </div>
 
-                <table>
+                <table ref="table">
                     <ImporterTableHead columnList={ table.columnList }
                         onChangeColumn={ this.onChangeColumn.bind(this) }
                         onEditColumn={ this.onEditColumn.bind(this) }/>
