@@ -88,6 +88,9 @@ table:
             other {# empty columns ignored}
         }
     firstRowAsHeader: First row contains headers
+    truncLabel: |-
+        Showing {truncated, number} of {total, number} rows. {extra, plural,
+        =1 {One more row} other {another # rows}} will be imported.
 tableSelect:
     h: Select sheet
     p: |-

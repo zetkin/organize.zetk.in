@@ -11,6 +11,7 @@ export default class ImporterTableSet extends React.Component {
     static propTypes = {
         tableSet: React.PropTypes.object.isRequired,
         dispatch: React.PropTypes.func.isRequired,
+        maxRows: React.PropTypes.number,
         onEditColumn: React.PropTypes.func,
     };
 
@@ -50,15 +51,33 @@ export default class ImporterTableSet extends React.Component {
 
         let tableId = this.state.selectedTableId;
         let tableItem = getListItemById(tableSet.tableList, tableId);
+        let maxRows = this.props.maxRows || 100;
 
         let table = (
             <ImporterTable table={ tableItem.data }
+                maxRows={ maxRows }
                 onEditColumn={ this.props.onEditColumn }
                 dispatch={ this.props.dispatch }/>
         );
 
+        let truncLabel;
+        if (tableItem.data.rows.length > maxRows) {
+            let values = {
+                truncated: maxRows,
+                total: tableItem.data.rows.length,
+                extra: tableItem.data.rows.length - maxRows,
+            };
+
+            truncLabel = (
+                <Msg id="panes.import.table.truncLabel"
+                    values={ values }
+                    />
+            );
+        }
+
         return (
             <div className="ImporterTableSet">
+                { truncLabel }
                 { table }
                 <Button
                     labelMsg="panes.import.importButton"

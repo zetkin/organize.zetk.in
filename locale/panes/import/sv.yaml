@@ -88,6 +88,9 @@ table:
             other {Ignorerade # tomma kolumner}
         }
     firstRowAsHeader: Första raden innehåller rubriker
+    truncLabel: |-
+        Visar {truncated, number} av {total, number} rader. Ytterligare {extra, plural,
+        =1 {en rad} other {# rader}} kommer importeras.
 tableSelect:
     h: Välj ark
     p: |-

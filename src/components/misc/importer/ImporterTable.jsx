@@ -13,6 +13,7 @@ export default class ImporterTable extends React.Component {
     static propTypes = {
         table: React.PropTypes.object.isRequired,
         dispatch: React.PropTypes.func.isRequired,
+        maxRows: React.PropTypes.number.isRequired,
         onEditColumn: React.PropTypes.func,
     };
 
@@ -48,7 +49,9 @@ export default class ImporterTable extends React.Component {
                     <ImporterTableHead columnList={ table.columnList }
                         onChangeColumn={ this.onChangeColumn.bind(this) }
                         onEditColumn={ this.onEditColumn.bind(this) }/>
-                    <ImporterTableBody table={ table }/>
+                    <ImporterTableBody table={ table }
+                        maxRows={ this.props.maxRows }
+                        />
                 </table>
             </div>
         );
