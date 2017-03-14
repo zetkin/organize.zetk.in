@@ -18,35 +18,26 @@ export default class ImporterTableSet extends React.Component {
         super(props);
 
         let tableSet = props.tableSet;
-        if (tableSet && tableSet.tableList.items.length > 0) {
-            this.state = {
-                selectedTableId: tableSet.tableList.items[0].data.id,
-            };
-        }
+        this.state = {
+            selectedTableId: (tableSet && tableSet.tableList.items.length == 1)?
+                tableSet.tableList.items[0].data.id : null,
+        };
     }
 
     render() {
         let tableSet = this.props.tableSet;
 
-        let table = null;
-        if (this.state.selectedTableId) {
-            let tableId = this.state.selectedTableId;
-            let tableItem = getListItemById(tableSet.tableList, tableId);
-
-            table = (
-                <ImporterTable table={ tableItem.data }
-                    onEditColumn={ this.props.onEditColumn }
-                    dispatch={ this.props.dispatch }/>
-            );
-        }
-
-        return (
-            <div className="ImporterTableSet">
+        if (this.state.selectedTableId == null) {
+            return (
                 <div className="importerTableSet-tableSelector">
-                    <Msg id="panes.import.table.tableSelectLabel"
-                        values={{ numRemoved: table.numEmptyColumnsRemoved }}/>
+                    <Msg tagName="h1" id="panes.import.tableSelect.h"/>
+                    <Msg tagName="p" id="panes.import.tableSelect.p"/>
                     <select className="importerTableSet-tableSelect"
                         onChange={ this.onChangeTable.bind(this) }>
+                        <Msg tagName="option"
+                            id="panes.import.tableSelect.label"
+                            values={{ count: tableSet.tableList.items.length }}
+                            />
                     { tableSet.tableList.items.map(item => (
                         <option key={ item.data.id } value={ item.data.id }>
                             { item.data.name }
@@ -54,6 +45,20 @@ export default class ImporterTableSet extends React.Component {
                     )) }
                     </select>
                 </div>
+            );
+        }
+
+        let tableId = this.state.selectedTableId;
+        let tableItem = getListItemById(tableSet.tableList, tableId);
+
+        let table = (
+            <ImporterTable table={ tableItem.data }
+                onEditColumn={ this.props.onEditColumn }
+                dispatch={ this.props.dispatch }/>
+        );
+
+        return (
+            <div className="ImporterTableSet">
                 { table }
                 <Button
                     labelMsg="panes.import.importButton"

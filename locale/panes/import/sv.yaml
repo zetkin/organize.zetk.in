@@ -88,4 +88,9 @@ table:
             other {Ignorerade # tomma kolumner}
         }
     firstRowAsHeader: Första raden innehåller rubriker
-    tableSelectLabel: 'Ark att importera:'
+tableSelect:
+    h: Välj ark
+    p: |-
+        Filen innehåller mer än ett ark. Välj vilket ark som innehåller
+        den data du vill importera.
+    label: Välj mellan {count} ark

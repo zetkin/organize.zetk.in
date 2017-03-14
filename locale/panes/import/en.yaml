@@ -88,4 +88,9 @@ table:
             other {# empty columns ignored}
         }
     firstRowAsHeader: First row contains headers
-    tableSelectLabel: 'Import from sheet:'
+tableSelect:
+    h: Select sheet
+    p: |-
+        There are more than one sheet in the file. Select the sheet that
+        contains the data you wish to import.
+    label: Select one of {count} sheets
