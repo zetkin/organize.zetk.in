@@ -21,7 +21,7 @@ export function createListItems(rawList) {
 
 export function updateOrAddListItem(list, id, newData, meta) {
     let updated = false;
-    let items = list.items;
+    let items = list.items.concat();
 
     for (let i = 0; i < items.length; i++) {
         if (items[i].data && items[i].data.id == id) {
@@ -36,12 +36,10 @@ export function updateOrAddListItem(list, id, newData, meta) {
     }
 
     if (!updated) {
-        items = items.concat([ createListItem(newData, meta) ]);
+        items.push(createListItem(newData, meta));
     }
 
-    return Object.assign({}, list, {
-        items: items.concat()
-    });
+    return Object.assign({}, list, { items });
 }
 
 export function updateOrAddListItems(list, newItems, meta) {
