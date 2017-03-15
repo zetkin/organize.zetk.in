@@ -1,9 +1,11 @@
 .ImporterTable {
     .ImporterTable-settings {
-        @include col(4, 12);
+        position: absolute;
+        top: 0;
+        right: 0;
         font-size: 1.5em;
         line-height: 1.5em;
-        margin: 1em 0;
+        margin: 1em;
 
         input[type="checkbox"] {
             width: 1.5em;

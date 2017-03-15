@@ -1,3 +1,9 @@
 .ImportPane .LoadingIndicator {
     color: $c-ui-dark;
 }
+
+.ImportPane .RootPaneBase-content {
+    margin-top: 0;
+    margin-bottom: 8em;
+    padding-top: 0;
+}
