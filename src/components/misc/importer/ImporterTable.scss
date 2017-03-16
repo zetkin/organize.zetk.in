@@ -1,4 +1,12 @@
 .ImporterTable {
+
+    h1 {
+        position: absolute;
+        top:0;
+        left: 0;
+        margin: 1em;
+    }
+
     .ImporterTable-settings {
         position: absolute;
         top: 0;
@@ -27,8 +35,11 @@
         }
     }
 
-    table {
-        display: block;
-        overflow: scroll;
+    .ImporterTable-container {
+        position: relative;
+        margin-top: 6em;
+        height: calc(100% - 6em);
+        overflow-x: scroll;
+        @include scrollbar(darken($c-ui-bg, 10));
     }
 }
