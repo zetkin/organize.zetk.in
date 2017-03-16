@@ -1,12 +1,5 @@
 .ImporterTable {
 
-    h1 {
-        position: absolute;
-        top:0;
-        left: 0;
-        margin: 1em;
-    }
-
     .ImporterTable-settings {
         position: absolute;
         top: 0;
@@ -15,19 +8,39 @@
         line-height: 1.5em;
         margin: 1em;
 
+        &:before {
+            @include icon($fa-var-wrench);
+        }
+
         input[type="checkbox"] {
             width: 1.5em;
             height: 1.5em;
+            vertical-align: middle;
         }
 
         span {
-            vertical-align: top;
+            vertical-align: middle;
         }
     }
 
     .ImporterTable-info {
-        @include col(12,12);
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 1em;
+
+        h1 {
+            display: inline-block;
+            margin: 0;
+        }
+
+        .ImporterTable-report {
+            display: inline-block;
+            margin-left: 1em;
+        }
+
         p {
+            color: lighten($c-text, 50);
             &:before {
                 @include icon($fa-var-info-circle);
                 color: $c-brand-comp-light;
