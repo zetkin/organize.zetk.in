@@ -69,16 +69,18 @@ export default class ImporterTableSet extends React.Component {
             };
 
             truncLabel = (
-                <Msg id="panes.import.table.truncLabel"
-                    values={ values }
-                    />
+                <div className="ImporterTableSet-trunc">
+                    <Msg id="panes.import.table.truncLabel"
+                        values={ values }
+                        />
+                </div>
             );
         }
 
         return (
             <div className="ImporterTableSet">
-                { truncLabel }
                 { table }
+                { truncLabel }
                 <Button
                     labelMsg="panes.import.importButton"
                     onClick={ this.onClickImport.bind(this) }/>
