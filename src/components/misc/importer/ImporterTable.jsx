@@ -69,15 +69,15 @@ export default class ImporterTable extends React.Component {
                         onChange={ this.onChangeFirstRow.bind(this) }/>
                     <Msg id="panes.import.table.firstRowAsHeader"/>
                 </div>
-
-                <table ref="table">
-                    <ImporterTableHead columnList={ table.columnList }
+                <div className="ImporterTable-container" ref="table">
+                    <ImporterTableHead
+                        columnList={ table.columnList }
                         onChangeColumn={ this.onChangeColumn.bind(this) }
                         onEditColumn={ this.onEditColumn.bind(this) }/>
                     <ImporterTableBody table={ table }
                         maxRows={ this.props.maxRows }
                         />
-                </table>
+                </div>
             </div>
         );
     }
