@@ -1,23 +1,46 @@
 .ImporterTable {
+
     .ImporterTable-settings {
-        @include col(4, 12);
+        position: absolute;
+        top: 0;
+        right: 0;
         font-size: 1.5em;
         line-height: 1.5em;
-        margin: 1em 0;
+        margin: 1em;
+
+        &:before {
+            @include icon($fa-var-wrench);
+        }
 
         input[type="checkbox"] {
             width: 1.5em;
             height: 1.5em;
+            vertical-align: middle;
         }
 
         span {
-            vertical-align: top;
+            vertical-align: middle;
         }
     }
 
     .ImporterTable-info {
-        @include col(12,12);
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 1em;
+
+        h1 {
+            display: inline-block;
+            margin: 0;
+        }
+
+        .ImporterTable-report {
+            display: inline-block;
+            margin-left: 1em;
+        }
+
         p {
+            color: lighten($c-text, 50);
             &:before {
                 @include icon($fa-var-info-circle);
                 color: $c-brand-comp-light;
@@ -25,8 +48,11 @@
         }
     }
 
-    table {
-        display: block;
-        overflow: scroll;
+    .ImporterTable-container {
+        position: relative;
+        margin-top: 6em;
+        height: calc(100% - 6em);
+        overflow-x: scroll;
+        @include scrollbar(darken($c-ui-bg, 10));
     }
 }

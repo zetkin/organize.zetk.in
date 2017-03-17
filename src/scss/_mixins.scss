@@ -326,3 +326,35 @@
     }
 }
 
+@mixin scrollbar($color:white, $flip: false) {
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    @if $flip {
+        &::-webkit-scrollbar-thumb {
+            background-color: lighten($color,5);
+
+            &:hover {
+                background-color: lighten($color,8);
+            }
+        }
+    }
+
+    @else {
+        &:hover {
+            &::-webkit-scrollbar {
+                background-color: darken(white,1.5);
+            }
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: darken($color,5);
+
+            &:hover {
+                background-color: darken($color,8);
+            }
+        }
+    }
+}

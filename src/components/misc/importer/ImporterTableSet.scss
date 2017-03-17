@@ -1,11 +1,9 @@
 .ImporterTableSet {
 
-    .importerTableSet-tableSelector {
-        display: inline-block;
-        font-size: 1.5em;
-        float:right;
+    .ImporterTableSet-tableSelector {
+        padding: 10% 25%;
 
-        &:before {
+        h1:before {
             @include icon($fa-var-file-o);
         }
 
@@ -15,16 +13,38 @@
 
         select {
             display: inline-block;
-            width: 250px;
-            font-size: 1em;
+            font-size: 1.5em;
         }
     }
 
-    .button {
+    .ImporterTableSet-trunc {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        padding: 1em;
+        background: rgba(255,255,255, 0.8);
+        bottom: 9.5em;
+        z-index: 999;
+
+        &:before {
+            @include icon($fa-var-info-circle);
+            color: $c-brand-comp-light;
+        }
+    }
+
+    .ImporterTableSet-importButton {
         @include button($icon: $fa-var-cloud-upload);
         position: fixed;
         bottom: 1em;
         right: 1em;
+        width: 20%;
+    }
+
+    .ImporterTableSet-abortButton {
+        @include button($icon: $fa-var-times, $color: $c-ui-dark);
+        position: fixed;
+        bottom: 1em;
+        left: calc(100px + 1em);
         width: 20%;
     }
 }

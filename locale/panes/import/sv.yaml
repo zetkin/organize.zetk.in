@@ -1,3 +1,4 @@
+abortButton: Avbryt import
 column:
     colOptions:
         complex:
@@ -88,4 +89,12 @@ table:
             other {Ignorerade # tomma kolumner}
         }
     firstRowAsHeader: Första raden innehåller rubriker
-    tableSelectLabel: 'Ark att importera:'
+    truncLabel: |-
+        Visar {truncated, number} av {total, number} rader. Ytterligare {extra, plural,
+        =1 {en rad} other {# rader}} kommer importeras.
+tableSelect:
+    h: Välj ark
+    p: |-
+        Filen innehåller mer än ett ark. Välj vilket ark som innehåller
+        den data du vill importera.
+    label: Välj mellan {count} ark

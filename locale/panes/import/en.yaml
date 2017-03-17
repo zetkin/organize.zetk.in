@@ -1,3 +1,4 @@
+abortButton: Abort import
 column:
     colOptions:
         complex:
@@ -88,4 +89,12 @@ table:
             other {# empty columns ignored}
         }
     firstRowAsHeader: First row contains headers
-    tableSelectLabel: 'Import from sheet:'
+    truncLabel: |-
+        Showing {truncated, number} of {total, number} rows. {extra, plural,
+        =1 {One more row} other {another # rows}} will be imported.
+tableSelect:
+    h: Select sheet
+    p: |-
+        There are more than one sheet in the file. Select the sheet that
+        contains the data you wish to import.
+    label: Select one of {count} sheets

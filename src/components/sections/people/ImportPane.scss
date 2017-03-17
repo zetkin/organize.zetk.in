@@ -3,6 +3,7 @@
         background-color: darken($c-ui-bg,5);
         min-height: 200px;
         padding: 15% 10% 10%;
+        margin: 2em;
         cursor: pointer;
         border: dashed 3px darken($c-ui-bg, 10);
 
@@ -40,19 +41,38 @@
         }
     }
 
+    .LoadingIndicator {
+        padding: 10% 25%;
+
+        .LoadingIndicator-icon {
+            font-size: 2em;
+        }
+    }
+
     .ImportPane-report {
+        width: 350px;
+        margin: 5% auto;
+        @include card;
+        padding: 1em;
+
+        h1 {
+            &:before {
+                @include icon($fa-var-cloud-upload);
+            }
+        }
+
         ul {
             margin: 1em 0 4em;
         }
 
         li {
             font-size: 1.5em;
-            margin: 0.2em 0;
+            margin: 0.5em 0;
         }
 
         .Button {
             @include inline-button();
-            margin: 0 1em 0 0;
+            margin: 0;
         }
     }
 }

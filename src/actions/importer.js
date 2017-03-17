@@ -57,7 +57,7 @@ export function updateImportColumn(tableId, columnId, props) {
 
                     // Map this value to a tag, if mapping doesn't already exist
                     if (!mappings.find(m => m.value === value)) {
-                        let lcValue = value? value.toLowerCase() : value;
+                        let lcValue = value? value.toString().toLowerCase() : value;
                         let tagItem = tagList.items.find(i =>
                             (i.data.title.toLowerCase() === lcValue));
 

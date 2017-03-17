@@ -1,5 +1,7 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { FormattedMessage as Msg } from 'react-intl';
+import scroll from 'scroll';
 
 import ImporterTableHead from './ImporterTableHead';
 import ImporterTableBody from './ImporterTableBody';
@@ -13,19 +15,41 @@ export default class ImporterTable extends React.Component {
     static propTypes = {
         table: React.PropTypes.object.isRequired,
         dispatch: React.PropTypes.func.isRequired,
+        maxRows: React.PropTypes.number.isRequired,
         onEditColumn: React.PropTypes.func,
     };
+
+    componentWillReceiveProps(nextProps) {
+        nextProps.table.columnList.items.forEach((item, idx) => {
+            let next = item.data;
+            let prev = this.props.table.columnList.items[idx].data;
+
+            if (next.type != prev.type) {
+                let tableNode = ReactDOM.findDOMNode(this.refs.table);
+                let tableRect = tableNode.getBoundingClientRect();
+
+                let colWidth = document.querySelector('.ImporterColumnHead')
+                    .getBoundingClientRect()
+                    .width;
+
+                let right = (idx + 1.5) * colWidth;
+                let dx = right - (tableRect.width - colWidth);
+
+                if (dx > 0) {
+                    scroll.left(tableNode, dx);
+                }
+            }
+        });
+    }
 
     render() {
         let table = this.props.table;
 
         let removedInfo = null;
         if (table.numEmptyColumnsRemoved > 0) {
-            let removedLabel = 'Empty columns removed: '
-                + table.numEmptyColumnsRemoved;
 
             removedInfo = (
-                <div className="ImporterTable-info">
+                <div className="ImporterTable-report">
                     <Msg tagName="p" id="panes.import.table.emptyColumnsRemoved"
                         values={{ numRemoved: table.numEmptyColumnsRemoved }}/>
                 </div>
@@ -34,22 +58,24 @@ export default class ImporterTable extends React.Component {
 
         return (
             <div className="ImporterTable">
+                <div className="ImporterTable-info">
                 <h1>{ table.name }</h1>
-
-                { removedInfo }
-
+                    { removedInfo }
+                </div>
                 <div className="ImporterTable-settings">
                     <input type="checkbox" checked={ table.useFirstRowAsHeader }
                         onChange={ this.onChangeFirstRow.bind(this) }/>
                     <Msg id="panes.import.table.firstRowAsHeader"/>
                 </div>
-
-                <table>
-                    <ImporterTableHead columnList={ table.columnList }
+                <div className="ImporterTable-container" ref="table">
+                    <ImporterTableHead
+                        columnList={ table.columnList }
                         onChangeColumn={ this.onChangeColumn.bind(this) }
                         onEditColumn={ this.onEditColumn.bind(this) }/>
-                    <ImporterTableBody table={ table }/>
-                </table>
+                    <ImporterTableBody table={ table }
+                        maxRows={ this.props.maxRows }
+                        />
+                </div>
             </div>
         );
     }
