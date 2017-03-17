@@ -32,11 +32,19 @@
         }
     }
 
-    .button {
+    .ImporterTableSet-importButton {
         @include button($icon: $fa-var-cloud-upload);
         position: fixed;
         bottom: 1em;
         right: 1em;
+        width: 20%;
+    }
+
+    .ImporterTableSet-abortButton {
+        @include button($icon: $fa-var-times, $color: $c-ui-dark);
+        position: fixed;
+        bottom: 1em;
+        left: calc(100px + 1em);
         width: 20%;
     }
 }

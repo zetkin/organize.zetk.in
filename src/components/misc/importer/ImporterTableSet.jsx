@@ -4,7 +4,7 @@ import { FormattedMessage as Msg } from 'react-intl';
 import Button from '../Button';
 import ImporterTable from './ImporterTable';
 import { getListItemById } from '../../../utils/store';
-import { executeImport } from '../../../actions/importer';
+import { executeImport, resetImport } from '../../../actions/importer';
 
 
 export default class ImporterTableSet extends React.Component {
@@ -86,6 +86,11 @@ export default class ImporterTableSet extends React.Component {
                 { table }
                 { truncLabel }
                 <Button
+                    className="ImporterTableSet-abortButton"
+                    labelMsg="panes.import.abortButton"
+                    onClick={ this.onClickAbort.bind(this) }/>
+                <Button
+                    className="ImporterTableSet-importButton"
                     labelMsg="panes.import.importButton"
                     onClick={ this.onClickImport.bind(this) }/>
             </div>
@@ -100,5 +105,9 @@ export default class ImporterTableSet extends React.Component {
 
     onClickImport() {
         this.props.dispatch(executeImport(this.state.selectedTableId));
+    }
+
+    onClickAbort() {
+        this.props.dispatch(resetImport());
     }
 }
