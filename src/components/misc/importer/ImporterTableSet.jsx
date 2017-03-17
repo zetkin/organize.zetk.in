@@ -30,21 +30,25 @@ export default class ImporterTableSet extends React.Component {
 
         if (this.state.selectedTableId == null) {
             return (
-                <div className="importerTableSet-tableSelector">
-                    <Msg tagName="h1" id="panes.import.tableSelect.h"/>
-                    <Msg tagName="p" id="panes.import.tableSelect.p"/>
-                    <select className="importerTableSet-tableSelect"
-                        onChange={ this.onChangeTable.bind(this) }>
-                        <Msg tagName="option"
-                            id="panes.import.tableSelect.label"
-                            values={{ count: tableSet.tableList.items.length }}
-                            />
-                    { tableSet.tableList.items.map(item => (
-                        <option key={ item.data.id } value={ item.data.id }>
-                            { item.data.name }
-                        </option>
-                    )) }
-                    </select>
+                <div className="ImporterTableSet">
+                    <div className="ImporterTableSet-tableSelector">
+                        <Msg tagName="h1" id="panes.import.tableSelect.h"/>
+                        <Msg tagName="p" id="panes.import.tableSelect.p"/>
+                        <select className="importerTableSet-tableSelect"
+                            onChange={ this.onChangeTable.bind(this) }>
+                            <Msg tagName="option"
+                                id="panes.import.tableSelect.label"
+                                values={
+                                    { count: tableSet.tableList.items.length }
+                                }/>
+                        { tableSet.tableList.items.map(item => (
+                            <option key={ item.data.id }
+                                value={ item.data.id }>
+                                { item.data.name }
+                            </option>
+                        )) }
+                        </select>
+                    </div>
                 </div>
             );
         }
