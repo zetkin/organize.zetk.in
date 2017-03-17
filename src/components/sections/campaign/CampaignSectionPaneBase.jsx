@@ -1,4 +1,3 @@
-import moment from 'moment';
 import React from 'react';
 
 import CampaignSelect from '../../misc/CampaignSelect';
@@ -35,7 +34,7 @@ export default class CampaignSectionPaneBase extends RootPaneBase {
     onCalendarAddAction(date) {
         const selectedId = this.props.campaigns.selectedCampaign;
         const campParam = selectedId || 0;
-        const dateParam = moment(date).format('YYYY-MM-DD');
+        const dateParam = date.format('{yyyy}-{MM}-{dd}');
 
         this.openPane('addaction', campParam, dateParam);
     }
@@ -91,7 +90,7 @@ export default class CampaignSectionPaneBase extends RootPaneBase {
     }
 
     onSelectDay(date) {
-        const dateStr = moment(date).format('YYYY-MM-DD');
+        const dateStr = date.format('{yyyy}-{MM}-{dd}');
         this.openPane('actionday', dateStr);
     }
 
