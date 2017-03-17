@@ -41,6 +41,14 @@
         }
     }
 
+    .LoadingIndicator {
+        padding: 10% 25%;
+
+        .LoadingIndicator-icon {
+            font-size: 2em;
+        }
+    }
+
     .ImportPane-report {
         width: 350px;
         margin: 5% auto;
