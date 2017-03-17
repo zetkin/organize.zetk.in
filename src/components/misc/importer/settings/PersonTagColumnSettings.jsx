@@ -23,11 +23,14 @@ export default class PersonTagColumnSettings extends React.Component {
     render() {
         let config = this.props.config;
         let tagList = this.props.personTags.tagList;
+        let mappings = config.mappings
+            .sort((m0, m1) => (m0.value && m1.value)?
+                m0.value.toString().localeCompare(m1.value.toString()) : 0);
 
         return (
             <div className="PersonTagColumnSettings">
                 <ul className="PersonTagColumnSettings-mappings">
-                { config.mappings.map(mapping => {
+                { mappings.map(mapping => {
                     let value = mapping.value;
                     let labelMsg = value?
                         'panes.import.settings.personTag.valueLabel' :
