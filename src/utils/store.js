@@ -46,11 +46,11 @@ export function updateOrAddListItems(list, newItems, meta) {
     // TODO: This can be more efficient
     let newList = list;
     for (let i = 0; i < newItems.length; i++) {
-        newList = updateOrAddListItem(list,
-            newItems[i].id, newItems[i], meta);
+        newList = updateOrAddListItem(newList,
+            newItems[i].id, newItems[i]);
     }
 
-    return newList;
+    return Object.assign({}, newList, meta);
 }
 
 

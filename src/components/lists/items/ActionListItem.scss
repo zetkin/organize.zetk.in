@@ -57,7 +57,7 @@
 
         .ParticipantList {
             max-height: 3.5em;
-            min-height: auto;
+            min-height: 3em;
             overflow: hidden;
             transition: max-height .2s ease-out;
             .ParticipantItem {
