@@ -20,13 +20,15 @@ export default class SurveyQuestionForm extends React.Component {
         super(props);
 
         this.state = {
-            responseType: props.question.response_type || 'text',
+            responseType: props.question?
+                props.question.response_type : 'text',
         };
     }
 
     render() {
         let question = this.props.question || {
             response_type: 'text',
+            response_config: {},
         };
 
         let typeOptions = {
