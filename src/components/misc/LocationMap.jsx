@@ -16,6 +16,8 @@ export default class LocationMap extends React.Component {
         var mapOptions = {
             center: getLocationAverage({}),
             disableDefaultUI: true,
+            zoomControl: true,
+            zoom: this.props.zoom || 4,
         };
 
         // TODO: create nicer looking svg path
@@ -112,6 +114,10 @@ export default class LocationMap extends React.Component {
         }
         this.map.setCenter(bounds.getCenter());
         this.map.fitBounds(bounds);
+
+        if (this.map.getZoom() > 15) {
+            this.map.setZoom(15);
+        }
     }
 
     createMarker(loc, editable, bounds) {
