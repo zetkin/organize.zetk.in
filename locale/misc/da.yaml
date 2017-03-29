@@ -1,0 +1,43 @@
+callAssignmentTemplates:
+    inform:
+        desc: >-
+            Vi ringer rundt indtil vi har talt med alle for at informere dem
+            om...
+        title: Spred ordet om
+    mobilize:
+        desc: Vi ringer rundt for at mobilisere aktivister til vores kampagne
+        title: Mobiliserer til
+    stayintouch:
+        desc: >-
+            Vi taler med alle i målgruppen én gang, hver tredje måned, hver
+            sjette måned, om året
+        title: Hold kontakten
+campaignSelect:
+    header: Vælg kampagne
+    nullLabel: Alle kampagner
+deleteButton:
+    label: Slet
+inviteBox:
+    h: Send invitation
+    instructions: Indsæt e-mail adressen på den person du vil invitere
+    sendButton: Send
+officialList:
+    userLabel: Din egen rolle kan ikke ændres
+staticMap:
+    noCoordinates: Ingen position
+    setPositionLink: Klik for at angive position
+surveyOutline:
+    add:
+        types:
+            question: Spørgsmål i spørgeskema
+            text: Tekstblok
+    element:
+        types:
+            question: Spørgsmål
+            text: Tekstblok
+    option:
+        addButton: Tilføj svarmulighed
+        cancelButton: Afbryd
+        saveButton: Gem
+tagCloud:
+    addButton: Læg til

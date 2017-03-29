@@ -1,0 +1,5 @@
+header:
+    email: E-mail
+    firstName: Fornavn
+    lastName: Efternavn
+    phone: Telefonnummer

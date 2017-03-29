@@ -1,0 +1,13 @@
+city: By
+coAddress: C/o adresse
+email: E-mail adresse
+firstName: Fornavn
+gender: Køn
+genderOptions:
+    female: Kvinde
+    male: Mand
+    other: Andet
+lastName: Efternavn
+phone: Telefonnummer
+streetAddress: Gadenavn og -nummer
+zip: Postnummer

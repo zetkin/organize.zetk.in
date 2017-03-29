@@ -1,0 +1,12 @@
+header:
+    startTime: Tid
+    stats: Statistik
+    title: Tiel
+item:
+    info:
+        callers: Ringere
+    stats:
+        calls: Opringninger
+        goal: Mangler
+        reached: Talt med
+        target: Målgruppe

@@ -1,0 +1,9 @@
+addFilter: Tilføj et filter
+dropInstructions: Drop filter her for at få ny rækkefølge
+types:
+    all: Alle i organisationen
+    callHistory: Opkaldshistorik
+    campaignParticipation: Kampagnedeltagelse
+    personData: Personoplysninger
+    personTags: Etiketter
+    random: Tilfældigt udvalgte

@@ -1,0 +1,11 @@
+contact:
+    h: Ansvarlig
+editLink: Rediger aktivitet
+participants:
+    addPerson: Drop en person her
+    h: Bekræftede deltagere
+    selectLink: Vælg deltager
+responses:
+    h: Tilmeldinger
+sendRemindersButton: Send påmindelser
+title: Aktivitet

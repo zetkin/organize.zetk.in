@@ -1,0 +1,13 @@
+closeButton: Luk uden at gemme
+editor:
+    bold: Fed
+    h1: Overskrift 1
+    h2: Overskrift 2
+    h3: Overskrift 3
+    italic: Kursiv
+    ol: Nummereret liste
+    p: Brødtekst
+    ul: Liste i punktform
+    underline: Understreget
+saveButton: Gem og luk
+title: Rediger tekst

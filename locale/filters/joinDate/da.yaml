@@ -1,0 +1,4 @@
+opOptions:
+    eq: Præcis dato
+    gt: Efter
+    lt: Før

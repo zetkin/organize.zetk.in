@@ -1,0 +1,53 @@
+breadcrumbs:
+    form: Indstilninger
+    goal: 'Målsætning, informere, mobilisere, hold kontakten, intet template'
+    target: >-
+        Målgruppe, ring alle, ring alle med en bestemt etiket, ring tilfældigt
+        udvalgte, intet template
+form:
+    instructions: >-
+        3. skridt ud af 3. Udfyld titel, beskrivelse og indstilninger for
+        rundringningen.
+    saveButton: Opret rundringning
+goal:
+    customLink: Definer regler for udvælgelse manuelt senere
+    instructions: >-
+        2. skridt ud af 3. Vælg formål med rundringningen for automatisk at
+        oprette regler for udvælgelse 
+    saveButton: >-
+        Opret rundringning for at informere, opret rundringning for at
+        mobilisere, opret rundringning for at holde kontakten
+target:
+    customLink: Definer regler for udvælgelse manuelt på et senere tidspunkt
+    instructions: 1. skridt ud af 3. Vælg målgruppe for rundringningen
+    saveButton: >-
+        Vælg alle som målgruppe, vælg målgruppe ud fra etiketter, vælg en
+        tilfældig målgruppe
+templates:
+    allTarget:
+        instructions: Målgruppen er alle personer i databasen
+        title: Alle i databasen
+    inform:
+        instructions: Alle bliver ringet op indtil de svarer
+        title: Informere
+    mobilize:
+        instructions: >-
+            Vælg en kampagne. Personer som allerede har tilmeldt sig en
+            aktivitet i kampagnen bliver ikke ringet op.
+        title: Mobiliser til kampagne
+    randomTarget:
+        instructions: Målgruppen er tilfældigt sammensat. Hvor mange skal ringes op?
+        title: Tilfældigt udvalgte
+    stayintouch:
+        instructions: Hvor ofte skal de høre fra os?
+        intervalSelect:
+            six: Hver sjette måned
+            three: Hver tredje måned
+            twelve: En gang om året
+        title: Hold kontakten
+    tagTarget:
+        instructions: >-
+            Vælg en etiket. Målgruppen kommer til at bestå af alle personer med
+            denne etiket
+        title: Alle med en bestemt etiket
+title: Opret rundringning

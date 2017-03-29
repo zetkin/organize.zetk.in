@@ -1,0 +1,14 @@
+description: Beskrivelse/hjælpetekst
+optionsWidget: Regler for svar
+optionsWidgetOptions:
+    checkbox: Tillad flere svarmuligheder
+    radio: Tillad kun et svar
+question: Spørgsmål
+responseType: Svartype
+responseTypeOptions:
+    options: Svarmuligheder
+    text: Fritekst
+textWidget: Type af tekstfelt
+textWidgetOptions:
+    multi: Flere linjer
+    single: En linje
