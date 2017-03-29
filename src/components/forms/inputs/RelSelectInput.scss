@@ -26,13 +26,15 @@
             cursor: pointer;
             font-size: 1.1em;
 
-            label {
+            .RelSelectInput-itemLabel {
                 display: block;
                 margin: 0;
                 padding: 0.5em 1em 0.5em 2em;
+                font-size: inherit;
 
                 &::before {
-                    content: "";
+                    @include icon($fa-var-check);
+                    visibility: hidden;
                     display: block;
                     float: left;
                     width: 1em;
@@ -41,14 +43,27 @@
                 }
             }
 
+            &.RelSelectInput-null .RelSelectInput-itemLabel:before {
+                @include icon($fa-var-times);
+                visibility: visible;
+                width: 1em;
+                color: darken(white, 10);
+            }
+
+            &.RelSelectInput-create .RelSelectInput-itemLabel:before {
+                @include icon($fa-var-plus);
+                visibility: visible;
+                width: 1em;
+                color: darken(white, 10);
+            }
+
             &:hover, &.focused {
-                label {
+                .RelSelectInput-itemLabel {
                     background-color: darken(white, 5);
 
                     &::before {
+                        visibility: visible;
                         color: #ddd;
-                        content: "\f00c";
-                        font: normal normal normal 10px FontAwesome;
                     }
                 }
 
@@ -58,11 +73,10 @@
             }
 
             &.selected {
-                label {
+                .RelSelectInput-itemLabel {
                     &::before {
+                        visibility: visible;
                         color: #2a0;
-                        content: "\f00c";
-                        font: normal normal normal 10px FontAwesome;
                     }
                 }
             }
