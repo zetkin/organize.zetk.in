@@ -24,7 +24,7 @@
         padding: 1em;
         background: rgba(255,255,255, 0.8);
         bottom: 9.5em;
-        z-index: 999;
+        z-index: 1;
 
         &:before {
             @include icon($fa-var-info-circle);
