@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { getLocationAverage } from '../../utils/location';
+
+
 export default class LocationMap extends React.Component {
     static propTypes = {
         locations: React.PropTypes.array,
@@ -11,8 +14,7 @@ export default class LocationMap extends React.Component {
     componentDidMount() {
         var ctrDOMNode = ReactDOM.findDOMNode(this.refs.mapContainer);
         var mapOptions = {
-            // TODO: Derive center from something?
-            center: { lat: 55.6, lng: 13.04 },
+            center: getLocationAverage({}),
             disableDefaultUI: true,
         };
 
