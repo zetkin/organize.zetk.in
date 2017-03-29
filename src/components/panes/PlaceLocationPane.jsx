@@ -37,8 +37,11 @@ export default class PlaceLocationPane extends PaneBase {
             position: 'absolute',
         };
 
+        let zoom = pendingLocation.isDefault? 3 : 14;
+
         return [
             <LocationMap key="map" style={ style }
+                zoom={ zoom }
                 pendingLocation={ pendingLocation }
                 locationsForBounds={ data.locationList.items }
                 onLocationChange={ this.onLocationChange.bind(this) }
