@@ -15,8 +15,9 @@ export function getLocationAverage(locList) {
     }
     else {
         return {
-            lat: 0,
-            lng: 0
+            isDefault: true,
+            lat: 50.974300,
+            lng: 12.840305,
         }
     }
 }
