@@ -28,8 +28,10 @@ export default class LocationMap extends React.Component {
         this.resetMarkers();
     }
 
-    componentDidUpdate() {
-        this.resetMarkers();
+    componentDidUpdate(prevProps) {
+        if (this.props.locations != prevProps.locations) {
+            this.resetMarkers();
+        }
     }
 
     componentWillUnmount() {
