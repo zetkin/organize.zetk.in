@@ -61,8 +61,12 @@
             overflow: hidden;
             transition: max-height .2s ease-out;
             .ParticipantItem {
-                &:nth-child(n+4){
+                &:nth-child(4){
                     visibility: hidden;
+                }
+
+                &:nth-child(4):last-child {
+                    visibility: visible;
                 }
             }
 

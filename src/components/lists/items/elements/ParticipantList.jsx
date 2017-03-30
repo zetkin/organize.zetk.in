@@ -30,10 +30,8 @@ export default class ParticipantList extends React.Component {
         return (
             <ul className="ParticipantList">
             {participants.map(function(person, idx) {
-                const visible = (!moreItem || (idx < maxVisible - 1));
-
                 return (
-                    <ParticipantItem key={ person.id } visible={ visible }
+                    <ParticipantItem key={ person.id }
                         action={ action } person={ person }/>
                 );
             }, this)}
