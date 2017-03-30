@@ -197,11 +197,16 @@ export default class ActionPane extends PaneBase {
     }
 
     renderPaneFooter(data) {
-        return (
-            <Button className="ActionPane-reminderButton"
-                labelMsg="panes.action.sendRemindersButton"
-                onClick={ this.onClickReminders.bind(this) }/>
-        );
+        if (data.actionItem && data.actionItem.data && data.actionItem.data.contact) {
+            return (
+                <Button className="ActionPane-reminderButton"
+                    labelMsg="panes.action.sendRemindersButton"
+                    onClick={ this.onClickReminders.bind(this) }/>
+            );
+        }
+        else {
+            return null;
+        }
     }
 
     onClickEdit(ev) {
