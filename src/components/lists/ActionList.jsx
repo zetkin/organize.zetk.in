@@ -40,6 +40,7 @@ export default class ActionList extends React.Component {
                 list={ this.props.actionList }
                 headerColumns={ columns }
                 itemComponent={ ActionListItem }
+                defaultSortField="start_time"
                 onItemClick={ this.props.onItemClick }
                 />
         );
