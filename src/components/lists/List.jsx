@@ -38,6 +38,7 @@ export default class List extends React.Component {
         itemComponent: React.PropTypes.func.isRequired,
         className: React.PropTypes.string,
         sortFunc: React.PropTypes.func,
+        defaultSortField: React.PropTypes.string,
         allowBulkSelection: React.PropTypes.bool,
         bulkSelection: React.PropTypes.object,
         onItemSelect: React.PropTypes.func,
@@ -47,7 +48,10 @@ export default class List extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            sortField: this.props.defaultSortField,
+        };
+
         this.lastSelectedId = null;
     }
 
