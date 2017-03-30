@@ -126,6 +126,10 @@ export default class CampaignFilter extends FilterBase {
             this.setState({ op: value, campaign: null }, () =>
                 this.onConfigChange());
         }
+        else if (this.state.campaign) {
+            this.setState({ op: value }, () =>
+                this.onConfigChange());
+        }
         else {
             // Don't fire event for "spec" operators until a campaign
             // has actually been selected.
