@@ -1,0 +1,25 @@
+action:
+    content:
+        header: Meddelelse til ansvarlig
+        noMessage: Ringeren efterlod ingen besked
+    header:
+        needed: Den ansvarlige skal udføre en handling
+        taken: Den ansvarlige har udført en handling
+    response:
+        resolve: Markér som udført
+        unresolve: Markér som ikke udført
+note:
+    header: Ringerens bemærkninger
+    noNote: Ringeren skrev ingen bemærkninger
+pendingTitle: Rapport
+summary:
+    status0: Opringningen er endnu ikke afsluttet
+    status1: Vi nåede
+    status11: Svarede ikke
+    status12: Telefonen var optaget
+    status13: Bad os om at ringe tilbage
+    status14: Var ikke til at få fat i lige nu
+    status15: Vi lagde en besked på telefonsvarer
+    status21: Forkert nummer
+    status22: Samtalen blev afbrudt
+title: Rapport fra samtale

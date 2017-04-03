@@ -1,0 +1,6 @@
+ops:
+    person:
+        delete: 'Slet en person, slet to personer, '
+        export: 'Eksporter en person, eksporter to personer'
+        tag: 'Sæt etiketter på en person, sæt etiketter på to personer'
+selectLabel: Vælg handling

@@ -1,0 +1,10 @@
+access: Adgang
+accessOptions:
+    auth: Kun åben for brugere som er tilsluttet vores organisation
+    open: Åben for alle
+info_text: Beskrivelse
+signature: Regel for underskrift
+signatureOptions:
+    anon: Tillad anonyme svar
+    sign: Forlang underskrift i form af navn og e-mail adresse
+title: Titel

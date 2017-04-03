@@ -1,0 +1,13 @@
+header:
+    access: Adgang
+    allowAnonymous: Regler for underskrift
+    callersOnly: Kun ringere
+    survey: Spørgeskema
+item:
+    access:
+        auth: Kun indloggede
+        open: Hvem som helst
+    anonymous:
+        allow: Tillad anonyme svar
+        deny: Kun svar underskrevet med navn og e-mailadresse
+    callersOnly: Kun for ringere

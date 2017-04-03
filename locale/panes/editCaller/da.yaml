@@ -1,0 +1,8 @@
+ex:
+    h: Etiketter som ikke skal medtages
+    instructions: Vil aldrig ringe personer med disse etiketter
+pendingTitle: Rediger ringere
+prio:
+    h: Prioriterede etiketter
+    instructions: Vil ringe til personer med disse etiketter først
+title: Rediger ringere

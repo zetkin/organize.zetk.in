@@ -1,0 +1,5 @@
+opLabel: Match personer som
+opOptions:
+    all: Har alle følgende etiketter
+    any: har nogen af følgende etiketter
+    none: Ikke har nogen af følgende etiketter

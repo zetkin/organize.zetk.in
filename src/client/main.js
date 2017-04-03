@@ -8,6 +8,7 @@ import cookie from 'cookie-cutter';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import svLocaleData from 'react-intl/locale-data/sv';
+import daLocaleData from 'react-intl/locale-data/da';
 import Z from 'zetkin';
 
 import polyfills from '../utils/polyfills';
@@ -29,6 +30,7 @@ window.onload = function() {
 
     addLocaleData([
         ...svLocaleData,
+        ...daLocaleData,
     ]);
 
     let ticket = cookie.get('apiTicket');

@@ -1,0 +1,11 @@
+header:
+    action: Handling
+    callerName: Ringer
+    status: Status
+    targetName: Modtager
+    time: Tid
+item:
+    status:
+        allocated: I gang
+        notReached: Svarer ikke
+        reached: Talt med

@@ -1,0 +1,18 @@
+callers:
+    addCaller: Træk og drop personer her eller
+    h: Ringere
+    selectLink: Vælg ringere
+instructions:
+    editLink: Rediger instruktionerne
+    h: Instruktioner
+summary:
+    cooldown: 'En time, timer'
+    editLink: Rediger indstilninger
+target:
+    editGoalLink: Rediger målsætning
+    editTargetLink: Rediger målgruppe
+    h: Målgruppe
+    stats:
+        goal: Personer tilbage
+        target: Personer i målgruppen
+title: Ringerunde

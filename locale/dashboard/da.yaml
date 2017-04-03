@@ -1,0 +1,10 @@
+footer:
+    foundationLink:
+        href: 'http://zetkin.org/en'
+        text: Om Zetkin Foundation
+    helpLink:
+        href: 'http://manual.zetkin.org/en'
+        text: Læs mere i Zetkin-manualen
+    info: >-
+        Zetkin bliver udviklet af Zetkin Foundation for at gøre det enklere at
+        organisere aktivistisk.

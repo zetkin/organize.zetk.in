@@ -1,0 +1,10 @@
+fields:
+    city: By
+    co_address: C/o adresse
+    email: E-mail adresse
+    first_name: Fornavn
+    last_name: Efternavn
+    phone: Telefonnummer
+    street_address: Gadenavn og -nummer
+    zip: Postnummer
+selectFields: Vælg flere filtre

@@ -24,7 +24,7 @@ export function createLocalizeHandler(messages) {
         let state = req.store.getState();
         let negotiator = new Negotiator(req);
 
-        let browserLocale = negotiator.language(['en', 'sv']) || 'en';
+        let browserLocale = negotiator.language(['en', 'sv', 'da']) || 'en';
         let locale = state.user.user.lang || browserLocale;
 
         req.store.dispatch(setIntlData({

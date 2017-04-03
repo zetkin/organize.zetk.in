@@ -1,0 +1,6 @@
+headers:
+    person:
+        delete: 'Slet, en person, personer'
+        export: 'Eksporter, en person, personer'
+        tag: 'Sæt etiket på (tag), en person, personer'
+submitButton: Udfør

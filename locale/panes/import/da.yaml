@@ -1,0 +1,33 @@
+column:
+    colOptions:
+        complex:
+            tag: Etiketter
+        id:
+            external: Eksternt ID
+            zetkin: Zetkin ID
+        person:
+            city: By
+            coAddress: C/o adresse
+            email: E-mail adresse
+            firstName: Fornavn
+            gender: Køn
+            lastName: Efternavn
+            phone: Telefonnummer
+            streetAddress: Gadenavn og -nummer
+            zip: Postnummer
+    editSettingsLink: Rediger indstillinger for spalter
+    idFields: ID for sammenlægning
+    otherFields: Anden data
+    personFields: Personfelt
+    unknown: Hop over spalte
+error:
+    backButton: Ændr indstilninger
+    h: Ups! Der skete en fejl. Kampen fortsætter!
+    p: >-
+        Noget gik galt, og importen blev afbrudt. Ingen personer blev
+        importeret. Du kan gå tilbage og tjekke importindstilningerne eller
+        vælge en ny fil at importere.
+    resetButton: Vælg en anden fil
+importButton: Importer
+importDropZoneMessage: 'Træk og drop en fil her, eller klik og vælg en fil der skal importeres'
+importMoreButton: Importer mere

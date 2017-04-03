@@ -1,0 +1,16 @@
+search:
+    matches:
+        actionDay: 'En aktion, andre aktioner'
+        query: Smart søgning
+        surveySubmission: 'Svar fra, på'
+    scopes:
+        all: Alt
+        campaign: Kampagne
+        dialog: Dialog
+        maps: Kort
+        people: Personer
+        survey: Spørgeskema
+    typeToSearch: Begynd at skrive for at starte søgningen
+userMenu:
+    accountLink: Kontoindstilninger
+    logOutLink: Log ud

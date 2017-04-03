@@ -2,6 +2,7 @@ import searchMatches from '../utils/searchMatches';
 
 // Include Date locales for search
 require('sugar-date/locales/sv');
+require('sugar-date/locales/da');
 
 
 function search(ws, req) {

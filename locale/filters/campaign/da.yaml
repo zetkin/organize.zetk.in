@@ -1,0 +1,14 @@
+campaign: Hvilken kampagne?
+dateOptions:
+    after: Efter en bestemt dato
+    any: I det hele taget
+    before: Inden en bestemt dato
+    between: Mellem bestemte datoer
+    future: I fremtiden
+    past: Før end i dag
+opOptions:
+    inAny: Deltager i en hvilken som helst kampagne
+    inSpec: Deltager i en bestemt kampagne
+    notInAny: Deltager ikke i nogen som helst kampagner
+    notInSpec: Deltager ikke i en bestemt kampagne
+participantStatus: Match personer som

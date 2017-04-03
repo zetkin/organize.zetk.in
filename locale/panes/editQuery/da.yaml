@@ -1,0 +1,9 @@
+filterHeader: Filtre
+filterIntro: >-
+    En smartsøgning består af en kæde af filtre, hvor hvert filter tilføjer
+    eller udelader personertil resultatet af de foregående filtre.
+saveButton: Gem søgningen
+title:
+    callassignment_goal: Rediger søgning på målsætning
+    callassignment_target: Rediger søgning på målgruppe
+    standalone: Rediger smartsøgning
