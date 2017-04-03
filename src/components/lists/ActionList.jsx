@@ -24,14 +24,14 @@ export default class ActionList extends React.Component {
                 'start_time': 'lists.actionList.header.startTime',
             },
             {
-                'activity': 'lists.actionList.header.activity',
-                'location': 'lists.actionList.header.location',
+                'activity.title': 'lists.actionList.header.activity',
+                'location.title': 'lists.actionList.header.location',
             },
             {
-                'contact': 'lists.actionList.header.contact',
+                'contact.name': 'lists.actionList.header.contact',
             },
             {
-                'participants': 'lists.actionList.header.participants',
+                'num_participants_required': 'lists.actionList.header.participants',
             }
         ];
 
@@ -40,6 +40,7 @@ export default class ActionList extends React.Component {
                 list={ this.props.actionList }
                 headerColumns={ columns }
                 itemComponent={ ActionListItem }
+                defaultSortField="start_time"
                 onItemClick={ this.props.onItemClick }
                 />
         );

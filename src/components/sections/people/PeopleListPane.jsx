@@ -153,20 +153,6 @@ export default class PeopleListPane extends RootPaneBase {
                     onEdit={ this.onQueryEdit.bind(this) }/>
             </div>
         );
-
-        if (data.selection && data.selection.selectedIds.length) {
-            let ops = [ 'delete', 'tag', 'export' ];
-
-            tools.push(
-                <BulkOpSelect key="bulkOps"
-                    objectType="person"
-                    openPane={ this.openPane.bind(this) }
-                    selection={ data.selection }
-                    operations={ ops }/>
-            );
-        }
-
-        return tools;
     }
 
     onItemClick(item, ev) {

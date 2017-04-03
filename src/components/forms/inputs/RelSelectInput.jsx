@@ -73,9 +73,10 @@ export default class RelSelectInput extends InputBase {
             createOption = (
                 <li key="create" className={ createOptionClasses }
                     onMouseDown={ this.onClickCreate.bind(this) }>
-                    <Msg tagName="label"
-                        id="forms.relSelectInput.addLabel"
-                        values={{ value }}/>
+                    <label className="RelSelectInput-itemLabel">
+                        <Msg id="forms.relSelectInput.addLabel"
+                            values={{ value }}/>
+                    </label>
                 </li>
             );
 
@@ -92,7 +93,9 @@ export default class RelSelectInput extends InputBase {
             nullOption = (
                 <li key="null" className={ nullOptionClasses }
                     onMouseDown={ this.onClickNull.bind(this) }>
-                    { this.props.nullLabel }
+                    <label className="RelSelectInput-itemLabel">
+                        { this.props.nullLabel }
+                    </label>
                 </li>
             );
 

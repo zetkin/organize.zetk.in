@@ -1,15 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { getLocationAverage } from '../../utils/location';
+
+
 export default class LocationMap extends React.Component {
+    static propTypes = {
+        locations: React.PropTypes.array,
+        style: React.PropTypes.object,
+        zoom: React.PropTypes.number,
+    };
+
     componentDidMount() {
         var ctrDOMNode = ReactDOM.findDOMNode(this.refs.mapContainer);
         var mapOptions = {
-            // TODO: Derive center from something?
-            center: { lat: 55.6, lng: 13.04 },
+            center: getLocationAverage({}),
             disableDefaultUI: true,
-            zoom: 11
+            zoomControl: true,
+            zoom: this.props.zoom || 4,
         };
+
         // TODO: create nicer looking svg path
         this.iconSettings =  {
                path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
@@ -28,8 +38,10 @@ export default class LocationMap extends React.Component {
         this.resetMarkers();
     }
 
-    componentDidUpdate() {
-        this.resetMarkers();
+    componentDidUpdate(prevProps) {
+        if (this.props.locations != prevProps.locations) {
+            this.resetMarkers();
+        }
     }
 
     componentWillUnmount() {
@@ -65,7 +77,7 @@ export default class LocationMap extends React.Component {
             this.createMarker({data: this.props.pendingLocation}, true);
             pendingId = this.props.pendingLocation.id;
 
-            this.map.setZoom(16);
+            this.map.setZoom(this.props.zoom || 16);
             this.map.setCenter(new google.maps.LatLng(
                 this.props.pendingLocation.lat,
                 this.props.pendingLocation.lng));
@@ -102,6 +114,10 @@ export default class LocationMap extends React.Component {
         }
         this.map.setCenter(bounds.getCenter());
         this.map.fitBounds(bounds);
+
+        if (this.map.getZoom() > 15) {
+            this.map.setZoom(15);
+        }
     }
 
     createMarker(loc, editable, bounds) {
@@ -157,9 +173,4 @@ export default class LocationMap extends React.Component {
         }
 
     }
-}
-
-LocationMap.propTypes = {
-    locations: React.PropTypes.array,
-    style: React.PropTypes.object
 }

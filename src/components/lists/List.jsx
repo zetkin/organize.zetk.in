@@ -9,7 +9,7 @@ import LoadingIndicator from '../misc/LoadingIndicator';
 
 function r(obj, fieldPath) {
     let path = fieldPath.split('.');
-    return path.reduce((o, e) => o[e], obj);
+    return path.reduce((o, e) => (!!o)? o[e] : null, obj);
 }
 
 
@@ -38,6 +38,7 @@ export default class List extends React.Component {
         itemComponent: React.PropTypes.func.isRequired,
         className: React.PropTypes.string,
         sortFunc: React.PropTypes.func,
+        defaultSortField: React.PropTypes.string,
         allowBulkSelection: React.PropTypes.bool,
         bulkSelection: React.PropTypes.object,
         onItemSelect: React.PropTypes.func,
@@ -47,7 +48,10 @@ export default class List extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            sortField: this.props.defaultSortField,
+        };
+
         this.lastSelectedId = null;
     }
 
@@ -80,9 +84,36 @@ export default class List extends React.Component {
             // Use custom sort func from properties if one exists, or use a
             // default sort func which resolves fields from the header columns
             // and uses standard JS comparison to figure out order.
-            let sortFunc = this.props.sortFunc || ((i0, i1) => {
-                if (r(i0.data, sortField) < r(i1.data, sortField)) return -1;
-                if (r(i0.data, sortField) > r(i1.data, sortField)) return 1;
+            let sortFunc = ((i0, i1) => {
+                let f0 = r(i0.data, sortField);
+                let f1 = r(i1.data, sortField);
+
+                if (this.props.sortFunc) {
+                    let sorted = this.props.sortFunc(i0, i1, sortField);
+                    if (sorted.length == 2) {
+                        f0 = sorted[0];
+                        f1 = sorted[1];
+                    }
+                    else {
+                        return sorted;
+                    }
+                }
+
+                if (typeof f0 == 'string' && typeof f1 == 'string') {
+                    return f0.localeCompare(f1);
+                }
+                else if (!f0 && !f1) {
+                    return 0;
+                }
+                else if (!f0) {
+                    return 1;
+                }
+                else if (!f1) {
+                    return -1
+                }
+
+                if (f0 < f1) return -1;
+                if (f0 > f1) return 1;
                 return 0;
             });
 
