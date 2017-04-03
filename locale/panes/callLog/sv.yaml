@@ -1,0 +1,8 @@
+filters:
+    oa:
+        label: Flaggad för funktionärsåtgärd
+        options:
+            all: Alla samtal oavsett flaggning
+            needed: Alla flaggade samtal
+            notTaken: Flaggade samtal där åtgärd krävs
+            taken: Flaggade samtal där åtgärd vidtagits

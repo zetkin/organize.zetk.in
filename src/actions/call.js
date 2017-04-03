@@ -1,16 +1,31 @@
 import * as types from '.';
 
 
-export function retrieveCalls(page = 0, perPage = 100) {
+export function retrieveCalls(page = 0, filters = {}) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
+
+        let filterStrings = [];
+
+        switch (filters.oa) {
+            case 'needed':
+                filterStrings.push(['organizer_action_needed', '==', 1])
+                break;
+            case 'taken':
+                filterStrings.push(['organizer_action_taken', '==', 1])
+                break;
+            case 'notTaken':
+                filterStrings.push(['organizer_action_needed', '==', 1])
+                filterStrings.push(['organizer_action_taken', '==', 0])
+                break;
+        }
 
         dispatch({
             type: types.RETRIEVE_CALLS,
             meta: { page },
             payload: {
                 promise: z.resource('orgs', orgId, 'calls')
-                    .get(page, perPage),
+                    .get(page, 100, filterStrings),
             }
         });
     };

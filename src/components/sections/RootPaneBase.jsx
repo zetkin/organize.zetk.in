@@ -13,6 +13,7 @@ export default class RootPaneBase extends React.Component {
         this.state = {
             scrolled: false,
             showFilters: false,
+            filters: {}
         };
     }
 
@@ -52,7 +53,7 @@ export default class RootPaneBase extends React.Component {
         });
 
         let filterDrawer = null;
-        let filters = this.getPaneFilters(data);
+        let filters = this.getPaneFilters(data, this.state.filters);
         var toolbar = this.getPaneTools(data);
 
         if (filters || toolbar) {
@@ -131,7 +132,7 @@ export default class RootPaneBase extends React.Component {
         return null;
     }
 
-    getPaneFilters(data) {
+    getPaneFilters(data, filters) {
         return null;
     }
 
@@ -176,10 +177,22 @@ export default class RootPaneBase extends React.Component {
         }
     }
 
+    onFilterChange(name, value) {
+        this.setState({
+            filters: {
+                [name]: value,
+            }
+        });
+    }
+
     onFilterButtonClick() {
         this.setState({
             showFilters: !this.state.showFilters,
         });
+
+        if (this.onFiltersApply) {
+            this.onFiltersApply(this.state.filters);
+        }
     }
 
     onCloseClick(ev) {

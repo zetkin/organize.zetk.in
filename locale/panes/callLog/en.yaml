@@ -1,0 +1,8 @@
+filters:
+    oa:
+        label: Flagged for official action
+        options:
+            all: All calls regardless of flagging
+            needed: All flagged calls
+            notTaken: Flagged calls where action is needed
+            taken: Flagged calls where action was taken

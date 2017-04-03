@@ -1,12 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { FormattedMessage as Msg } from 'react-intl';
 
 import CallList from '../../lists/CallList';
 import RootPaneBase from '../RootPaneBase';
+import SelectInput from '../../forms/inputs/SelectInput';
 import { retrieveCalls } from '../../../actions/call';
 
 
-@connect(state => state)
+const mapStateToProps = state => ({
+    callList: state.calls.callList,
+});
+
+@connect(mapStateToProps)
 export default class CallLogPane extends RootPaneBase {
     componentDidMount() {
         this.props.dispatch(retrieveCalls());
@@ -14,8 +20,27 @@ export default class CallLogPane extends RootPaneBase {
 
     getRenderData() {
         return {
-            callList: this.props.calls.callList,
+            callList: this.props.callList,
         };
+    }
+
+    getPaneFilters(data, filters) {
+        let oaOptions = {
+            'all': 'panes.callLog.filters.oa.options.all',
+            'needed': 'panes.callLog.filters.oa.options.needed',
+            'taken': 'panes.callLog.filters.oa.options.taken',
+            'notTaken': 'panes.callLog.filters.oa.options.notTaken',
+        };
+
+        return [
+            <div key="oa">
+                <Msg tagName="label" id="panes.callLog.filters.oa.label"/>
+                <SelectInput name="oa" options={ oaOptions }
+                    value={ filters.oa || 'all' }
+                    optionLabelsAreMessages={ true }
+                    onValueChange={ this.onFilterChange.bind(this) }/>
+            </div>
+        ];
     }
 
     renderPaneContent(data) {
@@ -31,7 +56,13 @@ export default class CallLogPane extends RootPaneBase {
         this.openPane('call', call.id);
     }
 
+    onFiltersApply(filters) {
+        this.setState({ filters });
+
+        this.props.dispatch(retrieveCalls(0, filters));
+    }
+
     onLoadPage(page) {
-        this.props.dispatch(retrieveCalls(page));
+        this.props.dispatch(retrieveCalls(page, this.state.filters));
     }
 }
