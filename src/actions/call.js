@@ -16,7 +16,7 @@ export function retrieveCalls(page = 0, filters = {}) {
                 break;
             case 'notTaken':
                 filterStrings.push(['organizer_action_needed', '==', 1])
-                filterStrings.push(['organizer_action_taken', '==', 0])
+                filterStrings.push(['organizer_action_taken', '!=', 1])
                 break;
         }
 
