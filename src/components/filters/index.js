@@ -4,6 +4,7 @@ import CampaignFilter from './CampaignFilter';
 import PersonDataFilter from './PersonDataFilter';
 import PersonTagsFilter from './PersonTagsFilter';
 import RandomFilter from './RandomFilter';
+import SurveyResponseFilter from './SurveyResponseFilter';
 import SurveySubmissionFilter from './SurveySubmissionFilter';
 
 const filterComponents = {
@@ -13,6 +14,7 @@ const filterComponents = {
     'person_data': PersonDataFilter,
     'person_tags': PersonTagsFilter,
     'random': RandomFilter,
+    'survey_response': SurveyResponseFilter,
     'survey_submission': SurveySubmissionFilter,
 };
 
