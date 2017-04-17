@@ -8,3 +8,6 @@ types:
     personData: Personal data
     personTags: Tags
     random: Random selection
+    surveyOption: Survey response (options)
+    surveyResponse: Survey response (text)
+    surveySubmission: Survey submission
