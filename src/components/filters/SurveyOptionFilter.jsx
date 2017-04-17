@@ -115,8 +115,6 @@ export default class SurveyOptionFilter extends FilterBase {
             options: this.state.option? [ this.state.option ] : undefined,
         };
 
-        console.log('getConfig', config);
-
         return config;
     }
 
