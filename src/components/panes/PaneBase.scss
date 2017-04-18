@@ -150,11 +150,6 @@
             overflow-x: hidden;
             outline: none;
 
-            &::-webkit-scrollbar { // hides scrollbar in webkit browsers.
-                width: 0px;
-                background: transparent;
-            }
-
             h2 {
                 margin-top: 0;
                 font-size: 2.0em;
