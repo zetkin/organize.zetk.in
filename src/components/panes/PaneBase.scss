@@ -94,7 +94,7 @@
         &:not(:last-child) .PaneBase-content{
         // If there are more than one pane open
             height: auto;
-            overflow: visable;
+            overflow: scroll;
         }
 
         .PaneBase-header {
