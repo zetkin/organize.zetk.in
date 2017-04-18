@@ -47,6 +47,7 @@ export default class SurveyResponseFilter extends FilterBase {
                 onValueChange={ this.onChangeSimpleField.bind(this) }
                 />,
             <TextInput name="value" key="value"
+                className="SurveyResponseFilter-valueInput"
                 value={ this.state.value }
                 labelMsg="filters.surveyResponse.value"
                 onValueChange={ this.onChangeSimpleField.bind(this) }
