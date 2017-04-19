@@ -48,6 +48,7 @@ export default class PaneBase extends React.Component {
 
         const classes = cx(componentClassNames(this), {
             'PaneBase-scrolled': this.state.scrolled,
+            'PaneBase-hasFooter': this.renderPaneFooter(data),
         });
 
         var title = null;
