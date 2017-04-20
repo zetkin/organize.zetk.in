@@ -109,6 +109,18 @@ export default function actions(state = null, action) {
                 },
             });
 
+        case types.SEND_ACTION_REMINDERS + '_PENDING':
+            return Object.assign({}, state, {
+                actionList: updateOrAddListItem(state.actionList,
+                        action.meta.actionId, {}, { isReminderPending: true }),
+            });
+
+        case types.SEND_ACTION_REMINDERS + '_FULFILLED':
+            return Object.assign({}, state, {
+                actionList: updateOrAddListItem(state.actionList,
+                        action.meta.actionId, {}, { isReminderPending: false }),
+            });
+
         default:
             // By default, filter from last week and eight weeks forward
             let startDate = Date.create('last monday');
