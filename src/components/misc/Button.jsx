@@ -22,16 +22,16 @@ export default class Button extends React.Component {
             this.props.labelValues);
 
         return (
-            <button className={ className }
-                onClick={ this.onClickSend() }>
+            <button className={ classes }
+                onClick={ this.onClick.bind(this) }>
                 { label }
             </button>
         );
     }
 
-    onClickSend() {
-        if (this.props.onClick) {
-            return this.props.isPending ? null : this.props.onClick;
+    onClick(ev) {
+        if(!this.props.isPending && this.props.onClick) {
+            this.props.onClick();
         }
     }
 }
