@@ -74,9 +74,6 @@ export default function participants(state = null, action) {
         case types.SEND_ACTION_REMINDERS + '_FULFILLED':
             actionId = action.meta.actionId;
             byAction = Object.assign({}, state.byAction);
-            action.payload.data.data.forEach(p => {
-                byAction[actionId]
-            })
             byAction[actionId] = byAction[actionId].map(p => {
                 let updated = action.payload.data.data.find(res =>
                     res.person.id == p.id);
