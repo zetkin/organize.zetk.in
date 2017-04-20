@@ -1,6 +1,7 @@
 import { injectIntl } from 'react-intl';
 import React from 'react';
 
+import cx from 'classnames';
 
 @injectIntl
 export default class Button extends React.Component {
@@ -14,15 +15,24 @@ export default class Button extends React.Component {
     render() {
         const formatMessage = this.props.intl.formatMessage;
 
-        let className = "Button " + this.props.className;
+        let classes = cx("Button", this.props.className, {
+            "pending": this.props.isPending,
+        });
+
         let label = formatMessage({ id: this.props.labelMsg },
             this.props.labelValues);
 
         return (
-            <button className={ className }
-                onClick={ this.props.onClick }>
+            <button className={ classes }
+                onClick={ this.onClick.bind(this) }>
                 { label }
             </button>
         );
+    }
+
+    onClick(ev) {
+        if(!this.props.isPending && this.props.onClick) {
+            this.props.onClick();
+        }
     }
 }

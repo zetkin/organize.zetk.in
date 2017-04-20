@@ -121,11 +121,17 @@ export default class ActionReminderPane extends PaneBase {
     }
 
     renderPaneFooter(data) {
-        return (
-            <Button className="ActionReminderPane-saveButton"
-                labelMsg="panes.actionReminder.saveButton"
-                onClick={ this.onRemindersSubmit.bind(this) }/>
-        );
+        if (data.actionItem) {
+            return (
+                <Button className="ActionReminderPane-saveButton"
+                    isPending={ data.actionItem.isReminderPending }
+                    labelMsg="panes.actionReminder.saveButton"
+                    onClick={ this.onRemindersSubmit.bind(this) }/>
+            );
+        }
+        else {
+            return null;
+        }
     }
 
     onRemindersSubmit(ev) {

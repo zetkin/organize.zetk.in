@@ -99,6 +99,12 @@
             height: 0;
         }
     }
+
+    &.pending {
+        @include progress-bg;
+        pointer-events: none;
+        @include button-color(lighten($color, 5), $amount);
+    }
 }
 
 @mixin inline-button($color: lighten($c-ui-bg, 1), $amount:5, $icon:false) {
@@ -234,6 +240,14 @@
         }
 }
 
+@mixin progress-bg {
+    background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,
+            transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,
+            rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+        background-size: 40px 40px;
+        animation: progress-stripes 2s linear infinite;
+}
+
 @mixin flex-container($direction: row, $wrapping: none){
     display: -webkit-box;
     display: -moz-box;
@@ -357,4 +371,13 @@
             }
         }
     }
+}
+
+@keyframes progress-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
 }
