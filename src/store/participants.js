@@ -6,6 +6,17 @@ export default function participants(state = null, action) {
     let actionId;
 
     switch (action.type) {
+        case types.SET_ACTION_CONTACT + '_FULFILLED':
+            let contact = action.payload.participant;
+
+            byAction = Object.assign({}, state.byAction);
+            actionId = action.meta.actionId;
+            byAction[actionId] = (byAction[actionId] || []).concat();
+            if (!byAction[actionId].find(p => p.id == contact.id)) {
+                byAction[actionId].push(contact);
+            }
+            return Object.assign({}, state, { byAction: byAction });
+
         case types.RETRIEVE_ACTION_PARTICIPANTS + '_FULFILLED':
             byAction = Object.assign({}, state.byAction);
             actionId = action.meta.actionId;

@@ -67,6 +67,13 @@ export default function actions(state = null, action) {
                         actionData.id, actionData, { isPending: true }),
             });
 
+        case types.SET_ACTION_CONTACT + '_FULFILLED':
+            actionData = action.payload.action;
+            return Object.assign({}, state, {
+                actionList: updateOrAddListItem(state.actionList,
+                    actionData.id, actionData, { isPending: false, error: null }),
+            });
+
         case types.CREATE_ACTION + '_FULFILLED':
         case types.UPDATE_ACTION + '_FULFILLED':
         case types.RETRIEVE_ACTION + '_FULFILLED':

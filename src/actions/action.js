@@ -116,6 +116,38 @@ export function deleteAction(id) {
     }
 }
 
+export function setActionContact(actionId, contactId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        let data = { contact_id: contactId };
+        let promise = new Promise((resolve, reject) => {
+            let participant = null;
+
+            z.resource('orgs', orgId,
+                'actions', actionId, 'participants', contactId)
+                .put()
+                .then(res => {
+                    participant = res.data.data;
+                    return z.resource('orgs', orgId, 'actions', actionId)
+                        .patch(data)
+                })
+                .then(res => {
+                    resolve({
+                        participant,
+                        action: res.data.data,
+                    });
+                })
+                .catch(err => reject(err));
+        });
+
+        dispatch({
+            type: types.SET_ACTION_CONTACT,
+            meta: { actionId, contactId },
+            payload: { promise },
+        });
+    };
+}
+
 export function sendActionReminders(actionId) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
