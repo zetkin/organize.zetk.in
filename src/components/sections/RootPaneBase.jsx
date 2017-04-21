@@ -186,11 +186,11 @@ export default class RootPaneBase extends React.Component {
     }
 
     onFilterButtonClick() {
-        this.setState({
-            showFilters: !this.state.showFilters,
-        });
+        let showFilters = !this.state.showFilters;
 
-        if (this.onFiltersApply) {
+        this.setState({ showFilters });
+
+        if (!showFilters && this.onFiltersApply) {
             this.onFiltersApply(this.state.filters);
         }
     }
