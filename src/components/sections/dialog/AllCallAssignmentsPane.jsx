@@ -31,7 +31,7 @@ export default class AllCallAssignmentsPane extends RootPaneBase {
     getPaneTools(data) {
         return [
             <Button key="addButton"
-                className="AllCallAssignmentsPane-addButton"
+                className="allCallAssignmentsPane-addButton"
                 labelMsg="panes.allCallAssignments.addButton"
                 onClick={ this.onAddClick.bind(this) }/>,
         ];
