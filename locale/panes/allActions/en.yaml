@@ -1,3 +1,4 @@
+addButton: Add action
 filters:
     afterDate: After date
     beforeDate: Before date
