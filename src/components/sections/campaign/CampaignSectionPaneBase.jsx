@@ -3,6 +3,7 @@ import React from 'react';
 import CampaignSelect from '../../misc/CampaignSelect';
 import DateInput from '../../forms/inputs/DateInput';
 import RootPaneBase from '../RootPaneBase';
+import { selectCampaign } from '../../../actions/campaign';
 import {
     createAction,
     retrieveActions,
@@ -11,24 +12,33 @@ import {
 
 
 export default class CampaignSectionPaneBase extends RootPaneBase {
-    getPaneFilters(data) {
+    getPaneFilters(data, filters) {
+        filters = filters || {};
+
         return [
             <div key="dateFilter" className="AllActionsPane-dateFilter">
                 <DateInput name="afterDate"
-                    value={ this.props.actions.filters.afterDate }
+                    value={ filters.afterDate }
                     labelMsg="panes.allActions.filters.afterDate"
-                    onValueChange={ this.onFilterAfterDateChange.bind(this) }
+                    onValueChange={ this.onFilterChange.bind(this) }
                     />
                 <DateInput name="beforeDate"
-                    value={ this.props.actions.filters.beforeDate }
+                    value={ filters.beforeDate }
                     labelMsg="panes.allActions.filters.beforeDate"
-                    onValueChange={ this.onFilterBeforeDateChange.bind(this) }
+                    onValueChange={ this.onFilterChange.bind(this) }
                     />
             </div>,
             <CampaignSelect key="campaignSelect"
+                value={ filters.campaign }
+                onSelect={ this.onFilterChange.bind(this, 'campaign') }
                 onCreate={ this.onCreateCampaign.bind(this) }
                 onEdit={ this.onEditCampaign.bind(this) }/>
         ];
+    }
+
+    onFiltersApply(filters) {
+        this.props.dispatch(selectCampaign(filters.campaign));
+        this.props.dispatch(retrieveActions(filters.afterDate, filters.beforeDate));
     }
 
     onCalendarAddAction(date) {
@@ -109,15 +119,5 @@ export default class CampaignSectionPaneBase extends RootPaneBase {
 
     onCreateCampaign(title) {
         this.openPane('addcampaign', title);
-    }
-
-    onFilterAfterDateChange(name, value) {
-        let beforeDate = this.props.actions.filters.beforeDate;
-        this.props.dispatch(retrieveActions(value, beforeDate));
-    }
-
-    onFilterBeforeDateChange(name, value) {
-        let afterDate = this.props.actions.filters.afterDate;
-        this.props.dispatch(retrieveActions(afterDate, value));
     }
 }
