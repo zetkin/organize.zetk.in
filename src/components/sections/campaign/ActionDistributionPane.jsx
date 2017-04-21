@@ -3,7 +3,6 @@ import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import CampaignSectionPaneBase from './CampaignSectionPaneBase';
-import CampaignSelect from '../../misc/CampaignSelect';
 import ActionDistribution from '../../misc/actiondistro/ActionDistribution';
 import ActionMiniCalendar from '../../misc/actioncal/ActionMiniCalendar';
 import { retrieveCampaigns } from '../../../actions/campaign';
