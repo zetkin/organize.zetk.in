@@ -2,7 +2,8 @@ description: Description/help text
 optionsWidget: Rules for options
 optionsWidgetOptions:
     checkbox: Allow multiple selected options
-    radio: Allow one selected option only
+    radio: Allow one selected option (check boxes)
+    select:  Allow one selected option (drop-down)
 question: Question
 responseType: Response type
 responseTypeOptions:
