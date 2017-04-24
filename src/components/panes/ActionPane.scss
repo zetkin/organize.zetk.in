@@ -69,6 +69,34 @@
         }
     }
 
+    .ActionPane-responses {
+        h3 {
+            &::before {
+                @include icon($fa-var-inbox);
+            }
+        }
+    }
+
+    .ActionPane-contact {
+        h3 {
+            &::before {
+                @include icon($fa-var-star-o);
+            }
+        }
+    }
+
+    .ActionPane-participants {
+        h3 {
+            &::before {
+                @include icon($fa-var-check);
+            }
+        }
+    }
+
+
+
+
+
 
     .ContactSlot {
         float: none;
