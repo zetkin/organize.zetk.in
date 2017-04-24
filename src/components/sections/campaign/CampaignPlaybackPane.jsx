@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import CampaignSectionPaneBase from './CampaignSectionPaneBase';
-import CampaignSelect from '../../misc/CampaignSelect';
 import CampaignPlayer from '../../misc/campaignplayer/CampaignPlayer';
 import ActionMiniCalendar from '../../misc/actioncal/ActionMiniCalendar';
 import { getLocationAverage } from '../../../utils/location';

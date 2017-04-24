@@ -2,7 +2,8 @@ description: Beskrivning/hjälptext
 optionsWidget: Flervalsregler
 optionsWidgetOptions:
     checkbox: Tillåt flera svarsalternativ
-    radio: Tillåt bara ett svarsalternativ
+    radio: Tillåt bara ett svarsalternativ (checkrutor)
+    select:  Tillåt bara ett svarsalternativ (rullgardin)
 question: Fråga
 responseType: Svarstyp
 responseTypeOptions:

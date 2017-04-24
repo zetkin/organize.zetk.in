@@ -10,7 +10,7 @@ import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import PersonCollection from '../misc/personcollection/PersonCollection';
 import { getListItemById } from '../../utils/store';
-import { retrieveAction, updateAction } from '../../actions/action';
+import { retrieveAction, setActionContact } from '../../actions/action';
 import {
     PCActionParticipantItem,
     PCActionResponseItem,
@@ -36,9 +36,7 @@ const contactTarget = {
         return {
             targetType: 'contact',
             onSetContact: person => {
-                props.dispatch(updateAction(actionId, {
-                    contact_id: person.id
-                }));
+                props.dispatch(setActionContact(actionId, person.id));
             }
         }
     }

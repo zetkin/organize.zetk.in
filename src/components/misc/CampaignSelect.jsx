@@ -3,7 +3,6 @@ import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import RelSelectInput from '../forms/inputs/RelSelectInput';
-import { selectCampaign } from '../../actions/campaign';
 
 
 @connect(state => state)
@@ -12,7 +11,6 @@ export default class CampaignSelect extends React.Component {
     render() {
         let campaignStore = this.props.campaigns;
         let campaigns = campaignStore.campaignList.items.map(i => i.data);
-        let selectedId = campaignStore.selectedCampaign;
 
         let nullLabel = this.props.intl.formatMessage(
             { id: 'misc.campaignSelect.nullLabel' });
@@ -20,7 +18,7 @@ export default class CampaignSelect extends React.Component {
         return (
             <div>
                 <Msg tagName="label" id="misc.campaignSelect.header" />
-                <RelSelectInput value={ selectedId } objects={ campaigns }
+                <RelSelectInput value={ this.props.value } objects={ campaigns }
                     className='CampaignSelect'
                     showEditLink={ true } allowNull={ true }
                     nullLabel={ nullLabel }
@@ -32,11 +30,8 @@ export default class CampaignSelect extends React.Component {
     }
 
     onChange(name, value) {
-        if (!value) {
-            this.props.dispatch(selectCampaign(null));
-        }
-        else {
-            this.props.dispatch(selectCampaign(value));
+        if (this.props.onSelect) {
+            this.props.onSelect(value? value : null);
         }
     }
 }

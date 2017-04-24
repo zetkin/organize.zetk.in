@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import ParticipantList from './elements/ParticipantList';
 import ContactSlot from './elements/ContactSlot';
-import { updateAction } from '../../../actions/action';
+import { setActionContact } from '../../../actions/action';
 import { retrieveActionResponses } from '../../../actions/actionResponse';
 import {
     addActionParticipant,
@@ -64,11 +64,9 @@ const contactTarget = {
             newAction: action,
             onMoveParticipant: props.onMoveParticipant,
             onSetContact: (person, oldAction) => {
-                props.dispatch(updateAction(action.id, {
-                    contact_id: person.id
-                }));
+                props.dispatch(setActionContact(action.id, person.id));
 
-                if (action.id != oldAction.id) {
+                if (oldAction && action.id != oldAction.id) {
                     // TODO: Remove from old action
                 }
             }

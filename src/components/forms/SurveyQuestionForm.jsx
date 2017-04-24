@@ -58,6 +58,7 @@ export default class SurveyQuestionForm extends React.Component {
             let widgetOptions = {
                 'checkbox': 'forms.surveyQuestion.optionsWidgetOptions.checkbox',
                 'radio': 'forms.surveyQuestion.optionsWidgetOptions.radio',
+                'select': 'forms.surveyQuestion.optionsWidgetOptions.select',
             };
 
             responseConfig = (

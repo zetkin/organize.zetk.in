@@ -32,7 +32,7 @@ export default class Button extends React.Component {
 
     onClick(ev) {
         if(!this.props.isPending && this.props.onClick) {
-            this.props.onClick();
+            this.props.onClick(ev);
         }
     }
 }
