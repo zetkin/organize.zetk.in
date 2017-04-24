@@ -1,6 +1,7 @@
 .PeopleListPane {
     .PeopleListPane-addButton {
         @include inline-button($icon: $fa-var-plus);
+        float: right;
     }
 
 }

@@ -1,7 +1,6 @@
-.LocationsPane {
-    .LocationsPane-addLocationButton {
+.allActionsPane {
+    .allActionsPane-addButton {
         @include inline-button($icon: $fa-var-plus);
         float: right;
     }
-
 }

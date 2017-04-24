@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import Button from '../../misc/Button';
+
 import CampaignSectionPaneBase from './CampaignSectionPaneBase';
 import ActionList from '../../lists/ActionList';
 import ActionCalendar from '../../misc/actioncal/ActionCalendar';
@@ -81,6 +83,10 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
             <ViewSwitch key="viewSwitch" states={ viewStates }
                 selected={ this.state.viewMode }
                 onSwitch={ this.onViewSwitch.bind(this) }/>,
+            <Button key="addButton"
+                className="allActionsPane-addButton"
+                labelMsg="panes.allActions.addButton"
+                onClick={ this.onAddClick.bind(this) }/>,
         ];
     }
 
@@ -88,5 +94,9 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         this.setState({
             viewMode: state
         });
+    }
+
+    onAddClick() {
+        this.openPane('addaction');
     }
 }
