@@ -15,11 +15,16 @@
         font-size: 14px;
         margin: 0 0 10px;
         font-weight: 700;
+        width: 100%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     select {
         font-size: 1em;
         margin-bottom: 5px;
+        height: 40px;
     }
 
     .ImporterColumnHead-summary {
