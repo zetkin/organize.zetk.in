@@ -79,7 +79,8 @@ export default class ImporterColumnHead extends React.Component {
 
         return (
             <th className={ classes }>
-                <h3 className="ImporterColumnHead-name">{ name }</h3>
+                <h3 className="ImporterColumnHead-name" title={ name }>
+                    { name }</h3>
                 <select value={ type }
                     onChange={ this.onChangeColumn.bind(this) }>
                     <option value="unknown">{ unknownLabel }</option>
