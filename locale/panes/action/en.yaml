@@ -8,4 +8,6 @@ participants:
 responses:
     h: Sign-ups
 sendRemindersButton: Send reminders
+summary:
+    noDesc: No description
 title: 'Action: { activity }'

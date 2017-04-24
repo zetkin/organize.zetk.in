@@ -8,4 +8,6 @@ participants:
 responses:
     h: Anmälningar
 sendRemindersButton: Skicka påminnelser
+summary:
+    noDesc: Ingen beskrivning
 title: 'Aktion: { activity }'

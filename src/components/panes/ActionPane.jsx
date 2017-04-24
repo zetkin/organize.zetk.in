@@ -99,23 +99,33 @@ export default class ActionPane extends PaneBase {
         }
     }
 
-    getPaneSubTitle(data) {
-        if (data.actionItem && data.actionItem.data && !data.actionItem.isPending) {
-            let action = data.actionItem.data;
-            let startDate = Date.create(action.start_time);
-            let timeLabel = startDate.setUTC(true)
-                .format('{yyyy}-{MM}-{dd}, {HH}:{mm}');
-
-            return action.location.title + ', ' + timeLabel;
-        }
-        else {
-            return null;
-        }
-    }
-
     renderPaneContent(data) {
         if (data.actionItem) {
             let action = data.actionItem.data;
+
+            let descText = null;
+            if (action.info_text) {
+                descText = action.info_text;
+            }
+            else {
+                descText = this.props.intl.formatMessage(
+                    { id: 'panes.action.summary.noDesc' });
+            }
+
+            let startDate = Date.create(action.start_time);
+            let endDate = Date.create(action.end_time);
+
+            let dateLabel = startDate.setUTC(true)
+                .format('{yyyy}-{MM}-{dd}');
+
+            let startTime = startDate.setUTC(true)
+                .format('{HH}:{mm}');
+            let endTime = endDate.setUTC(true)
+                .format('{HH}:{mm}');
+            let timeLabel = startTime + " - " + endTime;
+
+
+
             let participants = this.props.actionParticipants.byAction[action.id];
             let responses = this.props.actionResponses.byAction[action.id];
             let participantList;
@@ -163,8 +173,23 @@ export default class ActionPane extends PaneBase {
             return [
                 <div key="summary"
                     className="ActionPane-summary">
-                    <span className="ActionPane-info">
-                        { action.info_text }
+                    <span className="ActionPane-summaryDesc">
+                        { descText }
+                    </span>
+                    <span className="ActionPane-summaryDate">
+                        { dateLabel }
+                    </span>
+                    <span className="ActionPane-summaryTime">
+                        { timeLabel }
+                    </span>
+                    <span className="ActionPane-summaryLocation">
+                        { action.location.title }
+                    </span>
+                    <span className="ActionPane-summaryActivity">
+                        { action.activity.title }
+                    </span>
+                    <span className="ActionPane-summaryRequired">
+                        { action.num_participants_required }
                     </span>
                     <Link msgId="panes.action.editLink"
                         onClick={ this.onClickEdit.bind(this) }/>
