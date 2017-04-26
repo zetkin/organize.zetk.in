@@ -113,12 +113,26 @@
     }
 
 
+    .ActionPane-contactDropTarget {
+        @include ghost-placeholder();
+        position: relative;
 
+        .ContactSlot {
+            display: inline-block;
+            @include col(2,12, $align: middle);
+            width: 3em;
+            font-size: 1.5em;
 
+            figure {
+                margin-left: -0.5em;
+            }
+        }
 
-
-    .ContactSlot {
-        float: none;
+        span {
+            @include col(10,12, $align: middle);
+            font-size: 1.3em;
+            color: lighten($c-text, 50);
+        }
     }
 
     .ParticipantList {
