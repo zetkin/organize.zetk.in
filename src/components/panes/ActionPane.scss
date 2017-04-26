@@ -75,6 +75,25 @@
                 @include icon($fa-var-inbox);
             }
         }
+
+        .PersonCollectionItem, .DraggableAvatar {
+            cursor: pointer;
+
+            &:hover {
+                background-color: darken(white, 2);
+            }
+        }
+
+        .ActionPane-noResponses {
+            padding: 0.5em 1em;
+            color: lighten($c-text, 60);
+            span {
+                &::before {
+                    @include icon($fa-var-info-circle);
+                }
+                font-size: 1.3em;
+            }
+        }
     }
 
     .ActionPane-contact {
