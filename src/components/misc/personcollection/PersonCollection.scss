@@ -1,6 +1,11 @@
 .PersonCollection {
     .PersonCollection-addItem {
         @include ghost-placeholder();
+
+        p {
+            margin: 0.5em 0;
+            color: lighten($c-text, 50);
+        }
     }
 
     .PersonCollectionItem {
