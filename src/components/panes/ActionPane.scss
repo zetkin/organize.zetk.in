@@ -127,6 +127,32 @@
         }
     }
 
+    .ActionPane-reminders {
+        .ActionBox {
+            .ActionBox-content p {
+                &.checked {
+                    &::before {
+                        @include icon($fa-var-envelope-o);
+                    }
+                }
+
+                &.waiting {
+                    &::before {
+                        @include icon($fa-var-hourglass-half);
+                    }
+                }
+
+                &.missingContact {
+                    &::before {
+                        @include icon($fa-var-star-o);
+                    }
+                }
+            }
+            .ActionBox-footer .ActionPane-reminderButton {
+                @include inline-button($icon: $fa-var-paper-plane-o);
+            }
+        }
+    }
 
     .ActionPane-contactDropTarget {
         @include ghost-placeholder();

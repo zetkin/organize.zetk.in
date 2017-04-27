@@ -3,7 +3,10 @@ import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { DropTarget } from 'react-dnd';
 import React from 'react';
 
+import cx from 'classnames';
+
 import Button from '../misc/Button';
+import ActionBox from '../misc/ActionBox';
 import Link from '../misc/Link';
 import ContactSlot from '../lists/items/elements/ContactSlot';
 import LoadingIndicator from '../misc/LoadingIndicator';
@@ -162,12 +165,73 @@ export default class ActionPane extends PaneBase {
                         />
                 );
             }
+            else {
+                responseList = (
+                    <div className="ActionPane-noResponses">
+                        <Msg id="panes.action.responses.none"/>
+                    </div>
+                );
+            }
 
             let contactSlot = this.props.connectContactDropTarget(
                 <div className="ActionPane-contactDropTarget">
                     <ContactSlot
                         contact={ action.contact }/>
+                        <Msg id="panes.action.contact.addContact"/>
                 </div>
+            );
+
+            let reminderStatus = "checked";
+            let reminderStatusMsg = null;
+            let reminderButton = null;
+
+            if (participants &&
+                participants.find(p => !p.reminder_sent)) {
+                // Not all have reminders yet.
+                reminderStatus = "waiting";
+
+                let missingContact = null;
+
+                if (action.contact) {
+                    reminderButton = (
+                        <Button
+                            className="ActionPane-reminderButton"
+                            labelMsg="panes.action.reminders.button"
+                            onClick={ this.onClickReminders.bind(this) }/>
+                    );
+                }
+                else {
+                    missingContact = (
+                        <p className="missingContact">
+                            <Msg id="panes.action.reminders.missingContact"/>
+                        </p>
+                    );
+                }
+
+                reminderStatusMsg = (
+                    <div>
+                        <p className={ reminderStatus }>
+                            <Msg id="panes.action.reminders.received.notAll"/>
+                        </p>
+                        { missingContact }
+                    </div>
+                );
+            }
+            else {
+                // All have reminders
+                reminderStatusMsg = (
+                    <p className={ reminderStatus }>
+                        <Msg id="panes.action.reminders.received.all"/>
+                    </p>
+                );
+            }
+
+            let remindersActionBox = (
+                <ActionBox key="action"
+                    status={ reminderStatus }
+                    header="Reminders"
+                    content={ reminderStatusMsg }
+                    footer={ reminderButton } />
             );
 
             return [
@@ -215,23 +279,14 @@ export default class ActionPane extends PaneBase {
                     <Msg tagName="h3" id="panes.action.participants.h"/>
                     { participantList }
                 </div>,
+                <div key="reminders"
+                    className="ActionPane-reminders">
+                    { remindersActionBox }
+                </div>,
             ];
         }
         else {
             return <LoadingIndicator/>;
-        }
-    }
-
-    renderPaneFooter(data) {
-        if (data.actionItem && data.actionItem.data && data.actionItem.data.contact) {
-            return (
-                <Button className="ActionPane-reminderButton"
-                    labelMsg="panes.action.sendRemindersButton"
-                    onClick={ this.onClickReminders.bind(this) }/>
-            );
-        }
-        else {
-            return null;
         }
     }
 
