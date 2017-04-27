@@ -130,6 +130,10 @@
     .ActionPane-reminders {
         .ActionBox {
             .ActionBox-content p {
+                &::before {
+                    color: lighten($c-text, 50);
+                }
+
                 &.checked {
                     &::before {
                         @include icon($fa-var-envelope-o);
@@ -138,7 +142,7 @@
 
                 &.waiting {
                     &::before {
-                        @include icon($fa-var-hourglass-half);
+                        @include icon($fa-var-hourglass-o);
                     }
                 }
 
