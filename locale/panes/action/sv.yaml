@@ -13,8 +13,8 @@ reminders:
     button: Skicka påminnelser
     missingContact: Utse en ansvarig innan utskick
     received:
-        all: Alla deltagare har mottagit påminnelse
-        notAll: Inte alla deltagare har mottagit påminnelse
+        all: Alla deltagare har fått påminnelse
+        notAll: Inte alla deltagare har fått påminnelse
 responses:
     guide: Klicka i listan för att boka
     h: Anmälningar

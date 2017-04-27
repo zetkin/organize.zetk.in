@@ -13,12 +13,12 @@ reminders:
     button: Send reminders
     missingContact: Set a contact before sending
     received:
-        all: All participants have recived reminders
-        notAll: Not all participants have recived reminders
+        all: All participants have received reminders
+        notAll: Not all participants have received reminders
 responses:
     guide: Click in list to book
     h: Sign-ups
-    none: No awaiting sign-ups to be booked
+    none: No pending sign-ups to be booked
 summary:
     noDesc: No description
 title: 'Action: { activity }'
