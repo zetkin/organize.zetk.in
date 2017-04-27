@@ -198,6 +198,9 @@ export default class ActionPane extends PaneBase {
                 <div key="responses"
                     className="ActionPane-responses">
                     <Msg tagName="h3" id="panes.action.responses.h"/>
+                    <div className="ActionPane-responsesGuide">
+                        <Msg id="panes.action.responses.guide"/>
+                    </div>
                     { responseList }
                 </div>,
 

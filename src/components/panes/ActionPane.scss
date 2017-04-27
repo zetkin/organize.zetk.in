@@ -70,9 +70,24 @@
     }
 
     .ActionPane-responses {
+        position: relative;
+
         h3 {
             &::before {
                 @include icon($fa-var-inbox);
+            }
+        }
+
+        .ActionPane-responsesGuide {
+            position: absolute;
+            right: 0;
+            top: 0.5em;
+            color: lighten($c-text, 60);
+            span {
+                font-size: 1.1em;
+                &::before {
+                    @include icon($fa-var-question-circle);
+                }
             }
         }
 
