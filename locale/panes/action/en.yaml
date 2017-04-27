@@ -4,6 +4,9 @@ contact:
 editLink: Edit action
 participants:
     addPerson: 'Drop person here or {selectLink}.'
+    item:
+        reminded: 'Reminded {relativeTime}'
+        notReminded: Not reminded
     h: Booked participants
     selectLink: select participant
 reminders:
