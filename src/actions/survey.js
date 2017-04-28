@@ -92,6 +92,27 @@ export function updateSurveyElement(surveyId, elementId, data) {
     };
 }
 
+export function reorderSurveyElements(surveyId, order) {
+    // TODO: Don't convert to ints
+    order = order.map(key => parseInt(key));
+
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        let data = {
+            'default': order,
+        };
+
+        dispatch({
+            type: types.REORDER_SURVEY_ELEMENTS,
+            meta: { surveyId, order },
+            payload: {
+                promise: z.resource('orgs', orgId, 'surveys', surveyId,
+                    'element_order').patch(data)
+            }
+        });
+    };
+}
+
 export function createSurveyOption(surveyId, elementId, data) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;

@@ -78,6 +78,25 @@ export default function surveys(state = null, action) {
                 })
             });
 
+        case types.REORDER_SURVEY_ELEMENTS + '_FULFILLED':
+            surveyId = action.meta.surveyId.toString()
+            let defaultOrder = action.payload.data.data.default;
+
+            return Object.assign({}, state, {
+                elementsBySurvey: Object.assign({}, state.elementsBySurvey, {
+                    [surveyId]: Object.assign({}, state.elementsBySurvey[surveyId], {
+                        items: state.elementsBySurvey[surveyId].items
+                            .concat()
+                            .sort((i0, i1) => {
+                                let idx0 = defaultOrder.indexOf(i0.data.id);
+                                let idx1 = defaultOrder.indexOf(i1.data.id);
+
+                                return idx0 - idx1;
+                            }),
+                    })
+                }),
+            });
+
         case types.UPDATE_SURVEY_OPTION + '_FULFILLED':
             surveyId = action.meta.surveyId;
             elementId = action.meta.elementId;
