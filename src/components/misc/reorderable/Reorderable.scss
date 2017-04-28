@@ -1,0 +1,11 @@
+.Reorderable {
+    position: relative;
+
+    &.dragging {
+        .ReorderableItem.dragging {
+            & > * {
+                pointer-events: none;
+            }
+        }
+    }
+}
