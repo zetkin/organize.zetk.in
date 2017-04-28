@@ -1,11 +1,24 @@
 contact:
+    addContact: Släpp en person här för att utse ansvarig
     h: Ansvarig
 editLink: Redigera aktion
 participants:
     addPerson: 'Släpp en person här eller { selectLink }.'
+    item:
+        reminded: 'Påmind {relativeTime}'
+        notReminded: Ej påmind
     h: Bokade deltagare
     selectLink: välj deltagare
+reminders:
+    button: Skicka påminnelser
+    missingContact: Utse en ansvarig innan utskick
+    received:
+        all: Alla deltagare har fått påminnelse
+        notAll: Inte alla deltagare har fått påminnelse
 responses:
+    guide: Klicka i listan för att boka
     h: Anmälningar
-sendRemindersButton: Skicka påminnelser
+    none: Inga väntande anmälningar att boka
+summary:
+    noDesc: Ingen beskrivning
 title: 'Aktion: { activity }'

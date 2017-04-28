@@ -11,5 +11,13 @@
         left: 70px;
         top: 40px;
         font-size: 12px;
+
+        span {
+            color: lighten($c-text, 60);
+        }
+
+        .reminded span {
+            color: lighten($c-text, 30);
+        }
     }
 }

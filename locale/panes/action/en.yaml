@@ -1,11 +1,24 @@
 contact:
+    addContact: Drop a person here to assign as contact
     h: Contact person
 editLink: Edit action
 participants:
     addPerson: 'Drop person here or {selectLink}.'
+    item:
+        reminded: 'Reminded {relativeTime}'
+        notReminded: Not reminded
     h: Booked participants
     selectLink: select participant
+reminders:
+    button: Send reminders
+    missingContact: Set a contact before sending
+    received:
+        all: All participants have received reminders
+        notAll: Not all participants have received reminders
 responses:
+    guide: Click in list to book
     h: Sign-ups
-sendRemindersButton: Send reminders
+    none: No pending sign-ups to be booked
+summary:
+    noDesc: No description
 title: 'Action: { activity }'

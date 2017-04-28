@@ -3,7 +3,10 @@ import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { DropTarget } from 'react-dnd';
 import React from 'react';
 
+import cx from 'classnames';
+
 import Button from '../misc/Button';
+import ActionBox from '../misc/ActionBox';
 import Link from '../misc/Link';
 import ContactSlot from '../lists/items/elements/ContactSlot';
 import LoadingIndicator from '../misc/LoadingIndicator';
@@ -99,23 +102,33 @@ export default class ActionPane extends PaneBase {
         }
     }
 
-    getPaneSubTitle(data) {
-        if (data.actionItem && data.actionItem.data && !data.actionItem.isPending) {
-            let action = data.actionItem.data;
-            let startDate = Date.create(action.start_time);
-            let timeLabel = startDate.setUTC(true)
-                .format('{yyyy}-{MM}-{dd}, {HH}:{mm}');
-
-            return action.location.title + ', ' + timeLabel;
-        }
-        else {
-            return null;
-        }
-    }
-
     renderPaneContent(data) {
         if (data.actionItem) {
             let action = data.actionItem.data;
+
+            let descText = null;
+            if (action.info_text) {
+                descText = action.info_text;
+            }
+            else {
+                descText = this.props.intl.formatMessage(
+                    { id: 'panes.action.summary.noDesc' });
+            }
+
+            let startDate = Date.create(action.start_time);
+            let endDate = Date.create(action.end_time);
+
+            let dateLabel = startDate.setUTC(true)
+                .format('{yyyy}-{MM}-{dd}');
+
+            let startTime = startDate.setUTC(true)
+                .format('{HH}:{mm}');
+            let endTime = endDate.setUTC(true)
+                .format('{HH}:{mm}');
+            let timeLabel = startTime + " - " + endTime;
+
+
+
             let participants = this.props.actionParticipants.byAction[action.id];
             let responses = this.props.actionResponses.byAction[action.id];
             let participantList;
@@ -152,19 +165,95 @@ export default class ActionPane extends PaneBase {
                         />
                 );
             }
+            else {
+                responseList = (
+                    <div className="ActionPane-noResponses">
+                        <Msg id="panes.action.responses.none"/>
+                    </div>
+                );
+            }
 
             let contactSlot = this.props.connectContactDropTarget(
                 <div className="ActionPane-contactDropTarget">
                     <ContactSlot
                         contact={ action.contact }/>
+                        <Msg id="panes.action.contact.addContact"/>
                 </div>
+            );
+
+            let reminderStatus = "checked";
+            let reminderStatusMsg = null;
+            let reminderButton = null;
+
+            if (participants &&
+                participants.find(p => !p.reminder_sent)) {
+                // Not all have reminders yet.
+                reminderStatus = "waiting";
+
+                let missingContact = null;
+
+                if (action.contact) {
+                    reminderButton = (
+                        <Button
+                            className="ActionPane-reminderButton"
+                            labelMsg="panes.action.reminders.button"
+                            onClick={ this.onClickReminders.bind(this) }/>
+                    );
+                }
+                else {
+                    missingContact = (
+                        <p className="missingContact">
+                            <Msg id="panes.action.reminders.missingContact"/>
+                        </p>
+                    );
+                }
+
+                reminderStatusMsg = (
+                    <div>
+                        <p className={ reminderStatus }>
+                            <Msg id="panes.action.reminders.received.notAll"/>
+                        </p>
+                        { missingContact }
+                    </div>
+                );
+            }
+            else {
+                // All have reminders
+                reminderStatusMsg = (
+                    <p className={ reminderStatus }>
+                        <Msg id="panes.action.reminders.received.all"/>
+                    </p>
+                );
+            }
+
+            let remindersActionBox = (
+                <ActionBox key="action"
+                    status={ reminderStatus }
+                    header="Reminders"
+                    content={ reminderStatusMsg }
+                    footer={ reminderButton } />
             );
 
             return [
                 <div key="summary"
                     className="ActionPane-summary">
-                    <span className="ActionPane-info">
-                        { action.info_text }
+                    <span className="ActionPane-summaryDesc">
+                        { descText }
+                    </span>
+                    <span className="ActionPane-summaryDate">
+                        { dateLabel }
+                    </span>
+                    <span className="ActionPane-summaryTime">
+                        { timeLabel }
+                    </span>
+                    <span className="ActionPane-summaryLocation">
+                        { action.location.title }
+                    </span>
+                    <span className="ActionPane-summaryActivity">
+                        { action.activity.title }
+                    </span>
+                    <span className="ActionPane-summaryRequired">
+                        { action.num_participants_required }
                     </span>
                     <Link msgId="panes.action.editLink"
                         onClick={ this.onClickEdit.bind(this) }/>
@@ -173,6 +262,9 @@ export default class ActionPane extends PaneBase {
                 <div key="responses"
                     className="ActionPane-responses">
                     <Msg tagName="h3" id="panes.action.responses.h"/>
+                    <div className="ActionPane-responsesGuide">
+                        <Msg id="panes.action.responses.guide"/>
+                    </div>
                     { responseList }
                 </div>,
 
@@ -187,23 +279,14 @@ export default class ActionPane extends PaneBase {
                     <Msg tagName="h3" id="panes.action.participants.h"/>
                     { participantList }
                 </div>,
+                <div key="reminders"
+                    className="ActionPane-reminders">
+                    { remindersActionBox }
+                </div>,
             ];
         }
         else {
             return <LoadingIndicator/>;
-        }
-    }
-
-    renderPaneFooter(data) {
-        if (data.actionItem && data.actionItem.data && data.actionItem.data.contact) {
-            return (
-                <Button className="ActionPane-reminderButton"
-                    labelMsg="panes.action.sendRemindersButton"
-                    onClick={ this.onClickReminders.bind(this) }/>
-            );
-        }
-        else {
-            return null;
         }
     }
 
