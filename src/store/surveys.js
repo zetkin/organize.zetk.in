@@ -132,6 +132,26 @@ export default function surveys(state = null, action) {
                 })
             });
 
+        case types.DELETE_SURVEY_OPTION + '_FULFILLED':
+            surveyId = action.meta.surveyId;
+            elementId = action.meta.elementId;
+            optionId = action.meta.optionId;
+            element = state.elementsBySurvey[surveyId].items
+                .find(i => i.data.id == elementId).data;
+
+            return Object.assign({}, state, {
+                elementsBySurvey: Object.assign({}, state.elementsBySurvey, {
+                    [surveyId]: updateOrAddListItem(
+                        state.elementsBySurvey[surveyId],
+                        elementId, Object.assign({}, element, {
+                            question: Object.assign({}, element.question, {
+                                options: element.question.options
+                                    .filter(o => o.id != optionId),
+                            }),
+                        })),
+                })
+            });
+
         case types.CREATE_SURVEY_OPTION + '_FULFILLED':
             surveyId = action.meta.surveyId;
             elementId = action.meta.elementId;

@@ -155,6 +155,21 @@ export function updateSurveyOption(surveyId, elementId, optionId, data) {
     };
 }
 
+export function deleteSurveyOption(surveyId, elementId, optionId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.DELETE_SURVEY_OPTION,
+            meta: { surveyId, elementId, optionId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'surveys', surveyId,
+                    'elements', elementId, 'options', optionId).del()
+            }
+        });
+    };
+}
+
 export function reorderSurveyOptions(surveyId, elemId, order) {
     // TODO: Don't convert to ints
     order = order.map(key => parseInt(key));
