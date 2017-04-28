@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 export default class ReorderableItem extends React.Component {
     static propTypes = {
         dragging: React.PropTypes.bool,
+        disabled: React.PropTypes.bool,
     };
 
     render() {
@@ -45,7 +46,7 @@ export default class ReorderableItem extends React.Component {
     }
 
     onMouseDown(ev) {
-        if (this.props.onBeginDrag) {
+        if (!this.props.disabled && this.props.onBeginDrag) {
             ev.preventDefault();
 
             let itemNode = ReactDOM.findDOMNode(this);

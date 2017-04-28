@@ -7,6 +7,7 @@ import ReorderableItem from './ReorderableItem';
 
 export default class Reorderable extends React.Component {
     static propTypes = {
+        disabled: React.PropTypes.bool,
         onReordering: React.PropTypes.func,
         onReorder: React.PropTypes.func,
     };
@@ -54,6 +55,7 @@ export default class Reorderable extends React.Component {
             let key = child.key;
             let item = (
                 <ReorderableItem key={ key } itemKey={ key } ref={ key }
+                    disabled={ this.props.disabled }
                     dragging={ key == this.state.activeKey }
                     onBeginDrag={ this.onItemBeginDrag.bind(this) }>
                     { child }
