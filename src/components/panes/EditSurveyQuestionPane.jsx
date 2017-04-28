@@ -3,6 +3,7 @@ import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import Button from '../misc/Button';
+import DeleteButton from '../misc/DeleteButton';
 import PaneBase from './PaneBase';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import SurveyQuestionForm from '../forms/SurveyQuestionForm';
@@ -11,6 +12,7 @@ import { getListItemById } from '../../utils/store';
 import {
     retrieveSurvey,
     updateSurveyElement,
+    deleteSurveyElement,
     updateSurveyOption,
     createSurveyOption,
 } from '../../actions/survey';
@@ -70,6 +72,9 @@ export default class EditSurveyQuestionPane extends PaneBase {
                     question={ question }
                     onSubmit={ this.onSubmit.bind(this) }/>,
 
+                <DeleteButton key="deleteButton"
+                    onClick={ this.onDeleteClick.bind(this) }/>,
+
                 optionContainer,
             ];
         }
@@ -111,6 +116,14 @@ export default class EditSurveyQuestionPane extends PaneBase {
         };
 
         this.props.dispatch(updateSurveyElement(surveyId, elementId, data));
+        this.closePane();
+    }
+
+    onDeleteClick() {
+        let surveyId = this.getParam(0);
+        let elemId = this.getParam(1)
+
+        this.props.dispatch(deleteSurveyElement(surveyId, elemId));
         this.closePane();
     }
 }
