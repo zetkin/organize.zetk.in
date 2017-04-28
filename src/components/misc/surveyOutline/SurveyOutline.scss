@@ -1,4 +1,8 @@
 .SurveyOutline {
+    .ReorderableItem {
+        margin-bottom: 1em;
+    }
+
     .SurveyOutline-add {
         @include ghost-placeholder;
 
