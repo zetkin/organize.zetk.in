@@ -78,6 +78,17 @@ export default function surveys(state = null, action) {
                 })
             });
 
+        case types.DELETE_SURVEY_ELEMENT + '_FULFILLED':
+            surveyId = action.meta.surveyId.toString();
+            elementId = action.meta.elementId.toString();
+            return Object.assign({}, state, {
+                elementsBySurvey: Object.assign({}, state.elementsBySurvey, {
+                    [surveyId]: removeListItem(
+                        state.elementsBySurvey[surveyId],
+                        elementId),
+                })
+            });
+
         case types.REORDER_SURVEY_ELEMENTS + '_FULFILLED':
             surveyId = action.meta.surveyId.toString()
             let defaultOrder = action.payload.data.data.default;
