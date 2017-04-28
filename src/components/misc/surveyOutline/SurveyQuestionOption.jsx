@@ -2,6 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 
 import Button from '../Button';
+import Link from '../Link';
 
 
 export default class SurveyQuestionOption extends React.Component {
@@ -10,6 +11,7 @@ export default class SurveyQuestionOption extends React.Component {
         onTextChange: React.PropTypes.func,
         onOpen: React.PropTypes.func,
         onCancel: React.PropTypes.func,
+        onDelete: React.PropTypes.func,
         open: React.PropTypes.bool,
     };
 
@@ -49,6 +51,11 @@ export default class SurveyQuestionOption extends React.Component {
                     labelMsg="misc.surveyOutline.option.cancelButton"
                     onClick={ this.onCancelButtonClick.bind(this) }
                     />,
+                <Link key="deleteButton"
+                    className="SurveyQuestionOption-deleteButton"
+                    msgId="misc.surveyOutline.option.deleteButton"
+                    onClick={ this.onDeleteButtonClick.bind(this) }
+                    />,
                 <Button key="saveButton"
                     labelMsg="misc.surveyOutline.option.saveButton"
                     onClick={ this.onSaveButtonClick.bind(this) }
@@ -79,6 +86,12 @@ export default class SurveyQuestionOption extends React.Component {
     onCancelButtonClick(ev) {
         if (this.props.onCancel) {
             this.props.onCancel();
+        }
+    }
+
+    onDeleteButtonClick(ev) {
+        if (this.props.onDelete) {
+            this.props.onDelete();
         }
     }
 

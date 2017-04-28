@@ -9,6 +9,7 @@ export default class SurveyQuestionOutline extends React.Component {
     static propTypes = {
         options: React.PropTypes.array.isRequired,
         onOptionTextChange: React.PropTypes.func,
+        onOptionDelete: React.PropTypes.func,
     };
 
     constructor(props) {
@@ -29,6 +30,7 @@ export default class SurveyQuestionOutline extends React.Component {
                     open={ open }
                     onOpen={ this.onOptionOpen.bind(this, o) }
                     onCancel={ this.onOptionCancel.bind(this, o) }
+                    onDelete={ this.props.onOptionDelete.bind(this, o) }
                     onTextChange={ this.onOptionTextChange.bind(this, o) }
                     />
             );

@@ -29,6 +29,19 @@
         @include input-base;
     }
 
+    .SurveyQuestionOption-deleteButton {
+        margin-left: 0.5em;
+        color: $c-brand-delete;
+
+        &:before {
+            @include icon($fa-var-trash);
+        }
+
+        &:hover {
+            color: darken($c-brand-delete, 10);
+        }
+    }
+
     button {
         &:first-of-type {
             @include inline-button($icon:$fa-var-times);
