@@ -25,10 +25,12 @@ export default class Reorderable extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (!this.props.children.equals(nextProps.children)) {
-            this.setState({
-                order: nextProps.children.map(child => child.key)
-            });
+        let curKeys = this.props.children.map(child => child.key);
+        let nextKeys = nextProps.children.map(child => child.key);
+
+        if (!curKeys.equals(nextKeys)) {
+            let order = nextProps.children.map(child => child.key);
+            this.setState({ order });
         }
     }
 
