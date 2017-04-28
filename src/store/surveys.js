@@ -152,6 +152,31 @@ export default function surveys(state = null, action) {
                 })
             });
 
+        case types.REORDER_SURVEY_ELEMENTS + '_FULFILLED':
+            defaultOrder = action.payload.data.data.default;
+            surveyId = action.meta.surveyId.toString()
+            element = state.elementsBySurvey[surveyId].items
+                .find(i => i.data.id == elementId).data;
+
+            return Object.assign({}, state, {
+                elementsBySurvey: Object.assign({}, state.elementsBySurvey, {
+                    [surveyId]: updateOrAddListItem(
+                        state.elementsBySurvey[surveyId],
+                        elementId, Object.assign({}, element, {
+                            question: Object.assign({}, element.question, {
+                                options: element.question.options
+                                    .concat()
+                                    .sort((o0, o1) => {
+                                        let idx0 = defaultOrder.indexOf(o0.data.id);
+                                        let idx1 = defaultOrder.indexOf(o1.data.id);
+
+                                        return idx0 - idx1;
+                                    }),
+                            }),
+                        })),
+                })
+            });
+
         default:
             return state || {
                 surveyList: createList(),

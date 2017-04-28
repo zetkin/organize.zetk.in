@@ -154,3 +154,24 @@ export function updateSurveyOption(surveyId, elementId, optionId, data) {
         });
     };
 }
+
+export function reorderSurveyOptions(surveyId, elemId, order) {
+    // TODO: Don't convert to ints
+    order = order.map(key => parseInt(key));
+
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        let data = {
+            'default': order,
+        };
+
+        dispatch({
+            type: types.REORDER_SURVEY_OPTIONS,
+            meta: { surveyId, elemId, order },
+            payload: {
+                promise: z.resource('orgs', orgId, 'surveys', surveyId,
+                    'elements', elemId, 'option_order').patch(data)
+            }
+        });
+    };
+}
