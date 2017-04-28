@@ -3,6 +3,7 @@ import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import Button from '../misc/Button';
+import DeleteButton from '../misc/DeleteButton';
 import PaneBase from './PaneBase';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import SurveyQuestionForm from '../forms/SurveyQuestionForm';
@@ -11,8 +12,11 @@ import { getListItemById } from '../../utils/store';
 import {
     retrieveSurvey,
     updateSurveyElement,
+    deleteSurveyElement,
     updateSurveyOption,
     createSurveyOption,
+    deleteSurveyOption,
+    reorderSurveyOptions,
 } from '../../actions/survey';
 
 
@@ -60,6 +64,8 @@ export default class EditSurveyQuestionPane extends PaneBase {
                             options={ question.options }
                             onOptionCreate={ this.onOptionCreate.bind(this) }
                             onOptionTextChange={ this.onOptionTextChange.bind(this) }
+                            onOptionDelete={ this.onOptionDelete.bind(this) }
+                            onReorder={ this.onOptionReorder.bind(this) }
                             />
                     </div>
                 );
@@ -69,6 +75,9 @@ export default class EditSurveyQuestionPane extends PaneBase {
                 <SurveyQuestionForm key="form" ref="form"
                     question={ question }
                     onSubmit={ this.onSubmit.bind(this) }/>,
+
+                <DeleteButton key="deleteButton"
+                    onClick={ this.onDeleteClick.bind(this) }/>,
 
                 optionContainer,
             ];
@@ -92,6 +101,14 @@ export default class EditSurveyQuestionPane extends PaneBase {
             surveyId, elementId, option.id, data));
     }
 
+    onOptionDelete(option) {
+        let surveyId = this.getParam(0);
+        let elementId = this.getParam(1);
+
+        this.props.dispatch(deleteSurveyOption(
+            surveyId, elementId, option.id));
+    }
+
     onOptionCreate(text) {
         let surveyId = this.getParam(0);
         let elementId = this.getParam(1);
@@ -99,6 +116,14 @@ export default class EditSurveyQuestionPane extends PaneBase {
 
         this.props.dispatch(createSurveyOption(
             surveyId, elementId, data));
+    }
+
+    onOptionReorder(order) {
+        let surveyId = this.getParam(0);
+        let elementId = this.getParam(1);
+
+        this.props.dispatch(reorderSurveyOptions(
+            surveyId, elementId, order));
     }
 
     onSubmit(ev) {
@@ -111,6 +136,14 @@ export default class EditSurveyQuestionPane extends PaneBase {
         };
 
         this.props.dispatch(updateSurveyElement(surveyId, elementId, data));
+        this.closePane();
+    }
+
+    onDeleteClick() {
+        let surveyId = this.getParam(0);
+        let elemId = this.getParam(1)
+
+        this.props.dispatch(deleteSurveyElement(surveyId, elemId));
         this.closePane();
     }
 }

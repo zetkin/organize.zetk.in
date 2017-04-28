@@ -92,6 +92,41 @@ export function updateSurveyElement(surveyId, elementId, data) {
     };
 }
 
+export function deleteSurveyElement(surveyId, elementId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.DELETE_SURVEY_ELEMENT,
+            meta: { surveyId, elementId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'surveys', surveyId,
+                    'elements', elementId).del()
+            }
+        });
+    };
+}
+
+export function reorderSurveyElements(surveyId, order) {
+    // TODO: Don't convert to ints
+    order = order.map(key => parseInt(key));
+
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        let data = {
+            'default': order,
+        };
+
+        dispatch({
+            type: types.REORDER_SURVEY_ELEMENTS,
+            meta: { surveyId, order },
+            payload: {
+                promise: z.resource('orgs', orgId, 'surveys', surveyId,
+                    'element_order').patch(data)
+            }
+        });
+    };
+}
+
 export function createSurveyOption(surveyId, elementId, data) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
@@ -115,6 +150,42 @@ export function updateSurveyOption(surveyId, elementId, optionId, data) {
             payload: {
                 promise: z.resource('orgs', orgId, 'surveys', surveyId,
                     'elements', elementId, 'options', optionId).patch(data)
+            }
+        });
+    };
+}
+
+export function deleteSurveyOption(surveyId, elementId, optionId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.DELETE_SURVEY_OPTION,
+            meta: { surveyId, elementId, optionId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'surveys', surveyId,
+                    'elements', elementId, 'options', optionId).del()
+            }
+        });
+    };
+}
+
+export function reorderSurveyOptions(surveyId, elemId, order) {
+    // TODO: Don't convert to ints
+    order = order.map(key => parseInt(key));
+
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        let data = {
+            'default': order,
+        };
+
+        dispatch({
+            type: types.REORDER_SURVEY_OPTIONS,
+            meta: { surveyId, elemId, order },
+            payload: {
+                promise: z.resource('orgs', orgId, 'surveys', surveyId,
+                    'elements', elemId, 'option_order').patch(data)
             }
         });
     };

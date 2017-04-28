@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Reorderable from '../reorderable/Reorderable';
 import SurveyOutlineElement from './SurveyOutlineElement';
 import SelectInput from '../../forms/inputs/SelectInput';
 
@@ -9,7 +10,8 @@ export default class SurveyOutline extends React.Component {
         survey: React.PropTypes.object.isRequired,
         elements: React.PropTypes.array.isRequired,
         onElementSelect: React.PropTypes.func,
-        onElementCreate: React.PropTypes.func
+        onElementCreate: React.PropTypes.func,
+        onReorder: React.PropTypes.func,
     };
 
     render() {
@@ -31,7 +33,9 @@ export default class SurveyOutline extends React.Component {
 
         return (
             <div className="SurveyOutline">
-                { elements }
+                <Reorderable onReorder={ this.onReorder.bind(this) }>
+                    { elements }
+                </Reorderable>
                 <div key="addSection" className="SurveyOutline-add">
                     <SelectInput
                         value="label"
@@ -42,6 +46,12 @@ export default class SurveyOutline extends React.Component {
                 </div>
             </div>
         );
+    }
+
+    onReorder(order) {
+        if (this.props.onReorder) {
+            this.props.onReorder(order);
+        }
     }
 
     onElementSelect(elem) {

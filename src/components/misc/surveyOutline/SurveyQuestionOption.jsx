@@ -2,13 +2,17 @@ import React from 'react';
 import cx from 'classnames';
 
 import Button from '../Button';
+import Link from '../Link';
 
 
 export default class SurveyQuestionOption extends React.Component {
     static propTypes = {
         option: React.PropTypes.object.isRequired,
         onTextChange: React.PropTypes.func,
+        onOpen: React.PropTypes.func,
         onCancel: React.PropTypes.func,
+        onDelete: React.PropTypes.func,
+        open: React.PropTypes.bool,
     };
 
     constructor(props) {
@@ -16,21 +20,28 @@ export default class SurveyQuestionOption extends React.Component {
 
         this.state = {
             text: '',
-            editing: !!props.editMode,
         };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (!this.props.open && nextProps.open) {
+            this.setState({
+                text: this.props.option.text,
+            });
+        }
     }
 
     render() {
         let option = this.props.option;
         let classes = cx('SurveyQuestionOption', {
-            editable: !this.state.editing,
+            editable: !this.props.open,
         });
 
         let content = (
             <span>{ option.text }</span>
         );
 
-        if (this.state.editing) {
+        if (this.props.open) {
             content = [
                 <input key="input" type="text"
                     value={ this.state.text }
@@ -39,6 +50,11 @@ export default class SurveyQuestionOption extends React.Component {
                 <Button key="cancelButton"
                     labelMsg="misc.surveyOutline.option.cancelButton"
                     onClick={ this.onCancelButtonClick.bind(this) }
+                    />,
+                <Link key="deleteButton"
+                    className="SurveyQuestionOption-deleteButton"
+                    msgId="misc.surveyOutline.option.deleteButton"
+                    onClick={ this.onDeleteButtonClick.bind(this) }
                     />,
                 <Button key="saveButton"
                     labelMsg="misc.surveyOutline.option.saveButton"
@@ -56,11 +72,8 @@ export default class SurveyQuestionOption extends React.Component {
     }
 
     onClick(ev) {
-        if (!this.state.editing) {
-            this.setState({
-                text: this.props.option.text,
-                editing: true,
-            });
+        if (!this.props.open && this.props.onOpen) {
+            this.props.onOpen();
         }
     }
 
@@ -74,10 +87,12 @@ export default class SurveyQuestionOption extends React.Component {
         if (this.props.onCancel) {
             this.props.onCancel();
         }
+    }
 
-        this.setState({
-            editing: false,
-        });
+    onDeleteButtonClick(ev) {
+        if (this.props.onDelete) {
+            this.props.onDelete();
+        }
     }
 
     onSaveButtonClick(ev) {

@@ -40,6 +40,7 @@ surveyOutline:
     option:
         addButton: Add response option
         cancelButton: Cancel
+        deleteButton: Delete
         saveButton: Save
 tagCloud:
     addButton: Add tag

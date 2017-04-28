@@ -3,11 +3,16 @@ import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import Button from '../misc/Button';
+import DeleteButton from '../misc/DeleteButton';
 import PaneBase from './PaneBase';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import SurveyTextBlockForm from '../forms/SurveyTextBlockForm';
 import { getListItemById } from '../../utils/store';
-import { retrieveSurvey, updateSurveyElement } from '../../actions/survey';
+import {
+    retrieveSurvey,
+    updateSurveyElement,
+    deleteSurveyElement,
+} from '../../actions/survey';
 
 
 const mapStateToProps = (state, props) => {
@@ -49,6 +54,9 @@ export default class EditSurveyTextBlockPane extends PaneBase {
                 <SurveyTextBlockForm key="form" ref="form"
                     textBlock={ textBlock }
                     onSubmit={ this.onSubmit.bind(this) }/>,
+
+                <DeleteButton key="deleteButton"
+                    onClick={ this.onDeleteClick.bind(this) }/>,
             ];
         }
     }
@@ -71,6 +79,14 @@ export default class EditSurveyTextBlockPane extends PaneBase {
         };
 
         this.props.dispatch(updateSurveyElement(surveyId, elementId, data));
+        this.closePane();
+    }
+
+    onDeleteClick() {
+        let surveyId = this.getParam(0);
+        let elemId = this.getParam(1)
+
+        this.props.dispatch(deleteSurveyElement(surveyId, elemId));
         this.closePane();
     }
 }

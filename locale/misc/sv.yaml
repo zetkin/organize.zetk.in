@@ -44,6 +44,7 @@ surveyOutline:
     option:
         addButton: Lägg till svarsalternativ
         cancelButton: Avbryt
+        deleteButton: Radera
         saveButton: Spara
 tagCloud:
     addButton: Lägg till

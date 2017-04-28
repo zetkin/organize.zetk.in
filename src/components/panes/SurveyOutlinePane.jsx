@@ -8,7 +8,7 @@ import Link from '../misc/Link';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import SurveyOutline from '../misc/surveyOutline/SurveyOutline';
 import { getListItemById } from '../../utils/store';
-import { retrieveSurvey } from '../../actions/survey';
+import { retrieveSurvey, reorderSurveyElements } from '../../actions/survey';
 
 
 const mapStateToProps = (state, props) => ({
@@ -57,6 +57,7 @@ export default class SurveyOutlinePane extends PaneBase {
                         elements={ elements }
                         onElementSelect={ this.onElementSelect.bind(this) }
                         onElementCreate={ this.onElementCreate.bind(this) }
+                        onReorder={ this.onElementReorder.bind(this) }
                         />
                 </div>,
             ];
@@ -86,5 +87,11 @@ export default class SurveyOutlinePane extends PaneBase {
         else if (type == 'text') {
             this.openPane('addsurveytextblock', survey.id);
         }
+    }
+
+    onElementReorder(order) {
+        let survey = this.props.surveyItem.data;
+
+        this.props.dispatch(reorderSurveyElements(survey.id, order));
     }
 }

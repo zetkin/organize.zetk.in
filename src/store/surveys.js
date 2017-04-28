@@ -78,6 +78,36 @@ export default function surveys(state = null, action) {
                 })
             });
 
+        case types.DELETE_SURVEY_ELEMENT + '_FULFILLED':
+            surveyId = action.meta.surveyId.toString();
+            elementId = action.meta.elementId.toString();
+            return Object.assign({}, state, {
+                elementsBySurvey: Object.assign({}, state.elementsBySurvey, {
+                    [surveyId]: removeListItem(
+                        state.elementsBySurvey[surveyId],
+                        elementId),
+                })
+            });
+
+        case types.REORDER_SURVEY_ELEMENTS + '_FULFILLED':
+            surveyId = action.meta.surveyId.toString()
+            let defaultOrder = action.payload.data.data.default;
+
+            return Object.assign({}, state, {
+                elementsBySurvey: Object.assign({}, state.elementsBySurvey, {
+                    [surveyId]: Object.assign({}, state.elementsBySurvey[surveyId], {
+                        items: state.elementsBySurvey[surveyId].items
+                            .concat()
+                            .sort((i0, i1) => {
+                                let idx0 = defaultOrder.indexOf(i0.data.id);
+                                let idx1 = defaultOrder.indexOf(i1.data.id);
+
+                                return idx0 - idx1;
+                            }),
+                    })
+                }),
+            });
+
         case types.UPDATE_SURVEY_OPTION + '_FULFILLED':
             surveyId = action.meta.surveyId;
             elementId = action.meta.elementId;
@@ -102,6 +132,26 @@ export default function surveys(state = null, action) {
                 })
             });
 
+        case types.DELETE_SURVEY_OPTION + '_FULFILLED':
+            surveyId = action.meta.surveyId;
+            elementId = action.meta.elementId;
+            optionId = action.meta.optionId;
+            element = state.elementsBySurvey[surveyId].items
+                .find(i => i.data.id == elementId).data;
+
+            return Object.assign({}, state, {
+                elementsBySurvey: Object.assign({}, state.elementsBySurvey, {
+                    [surveyId]: updateOrAddListItem(
+                        state.elementsBySurvey[surveyId],
+                        elementId, Object.assign({}, element, {
+                            question: Object.assign({}, element.question, {
+                                options: element.question.options
+                                    .filter(o => o.id != optionId),
+                            }),
+                        })),
+                })
+            });
+
         case types.CREATE_SURVEY_OPTION + '_FULFILLED':
             surveyId = action.meta.surveyId;
             elementId = action.meta.elementId;
@@ -117,6 +167,31 @@ export default function surveys(state = null, action) {
                             question: Object.assign({}, element.question, {
                                 options: element.question.options.concat(
                                     [ action.payload.data.data ])
+                            }),
+                        })),
+                })
+            });
+
+        case types.REORDER_SURVEY_ELEMENTS + '_FULFILLED':
+            defaultOrder = action.payload.data.data.default;
+            surveyId = action.meta.surveyId.toString()
+            element = state.elementsBySurvey[surveyId].items
+                .find(i => i.data.id == elementId).data;
+
+            return Object.assign({}, state, {
+                elementsBySurvey: Object.assign({}, state.elementsBySurvey, {
+                    [surveyId]: updateOrAddListItem(
+                        state.elementsBySurvey[surveyId],
+                        elementId, Object.assign({}, element, {
+                            question: Object.assign({}, element.question, {
+                                options: element.question.options
+                                    .concat()
+                                    .sort((o0, o1) => {
+                                        let idx0 = defaultOrder.indexOf(o0.data.id);
+                                        let idx1 = defaultOrder.indexOf(o1.data.id);
+
+                                        return idx0 - idx1;
+                                    }),
                             }),
                         })),
                 })
