@@ -7,7 +7,12 @@ import { getListItemById } from '../../utils/store';
 import { retrieveQuery, retrieveQueryMatches } from '../../actions/query';
 
 
-@connect(state => ({ queries: state.queries }))
+const mapStateToProps = (state, props) => ({
+    queryItem: getListItemById(state.queries.queryList,
+        props.paneData.params[0]),
+});
+
+@connect(mapStateToProps)
 export default class QueryPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
@@ -18,24 +23,19 @@ export default class QueryPane extends PaneBase {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.queries != nextProps.queries) {
-            let queryId = this.getParam(0);
-            let queryList = this.props.queries.queryList;
-            let queryItem = getListItemById(queryList, queryId);
+        let queryItem = nextProps.queryItem;
 
-            // Load query matches if not already loaded (or loading)
-            if (queryItem && queryItem.data && !queryItem.data.matchList) {
-                this.props.dispatch(retrieveQueryMatches(queryId));
-            }
+        // Load query matches if not already loaded (or loading)
+        if (queryItem && queryItem.data && !queryItem.data.matchList) {
+            console.log('No matches');
+            let queryId = this.getParam(0);
+            this.props.dispatch(retrieveQueryMatches(queryId));
         }
     }
 
     getRenderData() {
-        let queryId = this.getParam(0);
-        let queryList = this.props.queries.queryList;
-
         return {
-            queryItem: getListItemById(queryList, queryId)
+            queryItem: this.props.queryItem,
         };
     }
 
