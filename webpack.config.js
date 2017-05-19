@@ -131,6 +131,11 @@ if (NODE_ENV === 'production') {
     config.devServer = {
         host: '0.0.0.0',
         port: WEBPACK_PORT,
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+            'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+        },
         inline: true,
         hot: true,
         public: `${WEBPACK_HOST}:${WEBPACK_PORT}`,

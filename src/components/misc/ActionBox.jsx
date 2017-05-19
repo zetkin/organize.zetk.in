@@ -1,13 +1,12 @@
-import { injectIntl } from 'react-intl';
 import React from 'react';
+import { FormattedMessage as Msg } from 'react-intl';
 
 import cx from 'classnames';
 
-@injectIntl
 export default class ActionBox extends React.Component {
     static propTypes = {
         status: React.PropTypes.string,
-        header: React.PropTypes.string,
+        headerMsg: React.PropTypes.string,
         content: React.PropTypes.object,
         footer: React.PropTypes.object,
     };
@@ -19,7 +18,7 @@ export default class ActionBox extends React.Component {
         return (
             <div className={ classes }>
                 <div className="ActionBox-header">
-                    { this.props.header }
+                    <Msg id={ this.props.headerMsg }/>
                 </div>
                 <div className="ActionBox-content">
                     { this.props.content }
