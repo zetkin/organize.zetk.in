@@ -6,7 +6,7 @@ const fuseOptions = {
     includeScore: true,
     includeMatches: true,
     maxPatternLength: 32,
-    minMatchCharLength: 2,
+    minMatchCharLength: 1,
     threshold: 0.2,
     keys: [
         // TODO: Use different keys for different types
@@ -24,6 +24,13 @@ const fuseOptions = {
 function searchMatches(q, data) {
     let fuse = new Fuse([ data ], fuseOptions);
     let tokens = q.split(/\s/);
+
+    let tokenLenSum = tokens.reduce((sum, t) => sum + t.length, 0);
+    let avgTokenLen = tokenLenSum / tokens.length;
+
+    if (avgTokenLen < 2.5) {
+        return false;
+    }
 
     let queryMatches = tokens
         .map(s => {
