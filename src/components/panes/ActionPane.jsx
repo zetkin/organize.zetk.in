@@ -181,58 +181,61 @@ export default class ActionPane extends PaneBase {
                 </div>
             );
 
-            let reminderStatus = "checked";
-            let reminderStatusMsg = null;
-            let reminderButton = null;
+            let reminderActionBox = null;
 
-            if (participants &&
-                participants.find(p => !p.reminder_sent)) {
-                // Not all have reminders yet.
-                reminderStatus = "waiting";
+            if (participants && participants.length) {
+                let reminderStatus = "checked";
+                let reminderStatusMsg = null;
+                let reminderButton = null;
 
-                let missingContact = null;
+                if (participants.find(p => !p.reminder_sent)) {
+                    // Not all have reminders yet.
+                    reminderStatus = "waiting";
 
-                if (action.contact) {
-                    reminderButton = (
-                        <Button
-                            className="ActionPane-reminderButton"
-                            labelMsg="panes.action.reminders.button"
-                            onClick={ this.onClickReminders.bind(this) }/>
+                    let missingContact = null;
+
+                    if (action.contact) {
+                        reminderButton = (
+                            <Button
+                                className="ActionPane-reminderButton"
+                                labelMsg="panes.action.reminders.button"
+                                onClick={ this.onClickReminders.bind(this) }/>
+                        );
+                    }
+                    else {
+                        missingContact = (
+                            <p className="missingContact">
+                                <Msg id="panes.action.reminders.missingContact"/>
+                            </p>
+                        );
+                    }
+
+                    reminderStatusMsg = (
+                        <div>
+                            <p className={ reminderStatus }>
+                                <Msg id="panes.action.reminders.received.notAll"/>
+                            </p>
+                            { missingContact }
+                        </div>
                     );
                 }
                 else {
-                    missingContact = (
-                        <p className="missingContact">
-                            <Msg id="panes.action.reminders.missingContact"/>
+                    // All have reminders
+                    reminderStatusMsg = (
+                        <p className={ reminderStatus }>
+                            <Msg id="panes.action.reminders.received.all"/>
                         </p>
                     );
                 }
 
-                reminderStatusMsg = (
-                    <div>
-                        <p className={ reminderStatus }>
-                            <Msg id="panes.action.reminders.received.notAll"/>
-                        </p>
-                        { missingContact }
-                    </div>
+                reminderActionBox = (
+                    <ActionBox key="action"
+                        status={ reminderStatus }
+                        headerMsg="panes.action.reminders.h"
+                        content={ reminderStatusMsg }
+                        footer={ reminderButton } />
                 );
             }
-            else {
-                // All have reminders
-                reminderStatusMsg = (
-                    <p className={ reminderStatus }>
-                        <Msg id="panes.action.reminders.received.all"/>
-                    </p>
-                );
-            }
-
-            let remindersActionBox = (
-                <ActionBox key="action"
-                    status={ reminderStatus }
-                    headerMsg="panes.action.reminders.h"
-                    content={ reminderStatusMsg }
-                    footer={ reminderButton } />
-            );
 
             return [
                 <div key="summary"
@@ -281,7 +284,7 @@ export default class ActionPane extends PaneBase {
                 </div>,
                 <div key="reminders"
                     className="ActionPane-reminders">
-                    { remindersActionBox }
+                    { reminderActionBox }
                 </div>,
             ];
         }
