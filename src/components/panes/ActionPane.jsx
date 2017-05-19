@@ -229,7 +229,7 @@ export default class ActionPane extends PaneBase {
             let remindersActionBox = (
                 <ActionBox key="action"
                     status={ reminderStatus }
-                    header="Reminders"
+                    headerMsg="panes.action.reminders.h"
                     content={ reminderStatusMsg }
                     footer={ reminderButton } />
             );

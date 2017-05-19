@@ -11,6 +11,7 @@ participants:
     selectLink: välj deltagare
 reminders:
     button: Skicka påminnelser
+    h: Påminnelser
     missingContact: Utse en ansvarig innan utskick
     received:
         all: Alla deltagare har fått påminnelse

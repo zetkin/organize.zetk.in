@@ -11,6 +11,7 @@ participants:
     selectLink: select participant
 reminders:
     button: Send reminders
+    h: Reminders
     missingContact: Set a contact before sending
     received:
         all: All participants have received reminders
