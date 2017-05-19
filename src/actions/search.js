@@ -69,7 +69,7 @@ function execSearch(getState, dispatch, query) {
 
     let sendQuery = function(query) {
         // Don't search for really short query strings
-        if (query.length >= 3) {
+        if (query.length >= 3 && ws.readyState == 1) {
             dispatch(searchPending());
 
             ws.send(JSON.stringify({

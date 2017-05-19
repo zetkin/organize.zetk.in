@@ -1,29 +1,53 @@
+import Fuse from 'fuse.js';
+
+const fuseOptions = {
+    location: 0,
+    distance: 10,
+    includeScore: true,
+    includeMatches: true,
+    maxPatternLength: 32,
+    minMatchCharLength: 1,
+    threshold: 0.2,
+    keys: [
+        // TODO: Use different keys for different types
+        'title',
+        'info_text',
+        'description',
+        'first_name',
+        'last_name',
+        'email',
+        'phone',
+    ],
+};
+
 
 function searchMatches(q, data) {
-    let strings = q.split(/\s/);
+    let fuse = new Fuse([ data ], fuseOptions);
+    let tokens = q.split(/\s/);
 
-    if (strings.length == 1) {
-        q = q.toLowerCase();
+    let tokenLenSum = tokens.reduce((sum, t) => sum + t.length, 0);
+    let avgTokenLen = tokenLenSum / tokens.length;
 
-        // This is a rather stupid search, which is likely to incur performance
-        // issues. Both the client and server users of this method know the type
-        // of object that is being tested, so we could have smarter matching
-        // strategies for known objects (i.e. person, location et c).
-        // TODO: Deal with variuos object types differently
-        for (let key in data) {
-            let val = data[key];
-            if (typeof val == 'string'
-                && val.toLowerCase().indexOf(q) >= 0) {
-                return true;
-            }
-        }
-
+    if (avgTokenLen < 2.5) {
         return false;
     }
+
+    let queryMatches = tokens
+        .map(s => {
+            let stringMatches = fuse.search(s);
+            return stringMatches.length? stringMatches[0] : null;
+        })
+        .filter(m => !!m);
+
+    // Must match all tokens
+    if (queryMatches.length == tokens.length) {
+        let matches = queryMatches.reduce((prev, cur) =>
+            prev.concat(cur.matches), []);
+
+        return matches;
+    }
     else {
-        return strings
-            .map(s => searchMatches(s, data))
-            .reduce((prev, cur) => prev && cur, true);
+        return false;
     }
 }
 

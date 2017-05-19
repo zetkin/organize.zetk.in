@@ -9,9 +9,9 @@ function search(ws, req) {
     var queue;
 
     ws.on('message', function(json) {
-        var msg = JSON.parse(json);
+        let msg = JSON.parse(json);
 
-        var writeFunc = function(query, type, data) {
+        let writeFunc = function(query, type, data) {
             ws.send(JSON.stringify({
                 cmd: 'match',
                 query: query,
@@ -64,13 +64,22 @@ function search(ws, req) {
 }
 
 function SearchQueue(z, orgId, query, writeMatch, searchFuncs, lang) {
-    var _idx = 0;
-    var _writeMatch = writeMatch;
+    const MAX_MATCH_COUNT = 20;
 
-    var _proceed = () => {
-        if (_idx < searchFuncs.length) {
+    let _matchCount = 0;
+    let _writeMatch = (query, type, data) => {
+        if (_matchCount < MAX_MATCH_COUNT) {
+            writeMatch(query, type, data);
+        }
+
+        _matchCount++;
+    };
+
+    let _idx = 0;
+    let _proceed = () => {
+        if (_idx < searchFuncs.length && _matchCount < MAX_MATCH_COUNT) {
             const searchFunc = searchFuncs[_idx++];
-            const promise = searchFunc(z, orgId, query, writeMatch, lang)
+            const promise = searchFunc(z, orgId, query, _writeMatch, lang)
 
             if (promise) {
                 promise.then(function() {
@@ -96,7 +105,7 @@ function SearchQueue(z, orgId, query, writeMatch, searchFuncs, lang) {
 
     this.abort = function() {
         _idx = searchFuncs.length;
-        _writeMatch = (type, data) => null;
+        _writeMatch = (query, type, data) => null;
     }
 }
 
