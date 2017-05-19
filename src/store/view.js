@@ -127,12 +127,21 @@ export default function viewState(state = null, action) {
         });
     }
     else if (action.type == types.CREATE_QUERY + '_FULFILLED') {
+        // Replace the relevant AddQueryPane with an EditQueryPane
+        // showing the newly created query.
         return Object.assign({}, state, {
-            panes: state.panes.concat([{
-                id: '$' + makeRandomString(6),
-                type: 'editquery',
-                params: [ action.payload.data.data.id ]
-            }])
+            panes: state.panes.map(paneData => {
+                if (paneData.id == action.meta.paneId) {
+                    return {
+                        id: '$' + makeRandomString(6),
+                        type: 'editquery',
+                        params: [ action.payload.data.data.id ]
+                    };
+                }
+                else {
+                    return paneData;
+                }
+            }),
         });
     }
     else if (action.type == types.MOVE_ACTION_PARTICIPANT) {
