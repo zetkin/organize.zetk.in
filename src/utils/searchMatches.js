@@ -1,29 +1,46 @@
+import Fuse from 'fuse.js';
+
+const fuseOptions = {
+    location: 0,
+    distance: 10,
+    includeScore: true,
+    includeMatches: true,
+    maxPatternLength: 32,
+    minMatchCharLength: 2,
+    threshold: 0.2,
+    keys: [
+        // TODO: Use different keys for different types
+        'title',
+        'info_text',
+        'description',
+        'first_name',
+        'last_name',
+        'email',
+        'phone',
+    ],
+};
+
 
 function searchMatches(q, data) {
-    let strings = q.split(/\s/);
+    let fuse = new Fuse([ data ], fuseOptions);
+    let tokens = q.split(/\s/);
 
-    if (strings.length == 1) {
-        q = q.toLowerCase();
+    let queryMatches = tokens
+        .map(s => {
+            let stringMatches = fuse.search(s);
+            return stringMatches.length? stringMatches[0] : null;
+        })
+        .filter(m => !!m);
 
-        // This is a rather stupid search, which is likely to incur performance
-        // issues. Both the client and server users of this method know the type
-        // of object that is being tested, so we could have smarter matching
-        // strategies for known objects (i.e. person, location et c).
-        // TODO: Deal with variuos object types differently
-        for (let key in data) {
-            let val = data[key];
-            if (typeof val == 'string'
-                && val.toLowerCase().indexOf(q) >= 0) {
-                return true;
-            }
-        }
+    // Must match all tokens
+    if (queryMatches.length == tokens.length) {
+        let matches = queryMatches.reduce((prev, cur) =>
+            prev.concat(cur.matches), []);
 
-        return false;
+        return matches;
     }
     else {
-        return strings
-            .map(s => searchMatches(s, data))
-            .reduce((prev, cur) => prev && cur, true);
+        return false;
     }
 }
 
