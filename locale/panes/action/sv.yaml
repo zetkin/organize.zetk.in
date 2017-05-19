@@ -15,7 +15,7 @@ reminders:
     missingContact: Utse en ansvarig innan utskick
     received:
         all: Alla deltagare har fått påminnelse
-        notAll: Inte alla deltagare har fått påminnelse
+        notAll: Alla deltagare har inte fått någon påminnelse
 responses:
     guide: Klicka i listan för att boka
     h: Anmälningar
