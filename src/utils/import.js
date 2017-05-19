@@ -126,7 +126,7 @@ function guessColumnConfigFromName(name) {
     let type, config;
 
     // TODO: Evolve this function. Add common, localized names
-    if (name.toLowerCase() == 'id') {
+    if (name && name.toLowerCase() == 'id') {
         type = 'person_data';
         config = {
             field: 'id'
