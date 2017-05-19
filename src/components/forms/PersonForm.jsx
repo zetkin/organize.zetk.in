@@ -9,10 +9,15 @@ export default class PersonForm extends React.Component {
     render() {
         var person = this.props.person || {};
         var genderOptions = {
+            '_': 'forms.person.genderOptions.unknown',
             'f': 'forms.person.genderOptions.female',
             'm': 'forms.person.genderOptions.male',
             'o': 'forms.person.genderOptions.other',
         };
+
+        if (!person.gender) {
+            person.gender = '_';
+        }
 
         return (
             <Form ref="form" {...this.props }>
@@ -43,10 +48,22 @@ export default class PersonForm extends React.Component {
     }
 
     getValues() {
-        return this.refs.form.getValues();
+        let values = this.refs.form.getValues();
+
+        if (values.gender == '_') {
+            values.gender = null;
+        }
+
+        return values;
     }
 
     getChangedValues() {
-        return this.refs.form.getChangedValues();
+        let values = this.refs.form.getChangedValues();
+
+        if (values.gender == '_') {
+            values.gender = null;
+        }
+
+        return values;
     }
 }

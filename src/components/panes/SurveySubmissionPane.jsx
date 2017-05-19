@@ -1,5 +1,5 @@
 import React from 'react';
-import { injectIntl, FormattedMessage as Msg } from 'react-intl';
+import { injectIntl, FormattedDate, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 
@@ -88,7 +88,7 @@ export default class SurveySubmissionPane extends PaneBase {
             let sub = data.submissionItem.data;
             let survey = data.surveyItem? data.surveyItem.data : null;
 
-            let timestamp = Date.create(sub.survey.submitted);
+            let timestamp = Date.create(sub.submitted);
 
             let responses = <LoadingIndicator />;
             if (this.props.elementList) {
@@ -117,7 +117,10 @@ export default class SurveySubmissionPane extends PaneBase {
                     <p className="SurveySubmissionPane-infoSurvey">
                         { sub.survey.title }</p>
                     <p className="SurveySubmissionPane-infoDate">
-                        { timestamp.format('{d}/{M}, {yyyy} {HH}:{MM}') }
+                        <FormattedDate value={ timestamp }
+                            year="numeric" month="short" day="numeric"
+                            hour="2-digit" minute="2-digit"
+                            />
                     </p>
 
                     <SubmissionRespondent submission={ sub }/>

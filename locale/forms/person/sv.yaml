@@ -7,6 +7,7 @@ genderOptions:
     female: Kvinna
     male: Man
     other: Annat
+    unknown: Okänt
 lastName: Efternamn
 phone: Telefonnummer
 streetAddress: Gatuadress

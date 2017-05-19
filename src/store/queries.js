@@ -29,9 +29,16 @@ export default function queries(state = null, action) {
                     query.id, query, { isPending: true }),
             });
 
+        case types.RETRIEVE_QUERY + '_FULFILLED':
+            query = action.payload.data.data;
+
+            return Object.assign({}, state, {
+                queryList: updateOrAddListItem(state.queryList,
+                    query.id, query, { isPending: false, error: null }),
+            });
+
         case types.CREATE_QUERY + '_FULFILLED':
         case types.UPDATE_QUERY + '_FULFILLED':
-        case types.RETRIEVE_QUERY + '_FULFILLED':
             query = action.payload.data.data;
 
             // Clear match list since the query changed

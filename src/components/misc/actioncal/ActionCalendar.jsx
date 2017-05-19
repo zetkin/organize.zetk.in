@@ -32,9 +32,9 @@ export default class ActionCalendar extends React.Component {
             endDate.setDate(endDate.getDate() + (7 - endDate.getDay()));
         }
 
-        // Get rid of actions before/after start/end dates
+        // Get rid of actions before start date
         actions = actions.filter(a =>
-            (new Date(a.start_time) > startDate && new Date(a.end_time) < endDate));
+            (new Date(a.start_time) > startDate));
 
         // Always show at least one month
         const duration = endDate.getTime() - startDate.getTime();

@@ -208,8 +208,7 @@ export default class PeopleListPane extends RootPaneBase {
     }
 
     onQueryCreate(title) {
-        this.props.dispatch(createQuery(title));
-        // TODO: Open pane with new query
+        this.openPane('addquery', title);
     }
 
     onQueryEdit(query) {
