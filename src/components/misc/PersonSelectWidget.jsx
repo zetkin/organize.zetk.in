@@ -88,11 +88,6 @@ export default class PersonSelectWidget extends React.Component {
                 <DraggableAvatar key="avatar"
                     person={ this.props.person }
                     />,
-                <a key="clearLink"
-                    className="PersonSelectWidget-clearLink"
-                    onClick={ this.onClearLinkClick.bind(this) }>
-                    <i className="fa fa-remove"></i>
-                </a>
             );
         }
 
@@ -145,6 +140,11 @@ export default class PersonSelectWidget extends React.Component {
                         values={{ selectLink }}
                         />
                 </p>,
+                <a key="clearLink"
+                    className="PersonSelectWidget-clearLink"
+                    onClick={ this.onClearLinkClick.bind(this) }>
+                    <i className="fa fa-remove"></i>
+                </a>
             );
         }
 
