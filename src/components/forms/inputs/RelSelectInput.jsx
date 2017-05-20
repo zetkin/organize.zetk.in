@@ -41,13 +41,12 @@ export default class RelSelectInput extends InputBase {
         const objects = this.props.objects;
         const showEditLink = this.props.showEditLink;
         const valueField = this.props.valueField;
-        const labelField = this.props.labelField;
         const selected = (value && objects)?
             objects.find(o => o[valueField] == value) : null;
 
         var inputValue = this.state.inputValue;
         if (inputValue === undefined) {
-            inputValue = (selected? selected[labelField] : '');
+            inputValue = (selected? label(selected) : '');
         }
 
         const classes = cx({
@@ -112,7 +111,6 @@ export default class RelSelectInput extends InputBase {
                 <ul ref="objectList">
                 {filteredObjects.map(function(obj, idx) {
                     const value = obj[valueField];
-                    const label = obj[labelField];
                     const classes = cx({
                         'selected': (obj == selected),
                         'focused': (idx === this.state.focusedIndex)
@@ -128,7 +126,7 @@ export default class RelSelectInput extends InputBase {
                         <li key={ value } className={ classes }>
                             <label className="RelSelectInput-itemLabel"
                                 onMouseDown={ this.onClickOption.bind(this, obj) }>
-                                { label }
+                                { this.getLabel(obj) }
                             </label>
                             { editLink }
                         </li>
@@ -141,12 +139,24 @@ export default class RelSelectInput extends InputBase {
         );
     }
 
+    getLabel(obj) {
+        if (this.props.labelField) {
+            return obj[this.props.labelField];
+        }
+        else if (this.props.labelFunc) {
+            return this.props.labelFunc(obj);
+        }
+        else {
+            return obj[this.props.valueField];
+        }
+    };
+
+
     getFilteredObjects() {
         // Filter objects based on input value, unless it's undefined or
         // an empty string in which case all objects should be displayed.
-        const labelField = this.props.labelField;
         return this.props.objects.filter(o =>
-            (!this.state.inputValue || o[labelField].toLowerCase()
+            (!this.state.inputValue || this.getLabel(o).toLowerCase()
                 .indexOf(this.state.inputValue.toLowerCase()) >= 0));
     }
 
@@ -274,6 +284,7 @@ RelSelectInput.propTypes = {
     objects: React.PropTypes.array.isRequired,
     valueField: React.PropTypes.string,
     labelField: React.PropTypes.string,
+    labelFunc: React.PropTypes.func,
     nullLabel: React.PropTypes.string,
     showCreateOption: React.PropTypes.bool,
     showEditLink: React.PropTypes.bool,
@@ -287,7 +298,6 @@ RelSelectInput.defaultProps = {
     showCreateOption: true,
     showEditLink: false,
     valueField: 'id',
-    labelField: 'title',
     nullLabel: 'None'
 };
 
