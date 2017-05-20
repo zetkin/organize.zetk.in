@@ -1,4 +1,4 @@
-import { FormattedMessage as Msg } from 'react-intl';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import cx from 'classnames';
@@ -6,6 +6,7 @@ import cx from 'classnames';
 import InputBase from './InputBase';
 
 
+@injectIntl
 export default class RelSelectInput extends InputBase {
     constructor(props) {
         super(props);
@@ -101,9 +102,13 @@ export default class RelSelectInput extends InputBase {
             this.values.push('-');
         }
 
+        let placeholder = this.props.intl.formatMessage(
+            { id: 'misc.relSelectInput.placeholder' });
+
         return (
             <div className={ classes }>
                 <input type="text" ref="input" value={ inputValue }
+                    placeholder={ placeholder }
                     onChange={ this.onInputChange.bind(this) }
                     onFocus={ this.onFocus.bind(this) }
                     onKeyDown={ this.onKeyDown.bind(this) }

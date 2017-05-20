@@ -33,6 +33,8 @@ personSelectWidget:
     selectInstructions: Välj en person från listan eller dra och släpp här för att välja.
     selectLink: välj en
     undoLink: Gå tillbaka
+relSelectInput:
+    placeholder: Skriv för att hitta eller skapa
 staticMap:
     noCoordinates: Ingen position
     setPositionLink: Klicka för att ange position
