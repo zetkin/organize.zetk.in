@@ -19,6 +19,7 @@ export default class CampaignSelect extends React.Component {
             <div>
                 <Msg tagName="label" id="misc.campaignSelect.header" />
                 <RelSelectInput value={ this.props.value } objects={ campaigns }
+                    name="campaign"
                     className='CampaignSelect'
                     showEditLink={ true } allowNull={ true }
                     nullLabel={ nullLabel }
