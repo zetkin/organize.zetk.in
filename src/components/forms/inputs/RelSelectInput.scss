@@ -4,6 +4,10 @@
 
     input[type=text] {
         @include input-base;
+
+        &::placeholder {
+            color: darken(white, 30);
+        }
     }
 
     ul {
