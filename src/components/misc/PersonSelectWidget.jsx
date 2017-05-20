@@ -58,7 +58,7 @@ export default class PersonSelectWidget extends React.Component {
 
     componentDidMount() {
         if (!this.props.person) {
-            this.props.dispatch(retrievePeople());
+            this.props.dispatch(retrievePeople(null, null));
         }
     }
 
@@ -71,7 +71,7 @@ export default class PersonSelectWidget extends React.Component {
                 return;
             }
 
-            this.props.dispatch(retrievePeople());
+            this.props.dispatch(retrievePeople(null, null));
         }
     }
 
