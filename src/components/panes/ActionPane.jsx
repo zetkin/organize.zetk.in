@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { injectIntl, FormattedMessage as Msg } from 'react-intl';
-import { DropTarget } from 'react-dnd';
 import React from 'react';
 
 import cx from 'classnames';
@@ -8,12 +7,12 @@ import cx from 'classnames';
 import Button from '../misc/Button';
 import ActionBox from '../misc/ActionBox';
 import Link from '../misc/Link';
-import ContactSlot from '../lists/items/elements/ContactSlot';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
+import PersonSelectWidget from '../misc/PersonSelectWidget';
 import PersonCollection from '../misc/personcollection/PersonCollection';
 import { getListItemById } from '../../utils/store';
-import { retrieveAction, setActionContact } from '../../actions/action';
+import { retrieveAction, updateAction, setActionContact } from '../../actions/action';
 import {
     PCActionParticipantItem,
     PCActionResponseItem,
@@ -27,42 +26,18 @@ import {
 } from '../../actions/participant';
 
 
-const contactTarget = {
-    canDrop(props, monitor) {
-        return true;
-    },
+const mapStateToProps = (state, props) => {
+    let actionId = props.paneData.params[0];
 
-    drop(props) {
-        // TODO: Use generalized onDropPerson instead
-        let actionId = props.paneData.params[0];
-
-        return {
-            targetType: 'contact',
-            onSetContact: person => {
-                props.dispatch(setActionContact(actionId, person.id));
-            }
-        }
+    return {
+        actionItem: getListItemById(state.actions.actionList, actionId),
+        actionParticipants: state.participants.byAction[actionId],
+        actionResponses: state.actionResponses.byAction[actionId],
     }
 };
 
-function collectContact(connect, monitor) {
-    return {
-        connectContactDropTarget: connect.dropTarget(),
-        isContactOver: monitor.isOver(),
-        canDropContact: monitor.canDrop()
-    };
-}
-
-
-let mapStateToProps = state => ({
-    actions: state.actions,
-    actionParticipants: state.participants,
-    actionResponses: state.actionResponses,
-});
-
 
 @connect(mapStateToProps)
-@DropTarget('person', contactTarget, collectContact)
 @injectIntl
 export default class ActionPane extends PaneBase {
     componentDidMount() {
@@ -72,21 +47,18 @@ export default class ActionPane extends PaneBase {
 
         this.props.dispatch(retrieveAction(actionId));
 
-        if (!this.props.actionParticipants.byAction[actionId]) {
+        if (!this.props.actionParticipants) {
             this.props.dispatch(retrieveActionParticipants(actionId));
         }
 
-        if (!this.props.actionResponses.byAction[actionId]) {
+        if (!this.props.actionResponses) {
             this.props.dispatch(retrieveActionResponses(actionId));
         }
     }
 
     getRenderData() {
-        let actionId = this.getParam(0);
-        let actionList = this.props.actions.actionList;
-
         return {
-            actionItem: getListItemById(actionList, actionId),
+            actionItem: this.props.actionItem,
         }
     }
 
@@ -127,10 +99,8 @@ export default class ActionPane extends PaneBase {
                 .format('{HH}:{mm}');
             let timeLabel = startTime + " - " + endTime;
 
-
-
-            let participants = this.props.actionParticipants.byAction[action.id];
-            let responses = this.props.actionResponses.byAction[action.id];
+            let participants = this.props.actionParticipants;
+            let responses = this.props.actionResponses;
             let participantList;
             let responseList;
 
@@ -172,14 +142,6 @@ export default class ActionPane extends PaneBase {
                     </div>
                 );
             }
-
-            let contactSlot = this.props.connectContactDropTarget(
-                <div className="ActionPane-contactDropTarget">
-                    <ContactSlot
-                        contact={ action.contact }/>
-                        <Msg id="panes.action.contact.addContact"/>
-                </div>
-            );
 
             let reminderActionBox = null;
 
@@ -274,7 +236,8 @@ export default class ActionPane extends PaneBase {
                 <div key="contact"
                     className="ActionPane-contact">
                     <Msg tagName="h3" id="panes.action.contact.h"/>
-                    { contactSlot }
+                    <PersonSelectWidget person={ action.contact }
+                        onSelect={ this.onContactSelect.bind(this) }/>
                 </div>,
 
                 <div key="participants"
@@ -316,5 +279,15 @@ export default class ActionPane extends PaneBase {
     onRemoveParticipant(person) {
         let actionId = this.getParam(0);
         this.props.dispatch(removeActionParticipant(actionId, person.id));
+    }
+
+    onContactSelect(person) {
+        let actionId = this.getParam(0);
+        if (person) {
+            this.props.dispatch(setActionContact(actionId, person.id));
+        }
+        else {
+            this.props.dispatch(updateAction(actionId, { contact_id: null }));
+        }
     }
 }
