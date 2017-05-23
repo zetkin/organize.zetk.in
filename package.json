@@ -5,7 +5,7 @@
     "type": "git",
     "url": "git://github.com/zetkin/organizer-dashboard.git"
   },
-  "version": "0.0.0",
+  "version": "4.0.0",
   "main": "app",
   "scripts": {
     "postinstall": "./bin/npm/postinstall",
@@ -49,6 +49,7 @@
     "negotiator": "^0.6.1",
     "node-yaml": "^3.0.3",
     "object-subset": "0.0.4",
+    "raven": "^1.2.1",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.0.1",
     "react-async": "^2.1.0",
