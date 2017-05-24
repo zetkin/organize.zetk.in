@@ -158,6 +158,13 @@ export default function viewState(state = null, action) {
             return state;
         }
     }
+    else if (action.meta && action.meta.paneId && action.type.slice(-10) == '_FULFILLED') {
+        // Generically close pane after successful async action
+        return Object.assign({}, state, {
+            panes: state.panes.filter(paneData =>
+                paneData.id != action.meta.paneId),
+        });
+    }
     else {
         return state || {
             section: '',
