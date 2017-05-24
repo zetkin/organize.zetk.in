@@ -1,0 +1,9 @@
+instructions: |-
+    För att kunna söka efter personer baserat på deras enkätsvar måste svaret
+    vara länkat till en person i persondatabasen.
+person:
+    h: Länkad person
+saveButton:
+    linkLabel: Länka enkätsvar
+    unlinkLabel: Koppla från enkätsvar
+title: Länka enkätsvar
