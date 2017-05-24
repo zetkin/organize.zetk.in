@@ -42,6 +42,7 @@ export default function surveySubmissions(state = null, action) {
                         submissionData.id, submissionData, { isPending: true }),
             });
 
+        case types.UPDATE_SURVEY_SUBMISSION + '_FULFILLED':
         case types.RETRIEVE_SURVEY_SUBMISSION + '_FULFILLED':
             submissionData = action.payload.data.data
             return Object.assign({}, state, {
