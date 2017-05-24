@@ -123,7 +123,8 @@ export default class SurveySubmissionPane extends PaneBase {
                             />
                     </p>
 
-                    <SubmissionRespondent submission={ sub }/>
+                    <SubmissionRespondent submission={ sub }
+                        onConnect={ this.onConnectClick.bind(this) }/>
                 </div>,
                 <div key="responses" className="SurveySubmissionPane-responses">
                     <Msg tagName="h3" id="panes.surveySubmission.responses.h"/>
@@ -134,6 +135,11 @@ export default class SurveySubmissionPane extends PaneBase {
         else {
             return <LoadingIndicator/>;
         }
+    }
+
+    onConnectClick() {
+        let surveyId = this.getParam(0);
+        this.openPane('linksubmission', surveyId);
     }
 }
 
@@ -158,15 +164,19 @@ let SubmissionRespondent = props => {
         if (sub.respondent.id) {
             avatar = <Avatar person={ sub.respondent }/>;
             connection = (
-                <div className="SurveySubmissionPane-connection">
+                <div className="SurveySubmissionPane-connection connected"
+                    onClick={ props.onConnect }>
                     <Msg id="panes.surveySubmission.info.connected"/>
                 </div>
             );
         }
         else {
-            // TODO: Search for person
-            // TODO: Show message
-            // TODO: Submit pairing
+            connection = (
+                <div className="SurveySubmissionPane-connection"
+                    onClick={ props.onConnect }>
+                    <Msg id="panes.surveySubmission.info.notConnected"/>
+                </div>
+            );
         }
     }
 

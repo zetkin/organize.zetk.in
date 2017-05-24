@@ -1,6 +1,7 @@
 info:
     anonymous: Anonym svarande
-    connected: Kopplad
+    connected: Länkad
+    notConnected: Olänkad
 responses:
     emptyResponse: Frågan besvarades inte
     h: Frågor och svar
