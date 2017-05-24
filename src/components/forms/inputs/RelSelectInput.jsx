@@ -47,7 +47,7 @@ export default class RelSelectInput extends InputBase {
 
         var inputValue = this.state.inputValue;
         if (inputValue === undefined) {
-            inputValue = (selected? label(selected) : '');
+            inputValue = (selected? this.getLabel(selected) : '');
         }
 
         const classes = cx({
@@ -145,14 +145,14 @@ export default class RelSelectInput extends InputBase {
     }
 
     getLabel(obj) {
-        if (this.props.labelField) {
-            return obj[this.props.labelField];
-        }
-        else if (this.props.labelFunc) {
+        if (this.props.labelFunc) {
             return this.props.labelFunc(obj);
         }
+        else if (this.props.labelField) {
+            return obj[this.props.labelField];
+        }
         else {
-            return obj[this.props.valueField];
+            return obj.title || obj[this.props.valueField];
         }
     };
 
