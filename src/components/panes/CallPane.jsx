@@ -14,7 +14,12 @@ import {
 } from '../../actions/call';
 
 
-@connect(state => ({ calls: state.calls }))
+const mapStateToProps = (state, props) => ({
+    callItem: getListItemById(state.calls.callList, props.paneData.params[0]),
+});
+
+
+@connect(mapStateToProps)
 @injectIntl
 export default class CallPane extends PaneBase {
     componentDidMount() {
@@ -25,11 +30,8 @@ export default class CallPane extends PaneBase {
     }
 
     getRenderData() {
-        let callId = this.getParam(0);
-        let callList = this.props.calls.callList;
-
         return {
-            callItem: getListItemById(callList, callId),
+            callItem: this.props.callItem,
         };
     }
 
@@ -132,7 +134,8 @@ export default class CallPane extends PaneBase {
             return (
                 <div className={ classes }>
                     <div className="CallPane-target">
-                        <Avatar key="targetAvatar" person={ call.target }/>
+                        <Avatar key="targetAvatar" person={ call.target }
+                            onClick={ this.onTargetClick.bind(this) }/>
                         <h1 key="targetName" className="CallPane-targetName">
                             { call.target.name } </h1>
                     </div>
@@ -166,6 +169,12 @@ export default class CallPane extends PaneBase {
         else {
             return <LoadingIndicator/>;
         }
+    }
+
+    onTargetClick() {
+        let call = this.props.callItem.data;
+
+        this.openPane('person', call.target.id);
     }
 
     onActionTakenClick(actionTaken) {

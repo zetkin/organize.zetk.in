@@ -15,6 +15,7 @@
     margin-bottom: 1em;
 
     .Avatar {
+        cursor: pointer;
         @include col(2.5,12, $align:middle);
     }
 
