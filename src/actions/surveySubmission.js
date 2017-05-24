@@ -25,3 +25,18 @@ export function retrieveSurveySubmission(id) {
         });
     };
 }
+
+export function updateSurveySubmission(id, data, paneId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.UPDATE_SURVEY_SUBMISSION,
+            meta: { id, paneId },
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'survey_submissions', id).patch(data)
+            }
+        });
+    };
+}

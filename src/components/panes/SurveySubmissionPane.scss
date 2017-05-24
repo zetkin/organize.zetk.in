@@ -75,10 +75,25 @@
             top: 0;
             right: 0;
             font-size: 1.3em;
+            cursor: pointer;
 
             &:before {
-                @include icon($fa-var-check);
+                @include icon($fa-var-chain-broken);
+                color: $c-brand-delete;
+            }
+
+            &.connected:before {
+                @include icon($fa-var-chain);
                 color: $c-brand-success;
+            }
+
+            &:hover, &.connected:hover {
+                color: $c-ui-darker;
+
+                &:before {
+                    @include icon($fa-var-pencil);
+                    color: inherit;
+                }
             }
         }
 

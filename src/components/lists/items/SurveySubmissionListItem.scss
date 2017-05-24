@@ -73,7 +73,7 @@
         &.linked {
             color: $c-ui-darker;
             &::before {
-                @include icon($fa-var-check);
+                @include icon($fa-var-chain);
             }
             &::after {
                 @include icon($fa-var-user);
@@ -83,7 +83,7 @@
         &.unknown {
             background-color: $c-ui-warning;
             &::before {
-                @include icon($fa-var-link);
+                @include icon($fa-var-chain-broken);
             }
             &::after {
                 @include icon($fa-var-user);

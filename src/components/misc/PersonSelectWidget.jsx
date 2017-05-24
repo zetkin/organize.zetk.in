@@ -44,6 +44,7 @@ const mapStateToProps = state => ({
 @DropTarget('person', contactTarget, collectPerson)
 export default class PersonSelectWidget extends React.Component {
     static propTypes = {
+        onSelect: React.PropTypes.func,
         person: React.PropTypes.object,
         personList: React.PropTypes.object,
     };
@@ -96,7 +97,7 @@ export default class PersonSelectWidget extends React.Component {
             let people = personList.items? personList.items.map(i => i.data) : [];
 
             content.push(
-                <RelSelectInput key="input"
+                <RelSelectInput key="input" name="person"
                     labelFunc={ p => p.first_name + ' ' + p.last_name }
                     onValueChange={ this.onInputChange.bind(this) }
                     objects={ people }

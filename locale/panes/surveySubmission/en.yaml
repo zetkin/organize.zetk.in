@@ -1,6 +1,7 @@
 info:
     anonymous: Anonymous respondent
-    connected: Connected
+    connected: Linked
+    notConnected: Unlinked
 responses:
     emptyResponse: Question not answered
     h: Questions and answers

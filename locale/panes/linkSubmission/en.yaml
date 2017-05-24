@@ -1,0 +1,9 @@
+instructions: |-
+    Linking a submission to a person in the person database is necessary to be
+    able to find that person based on survey searches.
+person:
+    h: Linked person
+saveButton:
+    linkLabel: Link submission
+    unlinkLabel: Unlink submission
+title: Link survey submission
