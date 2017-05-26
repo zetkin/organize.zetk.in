@@ -26,10 +26,6 @@ function run(paneElements, container) {
     }
 
     if (!_running) {
-        document.addEventListener('touchmove', function(ev) {
-            ev.preventDefault();
-        });
-
         _layout = (window.innerWidth > 720)? HORIZONTAL : VERTICAL;
         _stackWidth = container.offsetWidth;
 
@@ -241,7 +237,8 @@ function Pane(domElement, isBase) {
 
     this.domElement.addEventListener('touchstart', onDomElementTouchStart);
     function onDomElementTouchStart(ev) {
-        if (_layout == HORIZONTAL && !section.isBase) {
+        let x = ev.touches[0].clientX - domElement.getBoundingClientRect().left;
+        if (_layout == HORIZONTAL && !section.isBase && x < 30) {
             startDragging(ev.touches[0]);
         }
     }
