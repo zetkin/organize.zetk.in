@@ -42,6 +42,34 @@ export default class ImporterTable extends React.Component {
         });
     }
 
+    componentDidMount() {
+        this.onKeyUp = ev => {
+            let tableNode = ReactDOM.findDOMNode(this.refs.table);
+            let tableRect = tableNode.getBoundingClientRect();
+            let colWidth = document.querySelector('.ImporterColumnHead')
+                .getBoundingClientRect()
+                .width;
+
+            let colIdx = Math.ceil(tableNode.scrollLeft / colWidth);
+
+            if (ev.keyCode == 37) {
+                colIdx = Math.max(colIdx - 1, 0);
+            }
+            else if (ev.keyCode == 39) {
+                colIdx = Math.min(colIdx + 1, this.props.table.columnList.items.length - 1);
+            }
+
+            let scrollLeft = colIdx * colWidth;
+            scroll.left(tableNode, scrollLeft);
+        };
+
+        window.addEventListener('keyup', this.onKeyUp);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('keyup', this.onKeyUp);
+    }
+
     render() {
         let table = this.props.table;
 
