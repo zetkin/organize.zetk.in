@@ -1,6 +1,7 @@
 city: By
 coAddress: C/o adresse
 email: E-mail adresse
+externalId: Eksternt ID
 firstName: Fornavn
 gender: Køn
 genderOptions:
