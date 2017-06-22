@@ -1,3 +1,4 @@
+abortButton: Afbryd import
 column:
     colOptions:
         complex:
@@ -7,19 +8,19 @@ column:
             zetkin: Zetkin ID
         person:
             city: By
-            coAddress: C/o adresse
-            email: E-mail adresse
+            coAddress: C/O-adresse
+            email: E-mailadresse
             firstName: Fornavn
             gender: Køn
             lastName: Efternavn
             phone: Telefonnummer
-            streetAddress: Gadenavn og -nummer
+            streetAddress: Adresse
             zip: Postnummer
     editSettingsLink: Rediger indstillinger for spalter
     idFields: ID for sammenlægning
     otherFields: Anden data
     personFields: Personfelt
-    unknown: Hop over spalte
+    unknown: Spring over spalte
 error:
     backButton: Ændr indstilninger
     h: Ups! Der skete en fejl. Kampen fortsætter!
@@ -31,3 +32,71 @@ error:
 importButton: Importer
 importDropZoneMessage: 'Træk og drop en fil her, eller klik og vælg en fil der skal importeres'
 importMoreButton: Importer mere
+report:
+    h: |-
+        { count, plural,
+            =0 {Ingen rækker blev importeret}
+            =1 {En række blev importeret}
+            other {# rækker blev importerede}
+        }
+    numCreated: |-
+        { count, plural,
+            =0 {Ingen nye personer blev oprettet}
+            =1 {En ny person blev oprettet}
+            other {# nye personer blev oprettet}
+        }
+    numTagged: |-
+        { count, plural,
+            =0 {Tilføjede ingen etiketter}
+            =1 {Tilføjede etiketter på én person}
+            other {Tilføjede etiketter på # personer}
+        }
+    numUpdated: |-
+        { count, plural,
+            =0 {Ingen eksisterende personer blev opdaterede}
+            =1 {Én eksisterende person blev opdateret}
+            other {# eksisterende personer blev opdaterede}
+        }
+settings:
+    personData:
+        fields:
+            city: By
+            coAddress: C/O-adresse
+            email: E-mailadresse
+            firstName: Fornavn
+            gender: Køn
+            lastName: Efternavn
+            phone: Telefonnummer
+            streetAddress: Adresse
+            zip: Postnummer
+        h: Vælg felt
+        instructions: Hvilke personoplysninger er der i denne spalte
+    personTag:
+        emptyLabel: Etiketter for tomme rækker
+        valueLabel: 'Etiketter for rækker med værdi: { value }'
+summary:
+    personTag:
+        summary: |-
+            {numTagged, plural,
+                =0 {Ingen værdier er oversatte, ændr indstillingerne }
+                =1 {Oversætter en værdi til etiketter}
+                other {Oversætter # værdier til etiketter}
+            }
+table:
+    emptyColumnsRemoved: |-
+        { numRemoved, plural,
+            =1 {Ignorerede en tom spalte}
+            other {Ignorerede # tomme spalter}
+        }
+    firstRowAsHeader: Første række indeholder overskrifter
+    truncLabel: >-
+        Viser {truncated, number} af {total, number} rækker. Yderligere {extra,
+        plural,
+
+        =1 {en rad} other {# rader}} vil blive importeret.
+tableSelect:
+    h: Vælg ark
+    label: 'Vælg mellem {count} ark'
+    p: >
+        Filen indeholder mere end et ark. Vælg hvilket ark der indeholder det
+        data du vil importere.

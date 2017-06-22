@@ -1,0 +1,5 @@
+h1: Welcome
+intro: >-
+    This is Zetkin's caller interface. To use Zetkin Call you have to be signed
+    in.
+loginButton: Sign in

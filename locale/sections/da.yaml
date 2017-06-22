@@ -1,0 +1,35 @@
+labels:
+    campaign: Kampagne
+    dialog: Dialog
+    maps: 'Karter '
+    people: Mennesker
+    settings: Indstillinger
+    survey: Spørgeskema
+menu:
+    backToDashboard: Tilbage
+    helpLink:
+        href: 'http://manual.zetkin.org/en'
+        text: Hjælp
+    infoLink:
+        href: 'http://zetkin.org/en'
+        text: Info
+subSections:
+    campaign:
+        actions: Aktioner
+        distribution: Spredning
+        playback: Afspil
+    dialog:
+        assignments: Ringeopgave
+        calls: Samtalelog
+    maps:
+        locations: Steder
+        overview: Overblik
+    people:
+        import: Importer
+        invite: Invitation
+        list: Mennesker
+    settings:
+        officials: Tovholdere
+    survey:
+        submissions: Spørgeskemabesvarelser
+        surveys: Spørgeskemaer

@@ -1,0 +1,44 @@
+action:
+    booked: Booked
+    multiLocationLabel: |
+        {count, plural,
+            =2 {In two locations}
+            =3 {In three locations}
+            =4 {In four locations}
+            =5 {In five locations}
+            other {In # locations}
+        }
+    yesLabel: 'Yes'
+calendar:
+    weekDays:
+        friday: F
+        monday: M
+        saturday: S
+        sunday: S
+        thursday: T
+        tuesday: T
+        wednesday: W
+filter:
+    activities:
+        h: |
+            {count, plural,
+                =0 {Filter by activity}
+                =1 {Filtering by one activity}
+                other {Filtering by # activities}
+            }
+    campaigns:
+        h: |
+            {count, plural,
+                =0 {Filter by campaign}
+                =1 {Filtering by one campaign}
+                other {Filtering by # campaigns}
+            }
+    h: Filter actions
+    locations:
+        h: |
+            {count, plural,
+                =0 {Filter by location}
+                =1 {Filtering by one location}
+                other {Filtering by # locations}
+            }
+submitLabel: Save responses and sign up

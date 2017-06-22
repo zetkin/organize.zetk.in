@@ -1,0 +1,33 @@
+closeButton: I understand
+manualButton: Read more in the manual
+notes:
+    intro:
+        h: Start assignment
+        href: 'http://manual.zetkin.org/en'
+        p: >-
+            You are about to start a call assignment. Read the assignment
+            instructions and prepare. Then click "Start calling" to start.
+    laneSwitch:
+        h: Report old calls again
+        href: 'http://manual.zetkin.org/en'
+        p: >-
+            Here you can report a new call with a person you called before. It's
+            particularly useful if someone calls you back.
+    postCall:
+        h: After the call
+        href: 'http://manual.zetkin.org/en'
+        p: >-
+            After you finished talking to the person, click here to proceed to
+            reporting the call.
+    prepare:
+        h: Get to know the person
+        href: 'http://manual.zetkin.org/en'
+        p: >-
+            This is the first person you will be calling. Prepare for the call
+            and then continue to make the call.
+    targetInfo:
+        h: Use your phone
+        href: 'http://manual.zetkin.org/en'
+        p: >-
+            Here is a short summary of the person, including their phone number.
+            Use a regular phone to dial and call the person.

@@ -1,9 +1,21 @@
 breadcrumbs:
     form: Indstilninger
-    goal: 'Målsætning, informere, mobilisere, hold kontakten, intet template'
-    target: >-
-        Målgruppe, ring alle, ring alle med en bestemt etiket, ring tilfældigt
-        udvalgte, intet template
+    goal: |-
+        Målsætning{goalType, select,
+          inform {: Informere}
+          mobilize {: Mobilisere}
+          stayintouch {: Hold kontakten}
+          custom {: Intet template}
+          other {}
+        }
+    target: |-
+        Målgruppe{targetType, select,
+          allTarget {: Ring alle}
+          tagTarget {: Ring alle med en bestemt etiket}
+          randomTarget {: Ring tilfældigt udvalgte}
+          custom {: Intet template}
+          other {}
+        }
 form:
     instructions: >-
         3. skridt ud af 3. Udfyld titel, beskrivelse og indstilninger for

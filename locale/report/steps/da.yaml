@@ -1,0 +1,95 @@
+callBack:
+    effect:
+        asap: '{target} placeres sidst i opkaldskøen.'
+        other: '{target} fjernes automatisk fra opkaldskøen så længe.'
+    options:
+        asap: Så snart som muligt
+        fewDays: Om et par dage
+        oneWeek: Om en uge
+        twoWeeks: Om et par uger
+    question: Hvornår skal vi ringe tilbage?
+    summary:
+        asap: Vi ringer tilbage så snart som muligt
+        fewDays: 'Vi ringer tidligst tilbage om et par dage '
+        oneWeek: Vi ringer tidligst tilbage om en uge
+        twoWeeks: Vi ringer tidligst tilbage om to uger
+callerLog:
+    effect:
+        leftLog: 'De der ringer fremover kommer til at se din note: '
+    options:
+        saveWithLog: Gem note
+        saveWithoutLog: Gem uden note
+    question: Vil du efterlade en note til de der ringer en anden gang?
+    summary:
+        emptyLog: Du skrev ingen note til dem der ringer en anden gang.
+        leftLog: Du skrev en note til dem der ringer en anden gang.
+failureMessage:
+    effect:
+        leftMessage: >-
+            Dem der ringer en anden gang, kommer til at se at du har efterladt
+            en besked.
+    options:
+        leftMessage: Ja
+        noMessage: Nej
+    question: Efterlod du en besked på telefonsvareren?
+    summary:
+        leftMessage: Du efterlod en besked.
+        noMessage: Du efterlod ingen besked.
+failureReason:
+    options:
+        lineBusy: Optaget
+        noPickup: Intet svar / Telefonsvarer
+        notAvailable: Ikke tilgængelig lige nu
+        wrongNumber: Forkert nummer
+    question: Hvorfor ikke?
+    summary:
+        lineBusy: Der var optaget.
+        noPickup: '{target} svarede ikke.'
+        notAvailable: '{target var ikke tilgængelig lige nu.'
+        wrongNumber: 'Vi havde forkert nummer til {target}.'
+organizerAction:
+    effect:
+        actionNeeded: En tovholder vil blive informeret.
+    options:
+        actionNeeded: 'Ja, informér en tovholder'
+        noActionNeeded: 'Nej, ikke nødvendigt'
+    question: 'Skete der noget under samtalen, som kræver at en tovholder agerer?'
+    summary:
+        actionNeeded: Du vil gerne have at en tovholder ser på samtalen.
+        noActionNeeded: Ingen tovholder behøver at agere.
+organizerLog:
+    effect:
+        leftLog: 'Tovholderen kommer til at se din besked:'
+    options:
+        saveWithLog: Inkludér besked
+        saveWithoutLog: Gem uden besked
+    question: Forklar tovholderen hvad problemet er.
+    summary:
+        emptyLog: Du skrev ingen besked til tovholderen.
+        leftLog: Du skrev en besked til tovholderen.
+successCouldTalk:
+    effect:
+        callBack: 'Andre der ringer fremover, vil kunne se at vi skulle ringe tilbage.'
+        couldTalk: >-
+            Andre der ringer fremover, vil kunne se at du var i stand til at
+            færdiggøre opkaldet.
+    options:
+        callBack: 'Nej, vi bliver nødt til at ringe tilbage'
+        couldTalk: Ja
+    question: 'Kunne {target} tale lige nu?'
+    summary:
+        callBack: '{target} havde ikke tid til at tale med os lige nu.'
+        couldTalk: '{target} kunne tale med os.'
+successOrFailure:
+    effect:
+        failure: >-
+            Andre der ringer fremover, kommer til at se du ikke har talt med
+            {target}
+        success: 'Andre der ringer fremover, kommer til at se du har talt med {target}'
+    options:
+        failure: Nej...
+        success: Ja
+    question: 'Nåede du {target}?'
+    summary:
+        failure: 'Du nåede ikke {target}.'
+        success: 'Du nåede {target}.'

@@ -1,0 +1,8 @@
+h1: Dine opgaver
+intro: |-
+    Du har {numAssignments, plural, =1 {en opgave} other {# opgaver}} som du
+    kan ringe på.
+noAssignmentsIntro: >-
+    Du har ingen ringeopgaver. Kontakt en organisator i din organisation, hvis
+    du vil hjælpe med at ringe.
+startCalling: Vælg opgave og begynd at ringe

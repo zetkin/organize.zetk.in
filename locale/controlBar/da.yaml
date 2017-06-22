@@ -1,0 +1,14 @@
+assignmentsButton: Vis alle opgaver
+callButton: Start samtale
+endButton: Stop med at ringe
+finishCallButton: Afslut og rapportér
+instructions:
+    prepare: Forbered dig til samtalen
+nextCallButton: Fortsæt med at ringe
+skipButton: Spring over
+startButton: Begynd at ringe
+submitReportButton: Indsend rapport
+targetInfo:
+    lastFailure: 'Sidst forsøgt {date}'
+    lastNever: Aldrig ringet til før
+    lastSuccessful: Sidst nået

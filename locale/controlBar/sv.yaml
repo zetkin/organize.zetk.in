@@ -1,0 +1,14 @@
+assignmentsButton: Visa alla uppdrag
+callButton: Starta samtal
+endButton: Sluta ringa
+finishCallButton: Slutför & rapportera
+instructions:
+    prepare: Förbered dig iför samtalet.
+nextCallButton: Fortsätt ringa
+skipButton: Hoppa över
+startButton: Börja ringa
+submitReportButton: Skicka rapport
+targetInfo:
+    lastFailure: 'Senast sökt {date}'
+    lastNever: Aldrig ringd förut
+    lastSuccessful: 'Senast nådd {date}'

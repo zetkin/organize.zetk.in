@@ -1,0 +1,8 @@
+filters:
+    oa:
+        label: Markeret for tovholderhandling
+        options:
+            all: Alle opkald uanset markering
+            needed: Alle markerede opkald
+            notTaken: Markerede samtal hvor handling er påkrævet
+            taken: Markerede samtal hvor handling er foretaget

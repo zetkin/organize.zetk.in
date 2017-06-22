@@ -1,0 +1,16 @@
+admins:
+    add: 'Slip eller { selectLink }'
+    desc: >-
+        Administratører har fulde rettigheder til at oprette, redigere og slette
+        alle typer af indhold.
+    h: Administatører
+    selectLink: vælg personer
+organizers:
+    add: 'Slip eller { selectLink }'
+    desc: >-
+        Organisatører har tilstrækkelige rettigheder for at for eksempel
+        gennemføre kampagner og håndtere ringeopgaver.
+    h: >-
+        Organisatører har tilstrækkelige rettigheder for at for eksempel
+        gennemføre kampagner og håndtere ringeopgaver.
+    selectLink: vælg personer

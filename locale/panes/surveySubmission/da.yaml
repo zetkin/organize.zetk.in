@@ -1,0 +1,7 @@
+info:
+    anonymous: 'Anonym '
+    connected: Forbundet
+responses:
+    emptyResponse: Spørgsmålet blev ikke besvaret
+    h: Spørgsmål og svar
+title: Indsendt spørgeskema

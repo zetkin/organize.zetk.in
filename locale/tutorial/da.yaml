@@ -1,0 +1,35 @@
+closeButton: Jeg forstår
+manualButton: Læs mere i manualen
+notes:
+    intro:
+        h: Start ringeopgaven
+        href: 'http://manual.zetkin.org/dk'
+        p: >-
+            Du skal nu til at starte på en ringeopgave. Læs instruktionerne til
+            opgaven og forbered dig. Klik så på "Begynd at ringe" for at komme
+            igang.
+    laneSwitch:
+        h: Indrapportér gamle samtaler igen
+        href: 'http://manual.zetkin.org/dk'
+        p: >-
+            Her kan du indrapportere en ny samtale med en person du har talt med
+            tidligere. Det er for eksempel brugbart når nogen ringer tilbage til
+            dig.
+    postCall:
+        h: Efter samtalen
+        href: 'http://manual.zetkin.org/dk'
+        p: >-
+            Efter du har talt med personen, klikker du her for at gå videre og
+            indrapportere samtalen.
+    prepare:
+        h: Lær personen at kende
+        href: 'http://manual.zetkin.org/dk'
+        p: >-
+            Dette er den første person du skal ringe til. Forbered dig på
+            samtalen, og fortsæt så for at lave opkaldet. God vind!
+    targetInfo:
+        h: Brug din telefon
+        href: 'http://manual.zetkin.org/dk'
+        p: >-
+            Her ser du et resumé om personen, inklusiv nummeret du skal ringe
+            til. Benyt en almindelig telefon for at ringe op.

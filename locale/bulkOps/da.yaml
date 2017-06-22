@@ -1,6 +1,15 @@
 ops:
     person:
-        delete: 'Slet en person, slet to personer, '
-        export: 'Eksporter en person, eksporter to personer'
-        tag: 'Sæt etiketter på en person, sæt etiketter på to personer'
+        delete: |
+            Slet {count, plural,
+                =1 {en person}
+                other {# personer}}
+        export: |
+            Eksporter {count, plural,
+                =1 {en person}
+                other {# personer}}
+        tag: |
+            St etiketter på {count, plural,
+                =1 {en person}
+                other {# personer}}
 selectLabel: Vælg handling

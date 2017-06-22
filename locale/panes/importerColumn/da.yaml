@@ -1,0 +1,6 @@
+instructions: 'Vælg en spaltetype og rediger indstillinger her. '
+title: 'Indstilninger for spalte: { column }'
+typeOptions:
+    personData: Personoplysninger
+    personTag: Etiketter
+    unknown: Vælg en spatetype

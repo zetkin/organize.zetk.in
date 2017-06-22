@@ -1,0 +1,38 @@
+closeButton: Jag förstår
+manualButton: Läs mer i manualen
+notes:
+    intro:
+        h: Starta ringuppdrag
+        href: >-
+            http://manual.zetkin.org/sv/for-aktivister/ringa-med-zetkin/innan-du-borjar/
+        p: |-
+            Du ska nu starta ett ringuppdrag. Läs uppdragets instruktioner och
+            förbered dig. Klicka sedan på "Börja ringa" för att sätta igång.
+    laneSwitch:
+        h: Rapportera gamla samtal på nytt
+        href: >-
+            http://manual.zetkin.org/sv/for-aktivister/ringa-med-zetkin/gora-om-ett-samtal/
+        p: |-
+            Här kan du rapportera ett nytt samtal med en person du pratat med
+            tidigare. Det är användbart exempelvis om du blir uppringd.
+    postCall:
+        h: När samtalet är färdigt
+        href: >-
+            http://manual.zetkin.org/sv/for-aktivister/ringa-med-zetkin/samtalet/rapportera/
+        p: >-
+            Efter att du pratat med personen klickar du här för att gå vidare
+            och rapportera samtalet.
+    prepare:
+        h: Lär känna personen
+        href: >-
+            http://manual.zetkin.org/sv/for-aktivister/ringa-med-zetkin/samtalet/forbered-dig/
+        p: |-
+            Här är den första personen du ska ringa. Förbered dig inför
+            samtalet och gå sedan vidare för att ringa.
+    targetInfo:
+        h: Använd din telefon
+        href: >-
+            http://manual.zetkin.org/sv/for-aktivister/ringa-med-zetkin/samtalet/ring/
+        p: |-
+            Här ser du en sammanfattning om personen, inklusive numret du ska
+            ringa. För att ringa använder du en vanlig telefon.

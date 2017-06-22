@@ -1,0 +1,44 @@
+action:
+    booked: Booket
+    multiLocationLabel: |-
+        {count, plural,
+            =2 {På to pladser}
+            =3 {På tre pladser}
+            =4 {På fire pladser}
+            =5 {På fem pladser}
+            other {På # pladser}
+        }
+    yesLabel: Ja
+calendar:
+    weekDays:
+        friday: F
+        monday: M
+        saturday: L
+        sunday: S
+        thursday: T
+        tuesday: T
+        wednesday: O
+filter:
+    activities:
+        h: |
+            {count, plural,
+                =0 {Filtrer på aktiviteter}
+                =1 {Filtrer på en aktivitet}
+                other {Filtrer på # aktiviteter}
+            }
+    campaigns:
+        h: |
+            {count, plural,
+                =0 {Filtrér på kampagne}
+                =1 {Filtrerer på en kampagne}
+                other {Filtrerer på # kampagner}
+            }
+    h: Filtrér aktioner
+    locations:
+        h: |
+            {count, plural,
+                =0 {Filtrér på pladser}
+                =1 {Filtrerer på en plads}
+                other {Filtrerer på # pladser}
+            }
+submitLabel: Gem mine tilmeldinger
