@@ -3,13 +3,17 @@ import { connect } from 'react-redux';
 import { FormattedMessage as Msg } from 'react-intl';
 
 import RootPaneBase from '../RootPaneBase';
+import RoutePanel from './elements/RoutePanel';
 import SelectInput from '../../forms/inputs/SelectInput';
 import { retrieveAddresses } from '../../../actions/address';
+import { generateRoutes } from '../../../actions/route';
 import { getLocationAverage } from '../../../utils/location';
 
 
 const mapStateToProps = state => ({
     addressList: state.addresses.addressList,
+    routeList: state.routes.routeList,
+    draftList: state.routes.draftList,
 });
 
 @connect(mapStateToProps)
@@ -55,7 +59,13 @@ export default class AllRoutesPane extends RootPaneBase {
         return [
             <div key="map" ref="map"
                 className="AllRoutesPane-map">
-            </div>
+            </div>,
+            <RoutePanel key="routes"
+                addressList={ this.props.addressList }
+                routeList={ this.props.routeList }
+                draftList={ this.props.draftList }
+                onGenerate={ this.onRoutePanelGenerate.bind(this) }
+                />
         ];
     }
 
@@ -94,5 +104,9 @@ export default class AllRoutesPane extends RootPaneBase {
                 }
             }
         }
+    }
+
+    onRoutePanelGenerate(addresses, config) {
+        this.props.dispatch(generateRoutes(addresses, config));
     }
 }

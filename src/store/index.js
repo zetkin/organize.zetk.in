@@ -23,6 +23,7 @@ import people from './people';
 import importer from './importer';
 import personTags from './personTags';
 import queries from './queries';
+import routes from './routes';
 import search from './search';
 import selections from './selections';
 import surveys from './surveys';
@@ -54,6 +55,7 @@ const appReducer = combineReducers({
     personTags,
     locationTags,
     queries,
+    routes,
     search,
     selections,
     surveys,
