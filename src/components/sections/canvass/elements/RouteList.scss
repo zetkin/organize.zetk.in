@@ -1,0 +1,12 @@
+.RouteList {
+    margin: 1em;
+
+    .RouteList-item {
+        padding: 1em;
+        border-bottom: 1px solid $c-ui-dark;
+
+        span {
+            display: block;
+        }
+    }
+}
