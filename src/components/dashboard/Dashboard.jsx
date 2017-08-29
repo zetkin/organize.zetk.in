@@ -21,7 +21,7 @@ export default class Dashboard extends React.Component {
         let shortcutElements = [];
 
         shortcuts.forEach((shortcut, index) => {
-            if (index < 5) {
+            if (index < 6) {
                 favoriteElements.push(
                     <li key={ shortcut }>
                         <Shortcut section={ shortcut }
