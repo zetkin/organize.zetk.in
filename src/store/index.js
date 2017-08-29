@@ -6,6 +6,7 @@ import loginRedirect from '../common/redux/middleware/loginRedirect';
 import actions from './actions';
 import actionResponses from './actionResponses';
 import activities from './activities';
+import addresses from './addresses';
 import callAssignments from './callAssignments';
 import calls from './calls';
 import campaigns from './campaigns';
@@ -36,6 +37,7 @@ const appReducer = combineReducers({
     actions,
     actionResponses,
     activities,
+    addresses,
     callAssignments,
     calls,
     campaigns,
