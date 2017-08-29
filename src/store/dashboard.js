@@ -50,7 +50,7 @@ export default function dashboard(state = null, action) {
                 ],
                 widgetDataList: createList(),
                 shortcuts: [ 'people', 'campaign', 'dialog', 'maps', 'survey',
-                    'settings' ]
+                    'canvass', 'settings' ]
             };
     }
 }
