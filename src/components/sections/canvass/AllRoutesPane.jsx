@@ -118,8 +118,7 @@ export default class AllRoutesPane extends RootPaneBase {
     }
 
     onRoutePanelRouteMouseOver(route) {
-        let addressIds = route.addresses.map(i => i.data.id);
-        this.resetMarkers(addressIds);
+        this.resetMarkers(route.addresses);
     }
 
     onRoutePanelRouteMouseOut(route) {
