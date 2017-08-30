@@ -22,10 +22,10 @@ export default class AllRoutesPane extends RootPaneBase {
         this.props.dispatch(retrieveAddresses());
 
         var mapOptions = {
-            center: getLocationAverage({}),
+            center: new google.maps.LatLng(55.61, 13.01),
             disableDefaultUI: true,
             zoomControl: true,
-            zoom: this.props.zoom || 4,
+            zoom: 13,
         };
 
         // TODO: create nicer looking svg path
@@ -65,11 +65,13 @@ export default class AllRoutesPane extends RootPaneBase {
                 routeList={ this.props.routeList }
                 draftList={ this.props.draftList }
                 onGenerate={ this.onRoutePanelGenerate.bind(this) }
+                onRouteMouseOver={ this.onRoutePanelRouteMouseOver.bind(this) }
+                onRouteMouseOut={ this.onRoutePanelRouteMouseOut.bind(this) }
                 />
         ];
     }
 
-    resetMarkers() {
+    resetMarkers(activeIds = null) {
         let marker;
         let addressList = this.props.addressList;
 
@@ -81,6 +83,11 @@ export default class AllRoutesPane extends RootPaneBase {
 
         if (addressList.items && !addressList.isPending) {
             let addresses = this.props.addressList.items.map(i => i.data);
+
+            if (activeIds) {
+                addresses = addresses
+                    .filter(addr => activeIds.indexOf(addr.id) >= 0);
+            }
 
             addresses.forEach(addr => {
                 let latLng = new google.maps.LatLng(addr.latitude, addr.longitude);
@@ -108,5 +115,14 @@ export default class AllRoutesPane extends RootPaneBase {
 
     onRoutePanelGenerate(addresses, config) {
         this.props.dispatch(generateRoutes(addresses, config));
+    }
+
+    onRoutePanelRouteMouseOver(route) {
+        let addressIds = route.addresses.map(i => i.data.id);
+        this.resetMarkers(addressIds);
+    }
+
+    onRoutePanelRouteMouseOut(route) {
+        this.resetMarkers();
     }
 }
