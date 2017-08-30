@@ -10,9 +10,14 @@ export default function routes(state = null, action) {
             draftList: createList(action.data.routes),
         });
     }
+    else if (action.type == types.DISCARD_ROUTE_DRAFTS) {
+        return Object.assign({}, state, {
+            draftList: null,
+        });
+    }
     else {
         return state || {
-            draftList: createList(),
+            draftList: null,
             routeList: createList(),
         };
     }

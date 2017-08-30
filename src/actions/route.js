@@ -33,6 +33,12 @@ export function generateRoutes(addressIds, config = {}) {
     };
 }
 
+export function discardRouteDrafts() {
+    return {
+        type: types.DISCARD_ROUTE_DRAFTS,
+    };
+}
+
 
 function findRoute(points, size) {
     let cur = points[Math.floor(Math.random() * points.length)];

@@ -13,12 +13,17 @@ export default class RoutePanel extends React.Component {
         if (draftList && draftList.isLoading) {
             content = <LoadingIndicator />;
         }
-        else if (draftList && draftList.items && draftList.items.length) {
+        else if (draftList && draftList.items) {
             content = (
                 <div className="RoutePanel-drafts">
                     <RouteList list={ draftList }
                         onRouteMouseOver={ this.onRouteMouseOver.bind(this) }
                         onRouteMouseOut={ this.onRouteMouseOut.bind(this) }
+                        />
+                    <Button
+                        className="RoutePanel-discardButton"
+                        labelMsg="panes.allRoutes.routePanel.discardButton"
+                        onClick={ this.props.onDiscardDrafts }
                         />
                 </div>
             );
@@ -27,8 +32,8 @@ export default class RoutePanel extends React.Component {
             content = (
                 <div className="RoutePanel-config">
                     <Button
-                        className="AllRoutesPane-generateButton"
-                        labelMsg="panes.allRoutes.routes.generateButton"
+                        className="RoutePanel-generateButton"
+                        labelMsg="panes.allRoutes.routePanel.generateButton"
                         onClick={ this.onGenerateButtonClick.bind(this) }
                         />
                 </div>
