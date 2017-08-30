@@ -6,7 +6,7 @@ import RootPaneBase from '../RootPaneBase';
 import RoutePanel from './elements/RoutePanel';
 import SelectInput from '../../forms/inputs/SelectInput';
 import { retrieveAddresses } from '../../../actions/address';
-import { generateRoutes } from '../../../actions/route';
+import { generateRoutes, discardRouteDrafts } from '../../../actions/route';
 import { getLocationAverage } from '../../../utils/location';
 
 
@@ -65,6 +65,7 @@ export default class AllRoutesPane extends RootPaneBase {
                 routeList={ this.props.routeList }
                 draftList={ this.props.draftList }
                 onGenerate={ this.onRoutePanelGenerate.bind(this) }
+                onDiscardDrafts={ this.onRoutePanelDiscard.bind(this) }
                 onRouteMouseOver={ this.onRoutePanelRouteMouseOver.bind(this) }
                 onRouteMouseOut={ this.onRoutePanelRouteMouseOut.bind(this) }
                 />
@@ -115,6 +116,10 @@ export default class AllRoutesPane extends RootPaneBase {
 
     onRoutePanelGenerate(addresses, config) {
         this.props.dispatch(generateRoutes(addresses, config));
+    }
+
+    onRoutePanelDiscard() {
+        this.props.dispatch(discardRouteDrafts());
     }
 
     onRoutePanelRouteMouseOver(route) {
