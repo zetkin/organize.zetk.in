@@ -16,7 +16,10 @@ export default class RoutePanel extends React.Component {
         else if (draftList && draftList.items && draftList.items.length) {
             content = (
                 <div className="RoutePanel-drafts">
-                    <RouteList list={ draftList }/>
+                    <RouteList list={ draftList }
+                        onRouteMouseOver={ this.onRouteMouseOver.bind(this) }
+                        onRouteMouseOut={ this.onRouteMouseOut.bind(this) }
+                        />
                 </div>
             );
         }
@@ -47,6 +50,18 @@ export default class RoutePanel extends React.Component {
             };
 
             this.props.onGenerate(addresses, config);
+        }
+    }
+
+    onRouteMouseOver(route) {
+        if (this.props.onRouteMouseOver) {
+            this.props.onRouteMouseOver(route);
+        }
+    }
+
+    onRouteMouseOut(route) {
+        if (this.props.onRouteMouseOut) {
+            this.props.onRouteMouseOut(route);
         }
     }
 }
