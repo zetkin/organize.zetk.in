@@ -7,19 +7,36 @@ import {
 export default function addresses(state = null, action) {
     if (action.type == types.RETRIEVE_ADDRESSES) {
         // TODO: Handle async action
-        let rand = [];
+        let dummies = [];
 
         for (let i = 0; i < 100; i++) {
-            rand.push({
-                id: i,
-                street: '',
-                latitude: 55.596 + (Math.random() - 0.5) * 0.05,
-                longitude: 13.011 + (Math.random() - 0.5) * 0.1,
+            let row = Math.floor(i/10);
+            let col = i % 10;
+
+            let lat = 55.590 + row * 0.005;
+            let lng = 13.001 + col * 0.01;
+
+            let street = 'Av ' + (row + 1);
+            let number = col + 1;
+
+            if (row % 2) {
+                lng += 0.005;
+                street = 'Street ' + (col + 1)
+                number = row + 1;
+            }
+
+            dummies.push({
+                id: i.toString(),
+                street: street,
+                number: number,
+                title: number + ', ' + street,
+                latitude: lat,
+                longitude: lng,
             });
         }
 
         return Object.assign({}, state, {
-            addressList: createList(rand),
+            addressList: createList(dummies),
         });
     }
     else {
