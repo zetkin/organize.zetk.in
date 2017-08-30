@@ -88,7 +88,7 @@ export default class AllRoutesPane extends RootPaneBase {
                 marker = new google.maps.Marker({
                     position: latLng,
                     map: this.map,
-                    title: addr.address,
+                    title: addr.title,
                 });
 
                 this.markers.push(marker);
