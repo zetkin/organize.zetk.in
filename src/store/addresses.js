@@ -39,6 +39,17 @@ export default function addresses(state = null, action) {
             addressList: createList(dummies),
         });
     }
+    else if (action.type == types.RETRIEVE_ADDRESSES + '_FULFILLED') {
+        let addresses = action.payload;
+
+        return Object.assign({}, state, {
+            addressById: addresses.reduce((byId, a) => {
+                byId[a.id] = a;
+                return byId
+            }, {}),
+            addressList: createList(addresses),
+        });
+    }
     else {
         return state || {
             addressList: createList(),
