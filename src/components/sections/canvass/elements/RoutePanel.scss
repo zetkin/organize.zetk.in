@@ -1,3 +1,18 @@
 .RoutePanel {
     background-color: white;
+
+    .RouteList {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 4em;
+    }
+
+    .RoutePanel-buttons {
+        position: absolute;
+        bottom: 1em;
+        left: 1em;
+        right: 1em;
+    }
 }
