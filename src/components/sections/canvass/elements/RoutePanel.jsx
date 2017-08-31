@@ -7,11 +7,19 @@ import RouteList from './RouteList';
 
 export default class RoutePanel extends React.Component {
     render() {
+        let generator = this.props.generator;
         let draftList = this.props.draftList;
         let content;
 
-        if (draftList && draftList.isLoading) {
-            content = <LoadingIndicator />;
+        if (generator.isPending) {
+            content = (
+                <div className="RoutePanel-progress">
+                    <span className="RoutePanel-progressCount">
+                        { generator.info.routesCompleted }
+                    </span>
+                    <LoadingIndicator />;
+                </div>
+            );
         }
         else if (draftList && draftList.items) {
             content = (
@@ -20,22 +28,26 @@ export default class RoutePanel extends React.Component {
                         onRouteMouseOver={ this.onRouteMouseOver.bind(this) }
                         onRouteMouseOut={ this.onRouteMouseOut.bind(this) }
                         />
-                    <Button
-                        className="RoutePanel-discardButton"
-                        labelMsg="panes.allRoutes.routePanel.discardButton"
-                        onClick={ this.props.onDiscardDrafts }
-                        />
+                    <div className="RoutePanel-buttons">
+                        <Button
+                            className="RoutePanel-discardButton"
+                            labelMsg="panes.allRoutes.routePanel.discardButton"
+                            onClick={ this.props.onDiscardDrafts }
+                            />
+                    </div>
                 </div>
             );
         }
         else {
             content = (
                 <div className="RoutePanel-config">
-                    <Button
-                        className="RoutePanel-generateButton"
-                        labelMsg="panes.allRoutes.routePanel.generateButton"
-                        onClick={ this.onGenerateButtonClick.bind(this) }
-                        />
+                    <div className="RoutePanel-buttons">
+                        <Button
+                            className="RoutePanel-generateButton"
+                            labelMsg="panes.allRoutes.routePanel.generateButton"
+                            onClick={ this.onGenerateButtonClick.bind(this) }
+                            />
+                    </div>
                 </div>
             );
         }
@@ -51,7 +63,7 @@ export default class RoutePanel extends React.Component {
         if (this.props.onGenerate) {
             let addresses = this.props.addressList.items.map(i => i.data.id);
             let config = {
-                routeSize: 30,
+                routeSize: 300,
             };
 
             this.props.onGenerate(addresses, config);

@@ -12,6 +12,7 @@ import { getLocationAverage } from '../../../utils/location';
 
 const mapStateToProps = state => ({
     addressList: state.addresses.addressList,
+    generator: state.routes.generator,
     routeList: state.routes.routeList,
     draftList: state.routes.draftList,
 });
@@ -61,6 +62,7 @@ export default class AllRoutesPane extends RootPaneBase {
                 className="AllRoutesPane-map">
             </div>,
             <RoutePanel key="routes"
+                generator={ this.props.generator }
                 addressList={ this.props.addressList }
                 routeList={ this.props.routeList }
                 draftList={ this.props.draftList }
@@ -78,8 +80,8 @@ export default class AllRoutesPane extends RootPaneBase {
 
         // Remove existing markers
         while (marker = this.markers.pop()) {
-            marker.setMap(null);
-            google.maps.event.clearInstanceListeners(marker);
+            marker.marker.setMap(null);
+            google.maps.event.clearInstanceListeners(marker.marker);
         }
 
         if (addressList.items && !addressList.isPending) {
@@ -99,7 +101,9 @@ export default class AllRoutesPane extends RootPaneBase {
                     title: addr.title,
                 });
 
-                this.markers.push(marker);
+                this.markers.push({
+                    marker, addr
+                });
             });
 
             // right now just an extra loop...
@@ -114,6 +118,13 @@ export default class AllRoutesPane extends RootPaneBase {
         }
     }
 
+    redrawMarkers(activeIds = null) {
+        this.markers.forEach(m => {
+            let visible = !activeIds || !!activeIds.find(id => id == m.addr.id);
+            m.marker.setVisible(visible);
+        });
+    }
+
     onRoutePanelGenerate(addresses, config) {
         this.props.dispatch(generateRoutes(addresses, config));
     }
@@ -123,10 +134,10 @@ export default class AllRoutesPane extends RootPaneBase {
     }
 
     onRoutePanelRouteMouseOver(route) {
-        this.resetMarkers(route.addresses);
+        this.redrawMarkers(route.addresses);
     }
 
     onRoutePanelRouteMouseOut(route) {
-        this.resetMarkers();
+        this.redrawMarkers();
     }
 }
