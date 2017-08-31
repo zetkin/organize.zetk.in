@@ -16,9 +16,7 @@ export function generateRoutes(addressIds, config = {}) {
 
     return ({ dispatch, getState }) => {
         let addresses = addressIds
-            .map(id => getState().addresses.addressList.items
-                .find(i => i.data.id == id))
-                .map(i => i.data);
+            .map(id => getState().addresses.addressById[id]);
 
         let worker = new RouteGenWorker();
 
