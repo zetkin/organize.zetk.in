@@ -1,8 +1,13 @@
 import * as types from '.';
 
 export function generateRoutes(addressIds, config = {}) {
-    let routeSize = config.routeSize || 30;
+    let routeSize = config.routeSize || 100;
     let routes = [];
+
+    // Round route size up or down to accommodate all addresses
+    // in roughly equally large routes
+    let estRouteCount = Math.round(addressIds.length / routeSize);
+    let actualRouteSize = Math.ceil(addressIds.length / estRouteCount);
 
     return ({ dispatch, getState }) => {
         let addresses = addressIds
@@ -10,11 +15,11 @@ export function generateRoutes(addressIds, config = {}) {
                 .find(i => i.data.id == id))
                 .map(i => i.data);
 
-        // TODO: Implement auto-planner algorithm
         let points = getNormalizedPoints(addresses);
+        let tree = new QuadTree(points, 20);
 
         while (points.length) {
-            routes.push(findRoute(points, routeSize));
+            routes.push(findRoute(points, tree, actualRouteSize));
         }
 
         dispatch({
@@ -38,7 +43,7 @@ export function discardRouteDrafts() {
 }
 
 
-function findRoute(points, size) {
+function findRoute(points, tree, size) {
     let cur = points[Math.floor(Math.random() * points.length)];
     let cluster = new Cluster();
     let queue = [];
@@ -47,30 +52,29 @@ function findRoute(points, size) {
         let idx = points.indexOf(cur);
 
         points.splice(idx, 1);
-        cur.removeAllNeighbours();
 
         cluster.addPoint(cur);
 
-        //queue = queue.concat(neighbours);
-        queue = points.map(o => ({
-            point: o,
-            weight: cluster.fitForCluster(o)
-        }));
+        let avgX = cluster.getAverageX();
+        let avgY = cluster.getAverageY();
+
+        queue = tree.getRelevantPoints(avgX, avgY, 1);
+        queue.forEach(o => cluster.fitForCluster(o));
 
         cur = null;
 
         // Sort queue based on weights
-        queue.sort((a, b) => (a.weight - b.weight));
+        queue.sort((a, b) => (a.fitness - b.fitness));
 
         while (!cur && queue.length) {
             let next = queue.pop();
 
-            if (cluster.hasPointWithId(next.point.id)) {
+            if (next.used) {
                 continue;
             }
 
-            if (cluster.distanceFromNearest(next.point) < 0.2) {
-                cur = next.point;
+            if (cluster.distanceFromNearest(next) < 0.2) {
+                cur = next;
             }
         }
     }
@@ -126,37 +130,13 @@ function Point(id, x, y, street) {
     this.x = x;
     this.y = y;
     this.street = street;
-
-    let _connections = {};
-
-    this.addConnection = c => {
-        let o = c.getOther(this);
-        _connections[o.id] = c;
-    };
-
-    this.removeConnection = c => {
-        let o = c.getOther(this);
-        delete _connections[o.id];
-    };
-
-    this.getWeight = o => _connections[o.id].weight;
-
-    this.isNeighbour = o => !!_connections[o.id];
-
-    this.removeAllNeighbours = () => {
-        Object.keys(_connections).forEach(id => {
-            _connections[id].clear();
-        });
-    };
+    this.fitness = 0;
+    this.used = false;
 
     this.squareDistanceTo = p =>
         (p.x - this.x)*(p.x - this.x) + (p.y - this.y)*(p.y - this.y);
 
     this.distanceTo = p => Math.sqrt(this.squareDistanceTo(p));
-
-    this.getNeighbours = () =>
-        Object.keys(_connections)
-            .map(id => _connections[id].getOther(this));
 }
 
 function Cluster() {
@@ -192,30 +172,34 @@ function Cluster() {
             _streets[p.street] = 0;
 
         _streets[p.street]++;
+
+        p.used = true;
     };
 
     this.numPoints = () => _points.length;
     this.hasPointWithId = id => !!_points.find(p => p.id == id);
+    this.getAverageX = () => _aX;
+    this.getAverageY = () => _aY;
 
     this.fitForCluster = p => {
-        let fitness = 0;
-
-        fitness += 100 - this.distanceFromAverage(p) * 100;
-        fitness += 50 - this.distanceFromCenter(p) * 50;
-        fitness += _streets[p.street] || 0;
+        p.fitness = 0;
+        p.fitness += 100 - this.squareDistanceFromAverage(p);
+        p.fitness += _streets[p.street] || 0;
 
         if (_points.length > 2) {
-            let dn = _points.length / ((_maxX - _minX) * (_maxY - _minY)) || 1;
-            let maxX = Math.max(p.x, _maxX);
-            let maxY = Math.max(p.y, _maxY);
-            let minX = Math.min(p.x, _minX);
-            let minY = Math.min(p.y, _minY);
-            let da = (_points.length + 1) / ((maxX - minX) * (maxY - minY)) || 1;
+            let w = (_maxX - _minX);
+            let h = (_maxY - _minY);
+            let dn = _points.length / (w * h) || 1;
 
-            fitness += (da - dn) * 10;
+            if (p.x < _minX) w += (_minX - p.x);
+            if (p.x > _maxX) w += (p.x - _maxX);
+            if (p.y < _minY) h += (_minY - p.y);
+            if (p.y > _maxY) h += (p.y - _maxY);
+
+            let da = (_points.length + 1) / (w * h) || 1;
+
+            p.fitness += (da - dn) * 10;
         }
-
-        return fitness;
     };
 
     this.squareDistanceFromCenter = p =>
@@ -242,4 +226,44 @@ function Cluster() {
         id: Math.random().toString(),
         addresses: _points.map(p => p.id),
     });
+}
+
+function QuadTree(points, size = 10) {
+    let _qSize = 1/size;
+    let _quads = [];
+
+    this.quads = _quads;
+
+    for (let x = 0; x < size; x++) {
+        let minX = x * _qSize;
+        let maxX = (x + 1) * _qSize;
+
+        for (let y = 0; y < size; y++) {
+            let minY = y * _qSize;
+            let maxY = (y + 1) * _qSize;
+            let quadPoints = points.filter(p =>
+                p.x >= minX && p.x < maxX && p.y >= minY && p.y < maxY);
+
+            _quads.push(new Quad(x, y, quadPoints));
+        }
+    }
+
+    this.getRelevantPoints = (x, y, margin = 1) => {
+        let cc = Math.floor(x * size);
+        let cr = Math.floor(y * size);
+
+        let quads = _quads.filter((q, idx) => {
+            let dc = cc - q.x;
+            let dr = cr - q.y;
+            return (Math.abs(dc) <= margin && Math.abs(dr) <= margin);
+        });
+
+        return quads.reduce((points, q) => points.concat(q.points), []);
+    };
+}
+
+function Quad(x, y, points) {
+    this.x = x;
+    this.y = y;
+    this.points = points;
 }
