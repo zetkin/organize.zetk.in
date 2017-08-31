@@ -8,32 +8,67 @@ self.onmessage = ev => {
     if (ev.data.msg == 'start') {
         let config = ev.data.config;
         let addresses = ev.data.addresses;
-        let routes = [];
+        let clusters = [];
 
-        postUpdate();
-
+        // STEP 0: Prepare estimates
         // Round route size up or down to accommodate all addresses
         // in roughly equally large routes
+        postUpdate();
         let estRouteCount = Math.round(addresses.length / config.routeSize);
         let actualRouteSize = Math.ceil(addresses.length / estRouteCount);
 
+        // STEP 1: Set up data structures
         postUpdate({ step: 1 });
-
         let points = getNormalizedPoints(addresses);
         let tree = new QuadTree(points, 20);
 
+        // STEP 2: Start running
         postUpdate({ step: 2, estRouteCount });
 
         while (points.length) {
-            routes.push(findRoute(points, tree, actualRouteSize));
-            postUpdate({ step: 3, routesCompleted: routes.length });
+            // STEP 3: Add route
+            clusters.push(findRouteCluster(points, tree, actualRouteSize));
+            postUpdate({ step: 3, routesCompleted: clusters.length });
         }
 
+        // STEP 4: Merging
+        // This step merges tiny routes into the closest larger route
+        let p = new Point();
         postUpdate({ step: 4 });
+        clusters = clusters.filter(cluster => {
+            if (cluster.numPoints() > (0.4 * config.routeSize)) {
+                return true;
+            }
+            else {
+                p.x = cluster.getAverageX();
+                p.y = cluster.getAverageY();
+
+                let closest = null;
+                let closestDist = Infinity;
+
+                clusters.forEach(other => {
+                    let dist = other.distanceFromAverage(p);
+                    if (dist < closestDist) {
+                        closest = other;
+                        closestDist = dist;
+                    }
+                });
+
+                if (closest) {
+                    cluster.getPoints().forEach(cp => {
+                        closest.addPoint(p);
+                    });
+                }
+
+                return false;
+            }
+        });
+
+        let routes = clusters.map(c => c.toRouteDraft());
 
         postMessage({
             msg: 'fulfilled',
-            info, routes,
+            routes, info,
         });
     }
 };
@@ -49,7 +84,7 @@ function postUpdate(newInfo) {
 }
 
 
-function findRoute(points, tree, size) {
+function findRouteCluster(points, tree, size) {
     let cur = points[Math.floor(Math.random() * points.length)];
     let cluster = new Cluster();
     let queue = [];
@@ -85,7 +120,7 @@ function findRoute(points, tree, size) {
         }
     }
 
-    return cluster.toRouteDraft();
+    return cluster;
 }
 
 function getNormalizedPoints(addresses) {
@@ -182,8 +217,8 @@ function Cluster() {
         p.used = true;
     };
 
+    this.getPoints = () => _points;
     this.numPoints = () => _points.length;
-    this.hasPointWithId = id => !!_points.find(p => p.id == id);
     this.getAverageX = () => _aX;
     this.getAverageY = () => _aY;
 
