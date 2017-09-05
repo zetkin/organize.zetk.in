@@ -29,13 +29,17 @@ export default class AllRoutesPane extends RootPaneBase {
             zoom: 13,
         };
 
-        // TODO: create nicer looking svg path
-        this.iconSettings =  {
-               path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
-               fillColor: '#ee323e',
-               fillOpacity: 1,
-               strokeColor: '#ac0e18',
-        }
+        this.defaultIcon =  {
+               url: '/static/images/address-marker-black.png',
+               scaledSize: { width: 6, height: 6 },
+               anchor: { x: 3, y: 3 },
+        };
+
+        this.activeIcon =  {
+               url: '/static/images/address-marker-red.png',
+               scaledSize: { width: 6, height: 6 },
+               anchor: { x: 3, y: 3 },
+        };
 
         this.centerSetFromData = false;
         this.map = new google.maps.Map(this.refs.map, mapOptions);
@@ -94,11 +98,14 @@ export default class AllRoutesPane extends RootPaneBase {
 
             addresses.forEach(addr => {
                 let latLng = new google.maps.LatLng(addr.latitude, addr.longitude);
+                let isActive = (activeIds && activeIds.indexOf(addr.id) >= 0);
 
                 marker = new google.maps.Marker({
+                    icon: isActive? this.activeIcon : this.defaultIcon,
                     position: latLng,
                     map: this.map,
                     title: addr.title,
+                    zIndex: 0,
                 });
 
                 this.markers.push({
@@ -120,8 +127,16 @@ export default class AllRoutesPane extends RootPaneBase {
 
     redrawMarkers(activeIds = null) {
         this.markers.forEach(m => {
-            let visible = !activeIds || !!activeIds.find(id => id == m.addr.id);
-            m.marker.setVisible(visible);
+            let isActive = (activeIds && activeIds.indexOf(m.addr.id) >= 0);
+            let curIcon = m.marker.getIcon();
+            if (isActive && curIcon.url == this.defaultIcon.url) {
+                m.marker.setIcon(this.activeIcon);
+                m.marker.setZIndex(1);
+            }
+            else if (!isActive && curIcon.url == this.activeIcon.url) {
+                m.marker.setIcon(this.defaultIcon);
+                m.marker.setZIndex(0);
+            }
         });
     }
 
