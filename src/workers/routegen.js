@@ -64,7 +64,9 @@ self.onmessage = ev => {
             }
         });
 
-        let routes = clusters.map(c => c.toRouteDraft());
+        let routes = clusters.map((c, idx) => Object.assign(c.toRouteDraft(), {
+            id: config.draftPrefix + ' ' + (idx + 1),
+        }));
 
         postMessage({
             msg: 'fulfilled',
@@ -264,7 +266,6 @@ function Cluster() {
     };
 
     this.toRouteDraft = () => ({
-        id: Math.random().toString(),
         addresses: _points.map(p => p.id),
     });
 }

@@ -2,6 +2,7 @@ import * as types from '.';
 
 const ROUTE_GEN_DEFAULTS = {
     routeSize: 100,
+    draftPrefix: 'Draft route', // TODO: Localize
 };
 
 
