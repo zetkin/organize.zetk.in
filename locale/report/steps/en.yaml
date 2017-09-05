@@ -1,0 +1,100 @@
+callBack:
+    effect:
+        asap: '{target} is placed last in the queue'
+        other: 'In the meantime, {target} is automatically removed from the queue.'
+    options:
+        asap: As soon as possible
+        fewDays: A few days from now
+        oneWeek: A week from now
+        twoWeeks: A few weeks from now
+    question: When should we call back?
+    summary:
+        asap: We will call back as soon as possible.
+        fewDays: We will call back no sooner than a few days from now.
+        oneWeek: We will call back no sooner than a week from now.
+        twoWeeks: We will call back no sooner than two weeks from now.
+callerLog:
+    effect:
+        leftLog: 'Future callers will see your note:'
+    options:
+        saveWithLog: Save note
+        saveWithoutLog: Save without note
+    question: Do you wish to leave a note for future callers?
+    summary:
+        emptyLog: You did not leave a note to future callers.
+        leftLog: You wrote a note to future callers.
+failureMessage:
+    effect:
+        leftMessage: Future callers will see that you left a message.
+    options:
+        leftMessage: 'Yes'
+        noMessage: 'No'
+    question: Did you leave a message on the machine?
+    summary:
+        leftMessage: You left a message.
+        noMessage: You did not leave a message.
+failureReason:
+    options:
+        lineBusy: Busy
+        noPickup: Answering machine / no pick-up
+        notAvailable: Not available right now
+        wrongNumber: Wrong number
+    question: Why not?
+    summary:
+        lineBusy: The line was busy.
+        noPickup: '{target} did not pick up.'
+        notAvailable: '{target} was not available right now.'
+        wrongNumber: 'We had the wrong number for {target}.'
+organizerAction:
+    effect:
+        actionNeeded: An official will be notified.
+    options:
+        actionNeeded: 'Yes, notify official'
+        noActionNeeded: 'No, not needed'
+    question: Did anything happen during the call that requires action by an official?
+    summary:
+        actionNeeded: You want an official to take a look at this call.
+        noActionNeeded: No action is necessary.
+organizerLog:
+    effect:
+        leftLog: 'The official will see your message:'
+    options:
+        saveWithLog: Include message
+        saveWithoutLog: Save without message
+    question: Explain the problem to the official.
+    summary:
+        emptyLog: You did not leave a message to the official.
+        leftLog: You left a message to the official.
+successCouldTalk:
+    effect:
+        callBack: Future callers will see that we had to call back.
+        couldTalk: Future callers will see that you were able to finish.
+    options:
+        callBack: 'No, we have to call back'
+        couldTalk: 'Yes'
+    question: 'Could {target} talk?'
+    summary:
+        callBack: '{target} could not talk to us right now.'
+        couldTalk: '{target} could talk to us.'
+successOrFailure:
+    effect:
+        failure: 'Future callers will see that you did not speak to {target}'
+        success: 'Future callers will see that you spoke to {target}'
+    options:
+        failure: No...
+        success: 'Yes'
+    question: 'Did you reach {target}?'
+    summary:
+        failure: 'You did not reach {target}.'
+        success: 'You reached {target}.'
+summary:
+    surveys:
+        status: |-
+            During the call you entered responses to {count, plural,
+            =1 {one survey} other {# surveys}}, which will be submitted unless
+            deselected below.
+        submitted: |-
+            During the call you entered responses to {count, plural,
+            =1 {one survey} other {# surveys}}.
+        surveyDiscarded: 'Discarded responses for "{survey}"'
+        surveySubmitted: 'Submitted responses to "{survey}"'

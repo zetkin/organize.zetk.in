@@ -1,0 +1,14 @@
+assignmentsButton: Show all assignments
+callButton: Start call
+endButton: Stop calling
+finishCallButton: Finish & report
+instructions:
+    prepare: Prepare for the call
+nextCallButton: Continue calling
+skipButton: Skip
+startButton: Start calling
+submitReportButton: Send report
+targetInfo:
+    lastFailure: 'Last tried {date}'
+    lastNever: Never tried before
+    lastSuccessful: 'Last reached {date}'

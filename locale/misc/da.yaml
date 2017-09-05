@@ -6,11 +6,15 @@ callAssignmentTemplates:
         title: Spred ordet om
     mobilize:
         desc: Vi ringer rundt for at mobilisere aktivister til vores kampagne
-        title: Mobiliserer til
+        title: Mobiliser til
     stayintouch:
-        desc: >-
-            Vi taler med alle i målgruppen én gang, hver tredje måned, hver
-            sjette måned, om året
+        desc: |-
+            Vi taler med alle i målgruppen én gang
+            {months, select,
+              3 {hver tredje måned}
+              6 {hver sjette måned}
+              12 {om året}
+            }
         title: Hold kontakten
 campaignSelect:
     header: Vælg kampagne
@@ -19,7 +23,7 @@ deleteButton:
     label: Slet
 inviteBox:
     h: Send invitation
-    instructions: Indsæt e-mail adressen på den person du vil invitere
+    instructions: Indsæt e-mailadressen på den person du vil invitere
     sendButton: Send
 officialList:
     userLabel: Din egen rolle kan ikke ændres
@@ -28,6 +32,7 @@ staticMap:
     setPositionLink: Klik for at angive position
 surveyOutline:
     add:
+        label: 'Vælg type for at tilføje '
         types:
             question: Spørgsmål i spørgeskema
             text: Tekstblok

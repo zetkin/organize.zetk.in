@@ -43,6 +43,8 @@ export default class PersonForm extends React.Component {
                 <TextInput labelMsg="forms.person.city" name="city"
                     initialValue={ person.city }/>
 
+                <TextInput labelMsg="forms.person.externalId" name="ext_id"
+                    initialValue={ person.ext_id }/>
             </Form>
         );
     }

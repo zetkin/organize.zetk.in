@@ -1,0 +1,14 @@
+availableHeader: Vælg personer
+okButton: |-
+    { numSelected, plural,
+        =0 {Luk uden at vælge}
+        =1 {Vælg en person}
+        other {Vælg # personer}
+    }
+selectedHeader: |-
+    {numSelected, plural,
+        =0 {Ingen valgte}
+        =1 {En person er valgt}
+        other {# personer er valgt}
+    }
+title: Vælg personer

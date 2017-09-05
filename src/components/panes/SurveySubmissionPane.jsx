@@ -179,6 +179,14 @@ let SubmissionRespondent = props => {
             );
         }
     }
+    else {
+        connection = (
+            <div className="SurveySubmissionPane-connection"
+                onClick={ props.onConnect }>
+                <Msg id="panes.surveySubmission.info.notConnected"/>
+            </div>
+        );
+    }
 
     let classes = cx('SurveySubmissionPane-respondent', {
         anonymous: !sub.respondent,

@@ -1,0 +1,7 @@
+sentHeader: Sendte invitationer
+table:
+    header:
+        email: Til e-mailadresse
+        official: Sendt af
+        sent: Sendt
+    removeButton: Slet

@@ -1,0 +1,8 @@
+h1: Your assignments
+intro: >-
+    You have {numAssignments, plural, =1 {one assignment} other {# assignments}}
+    to call.
+noAssignmentsIntro: >-
+    You have no call assignments. Contact an official from your organization if
+    you want to help call.
+startCalling: Select assignment and start calling

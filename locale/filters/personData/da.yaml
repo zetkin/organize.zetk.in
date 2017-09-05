@@ -1,7 +1,7 @@
 fields:
     city: By
     co_address: C/o adresse
-    email: E-mail adresse
+    email: E-mailadresse
     first_name: Fornavn
     last_name: Efternavn
     phone: Telefonnummer

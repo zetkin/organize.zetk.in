@@ -1,0 +1,29 @@
+laneOverview:
+    lanes:
+        h: Unfinished calls
+        ops:
+            discard: Abandon call
+            switch: Switch to this call
+        p: >-
+            Here are calls you started but never finished. You should finish the
+            calls or abandon them so others can call the same people.
+    log:
+        filterPlaceholder: Type name to filter
+        h: Your previous calls
+        ops:
+            repeat: 'Log new call with {target}'
+            switch: 'Switch to unfinished call with {target}'
+        p: You can start new calls with people you've called before.
+resume:
+    h: You have unfinished calls
+    ops:
+        discard: 'Abandon call to {target}'
+        resume: 'Resume call to {target}'
+    p: >-
+        During a previous session you have been assigned a call that you have
+        yet to report.
+skip:
+    h: Skip call
+    p: 'Do you want to skip {target} and call someone else instead?'
+    resumeButton: 'No, resume call'
+    skipButton: 'Yes, skip {target}'

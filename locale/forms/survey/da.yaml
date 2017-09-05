@@ -6,5 +6,5 @@ info_text: Beskrivelse
 signature: Regel for underskrift
 signatureOptions:
     anon: Tillad anonyme svar
-    sign: Forlang underskrift i form af navn og e-mail adresse
+    sign: Forlang underskrift i form af navn og e-mailadresse
 title: Titel

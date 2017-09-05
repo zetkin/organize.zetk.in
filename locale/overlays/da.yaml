@@ -1,0 +1,29 @@
+laneOverview:
+    lanes:
+        h: Uafsluttede samtaler
+        ops:
+            discard: Opgiv samtale
+            switch: Skift til denne samtale
+        p: >-
+            Her er uafsluttede samtaler. Du bør afslutte samtalerne, eller
+            opgive dem, så andre kan ringe til de samme personer.
+    log:
+        filterPlaceholder: Skriv navn for at filtrere
+        h: Dine tidligere samtaler
+        ops:
+            repeat: 'Log ny samtale med {target}'
+            switch: 'Skift til uafsluttet samtale med {target}'
+        p: Du kan starte nye samtaler med personer du har ringet til tidligere.
+resume:
+    h: Du har uafsluttede samtaler
+    ops:
+        discard: 'Opgiv samtale med {target}'
+        resume: 'Genoptag samtale med {target}'
+    p: >-
+        Ved en tidligere session har du fået tildelt en samtale, som du ikke har
+        indrapporteret endnu.
+skip:
+    h: Spring over samtale
+    p: 'Vil du spring over {target} og ringe til en anden i stedet?'
+    resumeButton: 'Nej, genoptag samtalen'
+    skipButton: 'Ja, spring over {target}'

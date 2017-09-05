@@ -1,14 +1,14 @@
 assignment: Hvilken ringeopgave?
 dateOptions:
     after: efter en bestemt dato
-    any: Når som helst
-    before: Før en bestemt dato
-    between: Mellem bestemte datoer
-    inLast: I de seneste dage
+    any: når som helst
+    before: før en bestemt dato
+    between: mellem bestemte datoer
+    inLast: i de seneste dage
 opOptions:
     calledAny: Alle som er blevet ringet op i det hele taget
     calledSpec: De som er blevet ringet op i forbindelse med en bestemt ringeopgave
-    notReachedAny: Har aldrig nogensinde svaret
+    notReachedAny: Har aldrig nogeninde svaret
     notReachedSpec: Har ikke svaret i forbindelse med en bestemt ringeopgave
     reachedAny: Har svaret i det hele taget
     reachedSpec: Har svaret i forbindelse med en bestemt ringeopgave

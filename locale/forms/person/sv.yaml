@@ -1,6 +1,7 @@
 city: Stad
 coAddress: C/O-adress
 email: E-post
+externalId: Externt ID
 firstName: Förnamn
 gender: Kön
 genderOptions:

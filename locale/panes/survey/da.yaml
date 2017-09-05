@@ -1,0 +1,25 @@
+content:
+    editLink: Rediger indhold
+    h: Indhold
+    numQuestions: |-
+        {count, plural,
+            =0 {Ingen spørgsmål}
+            =1 {Et spørgsmål}
+            other {# spørgsmål}
+        }
+    numTextBlocks: |-
+        {count, plural,
+            =0 {Ingen tekstblok}
+            =1 {En tekstblok}
+            other {# tekstblok}
+        }
+summary:
+    access:
+        auth: Åben kun for tilmeldte brugere
+        list: Åben kun for specifikke personer
+        open: ben for hvem som helst
+    anonymous:
+        allow: Tillad anonyme besvarelser
+        deny: Tillad kun underskrevne svar
+    editLink: Rediger indstillinger
+    viewLink: Vis i aktivistportalen

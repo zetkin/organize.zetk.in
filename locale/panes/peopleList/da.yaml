@@ -1,0 +1,4 @@
+addButton: Tilføj personer
+querySelect:
+    header: Smarte søgninger
+    nullLabel: (Hvis alle personer)

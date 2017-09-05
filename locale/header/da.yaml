@@ -1,6 +1,10 @@
 search:
     matches:
-        actionDay: 'En aktion, andre aktioner'
+        actionDay: |-
+            {count, plural,
+                =1 {En aktion {date}}
+                other {# aktioner {date}}
+            }
         query: Smart søgning
         surveySubmission: 'Svar fra, på'
     scopes:

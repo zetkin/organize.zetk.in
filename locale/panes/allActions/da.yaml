@@ -1,5 +1,5 @@
 filters:
-    afterDate: efter dato
+    afterDate: Efter dato
     beforeDate: Før dato
 viewModes:
     calendar: Kalender
