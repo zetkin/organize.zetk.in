@@ -50,3 +50,20 @@ export function discardRouteDrafts() {
         type: types.DISCARD_ROUTE_DRAFTS,
     };
 }
+
+export function commitRouteDrafts() {
+    return ({ dispatch, getState }) => {
+        // TODO: Don't map real data
+        let routes = getState().routes.draftList.items
+            .map((i, idx) => Object.assign({}, i.data, {
+                id: 'Route ' + (idx+1),
+            }));
+
+        dispatch({
+            type: types.COMMIT_ROUTE_DRAFTS,
+            payload: {
+                data: routes,
+            }
+        });
+    };
+}

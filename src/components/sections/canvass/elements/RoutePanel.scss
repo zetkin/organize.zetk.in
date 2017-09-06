@@ -1,12 +1,21 @@
 .RoutePanel {
     background-color: white;
 
-    .RouteList {
+    .RoutePanel-tabs {
+        .Button {
+            width: 50%;
+            height: 4em;
+            overflow: hidden;
+            background-color: white;
+        }
+    }
+
+    .RoutePanel-content {
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 5em;
         left: 0;
-        bottom: 4em;
+        right: 0;
+        bottom: 0;
     }
 
     .RoutePanel-buttons {
@@ -14,5 +23,32 @@
         bottom: 1em;
         left: 1em;
         right: 1em;
+    }
+
+    .RouteList {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+    }
+
+    &.routes {
+        .RouteList {
+            bottom: 0;
+        }
+
+        .RoutePanel-tabs .Button:last-child {
+            background-color: $c-ui-dark;
+        }
+    }
+
+    &.generator {
+        .RouteList {
+            bottom: 8em;
+        }
+
+        .RoutePanel-tabs .Button:first-child {
+            background-color: $c-ui-dark;
+        }
     }
 }

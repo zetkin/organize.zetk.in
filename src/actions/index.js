@@ -193,3 +193,4 @@ export const RETRIEVE_ADDRESSES = 'RETRIEVE_ADDRESSES';
 // Redux actions related to routes
 export const GENERATE_ROUTES = 'GENERATE_ROUTES';
 export const DISCARD_ROUTE_DRAFTS = 'DISCARD_ROUTE_DRAFTS';
+export const COMMIT_ROUTE_DRAFTS = 'COMMIT_ROUTE_DRAFTS';
