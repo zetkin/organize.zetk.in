@@ -27,6 +27,14 @@ export default function routes(state = null, action) {
             draftList: null,
         });
     }
+    else if (action.type == types.COMMIT_ROUTE_DRAFTS) {
+        let routes = action.payload.data;
+
+        return Object.assign({}, state, {
+            draftList: null,
+            routeList: createList(routes),
+        })
+    }
     else {
         return state || {
             generator: {
