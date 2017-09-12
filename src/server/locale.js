@@ -16,6 +16,17 @@ export function getMessageSubset(messages, scope, locale) {
     let scoped = subset(scope, localized);
     let flat = flatten(scoped);
 
+    // For non-English, use English as truth and find any
+    // missing strings, falling back to English.
+    if (locale !== 'en') {
+        let enFlat = flatten(subset(scope, messages.en));
+        Object.keys(enFlat).forEach(key => {
+            if (!flat[key]) {
+                flat[key] = enFlat[key];
+            }
+        });
+    }
+
     return flat;
 }
 
