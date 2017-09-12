@@ -1,3 +1,0 @@
-calls_made: Calls made
-calls_reached: Successful calls
-target_size: '{number, plural, =1 { person } other { people }} to call'
