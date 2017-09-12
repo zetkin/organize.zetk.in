@@ -29,7 +29,7 @@ inviteBox:
 officialList:
     userLabel: Din egen roll är låst
 personSelectWidget:
-    changeInstructions: Släpp en person här eller { selectLink } för att byta.
+    changeInstructions: 'Släpp en person här eller { selectLink } för att byta.'
     selectInstructions: Välj en person från listan eller dra och släpp här för att välja.
     selectLink: välj en
     undoLink: Gå tillbaka

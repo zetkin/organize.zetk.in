@@ -3,7 +3,7 @@ optionsWidget: Flervalsregler
 optionsWidgetOptions:
     checkbox: Tillåt flera svarsalternativ
     radio: Tillåt bara ett svarsalternativ (checkrutor)
-    select:  Tillåt bara ett svarsalternativ (rullgardin)
+    select: Tillåt bara ett svarsalternativ (rullgardin)
 question: Fråga
 responseType: Svarstyp
 responseTypeOptions:

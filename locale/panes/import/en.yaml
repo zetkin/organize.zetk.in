@@ -94,7 +94,7 @@ table:
         =1 {One more row} other {another # rows}} will be imported.
 tableSelect:
     h: Select sheet
+    label: 'Select one of {count} sheets'
     p: |-
         There are more than one sheet in the file. Select the sheet that
         contains the data you wish to import.
-    label: Select one of {count} sheets

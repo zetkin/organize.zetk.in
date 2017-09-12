@@ -6,7 +6,7 @@ callAssignmentTemplates:
         title: Spred ordet om
     mobilize:
         desc: Vi ringer rundt for at mobilisere aktivister til vores kampagne
-        title: Mobiliser til
+        title: 'Mobiliser til {campaign}'
     stayintouch:
         desc: |-
             Vi taler med alle i målgruppen én gang

@@ -1,4 +1,4 @@
-survey: Survey
 dateOptions:
-    any: At any point in time
     after: After a certain date
+    any: At any point in time
+survey: Survey

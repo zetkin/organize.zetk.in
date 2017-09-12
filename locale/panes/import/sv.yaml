@@ -89,12 +89,14 @@ table:
             other {Ignorerade # tomma kolumner}
         }
     firstRowAsHeader: Första raden innehåller rubriker
-    truncLabel: |-
-        Visar {truncated, number} av {total, number} rader. Ytterligare {extra, plural,
+    truncLabel: >-
+        Visar {truncated, number} av {total, number} rader. Ytterligare {extra,
+        plural,
+
         =1 {en rad} other {# rader}} kommer importeras.
 tableSelect:
     h: Välj ark
+    label: 'Välj mellan {count} ark'
     p: |-
         Filen innehåller mer än ett ark. Välj vilket ark som innehåller
         den data du vill importera.
-    label: Välj mellan {count} ark
