@@ -15,7 +15,7 @@ content:
         }
 summary:
     access:
-        auth: Åben kun for tilmeldte brugere
+        auth: Åben kun for tilsluttede brugere
         list: Åben kun for specifikke personer
         open: ben for hvem som helst
     anonymous:

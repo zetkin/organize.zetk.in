@@ -1,0 +1,9 @@
+instructions: >-
+    For at kunne søge efter personer baseret på deres spørgeskemabesvarelser, er
+    det nødvendigt at svaret er linket til en person i persondatabasen.
+person:
+    h: Linket person
+saveButton:
+    linkLabel: Link til spørgeskemabesvarelse
+    unlinkLabel: Fjern link til spørgeskemabesvarelse
+title: Link til spørgeskemabesvarelse

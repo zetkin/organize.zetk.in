@@ -1,6 +1,7 @@
 info:
     anonymous: 'Anonym '
     connected: Forbundet
+    notConnected: Ikke linket
 responses:
     emptyResponse: Spørgsmålet blev ikke besvaret
     h: Spørgsmål og svar
