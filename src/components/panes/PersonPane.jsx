@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage as Msg } from 'react-intl';
+import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import Link from '../misc/Link';
@@ -20,7 +20,14 @@ import {
 const BASIC_FIELDS = [ 'email', 'phone' ];
 const ADDR_FIELDS = [ 'co_address', 'street_address', 'zip_code', 'city' ];
 
-@connect(state => ({ people: state.people, personTags: state.personTags }))
+const mapStateToProps = (state, props) => ({
+    personTags: state.personTags,
+    personItem: getListItemById(state.people.personList,
+        props.paneData.params[0]),
+});
+
+@connect(mapStateToProps)
+@injectIntl
 export default class PersonPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
@@ -31,11 +38,8 @@ export default class PersonPane extends PaneBase {
     }
 
     getRenderData() {
-        let personId = this.getParam(0);
-        let personList = this.props.people.personList;
-
         return {
-            personItem: getListItemById(personList, personId),
+            personItem: this.props.personItem,
         }
     }
 
@@ -75,13 +79,15 @@ export default class PersonPane extends PaneBase {
                 </span>
             ));
 
-            let createInfoItem = (name, content) => {
+            let createInfoItem = (name, content, forceMissing) => {
                 let className = 'PersonPane-' + name;
 
-                if (!content) {
+                if (forceMissing || !content) {
                     className += ' PersonPane-emptyField';
-                    content = <span className="PersonPane-infoValue">
-                        Missing</span>;
+                    if (!content) {
+                        content = <span className="PersonPane-infoValue">
+                            -</span>;
+                    }
                 }
 
                 return (
@@ -91,9 +97,16 @@ export default class PersonPane extends PaneBase {
                 );
             };
 
+            const formatMessage = this.props.intl.formatMessage;
+
             return [
                 <DraggableAvatar key="avatar" ref="avatar" person={ person }/>,
                 <ul key="info" className="PersonPane-info">
+                    { createInfoItem('user', person.is_user?
+                        formatMessage({ id: 'panes.person.user.connected' }) :
+                        formatMessage({ id: 'panes.person.user.notConnected' }),
+                        !person.is_user)
+                    }
                     { BASIC_FIELDS.map(field => (
                         createInfoItem(field, person[field])
                     )) }
