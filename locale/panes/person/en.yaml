@@ -1,2 +1,5 @@
 editLink: Edit personal data
 tagHeader: Tags
+user:
+    connected: Connected to Zetkin account
+    notConnected: Not connected to a Zetkin account

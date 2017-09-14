@@ -1,2 +1,5 @@
 editLink: Redigera personuppgifter
 tagHeader: Etiketter
+user:
+    connected: Ansluten till Zetkin-konto
+    notConnected: Inte asluten till Zetkin-konto
