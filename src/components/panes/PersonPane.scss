@@ -23,8 +23,19 @@
             color: lighten($c-text, 60);
         }
 
+        .PersonPane-user {
+            &::before {
+                @include icon($fa-var-user);
+            }
+
+            &.PersonPane-emptyField {
+                &::before {
+                    @include icon($fa-var-remove);
+                }
+            }
+        }
+
         .PersonPane-email {
-            margin-top: 1em;
             &::before {
                 @include icon($fa-var-envelope-o);
             }
