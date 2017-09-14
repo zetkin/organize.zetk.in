@@ -25,7 +25,7 @@ inviteBox:
 officialList:
     userLabel: Can't change own role
 personSelectWidget:
-    changeInstructions: Drop another person here or { selectLink } to change.
+    changeInstructions: 'Drop another person here or { selectLink } to change.'
     selectInstructions: Select a person from the list or drop here to select.
     selectLink: select one
     undoLink: Go back

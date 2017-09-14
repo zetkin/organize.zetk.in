@@ -1,11 +1,25 @@
 contact:
+    addContact: Drop en person her for at udpege tovholder
     h: Ansvarlig
 editLink: Rediger aktivitet
 participants:
     addPerson: Drop en person her
     h: Bekræftede deltagere
-    selectLink: Vælg deltager
+    item:
+        notReminded: Har ikke fået påmindelse
+        reminded: 'Har fået påmindelse {relativeTime}'
+    selectLink: vælg deltagere
+reminders:
+    button: Send påmindelser
+    h: Påmindelser
+    missingContact: Udpeg en tovholder før udsendelse
+    received:
+        all: Alle deltagere har fået en påmindelse
+        notAll: Alle deltagere har ikke fået nogen påmindelse
 responses:
+    guide: Klik i listen for at booke
     h: Tilmeldinger
-sendRemindersButton: Send påmindelser
+    none: Ingen ventende tilmeldinger til booking
+summary:
+    noDesc: Ingen beskrivelse
 title: Aktivitet

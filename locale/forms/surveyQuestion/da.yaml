@@ -3,6 +3,7 @@ optionsWidget: Regler for svar
 optionsWidgetOptions:
     checkbox: Tillad flere svarmuligheder
     radio: Tillad kun et svar
+    select: Tillas kun en svarmulighed (drop-down)
 question: Spørgsmål
 responseType: Svartype
 responseTypeOptions:

@@ -1,12 +1,14 @@
 city: By
 coAddress: C/o-adresse
 email: E-mailadresse
+externalId: Eksternt ID
 firstName: Fornavn
 gender: Køn
 genderOptions:
     female: Kvinde
     male: Mand
     other: Andet
+    unknown: Ukendt
 lastName: Efternavn
 phone: Telefonnummer
 streetAddress: Gadenavn og -nummer

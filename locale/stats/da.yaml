@@ -1,3 +1,0 @@
-calls_made: Foretagne opkald
-calls_reached: Gennemførte samtaler
-target_size: '{number, plural, =1 { person } other { personer }} at ringe'

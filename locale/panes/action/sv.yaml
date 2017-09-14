@@ -4,10 +4,10 @@ contact:
 editLink: Redigera aktion
 participants:
     addPerson: 'Släpp en person här eller { selectLink }.'
-    item:
-        reminded: 'Påmind {relativeTime}'
-        notReminded: Ej påmind
     h: Bokade deltagare
+    item:
+        notReminded: Ej påmind
+        reminded: 'Påmind {relativeTime}'
     selectLink: välj deltagare
 reminders:
     button: Skicka påminnelser

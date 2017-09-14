@@ -6,7 +6,7 @@ callAssignmentTemplates:
         title: Spred ordet om
     mobilize:
         desc: Vi ringer rundt for at mobilisere aktivister til vores kampagne
-        title: Mobiliser til
+        title: 'Mobiliser til {campaign}'
     stayintouch:
         desc: |-
             Vi taler med alle i målgruppen én gang
@@ -27,6 +27,13 @@ inviteBox:
     sendButton: Send
 officialList:
     userLabel: Din egen rolle kan ikke ændres
+personSelectWidget:
+    changeInstructions: 'Drop en person her eller { selectLink } for at skifte.'
+    selectInstructions: Vælg en person fra listen eller træk og drop her for at vælge.
+    selectLink: vælg en
+    undoLink: Gå tilbage
+relSelectInput:
+    placeholder: Skriv for at finde eller oprette
 staticMap:
     noCoordinates: Ingen position
     setPositionLink: Klik for at angive position
@@ -43,6 +50,7 @@ surveyOutline:
     option:
         addButton: Tilføj svarmulighed
         cancelButton: Afbryd
+        deleteButton: Slet
         saveButton: Gem
 tagCloud:
     addButton: Læg til

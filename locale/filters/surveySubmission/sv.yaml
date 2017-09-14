@@ -1,4 +1,4 @@
-survey: Enkät
 dateOptions:
-    any: Närsomhelst
     after: Efter ett visst datum
+    any: Närsomhelst
+survey: Enkät

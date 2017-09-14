@@ -8,3 +8,6 @@ types:
     personData: Personoplysninger
     personTags: Etiketter
     random: Tilfældigt udvalgte
+    surveyOption: Spørgeskemabesvarelse (svarmuligheder)
+    surveyResponse: Spørgeskemabesvarelse (fritekst)
+    surveySubmission: Indsendt spørgeskema
