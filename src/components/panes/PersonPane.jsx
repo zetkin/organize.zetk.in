@@ -103,8 +103,8 @@ export default class PersonPane extends PaneBase {
                 <DraggableAvatar key="avatar" ref="avatar" person={ person }/>,
                 <ul key="info" className="PersonPane-info">
                     { createInfoItem('user', person.is_user?
-                        formatMessage({ id: 'panes.person.subTitle.connected' }) :
-                        formatMessage({ id: 'panes.person.subTitle.notConnected' }),
+                        formatMessage({ id: 'panes.person.user.connected' }) :
+                        formatMessage({ id: 'panes.person.user.notConnected' }),
                         !person.is_user)
                     }
                     { BASIC_FIELDS.map(field => (
