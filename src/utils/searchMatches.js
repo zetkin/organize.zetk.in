@@ -8,21 +8,11 @@ const fuseOptions = {
     maxPatternLength: 32,
     minMatchCharLength: 1,
     threshold: 0.2,
-    keys: [
-        // TODO: Use different keys for different types
-        'title',
-        'info_text',
-        'description',
-        'first_name',
-        'last_name',
-        'email',
-        'phone',
-    ],
 };
 
 
-function searchMatches(q, data) {
-    let fuse = new Fuse([ data ], fuseOptions);
+function searchMatches(q, data, keys) {
+    let fuse = new Fuse([ data ], Object.assign({}, fuseOptions, { keys }));
     let tokens = q.split(/\s/);
 
     let tokenLenSum = tokens.reduce((sum, t) => sum + t.length, 0);

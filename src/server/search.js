@@ -176,7 +176,8 @@ let SearchPersonProc = searchProcFactory('person', {
             .then(result => result.data.data);
     },
     matcher: (qs, obj) => {
-        return searchMatches(qs, obj);
+        return searchMatches(qs, obj,
+            [ 'first_name', 'last_name', 'email', 'phone' ]);
     },
 });
 
@@ -188,7 +189,7 @@ let SearchPersonQueryProc = searchProcFactory('query', {
             .then(result => result.data.data);
     },
     matcher: (qs, obj) => {
-        return searchMatches(qs, obj);
+        return searchMatches(qs, obj, [ 'title', 'info_text' ]);
     },
 });
 
@@ -231,7 +232,7 @@ let SearchCampaignProc = searchProcFactory('campaign', {
             .then(result => result.data.data);
     },
     matcher: (qs, obj) => {
-        return searchMatches(qs, obj);
+        return searchMatches(qs, obj, [ 'title', 'info_text' ]);
     },
 });
 
@@ -243,7 +244,7 @@ let SearchLocationProc = searchProcFactory('location', {
             .then(result => result.data.data);
     },
     matcher: (qs, obj) => {
-        return searchMatches(qs, obj);
+        return searchMatches(qs, obj, [ 'title', 'info_text' ]);
     },
 });
 
@@ -255,7 +256,7 @@ let SearchCallAssignmentProc = searchProcFactory('call_assignment', {
             .then(result => result.data.data);
     },
     matcher: (qs, obj) => {
-        return searchMatches(qs, obj);
+        return searchMatches(qs, obj, [ 'title', 'description' ]);
     },
 });
 
@@ -267,7 +268,7 @@ let SearchSurveyProc = searchProcFactory('survey', {
             .then(result => result.data.data);
     },
     matcher: (qs, obj) => {
-        return searchMatches(qs, obj);
+        return searchMatches(qs, obj, [ 'title', 'info_text' ]);
     },
 });
 
@@ -279,7 +280,8 @@ let SearchSurveySubmissionProc = searchProcFactory('survey_submission', {
             .then(result => result.data.data);
     },
     matcher: (qs, obj) => {
-        return (obj.respondent && searchMatches(qs, obj.respondent));
+        return (obj.respondent && searchMatches(qs, obj.respondent,
+            [ 'first_name', 'last_name', 'email' ]));
     },
 });
 
