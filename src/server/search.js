@@ -6,7 +6,8 @@ require('sugar-date/locales/da');
 
 
 function search(ws, req) {
-    var queue;
+    let cache = new SearchCache();
+    let queue;
 
     ws.on('message', function(json) {
         let msg = JSON.parse(json);
@@ -29,26 +30,26 @@ function search(ws, req) {
         var searchFuncs = [];
 
         if (!msg.scope || msg.scope == 'people') {
-            searchFuncs.push(searchPeople);
-            searchFuncs.push(searchPersonQueries);
+            searchFuncs.push(new SearchPersonQueryProc(msg.query, req.z, msg.org, cache, msg.lang));
+            searchFuncs.push(new SearchPersonProc(msg.query, req.z, msg.org, cache, msg.lang));
         }
 
         if (!msg.scope || msg.scope == 'maps') {
-            searchFuncs.push(searchLocations);
+            searchFuncs.push(new SearchLocationProc(msg.query, req.z, msg.org, cache, msg.lang));
         }
 
         if (!msg.scope || msg.scope == 'campaign') {
-            searchFuncs.push(searchActions);
-            searchFuncs.push(searchCampaigns);
+            searchFuncs.push(new SearchActionDayProc(msg.query, req.z, msg.org, cache, msg.lang));
+            searchFuncs.push(new SearchCampaignProc(msg.query, req.z, msg.org, cache, msg.lang));
         }
 
         if (!msg.scope || msg.scope == 'dialog') {
-            searchFuncs.push(searchCallAssignments);
+            searchFuncs.push(new SearchCallAssignmentProc(msg.query, req.z, msg.org, cache, msg.lang));
         }
 
         if (!msg.scope || msg.scope == 'survey') {
-            searchFuncs.push(searchSurveys);
-            searchFuncs.push(searchSurveySubmissions);
+            searchFuncs.push(new SearchSurveyProc(msg.query, req.z, msg.org, cache, msg.lang));
+            searchFuncs.push(new SearchSurveySubmissionProc(msg.query, req.z, msg.org, cache, msg.lang));
         }
 
         queue = new SearchQueue(req.z, msg.org, msg.query, writeFunc, searchFuncs, msg.lang);
@@ -63,9 +64,64 @@ function search(ws, req) {
     });
 }
 
+
+function searchProcFactory(type, opts) {
+    function SearchProc(qs, z, orgId, cache, lang) {
+        if (!opts.matcher) {
+            opts.matcher = () => true;
+        }
+
+        let promise = null;
+        if (opts.cache) {
+            promise = cache.get(opts.cache);
+        }
+
+        if (!promise) {
+            promise = opts.loader(z, orgId, qs, lang);
+
+            if (opts.cache) {
+                promise = cache.load(opts.cache, promise);
+            }
+        }
+
+        this.run = (writeMatch) => {
+            return promise
+                .then(result => {
+                    // TODO: Don't loop through all at once, green thread instead
+                    result.forEach(obj => {
+                        if (!opts.matcher || opts.matcher(qs, obj)) {
+                            writeMatch(qs, type, obj);
+                        }
+                    });
+                });
+        }
+    }
+
+    return SearchProc;
+}
+
+
+function SearchCache() {
+    let _cache = {};
+
+    this.get = id => {
+        if (id in _cache) {
+            let val = _cache[id];
+            return (val instanceof Promise)? val : Promise.resolve(val);
+        }
+    };
+
+    this.load = (id, promise) => {
+        _cache[id] = promise;
+        return promise;
+    };
+}
+
+
 function SearchQueue(z, orgId, query, writeMatch, searchFuncs, lang) {
     const MAX_MATCH_COUNT = 20;
 
+    let _aborted = true;
     let _matchCount = 0;
     let _writeMatch = (query, type, data) => {
         if (_matchCount < MAX_MATCH_COUNT) {
@@ -79,7 +135,7 @@ function SearchQueue(z, orgId, query, writeMatch, searchFuncs, lang) {
     let _proceed = () => {
         if (_idx < searchFuncs.length && _matchCount < MAX_MATCH_COUNT) {
             const searchFunc = searchFuncs[_idx++];
-            const promise = searchFunc(z, orgId, query, _writeMatch, lang)
+            const promise = searchFunc.run(_writeMatch);
 
             if (promise) {
                 promise.then(function() {
@@ -100,27 +156,57 @@ function SearchQueue(z, orgId, query, writeMatch, searchFuncs, lang) {
     };
 
     this.run = function() {
+        _aborted = false;
         _proceed();
     }
 
     this.abort = function() {
+        _aborted = true;
         _idx = searchFuncs.length;
         _writeMatch = (query, type, data) => null;
     }
 }
 
-function searchActions(z, orgId, q, writeMatch, lang) {
-    var date = Date.create(q, lang);
-    if (date.isValid()) {
-        const dateStr = date.format('{yyyy}-{MM}-{dd}');
-        const endStr = date.addDays(1).format('{yyyy}-{MM}-{dd}');
+
+let SearchPersonProc = searchProcFactory('person', {
+    cache: 'people',
+    loader: (z, orgId) => {
+        return z.resource('orgs', orgId, 'people')
+            .get()
+            .then(result => result.data.data);
+    },
+    matcher: (qs, obj) => {
+        return searchMatches(qs, obj);
+    },
+});
+
+let SearchPersonQueryProc = searchProcFactory('query', {
+    cache: 'queries',
+    loader: (z, orgId) => {
+        return z.resource('orgs', orgId, 'people', 'queries')
+            .get()
+            .then(result => result.data.data);
+    },
+    matcher: (qs, obj) => {
+        return searchMatches(qs, obj);
+    },
+});
+
+let SearchActionDayProc = searchProcFactory('actionday', {
+    loader: (z, orgId, qs, lang) => {
+        let date = Date.create(qs, lang);
+        if (!date.isValid()) {
+            return Promise.resolve([]);
+        }
+
+        let dateStr = date.format('{yyyy}-{MM}-{dd}');
+        let endStr = date.addDays(1).format('{yyyy}-{MM}-{dd}');
 
         // Searching for date
-        // TODO: Search using backend filtering
         return z.resource('orgs', orgId, 'actions')
             .get(null, null, [['start_time', '>=', dateStr], ['end_time', '<', endStr]])
             .then(function(result) {
-                const actions = result.data.data;
+                let actions = result.data.data;
 
                 if (actions.length > 0) {
                     const matchData = {
@@ -128,110 +214,73 @@ function searchActions(z, orgId, q, writeMatch, lang) {
                         action_count: actions.length,
                     };
 
-                    writeMatch(q, 'actionday', matchData);
+                    return [matchData]
+                }
+                else {
+                    return [];
                 }
             });
-    }
-    else {
-        // TODO: Implement searching for actions based on loc/activity
-        return null;
-    }
-}
+    },
+});
 
-function searchPeople(z, orgId, q, writeMatch) {
-    // TODO: Use API-side filtering once implemented
-    return z.resource('orgs', orgId, 'people').get()
-        .then(function(result) {
-            var i;
-            var people = result.data.data;
+let SearchCampaignProc = searchProcFactory('campaign', {
+    cache: 'campaigns',
+    loader: (z, orgId, qs, lang) => {
+        return z.resource('orgs', orgId, 'campaigns')
+            .get()
+            .then(result => result.data.data);
+    },
+    matcher: (qs, obj) => {
+        return searchMatches(qs, obj);
+    },
+});
 
-            for (i = 0; i < people.length; i++) {
-                var p = people[i];
-                if (searchMatches(q, p)) {
-                    writeMatch(q, 'person', p);
-                }
-            }
-        })
-}
+let SearchLocationProc = searchProcFactory('location', {
+    cache: 'locations',
+    loader: (z, orgId, qs, lang) => {
+        return z.resource('orgs', orgId, 'locations')
+            .get()
+            .then(result => result.data.data);
+    },
+    matcher: (qs, obj) => {
+        return searchMatches(qs, obj);
+    },
+});
 
-function searchPersonQueries(z, orgId, q, writeMatch) {
-    return z.resource('orgs', orgId, 'people', 'queries').get()
-        .then(function(result) {
-            let queries = result.data.data;
+let SearchCallAssignmentProc = searchProcFactory('call_assignment', {
+    cache: 'call_assignments',
+    loader: (z, orgId, qs, lang) => {
+        return z.resource('orgs', orgId, 'call_assignments')
+            .get()
+            .then(result => result.data.data);
+    },
+    matcher: (qs, obj) => {
+        return searchMatches(qs, obj);
+    },
+});
 
-            for (let i = 0; i < queries.length; i++) {
-                if (searchMatches(q, queries[i])) {
-                    writeMatch(q, 'query', queries[i]);
-                }
-            }
-        });
-}
+let SearchSurveyProc = searchProcFactory('survey', {
+    cache: 'surveys',
+    loader: (z, orgId, qs, lang) => {
+        return z.resource('orgs', orgId, 'surveys')
+            .get()
+            .then(result => result.data.data);
+    },
+    matcher: (qs, obj) => {
+        return searchMatches(qs, obj);
+    },
+});
 
-function searchLocations(z, orgId, q, writeMatch) {
-    return z.resource('orgs', orgId, 'locations').get()
-        .then(function(result) {
-            var i;
-            var locations = result.data.data;
-
-            for (i = 0; i < locations.length; i++) {
-                var loc = locations[i];
-                if (searchMatches(q, loc)) {
-                    writeMatch(q, 'location', loc);
-                }
-            }
-        })
-}
-
-function searchCallAssignments(z, orgId, q, writeMatch) {
-    return z.resource('orgs', orgId, 'call_assignments').get()
-        .then(function(result) {
-            let assignments = result.data.data;
-
-            for (let i = 0; i < assignments.length; i++) {
-                let assignment = assignments[i];
-                if (searchMatches(q, assignment)) {
-                    writeMatch(q, 'call_assignment', assignment);
-                };
-            }
-        });
-}
-
-function searchCampaigns(z, orgId, q, writeMatch) {
-    return z.resource('orgs', orgId, 'campaigns').get()
-        .then(function(result) {
-            var i;
-            var campaigns = result.data.data;
-
-            for (i = 0; i < campaigns.length; i++) {
-                var campaign = campaigns[i];
-                if (searchMatches(q, campaign)) {
-                    writeMatch(q, 'campaign', campaign);
-                }
-            }
-        });
-}
-
-function searchSurveys(z, orgId, q, writeMatch) {
-    return z.resource('orgs', orgId, 'surveys').get()
-        .then(function(result) {
-            result.data.data.forEach(survey => {
-                if (searchMatches(q, survey)) {
-                    writeMatch(q, 'survey', survey);
-                }
-            });
-        });
-}
-
-function searchSurveySubmissions(z, orgId, q, writeMatch) {
-    // TODO: Filter in API
-    return z.resource('orgs', orgId, 'survey_submissions').get()
-        .then(result => {
-            result.data.data.forEach(sub => {
-                if (sub.respondent && searchMatches(q, sub.respondent)) {
-                    writeMatch(q, 'survey_submission', sub);
-                }
-            });
-        });
-}
+let SearchSurveySubmissionProc = searchProcFactory('survey_submission', {
+    cache: 'survey_submissions',
+    loader: (z, orgId, qs, lang) => {
+        return z.resource('orgs', orgId, 'survey_submissions')
+            .get()
+            .then(result => result.data.data);
+    },
+    matcher: (qs, obj) => {
+        return (obj.respondent && searchMatches(qs, obj.respondent));
+    },
+});
 
 export default search;
