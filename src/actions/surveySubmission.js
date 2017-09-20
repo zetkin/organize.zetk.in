@@ -1,14 +1,23 @@
 import * as types from '.';
 
 
-export function retrieveSurveySubmissions() {
+export function retrieveSurveySubmissions(surveyId = null) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
+        let promise;
+
+        if (surveyId) {
+            promise = z.resource('orgs', orgId, 'surveys', surveyId,
+                'submissions').get();
+        }
+        else {
+            promise = z.resource('orgs', orgId, 'survey_submissions').get();
+        }
+
         dispatch({
             type: types.RETRIEVE_SURVEY_SUBMISSIONS,
-            payload: {
-                promise: z.resource('orgs', orgId, 'survey_submissions').get(),
-            }
+            meta: { surveyId },
+            payload: { promise },
         });
     };
 }

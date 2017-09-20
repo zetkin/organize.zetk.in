@@ -1,0 +1,4 @@
+filters:
+    survey:
+        label: Enkät
+        nullOption: Alla enkäter
