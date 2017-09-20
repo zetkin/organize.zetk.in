@@ -1,0 +1,4 @@
+filters:
+    survey:
+        label: Survey
+        nullOption: All surveys
