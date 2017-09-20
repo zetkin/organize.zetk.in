@@ -67,6 +67,8 @@ function search(ws, req) {
 
 function searchProcFactory(type, opts) {
     function SearchProc(qs, z, orgId, cache, lang) {
+        let _aborted = false;
+
         if (!opts.matcher) {
             opts.matcher = () => true;
         }
@@ -84,14 +86,42 @@ function searchProcFactory(type, opts) {
             }
         }
 
+        this.abort = () => {
+            _aborted = true;
+        };
+
         this.run = (writeMatch) => {
             return promise
                 .then(result => {
-                    // TODO: Don't loop through all at once, green thread instead
-                    result.forEach(obj => {
-                        if (!opts.matcher || opts.matcher(qs, obj)) {
-                            writeMatch(qs, type, obj);
-                        }
+                    return new Promise(resolve => {
+                        let idx = 0;
+
+                        let matchNextBatch = () => {
+                            let batchEnd = Math.min(result.length, idx + 10);
+
+                            if (_aborted) {
+                                resolve();
+                                return;
+                            }
+
+                            while (idx < batchEnd) {
+                                let obj = result[idx];
+                                if (!opts.matcher || opts.matcher(qs, obj)) {
+                                    writeMatch(qs, type, obj);
+                                }
+
+                                idx++;
+                            }
+
+                            if (batchEnd < result.length) {
+                                setImmediate(matchNextBatch);
+                            }
+                            else {
+                                resolve();
+                            }
+                        };
+
+                        matchNextBatch();
                     });
                 });
         }
@@ -121,6 +151,7 @@ function SearchCache() {
 function SearchQueue(z, orgId, query, writeMatch, searchFuncs, lang) {
     const MAX_MATCH_COUNT = 20;
 
+    let _curFunc = null;
     let _aborted = true;
     let _matchCount = 0;
     let _writeMatch = (query, type, data) => {
@@ -134,8 +165,9 @@ function SearchQueue(z, orgId, query, writeMatch, searchFuncs, lang) {
     let _idx = 0;
     let _proceed = () => {
         if (_idx < searchFuncs.length && _matchCount < MAX_MATCH_COUNT) {
-            const searchFunc = searchFuncs[_idx++];
-            const promise = searchFunc.run(_writeMatch);
+            _curFunc = searchFuncs[_idx++];
+
+            let promise = _curFunc.run(_writeMatch);
 
             if (promise) {
                 promise.then(function() {
@@ -161,6 +193,11 @@ function SearchQueue(z, orgId, query, writeMatch, searchFuncs, lang) {
     }
 
     this.abort = function() {
+        if (_curFunc) {
+            _curFunc.abort();
+            _curFunc = null;
+        }
+
         _aborted = true;
         _idx = searchFuncs.length;
         _writeMatch = (query, type, data) => null;
