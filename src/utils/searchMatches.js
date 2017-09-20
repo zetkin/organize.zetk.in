@@ -1,5 +1,15 @@
 import Fuse from 'fuse.js';
 
+const DEFAULT_KEYS = [
+    'title',
+    'info_text',
+    'description',
+    'first_name',
+    'last_name',
+    'email',
+    'phone',
+];
+
 const fuseOptions = {
     location: 0,
     distance: 10,
@@ -11,7 +21,7 @@ const fuseOptions = {
 };
 
 
-function searchMatches(q, data, keys) {
+function searchMatches(q, data, keys = DEFAULT_KEYS) {
     let fuse = new Fuse([ data ], Object.assign({}, fuseOptions, { keys }));
     let tokens = q.split(/\s/);
 
