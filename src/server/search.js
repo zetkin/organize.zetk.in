@@ -73,24 +73,24 @@ function searchProcFactory(type, opts) {
             opts.matcher = () => true;
         }
 
-        let promise = null;
-        if (opts.cache) {
-            promise = cache.get(opts.cache);
-        }
-
-        if (!promise) {
-            promise = opts.loader(z, orgId, qs, lang);
-
-            if (opts.cache) {
-                promise = cache.load(opts.cache, promise);
-            }
-        }
-
         this.abort = () => {
             _aborted = true;
         };
 
         this.run = (writeMatch) => {
+            let promise = null;
+            if (opts.cache) {
+                promise = cache.get(opts.cache);
+            }
+
+            if (!promise) {
+                promise = opts.loader(z, orgId, qs, lang);
+
+                if (opts.cache) {
+                    promise = cache.load(opts.cache, promise);
+                }
+            }
+
             return promise
                 .then(result => {
                     return new Promise(resolve => {
