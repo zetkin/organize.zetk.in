@@ -124,6 +124,28 @@
     }
 }
 
+@mixin tab-button($color: white, $amount:5, $icon:false, $passive:false) {
+    @if $passive {
+        $color: darken($color, 5);
+
+        &:first-child {
+            box-shadow: inset -1px 1px 2px darken($color, 8);
+        }
+        &:last-child {
+            box-shadow: inset 1px -1px 2px darken($color, 8);
+        }
+    }
+
+    @include button($color: $color, $amount: $amount, $icon: $icon);
+
+    &:focus {
+        background-color: $color;
+    }
+
+    border: 0;
+    border-radius: 0;
+}
+
 @mixin key-reference {
     font-family: 'Consolas', 'Courier New', 'monospace';
     display: inline-block;

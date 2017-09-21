@@ -2,11 +2,16 @@
     background-color: white;
 
     .RoutePanel-tabs {
+        .RoutePanel-routesTab {
+            @include tab-button($icon: $fa-var-compass);
+        }
+
+        .RoutePanel-generatorTab {
+            @include tab-button($icon: $fa-var-magic);
+        }
         .Button {
             width: 50%;
-            height: 4em;
             overflow: hidden;
-            background-color: white;
         }
     }
 
@@ -38,7 +43,7 @@
         }
 
         .RoutePanel-tabs .Button:last-child {
-            background-color: $c-ui-dark;
+            @include tab-button($passive: true);
         }
     }
 
@@ -48,7 +53,7 @@
         }
 
         .RoutePanel-tabs .Button:first-child {
-            background-color: $c-ui-dark;
+            @include tab-button($passive: true);
         }
     }
 }
