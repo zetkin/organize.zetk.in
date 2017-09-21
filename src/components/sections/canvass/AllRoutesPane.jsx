@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage as Msg } from 'react-intl';
+import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 
 import RootPaneBase from '../RootPaneBase';
 import RoutePanel from './elements/RoutePanel';
 import SelectInput from '../../forms/inputs/SelectInput';
 import { retrieveAddresses } from '../../../actions/address';
+import { retrieveLocationTags } from '../../../actions/locationTag';
 import {
     commitRouteDrafts,
     discardRouteDrafts,
@@ -15,6 +16,7 @@ import { getLocationAverage } from '../../../utils/location';
 
 
 const mapStateToProps = state => ({
+    tagList: state.locationTags.tagList,
     addressList: state.addresses.addressList,
     generator: state.routes.generator,
     routeList: state.routes.routeList,
@@ -22,9 +24,11 @@ const mapStateToProps = state => ({
 });
 
 @connect(mapStateToProps)
+@injectIntl
 export default class AllRoutesPane extends RootPaneBase {
     componentDidMount() {
         this.props.dispatch(retrieveAddresses());
+        this.props.dispatch(retrieveLocationTags());
 
         var mapOptions = {
             center: new google.maps.LatLng(55.61, 13.01),
@@ -64,6 +68,31 @@ export default class AllRoutesPane extends RootPaneBase {
         };
     }
 
+    getPaneFilters(data, filters) {
+        let tagOptions = {
+            '_': this.props.intl.formatMessage({
+                id: 'panes.allRoutes.filters.tag.nullOption' }),
+         };
+
+         if (this.props.tagList && this.props.tagList.items) {
+             this.props.tagList.items.forEach(item => {
+                 tagOptions[item.data.id] = item.data.title;
+             });
+         }
+
+
+        return [
+            <div key="filters">
+                <Msg tagName="label"
+                    id="panes.allRoutes.filters.tag.label"/>
+                <SelectInput name="tag" options={ tagOptions }
+                    value={ filters.tag || '_' }
+                    onValueChange={ this.onFilterChange.bind(this) }
+                    />
+            </div>
+        ];
+    }
+
     renderPaneContent(data) {
         return [
             <div key="map" ref="map"
@@ -83,7 +112,7 @@ export default class AllRoutesPane extends RootPaneBase {
         ];
     }
 
-    resetMarkers(activeIds = null) {
+    resetMarkers() {
         let marker;
         let addressList = this.props.addressList;
 
@@ -94,19 +123,19 @@ export default class AllRoutesPane extends RootPaneBase {
         }
 
         if (addressList.items && !addressList.isPending) {
+            let tagId = this.state.filters.tag;
             let addresses = this.props.addressList.items.map(i => i.data);
 
-            if (activeIds) {
+            if (tagId && tagId != '_') {
                 addresses = addresses
-                    .filter(addr => activeIds.indexOf(addr.id) >= 0);
+                    .filter(addr => addr.tags.indexOf(tagId) >= 0);
             }
 
             addresses.forEach(addr => {
                 let latLng = new google.maps.LatLng(addr.latitude, addr.longitude);
-                let isActive = (activeIds && activeIds.indexOf(addr.id) >= 0);
 
                 marker = new google.maps.Marker({
-                    icon: isActive? this.activeIcon : this.defaultIcon,
+                    icon: this.defaultIcon,
                     position: latLng,
                     map: this.map,
                     title: addr.title,
@@ -163,5 +192,9 @@ export default class AllRoutesPane extends RootPaneBase {
 
     onRoutePanelRouteMouseOut(route) {
         this.redrawMarkers();
+    }
+
+    onFiltersApply(filters) {
+        this.setState({ filters }, () => this.resetMarkers());
     }
 }
