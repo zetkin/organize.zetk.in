@@ -4,6 +4,7 @@ import cx from 'classnames';
 import Button from '../../../misc/Button';
 import LoadingIndicator from '../../../misc/LoadingIndicator';
 import RouteList from './RouteList';
+import { FormattedMessage as Msg } from 'react-intl';
 
 
 export default class RoutePanel extends React.Component {
@@ -105,9 +106,16 @@ export default class RoutePanel extends React.Component {
         else {
             return (
                 <div className="RoutePanel-config">
+                    <div className="RoutePanel-configIcon"/>
+                    <h2>
+                        <Msg id="panes.allRoutes.routePanel.config.h"/>
+                    </h2>
+                    <p>
+                        <Msg id="panes.allRoutes.routePanel.config.p"/>
+                    </p>
                     <Button
-                        className="RoutePanel-generateButton"
-                        labelMsg="panes.allRoutes.routePanel.generateButton"
+                        className="RoutePanel-configStartButton"
+                        labelMsg="panes.allRoutes.routePanel.config.startButton"
                         onClick={ this.onGenerateButtonClick.bind(this) }
                         />
                 </div>
