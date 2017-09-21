@@ -8,6 +8,8 @@ routePanel:
             eller spara.
         startButton: Start wizard
     generateButton: Generera rutter
+    progress:
+        counting: '{count} rutter skapade...'
     tabs:
         routes: Rutter
         generator: Generera

@@ -7,6 +7,8 @@ routePanel:
             The generated list is collected in a draft for you to edit or commit.
         startButton: Start wizard
     generateButton: Generate routes
+    progress:
+        counting: '{count} routes created...'
     tabs:
         routes: Routes
         generator: Auto create
