@@ -1,4 +1,5 @@
 labels:
+    canvass: Canvass
     campaign: Kampanj
     dialog: Dialog
     maps: Kartor
@@ -14,6 +15,7 @@ menu:
         href: 'http://zetkin.org/sv'
         text: Info
 subSections:
+    canvass: Rutter
     campaign:
         actions: Aktioner
         distribution: Spridning
