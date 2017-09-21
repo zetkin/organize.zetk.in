@@ -12,6 +12,7 @@ export default class RouteList extends React.Component {
                     onMouseOut={ this.onRouteMouseOut.bind(this, route) }>
                     <span className="RouteList-itemTitle">{ route.id }</span>
                     <span className="RouteList-itemAddrCount">{ route.addresses.length }</span>
+                    <span className="RouteList-itemHouseholdCount">{ route.household_count }</span>
                 </li>
             );
         });

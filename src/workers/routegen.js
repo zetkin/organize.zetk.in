@@ -11,11 +11,13 @@ self.onmessage = ev => {
         let clusters = [];
 
         // STEP 0: Prepare estimates
-        // Round route size up or down to accommodate all addresses
+        // Round route size up or down to accommodate all households
         // in roughly equally large routes
         postUpdate();
-        let estRouteCount = Math.round(addresses.length / config.routeSize);
-        let actualRouteSize = Math.ceil(addresses.length / estRouteCount);
+        let numHouseholds = addresses.reduce((sum, addr) =>
+            sum + addr.household_count, 0);
+        let estRouteCount = Math.round(numHouseholds / config.routeSize);
+        let actualRouteSize = Math.ceil(numHouseholds / estRouteCount);
 
         // STEP 1: Set up data structures
         postUpdate({ step: 1 });
@@ -36,7 +38,7 @@ self.onmessage = ev => {
         let p = new Point();
         postUpdate({ step: 4 });
         clusters = clusters.filter(cluster => {
-            if (cluster.numPoints() > (0.4 * config.routeSize)) {
+            if (cluster.numHouseholds() > (0.4 * config.routeSize)) {
                 return true;
             }
             else {
@@ -91,7 +93,7 @@ function findRouteCluster(points, tree, size) {
     let cluster = new Cluster();
     let queue = [];
 
-    while (cur && cluster.numPoints() < size) {
+    while (cur && cluster.numHouseholds() < size) {
         let idx = points.indexOf(cur);
 
         points.splice(idx, 1);
@@ -136,6 +138,7 @@ function getNormalizedPoints(addresses) {
         (addr.longitude - b.minX) / maxDim,
         (addr.latitude - b.minY) / maxDim,
         addr.street,
+        addr.household_count,
     ));
 }
 
@@ -168,11 +171,12 @@ function calcBounds(addresses) {
     return b;
 }
 
-function Point(id, x, y, street) {
+function Point(id, x, y, street, households) {
     this.id = id;
     this.x = x;
     this.y = y;
     this.street = street;
+    this.households = households;
     this.fitness = 0;
     this.used = false;
 
@@ -189,6 +193,7 @@ function Cluster() {
     let _minY = Infinity;
     let _maxX = -Infinity;
     let _maxY = -Infinity;
+    let _households = 0;
     let _cX = 0;
     let _cY = 0;
 
@@ -216,11 +221,14 @@ function Cluster() {
 
         _streets[p.street]++;
 
+        _households += p.households;
+
         p.used = true;
     };
 
     this.getPoints = () => _points;
     this.numPoints = () => _points.length;
+    this.numHouseholds = () => _households;
     this.getAverageX = () => _aX;
     this.getAverageY = () => _aY;
 
@@ -267,6 +275,7 @@ function Cluster() {
 
     this.toRouteDraft = () => ({
         addresses: _points.map(p => p.id),
+        household_count: _households,
     });
 }
 
