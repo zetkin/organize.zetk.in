@@ -1,4 +1,13 @@
 routePanel:
+    config:
+        h: Låt Zetkin generera rutterna!
+        p: |
+            Detta är en guide som automatiskt skapar rutter åt dig.
+            I nästa steg kan du göra dina inställningar.
+            Den genererade listan samlas i ett utkast som du kan redigera
+            eller spara.
+        startButton: Start wizard
+    generateButton: Generera rutter
     tabs:
         routes: Rutter
         generator: Generera

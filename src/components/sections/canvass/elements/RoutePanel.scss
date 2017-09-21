@@ -21,6 +21,7 @@
         left: 0;
         right: 0;
         bottom: 0;
+        padding: 2em;
     }
 
     .RoutePanel-buttons {
@@ -54,6 +55,21 @@
 
         .RoutePanel-tabs .Button:first-child {
             @include tab-button($passive: true);
+        }
+    }
+
+    .RoutePanel-config {
+        text-align: center;
+
+        .RoutePanel-configIcon:before {
+            @include icon($fa-var-magic);
+            font-size: 6em;
+        }
+
+        .RoutePanel-configStartButton {
+            @include button($icon: $fa-var-play);
+            width: 100%;
+            margin-top: 1em;
         }
     }
 }
