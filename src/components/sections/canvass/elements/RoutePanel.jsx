@@ -72,12 +72,15 @@ export default class RoutePanel extends React.Component {
         let draftList = this.props.draftList;
 
         if (generator.isPending) {
+            let count = generator.info.routesCompleted;
+
             return (
                 <div className="RoutePanel-progress">
-                    <span className="RoutePanel-progressCount">
-                        { generator.info.routesCompleted }
-                    </span>
-                    <LoadingIndicator />;
+                    <LoadingIndicator />
+                    <h2 className="RoutePanel-progressCount">
+                        <Msg id="panes.allRoutes.routePanel.progress.counting"
+                            values={{ count }}/>
+                    </h2>
                 </div>
             );
         }

@@ -72,4 +72,15 @@
             margin-top: 1em;
         }
     }
+
+    .RoutePanel-progress {
+        .LoadingIndicator {
+            font-size: 3em;
+            margin: 1em 0;
+        }
+
+        .RoutePanel-progressCount {
+            text-align: center;
+        }
+    }
 }
