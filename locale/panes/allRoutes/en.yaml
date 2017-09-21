@@ -1,0 +1,4 @@
+routePanel:
+    tabs:
+        routes: Routes
+        generator: Auto create
