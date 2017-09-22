@@ -125,7 +125,11 @@
 }
 
 @mixin tab-button($color: white, $amount:5, $icon:false, $passive:false) {
+    position: relative;
+    top: -0.2em;
+
     @if $passive {
+        top: 0;
         $color: darken($color, 5);
 
         &:first-child {
