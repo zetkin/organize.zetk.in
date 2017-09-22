@@ -1,0 +1,42 @@
+filters:
+    tag:
+        nullOption: (All addresses)
+routePanel:
+    drafts:
+        info:
+            title: Generated draft routes
+            text: The routes will be created when the draft is saved.
+        commit: Save routes
+        discard: Discard routes
+    intro:
+        h: Let Zetkin create the routes!
+        p: |
+            This is a wizard that creates routes for you automatically.
+            In the following step, you can enter your configurations.
+            The generated list is collected in a draft for you to edit or commit.
+        startButton: Start wizard
+    form:
+        selection:
+            all: All available addresses
+            filter: Filtered (visible) addresses
+            h: Selection
+        settings:
+            h: Settings
+            households:
+                h: Desired route size
+                label: households
+        generateButton: Generate routes
+    progress:
+        counting: '{count} routes created...'
+    routeList:
+        addresses: |
+                    {addressesCount, plural,
+                        =1 {1 address}
+                        other {# addresses}}
+        households: |
+                    {householdsCount, plural,
+                        =1 {# household}
+                        other {# households}}
+    tabs:
+        routes: Routes
+        generator: Auto create

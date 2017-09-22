@@ -1,0 +1,20 @@
+.AllRoutesPane {
+    position: relative;
+
+    .RoutePanel {
+        position: absolute;
+        top: 6em;
+        bottom: 2em;
+        left: 2em;
+        width: 32em;
+        z-index: 2;
+    }
+}
+
+.AllRoutesPane-map {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+}

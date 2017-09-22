@@ -1,0 +1,43 @@
+filters:
+    tag:
+        nullOption: (Alla adresser)
+routePanel:
+    drafts:
+        info:
+            title: Utkast av genererade rutter
+            text: Rutterna kommer att skapas när utkastet sparas.
+        commit: Spara rutter
+        discard: Kassera rutter
+    intro:
+        h: Låt Zetkin generera rutterna!
+        p: |
+            Detta är en guide som automatiskt skapar rutter åt dig.
+            I nästa steg kan du göra dina inställningar.
+            Den genererade listan samlas i ett utkast som du kan redigera
+            eller spara.
+        startButton: Start wizard
+    form:
+        selection:
+            all: Alla tillgängliga adresser
+            filter: Filtrerade (synliga) adresser
+            h: Adressurval
+        settings:
+            h: Inställningar
+            households:
+                h: Önskad ruttstorlek
+                label: hushåll
+        generateButton: Skapa rutter
+    progress:
+        counting: '{count} rutter skapade...'
+    routeList:
+        addresses: |
+                    {addressesCount, plural,
+                        =1 {1 adress}
+                        other {# adresser}}
+        households: |
+                    {householdsCount, plural,
+                        =1 {# hushåll}
+                        other {# hushåll}}
+    tabs:
+        routes: Rutter
+        generator: Generera
