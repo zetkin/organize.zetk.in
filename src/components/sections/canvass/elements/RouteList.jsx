@@ -11,6 +11,7 @@ export default class RouteList extends React.Component {
 
             return (
                 <li key={ route.id } className="RouteList-item"
+                    onClick={ this.onRouteClick.bind(this, route) }
                     onMouseOver={ this.onRouteMouseOver.bind(this, route) }
                     onMouseOut={ this.onRouteMouseOut.bind(this, route) }>
                     <h3 className="RouteList-itemTitle">{ route.id }</h3>
@@ -31,6 +32,12 @@ export default class RouteList extends React.Component {
                 { items }
             </ul>
         );
+    }
+
+    onRouteClick(route) {
+        if (this.props.onRouteClick) {
+            this.props.onRouteClick(route);
+        }
     }
 
     onRouteMouseOver(route) {
