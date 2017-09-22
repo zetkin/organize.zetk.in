@@ -103,6 +103,7 @@ export default class AllRoutesPane extends RootPaneBase {
                 addressList={ this.props.addressList }
                 routeList={ this.props.routeList }
                 draftList={ this.props.draftList }
+                filteredAddressesSelector={ this.getFilteredAddresses.bind(this) }
                 onGenerate={ this.onRoutePanelGenerate.bind(this) }
                 onCommitDrafts={ this.onRoutePanelCommit.bind(this) }
                 onDiscardDrafts={ this.onRoutePanelDiscard.bind(this) }
@@ -110,6 +111,18 @@ export default class AllRoutesPane extends RootPaneBase {
                 onRouteMouseOut={ this.onRoutePanelRouteMouseOut.bind(this) }
                 />
         ];
+    }
+
+    getFilteredAddresses() {
+        let tagId = this.state.filters.tag;
+        let addresses = this.props.addressList.items.map(i => i.data);
+
+        if (tagId && tagId != '_') {
+            addresses = addresses
+                .filter(addr => addr.tags.indexOf(tagId) >= 0);
+        }
+
+        return addresses;
     }
 
     resetMarkers() {
@@ -123,13 +136,7 @@ export default class AllRoutesPane extends RootPaneBase {
         }
 
         if (addressList.items && !addressList.isPending) {
-            let tagId = this.state.filters.tag;
-            let addresses = this.props.addressList.items.map(i => i.data);
-
-            if (tagId && tagId != '_') {
-                addresses = addresses
-                    .filter(addr => addr.tags.indexOf(tagId) >= 0);
-            }
+            let addresses = this.getFilteredAddresses();
 
             addresses.forEach(addr => {
                 let latLng = new google.maps.LatLng(addr.latitude, addr.longitude);

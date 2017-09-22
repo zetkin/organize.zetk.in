@@ -1,5 +1,8 @@
+filters:
+    tag:
+        nullOption: (Alla adresser)
 routePanel:
-    config:
+    intro:
         h: Låt Zetkin generera rutterna!
         p: |
             Detta är en guide som automatiskt skapar rutter åt dig.
@@ -7,7 +10,17 @@ routePanel:
             Den genererade listan samlas i ett utkast som du kan redigera
             eller spara.
         startButton: Start wizard
-    generateButton: Generera rutter
+    form:
+        selection:
+            all: Alla tillgängliga adresser
+            filter: Filtrerade (synliga) adresser
+            h: Adressurval
+        settings:
+            h: Inställningar
+            households:
+                h: Önskad ruttstorlek
+                label: hushåll
+        generateButton: Skapa rutter
     progress:
         counting: '{count} rutter skapade...'
     tabs:

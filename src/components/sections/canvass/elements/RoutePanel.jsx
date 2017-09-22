@@ -4,6 +4,7 @@ import cx from 'classnames';
 import Button from '../../../misc/Button';
 import LoadingIndicator from '../../../misc/LoadingIndicator';
 import RouteList from './RouteList';
+import SelectInput from '../../../forms/inputs/SelectInput';
 import { FormattedMessage as Msg } from 'react-intl';
 
 
@@ -13,6 +14,11 @@ export default class RoutePanel extends React.Component {
 
         this.state = {
             viewMode: 'routes',
+            generator: {
+                viewMode: 'intro',
+                selection: 'all',
+                households: 300,
+            },
         };
     }
 
@@ -71,7 +77,25 @@ export default class RoutePanel extends React.Component {
         let generator = this.props.generator;
         let draftList = this.props.draftList;
 
-        if (generator.isPending) {
+        if (this.state.generator.viewMode == 'intro') {
+            return (
+                <div className="RoutePanel-intro">
+                    <div className="RoutePanel-introIcon"/>
+                    <h2>
+                        <Msg id="panes.allRoutes.routePanel.intro.h"/>
+                    </h2>
+                    <p>
+                        <Msg id="panes.allRoutes.routePanel.intro.p"/>
+                    </p>
+                    <Button
+                        className="RoutePanel-introStartButton"
+                        labelMsg="panes.allRoutes.routePanel.intro.startButton"
+                        onClick={ this.onStartButtonClick.bind(this) }
+                        />
+                </div>
+            );
+        }
+        else if (generator.isPending) {
             let count = generator.info.routesCompleted;
 
             return (
@@ -107,18 +131,37 @@ export default class RoutePanel extends React.Component {
             );
         }
         else {
+            let selectionOptions = {
+                'all': 'panes.allRoutes.routePanel.form.selection.all',
+                'filter': 'panes.allRoutes.routePanel.form.selection.filter',
+            };
+
             return (
-                <div className="RoutePanel-config">
-                    <div className="RoutePanel-configIcon"/>
-                    <h2>
-                        <Msg id="panes.allRoutes.routePanel.config.h"/>
+                <div className="RoutePanel-form">
+                    <h2 className="RoutePanel-formSelection">
+                        <Msg id="panes.allRoutes.routePanel.form.selection.h"/>
                     </h2>
-                    <p>
-                        <Msg id="panes.allRoutes.routePanel.config.p"/>
-                    </p>
+                    <SelectInput name="selection" options={ selectionOptions }
+                        value={ this.state.generator.selection }
+                        onValueChange={ this.onGeneratorChange.bind(this) }
+                        optionLabelsAreMessages={ true }
+                        />
+
+                    <h2 className="RoutePanel-formSettings">
+                        <Msg id="panes.allRoutes.routePanel.form.settings.h"/>
+                    </h2>
+                    <h3 className="RoutePanel-formHouseholds">
+                        <Msg id="panes.allRoutes.routePanel.form.settings.households.h"/>
+                    </h3>
+                        <input name="routeGenHouseholds"
+                            onChange={ ev => this.onGeneratorChange('households', ev.target.value) }
+                            value={ this.state.generator.households }
+                            />
+                        <Msg tagName="label"
+                            id="panes.allRoutes.routePanel.form.settings.households.label"/>
                     <Button
-                        className="RoutePanel-configStartButton"
-                        labelMsg="panes.allRoutes.routePanel.config.startButton"
+                        className="RoutePanel-generateButton"
+                        labelMsg="panes.allRoutes.routePanel.form.generateButton"
                         onClick={ this.onGenerateButtonClick.bind(this) }
                         />
                 </div>
@@ -132,14 +175,39 @@ export default class RoutePanel extends React.Component {
         });
     }
 
+    onStartButtonClick() {
+        this.setState({
+            generator: Object.assign({}, this.state.generator, {
+                viewMode: 'form',
+            }),
+        });
+    }
+
+    onGeneratorChange(option, value) {
+        this.setState({
+            generator: Object.assign({}, this.state.generator, {
+                [option]: value,
+            }),
+        });
+    }
+
     onGenerateButtonClick() {
         if (this.props.onGenerate) {
-            let addresses = this.props.addressList.items.map(i => i.data.id);
+            let addresses;
+
+            if (this.state.generator.selection == 'filter') {
+                console.log('FILTER ADDRESSES');
+                addresses = this.props.filteredAddressesSelector();
+            }
+            else {
+                addresses = this.props.addressList.items.map(i => i.data);
+            }
+
             let config = {
-                routeSize: 300,
+                routeSize: parseInt(this.state.generator.households) || 300,
             };
 
-            this.props.onGenerate(addresses, config);
+            this.props.onGenerate(addresses.map(a => a.id), config);
         }
     }
 
