@@ -66,6 +66,7 @@ export default class RoutePanel extends React.Component {
         else {
             return (
                 <RouteList list={ routeList }
+                    onRouteClick={ this.props.onRouteClick }
                     onRouteMouseOver={ this.onRouteMouseOver.bind(this) }
                     onRouteMouseOut={ this.onRouteMouseOut.bind(this) }
                     />
@@ -121,6 +122,7 @@ export default class RoutePanel extends React.Component {
                             </p>
                         </div>
                         <RouteList list={ draftList }
+                            onRouteClick={ this.props.onRouteClick }
                             onRouteMouseOver={ this.onRouteMouseOver.bind(this) }
                             onRouteMouseOut={ this.onRouteMouseOut.bind(this) }
                             />
@@ -134,7 +136,7 @@ export default class RoutePanel extends React.Component {
                         <Button
                             className="RoutePanel-commitButton"
                             labelMsg="panes.allRoutes.routePanel.drafts.commit"
-                            onClick={ this.props.onCommitDrafts }
+                            onClick={ this.onCommitDrafts.bind(this) }
                             />
                     </div>
                 </div>
@@ -209,7 +211,6 @@ export default class RoutePanel extends React.Component {
             let addresses;
 
             if (this.state.generator.selection == 'filter') {
-                console.log('FILTER ADDRESSES');
                 addresses = this.props.filteredAddressesSelector();
             }
             else {
@@ -221,6 +222,19 @@ export default class RoutePanel extends React.Component {
             };
 
             this.props.onGenerate(addresses.map(a => a.id), config);
+        }
+    }
+
+    onCommitDrafts() {
+        this.setState({
+            viewMode: 'routes',
+            generator: Object.assign({}, this.state.generator, {
+                viewMode: 'intro',
+            }),
+        });
+
+        if (this.props.onCommitDrafts) {
+            this.props.onCommitDrafts();
         }
     }
 

@@ -107,6 +107,7 @@ export default class AllRoutesPane extends RootPaneBase {
                 onGenerate={ this.onRoutePanelGenerate.bind(this) }
                 onCommitDrafts={ this.onRoutePanelCommit.bind(this) }
                 onDiscardDrafts={ this.onRoutePanelDiscard.bind(this) }
+                onRouteClick={ this.onRoutePanelRouteClick.bind(this) }
                 onRouteMouseOver={ this.onRoutePanelRouteMouseOver.bind(this) }
                 onRouteMouseOut={ this.onRoutePanelRouteMouseOut.bind(this) }
                 />
@@ -191,6 +192,10 @@ export default class AllRoutesPane extends RootPaneBase {
 
     onRoutePanelDiscard() {
         this.props.dispatch(discardRouteDrafts());
+    }
+
+    onRoutePanelRouteClick(route) {
+        this.openPane('route', route.id);
     }
 
     onRoutePanelRouteMouseOver(route) {
