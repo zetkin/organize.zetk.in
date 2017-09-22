@@ -1,0 +1,15 @@
+editLink: Edit route content
+info:
+    addresses: |-
+        {count, plural,
+          =1 {One address}
+          other {# addresses}}
+    households: |-
+        {count, plural,
+          =1 {One household}
+          other {# households}}
+owner:
+    h: Owner
+tags:
+    h: Tags in route
+    emptyLabel: No tagged addresses in route
