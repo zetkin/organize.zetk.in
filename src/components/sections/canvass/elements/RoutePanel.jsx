@@ -117,14 +117,14 @@ export default class RoutePanel extends React.Component {
                         />
                     <div className="RoutePanel-buttons">
                         <Button
-                            className="RoutePanel-commitButton"
-                            labelMsg="panes.allRoutes.routePanel.commitButton"
-                            onClick={ this.props.onCommitDrafts }
+                            className="RoutePanel-discardButton"
+                            labelMsg="panes.allRoutes.routePanel.draft.discard"
+                            onClick={ this.props.onDiscardDrafts }
                             />
                         <Button
-                            className="RoutePanel-discardButton"
-                            labelMsg="panes.allRoutes.routePanel.discardButton"
-                            onClick={ this.props.onDiscardDrafts }
+                            className="RoutePanel-commitButton"
+                            labelMsg="panes.allRoutes.routePanel.draft.commit"
+                            onClick={ this.props.onCommitDrafts }
                             />
                     </div>
                 </div>

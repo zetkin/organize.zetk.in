@@ -2,6 +2,9 @@ filters:
     tag:
         nullOption: (Alla adresser)
 routePanel:
+    draft:
+        commit: Spara rutter
+        discard: Kassera rutter
     intro:
         h: Låt Zetkin generera rutterna!
         p: |
