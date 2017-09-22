@@ -43,6 +43,10 @@
     }
 
     &.routes {
+        .RouteList {
+            overflow-y:scroll;
+        }
+
         .RoutePanel-tabs .Button:last-child {
             @include tab-button($passive: true);
         }
