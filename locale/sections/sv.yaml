@@ -15,7 +15,8 @@ menu:
         href: 'http://zetkin.org/sv'
         text: Info
 subSections:
-    canvass: Rutter
+    canvass:
+        routes: Rutter
     campaign:
         actions: Aktioner
         distribution: Spridning
