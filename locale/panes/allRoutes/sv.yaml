@@ -2,7 +2,7 @@ filters:
     tag:
         nullOption: (Alla adresser)
 routePanel:
-    draft:
+    drafts:
         info:
             title: Utkast av genererade rutter
             text: Rutterna kommer att skapas när utkastet sparas.
