@@ -22,6 +22,15 @@ routePanel:
         generateButton: Generate routes
     progress:
         counting: '{count} routes created...'
+    routeList:
+        addresses: |
+                    {addressesCount, plural,
+                        =1 {1 address}
+                        other {# addresses}}
+        households: |
+                    {householdsCount, plural,
+                        =1 {# household}
+                        other {# households}}
     tabs:
         routes: Routes
         generator: Auto create

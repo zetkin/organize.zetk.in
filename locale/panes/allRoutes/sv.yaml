@@ -23,6 +23,15 @@ routePanel:
         generateButton: Skapa rutter
     progress:
         counting: '{count} rutter skapade...'
+    routeList:
+        addresses: |
+                    {addressesCount, plural,
+                        =1 {1 adress}
+                        other {# adresser}}
+        households: |
+                    {householdsCount, plural,
+                        =1 {# hushåll}
+                        other {# hushåll}}
     tabs:
         routes: Rutter
         generator: Generera
