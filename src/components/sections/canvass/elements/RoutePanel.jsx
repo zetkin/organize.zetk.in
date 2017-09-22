@@ -160,15 +160,18 @@ export default class RoutePanel extends React.Component {
                     <h2 className="RoutePanel-formSettings">
                         <Msg id="panes.allRoutes.routePanel.form.settings.h"/>
                     </h2>
-                    <h3 className="RoutePanel-formHouseholds">
-                        <Msg id="panes.allRoutes.routePanel.form.settings.households.h"/>
-                    </h3>
-                        <input name="routeGenHouseholds"
+                    <div className="RoutePanel-formHouseholds">
+                        <h3 className="RoutePanel-formHouseholdsTitle">
+                            <Msg id="panes.allRoutes.routePanel.form.settings.households.h"/>
+                        </h3>
+                        <input className="RoutePanel-formHouseholdsInput"
+                            name="routeGenHouseholds"
                             onChange={ ev => this.onGeneratorChange('households', ev.target.value) }
                             value={ this.state.generator.households }
                             />
                         <Msg tagName="label"
                             id="panes.allRoutes.routePanel.form.settings.households.label"/>
+                    </div>
                     <Button
                         className="RoutePanel-generateButton"
                         labelMsg="panes.allRoutes.routePanel.form.generateButton"
