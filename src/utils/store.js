@@ -55,10 +55,15 @@ export function updateOrAddListItems(list, newItems, meta) {
 
 
 export function getListItemById(list, id) {
+    if (!id)
+        return null;
+
     if (!list.items)
         return null;
 
-    return list.items.find(i => i.data && i.data.id == id);
+    // TODO: Don't force convert to strings
+    id = id.toString();
+    return list.items.find(i => i.data && i.data.id.toString() == id);
 }
 
 export function getListItemsByIds(list, ids) {
