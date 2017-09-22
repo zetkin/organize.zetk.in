@@ -38,6 +38,7 @@ import MoveParticipantsPane from './MoveParticipantsPane';
 import PersonPane from './PersonPane';
 import PlaceLocationPane from './PlaceLocationPane';
 import QueryPane from './QueryPane';
+import RoutePane from './RoutePane';
 import SelectPeoplePane from './SelectPeoplePane';
 import SelectLocationTagsPane from './SelectLocationTagsPane';
 import SelectPersonTagsPane from './SelectPersonTagsPane';
@@ -86,6 +87,7 @@ var _panes = {
     'person': PersonPane,
     'placelocation': PlaceLocationPane,
     'query': QueryPane,
+    'route': RoutePane,
     'selectpeople': SelectPeoplePane,
     'selectlocationtags': SelectLocationTagsPane,
     'selectpersontags': SelectPersonTagsPane,
