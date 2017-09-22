@@ -1,0 +1,64 @@
+.RoutePane.PaneBase {
+    min-width: 450px;
+}
+
+.RoutePane {
+    .RoutePane-title {
+        &:before {
+            @include icon($fa-var-compass);
+        }
+    }
+
+    .RoutePane-info {
+        color: lighten($c-text, 40);
+        padding-bottom: 2em;
+        border-bottom: 1px solid darken($c-ui-bg, 10);
+        position: relative;
+
+        .RoutePane-infoList {
+            li {
+                font-size: 1.4em;
+                margin: 0.5em 0;
+            }
+        }
+
+        .RoutePane-address_count {
+            &:before {
+                @include icon($fa-var-map-marker);
+            }
+        }
+
+        .RoutePane-household_count {
+            &:before {
+                @include icon($fa-var-home);
+            }
+        }
+    }
+
+    .RoutePane-editLink {
+        position: absolute;
+        top: 0;
+        right: 0;
+
+
+        &:before {
+            @include icon($fa-var-pencil);
+        }
+    }
+
+    .RoutePane-owner {
+        h3 {
+            &:before {
+                @include icon($fa-var-star);
+            }
+        }
+    }
+
+    .RoutePane-tags {
+        h3 {
+            &:before {
+                @include icon($fa-var-tag);
+            }
+        }
+    }
+}

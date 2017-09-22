@@ -3,6 +3,7 @@ import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import Link from '../misc/Link';
+import Button from '../misc/Button';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import PersonSelectWidget from '../misc/PersonSelectWidget';
@@ -100,29 +101,37 @@ export default class RoutePane extends PaneBase {
                 }
             }
 
+            let routeInfo = (
+                <div key="info"className="RoutePane-info">
+                    <ul key="infoList" className="RoutePane-infoList">
+                        { createInfoItem('address_count',
+                            formatMessage(
+                                { id: 'panes.route.info.addresses' },
+                                { count: route.addresses.length })) }
+
+                        { createInfoItem('household_count',
+                            formatMessage(
+                                { id: 'panes.route.info.households' },
+                                { count: route.household_count})) }
+                    </ul>
+                    <Button
+                        className="RoutePane-editLink"
+                        labelMsg="panes.route.editLink"
+                        onClick={ this.onClickEdit.bind(this) }
+                        />
+                </div>
+            );
+
             return [
-                <ul key="info" className="RoutePane-info">
-                    { createInfoItem('address_count',
-                        formatMessage(
-                            { id: 'panes.route.info.addresses' },
-                            { count: route.addresses.length })) }
-
-                    { createInfoItem('household_count',
-                        formatMessage(
-                            { id: 'panes.route.info.households' },
-                            { count: route.household_count})) }
-                </ul>,
-                <Link key="editLink" msgId="panes.route.editLink"
-                    onClick={ this.onClickEdit.bind(this) }/>,
-
+                routeInfo,
                 <div key="owner" className="RoutePane-owner">
-                    <Msg tagName="h2" id="panes.route.owner.h"/>
+                    <Msg tagName="h3" id="panes.route.owner.h"/>
                     <PersonSelectWidget person={ route.owner }
                         onSelect={ this.onOwnerSelect.bind(this) }/>
                 </div>,
 
                 <div key="tags" className="RoutePane-tags">
-                    <Msg tagName="h2" id="panes.route.tags.h"/>
+                    <Msg tagName="h3" id="panes.route.tags.h"/>
                     { tagInfo }
                 </div>
             ];
