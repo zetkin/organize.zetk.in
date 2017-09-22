@@ -1,5 +1,6 @@
 filters:
     tag:
+        label: Routes containing tag
         nullOption: (All addresses)
 routePanel:
     drafts:

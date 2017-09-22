@@ -1,5 +1,6 @@
 filters:
     tag:
+        label: Rutter som innehåller etikett
         nullOption: (Alla adresser)
 routePanel:
     drafts:
