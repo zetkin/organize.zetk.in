@@ -129,4 +129,42 @@
             margin-left: 0.5em;
         }
     }
+
+    .RoutePanel-form {
+        .RoutePanel-formSelection {
+            &:before {
+                @include icon($fa-var-filter);
+            }
+        }
+
+        .RoutePanel-formSettings {
+            &:before {
+                @include icon($fa-var-cog);
+            }
+        }
+
+        .RoutePanel-formHouseholds {
+            .RoutePanel-formHouseholdsTitle {
+                &:before {
+                    @include icon($fa-var-home);
+                }
+            }
+
+            .RoutePanel-formHouseholdsInput {
+                @include input-base;
+                width: 4em;
+            }
+
+            label {
+                font-size: 1.2em;
+                margin-left: 0.5em;
+            }
+        }
+
+        .RoutePanel-generateButton {
+            @include button($icon:$fa-var-check);
+            width: 100%;
+        }
+
+    }
 }
