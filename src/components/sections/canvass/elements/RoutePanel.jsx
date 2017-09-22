@@ -111,19 +111,29 @@ export default class RoutePanel extends React.Component {
         else if (draftList && draftList.items) {
             return (
                 <div className="RoutePanel-drafts">
-                    <RouteList list={ draftList }
-                        onRouteMouseOver={ this.onRouteMouseOver.bind(this) }
-                        onRouteMouseOut={ this.onRouteMouseOut.bind(this) }
-                        />
+                    <div className="RoutePanel-draftsContent">
+                        <div className="RoutePanel-draftsInfo">
+                            <h3 className="RoutePanel-draftsInfoTitle">
+                                <Msg id="panes.allRoutes.routePanel.drafts.info.title"/>
+                            </h3>
+                            <p className="RoutePanel-draftsInfoText">
+                                <Msg id="panes.allRoutes.routePanel.drafts.info.text"/>
+                            </p>
+                        </div>
+                        <RouteList list={ draftList }
+                            onRouteMouseOver={ this.onRouteMouseOver.bind(this) }
+                            onRouteMouseOut={ this.onRouteMouseOut.bind(this) }
+                            />
+                    </div>
                     <div className="RoutePanel-buttons">
                         <Button
                             className="RoutePanel-discardButton"
-                            labelMsg="panes.allRoutes.routePanel.draft.discard"
+                            labelMsg="panes.allRoutes.routePanel.drafts.discard"
                             onClick={ this.props.onDiscardDrafts }
                             />
                         <Button
                             className="RoutePanel-commitButton"
-                            labelMsg="panes.allRoutes.routePanel.draft.commit"
+                            labelMsg="panes.allRoutes.routePanel.drafts.commit"
                             onClick={ this.props.onCommitDrafts }
                             />
                     </div>
