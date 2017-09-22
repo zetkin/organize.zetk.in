@@ -3,6 +3,9 @@ filters:
         nullOption: (Alla adresser)
 routePanel:
     draft:
+        info:
+            title: Utkast av genererade rutter
+            text: Rutterna kommer att skapas när utkastet sparas.
         commit: Spara rutter
         discard: Kassera rutter
     intro:

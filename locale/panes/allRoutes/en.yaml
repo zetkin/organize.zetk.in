@@ -2,7 +2,10 @@ filters:
     tag:
         nullOption: (All addresses)
 routePanel:
-    draft:
+    drafts:
+        info:
+            title: Generated draft routes
+            text: The routes will be created when the draft is saved.
         commit: Save routes
         discard: Discard routes
     intro:

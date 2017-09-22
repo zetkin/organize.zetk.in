@@ -39,23 +39,16 @@
         top: 0;
         right: 0;
         left: 0;
+        bottom:0;
     }
 
     &.routes {
-        .RouteList {
-            bottom: 0;
-        }
-
         .RoutePanel-tabs .Button:last-child {
             @include tab-button($passive: true);
         }
     }
 
     &.generator {
-        .RouteList {
-            bottom: 7em;
-        }
-
         .RoutePanel-tabs .Button:first-child {
             @include tab-button($passive: true);
         }
@@ -88,6 +81,36 @@
     }
 
     .RoutePanel-drafts {
+        .RoutePanel-draftsContent {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 7em;
+            overflow-y: scroll;
+        }
+
+        .RoutePanel-draftsInfo {
+            padding: 2em;
+            text-align: center;
+
+            .RoutePanel-draftsInfoTitle {
+                margin: 0;
+
+                &:before {
+                    @include icon($fa-var-info-circle);
+                }
+            }
+
+            .RoutePanel-draftsInfoText {
+                margin: 0.5em 0;
+            }
+        }
+
+        .RouteList {
+            top: 12em;
+        }
+
         .RoutePanel-buttons {
             .Button {
                 display: inline-block;
@@ -98,7 +121,7 @@
         .RoutePanel-discardButton {
             @include button(
                 $color: $c-ui-dark,$icon: $fa-var-times);
-            margin-right: 0.5em;
+                margin-right: 0.5em;
         }
 
         .RoutePanel-commitButton {
