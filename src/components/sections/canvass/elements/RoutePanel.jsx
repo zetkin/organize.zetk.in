@@ -16,7 +16,7 @@ export default class RoutePanel extends React.Component {
             viewMode: 'routes',
             generator: {
                 viewMode: 'intro',
-                selection: 'all',
+                selection: 'filter',
                 households: 300,
             },
         };
