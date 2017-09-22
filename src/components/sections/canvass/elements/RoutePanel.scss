@@ -58,15 +58,15 @@
         }
     }
 
-    .RoutePanel-config {
+    .RoutePanel-intro {
         text-align: center;
 
-        .RoutePanel-configIcon:before {
+        .RoutePanel-introIcon:before {
             @include icon($fa-var-magic);
             font-size: 6em;
         }
 
-        .RoutePanel-configStartButton {
+        .RoutePanel-introStartButton {
             @include button($icon: $fa-var-play);
             width: 100%;
             margin-top: 1em;

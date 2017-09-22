@@ -1,12 +1,25 @@
+filters:
+    tag:
+        nullOption: (All addresses)
 routePanel:
-    config:
+    intro:
         h: Let Zetkin create the routes!
         p: |
             This is a wizard that creates routes for you automatically.
             In the following step, you can enter your configurations.
             The generated list is collected in a draft for you to edit or commit.
         startButton: Start wizard
-    generateButton: Generate routes
+    form:
+        selection:
+            all: All available addresses
+            filter: Filtered (visible) addresses
+            h: Selection
+        settings:
+            h: Settings
+            households:
+                h: Desired route size
+                label: households
+        generateButton: Generate routes
     progress:
         counting: '{count} routes created...'
     tabs:
