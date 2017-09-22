@@ -26,9 +26,12 @@
 
     .RoutePanel-buttons {
         position: absolute;
-        bottom: 1em;
-        left: 1em;
-        right: 1em;
+        height: 7em;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1em;
+        box-shadow: 0px -1px 10px 0px darken(white, 10);
     }
 
     .RouteList {
@@ -50,7 +53,7 @@
 
     &.generator {
         .RouteList {
-            bottom: 8em;
+            bottom: 7em;
         }
 
         .RoutePanel-tabs .Button:first-child {
@@ -81,6 +84,26 @@
 
         .RoutePanel-progressCount {
             text-align: center;
+        }
+    }
+
+    .RoutePanel-drafts {
+        .RoutePanel-buttons {
+            .Button {
+                display: inline-block;
+                width: calc(50% - 0.5em);
+            }
+        }
+
+        .RoutePanel-discardButton {
+            @include button(
+                $color: $c-ui-dark,$icon: $fa-var-times);
+            margin-right: 0.5em;
+        }
+
+        .RoutePanel-commitButton {
+            @include button($icon:$fa-var-floppy-o);
+            margin-left: 0.5em;
         }
     }
 }

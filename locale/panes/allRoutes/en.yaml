@@ -2,6 +2,9 @@ filters:
     tag:
         nullOption: (All addresses)
 routePanel:
+    draft:
+        commit: Save routes
+        discard: Discard routes
     intro:
         h: Let Zetkin create the routes!
         p: |
