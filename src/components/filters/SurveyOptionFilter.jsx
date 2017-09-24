@@ -21,11 +21,11 @@ export default class SurveyOptionFilter extends FilterBase {
     constructor(props) {
         super(props);
 
-        this.state = stateFromConfig(props.config);
+        this.state = this.stateFromProps(props);
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState(stateFromConfig(nextProps.config));
+        this.setState(this.stateFromProps(nextProps));
 
         if (nextProps.config.survey && nextProps.config.survey != this.props.config.survey) {
             this.props.dispatch(retrieveSurvey(this.state.survey));
@@ -65,7 +65,7 @@ export default class SurveyOptionFilter extends FilterBase {
                     .forEach(q => {
                         questions[q.id] = q.question;
 
-                        if (this.state.question === q.id.toString()) {
+                        if (this.state.question === q.id) {
                             question = q;
                         }
                     });
@@ -118,21 +118,57 @@ export default class SurveyOptionFilter extends FilterBase {
         return config;
     }
 
+    stateFromProps(props) {
+        let autoChanged = false;
+        let config = props.config;
+        let state = {
+            operator: config.operator || 'any',
+            question: config.question,
+            survey: config.survey,
+            option: (config.options && config.options.length)?
+                config.options[0] : undefined,
+        };
+
+        if (state.survey && (!state.question || !state.option)) {
+            let elementList = props.elementsBySurvey[state.survey.toString()];
+
+            if (elementList && elementList.items) {
+                if (!state.question) {
+                    // Select first question by default
+                    let firstQuestionElement = elementList.items.find(i =>
+                        (i.data.type == 'question' && i.data.question.response_type == 'options'));
+
+                    if (firstQuestionElement) {
+                        state.question = firstQuestionElement.data.id;
+                        autoChanged = true;
+                    }
+                }
+
+                if (state.question && !state.option) {
+                    let questionElement = elementList.items.find(i =>
+                        (i.data.id.toString() == state.question.toString()));
+
+                    if (questionElement && questionElement.data) {
+                        let options = questionElement.data.question.options;
+                        if (options && options.length) {
+                            state.option = options[0].id;
+                            autoChanged = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (autoChanged) {
+            this.onConfigChange();
+        }
+
+        return state;
+    }
+
     onChangeSimpleField(name, value) {
         let state = {};
         state[name] = value;
         this.setState(state, () => this.onConfigChange());
     }
-}
-
-function stateFromConfig(config) {
-    let state = {
-        operator: config.operator || 'any',
-        question: config.question,
-        survey: config.survey,
-        option: (config.options && config.options.length)?
-            config.options[0] : undefined,
-    };
-
-    return state;
 }
