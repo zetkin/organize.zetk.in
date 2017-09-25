@@ -1,4 +1,5 @@
 import * as types from '../actions';
+import makeRandomString from '../utils/makeRandomString';
 import {
     createList,
 } from '../utils/store';
@@ -42,17 +43,40 @@ export default function addresses(state = null, action) {
     else if (action.type == types.RETRIEVE_ADDRESSES + '_FULFILLED') {
         let addresses = action.payload;
 
+        let streets = [];
+        let streetsByTitle = {};
+        addresses.forEach(addr => {
+            if (addr.street) {
+                let street = streetsByTitle[addr.street];
+
+                if (!street) {
+                    street = {
+                        id: '$' + makeRandomString(6),
+                        title: addr.street,
+                        addresses: [],
+                    };
+
+                    streets.push(street);
+                    streetsByTitle[street.title] = street;
+                }
+
+                street.addresses.push(addr.id);
+            }
+        });
+
         return Object.assign({}, state, {
             addressById: addresses.reduce((byId, a) => {
                 byId[a.id] = a;
                 return byId
             }, {}),
             addressList: createList(addresses),
+            streetList: createList(streets),
         });
     }
     else {
         return state || {
             addressList: createList(),
+            streetList: createList(),
         };
     }
 }
