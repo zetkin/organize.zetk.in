@@ -7,6 +7,7 @@ import RoutePanel from './elements/RoutePanel';
 import SelectInput from '../../forms/inputs/SelectInput';
 import { retrieveAddresses } from '../../../actions/address';
 import { retrieveLocationTags } from '../../../actions/locationTag';
+import { getListItemById } from '../../../utils/store';
 import {
     commitRouteDrafts,
     discardRouteDrafts,
@@ -18,6 +19,7 @@ import { getLocationAverage } from '../../../utils/location';
 const mapStateToProps = state => ({
     tagList: state.locationTags.tagList,
     addressList: state.addresses.addressList,
+    streetList: state.addresses.streetList,
     generator: state.routes.generator,
     routeList: state.routes.routeList,
     draftList: state.routes.draftList,
@@ -70,16 +72,26 @@ export default class AllRoutesPane extends RootPaneBase {
 
     getPaneFilters(data, filters) {
         let tagOptions = {
+           '_': this.props.intl.formatMessage({
+               id: 'panes.allRoutes.filters.tag.nullOption' }),
+        };
+
+        if (this.props.tagList && this.props.tagList.items) {
+            this.props.tagList.items.forEach(item => {
+                tagOptions[item.data.id] = item.data.title;
+            });
+        }
+
+        let streetOptions = {
             '_': this.props.intl.formatMessage({
-                id: 'panes.allRoutes.filters.tag.nullOption' }),
-         };
+                id: 'panes.allRoutes.filters.street.nullOption' }),
+        };
 
-         if (this.props.tagList && this.props.tagList.items) {
-             this.props.tagList.items.forEach(item => {
-                 tagOptions[item.data.id] = item.data.title;
-             });
-         }
-
+        if (this.props.streetList && this.props.streetList.items) {
+            this.props.streetList.items.forEach(item => {
+                streetOptions[item.data.id] = item.data.title;
+            });
+        }
 
         return [
             <div key="filters">
@@ -87,6 +99,13 @@ export default class AllRoutesPane extends RootPaneBase {
                     id="panes.allRoutes.filters.tag.label"/>
                 <SelectInput name="tag" options={ tagOptions }
                     value={ filters.tag || '_' }
+                    onValueChange={ this.onFilterChange.bind(this) }
+                    />
+
+                <Msg tagName="label"
+                    id="panes.allRoutes.filters.street.label"/>
+                <SelectInput name="street" options={ streetOptions }
+                    value={ filters.street || '_' }
                     onValueChange={ this.onFilterChange.bind(this) }
                     />
             </div>
@@ -116,11 +135,22 @@ export default class AllRoutesPane extends RootPaneBase {
 
     getFilteredAddresses() {
         let tagId = this.state.filters.tag;
+        let streetId = this.state.filters.street;
         let addresses = this.props.addressList.items.map(i => i.data);
 
         if (tagId && tagId != '_') {
             addresses = addresses
                 .filter(addr => addr.tags.indexOf(tagId) >= 0);
+        }
+
+        if (streetId) {
+            let streetItem = getListItemById(this.props.streetList, streetId);
+
+            if (streetItem) {
+                let streetAddresses = streetItem.data.addresses;
+                addresses = addresses
+                    .filter(addr => streetAddresses.indexOf(addr.id) >= 0);
+            }
         }
 
         return addresses;
