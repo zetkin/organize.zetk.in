@@ -65,12 +65,12 @@ export function deleteSurvey(id) {
     };
 }
 
-export function createSurveyElement(surveyId, data) {
+export function createSurveyElement(surveyId, data, paneId) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
         dispatch({
             type: types.CREATE_SURVEY_ELEMENT,
-            meta: { surveyId },
+            meta: { surveyId, paneId },
             payload: {
                 promise: z.resource('orgs', orgId, 'surveys', surveyId,
                     'elements').post(data)
