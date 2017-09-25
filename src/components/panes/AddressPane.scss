@@ -1,0 +1,21 @@
+.AddressPane.PaneBase {
+    min-width: 450px;
+}
+
+.AddressPane {
+    .InfoListItem-address {
+        &:before {
+            @include icon($fa-var-globe);
+        }
+    }
+
+    .InfoListItem-position {
+        &:before {
+            @include icon($fa-var-location-arrow);
+        }
+    }
+
+    .TagCloud {
+        margin-top: 2em;
+    }
+}
