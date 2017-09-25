@@ -150,6 +150,8 @@ export default class AllRoutesPane extends RootPaneBase {
                     zIndex: 0,
                 });
 
+                marker.addListener('click', this.onMarkerClick.bind(this, addr));
+
                 this.markers.push({
                     marker, addr
                 });
@@ -180,6 +182,10 @@ export default class AllRoutesPane extends RootPaneBase {
                 m.marker.setZIndex(0);
             }
         });
+    }
+
+    onMarkerClick(addr) {
+        this.openPane('address', addr.id);
     }
 
     onRoutePanelGenerate(addresses, config) {
