@@ -1,0 +1,11 @@
+.InfoList {
+    color: lighten($c-text, 40);
+    padding-bottom: 2em;
+    border-bottom: 1px solid darken($c-ui-bg, 10);
+    position: relative;
+
+    li {
+        font-size: 1.4em;
+        margin: 0.5em 0;
+    }
+}
