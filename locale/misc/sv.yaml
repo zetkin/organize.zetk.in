@@ -17,6 +17,9 @@ callAssignmentTemplates:
                 12 {om året}
             }.
         title: Håll kontakten
+    survey:
+        desc: 'Vi ringer runt för att samla in svar på {survey}.'
+        title: 'Samla in svar på {survey}'
 campaignSelect:
     header: Välj kampanj
     nullLabel: Alla kampanjer
