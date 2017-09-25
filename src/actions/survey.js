@@ -13,11 +13,12 @@ export function retrieveSurveys() {
     };
 }
 
-export function createSurvey(data) {
+export function createSurvey(data, paneId) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
         dispatch({
             type: types.CREATE_SURVEY,
+            meta: { paneId },
             payload: {
                 promise: z.resource('orgs', orgId, 'surveys').post(data),
             }
