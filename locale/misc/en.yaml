@@ -13,6 +13,9 @@ callAssignmentTemplates:
               12 {a year}
             }
         title: Stay in touch
+    survey:
+        desc: 'We call to collect responses for {survey}.'
+        title: 'Collect {survey}'
 campaignSelect:
     header: Choose campaign
     nullLabel: All campaigns

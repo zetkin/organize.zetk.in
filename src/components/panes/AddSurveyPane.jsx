@@ -35,7 +35,6 @@ export default class AddSurveyPane extends PaneBase {
 
         let values = this.refs.form.getChangedValues();
 
-        this.props.dispatch(createSurvey(values));
-        this.closePane()
+        this.props.dispatch(createSurvey(values, this.props.paneData.id));
     }
 }

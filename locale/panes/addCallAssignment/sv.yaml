@@ -30,6 +30,7 @@ goal:
         {goalType, select,
             inform {Skapa uppdrag för att informera}
             mobilize {Skapa mobiliseringsuppdrag}
+            survey {Skapa uppdrag för att samla in enkätsvar}
             stayintouch {Skapa uppdrag för att hålla kontakten}
         }
 target:
@@ -66,6 +67,9 @@ templates:
             three: Var tredje månad
             twelve: En gång om året
         title: Håll kontakten
+    survey:
+        instructions: Välj vilken enkät du vill samla in svar på
+        title: Samla in enkätsvar
     tagTarget:
         instructions: |-
             Välj en etikett. Målgruppen kommer bestå av alla personer med den

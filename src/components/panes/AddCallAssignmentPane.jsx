@@ -8,12 +8,14 @@ import CallAssignmentForm from '../forms/CallAssignmentForm';
 import Button from '../misc/Button';
 import Link from '../misc/Link';
 import { retrieveCampaigns } from '../../actions/campaign';
+import { retrieveSurveys } from '../../actions/survey';
 import { retrievePersonTags } from '../../actions/personTag';
 import { retrieveCallAssignment, createCallAssignment }
     from '../../actions/callAssignment';
 
 import InformTemplate from '../misc/callAssignmentTemplates/InformTemplate';
 import MobilizeTemplate from '../misc/callAssignmentTemplates/MobilizeTemplate';
+import SurveyTemplate from '../misc/callAssignmentTemplates/SurveyTemplate';
 import StayInTouchTemplate from '../misc/callAssignmentTemplates/StayInTouchTemplate';
 import TagTargetTemplate from '../misc/callAssignmentTemplates/TagTargetTemplate';
 import AllTargetTemplate from '../misc/callAssignmentTemplates/AllTargetTemplate';
@@ -22,7 +24,13 @@ import RandomTargetTemplate from '../misc/callAssignmentTemplates/RandomTargetTe
 
 const STEPS = [ 'target', 'goal', 'form' ];
 
-@connect(state => state)
+const mapStateToProps = state => ({
+    campaignList: state.campaigns.campaignList,
+    surveyList: state.surveys.surveyList,
+    tagList: state.personTags.tagList,
+});
+
+@connect(mapStateToProps)
 @injectIntl
 export default class AddCallAssignmentPane extends PaneBase {
     constructor(props) {
@@ -39,12 +47,10 @@ export default class AddCallAssignmentPane extends PaneBase {
     }
 
     getRenderData() {
-        let campaignList = this.props.campaigns.campaignList;
-        let tagList = this.props.personTags.tagList;
-
         return {
-            campaigns: campaignList.items.map(i => i.data),
-            tags: tagList.items.map(i => i.data),
+            campaigns: this.props.campaignList.items.map(i => i.data),
+            surveys: this.props.surveyList.items.map(i => i.data),
+            tags: this.props.tagList.items.map(i => i.data),
         }
     }
 
@@ -120,6 +126,11 @@ export default class AddCallAssignmentPane extends PaneBase {
                         selected={ this.state.goalType == 'mobilize' }
                         onConfigChange={ this.onGoalConfigChange.bind(this) }
                         onSelect={ this.onGoalSelect.bind(this) }/>
+                    <SurveyTemplate surveys={ data.surveys }
+                        config={ this.state.goalConfig }
+                        selected={ this.state.goalType == 'survey' }
+                        onConfigChange={ this.onGoalConfigChange.bind(this) }
+                        onSelect={ this.onGoalSelect.bind(this) }/>
                     <StayInTouchTemplate
                         config={ this.state.goalConfig }
                         selected={ this.state.goalType == 'stayintouch' }
@@ -146,6 +157,7 @@ export default class AddCallAssignmentPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
 
+        this.props.dispatch(retrieveSurveys());
         this.props.dispatch(retrieveCampaigns());
         this.props.dispatch(retrievePersonTags());
     }
@@ -206,7 +218,7 @@ export default class AddCallAssignmentPane extends PaneBase {
                 };
             }
             else if (this.state.goalType == 'mobilize') {
-                let campaignItem = this.props.campaigns.campaignList.items
+                let campaignItem = this.props.campaignList.items
                     .find(i => i.data.id == this.state.goalConfig.campaignId);
 
                 let campaign = campaignItem.data;
@@ -218,6 +230,21 @@ export default class AddCallAssignmentPane extends PaneBase {
                     description: formatMessage(
                         { id: 'misc.callAssignmentTemplates.mobilize.desc' },
                         { campaign: campaign.title }),
+                };
+            }
+            else if (this.state.goalType == 'survey') {
+                let surveyItem = this.props.surveyList.items
+                    .find(i => i.data.id == this.state.goalConfig.surveyId);
+
+                let survey = surveyItem.data;
+
+                extraState.assignment = {
+                    title: formatMessage(
+                        { id: 'misc.callAssignmentTemplates.survey.title' },
+                        { survey: survey.title }),
+                    description: formatMessage(
+                        { id: 'misc.callAssignmentTemplates.survey.desc' },
+                        { survey: survey.title }),
                 };
             }
             else {
@@ -338,6 +365,16 @@ export default class AddCallAssignmentPane extends PaneBase {
                         campaign: this.state.goalConfig.campaignId,
                         after: 'now',
                     }
+                }];
+            }
+            else if (this.state.goalType == 'survey') {
+                // Add filter to find all who responded to survey
+                values.goal_filters = [{
+                    type: 'survey_submission',
+                    config: {
+                        operator: 'submitted',
+                        survey: this.state.goalConfig.surveyId,
+                    },
                 }];
             }
             else {

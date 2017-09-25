@@ -103,8 +103,8 @@ export default class SurveyQuestionForm extends React.Component {
     }
 
     decorateValues(values) {
-        values.response_config = {}
         if (values.textWidget) {
+            values.response_config = values.response_config || {}
             if (this.state.responseType == 'text') {
                 values.response_config.multiline = (values.textWidget == 'multi');
             }
@@ -113,6 +113,7 @@ export default class SurveyQuestionForm extends React.Component {
         }
 
         if (values.optionsWidget) {
+            values.response_config = values.response_config || {}
             if (this.state.responseType == 'options') {
                 values.response_config.widget_type = values.optionsWidget;
             }
