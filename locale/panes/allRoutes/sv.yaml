@@ -1,3 +1,4 @@
+addSelectionToRouteButton: Lägg till i rutt
 filters:
     tag:
         label: Rutter som innehåller etikett

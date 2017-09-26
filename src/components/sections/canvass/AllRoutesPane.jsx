@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 
 import AddressMap from './elements/AddressMap';
+import Button from '../../misc/Button';
 import RootPaneBase from '../RootPaneBase';
 import RoutePanel from './elements/RoutePanel';
 import SelectInput from '../../forms/inputs/SelectInput';
@@ -49,7 +50,18 @@ export default class AllRoutesPane extends RootPaneBase {
     }
 
     getRenderData() {
+        let selection = null;
+
+        if (this.selectionId) {
+            let selectionList = this.props.selectionList
+            let selectionItem = getListItemById(selectionList, this.selectionId);
+            if (selectionItem) {
+                selection = selectionItem.data;
+            }
+        }
+
         return {
+            selection,
             addressList: this.props.addressList,
         };
     }
@@ -85,29 +97,33 @@ export default class AllRoutesPane extends RootPaneBase {
             select: 'panes.allRoutes.mapModes.select',
         };
 
+        let addRouteButton = null;
+        if (data.selection && data.selection.selectedIds.length) {
+            let count = data.selection.selectedIds.length;
+            addRouteButton = (
+                <Button key="addRouteButton"
+                    className="AllRoutesPane-addSelectionToRouteButton"
+                    labelMsg="panes.allRoutes.addSelectionToRouteButton"
+                    labelValues={{ count }}
+                    onClick={ this.onSelectionToRouteButtonClick.bind(this) }
+                    />
+            );
+        }
+
         return [
             <ViewSwitch key="mapMode"
                 states={ mapModes } selected={ this.state.mapMode }
                 onSwitch={ this.onMapStateSwitch.bind(this) }
-                />
+                />,
+            addRouteButton
         ]
     }
 
     renderPaneContent(data) {
-        let selection = null;
-
-        if (this.selectionId) {
-            let selectionList = this.props.selectionList
-            let selectionItem = getListItemById(selectionList, this.selectionId);
-            if (selectionItem) {
-                selection = selectionItem.data;
-            }
-        }
-
         return [
             <AddressMap key="map"
                 mode={ this.state.mapMode }
-                selection={ selection }
+                selection={ data.selection }
                 addresses={ this.filteredAddresses }
                 highlightRoute={ this.state.highlightRoute }
                 onAddressClick={ this.onMapAddressClick.bind(this) }
@@ -189,6 +205,14 @@ export default class AllRoutesPane extends RootPaneBase {
         this.setState({
             mapMode: state,
         });
+    }
+
+    onAddRouteButtonClick() {
+        this.openPane('addroute');
+    }
+
+    onSelectionToRouteButtonClick() {
+        this.openPane('routefromaddresses', this.selectionId);
     }
 
     onFiltersApply(filters) {

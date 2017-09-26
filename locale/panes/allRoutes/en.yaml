@@ -1,3 +1,4 @@
+addSelectionToRouteButton: Add selection to route
 filters:
     tag:
         label: Routes containing tag
