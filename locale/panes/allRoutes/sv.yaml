@@ -5,6 +5,9 @@ filters:
     tag:
         label: Adresser med etiketten
         nullOption: (Alla adresser)
+mapModes:
+    browse: Browse
+    select: Select
 routePanel:
     drafts:
         info:

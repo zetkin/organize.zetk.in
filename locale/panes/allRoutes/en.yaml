@@ -5,6 +5,9 @@ filters:
     tag:
         label: Addresses tagged
         nullOption: (All addresses)
+mapModes:
+    browse: Browse
+    select: Select
 routePanel:
     drafts:
         info:

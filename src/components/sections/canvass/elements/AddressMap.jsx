@@ -1,9 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import cx from 'classnames';
 
+import {
+    addToSelection,
+    removeFromSelection,
+} from '../../../../actions/selection';
+
+
+@connect(state => ({}))
 export default class AddressMap extends React.Component {
     render() {
+        let classes = cx('AddressMap', {
+            'browseMode': this.props.mode == 'browse',
+            'selectMode': this.props.mode == 'select',
+        });
+
         return (
-            <div className="AddressMap">
+            <div className={ classes }>
                 <div className="AddressMap-map" ref="map"/>
             </div>
         );
@@ -17,16 +31,22 @@ export default class AddressMap extends React.Component {
             zoom: 13,
         };
 
-        this.defaultIcon =  {
-               url: '/static/images/address-marker-black.png',
-               scaledSize: { width: 6, height: 6 },
-               anchor: { x: 3, y: 3 },
+        this.defaultIcon = {
+            url: '/static/images/address-marker-black.png',
+            scaledSize: { width: 6, height: 6 },
+            anchor: { x: 3, y: 3 },
         };
 
-        this.activeIcon =  {
-               url: '/static/images/address-marker-red.png',
-               scaledSize: { width: 6, height: 6 },
-               anchor: { x: 3, y: 3 },
+        this.activeIcon = {
+            url: '/static/images/address-marker-red.png',
+            scaledSize: { width: 6, height: 6 },
+            anchor: { x: 3, y: 3 },
+        };
+
+        this.selectedIcon = {
+            url: '/static/images/address-marker-blue.png',
+            scaledSize: { width: 6, height: 6 },
+            anchor: { x: 3, y: 3 },
         };
 
         this.centerSetFromData = false;
@@ -43,6 +63,25 @@ export default class AddressMap extends React.Component {
 
         if (this.props.highlightRoute != prevProps.highlightRoute) {
             this.redrawMarkers();
+        }
+
+        if (this.props.selection != prevProps.selection) {
+            this.redrawMarkers();
+        }
+
+        if (this.props.mode != prevProps.mode) {
+            if (this.props.mode == 'select') {
+                this.map.setOptions({
+                    draggable: false,
+                    draggableCursor: 'crosshair',
+                });
+            }
+            else {
+                this.map.setOptions({
+                    draggable: true,
+                    draggableCursor: 'default',
+                });
+            }
         }
     }
 
@@ -94,11 +133,24 @@ export default class AddressMap extends React.Component {
             this.props.highlightRoute.addresses : null;
 
         this.markers.forEach(m => {
-            let isActive = (activeIds && activeIds.indexOf(m.addr.id) >= 0);
             let curIcon = m.marker.getIcon();
+            let selection = this.props.selection;
+
+            let isSelected = (selection && selection.selectedIds.indexOf(m.addr.id) >= 0);
+            if (isSelected) {
+                if (curIcon.url != this.selectedIcon.url) {
+                    m.marker.setIcon(this.selectedIcon);
+                    m.marker.setZIndex(2);
+                }
+
+                return;
+            }
+
+            let isActive = (activeIds && activeIds.indexOf(m.addr.id) >= 0);
             if (isActive && curIcon.url == this.defaultIcon.url) {
                 m.marker.setIcon(this.activeIcon);
                 m.marker.setZIndex(1);
+                return;
             }
             else if (!isActive && curIcon.url == this.activeIcon.url) {
                 m.marker.setIcon(this.defaultIcon);
@@ -108,8 +160,12 @@ export default class AddressMap extends React.Component {
     }
 
     onMarkerClick(addr) {
-        if (this.props.onAddressClick) {
+        if (this.props.mode == 'browse' && this.props.onAddressClick) {
             this.props.onAddressClick(addr);
+        }
+        else if (this.props.mode == 'select') {
+            let selectionId = this.props.selection.id;
+            this.props.dispatch(addToSelection(selectionId, addr.id));
         }
     }
 }
