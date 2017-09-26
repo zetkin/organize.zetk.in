@@ -7,6 +7,13 @@ extend:
     desc: Välj en befintlig rutt för att utöka den.
     h: Utöka befintlig rutt
     empty: Det finns inga befintliga rutter att utöka.
+info:
+    households: |
+        {count, plural,
+            =1 {Ett hushåll}
+            other {# hushåll}
+        }
+    size: Området är ca {radius} m
 title: |-
     { count, plural,
         =1 {Lägg till en adress i rutt}
