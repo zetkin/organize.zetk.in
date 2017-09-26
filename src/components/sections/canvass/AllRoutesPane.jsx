@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 
+import AddressMap from './elements/AddressMap';
 import RootPaneBase from '../RootPaneBase';
 import RoutePanel from './elements/RoutePanel';
 import SelectInput from '../../forms/inputs/SelectInput';
@@ -28,40 +29,15 @@ const mapStateToProps = state => ({
 @connect(mapStateToProps)
 @injectIntl
 export default class AllRoutesPane extends RootPaneBase {
+    constructor(props) {
+        super(props);
+
+        this.filteredAddresses = this.getFilteredAddresses();
+    }
+
     componentDidMount() {
         this.props.dispatch(retrieveAddresses());
         this.props.dispatch(retrieveLocationTags());
-
-        var mapOptions = {
-            center: new google.maps.LatLng(55.61, 13.01),
-            disableDefaultUI: true,
-            zoomControl: true,
-            zoom: 13,
-        };
-
-        this.defaultIcon =  {
-               url: '/static/images/address-marker-black.png',
-               scaledSize: { width: 6, height: 6 },
-               anchor: { x: 3, y: 3 },
-        };
-
-        this.activeIcon =  {
-               url: '/static/images/address-marker-red.png',
-               scaledSize: { width: 6, height: 6 },
-               anchor: { x: 3, y: 3 },
-        };
-
-        this.centerSetFromData = false;
-        this.map = new google.maps.Map(this.refs.map, mapOptions);
-
-        this.markers = [];
-        this.resetMarkers();
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.addressList != prevProps.addressList) {
-            this.resetMarkers();
-        }
     }
 
     getRenderData() {
@@ -114,9 +90,11 @@ export default class AllRoutesPane extends RootPaneBase {
 
     renderPaneContent(data) {
         return [
-            <div key="map" ref="map"
-                className="AllRoutesPane-map">
-            </div>,
+            <AddressMap key="map"
+                addresses={ this.filteredAddresses }
+                highlightRoute={ this.state.highlightRoute }
+                onAddressClick={ this.onMapAddressClick.bind(this) }
+                />,
             <RoutePanel key="routes"
                 generator={ this.props.generator }
                 addressList={ this.props.addressList }
@@ -133,10 +111,16 @@ export default class AllRoutesPane extends RootPaneBase {
         ];
     }
 
-    getFilteredAddresses() {
-        let tagId = this.state.filters.tag;
+    componentWillUpdate(nextProps, nextState) {
+        if (this.props.addressList != nextProps.addressList) {
+            this.filteredAddresses = this.getFilteredAddresses(nextProps, nextState);
+        }
+    }
+
+    getFilteredAddresses(props = this.props, state = this.state) {
+        let tagId = state.filters.tag;
         let streetId = this.state.filters.street;
-        let addresses = this.props.addressList.items.map(i => i.data);
+        let addresses = props.addressList.items.map(i => i.data);
 
         if (tagId && tagId != '_') {
             addresses = addresses
@@ -156,65 +140,7 @@ export default class AllRoutesPane extends RootPaneBase {
         return addresses;
     }
 
-    resetMarkers() {
-        let marker;
-        let addressList = this.props.addressList;
-
-        // Remove existing markers
-        while (marker = this.markers.pop()) {
-            marker.marker.setMap(null);
-            google.maps.event.clearInstanceListeners(marker.marker);
-        }
-
-        if (addressList.items && !addressList.isPending) {
-            let addresses = this.getFilteredAddresses();
-
-            addresses.forEach(addr => {
-                let latLng = new google.maps.LatLng(addr.latitude, addr.longitude);
-
-                marker = new google.maps.Marker({
-                    icon: this.defaultIcon,
-                    position: latLng,
-                    map: this.map,
-                    title: addr.title,
-                    zIndex: 0,
-                });
-
-                marker.addListener('click', this.onMarkerClick.bind(this, addr));
-
-                this.markers.push({
-                    marker, addr
-                });
-            });
-
-            // right now just an extra loop...
-            // and and only center and set bounds if map not centered by
-            // data before
-            if (!this.centerSetFromData && this.props.locationsForBounds) {
-                if (this.props.locationsForBounds.length > 0) {
-                    this.centerSetFromData = true;
-                    this.positionMap(this.props.locationsForBounds);
-                }
-            }
-        }
-    }
-
-    redrawMarkers(activeIds = null) {
-        this.markers.forEach(m => {
-            let isActive = (activeIds && activeIds.indexOf(m.addr.id) >= 0);
-            let curIcon = m.marker.getIcon();
-            if (isActive && curIcon.url == this.defaultIcon.url) {
-                m.marker.setIcon(this.activeIcon);
-                m.marker.setZIndex(1);
-            }
-            else if (!isActive && curIcon.url == this.activeIcon.url) {
-                m.marker.setIcon(this.defaultIcon);
-                m.marker.setZIndex(0);
-            }
-        });
-    }
-
-    onMarkerClick(addr) {
+    onMapAddressClick(addr) {
         this.openPane('address', addr.id);
     }
 
@@ -235,14 +161,18 @@ export default class AllRoutesPane extends RootPaneBase {
     }
 
     onRoutePanelRouteMouseOver(route) {
-        this.redrawMarkers(route.addresses);
+        this.setState({
+            highlightRoute: route,
+        });
     }
 
     onRoutePanelRouteMouseOut(route) {
-        this.redrawMarkers();
+        this.setState({
+            highlightRoute: null,
+        });
     }
 
     onFiltersApply(filters) {
-        this.setState({ filters }, () => this.resetMarkers());
+        this.filteredAddresses = this.getFilteredAddresses(this.props, { filters });
     }
 }
