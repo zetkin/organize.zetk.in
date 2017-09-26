@@ -65,7 +65,7 @@ export default class SurveyOptionFilter extends FilterBase {
                     .forEach(q => {
                         questions[q.id] = q.question;
 
-                        if (this.state.question === q.id) {
+                        if (this.state.question && this.state.question.toString() === q.id.toString()) {
                             question = q;
                         }
                     });
