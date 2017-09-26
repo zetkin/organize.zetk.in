@@ -7,6 +7,13 @@ extend:
     desc: Pick an existing route to be extended with these addresses.
     h: Extend route
     empty: There are no routes to extend.
+info:
+    households: |
+        {count, plural,
+            =1 {One household}
+            other {# households}
+        }
+    size: Radius is roughly {radius} m
 title: |-
     { count, plural,
         =1 {Add one address to route}
