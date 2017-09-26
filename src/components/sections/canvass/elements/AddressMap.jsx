@@ -134,27 +134,22 @@ export default class AddressMap extends React.Component {
 
         this.markers.forEach(m => {
             let curIcon = m.marker.getIcon();
+            let nextIcon = this.defaultIcon;
+            let zIndex = 0;
+
             let selection = this.props.selection;
-
-            let isSelected = (selection && selection.selectedIds.indexOf(m.addr.id) >= 0);
-            if (isSelected) {
-                if (curIcon.url != this.selectedIcon.url) {
-                    m.marker.setIcon(this.selectedIcon);
-                    m.marker.setZIndex(2);
-                }
-
-                return;
+            if (activeIds && activeIds.indexOf(m.addr.id) >= 0) {
+                nextIcon = this.activeIcon;
+                zIndex = 1;
+            }
+            else if (selection && selection.selectedIds.indexOf(m.addr.id) >= 0) {
+                nextIcon = this.selectedIcon;
+                zIndex = 2;
             }
 
-            let isActive = (activeIds && activeIds.indexOf(m.addr.id) >= 0);
-            if (isActive && curIcon.url == this.defaultIcon.url) {
-                m.marker.setIcon(this.activeIcon);
-                m.marker.setZIndex(1);
-                return;
-            }
-            else if (!isActive && curIcon.url == this.activeIcon.url) {
-                m.marker.setIcon(this.defaultIcon);
-                m.marker.setZIndex(0);
+            if (curIcon.url != nextIcon.url) {
+                m.marker.setIcon(nextIcon);
+                m.marker.setZIndex(zIndex);
             }
         });
     }
@@ -164,8 +159,15 @@ export default class AddressMap extends React.Component {
             this.props.onAddressClick(addr);
         }
         else if (this.props.mode == 'select') {
-            let selectionId = this.props.selection.id;
-            this.props.dispatch(addToSelection(selectionId, addr.id));
+            let selection = this.props.selection;
+
+            console.log(addr.id, selection.selectedIds);
+            if (selection.selectedIds.indexOf(addr.id) >= 0) {
+                this.props.dispatch(removeFromSelection(selection.id, addr.id));
+            }
+            else {
+                this.props.dispatch(addToSelection(selection.id, addr.id));
+            }
         }
     }
 }
