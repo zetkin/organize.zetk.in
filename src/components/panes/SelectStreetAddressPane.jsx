@@ -5,6 +5,7 @@ import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 import AddressList from '../lists/AddressList';
 import Button from '../misc/Button';
 import PaneBase from './PaneBase';
+import ViewSwitch from '../misc/ViewSwitch';
 import { getListItemById } from '../../utils/store';
 
 import {
@@ -39,6 +40,14 @@ const mapStateToProps = (state, props) => {
 @connect(mapStateToProps)
 @injectIntl
 export default class SelectStreetAddressPane extends PaneBase {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            viewState: 'all',
+        };
+    }
+
     componentDidMount() {
         super.componentDidMount();
 
@@ -60,6 +69,13 @@ export default class SelectStreetAddressPane extends PaneBase {
 
     renderPaneContent(data) {
         if (this.props.streetItem) {
+            let viewState = this.state.viewState;
+            let viewStates = {
+                'all': 'panes.selectStreetAddress.views.all',
+                'even': 'panes.selectStreetAddress.views.even',
+                'odd': 'panes.selectStreetAddress.views.odd',
+            };
+
             // Mimic a list structure
             let addrList = {
                 items: this.props.addresses.map(addr => ({
@@ -67,7 +83,28 @@ export default class SelectStreetAddressPane extends PaneBase {
                 })),
             };
 
+            if (viewState !== 'all') {
+                addrList.items = addrList.items.filter(item => {
+                    let num = parseInt(item.data.number);
+                    let mod = num % 2;
+
+                    if (viewState == 'odd' && mod == 1) {
+                        return true;
+                    }
+                    else if (viewState == 'even' && mod == 0) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                });
+            }
+
             return [
+                <ViewSwitch key="viewSwitch"
+                    states={ viewStates } selected={ viewState }
+                    onSwitch={ this.onViewSwitch.bind(this) }
+                    />,
                 <AddressList key="addresses" addressList={ addrList }
                     allowBulkSelection={ true }
                     bulkSelection={ this.props.selectionItem.data }
@@ -101,6 +138,12 @@ export default class SelectStreetAddressPane extends PaneBase {
         else {
             this.props.dispatch(removeFromSelection(selectionId, item.data.id));
         }
+    }
+
+    onViewSwitch(state) {
+        this.setState({
+            viewState: state,
+        });
     }
 
     onSaveButtonClick() {
