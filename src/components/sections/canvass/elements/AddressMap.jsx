@@ -54,6 +54,8 @@ export default class AddressMap extends React.Component {
 
         this.markers = [];
         this.resetMarkers();
+
+        this.map.addListener('mousedown', this.onMapMouseDown.bind(this));
     }
 
     componentDidUpdate(prevProps) {
@@ -79,7 +81,7 @@ export default class AddressMap extends React.Component {
             else {
                 this.map.setOptions({
                     draggable: true,
-                    draggableCursor: 'default',
+                    draggableCursor: 'grab',
                 });
             }
         }
@@ -161,7 +163,6 @@ export default class AddressMap extends React.Component {
         else if (this.props.mode == 'select') {
             let selection = this.props.selection;
 
-            console.log(addr.id, selection.selectedIds);
             if (selection.selectedIds.indexOf(addr.id) >= 0) {
                 this.props.dispatch(removeFromSelection(selection.id, addr.id));
             }
@@ -169,5 +170,51 @@ export default class AddressMap extends React.Component {
                 this.props.dispatch(addToSelection(selection.id, addr.id));
             }
         }
+    }
+
+    onMapMouseDown(ev) {
+        if (this.props.mode == 'select') {
+            this.mouseDownPos = ev.latLng.toJSON();
+
+            this.map.addListener('mousemove', this.onMapMouseMove.bind(this));
+            this.map.addListener('mouseup', this.onMapMouseUp.bind(this));
+        }
+    }
+
+    onMapMouseMove(ev) {
+        let bounds = new google.maps.LatLngBounds(this.mouseDownPos, this.mouseDownPos);
+
+        bounds.extend(ev.latLng);
+        if (this.selectionRect) {
+            this.selectionRect.setBounds(bounds);
+        }
+        else {
+            this.selectionRect = new google.maps.Rectangle({
+                map: this.map,
+                bounds: bounds,
+                clickable: false,
+                fillOpacity: 0.05,
+                strokeWeight: 1,
+            });
+        }
+    }
+
+    onMapMouseUp(ev) {
+        // Find selection
+        let bounds = this.selectionRect.getBounds();
+        let selection = this.props.selection;
+        this.markers
+            .filter(m => bounds.contains(m.marker.getPosition()))
+            .forEach(m => {
+                let addrId = m.addr.id;
+                this.props.dispatch(addToSelection(selection.id, addrId));
+            });
+
+        // Clean up
+        this.mouseDownPos = null;
+        this.selectionRect.setMap(null);
+        this.selectionRect = null;
+        google.maps.event.clearListeners(this.map, 'mousemove');
+        google.maps.event.clearListeners(this.map, 'mouseup');
     }
 }
