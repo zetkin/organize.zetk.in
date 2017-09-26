@@ -1,3 +1,4 @@
+addSelectionToRouteButton: Add selection to route
 filters:
     street:
         label: Addresses on street

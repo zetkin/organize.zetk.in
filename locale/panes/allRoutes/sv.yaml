@@ -1,3 +1,4 @@
+addSelectionToRouteButton: Lägg till i rutt
 filters:
     street:
         label: Adresser på gata
