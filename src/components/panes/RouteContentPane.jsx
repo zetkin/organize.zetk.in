@@ -91,6 +91,7 @@ export default class RouteContentPane extends PaneBase {
                 <div key="add">
                     <RelSelectInput name="address"
                         labelFunc={ o => o.title || stringFromAddress(o) }
+                        minFilterLength={ 3 }
                         showCreateOption={ false } allowNull={ false }
                         onValueChange={ this.onAddAddressChange.bind(this) }
                         objects={ addrObjects }
