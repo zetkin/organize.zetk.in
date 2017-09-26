@@ -2,6 +2,9 @@ filters:
     tag:
         label: Routes containing tag
         nullOption: (All addresses)
+mapModes:
+    browse: Browse
+    select: Select
 routePanel:
     drafts:
         info:

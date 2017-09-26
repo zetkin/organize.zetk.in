@@ -6,19 +6,23 @@ import AddressMap from './elements/AddressMap';
 import RootPaneBase from '../RootPaneBase';
 import RoutePanel from './elements/RoutePanel';
 import SelectInput from '../../forms/inputs/SelectInput';
+import ViewSwitch from '../../misc/ViewSwitch';
 import { retrieveAddresses } from '../../../actions/address';
 import { retrieveLocationTags } from '../../../actions/locationTag';
+import { createSelection } from '../../../actions/selection';
 import {
     commitRouteDrafts,
     discardRouteDrafts,
     generateRoutes,
 } from '../../../actions/route';
 import { getLocationAverage } from '../../../utils/location';
+import { getListItemById } from '../../../utils/store';
 
 
 const mapStateToProps = state => ({
     tagList: state.locationTags.tagList,
     addressList: state.addresses.addressList,
+    selectionList: state.selections.selectionList,
     generator: state.routes.generator,
     routeList: state.routes.routeList,
     draftList: state.routes.draftList,
@@ -30,6 +34,12 @@ export default class AllRoutesPane extends RootPaneBase {
     constructor(props) {
         super(props);
 
+        this.state = {
+            filters: {},
+            mapMode: 'browse',
+        };
+
+        this.selectionId = null;
         this.filteredAddresses = this.getFilteredAddresses();
     }
 
@@ -69,9 +79,35 @@ export default class AllRoutesPane extends RootPaneBase {
         ];
     }
 
+    getPaneTools(data) {
+        let mapModes = {
+            browse: 'panes.allRoutes.mapModes.browse',
+            select: 'panes.allRoutes.mapModes.select',
+        };
+
+        return [
+            <ViewSwitch key="mapMode"
+                states={ mapModes } selected={ this.state.mapMode }
+                onSwitch={ this.onMapStateSwitch.bind(this) }
+                />
+        ]
+    }
+
     renderPaneContent(data) {
+        let selection = null;
+
+        if (this.selectionId) {
+            let selectionList = this.props.selectionList
+            let selectionItem = getListItemById(selectionList, this.selectionId);
+            if (selectionItem) {
+                selection = selectionItem.data;
+            }
+        }
+
         return [
             <AddressMap key="map"
+                mode={ this.state.mapMode }
+                selection={ selection }
                 addresses={ this.filteredAddresses }
                 highlightRoute={ this.state.highlightRoute }
                 onAddressClick={ this.onMapAddressClick.bind(this) }
@@ -139,6 +175,19 @@ export default class AllRoutesPane extends RootPaneBase {
     onRoutePanelRouteMouseOut(route) {
         this.setState({
             highlightRoute: null,
+        });
+    }
+
+    onMapStateSwitch(state) {
+        if (state == 'select' && !this.selectionId) {
+            let action = createSelection('address', null, null);
+
+            this.selectionId = action.payload.id;
+            this.props.dispatch(action);
+        }
+
+        this.setState({
+            mapMode: state,
         });
     }
 
