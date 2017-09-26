@@ -1,4 +1,5 @@
 addSelectionToRouteButton: Add selection to route
+clearSelectionButton: Clear selection
 filters:
     tag:
         label: Routes containing tag

@@ -10,7 +10,10 @@ import SelectInput from '../../forms/inputs/SelectInput';
 import ViewSwitch from '../../misc/ViewSwitch';
 import { retrieveAddresses } from '../../../actions/address';
 import { retrieveLocationTags } from '../../../actions/locationTag';
-import { createSelection } from '../../../actions/selection';
+import {
+    clearSelection,
+    createSelection
+} from '../../../actions/selection';
 import {
     commitRouteDrafts,
     discardRouteDrafts,
@@ -98,6 +101,7 @@ export default class AllRoutesPane extends RootPaneBase {
         };
 
         let addRouteButton = null;
+        let clearButton = null;
         if (data.selection && data.selection.selectedIds.length) {
             let count = data.selection.selectedIds.length;
             addRouteButton = (
@@ -108,6 +112,14 @@ export default class AllRoutesPane extends RootPaneBase {
                     onClick={ this.onSelectionToRouteButtonClick.bind(this) }
                     />
             );
+
+            clearButton = (
+                <Button key="clearSelectionButton"
+                    className="AllRoutesPane-clearSelectionButton"
+                    labelMsg="panes.allRoutes.clearSelectionButton"
+                    onClick={ this.onClearSelectionButtonClick.bind(this) }
+                    />
+            );
         }
 
         return [
@@ -115,7 +127,8 @@ export default class AllRoutesPane extends RootPaneBase {
                 states={ mapModes } selected={ this.state.mapMode }
                 onSwitch={ this.onMapStateSwitch.bind(this) }
                 />,
-            addRouteButton
+            addRouteButton,
+            clearButton
         ]
     }
 
@@ -213,6 +226,10 @@ export default class AllRoutesPane extends RootPaneBase {
 
     onSelectionToRouteButtonClick() {
         this.openPane('routefromaddresses', this.selectionId);
+    }
+
+    onClearSelectionButtonClick() {
+        this.props.dispatch(clearSelection(this.selectionId));
     }
 
     onFiltersApply(filters) {

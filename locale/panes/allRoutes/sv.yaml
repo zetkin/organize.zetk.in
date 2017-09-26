@@ -1,4 +1,5 @@
 addSelectionToRouteButton: Lägg till i rutt
+clearSelectionButton: Välj inga adresser
 filters:
     tag:
         label: Rutter som innehåller etikett
