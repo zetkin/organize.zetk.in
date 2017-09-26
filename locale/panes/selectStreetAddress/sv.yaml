@@ -1,2 +1,11 @@
+saveButton: |
+    {numSelected, plural,
+        =0 {Close without selecting}
+        =1 {Select one address}
+        other {Select # addresses}
+    }
 title: Välj adresser från {street}
-saveButton: Spara urval
+views:
+    all: Alla
+    even: Jämna nummer
+    odd: Udda nummer
