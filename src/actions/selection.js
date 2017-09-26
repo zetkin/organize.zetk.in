@@ -29,6 +29,13 @@ export function removeFromSelection(id, objId) {
     };
 }
 
+export function clearSelection(id) {
+    return {
+        type: types.CLEAR_SELECTION,
+        payload: { id },
+    };
+}
+
 export function finishSelection(id) {
     return ({ dispatch, getState }) => {
         let selectionList = getState().selections.selectionList;

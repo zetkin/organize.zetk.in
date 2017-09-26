@@ -45,6 +45,17 @@ export default function selections(state = null, action) {
                     selection.id, selection),
             });
 
+        case types.CLEAR_SELECTION:
+            selection = Object.assign({}, getListItemById(
+                state.selectionList, action.payload.id).data, {
+                    selectedIds: []
+                });
+
+            return Object.assign({}, state, {
+                selectionList: updateOrAddListItem(state.selectionList,
+                    action.payload.id, selection),
+            });
+
         case types.FINISH_SELECTION:
             let id = action.payload.id;
             return Object.assign({}, state, {
