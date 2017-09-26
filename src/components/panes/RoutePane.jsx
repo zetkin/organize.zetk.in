@@ -142,8 +142,7 @@ export default class RoutePane extends PaneBase {
     }
 
     onClickEdit(ev) {
-        // TODO: Open edit pane
-        //this.openPane('editroute', this.getParam(0));
+        this.openPane('routecontent', this.getParam(0));
     }
 
     onOwnerSelect(person) {
