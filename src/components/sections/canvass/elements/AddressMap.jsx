@@ -59,6 +59,8 @@ export default class AddressMap extends React.Component {
 
         window.addEventListener('keydown', this.onKeyDown = this.onKeyDown.bind(this));
         window.addEventListener('keyup', this.onKeyUp = this.onKeyUp.bind(this));
+
+        this.resetDragState();
     }
 
     componentWillUnmount() {
@@ -80,20 +82,7 @@ export default class AddressMap extends React.Component {
         }
 
         if (this.props.mode != prevProps.mode) {
-            if (this.props.mode == 'select') {
-                this.map.setOptions({
-                    draggable: false,
-                    scrollwheel: true,
-                    draggableCursor: 'crosshair',
-                });
-            }
-            else {
-                this.map.setOptions({
-                    draggable: true,
-                    scrollwheel: true,
-                    draggableCursor: 'grab',
-                });
-            }
+            this.resetDragState();
         }
     }
 
@@ -192,8 +181,9 @@ export default class AddressMap extends React.Component {
                 this.mouseDownPos = ev.latLng.toJSON();
 
                 this.map.addListener('mousemove', this.onMapMouseMove.bind(this));
-                this.map.addListener('mouseup', this.onMapMouseUp.bind(this));
             }
+
+            this.map.addListener('mouseup', this.onMapMouseUp.bind(this));
         }
     }
 
@@ -217,23 +207,36 @@ export default class AddressMap extends React.Component {
 
     onMapMouseUp(ev) {
         // Find selection
-        if (this.mapDragMode == 'selecting') {
+        if (this.mapDragMode == 'selecting' && this.selectionRect) {
             let bounds = this.selectionRect.getBounds();
             let selection = this.props.selection;
-            this.markers
-                .filter(m => bounds.contains(m.marker.getPosition()))
-                .forEach(m => {
-                    let addrId = m.addr.id;
-                    this.props.dispatch(addToSelection(selection.id, addrId));
-                });
+            let markers = this.markers
+                .filter(m => bounds.contains(m.marker.getPosition()));
+
+            if (this.altIsDown) {
+                markers
+                    .filter(m => selection.selectedIds.indexOf(m.addr.id) >= 0)
+                    .forEach(m => {
+                        let addrId = m.addr.id;
+                        this.props.dispatch(removeFromSelection(selection.id, addrId));
+                    });
+            }
+            else {
+                markers
+                    .forEach(m => {
+                        let addrId = m.addr.id;
+                        this.props.dispatch(addToSelection(selection.id, addrId));
+                    });
+            }
+
             // Clean up
             this.mouseDownPos = null;
             this.selectionRect.setMap(null);
         }
 
         this.mapDragMode = null;
-        this.resetDragState();
         this.selectionRect = null;
+        this.resetDragState();
 
         google.maps.event.clearListeners(this.map, 'mousemove');
         google.maps.event.clearListeners(this.map, 'mouseup');
@@ -242,23 +245,33 @@ export default class AddressMap extends React.Component {
     onKeyDown(ev) {
         if (ev.keyCode == 32) { // Space
             this.spaceIsDown = true;
-            this.resetDragState();
         }
+        else if (ev.keyCode == 18) { // Alt
+            this.altIsDown = true;
+        }
+
+        this.resetDragState();
     }
 
     onKeyUp(ev) {
         if (ev.keyCode == 32) { // Space
             this.spaceIsDown = false;
-            this.resetDragState();
         }
+        else if (ev.keyCode == 18) { // Alt
+            this.altIsDown = false;
+        }
+
+        this.resetDragState();
     }
 
     resetDragState() {
-        let browseMode = (this.props.mode == 'browse');
-        let draggable = browseMode || this.spaceIsDown;
+        let draggable = (this.props.mode == 'browse')
+            || (this.mapDragMode == 'panning')
+            || !!this.spaceIsDown;
 
         this.map.setOptions({
             draggable: draggable,
+            scrollwheel: true,
             draggableCursor: draggable? 'grab' : 'crosshair',
         });
     }
