@@ -1,6 +1,9 @@
 filters:
+    street:
+        label: Adresser på gata
+        nullOption: (Vilken gata som helst)
     tag:
-        label: Rutter som innehåller etikett
+        label: Adresser med etiketten
         nullOption: (Alla adresser)
 routePanel:
     drafts:

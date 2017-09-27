@@ -1,6 +1,9 @@
 filters:
+    street:
+        label: Addresses on street
+        nullOption: (Any street)
     tag:
-        label: Routes containing tag
+        label: Addresses tagged
         nullOption: (All addresses)
 routePanel:
     drafts:

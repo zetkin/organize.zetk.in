@@ -158,11 +158,20 @@ export default class RelSelectInput extends InputBase {
 
 
     getFilteredObjects() {
+        let filter = this.state.inputValue;
+        let filterLen = filter? filter.length : 0;
+        let minLen = this.props.minFilterLength || 0;
+
+        // Return an empty array if the filter is not long enough
+        if (filterLen < minLen) {
+            return [];
+        }
+
         // Filter objects based on input value, unless it's undefined or
         // an empty string in which case all objects should be displayed.
         return this.props.objects.filter(o =>
-            (!this.state.inputValue || this.getLabel(o).toLowerCase()
-                .indexOf(this.state.inputValue.toLowerCase()) >= 0));
+            (!filter || this.getLabel(o).toLowerCase()
+                .indexOf(filter.toLowerCase()) >= 0));
     }
 
     onInputChange(ev) {
@@ -290,6 +299,7 @@ RelSelectInput.propTypes = {
     valueField: React.PropTypes.string,
     labelField: React.PropTypes.string,
     labelFunc: React.PropTypes.func,
+    minFilterLength: React.PropTypes.number,
     nullLabel: React.PropTypes.string,
     showCreateOption: React.PropTypes.bool,
     showEditLink: React.PropTypes.bool,
