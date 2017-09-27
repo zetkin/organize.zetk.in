@@ -25,7 +25,6 @@ export default class AddressMap extends React.Component {
 
     componentDidMount() {
         var mapOptions = {
-            center: new google.maps.LatLng(55.61, 13.01),
             disableDefaultUI: true,
             zoomControl: true,
             zoom: 13,
@@ -54,6 +53,12 @@ export default class AddressMap extends React.Component {
 
         this.markers = [];
         this.resetMarkers();
+
+        if (this.markers.length) {
+            let bounds = new google.maps.LatLngBounds();
+            this.markers.forEach(m => bounds.extend(m.marker.getPosition()));
+            this.map.setCenter(bounds.getCenter());
+        }
 
         this.map.addListener('mousedown', this.onMapMouseDown.bind(this));
 
