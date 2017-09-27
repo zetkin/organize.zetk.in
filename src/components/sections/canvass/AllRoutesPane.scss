@@ -9,14 +9,14 @@
         transition: bottom 0.2s;
 
         &.contracted {
-            bottom: 19em;
+            bottom: 25em;
         }
     }
 
     .AddressSelectionPanel {
         position: absolute;
         width: 32em;
-        height: 15em;
+        height: 21em;
         bottom: 2em;
         left: 2em;
         z-index: 2;
