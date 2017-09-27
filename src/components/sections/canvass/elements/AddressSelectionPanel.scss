@@ -29,13 +29,15 @@
         position: relative;
 
         .AddressSelectionPanel-buttonsClear {
-            @include button($color: $c-ui-dark, $icon: $fa-var-times);
+            @include inline-button(
+                $color: $c-ui-dark, $icon: $fa-var-times);
             position: absolute;
             left: 0;
         }
 
         .AddressSelectionPanel-buttonsAdd {
-            @include button($icon: $fa-var-check);
+            @include inline-button(
+                $color: $c-brand-comp-light, $icon: $fa-var-check);
             position: absolute;
             right: 0;
         }
