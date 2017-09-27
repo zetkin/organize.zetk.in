@@ -4,6 +4,7 @@ import { FormattedMessage as Msg } from 'react-intl';
 
 import PaneBase from './PaneBase';
 import Button from '../misc/Button';
+import Link from '../misc/Link';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
 import { getListItemById } from '../../utils/store';
 import { stringFromAddress } from '../../utils/location';
@@ -54,16 +55,16 @@ export default class RouteContentPane extends PaneBase {
 
                 return (
                     <li key={ addr.id }>
-                        <span className="RouteContentPane-addressName">
+                        <h4 className="RouteContentPane-addressName">
                             { stringFromAddress(addr) }
-                        </span>
+                        </h4>
                         <span className="RouteContentPane-addressHouseholds">
                             <Msg id="panes.routeContent.addresses.item.households"
                                 values={{ count: addr.household_count }}
                                 />
                         </span>
-                        <Button className="RouteContentPane-addressDeleteButton"
-                            labelMsg="panes.routeContent.addresses.item.deleteButton"
+                        <Link className="RouteContentPane-addressDeleteButton"
+                            msgId="panes.routeContent.addresses.item.deleteButton"
                             onClick={ this.onAddressDeleteClick.bind(this, addr) }
                             />
                     </li>
@@ -97,8 +98,8 @@ export default class RouteContentPane extends PaneBase {
                         objects={ addrObjects }
                         />
                 </div>,
-                <div key="addresses">
-                    <Msg tagName="h2" id="panes.routeContent.addresses.h"/>
+                <div key="addresses" className="RouteContentPane-addresses">
+                    <Msg tagName="h3" id="panes.routeContent.addresses.h"/>
                     <ul className="RouteContentPane-addressList">
                         { addrItems }
                     </ul>
