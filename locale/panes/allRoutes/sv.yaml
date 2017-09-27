@@ -61,4 +61,4 @@ selectionPanel:
                 =1 {Ett hushåll}
                 other {# hushåll}
             }
-        size: Området är ca {radius} m stort
+        size: Området är ca {radius, number} m stort
