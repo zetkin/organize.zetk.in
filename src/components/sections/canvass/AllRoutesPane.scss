@@ -1,4 +1,13 @@
 .AllRoutesPane {
+
+    .ViewSwitch-state-browse {
+        @include inline-button($icon: $fa-var-mouse-pointer);
+    }
+
+    .ViewSwitch-state-select {
+        @include inline-button($icon: $fa-var-crosshairs);
+    }
+
     .RoutePanel {
         position: absolute;
         top: 6em;
