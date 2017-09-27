@@ -50,3 +50,18 @@ routePanel:
     tabs:
         routes: Rutter
         generator: Generera
+selectionPanel:
+    addButton: Lägg till i rutt
+    clearButton: Nollställ urvalet
+    h: |
+        { count, plural,
+            =1 {En vald adress}
+            other {# valda adresser}
+        }
+    info:
+        households: |
+            {count, plural,
+                =1 {Ett hushåll}
+                other {# hushåll}
+            }
+        size: Området är ca {radius} m stort

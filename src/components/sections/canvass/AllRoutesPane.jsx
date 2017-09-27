@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 
 import AddressMap from './elements/AddressMap';
+import AddressSelectionPanel from './elements/AddressSelectionPanel';
 import Button from '../../misc/Button';
 import RootPaneBase from '../RootPaneBase';
 import RoutePanel from './elements/RoutePanel';
@@ -118,39 +119,26 @@ export default class AllRoutesPane extends RootPaneBase {
             select: 'panes.allRoutes.mapModes.select',
         };
 
-        let addRouteButton = null;
-        let clearButton = null;
-        if (data.selection && data.selection.selectedIds.length) {
-            let count = data.selection.selectedIds.length;
-            addRouteButton = (
-                <Button key="addRouteButton"
-                    className="AllRoutesPane-addSelectionToRouteButton"
-                    labelMsg="panes.allRoutes.addSelectionToRouteButton"
-                    labelValues={{ count }}
-                    onClick={ this.onSelectionToRouteButtonClick.bind(this) }
-                    />
-            );
-
-            clearButton = (
-                <Button key="clearSelectionButton"
-                    className="AllRoutesPane-clearSelectionButton"
-                    labelMsg="panes.allRoutes.clearSelectionButton"
-                    onClick={ this.onClearSelectionButtonClick.bind(this) }
-                    />
-            );
-        }
-
         return [
             <ViewSwitch key="mapMode"
                 states={ mapModes } selected={ this.state.mapMode }
                 onSwitch={ this.onMapStateSwitch.bind(this) }
                 />,
-            addRouteButton,
-            clearButton
         ]
     }
 
     renderPaneContent(data) {
+        let selectionPanel = null;
+        if (data.selection && data.selection.selectedIds.length) {
+            selectionPanel = (
+                <AddressSelectionPanel key="selection"
+                    selection={ data.selection }
+                    onAddRoute={ this.onSelectionPanelAddRoute.bind(this) }
+                    onClear={ this.onSelectionPanelClear.bind(this) }
+                    />
+            );
+        }
+
         return [
             <AddressMap key="map"
                 mode={ this.state.mapMode }
@@ -160,6 +148,7 @@ export default class AllRoutesPane extends RootPaneBase {
                 onAddressClick={ this.onMapAddressClick.bind(this) }
                 />,
             <RoutePanel key="routes"
+                contracted={ !!selectionPanel }
                 generator={ this.props.generator }
                 addressList={ this.props.addressList }
                 routeList={ this.props.routeList }
@@ -171,7 +160,8 @@ export default class AllRoutesPane extends RootPaneBase {
                 onRouteClick={ this.onRoutePanelRouteClick.bind(this) }
                 onRouteMouseOver={ this.onRoutePanelRouteMouseOver.bind(this) }
                 onRouteMouseOut={ this.onRoutePanelRouteMouseOut.bind(this) }
-                />
+                />,
+            selectionPanel,
         ];
     }
 
@@ -249,15 +239,11 @@ export default class AllRoutesPane extends RootPaneBase {
         });
     }
 
-    onAddRouteButtonClick() {
-        this.openPane('addroute');
-    }
-
-    onSelectionToRouteButtonClick() {
+    onSelectionPanelAddRoute() {
         this.openPane('routefromaddresses', this.selectionId);
     }
 
-    onClearSelectionButtonClick() {
+    onSelectionPanelClear() {
         this.props.dispatch(clearSelection(this.selectionId));
     }
 
