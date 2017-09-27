@@ -45,7 +45,7 @@ export default class AdressSelectionPanel extends React.Component {
 
         return (
             <div className="AddressSelectionPanel">
-                <Msg tagName="h2" id="panes.allRoutes.selectionPanel.h"
+                <Msg tagName="h3" id="panes.allRoutes.selectionPanel.h"
                     values={{ count: selection.selectedIds.length }}/>
                 <InfoList key="info">
                     <InfoList.Item key="households">
@@ -56,10 +56,12 @@ export default class AdressSelectionPanel extends React.Component {
                     </InfoList.Item>
                 </InfoList>
                 <div className="AddressSelectionPanel-buttons">
-                    <Button labelMsg="panes.allRoutes.selectionPanel.clearButton"
+                    <Button className="AddressSelectionPanel-buttonsClear"
+                        labelMsg="panes.allRoutes.selectionPanel.clearButton"
                         onClick={ this.props.onClear }
                         />
-                    <Button labelMsg="panes.allRoutes.selectionPanel.addButton"
+                    <Button className="AddressSelectionPanel-buttonsAdd"
+                        labelMsg="panes.allRoutes.selectionPanel.addButton"
                         onClick={ this.props.onAddRoute }
                         />
                 </div>
