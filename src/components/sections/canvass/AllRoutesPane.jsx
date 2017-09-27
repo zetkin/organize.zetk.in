@@ -139,30 +139,38 @@ export default class AllRoutesPane extends RootPaneBase {
             );
         }
 
-        return [
-            <AddressMap key="map"
-                mode={ this.state.mapMode }
-                selection={ data.selection }
-                addresses={ this.filteredAddresses }
-                highlightRoute={ this.state.highlightRoute }
-                onAddressClick={ this.onMapAddressClick.bind(this) }
-                />,
-            <RoutePanel key="routes"
-                contracted={ !!selectionPanel }
-                generator={ this.props.generator }
-                addressList={ this.props.addressList }
-                routeList={ this.props.routeList }
-                draftList={ this.props.draftList }
-                filteredAddressesSelector={ this.getFilteredAddresses.bind(this) }
-                onGenerate={ this.onRoutePanelGenerate.bind(this) }
-                onCommitDrafts={ this.onRoutePanelCommit.bind(this) }
-                onDiscardDrafts={ this.onRoutePanelDiscard.bind(this) }
-                onRouteClick={ this.onRoutePanelRouteClick.bind(this) }
-                onRouteMouseOver={ this.onRoutePanelRouteMouseOver.bind(this) }
-                onRouteMouseOut={ this.onRoutePanelRouteMouseOut.bind(this) }
-                />,
-            selectionPanel,
-        ];
+        let addressList = this.props.addressList;
+        if (addressList && addressList.items.length) {
+            return [
+                <AddressMap key="map"
+                    mode={ this.state.mapMode }
+                    selection={ data.selection }
+                    addresses={ this.filteredAddresses }
+                    highlightRoute={ this.state.highlightRoute }
+                    onAddressClick={ this.onMapAddressClick.bind(this) }
+                    />,
+                <RoutePanel key="routes"
+                    contracted={ !!selectionPanel }
+                    generator={ this.props.generator }
+                    addressList={ this.props.addressList }
+                    routeList={ this.props.routeList }
+                    draftList={ this.props.draftList }
+                    filteredAddressesSelector={ this.getFilteredAddresses.bind(this) }
+                    onGenerate={ this.onRoutePanelGenerate.bind(this) }
+                    onCommitDrafts={ this.onRoutePanelCommit.bind(this) }
+                    onDiscardDrafts={ this.onRoutePanelDiscard.bind(this) }
+                    onRouteClick={ this.onRoutePanelRouteClick.bind(this) }
+                    onRouteMouseOver={ this.onRoutePanelRouteMouseOver.bind(this) }
+                    onRouteMouseOut={ this.onRoutePanelRouteMouseOut.bind(this) }
+                    />,
+                selectionPanel,
+            ];
+        }
+        else {
+            // TODO: Display loading indicator if loading, or message if there
+            //       are no addresses.
+            return null;
+        }
     }
 
     componentWillUpdate(nextProps, nextState) {
