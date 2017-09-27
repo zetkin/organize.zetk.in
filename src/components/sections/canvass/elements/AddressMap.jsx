@@ -56,6 +56,14 @@ export default class AddressMap extends React.Component {
         this.resetMarkers();
 
         this.map.addListener('mousedown', this.onMapMouseDown.bind(this));
+
+        window.addEventListener('keydown', this.onKeyDown = this.onKeyDown.bind(this));
+        window.addEventListener('keyup', this.onKeyUp = this.onKeyUp.bind(this));
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('keydown', this.onKeyDown);
+        window.removeEventListener('keyup', this.onKeyUp);
     }
 
     componentDidUpdate(prevProps) {
@@ -75,12 +83,14 @@ export default class AddressMap extends React.Component {
             if (this.props.mode == 'select') {
                 this.map.setOptions({
                     draggable: false,
+                    scrollwheel: true,
                     draggableCursor: 'crosshair',
                 });
             }
             else {
                 this.map.setOptions({
                     draggable: true,
+                    scrollwheel: true,
                     draggableCursor: 'grab',
                 });
             }
@@ -174,10 +184,16 @@ export default class AddressMap extends React.Component {
 
     onMapMouseDown(ev) {
         if (this.props.mode == 'select') {
-            this.mouseDownPos = ev.latLng.toJSON();
+            if (this.spaceIsDown) {
+                this.mapDragMode = 'panning';
+            }
+            else {
+                this.mapDragMode = 'selecting';
+                this.mouseDownPos = ev.latLng.toJSON();
 
-            this.map.addListener('mousemove', this.onMapMouseMove.bind(this));
-            this.map.addListener('mouseup', this.onMapMouseUp.bind(this));
+                this.map.addListener('mousemove', this.onMapMouseMove.bind(this));
+                this.map.addListener('mouseup', this.onMapMouseUp.bind(this));
+            }
         }
     }
 
@@ -201,20 +217,49 @@ export default class AddressMap extends React.Component {
 
     onMapMouseUp(ev) {
         // Find selection
-        let bounds = this.selectionRect.getBounds();
-        let selection = this.props.selection;
-        this.markers
-            .filter(m => bounds.contains(m.marker.getPosition()))
-            .forEach(m => {
-                let addrId = m.addr.id;
-                this.props.dispatch(addToSelection(selection.id, addrId));
-            });
+        if (this.mapDragMode == 'selecting') {
+            let bounds = this.selectionRect.getBounds();
+            let selection = this.props.selection;
+            this.markers
+                .filter(m => bounds.contains(m.marker.getPosition()))
+                .forEach(m => {
+                    let addrId = m.addr.id;
+                    this.props.dispatch(addToSelection(selection.id, addrId));
+                });
+            // Clean up
+            this.mouseDownPos = null;
+            this.selectionRect.setMap(null);
+        }
 
-        // Clean up
-        this.mouseDownPos = null;
-        this.selectionRect.setMap(null);
+        this.mapDragMode = null;
+        this.resetDragState();
         this.selectionRect = null;
+
         google.maps.event.clearListeners(this.map, 'mousemove');
         google.maps.event.clearListeners(this.map, 'mouseup');
+    }
+
+    onKeyDown(ev) {
+        if (ev.keyCode == 32) { // Space
+            this.spaceIsDown = true;
+            this.resetDragState();
+        }
+    }
+
+    onKeyUp(ev) {
+        if (ev.keyCode == 32) { // Space
+            this.spaceIsDown = false;
+            this.resetDragState();
+        }
+    }
+
+    resetDragState() {
+        let browseMode = (this.props.mode == 'browse');
+        let draggable = browseMode || this.spaceIsDown;
+
+        this.map.setOptions({
+            draggable: draggable,
+            draggableCursor: draggable? 'grab' : 'crosshair',
+        });
     }
 }
