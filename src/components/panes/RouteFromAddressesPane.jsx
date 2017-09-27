@@ -71,7 +71,8 @@ export default class RouteFromAddressesPane extends PaneBase {
                     { sizeLabel }
                 </InfoList.Item>
             </InfoList>,
-            <div key="create">
+            <div key="create"
+                className="RouteFromAddressesPane-create">
                 <Msg tagName="h3" id="panes.routeFromSelection.create.h"/>
                 <Msg tagName="p" id="panes.routeFromSelection.create.desc"/>
                 <Button
@@ -91,7 +92,8 @@ export default class RouteFromAddressesPane extends PaneBase {
             }
 
             content.push(
-                <div key="extend">
+                <div key="extend"
+                    className="RouteFromAddressesPane-extend">
                     <Msg tagName="h3" id="panes.routeFromSelection.extend.h"/>
                     <Msg tagName="p" id="panes.routeFromSelection.extend.desc"/>
                     <RelSelectInput name="route"
