@@ -36,9 +36,12 @@ export default class AdressSelectionPanel extends React.Component {
         let dist = google.maps.geometry.spherical.computeDistanceBetween(
             bounds.getSouthWest(), bounds.getNorthEast());
 
-        let sizeLabel = this.props.intl.formatMessage(
-            { id: 'panes.allRoutes.selectionPanel.info.size' },
-            { radius: Math.round(dist/10) * 10 });
+        let sizeLabel = null;
+        if (dist > 0) {
+            sizeLabel = this.props.intl.formatMessage(
+                { id: 'panes.allRoutes.selectionPanel.info.size' },
+                { radius: Math.round(dist/10) * 10 });
+        }
 
         return (
             <div className="AddressSelectionPanel">

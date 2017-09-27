@@ -63,4 +63,4 @@ selectionPanel:
                 =1 {One household}
                 other {# households}
             }
-        size: Radius is roughly {radius} m
+        size: Radius is roughly {radius, number} m
