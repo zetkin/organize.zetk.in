@@ -46,3 +46,18 @@ routePanel:
     tabs:
         routes: Routes
         generator: Auto create
+selectionPanel:
+    addButton: Add to route
+    clearButton: Clear selection
+    h: |
+        { count, plural,
+            =1 {One address selected}
+            other {# addresses selected}
+        }
+    info:
+        households: |
+            {count, plural,
+                =1 {One household}
+                other {# households}
+            }
+        size: Radius is roughly {radius} m

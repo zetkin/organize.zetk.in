@@ -6,6 +6,23 @@
         left: 2em;
         width: 32em;
         z-index: 2;
+        transition: bottom 0.2s;
+
+        &.contracted {
+            bottom: 19em;
+        }
+    }
+
+    .AddressSelectionPanel {
+        position: absolute;
+        width: 32em;
+        height: 15em;
+        bottom: 2em;
+        left: 2em;
+        z-index: 2;
+
+        animation: AllRoutesPane-selectionEnter 0.1s 0.2s;
+        animation-fill-mode: both;
     }
 
     .AddressMap {
@@ -14,5 +31,11 @@
         right: 0;
         left: 0;
         top: 0;
+    }
+}
+
+@keyframes AllRoutesPane-selectionEnter {
+    from {
+        opacity: 0;
     }
 }
