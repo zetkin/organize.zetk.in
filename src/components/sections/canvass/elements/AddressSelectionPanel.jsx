@@ -47,14 +47,14 @@ export default class AdressSelectionPanel extends React.Component {
             <div className="AddressSelectionPanel">
                 <Msg tagName="h3" id="panes.allRoutes.selectionPanel.h"
                     values={{ count: selection.selectedIds.length }}/>
-                <InfoList key="info">
-                    <InfoList.Item key="households">
-                        { householdsLabel }
-                    </InfoList.Item>
-                    <InfoList.Item key="size">
-                        { sizeLabel }
-                    </InfoList.Item>
-                </InfoList>
+                {/* TODO: Add support for internationalization in InfoList */}
+                <InfoList
+                    key="info"
+                    data={[
+                        { name: 'households', value: householdsLabel },
+                        { name: 'size', value: sizeLabel }
+                    ]}
+                />
                 <div className="AddressSelectionPanel-buttons">
                     <Button className="AddressSelectionPanel-buttonsClear"
                         labelMsg="panes.allRoutes.selectionPanel.clearButton"

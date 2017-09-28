@@ -64,14 +64,14 @@ export default class RouteFromAddressesPane extends PaneBase {
             { radius: Math.round(dist/10) * 10 });
 
         let content = [
-            <InfoList key="info">
-                <InfoList.Item key="households">
-                    { householdsLabel }
-                </InfoList.Item>
-                <InfoList.Item key="size">
-                    { sizeLabel }
-                </InfoList.Item>
-            </InfoList>,
+            // TODO: Add support for internationalization in InfoList
+            <InfoList
+                key="info"
+                data={[
+                    { name: 'households', value: householdsLabel },
+                    { name: 'size', value: sizeLabel }
+                ]}
+            />,
             <div key="create"
                 className="RouteFromAddressesPane-create">
                 <Msg tagName="h3" id="panes.routeFromSelection.create.h"/>
