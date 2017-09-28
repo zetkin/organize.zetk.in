@@ -170,8 +170,8 @@ export default class AllRoutesPane extends RootPaneBase {
         else if (!addressList || addressList.isPending) {
             return (
                 <div className="AllRoutesPane-loader">
-                    <Msg id="panes.allRoutes.loader.loading"/>
                     <LoadingIndicator/>
+                    <Msg id="panes.allRoutes.loader.loading"/>
                 </div>
             );
         }
