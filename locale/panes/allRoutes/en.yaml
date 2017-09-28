@@ -7,6 +7,10 @@ filters:
     tag:
         label: Addresses tagged
         nullOption: (All addresses)
+loader:
+    empty: You have no addresses in your database. Contact Zetkin Foundation.
+    error: Addresses could not be loaded due to an error
+    loading: Loading addresses...
 mapModes:
     browse: Browse
     select: Select
