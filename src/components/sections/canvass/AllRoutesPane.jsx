@@ -11,7 +11,6 @@ import SelectInput from '../../forms/inputs/SelectInput';
 import ViewSwitch from '../../misc/ViewSwitch';
 import { retrieveAddresses } from '../../../actions/address';
 import { retrieveLocationTags } from '../../../actions/locationTag';
-import { getListItemById } from '../../../utils/store';
 import {
     clearSelection,
     createSelection
