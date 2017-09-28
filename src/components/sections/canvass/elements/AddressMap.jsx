@@ -25,6 +25,7 @@ export default class AddressMap extends React.Component {
 
     componentDidMount() {
         var mapOptions = {
+            clickableIcons: false,
             disableDefaultUI: true,
             zoomControl: true,
             zoom: 13,
