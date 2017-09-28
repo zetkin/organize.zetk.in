@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage as Msg, injectIntl } from 'react-intl';
+import { FormattedMessage as Msg } from 'react-intl';
 
 import Button from '../../../misc/Button';
 import InfoList from '../../../misc/InfoList';
@@ -12,7 +12,6 @@ const mapStateToProps = state => ({
 
 
 @connect(mapStateToProps)
-@injectIntl
 export default class AdressSelectionPanel extends React.Component {
     render() {
         let selection = this.props.selection;
@@ -21,10 +20,6 @@ export default class AdressSelectionPanel extends React.Component {
             let addr = this.props.addressById[addrId];
             return sum + (addr? addr.household_count : 0);
         }, 0);
-
-        let householdsLabel = this.props.intl.formatMessage(
-            { id: 'panes.allRoutes.selectionPanel.info.households' },
-            { count: householdCount });
 
         let bounds = new google.maps.LatLngBounds();
         selection.selectedIds.forEach(addrId => {
@@ -36,23 +31,23 @@ export default class AdressSelectionPanel extends React.Component {
         let dist = google.maps.geometry.spherical.computeDistanceBetween(
             bounds.getSouthWest(), bounds.getNorthEast());
 
-        let sizeLabel = null;
-        if (dist > 0) {
-            sizeLabel = this.props.intl.formatMessage(
-                { id: 'panes.allRoutes.selectionPanel.info.size' },
-                { radius: Math.round(dist/10) * 10 });
-        }
-
         return (
             <div className="AddressSelectionPanel">
                 <Msg tagName="h3" id="panes.allRoutes.selectionPanel.h"
                     values={{ count: selection.selectedIds.length }}/>
-                {/* TODO: Add support for internationalization in InfoList */}
                 <InfoList
                     key="info"
                     data={[
-                        { name: 'households', value: householdsLabel },
-                        { name: 'size', value: sizeLabel }
+                        {
+                            name: 'households',
+                            msgId: 'panes.allRoutes.selectionPanel.info.households',
+                            msgValues: { count: householdCount }
+                        },
+                        {
+                            name: 'size',
+                            msgId: dist > 0 ? 'panes.allRoutes.selectionPanel.info.size' : null,
+                            msgValues: { radius: Math.round(dist/10) * 10 }
+                        }
                     ]}
                 />
                 <div className="AddressSelectionPanel-buttons">
