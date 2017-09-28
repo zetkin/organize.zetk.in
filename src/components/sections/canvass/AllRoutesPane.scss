@@ -1,4 +1,13 @@
 .AllRoutesPane {
+
+    .ViewSwitch-state-browse {
+        @include inline-button($icon: $fa-var-mouse-pointer);
+    }
+
+    .ViewSwitch-state-select {
+        @include inline-button($icon: $fa-var-crosshairs);
+    }
+
     .RoutePanel {
         position: absolute;
         top: 6em;
@@ -6,13 +15,36 @@
         left: 2em;
         width: 32em;
         z-index: 2;
+        transition: bottom 0.2s;
+
+        &.contracted {
+            bottom: 23em;
+        }
+    }
+
+    .AddressSelectionPanel {
+        position: absolute;
+        width: 32em;
+        height: 19em;
+        bottom: 2em;
+        left: 2em;
+        z-index: 2;
+
+        animation: AllRoutesPane-selectionEnter 0.1s 0.2s;
+        animation-fill-mode: both;
+    }
+
+    .AddressMap {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        top: 0;
     }
 }
 
-.AllRoutesPane-map {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    top: 0;
+@keyframes AllRoutesPane-selectionEnter {
+    from {
+        opacity: 0;
+    }
 }

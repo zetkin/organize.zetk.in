@@ -33,7 +33,9 @@ export default class RoutePanel extends React.Component {
             content = this.renderGenerator();
         }
 
-        classes = cx('RoutePanel', this.state.viewMode);
+        classes = cx('RoutePanel', this.state.viewMode, {
+            contracted: this.props.contracted,
+        });
 
         return (
             <div className={ classes }>

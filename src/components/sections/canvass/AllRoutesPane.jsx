@@ -2,23 +2,33 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 
+import AddressMap from './elements/AddressMap';
+import AddressSelectionPanel from './elements/AddressSelectionPanel';
+import Button from '../../misc/Button';
 import RootPaneBase from '../RootPaneBase';
 import RoutePanel from './elements/RoutePanel';
 import SelectInput from '../../forms/inputs/SelectInput';
+import ViewSwitch from '../../misc/ViewSwitch';
 import { retrieveAddresses } from '../../../actions/address';
 import { retrieveLocationTags } from '../../../actions/locationTag';
 import { getListItemById } from '../../../utils/store';
+import {
+    clearSelection,
+    createSelection
+} from '../../../actions/selection';
 import {
     commitRouteDrafts,
     discardRouteDrafts,
     generateRoutes,
 } from '../../../actions/route';
 import { getLocationAverage } from '../../../utils/location';
+import { getListItemById } from '../../../utils/store';
 
 
 const mapStateToProps = state => ({
     tagList: state.locationTags.tagList,
     addressList: state.addresses.addressList,
+    selectionList: state.selections.selectionList,
     streetList: state.addresses.streetList,
     generator: state.routes.generator,
     routeList: state.routes.routeList,
@@ -28,44 +38,36 @@ const mapStateToProps = state => ({
 @connect(mapStateToProps)
 @injectIntl
 export default class AllRoutesPane extends RootPaneBase {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            filters: {},
+            mapMode: 'browse',
+        };
+
+        this.selectionId = null;
+        this.filteredAddresses = this.getFilteredAddresses();
+    }
+
     componentDidMount() {
         this.props.dispatch(retrieveAddresses());
         this.props.dispatch(retrieveLocationTags());
-
-        var mapOptions = {
-            center: new google.maps.LatLng(55.61, 13.01),
-            disableDefaultUI: true,
-            zoomControl: true,
-            zoom: 13,
-        };
-
-        this.defaultIcon =  {
-               url: '/static/images/address-marker-black.png',
-               scaledSize: { width: 6, height: 6 },
-               anchor: { x: 3, y: 3 },
-        };
-
-        this.activeIcon =  {
-               url: '/static/images/address-marker-red.png',
-               scaledSize: { width: 6, height: 6 },
-               anchor: { x: 3, y: 3 },
-        };
-
-        this.centerSetFromData = false;
-        this.map = new google.maps.Map(this.refs.map, mapOptions);
-
-        this.markers = [];
-        this.resetMarkers();
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.addressList != prevProps.addressList) {
-            this.resetMarkers();
-        }
     }
 
     getRenderData() {
+        let selection = null;
+
+        if (this.selectionId) {
+            let selectionList = this.props.selectionList
+            let selectionItem = getListItemById(selectionList, this.selectionId);
+            if (selectionItem) {
+                selection = selectionItem.data;
+            }
+        }
+
         return {
+            selection,
             addressList: this.props.addressList,
         };
     }
@@ -112,31 +114,76 @@ export default class AllRoutesPane extends RootPaneBase {
         ];
     }
 
-    renderPaneContent(data) {
+    getPaneTools(data) {
+        let mapModes = {
+            browse: 'panes.allRoutes.mapModes.browse',
+            select: 'panes.allRoutes.mapModes.select',
+        };
+
         return [
-            <div key="map" ref="map"
-                className="AllRoutesPane-map">
-            </div>,
-            <RoutePanel key="routes"
-                generator={ this.props.generator }
-                addressList={ this.props.addressList }
-                routeList={ this.props.routeList }
-                draftList={ this.props.draftList }
-                filteredAddressesSelector={ this.getFilteredAddresses.bind(this) }
-                onGenerate={ this.onRoutePanelGenerate.bind(this) }
-                onCommitDrafts={ this.onRoutePanelCommit.bind(this) }
-                onDiscardDrafts={ this.onRoutePanelDiscard.bind(this) }
-                onRouteClick={ this.onRoutePanelRouteClick.bind(this) }
-                onRouteMouseOver={ this.onRoutePanelRouteMouseOver.bind(this) }
-                onRouteMouseOut={ this.onRoutePanelRouteMouseOut.bind(this) }
-                />
-        ];
+            <ViewSwitch key="mapMode"
+                states={ mapModes } selected={ this.state.mapMode }
+                onSwitch={ this.onMapStateSwitch.bind(this) }
+                />,
+        ]
     }
 
-    getFilteredAddresses() {
-        let tagId = this.state.filters.tag;
-        let streetId = this.state.filters.street;
-        let addresses = this.props.addressList.items.map(i => i.data);
+    renderPaneContent(data) {
+        let selectionPanel = null;
+        if (data.selection && data.selection.selectedIds.length) {
+            selectionPanel = (
+                <AddressSelectionPanel key="selection"
+                    selection={ data.selection }
+                    onAddRoute={ this.onSelectionPanelAddRoute.bind(this) }
+                    onClear={ this.onSelectionPanelClear.bind(this) }
+                    />
+            );
+        }
+
+        let addressList = this.props.addressList;
+        if (addressList && addressList.items.length) {
+            return [
+                <AddressMap key="map"
+                    mode={ this.state.mapMode }
+                    selection={ data.selection }
+                    addresses={ this.filteredAddresses }
+                    highlightRoute={ this.state.highlightRoute }
+                    onAddressClick={ this.onMapAddressClick.bind(this) }
+                    />,
+                <RoutePanel key="routes"
+                    contracted={ !!selectionPanel }
+                    generator={ this.props.generator }
+                    addressList={ this.props.addressList }
+                    routeList={ this.props.routeList }
+                    draftList={ this.props.draftList }
+                    filteredAddressesSelector={ this.getFilteredAddresses.bind(this) }
+                    onGenerate={ this.onRoutePanelGenerate.bind(this) }
+                    onCommitDrafts={ this.onRoutePanelCommit.bind(this) }
+                    onDiscardDrafts={ this.onRoutePanelDiscard.bind(this) }
+                    onRouteClick={ this.onRoutePanelRouteClick.bind(this) }
+                    onRouteMouseOver={ this.onRoutePanelRouteMouseOver.bind(this) }
+                    onRouteMouseOut={ this.onRoutePanelRouteMouseOut.bind(this) }
+                    />,
+                selectionPanel,
+            ];
+        }
+        else {
+            // TODO: Display loading indicator if loading, or message if there
+            //       are no addresses.
+            return null;
+        }
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        if (this.props.addressList != nextProps.addressList) {
+            this.filteredAddresses = this.getFilteredAddresses(nextProps, nextState);
+        }
+    }
+
+    getFilteredAddresses(props = this.props, state = this.state) {
+        let tagId = state.filters.tag;
+        let streetId = state.filters.street;
+        let addresses = props.addressList.items.map(i => i.data);
 
         if (tagId && tagId != '_') {
             addresses = addresses
@@ -156,65 +203,7 @@ export default class AllRoutesPane extends RootPaneBase {
         return addresses;
     }
 
-    resetMarkers() {
-        let marker;
-        let addressList = this.props.addressList;
-
-        // Remove existing markers
-        while (marker = this.markers.pop()) {
-            marker.marker.setMap(null);
-            google.maps.event.clearInstanceListeners(marker.marker);
-        }
-
-        if (addressList.items && !addressList.isPending) {
-            let addresses = this.getFilteredAddresses();
-
-            addresses.forEach(addr => {
-                let latLng = new google.maps.LatLng(addr.latitude, addr.longitude);
-
-                marker = new google.maps.Marker({
-                    icon: this.defaultIcon,
-                    position: latLng,
-                    map: this.map,
-                    title: addr.title,
-                    zIndex: 0,
-                });
-
-                marker.addListener('click', this.onMarkerClick.bind(this, addr));
-
-                this.markers.push({
-                    marker, addr
-                });
-            });
-
-            // right now just an extra loop...
-            // and and only center and set bounds if map not centered by
-            // data before
-            if (!this.centerSetFromData && this.props.locationsForBounds) {
-                if (this.props.locationsForBounds.length > 0) {
-                    this.centerSetFromData = true;
-                    this.positionMap(this.props.locationsForBounds);
-                }
-            }
-        }
-    }
-
-    redrawMarkers(activeIds = null) {
-        this.markers.forEach(m => {
-            let isActive = (activeIds && activeIds.indexOf(m.addr.id) >= 0);
-            let curIcon = m.marker.getIcon();
-            if (isActive && curIcon.url == this.defaultIcon.url) {
-                m.marker.setIcon(this.activeIcon);
-                m.marker.setZIndex(1);
-            }
-            else if (!isActive && curIcon.url == this.activeIcon.url) {
-                m.marker.setIcon(this.defaultIcon);
-                m.marker.setZIndex(0);
-            }
-        });
-    }
-
-    onMarkerClick(addr) {
+    onMapAddressClick(addr) {
         this.openPane('address', addr.id);
     }
 
@@ -235,14 +224,39 @@ export default class AllRoutesPane extends RootPaneBase {
     }
 
     onRoutePanelRouteMouseOver(route) {
-        this.redrawMarkers(route.addresses);
+        this.setState({
+            highlightRoute: route,
+        });
     }
 
     onRoutePanelRouteMouseOut(route) {
-        this.redrawMarkers();
+        this.setState({
+            highlightRoute: null,
+        });
+    }
+
+    onMapStateSwitch(state) {
+        if (state == 'select' && !this.selectionId) {
+            let action = createSelection('address', null, null);
+
+            this.selectionId = action.payload.id;
+            this.props.dispatch(action);
+        }
+
+        this.setState({
+            mapMode: state,
+        });
+    }
+
+    onSelectionPanelAddRoute() {
+        this.openPane('routefromaddresses', this.selectionId);
+    }
+
+    onSelectionPanelClear() {
+        this.props.dispatch(clearSelection(this.selectionId));
     }
 
     onFiltersApply(filters) {
-        this.setState({ filters }, () => this.resetMarkers());
+        this.filteredAddresses = this.getFilteredAddresses(this.props, { filters });
     }
 }

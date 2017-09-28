@@ -40,6 +40,7 @@ import PersonPane from './PersonPane';
 import PlaceLocationPane from './PlaceLocationPane';
 import QueryPane from './QueryPane';
 import RoutePane from './RoutePane';
+import RouteFromAddressesPane from './RouteFromAddressesPane';
 import RouteContentPane from './RouteContentPane';
 import SelectPeoplePane from './SelectPeoplePane';
 import SelectLocationTagsPane from './SelectLocationTagsPane';
@@ -92,6 +93,7 @@ var _panes = {
     'placelocation': PlaceLocationPane,
     'query': QueryPane,
     'route': RoutePane,
+    'routefromaddresses': RouteFromAddressesPane,
     'routecontent': RouteContentPane,
     'selectpeople': SelectPeoplePane,
     'selectlocationtags': SelectLocationTagsPane,

@@ -1,3 +1,5 @@
+addSelectionToRouteButton: Lägg till i rutt
+clearSelectionButton: Välj inga adresser
 filters:
     street:
         label: Adresser på gata
@@ -5,6 +7,9 @@ filters:
     tag:
         label: Adresser med etiketten
         nullOption: (Alla adresser)
+mapModes:
+    browse: Browse
+    select: Select
 routePanel:
     drafts:
         info:
@@ -45,3 +50,18 @@ routePanel:
     tabs:
         routes: Rutter
         generator: Generera
+selectionPanel:
+    addButton: Lägg till i rutt
+    clearButton: Nollställ urvalet
+    h: |
+        { count, plural,
+            =1 {En vald adress}
+            other {# valda adresser}
+        }
+    info:
+        households: |
+            {count, plural,
+                =1 {Ett hushåll}
+                other {# hushåll}
+            }
+        size: Området är ca {radius, number} m stort

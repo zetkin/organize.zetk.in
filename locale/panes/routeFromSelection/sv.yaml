@@ -1,0 +1,21 @@
+create:
+    createButton: Skapa rutt
+    desc: En ny rutt skapas med enbart dessa adresser.
+    h: Skapa ny rutt
+extend:
+    addButton: Utöka rutt
+    desc: Välj en befintlig rutt för att utöka den.
+    h: Utöka befintlig rutt
+    empty: Det finns inga befintliga rutter att utöka.
+info:
+    households: |
+        {count, plural,
+            =1 {Ett hushåll}
+            other {# hushåll}
+        }
+    size: Området är ca {radius} m
+title: |-
+    { count, plural,
+        =1 {Lägg till en adress i rutt}
+        other {Lägg till # adresser i rutt}
+    }
