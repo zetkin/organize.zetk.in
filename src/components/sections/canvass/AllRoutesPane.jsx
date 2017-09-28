@@ -5,6 +5,7 @@ import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 import AddressMap from './elements/AddressMap';
 import AddressSelectionPanel from './elements/AddressSelectionPanel';
 import Button from '../../misc/Button';
+import LoadingIndicator from '../../misc/LoadingIndicator';
 import RootPaneBase from '../RootPaneBase';
 import RoutePanel from './elements/RoutePanel';
 import SelectInput from '../../forms/inputs/SelectInput';
@@ -166,10 +167,27 @@ export default class AllRoutesPane extends RootPaneBase {
                 selectionPanel,
             ];
         }
-        else {
-            // TODO: Display loading indicator if loading, or message if there
-            //       are no addresses.
-            return null;
+        else if (!addressList || addressList.isPending) {
+            return (
+                <div className="AllRoutesPane-loader">
+                    <Msg id="panes.allRoutes.loader.loading"/>
+                    <LoadingIndicator/>
+                </div>
+            );
+        }
+        else if (addressList.error) {
+            return (
+                <div className="AllRoutesPane-loader">
+                    <Msg id="panes.allRoutes.loader.error"/>
+                </div>
+            );
+        }
+        else if (addressList.items.length == 0) {
+            return (
+                <div className="AllRoutesPane-loader">
+                    <Msg id="panes.allRoutes.loader.empty"/>
+                </div>
+            );
         }
     }
 
@@ -181,8 +199,9 @@ export default class AllRoutesPane extends RootPaneBase {
 
     getFilteredAddresses(props = this.props, state = this.state) {
         let tagId = state.filters.tag;
-        let streetId = this.state.filters.street;
-        let addresses = props.addressList.items.map(i => i.data);
+        let streetId = state.filters.street;
+        let addresses = props.addressList?
+            props.addressList.items.map(i => i.data) : [];
 
         if (tagId && tagId != '_') {
             addresses = addresses

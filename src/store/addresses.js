@@ -40,6 +40,13 @@ export default function addresses(state = null, action) {
             addressList: createList(dummies),
         });
     }
+    else if (action.type == types.RETRIEVE_ADDRESSES + '_PENDING') {
+        return Object.assign({}, state, {
+            addressList: createList(null, {
+                isPending: true,
+            }),
+        });
+    }
     else if (action.type == types.RETRIEVE_ADDRESSES + '_FULFILLED') {
         let addresses = action.payload;
 
@@ -75,7 +82,7 @@ export default function addresses(state = null, action) {
     }
     else {
         return state || {
-            addressList: createList(),
+            addressList: null,
             streetList: createList(),
         };
     }

@@ -7,6 +7,10 @@ filters:
     tag:
         label: Adresser med etiketten
         nullOption: (Alla adresser)
+loader:
+    empty: Det finns inga adresser i er databas. Kontakta Zetkin Foundation.
+    error: På grund av ett fel kunde adresser inte laddas.
+    loading: Laddar adresser...
 mapModes:
     browse: Browse
     select: Select
