@@ -16,7 +16,9 @@ menu:
         text: Info
 subSections:
     canvass:
+        assignments: Uppdrag
         routes: Rutter
+        visits: Besökslogg
     campaign:
         actions: Aktioner
         distribution: Spridning
