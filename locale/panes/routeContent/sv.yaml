@@ -1,0 +1,9 @@
+addresses:
+    item:
+        deleteButton: Radera
+        households: >-
+            {count, plural,
+                =1 {Ett hushåll}
+                other {# hushåll}
+            }
+    h: Adresser i den här rutten

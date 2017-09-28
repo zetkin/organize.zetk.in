@@ -41,8 +41,10 @@ import PlaceLocationPane from './PlaceLocationPane';
 import QueryPane from './QueryPane';
 import RoutePane from './RoutePane';
 import RouteFromAddressesPane from './RouteFromAddressesPane';
+import RouteContentPane from './RouteContentPane';
 import SelectPeoplePane from './SelectPeoplePane';
 import SelectLocationTagsPane from './SelectLocationTagsPane';
+import SelectStreetAddressPane from './SelectStreetAddressPane';
 import SelectPersonTagsPane from './SelectPersonTagsPane';
 import SurveyPane from './SurveyPane';
 import SurveyOutlinePane from './SurveyOutlinePane';
@@ -92,9 +94,11 @@ var _panes = {
     'query': QueryPane,
     'route': RoutePane,
     'routefromaddresses': RouteFromAddressesPane,
+    'routecontent': RouteContentPane,
     'selectpeople': SelectPeoplePane,
     'selectlocationtags': SelectLocationTagsPane,
     'selectpersontags': SelectPersonTagsPane,
+    'selectstreetaddr': SelectStreetAddressPane,
     'survey': SurveyPane,
     'surveyoutline': SurveyOutlinePane,
     'surveysubmission': SurveySubmissionPane,

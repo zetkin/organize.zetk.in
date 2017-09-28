@@ -99,6 +99,7 @@ export default class PersonSelectWidget extends React.Component {
             content.push(
                 <RelSelectInput key="input" name="person"
                     labelFunc={ p => p.first_name + ' ' + p.last_name }
+                    minFilterLength={ 2 }
                     onValueChange={ this.onInputChange.bind(this) }
                     objects={ people }
                     />

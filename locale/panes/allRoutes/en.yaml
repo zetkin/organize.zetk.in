@@ -1,8 +1,11 @@
 addSelectionToRouteButton: Add selection to route
 clearSelectionButton: Clear selection
 filters:
+    street:
+        label: Addresses on street
+        nullOption: (Any street)
     tag:
-        label: Routes containing tag
+        label: Addresses tagged
         nullOption: (All addresses)
 mapModes:
     browse: Browse
