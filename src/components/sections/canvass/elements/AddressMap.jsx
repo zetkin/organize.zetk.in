@@ -103,13 +103,19 @@ export default class AddressMap extends React.Component {
         }
 
         if (this.props.addresses) {
-            let addresses = this.props.addresses
+            let addresses = this.props.addresses;
+            let selection = this.props.selection;
 
             addresses.forEach(addr => {
                 let latLng = new google.maps.LatLng(addr.latitude, addr.longitude);
+                let icon = this.defaultIcon;
+
+                if (selection && selection.selectedIds.indexOf(addr.id) >= 0) {
+                    icon = this.selectedIcon;
+                }
 
                 marker = new google.maps.Marker({
-                    icon: this.defaultIcon,
+                    icon: icon,
                     position: latLng,
                     map: this.map,
                     title: addr.title,
