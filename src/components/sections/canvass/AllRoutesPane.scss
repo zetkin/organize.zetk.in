@@ -41,6 +41,13 @@
         left: 0;
         top: 0;
     }
+
+    .AllRoutesPane-loader {
+        font-size: 2em;
+        text-align: center;
+        margin-top: 20%;
+        color: lighten($c-text,50);
+    }
 }
 
 @keyframes AllRoutesPane-selectionEnter {
