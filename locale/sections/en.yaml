@@ -16,7 +16,9 @@ menu:
         text: Info
 subSections:
     canvass:
+        assignments: Assignments
         routes: Routes
+        visits: Visit log
     campaign:
         actions: Actions
         distribution: Distribution
