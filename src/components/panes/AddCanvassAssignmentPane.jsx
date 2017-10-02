@@ -49,6 +49,6 @@ export default class AddCanvassAssignmentPane extends PaneBase {
         let assignmentId = this.getParam(0);
         let values = this.refs.form.getValues();
 
-        this.props.dispatch(createCanvassAssignment(values));
+        this.props.dispatch(createCanvassAssignment(values, this.props.paneData.id));
     }
 }
