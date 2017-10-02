@@ -1,3 +1,8 @@
+.CanvassAssignmentPane.PaneBase {
+    min-width: 450px;
+}
+
+
 .CanvassAssignmentPane {
     .InfoListItem-description {
         &:before {
@@ -8,6 +13,20 @@
     .InfoListItem-dates {
         &:before {
             @include icon($fa-var-calendar);
+        }
+    }
+
+    .CanvassAssignmentPane-info {
+        position: relative;
+    }
+
+    .CanvassAssignmentPane-editLink {
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        &:before {
+            @include icon($fa-var-pencil);
         }
     }
 }

@@ -3,7 +3,7 @@ import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import InfoList from '../misc/InfoList';
-import Link from '../misc/Link';
+import Button from '../misc/Button';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import { getListItemById } from '../../utils/store';
@@ -44,19 +44,26 @@ export default class CanvassAssignmentPane extends PaneBase {
         if (data.assignmentItem && data.assignmentItem.data) {
             let assignment = data.assignmentItem.data;
 
+            let canvassAssignmentInfo = (
+                <div key="info" className="CanvassAssignmentPane-info">
+                    <InfoList key="info">
+                        <InfoList.Item key="description">
+                            { assignment.description }
+                        </InfoList.Item>
+                        <InfoList.Item key="dates">
+                            { assignment.start_date } - { assignment.end_date }
+                        </InfoList.Item>
+                    </InfoList>
+                    <Button key="editLink"
+                        className="CanvassAssignmentPane-editLink"
+                        labelMsg="panes.canvassAssignment.editLink"
+                        onClick={ this.onEditLinkClick.bind(this) }
+                        />
+                </div>
+            );
+
             return [
-                <InfoList key="info">
-                    <InfoList.Item key="description">
-                        { assignment.description }
-                    </InfoList.Item>
-                    <InfoList.Item key="dates">
-                        { assignment.start_date } - { assignment.end_date }
-                    </InfoList.Item>
-                </InfoList>,
-                <Link key="editLink"
-                    msgId="panes.canvassAssignment.editLink"
-                    onClick={ this.onEditLinkClick.bind(this) }
-                    />
+                canvassAssignmentInfo,
             ];
         }
         else {
