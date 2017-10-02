@@ -183,6 +183,24 @@ export default function viewState(state = null, action) {
             }),
         });
     }
+    else if (action.type == types.CREATE_ROUTE + '_FULFILLED') {
+        // Replace the relevant pane with a RoutePane showing the
+        // newly created route.
+        return Object.assign({}, state, {
+            panes: state.panes.map(paneData => {
+                if (paneData.id == action.meta.paneId) {
+                    return {
+                        id: '$' + makeRandomString(6),
+                        type: 'route',
+                        params: [ action.payload.data.data.id ],
+                    };
+                }
+                else {
+                    return paneData;
+                }
+            }),
+        });
+    }
     else if (action.type == types.MOVE_ACTION_PARTICIPANT) {
         if (!state.panes.find(p => p.type == 'moveparticipants')) {
             return Object.assign({}, state, {
