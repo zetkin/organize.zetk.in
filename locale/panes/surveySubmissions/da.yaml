@@ -1,0 +1,5 @@
+filters:
+    survey:
+        label: Spørgeskema
+        nullOption: |
+            Alle spørgeskemaer
