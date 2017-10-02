@@ -14,6 +14,14 @@ export default function canvassAssignments(state = null, action) {
                 state.assignmentList, assignment.id, assignment),
         });
     }
+    if (action.type == types.UPDATE_CANVASS_ASSIGNMENT + '_FULFILLED') {
+        let assignment = action.payload.data.data;
+
+        return Object.assign({}, state, {
+            assignmentList: updateOrAddListItem(
+                state.assignmentList, assignment.id, assignment),
+        });
+    }
     else {
         return state || {
             assignmentList: null,
