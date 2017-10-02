@@ -59,6 +59,10 @@ export default class CanvassAssignmentPane extends PaneBase {
                         labelMsg="panes.canvassAssignment.editLink"
                         onClick={ this.onEditLinkClick.bind(this) }
                         />
+                    <Button key="routesLink"
+                        labelMsg="panes.canvassAssignment.routesLink"
+                        onClick={ this.onRoutesLinkClick.bind(this) }
+                        />,
                 </div>
             );
 
@@ -74,5 +78,16 @@ export default class CanvassAssignmentPane extends PaneBase {
     onEditLinkClick() {
         let assignment = this.props.assignmentItem.data;
         this.openPane('editcanvassassignment', assignment.id)
+    }
+
+    onRoutesLinkClick() {
+        let assignmentId = this.getParam(0);
+        let action = createSelection('route', null, null, ids => {
+            console.log(ids);
+            //this.props.dispatch(addTagsToLocation(locationId, ids));
+        });
+
+        this.props.dispatch(action);
+        this.openPane('selectassignmentroutes', action.payload.id);
     }
 }
