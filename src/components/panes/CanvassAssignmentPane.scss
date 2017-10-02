@@ -29,4 +29,10 @@
             @include icon($fa-var-pencil);
         }
     }
+
+    .CanvassAssignmentPane-routesLink {
+        margin-top: 2em;
+        width: 100%;
+        @include button($icon:$fa-var-map-signs);
+    }
 }

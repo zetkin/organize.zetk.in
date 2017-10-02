@@ -59,15 +59,16 @@ export default class CanvassAssignmentPane extends PaneBase {
                         labelMsg="panes.canvassAssignment.editLink"
                         onClick={ this.onEditLinkClick.bind(this) }
                         />
-                    <Button key="routesLink"
-                        labelMsg="panes.canvassAssignment.routesLink"
-                        onClick={ this.onRoutesLinkClick.bind(this) }
-                        />,
                 </div>
             );
 
             return [
                 canvassAssignmentInfo,
+                <Button key="routesLink"
+                    className="CanvassAssignmentPane-routesLink"
+                    labelMsg="panes.canvassAssignment.routesLink"
+                    onClick={ this.onRoutesLinkClick.bind(this) }
+                    />
             ];
         }
         else {
