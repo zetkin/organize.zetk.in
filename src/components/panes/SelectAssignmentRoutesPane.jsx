@@ -34,6 +34,7 @@ export default class SelectAssignmentRoutesPane extends PaneBase {
 
         this.state = {
             highlightRoute: null,
+            addressSelection: this.mockAddressSelection(props.selectionItem),
         };
 
         this.addresses = this.props.addressList.items.map(i => i.data);
@@ -53,7 +54,7 @@ export default class SelectAssignmentRoutesPane extends PaneBase {
     renderPaneContent(data) {
         return [
             <AddressMap key="map" mode="browse"
-                selection={ data.selection }
+                selection={ this.state.addressSelection }
                 addresses={ this.addresses }
                 highlightRoute={ this.state.highlightRoute }
                 />,
@@ -78,6 +79,13 @@ export default class SelectAssignmentRoutesPane extends PaneBase {
     componentWillUpdate(nextProps, nextState) {
         if (this.props.addressList != nextProps.addressList) {
             this.addresses = nextProps.addressList.items.map(i => i.data);
+        }
+
+        if (this.props.selectionItem != nextProps.selectionItem) {
+            console.log('Updating selection');
+            this.setState({
+                addressSelection: this.mockAddressSelection(nextProps.selectionItem),
+            });
         }
     }
 
@@ -110,5 +118,18 @@ export default class SelectAssignmentRoutesPane extends PaneBase {
 
         this.props.dispatch(finishSelection(selection.id));
         this.closePane();
+    }
+
+    mockAddressSelection(routeSelectionItem) {
+        let addressIds = [];
+        routeSelectionItem.data.selectedIds.forEach(routeId => {
+            console.log('Adding addresses from route', routeId);
+            let routeItem = getListItemById(this.props.routeList, routeId);
+            addressIds = addressIds.concat(routeItem.data.addresses);
+        });
+
+        return {
+            selectedIds: addressIds,
+        };
     }
 }
