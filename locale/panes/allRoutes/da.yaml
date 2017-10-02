@@ -1,0 +1,70 @@
+addSelectionToRouteButton: Tilføj til rute
+clearSelectionButton: Vælg ingen adresser
+filters:
+    street:
+        label: Adresser på gaden
+        nullOption: (Hvilken som helst gade)
+    tag:
+        label: Adresser med etiketten
+        nullOption: (Alle adresser)
+loader:
+    empty: 'Der er ingen adresser i jeres database. Kontakt Zetkin Foundation. '
+    error: På grund af en fejl kunne adresser ikke indlæses.
+    loading: Indlæser adresser...
+mapModes:
+    browse: Browse
+    select: Vælg
+routePanel:
+    drafts:
+        commit: Gem ruter
+        discard: Forkast ruter
+        info:
+            text: Ruterne vil blive dannet når udkastet er gemt.
+            title: Udkast til genererede ruter.
+    form:
+        generateButton: Generer ruter
+        selection:
+            all: Alle tilgængelige adresser
+            filter: Filtrerede (synlige) adresser
+            h: Adresseselektion
+        settings:
+            h: Indstillinger
+            households:
+                h: Ønsket rutestørrelse
+                label: husstande
+    intro:
+        h: Lad Zetkin generere ruterne!
+        p: >-
+            Dette er en guide der automatisk skaber ruter. Ved det næste trin
+            kan du lave dine indstillinger. Den generede liste samles i et
+            udkast, som du kan redigere eller gemme.
+        startButton: Start guide
+    progress:
+        counting: '{count} dannede ruter...'
+    routeList:
+        addresses: |
+            {addressesCount, plural,
+                =1 {1 address}
+                other {# adresser}}
+        households: |
+            {householdsCount, plural,
+                =1 {# husstand}
+                other {# husstande}}
+    tabs:
+        generator: Generer automatisk
+        routes: Ruter
+selectionPanel:
+    addButton: Tilføj til rute
+    clearButton: Nulstil selektionen
+    h: |
+        { count, plural,
+            =1 {En valgt adresse}
+            other {# valgte adresser}
+        }
+    info:
+        households: |
+            {count, plural,
+                =1 {En husstand}
+                other {# husstand}
+            }
+        size: 'Området er ca {radius, number} m stort'
