@@ -16,11 +16,12 @@ mapModes:
     select: Select
 routePanel:
     drafts:
+        commit: Spara rutter
+        discard: Kassera rutter
         info:
             title: Utkast av genererade rutter
             text: Rutterna kommer att skapas när utkastet sparas.
-        commit: Spara rutter
-        discard: Kassera rutter
+        label: Utkast {id}
     intro:
         h: Låt Zetkin generera rutterna!
         p: |

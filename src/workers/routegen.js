@@ -67,7 +67,7 @@ self.onmessage = ev => {
         });
 
         let routes = clusters.map((c, idx) => Object.assign(c.toRouteDraft(), {
-            id: config.draftPrefix + ' ' + (idx + 1),
+            id: (idx + 1),
         }));
 
         postMessage({
