@@ -33,7 +33,7 @@ $ ./bin/build_dev
 ```
 
 Docker will download all the requirements and create an image which you can
-then use to run the Zetkin Activist portal on your local port 80.
+then use to run Zetkin Organize on your local port 80.
 
 ```bash
 $ ./bin/run_dev
