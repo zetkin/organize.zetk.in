@@ -2,11 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 
+import Button from '../../misc/Button';
 import RootPaneBase from '../RootPaneBase';
-import ViewSwitch from '../../misc/ViewSwitch';
 
 
 const mapStateToProps = state => ({
+    assignmentList: state.canvassAssignments.assignmentList,
 });
 
 @connect(mapStateToProps)
@@ -28,6 +29,19 @@ export default class AllCanvassAssignmentsPane extends RootPaneBase {
         return null;
     }
 
+    getPaneTools(data) {
+        return [
+            <Button key="addButton"
+                className="AllCanvassAssignmentsPane-addButton"
+                labelMsg="panes.allCanvassAssignments.addButton"
+                onClick={ this.onAddClick.bind(this) }/>,
+        ];
+    }
+
     onFiltersApply(filters) {
+    }
+
+    onAddClick() {
+        this.openPane('addcanvassassignment');
     }
 }
