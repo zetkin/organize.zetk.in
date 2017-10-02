@@ -3,6 +3,7 @@ import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import InfoList from '../misc/InfoList';
+import Link from '../misc/Link';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import { getListItemById } from '../../utils/store';
@@ -52,10 +53,19 @@ export default class CanvassAssignmentPane extends PaneBase {
                         { assignment.start_date } - { assignment.end_date }
                     </InfoList.Item>
                 </InfoList>,
+                <Link key="editLink"
+                    msgId="panes.canvassAssignment.editLink"
+                    onClick={ this.onEditLinkClick.bind(this) }
+                    />
             ];
         }
         else {
             return <LoadingIndicator />;
         }
+    }
+
+    onEditLinkClick() {
+        let assignment = this.props.assignmentItem.data;
+        this.openPane('editcanvassassignment', assignment.id)
     }
 }
