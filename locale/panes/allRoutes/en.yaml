@@ -1,0 +1,71 @@
+addSelectionToRouteButton: Add selection to route
+clearSelectionButton: Clear selection
+filters:
+    street:
+        label: Addresses on street
+        nullOption: (Any street)
+    tag:
+        label: Addresses tagged
+        nullOption: (All addresses)
+loader:
+    empty: You have no addresses in your database. Contact Zetkin Foundation.
+    error: Addresses could not be loaded due to an error
+    loading: Loading addresses...
+mapModes:
+    browse: Browse
+    select: Select
+routePanel:
+    drafts:
+        info:
+            title: Generated draft routes
+            text: The routes will be created when the draft is saved.
+        commit: Save routes
+        discard: Discard routes
+    intro:
+        h: Let Zetkin create the routes!
+        p: |
+            This is a wizard that creates routes for you automatically.
+            In the following step, you can enter your configurations.
+            The generated list is collected in a draft for you to edit or commit.
+        startButton: Start wizard
+    form:
+        selection:
+            all: All available addresses
+            filter: Filtered (visible) addresses
+            h: Selection
+        settings:
+            h: Settings
+            households:
+                h: Desired route size
+                label: households
+        generateButton: Generate routes
+    progress:
+        counting: '{count} routes created...'
+    routeList:
+        label: Route {id}
+        addresses: |
+                    {addressesCount, plural,
+                        =1 {1 address}
+                        other {# addresses}}
+        households: |
+                    {householdsCount, plural,
+                        =1 {# household}
+                        other {# households}}
+    tabs:
+        routes: Routes
+        generator: Auto create
+selectionPanel:
+    addButton: Add to route
+    clearButton: Clear selection
+    h: |
+        { count, plural,
+            =1 {One address selected}
+            other {# addresses selected}
+        }
+    info:
+        households: |
+            {count, plural,
+                =1 {One household}
+                other {# households}
+            }
+        size: Radius is roughly {radius, number} m

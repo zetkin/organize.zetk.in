@@ -1,4 +1,5 @@
 labels:
+    canvass: Canvass
     campaign: Campaign
     dialog: Dialog
     maps: Maps
@@ -14,6 +15,10 @@ menu:
         href: 'http://zetkin.org/en'
         text: Info
 subSections:
+    canvass:
+        assignments: Assignments
+        routes: Routes
+        visits: Visit log
     campaign:
         actions: Actions
         distribution: Distribution

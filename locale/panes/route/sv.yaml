@@ -1,0 +1,16 @@
+editLink: Redigera ruttens innehåll
+info:
+    addresses: |-
+        {count, plural,
+          =1 {En adress}
+          other {# adresser}}
+    households: |-
+        {count, plural,
+          =1 {Ett hushåll}
+          other {# hushåll}}
+owner:
+    h: Ansvarig
+tags:
+    h: Etiketter i rutten
+    emptyLabel: Rutten innehåller inga adresser med etiketter
+title: Rutt {id}

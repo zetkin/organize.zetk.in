@@ -1,0 +1,174 @@
+.RoutePanel {
+    background-color: white;
+
+    .RoutePanel-tabs {
+        .RoutePanel-routesTab {
+            @include tab-button($icon: $fa-var-compass);
+        }
+
+        .RoutePanel-generatorTab {
+            @include tab-button($icon: $fa-var-magic);
+        }
+        .Button {
+            width: 50%;
+            overflow: hidden;
+        }
+    }
+
+    .RoutePanel-content {
+        position: absolute;
+        top: 5em;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 2em;
+    }
+
+    .RoutePanel-buttons {
+        position: absolute;
+        height: 7em;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1em;
+        box-shadow: 0px -1px 10px 0px darken(white, 10);
+    }
+
+    .RouteList {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom:0;
+    }
+
+    &.routes {
+        .RouteList {
+            overflow-y:scroll;
+        }
+
+        .RoutePanel-tabs .Button:last-child {
+            @include tab-button($passive: true);
+        }
+    }
+
+    &.generator {
+        .RoutePanel-tabs .Button:first-child {
+            @include tab-button($passive: true);
+        }
+    }
+
+    .RoutePanel-intro {
+        text-align: center;
+
+        .RoutePanel-introIcon:before {
+            @include icon($fa-var-magic);
+            font-size: 6em;
+        }
+
+        .RoutePanel-introStartButton {
+            @include button($icon: $fa-var-play);
+            width: 100%;
+            margin-top: 1em;
+        }
+    }
+
+    .RoutePanel-progress {
+        .LoadingIndicator {
+            font-size: 3em;
+            margin: 1em 0;
+        }
+
+        .RoutePanel-progressCount {
+            text-align: center;
+        }
+    }
+
+    .RoutePanel-drafts {
+        .RoutePanel-draftsContent {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 7em;
+            overflow-y: scroll;
+        }
+
+        .RoutePanel-draftsInfo {
+            padding: 2em;
+            text-align: center;
+
+            .RoutePanel-draftsInfoTitle {
+                margin: 0;
+
+                &:before {
+                    @include icon($fa-var-info-circle);
+                }
+            }
+
+            .RoutePanel-draftsInfoText {
+                margin: 0.5em 0;
+            }
+        }
+
+        .RouteList {
+            top: 12em;
+        }
+
+        .RoutePanel-buttons {
+            .Button {
+                display: inline-block;
+                width: calc(50% - 0.5em);
+            }
+        }
+
+        .RoutePanel-discardButton {
+            @include button(
+                $color: $c-ui-dark,$icon: $fa-var-times);
+                margin-right: 0.5em;
+        }
+
+        .RoutePanel-commitButton {
+            @include button($icon:$fa-var-floppy-o);
+            margin-left: 0.5em;
+        }
+    }
+
+    .RoutePanel-form {
+        .RoutePanel-formSelection {
+            &:before {
+                @include icon($fa-var-filter);
+            }
+        }
+
+        .RoutePanel-formSettings {
+            &:before {
+                @include icon($fa-var-cog);
+            }
+        }
+
+        .RoutePanel-formHouseholds {
+            .RoutePanel-formHouseholdsTitle {
+                &:before {
+                    @include icon($fa-var-home);
+                }
+            }
+
+            .RoutePanel-formHouseholdsInput {
+                @include input-base;
+                width: 4em;
+            }
+
+            label {
+                font-size: 1.2em;
+                margin-left: 0.5em;
+            }
+        }
+
+        .RoutePanel-generateButton {
+            @include button($icon:$fa-var-check);
+            width: 100%;
+        }
+
+    }
+}

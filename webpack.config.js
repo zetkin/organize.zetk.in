@@ -88,6 +88,7 @@ const config = {
     },
     externals: [
         {
+            '../xlsx.js': 'var _XLSX',
             './cptable': 'var cptable',
         }
     ]

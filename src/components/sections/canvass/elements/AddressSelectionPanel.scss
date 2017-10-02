@@ -1,0 +1,46 @@
+.AddressSelectionPanel {
+    background-color: white;
+    padding: 1em;
+
+    h3 {
+        &:before {
+            @include icon($fa-var-map-marker);
+        }
+    }
+
+    .InfoList {
+        padding-bottom: 1em;
+        border: 0;
+
+        .InfoListItem-households {
+            &:before {
+                @include icon($fa-var-home);
+            }
+        }
+
+        .InfoListItem-size {
+            &:before {
+                @include icon($fa-var-bullseye);
+            }
+        }
+    }
+
+    .AddressSelectionPanel-buttons {
+        position: relative;
+
+        .AddressSelectionPanel-buttonsClear {
+            @include inline-button(
+                $color: $c-ui-dark, $icon: $fa-var-times);
+            position: absolute;
+            left: 0;
+        }
+
+        .AddressSelectionPanel-buttonsAdd {
+            @include inline-button(
+                $color: $c-brand-comp-light, $icon: $fa-var-check);
+            position: absolute;
+            right: 0;
+        }
+
+    }
+}

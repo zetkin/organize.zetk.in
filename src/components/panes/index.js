@@ -13,6 +13,7 @@ import AddSurveyPane from './AddSurveyPane';
 import AddSurveyQuestionPane from './AddSurveyQuestionPane';
 import AddSurveyTextBlockPane from './AddSurveyTextBlockPane';
 import AddQueryPane from './AddQueryPane';
+import AddressPane from './AddressPane';
 import BulkOpPane from './BulkOpPane';
 import CallPane from './CallPane';
 import CallAssignmentPane from './CallAssignmentPane';
@@ -38,8 +39,12 @@ import MoveParticipantsPane from './MoveParticipantsPane';
 import PersonPane from './PersonPane';
 import PlaceLocationPane from './PlaceLocationPane';
 import QueryPane from './QueryPane';
+import RoutePane from './RoutePane';
+import RouteContentPane from './RouteContentPane';
+import RouteFromAddressesPane from './RouteFromAddressesPane';
 import SelectPeoplePane from './SelectPeoplePane';
 import SelectLocationTagsPane from './SelectLocationTagsPane';
+import SelectStreetAddressPane from './SelectStreetAddressPane';
 import SelectPersonTagsPane from './SelectPersonTagsPane';
 import SurveyPane from './SurveyPane';
 import SurveyOutlinePane from './SurveyOutlinePane';
@@ -61,6 +66,7 @@ var _panes = {
     'addsurveyquestion': AddSurveyQuestionPane,
     'addsurveytextblock': AddSurveyTextBlockPane,
     'addquery': AddQueryPane,
+    'address': AddressPane,
     'bulk': BulkOpPane,
     'call': CallPane,
     'callassignment': CallAssignmentPane,
@@ -86,9 +92,13 @@ var _panes = {
     'person': PersonPane,
     'placelocation': PlaceLocationPane,
     'query': QueryPane,
+    'route': RoutePane,
+    'routecontent': RouteContentPane,
+    'routefromaddresses': RouteFromAddressesPane,
     'selectpeople': SelectPeoplePane,
     'selectlocationtags': SelectLocationTagsPane,
     'selectpersontags': SelectPersonTagsPane,
+    'selectstreetaddr': SelectStreetAddressPane,
     'survey': SurveyPane,
     'surveyoutline': SurveyOutlinePane,
     'surveysubmission': SurveySubmissionPane,
