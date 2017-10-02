@@ -1,0 +1,13 @@
+.CanvassAssignmentPane {
+    .InfoListItem-description {
+        &:before {
+            @include icon($fa-var-info-circle);
+        }
+    }
+
+    .InfoListItem-dates {
+        &:before {
+            @include icon($fa-var-calendar);
+        }
+    }
+}
