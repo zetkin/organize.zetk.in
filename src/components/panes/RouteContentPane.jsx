@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage as Msg } from 'react-intl';
+import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 
 import PaneBase from './PaneBase';
 import Button from '../misc/Button';
@@ -23,6 +23,7 @@ const mapStateToProps = (state, props) => {
 };
 
 @connect(mapStateToProps)
+@injectIntl
 export default class RouteContentPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
@@ -41,7 +42,9 @@ export default class RouteContentPane extends PaneBase {
 
     getPaneTitle(data) {
         if (data.routeItem && data.routeItem.data) {
-            return data.routeItem.data.id;
+            return this.props.intl.formatMessage(
+                { id: 'panes.routeContent.title' },
+                { id: data.routeItem.data.id });
         }
         else {
             return null;
