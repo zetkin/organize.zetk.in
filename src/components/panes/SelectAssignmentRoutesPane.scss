@@ -1,3 +1,11 @@
+.SelectAssignmentRoutesPane.PaneBase {
+    min-width: 450px;
+
+    .PaneBase-header {
+        background: none;
+    }
+}
+
 .SelectAssignmentRoutesPane {
     .AddressMap {
         position: absolute;
@@ -5,5 +13,19 @@
         right: 0;
         top: 0;
         height: 40vh;
+    }
+
+    .RouteList {
+        position: absolute;
+        top: 0;
+        margin-top: 40vh;
+        height: 60vh;
+        overflow: scroll;
+        padding-top: 2em;
+
+    }
+
+    .SelectAssignmentRoutesPane-saveButton {
+        @include button($icon:$fa-var-floppy-o);
     }
 }
