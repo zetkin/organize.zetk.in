@@ -183,6 +183,8 @@ export default class List extends React.Component {
                             showCheckbox={ this.props.allowBulkSelection }
                             selected={ selected }
                             onItemSelect={ this.onItemSelect.bind(this) }
+                            onItemMouseOut={ this.props.onItemMouseOut }
+                            onItemMouseOver={ this.props.onItemMouseOver }
                             onItemClick={ this.props.onItemClick }/>
                     );
                 }) }

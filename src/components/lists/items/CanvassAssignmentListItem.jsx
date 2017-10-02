@@ -37,6 +37,7 @@ export default class CanvassAssignmentListItem extends React.Component {
 
         return (
             <div className={ classNames }
+                onMouseOver={ this.props.onItemMouseOver }
                 onClick={ this.props.onItemClick }>
                     { assignmentDateSpan }
                 <div className="CanvassAssignmentListItem-info">
