@@ -196,3 +196,6 @@ export const CREATE_ROUTE = 'CREATE_ROUTE';
 export const GENERATE_ROUTES = 'GENERATE_ROUTES';
 export const DISCARD_ROUTE_DRAFTS = 'DISCARD_ROUTE_DRAFTS';
 export const COMMIT_ROUTE_DRAFTS = 'COMMIT_ROUTE_DRAFTS';
+
+// Redux actions related to canvass assignments
+export const CREATE_CANVASS_ASSIGNMENT = 'CREATE_CANVASS_ASSIGNMENT';

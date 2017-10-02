@@ -9,6 +9,7 @@ import activities from './activities';
 import addresses from './addresses';
 import callAssignments from './callAssignments';
 import calls from './calls';
+import canvassAssignments from './canvassAssignments';
 import campaigns from './campaigns';
 import dashboard from './dashboard';
 import documents from './documents';
@@ -41,6 +42,7 @@ const appReducer = combineReducers({
     addresses,
     callAssignments,
     calls,
+    canvassAssignments,
     campaigns,
     dashboard,
     documents,
