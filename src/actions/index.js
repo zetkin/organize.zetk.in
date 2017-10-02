@@ -199,3 +199,4 @@ export const COMMIT_ROUTE_DRAFTS = 'COMMIT_ROUTE_DRAFTS';
 
 // Redux actions related to canvass assignments
 export const CREATE_CANVASS_ASSIGNMENT = 'CREATE_CANVASS_ASSIGNMENT';
+export const UPDATE_CANVASS_ASSIGNMENT = 'UPDATE_CANVASS_ASSIGNMENT';
