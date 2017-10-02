@@ -42,6 +42,7 @@ routePanel:
     progress:
         counting: '{count} dannede ruter...'
     routeList:
+        label: Rut {id}
         addresses: |
             {addressesCount, plural,
                 =1 {1 address}

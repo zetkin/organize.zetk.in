@@ -8,13 +8,17 @@ export default class RouteList extends React.Component {
             let route = item.data;
             let addressesCount = route.addresses.length;
             let householdsCount = route.household_count;
+            let labelMsg = this.props.labelMsg
+                || 'panes.allRoutes.routePanel.routeList.label';
 
             return (
                 <li key={ route.id } className="RouteList-item"
                     onClick={ this.onRouteClick.bind(this, route) }
                     onMouseOver={ this.onRouteMouseOver.bind(this, route) }
                     onMouseOut={ this.onRouteMouseOut.bind(this, route) }>
-                    <h3 className="RouteList-itemTitle">{ route.id }</h3>
+                    <h3 className="RouteList-itemTitle">
+                        <Msg id={ labelMsg } values={{ id: route.id }}/>
+                    </h3>
                     <span className="RouteList-itemAddrCount">
                         <Msg id="panes.allRoutes.routePanel.routeList.addresses"
                             values={{ addressesCount }}/>

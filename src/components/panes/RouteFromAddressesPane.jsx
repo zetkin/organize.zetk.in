@@ -8,6 +8,7 @@ import PaneBase from './PaneBase';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
 import { getListItemById } from '../../utils/store';
 import { finishSelection } from '../../actions/selection';
+import { createRoute } from '../../actions/route';
 
 
 const mapStateToProps = (state, props) => {
@@ -77,7 +78,8 @@ export default class RouteFromAddressesPane extends PaneBase {
                 <Msg tagName="p" id="panes.routeFromSelection.create.desc"/>
                 <Button
                     labelMsg="panes.routeFromSelection.create.createButton"
-                       />
+                    onClick={ this.onCreateButtonClick.bind(this) }
+                    />
             </div>,
         ];
 
@@ -114,6 +116,11 @@ export default class RouteFromAddressesPane extends PaneBase {
         }
 
         return content;
+    }
+
+    onCreateButtonClick() {
+        let selection = this.props.selectionItem.data;
+        this.props.dispatch(createRoute(selection.selectedIds, this.props.paneData.id));
     }
 
     onRouteChange(name, value) {

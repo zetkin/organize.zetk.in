@@ -1,8 +1,8 @@
 import * as types from '.';
+import makeRandomString from '../utils/makeRandomString';
 
 const ROUTE_GEN_DEFAULTS = {
     routeSize: 100,
-    draftPrefix: 'Draft route', // TODO: Localize
 };
 
 
@@ -11,6 +11,35 @@ if (typeof window !== 'undefined') {
     let worker = new RouteGenWorker();
 }
 
+
+export function createRoute(addressIds, paneId) {
+    return ({ dispatch, getState }) => {
+        // TODO: Remove once hooked to API
+        let addressById = getState().addresses.addressById;
+        let households = addressIds
+            .map(id => addressById[id])
+            .reduce((sum, addr) => sum + addr.household_count, 0);
+
+        dispatch({
+            type: types.CREATE_ROUTE,
+            meta: { paneId },
+            payload: {
+                // TODO: Submit to API
+                promise: new Promise((resolve) => {
+                    resolve({
+                        data: {
+                            data: {
+                                id: makeRandomString(6),
+                                addresses: addressIds,
+                                household_count: households,
+                            }
+                        }
+                    });
+                }),
+            }
+        });
+    };
+}
 
 export function generateRoutes(addressIds, config = {}) {
     config = Object.assign({}, ROUTE_GEN_DEFAULTS, config);
@@ -56,7 +85,7 @@ export function commitRouteDrafts() {
         // TODO: Don't map real data
         let routes = getState().routes.draftList.items
             .map((i, idx) => Object.assign({}, i.data, {
-                id: 'Route ' + (idx+1),
+                id: makeRandomString(5),
             }));
 
         dispatch({

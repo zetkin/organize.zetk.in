@@ -124,6 +124,7 @@ export default class RoutePanel extends React.Component {
                             </p>
                         </div>
                         <RouteList list={ draftList }
+                            labelMsg="panes.allRoutes.routePanel.drafts.label"
                             onRouteClick={ this.props.onRouteClick }
                             onRouteMouseOver={ this.onRouteMouseOver.bind(this) }
                             onRouteMouseOut={ this.onRouteMouseOut.bind(this) }

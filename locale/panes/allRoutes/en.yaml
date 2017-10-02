@@ -16,11 +16,12 @@ mapModes:
     select: Select
 routePanel:
     drafts:
+        commit: Save routes
+        discard: Discard routes
         info:
             title: Generated draft routes
             text: The routes will be created when the draft is saved.
-        commit: Save routes
-        discard: Discard routes
+        label: Draft {id}
     intro:
         h: Let Zetkin create the routes!
         p: |
@@ -42,6 +43,7 @@ routePanel:
     progress:
         counting: '{count} routes created...'
     routeList:
+        label: Route {id}
         addresses: |
                     {addressesCount, plural,
                         =1 {1 address}

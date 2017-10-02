@@ -1,6 +1,7 @@
 import * as types from '../actions';
 import {
     createList,
+    updateOrAddListItem,
 } from '../utils/store';
 
 
@@ -20,6 +21,13 @@ export default function routes(state = null, action) {
             generator: Object.assign({}, state.generator, {
                 isPending: false,
             }),
+        });
+    }
+    else if (action.type == types.CREATE_ROUTE + '_FULFILLED') {
+        let route = action.payload.data.data;
+
+        return Object.assign({}, state, {
+            routeList: updateOrAddListItem(state.routeList, route.id, route),
         });
     }
     else if (action.type == types.DISCARD_ROUTE_DRAFTS) {
