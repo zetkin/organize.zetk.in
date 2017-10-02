@@ -13,3 +13,4 @@ owner:
 tags:
     h: Tags in route
     emptyLabel: No tagged addresses in route
+title: Route {id}

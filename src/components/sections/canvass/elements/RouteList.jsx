@@ -14,7 +14,10 @@ export default class RouteList extends React.Component {
                     onClick={ this.onRouteClick.bind(this, route) }
                     onMouseOver={ this.onRouteMouseOver.bind(this, route) }
                     onMouseOut={ this.onRouteMouseOut.bind(this, route) }>
-                    <h3 className="RouteList-itemTitle">{ route.id }</h3>
+                    <h3 className="RouteList-itemTitle">
+                        <Msg id="panes.allRoutes.routePanel.routeList.label"
+                            values={{ id: route.id }}/>
+                    </h3>
                     <span className="RouteList-itemAddrCount">
                         <Msg id="panes.allRoutes.routePanel.routeList.addresses"
                             values={{ addressesCount }}/>

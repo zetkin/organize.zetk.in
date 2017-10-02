@@ -48,7 +48,8 @@ export default class RoutePane extends PaneBase {
 
     getPaneTitle(data) {
         if (data.routeItem && data.routeItem.data) {
-            return data.routeItem.data.id;
+            return this.props.intl.formatMessage({ id: 'panes.route.title' },
+                { id: data.routeItem.data.id });
         }
         else {
             return null;

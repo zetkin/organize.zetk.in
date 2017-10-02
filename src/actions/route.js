@@ -86,7 +86,7 @@ export function commitRouteDrafts() {
         // TODO: Don't map real data
         let routes = getState().routes.draftList.items
             .map((i, idx) => Object.assign({}, i.data, {
-                id: 'Route ' + (idx+1),
+                id: makeRandomString(5),
             }));
 
         dispatch({
