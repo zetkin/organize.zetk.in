@@ -4,6 +4,7 @@ import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 
 import Button from '../../misc/Button';
 import RootPaneBase from '../RootPaneBase';
+import CanvassAssignmentList from '../../lists/CanvassAssignmentList';
 
 
 const mapStateToProps = state => ({
@@ -13,9 +14,6 @@ const mapStateToProps = state => ({
 @connect(mapStateToProps)
 @injectIntl
 export default class AllCanvassAssignmentsPane extends RootPaneBase {
-    componentDidMount() {
-    }
-
     getRenderData() {
         return {
         };
@@ -26,7 +24,13 @@ export default class AllCanvassAssignmentsPane extends RootPaneBase {
     }
 
     renderPaneContent(data) {
-        return null;
+        if (this.props.assignmentList) {
+            return (
+                <CanvassAssignmentList
+                    assignmentList={ this.props.assignmentList }
+                    onItemClick={ this.onAssignmentClick.bind(this) } />
+            );
+        }
     }
 
     getPaneTools(data) {
@@ -43,5 +47,9 @@ export default class AllCanvassAssignmentsPane extends RootPaneBase {
 
     onAddClick() {
         this.openPane('addcanvassassignment');
+    }
+
+    onAssignmentClick(item) {
+        this.openPane('canvassassignment', item.data.id);
     }
 }
