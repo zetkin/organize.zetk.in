@@ -1,0 +1,26 @@
+.CanvassAssignmentListItem {
+    position: relative;
+    min-height: 5em;
+
+    .ListItem-date {
+        text-align: center;
+    }
+
+    .dateStart {
+        margin-top: 1em;
+
+        &:after {
+            @include icon($fa-var-arrows-h);
+            width: 100%;
+        }
+    }
+
+    .CanvassAssignmentListItem-info {
+        @include col(6,12);
+
+        .CanvassAssignmentListItem-infoTitle {
+            margin: 0.5em 0;
+            font-size: 1.3em;
+        }
+    }
+}
