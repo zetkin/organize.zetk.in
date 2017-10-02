@@ -19,6 +19,7 @@ import BulkOpPane from './BulkOpPane';
 import CallPane from './CallPane';
 import CallAssignmentPane from './CallAssignmentPane';
 import CampaignPane from './CampaignPane';
+import CanvassAssignmentPane from './CanvassAssignmentPane';
 import LinkSubmissionPane from './LinkSubmissionPane';
 import EditActionPane from './EditActionPane';
 import EditActivityPane from './EditActivityPane';
@@ -73,6 +74,7 @@ var _panes = {
     'call': CallPane,
     'callassignment': CallAssignmentPane,
     'campaign': CampaignPane,
+    'canvassassignment': CanvassAssignmentPane,
     'linksubmission': LinkSubmissionPane,
     'editaction': EditActionPane,
     'editactivity': EditActivityPane,
