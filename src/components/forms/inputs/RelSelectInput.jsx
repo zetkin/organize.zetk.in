@@ -180,6 +180,7 @@ export default class RelSelectInput extends InputBase {
         const objects = this.getFilteredObjects();
         const valueCount = this.values.length;
         const maxIndex = valueCount - 1;
+        const listDOMNode = ReactDOM.findDOMNode(this.refs.objectList);
 
         if (ev.keyCode == 40) {
             // User pressed down, increment or set to zero if undefined
@@ -187,6 +188,15 @@ export default class RelSelectInput extends InputBase {
                 focusedIndex: Math.min(maxIndex,
                     (focusedIndex === undefined)? 0 : focusedIndex + 1)
             });
+
+            // Scroll the list
+            const newFocusedIndex = this.state.focusedIndex;
+            if(newFocusedIndex !== undefined && newFocusedIndex != 0) {
+                const element = listDOMNode.children[newFocusedIndex];
+                listDOMNode.scrollTop = Math.min(listDOMNode.scrollHeight, 
+                    listDOMNode.scrollTop + element.offsetHeight);
+            }
+
 
             ev.preventDefault();
         }
@@ -196,6 +206,15 @@ export default class RelSelectInput extends InputBase {
                 focusedIndex: Math.max(0, (focusedIndex === undefined)?
                     maxIndex : focusedIndex - 1)
             });
+
+            // Scroll the list
+            // When scrolling up, the scrollIntoView() function doesn't work properly
+            const newFocusedIndex = this.state.focusedIndex;
+            if(newFocusedIndex !== undefined && newFocusedIndex != maxIndex) {
+                const element = listDOMNode.children[newFocusedIndex];
+                listDOMNode.scrollTop = Math.max(0, 
+                    listDOMNode.scrollTop - element.offsetHeight);
+            }
 
             ev.preventDefault();
         }
