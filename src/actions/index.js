@@ -190,6 +190,7 @@ export const UPDATE_SURVEY_SUBMISSION = 'UPDATE_SURVEY_SUBMISSION';
 
 // Redux actions related to addresses
 export const RETRIEVE_ADDRESSES = 'RETRIEVE_ADDRESSES';
+export const RETRIEVE_ROUTE_ADDRESSES = 'RETRIEVE_ROUTE_ADDRESSES';
 
 // Redux actions related to routes
 export const CREATE_ROUTE = 'CREATE_ROUTE';

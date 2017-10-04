@@ -80,9 +80,20 @@ export default function addresses(state = null, action) {
             streetList: createList(streets),
         });
     }
+    else if (action.type == types.RETRIEVE_ROUTE_ADDRESSES + '_FULFILLED') {
+        let routeId = action.meta.routeId;
+        let addresses = action.payload.data.data;
+
+        return Object.assign({}, state, {
+            addressesByRoute: Object.assign({}, state.addressesByRoute, {
+                [routeId]: addresses.map(a => a.id),
+            }),
+        });
+    }
     else {
         return state || {
             addressList: null,
+            addressesByRoute: {},
             streetList: createList(),
         };
     }
