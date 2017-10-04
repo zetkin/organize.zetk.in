@@ -48,7 +48,7 @@ export default function addresses(state = null, action) {
         });
     }
     else if (action.type == types.RETRIEVE_ADDRESSES + '_FULFILLED') {
-        let addresses = action.payload;
+        let addresses = action.payload.data.data;
 
         let streets = [];
         let streetsByTitle = {};
