@@ -22,7 +22,7 @@ routePanel:
             text: Ruterne vil blive dannet når udkastet er gemt.
             title: Udkast til genererede ruter.
     form:
-        generateButton: Generer ruter
+        generateButton: Generer
         selection:
             all: Alle tilgængelige adresser
             filter: Filtrerede (synlige) adresser
@@ -44,15 +44,15 @@ routePanel:
     routeList:
         label: Rut {id}
         addresses: |
-            {addressesCount, plural,
+            {count, plural,
                 =1 {1 address}
                 other {# adresser}}
         households: |
-            {householdsCount, plural,
+            {count, plural,
                 =1 {# husstand}
                 other {# husstande}}
     tabs:
-        generator: Generer automatisk
+        generator: Generer
         routes: Ruter
 selectionPanel:
     addButton: Tilføj til rute

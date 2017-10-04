@@ -20,6 +20,7 @@ import {
     commitRouteDrafts,
     discardRouteDrafts,
     generateRoutes,
+    retrieveRoutes,
 } from '../../../actions/route';
 import { getLocationAverage } from '../../../utils/location';
 import { getListItemById } from '../../../utils/store';
@@ -28,6 +29,7 @@ import { getListItemById } from '../../../utils/store';
 const mapStateToProps = state => ({
     tagList: state.locationTags.tagList,
     addressList: state.addresses.addressList,
+    addressesByRoute: state.addresses.addressesByRoute,
     streetList: state.addresses.streetList,
     selectionList: state.selections.selectionList,
     generator: state.routes.generator,
@@ -51,6 +53,7 @@ export default class AllRoutesPane extends RootPaneBase {
     }
 
     componentDidMount() {
+        this.props.dispatch(retrieveRoutes());
         this.props.dispatch(retrieveAddresses());
         this.props.dispatch(retrieveLocationTags());
     }
@@ -147,7 +150,7 @@ export default class AllRoutesPane extends RootPaneBase {
                     mode={ this.state.mapMode }
                     selection={ data.selection }
                     addresses={ this.filteredAddresses }
-                    highlightRoute={ this.state.highlightRoute }
+                    highlightAddresses={ this.state.highlightAddresses }
                     onAddressClick={ this.onMapAddressClick.bind(this) }
                     />,
                 <RoutePanel key="routes"
@@ -243,13 +246,13 @@ export default class AllRoutesPane extends RootPaneBase {
 
     onRoutePanelRouteMouseOver(route) {
         this.setState({
-            highlightRoute: route,
+            highlightAddresses: this.props.addressesByRoute[route.id] || null,
         });
     }
 
     onRoutePanelRouteMouseOut(route) {
         this.setState({
-            highlightRoute: null,
+            highlightAddresses: null,
         });
     }
 

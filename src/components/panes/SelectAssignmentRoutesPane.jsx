@@ -22,6 +22,7 @@ const mapStateToProps = (state, props) => {
     return {
         routeList: state.routes.routeList,
         addressList: state.addresses.addressList,
+        addressesByRoute: state.addresses.addressesByRoute,
         selectionItem: getListItemById(selectionList, selectionId),
     }
 };
@@ -33,7 +34,7 @@ export default class SelectAssignmentRoutesPane extends PaneBase {
         super(props);
 
         this.state = {
-            highlightRoute: null,
+            highlightAddresses: null,
             addressSelection: this.mockAddressSelection(props.selectionItem),
         };
 
@@ -56,7 +57,7 @@ export default class SelectAssignmentRoutesPane extends PaneBase {
             <AddressMap key="map" mode="browse"
                 selection={ this.state.addressSelection }
                 addresses={ this.addresses }
-                highlightRoute={ this.state.highlightRoute }
+                highlightAddresses={ this.state.highlightAddresses }
                 />,
             <RouteList key="list"
                 routeList={ data.routeList }
@@ -82,7 +83,6 @@ export default class SelectAssignmentRoutesPane extends PaneBase {
         }
 
         if (this.props.selectionItem != nextProps.selectionItem) {
-            console.log('Updating selection');
             this.setState({
                 addressSelection: this.mockAddressSelection(nextProps.selectionItem),
             });
@@ -91,13 +91,13 @@ export default class SelectAssignmentRoutesPane extends PaneBase {
 
     onItemMouseOver(item) {
         this.setState({
-            highlightRoute: item.data,
+            highlightAddresses: this.props.addressesByRoute[item.data.id],
         });
     }
 
     onItemMouseOut(item) {
         this.setState({
-            highlightRoute: null,
+            highlightAddresses: null,
         });
     }
 
@@ -123,7 +123,6 @@ export default class SelectAssignmentRoutesPane extends PaneBase {
     mockAddressSelection(routeSelectionItem) {
         let addressIds = [];
         routeSelectionItem.data.selectedIds.forEach(routeId => {
-            console.log('Adding addresses from route', routeId);
             let routeItem = getListItemById(this.props.routeList, routeId);
             addressIds = addressIds.concat(routeItem.data.addresses);
         });

@@ -9,6 +9,7 @@ import RelSelectInput from '../forms/inputs/RelSelectInput';
 import { getListItemById } from '../../utils/store';
 import { stringFromAddress } from '../../utils/location';
 import { createSelection } from '../../actions/selection';
+import { retrieveRouteAddresses } from '../../actions/address';
 
 
 const mapStateToProps = (state, props) => {
@@ -18,6 +19,7 @@ const mapStateToProps = (state, props) => {
     return {
         streetList: state.addresses.streetList,
         addressById: state.addresses.addressById,
+        addresses: state.addresses.addressesByRoute[routeId] || [],
         routeItem: getListItemById(routeList, routeId),
     };
 };
@@ -32,11 +34,16 @@ export default class RouteContentPane extends PaneBase {
             // TODO: Retrieve route
             //this.props.dispatch(retrieveRoute(this.getParam(0)));
         }
+
+        if (!this.props.addresses) {
+            this.props.dispatch(retrieveRouteAddresses(this.getParam(0)));
+        }
     }
 
     getRenderData() {
         return {
             routeItem: this.props.routeItem,
+            addresses: this.props.addresses,
         }
     }
 
@@ -53,7 +60,7 @@ export default class RouteContentPane extends PaneBase {
 
     renderPaneContent(data) {
         if (data.routeItem) {
-            let addrItems = data.routeItem.data.addresses.map(addrId => {
+            let addrItems = data.addresses.map(addrId => {
                 let addr = this.props.addressById[addrId];
 
                 return (
@@ -81,7 +88,7 @@ export default class RouteContentPane extends PaneBase {
 
                 // filter out addresses that are already in this route
                 let unusedAddresses = street.addresses.filter(addrId =>
-                    (data.routeItem.data.addresses.indexOf(addrId) < 0));
+                    (data.addresses.indexOf(addrId) < 0));
 
                 if (unusedAddresses.length) {
                     addrObjects.push(street);

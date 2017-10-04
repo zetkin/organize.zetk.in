@@ -46,11 +46,11 @@ routePanel:
     routeList:
         label: Rutt {id}
         addresses: |
-                    {addressesCount, plural,
+                    {count, plural,
                         =1 {1 adress}
                         other {# adresser}}
         households: |
-                    {householdsCount, plural,
+                    {count, plural,
                         =1 {# hushåll}
                         other {# hushåll}}
     tabs:

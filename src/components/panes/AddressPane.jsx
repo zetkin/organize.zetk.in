@@ -26,8 +26,9 @@ export default class AddressPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        // TODO: Retrieve address
+        // TODO: Retrieve address and tags
         //this.props.dispatch(retrieveAddress(this.getParam(0)));
+        //this.props.dispatch(retrieveAddressTags(this.getParam(0)));
     }
 
     getRenderData() {
@@ -58,8 +59,11 @@ export default class AddressPane extends PaneBase {
                 + (addr.zip || '') + ' '
                 + (addr.city || '');
 
-            let tags = addr.tags.map(tagId =>
-                getListItemById(this.props.tagList, tagId).data);
+            let tags = [];
+            if (addr.tags) {
+                tags = addr.tags.map(tagId =>
+                    getListItemById(this.props.tagList, tagId).data);
+            }
 
             return [
                 <InfoList key="info">

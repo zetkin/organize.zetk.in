@@ -79,7 +79,7 @@ export default class AddressMap extends React.Component {
             this.resetMarkers();
         }
 
-        if (this.props.highlightRoute != prevProps.highlightRoute) {
+        if (this.props.highlightAddresses != prevProps.highlightAddresses) {
             this.redrawMarkers();
         }
 
@@ -142,8 +142,7 @@ export default class AddressMap extends React.Component {
     }
 
     redrawMarkers() {
-        let activeIds = this.props.highlightRoute?
-            this.props.highlightRoute.addresses : null;
+        let activeIds = this.props.highlightAddresses;
 
         this.markers.forEach(m => {
             let curIcon = m.marker.getIcon();
