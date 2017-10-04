@@ -1,7 +1,7 @@
-.RouteList {
+.RoutePanelList {
     // overflow-y: scroll;
 
-    .RouteList-item {
+    .RoutePanelList-item {
         padding: 1em;
         border-bottom: 1px solid lighten($c-ui-dark, 25);
 
@@ -10,7 +10,7 @@
             background-color: darken(white, 2);
         }
 
-        .RouteList-itemTitle {
+        .RoutePanelList-itemTitle {
             font-size: 1.6em;
             margin: 0.3em ;
         }
@@ -22,13 +22,13 @@
             color: lighten($c-text, 50);
         }
 
-        .RouteList-itemAddrCount {
+        .RoutePanelList-itemAddrCount {
             &:before {
                 @include icon($fa-var-map-marker);
             }
         }
 
-        .RouteList-itemHouseholdCount {
+        .RoutePanelList-itemHouseholdCount {
             &:before {
                 @include icon($fa-var-home);
             }

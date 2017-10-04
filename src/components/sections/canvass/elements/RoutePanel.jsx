@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 import Button from '../../../misc/Button';
 import LoadingIndicator from '../../../misc/LoadingIndicator';
-import RouteList from './RouteList';
+import RoutePanelList from './RoutePanelList';
 import SelectInput from '../../../forms/inputs/SelectInput';
 import { FormattedMessage as Msg } from 'react-intl';
 
@@ -67,7 +67,7 @@ export default class RoutePanel extends React.Component {
         }
         else {
             return (
-                <RouteList list={ routeList }
+                <RoutePanelList list={ routeList }
                     onRouteClick={ this.props.onRouteClick }
                     onRouteMouseOver={ this.onRouteMouseOver.bind(this) }
                     onRouteMouseOut={ this.onRouteMouseOut.bind(this) }
@@ -123,7 +123,7 @@ export default class RoutePanel extends React.Component {
                                 <Msg id="panes.allRoutes.routePanel.drafts.info.text"/>
                             </p>
                         </div>
-                        <RouteList list={ draftList }
+                        <RoutePanelList list={ draftList }
                             labelMsg="panes.allRoutes.routePanel.drafts.label"
                             onRouteClick={ this.props.onRouteClick }
                             onRouteMouseOver={ this.onRouteMouseOver.bind(this) }

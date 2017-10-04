@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage as Msg } from 'react-intl';
 
 
-export default class RouteList extends React.Component {
+export default class RoutePanelList extends React.Component {
     render() {
         let items = this.props.list.items.map(item => {
             let route = item.data;
@@ -12,18 +12,18 @@ export default class RouteList extends React.Component {
                 || 'panes.allRoutes.routePanel.routeList.label';
 
             return (
-                <li key={ route.id } className="RouteList-item"
+                <li key={ route.id } className="RoutePanelList-item"
                     onClick={ this.onRouteClick.bind(this, route) }
                     onMouseOver={ this.onRouteMouseOver.bind(this, route) }
                     onMouseOut={ this.onRouteMouseOut.bind(this, route) }>
-                    <h3 className="RouteList-itemTitle">
+                    <h3 className="RoutePanelList-itemTitle">
                         <Msg id={ labelMsg } values={{ id: route.id }}/>
                     </h3>
-                    <span className="RouteList-itemAddrCount">
+                    <span className="RoutePanelList-itemAddrCount">
                         <Msg id="panes.allRoutes.routePanel.routeList.addresses"
                             values={{ addressesCount }}/>
                     </span>
-                    <span className="RouteList-itemHouseholdCount">
+                    <span className="RoutePanelList-itemHouseholdCount">
                         <Msg id="panes.allRoutes.routePanel.routeList.households"
                             values={{ householdsCount }}/>
                     </span>
@@ -32,7 +32,7 @@ export default class RouteList extends React.Component {
         });
 
         return (
-            <ul className="RouteList">
+            <ul className="RoutePanelList">
                 { items }
             </ul>
         );

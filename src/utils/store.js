@@ -20,6 +20,8 @@ export function createListItems(rawList) {
 }
 
 export function updateOrAddListItem(list, id, newData, meta) {
+    list = list || createList();
+
     let updated = false;
     let items = list.items.concat();
 
