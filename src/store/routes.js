@@ -30,6 +30,13 @@ export default function routes(state = null, action) {
             routeList: updateOrAddListItem(state.routeList, route.id, route),
         });
     }
+    else if (action.type == types.RETRIEVE_ROUTES + '_FULFILLED') {
+        let routes = action.payload.data.data;
+
+        return Object.assign({}, state, {
+            routeList: createList(routes),
+        });
+    }
     else if (action.type == types.DISCARD_ROUTE_DRAFTS) {
         return Object.assign({}, state, {
             draftList: null,

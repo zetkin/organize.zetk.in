@@ -12,6 +12,19 @@ if (typeof window !== 'undefined') {
 }
 
 
+export function retrieveRoutes() {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_ROUTES,
+            payload: {
+                promise: z.resource('orgs', orgId, 'canvass_routes').get(),
+            },
+        });
+    };
+}
+
 export function createRoute(addressIds, paneId) {
     return ({ dispatch, getState }) => {
         // TODO: Remove once hooked to API
