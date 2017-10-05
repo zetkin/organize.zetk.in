@@ -42,6 +42,7 @@ export default function addresses(state = null, action) {
     }
     else if (action.type == types.RETRIEVE_ADDRESSES + '_PENDING') {
         return Object.assign({}, state, {
+            filterTagId: action.meta.tagId,
             addressList: createList(null, {
                 isPending: true,
             }),
@@ -114,6 +115,7 @@ export default function addresses(state = null, action) {
     }
     else {
         return state || {
+            filterTagId: null,
             addressList: null,
             addressesByRoute: {},
             streetList: createList(),

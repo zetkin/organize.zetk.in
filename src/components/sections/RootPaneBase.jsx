@@ -179,9 +179,9 @@ export default class RootPaneBase extends React.Component {
 
     onFilterChange(name, value) {
         this.setState({
-            filters: {
+            filters: Object.assign({}, this.state.filters, {
                 [name]: value,
-            }
+            }),
         });
     }
 

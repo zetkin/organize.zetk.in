@@ -1,14 +1,21 @@
 import * as types from '.';
 
 
-export function retrieveAddresses() {
+export function retrieveAddresses(tagId = null) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
+        let filters = null;
+
+        if (tagId) {
+            filters = [[ 'tag', '==', tagId ]];
+        }
 
         dispatch({
             type: types.RETRIEVE_ADDRESSES,
+            meta: { tagId },
             payload: {
-                promise: z.resource('orgs', orgId, 'addresses').get(),
+                promise: z.resource('orgs', orgId, 'addresses')
+                    .get(null, null, filters),
             },
         });
     };

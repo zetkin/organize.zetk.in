@@ -27,6 +27,7 @@ import { getListItemById } from '../../../utils/store';
 
 
 const mapStateToProps = state => ({
+    filterTagId: state.addresses.filterTagId,
     tagList: state.locationTags.tagList,
     addressList: state.addresses.addressList,
     addressesByRoute: state.addresses.addressesByRoute,
@@ -201,15 +202,9 @@ export default class AllRoutesPane extends RootPaneBase {
     }
 
     getFilteredAddresses(props = this.props, state = this.state) {
-        let tagId = state.filters.tag;
         let streetId = state.filters.street;
         let addresses = props.addressList?
             props.addressList.items.map(i => i.data) : [];
-
-        if (tagId && tagId != '_') {
-            addresses = addresses
-                .filter(addr => addr.tags.indexOf(tagId) >= 0);
-        }
 
         if (streetId) {
             let streetItem = getListItemById(this.props.streetList, streetId);
@@ -278,6 +273,10 @@ export default class AllRoutesPane extends RootPaneBase {
     }
 
     onFiltersApply(filters) {
-        this.filteredAddresses = this.getFilteredAddresses(this.props, { filters });
+        if (filters.tag != this.props.filterTagId) {
+            this.props.dispatch(retrieveAddresses(filters.tag));
+        }
+
+        this.filteredAddresses = this.getFilteredAddresses();
     }
 }
