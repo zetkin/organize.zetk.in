@@ -9,7 +9,11 @@ import RelSelectInput from '../forms/inputs/RelSelectInput';
 import { getListItemById } from '../../utils/store';
 import { stringFromAddress } from '../../utils/location';
 import { createSelection } from '../../actions/selection';
-import { retrieveRouteAddresses } from '../../actions/address';
+import {
+    addAddressesToRoute,
+    removeAddressesFromRoute,
+    retrieveRouteAddresses,
+} from '../../actions/address';
 
 
 const mapStateToProps = (state, props) => {
@@ -123,21 +127,24 @@ export default class RouteContentPane extends PaneBase {
     }
 
     onAddAddressChange(name, value) {
+        let routeId = this.getParam(0);
+
         if (value[0] == '$') {
             let meta = { streetId: value };
             let action = createSelection('address', null, null, ids => {
-                console.log(ids);
+                this.props.dispatch(addAddressesToRoute(routeId, ids));
             }, meta);
 
             this.props.dispatch(action);
             this.openPane('selectstreetaddr', action.payload.id);
         }
         else {
-            // TODO: Add address
+            this.props.dispatch(addAddressesToRoute(routeId, [value]));
         }
     }
 
     onAddressDeleteClick(addr) {
-        // TODO: Handle delete
+        let routeId = this.getParam(0);
+        this.props.dispatch(removeAddressesFromRoute(routeId, [addr.id]));
     }
 }

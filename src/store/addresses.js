@@ -90,6 +90,28 @@ export default function addresses(state = null, action) {
             }),
         });
     }
+    else if (action.type == types.ADD_ADDRESSES_TO_ROUTE + '_FULFILLED') {
+        let routeId = action.meta.routeId;
+        let oldAddresses = state.addressesByRoute[routeId] || [];
+        let addressIds = oldAddresses.concat(action.meta.addressIds);
+
+        return Object.assign({}, state, {
+            addressesByRoute: Object.assign({}, state.addressesByRoute, {
+                [routeId]: addressIds,
+            }),
+        });
+    }
+    else if (action.type == types.REMOVE_ADDRESSES_FROM_ROUTE + '_FULFILLED') {
+        let routeId = action.meta.routeId;
+        let oldIds = state.addressesByRoute[routeId] || [];
+        let addressIds = oldIds.filter(id => action.meta.addressIds.indexOf(id) < 0);
+
+        return Object.assign({}, state, {
+            addressesByRoute: Object.assign({}, state.addressesByRoute, {
+                [routeId]: addressIds,
+            }),
+        });
+    }
     else {
         return state || {
             addressList: null,
