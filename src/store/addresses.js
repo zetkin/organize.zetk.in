@@ -2,6 +2,10 @@ import * as types from '../actions';
 import makeRandomString from '../utils/makeRandomString';
 import {
     createList,
+    getListItemById,
+    removeListItem,
+    updateOrAddListItem,
+    updateOrAddListItems,
 } from '../utils/store';
 
 
@@ -112,6 +116,68 @@ export default function addresses(state = null, action) {
                 [routeId]: addressIds,
             }),
         });
+    }
+    else if (action.type == types.RETRIEVE_TAGS_FOR_ADDRESS + '_PENDING') {
+        let addr = {
+            id: action.meta.id,
+            tagList: createList(null, { isPending: true }),
+        };
+
+        return Object.assign({}, state, {
+            addressList: updateOrAddListItem(state.addressList,
+                addr.id, addr),
+        });
+    }
+    else if (action.type == types.RETRIEVE_TAGS_FOR_ADDRESS + '_FULFILLED') {
+        let tags = action.payload.data.data.map(t => ({ id: t.id }));
+        let addr = {
+            id: action.meta.id,
+            tagList: createList(tags, { isPending: false }),
+        };
+
+        return Object.assign({}, state, {
+            addressList: updateOrAddListItem(state.addressList,
+                addr.id, addr),
+        });
+    }
+    else if (action.type == types.ADD_TAGS_TO_ADDRESS + '_FULFILLED') {
+        let addrItem = getListItemById(state.addressList, action.meta.id);
+
+        if (addrItem) {
+            let tags = action.meta.tagIds.map(id => ({ id }));
+            let addr = Object.assign({}, addrItem.data, {
+                id: action.meta.id,
+                tagList: updateOrAddListItems(
+                    addrItem.data.tagList, tags)
+            });
+
+            return Object.assign({}, state, {
+                addressList: updateOrAddListItem(state.addressList,
+                    addr.id, addr),
+            });
+        }
+        else {
+            return state;
+        }
+    }
+    else if (action.type == types.REMOVE_TAG_FROM_ADDRESS + '_FULFILLED') {
+        let addrItem = getListItemById(state.addressList, action.meta.id);
+
+        if (addrItem) {
+            let addr = Object.assign({}, addrItem.data, {
+                id: action.meta.id,
+                tagList: removeListItem(addrItem.data.tagList,
+                    action.meta.tagId)
+            });
+
+            return Object.assign({}, state, {
+                addressList: updateOrAddListItem(state.addressList,
+                    addr.id, addr),
+            });
+        }
+        else {
+            return state;
+        }
     }
     else {
         return state || {

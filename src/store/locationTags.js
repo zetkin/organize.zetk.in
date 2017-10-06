@@ -19,6 +19,9 @@ export default function locationTags(state = null, action) {
                     action.payload.data.data)
             });
 
+        case types.RETRIEVE_ADDRESS_TAG + '_FULFILLED':
+        case types.UPDATE_ADDRESS_TAG + '_FULFILLED':
+        case types.CREATE_ADDRESS_TAG + '_FULFILLED':
         case types.RETRIEVE_LOCATION_TAG + '_FULFILLED':
         case types.UPDATE_LOCATION_TAG + '_FULFILLED':
         case types.CREATE_LOCATION_TAG + '_FULFILLED':

@@ -9,6 +9,11 @@ import TagCloud from '../misc/tagcloud/TagCloud';
 import { getListItemById } from '../../utils/store';
 import { dmsStringFromLatLng } from '../../utils/location';
 import { createSelection } from '../../actions/selection';
+import {
+    addTagsToAddress,
+    removeTagFromAddress,
+    retrieveTagsForAddress,
+} from '../../actions/locationTag';
 
 
 const mapStateToProps = (state, props) => {
@@ -17,7 +22,7 @@ const mapStateToProps = (state, props) => {
 
     return {
         tagList: state.locationTags.tagList,
-        addrItem: getListItemById(addrList, addrId),
+        addrItem: addrList? getListItemById(addrList, addrId) : null,
     };
 };
 
@@ -26,9 +31,9 @@ export default class AddressPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        // TODO: Retrieve address and tags
+        // TODO: Retrieve address
         //this.props.dispatch(retrieveAddress(this.getParam(0)));
-        //this.props.dispatch(retrieveAddressTags(this.getParam(0)));
+        this.props.dispatch(retrieveTagsForAddress(this.getParam(0)));
     }
 
     getRenderData() {
@@ -60,9 +65,9 @@ export default class AddressPane extends PaneBase {
                 + (addr.city || '');
 
             let tags = [];
-            if (addr.tags) {
-                tags = addr.tags.map(tagId =>
-                    getListItemById(this.props.tagList, tagId).data);
+            if (addr.tagList && addr.tagList.items) {
+                tags = addr.tagList.items.map(tagItem =>
+                    getListItemById(this.props.tagList, tagItem.data.id).data);
             }
 
             return [
@@ -89,8 +94,7 @@ export default class AddressPane extends PaneBase {
 
     onAddTag() {
         let action = createSelection('locationtag', null, null, ids => {
-            // TODO: Dispatch relevant action
-            //this.props.dispatch(addTagsToAddress(this.getParam(0), ids));
+            this.props.dispatch(addTagsToAddress(this.getParam(0), ids));
         });
 
         this.props.dispatch(action);
@@ -99,7 +103,6 @@ export default class AddressPane extends PaneBase {
 
 
     onRemoveTag(tag) {
-        // TODO: Dispatch relevant action
-        //this.props.dispatch(removeTagFromAddress(this.getParam(0), tag.id));
+        this.props.dispatch(removeTagFromAddress(this.getParam(0), tag.id));
     }
 }
