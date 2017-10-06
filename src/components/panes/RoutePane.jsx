@@ -9,6 +9,7 @@ import PaneBase from './PaneBase';
 import PersonSelectWidget from '../misc/PersonSelectWidget';
 import TagCloud from '../misc/tagcloud/TagCloud';
 import { getListItemById } from '../../utils/store';
+import { retrieveRouteAddresses } from '../../actions/address';
 
 
 const mapStateToProps = (state, props) => {
@@ -16,16 +17,15 @@ const mapStateToProps = (state, props) => {
     let list = state.routes.routeList;
     let item = getListItemById(list, routeId);
 
-    let addressList = state.addresses.addressList;
-    let addressItems = null;
-    if (item && item.data && addressList && addressList.items) {
-        addressItems = addressList.items.filter(ai =>
-            item.data.addresses.indexOf(ai.data.id) >= 0);
+    let addressIds = state.addresses.addressesByRoute[routeId];
+    let addresses = null;
+    if (item && item.data && addressIds) {
+        addresses = addressIds.map(id => state.addresses.addressById[id]);
     }
 
     return {
         routeItem: item,
-        routeAddressItems: addressItems,
+        routeAddresses: addresses,
         tagList: state.locationTags.tagList,
     };
 };
@@ -36,8 +36,9 @@ export default class RoutePane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        // TODO: Retrieve route
+        // TODO: Retrieve route data
         //this.props.dispatch(retrieveRoute(this.getParam(0)));
+        this.props.dispatch(retrieveRouteAddresses(this.getParam(0)));
     }
 
     getRenderData() {
@@ -61,6 +62,8 @@ export default class RoutePane extends PaneBase {
 
         if (data.routeItem) {
             let route = data.routeItem.data;
+            let addressCount = this.props.routeAddresses?
+                this.props.routeAddresses.length : 0;
 
             let createInfoItem = (name, content) => {
                 let className = 'RoutePane-' + name;
@@ -78,11 +81,14 @@ export default class RoutePane extends PaneBase {
                 let tagIdsInRoute = [];
 
                 this.props.routeAddressItems.forEach(ai => {
-                    ai.data.tags.forEach(tagId => {
-                        if (tagIdsInRoute.indexOf(tagId) < 0) {
-                            tagIdsInRoute.push(tagId);
-                        }
-                    });
+                    // TODO: Use tags retrieved elsewhere
+                    if (ai.data.tags) {
+                        ai.data.tags.forEach(tagId => {
+                            if (tagIdsInRoute.indexOf(tagId) < 0) {
+                                tagIdsInRoute.push(tagId);
+                            }
+                        });
+                    }
                 });
 
                 if (tagIdsInRoute.length) {
@@ -108,7 +114,7 @@ export default class RoutePane extends PaneBase {
                         { createInfoItem('address_count',
                             formatMessage(
                                 { id: 'panes.route.info.addresses' },
-                                { count: route.addresses.length })) }
+                                { count: addressCount })) }
 
                         { createInfoItem('household_count',
                             formatMessage(

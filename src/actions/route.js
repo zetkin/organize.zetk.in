@@ -12,30 +12,31 @@ if (typeof window !== 'undefined') {
 }
 
 
+export function retrieveRoutes() {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_ROUTES,
+            payload: {
+                promise: z.resource('orgs', orgId, 'canvass_routes').get(),
+            },
+        });
+    };
+}
+
 export function createRoute(addressIds, paneId) {
-    return ({ dispatch, getState }) => {
-        // TODO: Remove once hooked to API
-        let addressById = getState().addresses.addressById;
-        let households = addressIds
-            .map(id => addressById[id])
-            .reduce((sum, addr) => sum + addr.household_count, 0);
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        let data = {
+            addresses: addressIds,
+        };
 
         dispatch({
             type: types.CREATE_ROUTE,
             meta: { paneId },
             payload: {
-                // TODO: Submit to API
-                promise: new Promise((resolve) => {
-                    resolve({
-                        data: {
-                            data: {
-                                id: makeRandomString(6),
-                                addresses: addressIds,
-                                household_count: households,
-                            }
-                        }
-                    });
-                }),
+                promise: z.resource('orgs', orgId, 'canvass_routes').post(data),
             }
         });
     };

@@ -1,6 +1,10 @@
 addSelectionToRouteButton: Add selection to route
 clearSelectionButton: Clear selection
 filters:
+    route:
+        label: Addresses in route
+        nullOption: (Any or no route)
+        zeroOption: (Addresses not belonging to a route)
     street:
         label: Addresses on street
         nullOption: (Any street)
@@ -45,11 +49,11 @@ routePanel:
     routeList:
         label: Route {id}
         addresses: |
-                    {addressesCount, plural,
+                    {count, plural,
                         =1 {1 address}
                         other {# addresses}}
         households: |
-                    {householdsCount, plural,
+                    {count, plural,
                         =1 {# household}
                         other {# households}}
     tabs:
