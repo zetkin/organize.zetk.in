@@ -99,6 +99,19 @@ export default class AllRoutesPane extends RootPaneBase {
             });
         }
 
+        let routeOptions = {
+            '_': this.props.intl.formatMessage({
+                id: 'panes.allRoutes.filters.route.nullOption' }),
+            '0': this.props.intl.formatMessage({
+                id: 'panes.allRoutes.filters.route.zeroOption' }),
+        };
+
+        if (this.props.routeList && this.props.routeList.items) {
+            this.props.routeList.items.forEach(item => {
+                routeOptions[item.data.id] = item.data.id;
+            });
+        };
+
         return [
             <div key="filters">
                 <Msg tagName="label"
@@ -112,6 +125,14 @@ export default class AllRoutesPane extends RootPaneBase {
                     id="panes.allRoutes.filters.street.label"/>
                 <SelectInput name="street" options={ streetOptions }
                     value={ filters.street || '_' }
+                    onValueChange={ this.onFilterChange.bind(this) }
+                    />
+
+                <Msg tagName="label"
+                    id="panes.allRoutes.filters.route.label"
+                    />
+                <SelectInput name="route" options={ routeOptions }
+                    value={ filters.route || '_' }
                     onValueChange={ this.onFilterChange.bind(this) }
                     />
             </div>
@@ -199,20 +220,49 @@ export default class AllRoutesPane extends RootPaneBase {
         if (this.props.addressList != nextProps.addressList) {
             this.filteredAddresses = this.getFilteredAddresses(nextProps, nextState);
         }
+        else if (this.props.addressesByRoute != nextProps.addressesByRoute
+            && this.state.filters.route && this.state.filters.route != '_') {
+            this.filteredAddresses = this.getFilteredAddresses(nextProps, nextState);
+        }
     }
 
     getFilteredAddresses(props = this.props, state = this.state) {
         let streetId = state.filters.street;
+        let routeId = state.filters.route;
         let addresses = props.addressList?
             props.addressList.items.map(i => i.data) : [];
 
-        if (streetId) {
+        if (streetId && streetId != '_') {
             let streetItem = getListItemById(this.props.streetList, streetId);
 
             if (streetItem) {
                 let streetAddresses = streetItem.data.addresses;
                 addresses = addresses
                     .filter(addr => streetAddresses.indexOf(addr.id) >= 0);
+            }
+        }
+
+        if (routeId && routeId != '_') {
+            if (routeId == '0') {
+                addresses = addresses.filter(addr => {
+                    let routeIds = Object.keys(this.props.addressesByRoute);
+                    for (let i = 0; i < routeIds.length; i++) {
+                        let routeId = routeIds[i];
+                        let routeAddresses = this.props.addressesByRoute[routeId];
+                        if (routeAddresses.indexOf(addr.id) >= 0) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                });
+            }
+            else {
+                let routeAddresses = this.props.addressesByRoute[routeId];
+                if (routeAddresses) {
+                    addresses = addresses
+                        .filter(addr => routeAddresses.indexOf(addr.id) >= 0);
+                }
             }
         }
 
@@ -273,8 +323,9 @@ export default class AllRoutesPane extends RootPaneBase {
     }
 
     onFiltersApply(filters) {
-        if (filters.tag != this.props.filterTagId) {
-            this.props.dispatch(retrieveAddresses(filters.tag));
+        let tagId = (filters.tag == '_')? null : filters.tag;
+        if (tagId != this.props.filterTagId) {
+            this.props.dispatch(retrieveAddresses(tagId));
         }
 
         this.filteredAddresses = this.getFilteredAddresses();

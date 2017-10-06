@@ -1,6 +1,10 @@
 addSelectionToRouteButton: Lägg till i rutt
 clearSelectionButton: Välj inga adresser
 filters:
+    route:
+        label: Adresser i rutter
+        nullOption: (Oavsett rutt)
+        zeroOption: (Adresser som inte förekommer i en rutt)
     street:
         label: Adresser på gata
         nullOption: (Vilken gata som helst)
