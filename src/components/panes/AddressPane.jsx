@@ -71,14 +71,10 @@ export default class AddressPane extends PaneBase {
             }
 
             return [
-                <InfoList key="info">
-                    <InfoList.Item key="address">
-                        { addrLabel }
-                    </InfoList.Item>
-                    <InfoList.Item key="position">
-                        { posLabel }
-                    </InfoList.Item>
-                </InfoList>,
+                <InfoList key="info" data={[
+                    { name: 'address', value: addrLabel },
+                    { name: 'position', value: posLabel }
+                ]} />,
                 <TagCloud key="tags" tags={ tags }
                     showAddButton={ true }
                     showRemoveButtons={ true }

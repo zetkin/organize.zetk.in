@@ -1,15 +1,12 @@
 .PersonPane {
-    color: lighten($c-text, 30);
-
     .DraggableAvatar {
         float: left;
         height: 12em;
         @include col(4,12, $first:true);
     }
 
-    .PersonPane-info {
+    .InfoList {
         margin: 1em 0 0;
-        font-size: 1.4em;
 
         li {
             margin-bottom: 0.8em;
@@ -23,7 +20,7 @@
             color: lighten($c-text, 60);
         }
 
-        .PersonPane-user {
+        .InfoListItem-user {
             &::before {
                 @include icon($fa-var-user);
             }
@@ -35,19 +32,20 @@
             }
         }
 
-        .PersonPane-email {
+        .InfoListItem-email {
+            margin-top: 1em;
             &::before {
                 @include icon($fa-var-envelope-o);
             }
         }
 
-        .PersonPane-phone {
+        .InfoListItem-phone {
             &::before {
                 @include icon($fa-var-phone);
             }
         }
 
-        .PersonPane-address {
+        .InfoListItem-address {
             &:before {
                 @include icon($fa-var-home);
             }
@@ -61,6 +59,9 @@
             }
         }
 
+        .InfoListItem-editLink {
+            font-size: 1em;
+        }
     }
 
     a:hover {

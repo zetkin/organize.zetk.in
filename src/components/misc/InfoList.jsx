@@ -1,43 +1,32 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 
 
+@injectIntl
 export default class InfoList extends React.Component {
     static propTypes = {
-        data: React.PropTypes.object,
+        data: React.PropTypes.array.isRequired,
     }
 
     render() {
         return (
             <ul className="InfoList">
-            {this.props.children.map(item => {
-                let attr = item.props.name || item.key;
-                let value = item.props.children;
+            {
+                this.props.data.map(item => {
+                    let className = 'InfoListItem InfoListItem-' + item.name;
+                    let value = item.value;
 
-                if (!value && this.props.data) {
-                    value = this.props.data[attr];
-                }
+                    if (item.msgId) {
+                        value = this.props.intl.formatMessage({ id: item.msgId }, item.msgValues);
+                    }
 
-                if (!value) {
-                    value = '-';
-                }
-
-                return (
-                    <InfoList.Item key={ attr } name={ attr }>
-                        { value }
-                    </InfoList.Item>
-                );
-            })}
+                    if (!value) {
+                        value = '-';
+                    }
+                    return <li className={ className } key={item.name}>{value}</li>
+                })
+            }
             </ul>
         );
     }
 }
-
-InfoList.Item = props => {
-    let className = 'InfoListItem InfoListItem-' + props.name;
-
-    return (
-        <li className={ className }>
-            { props.children }
-        </li>
-    );
-};

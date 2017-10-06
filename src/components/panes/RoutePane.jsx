@@ -10,6 +10,7 @@ import PersonSelectWidget from '../misc/PersonSelectWidget';
 import TagCloud from '../misc/tagcloud/TagCloud';
 import { getListItemById } from '../../utils/store';
 import { retrieveRouteAddresses } from '../../actions/address';
+import InfoList from '../misc/InfoList';
 
 
 const mapStateToProps = (state, props) => {
@@ -65,16 +66,6 @@ export default class RoutePane extends PaneBase {
             let addressCount = this.props.routeAddresses?
                 this.props.routeAddresses.length : 0;
 
-            let createInfoItem = (name, content) => {
-                let className = 'RoutePane-' + name;
-
-                return (
-                    <li key={ name } className={ className }>
-                        { content }
-                    </li>
-                );
-            };
-
             let tagInfo = null;
 
             if (this.props.routeAddressItems) {
@@ -110,17 +101,17 @@ export default class RoutePane extends PaneBase {
 
             let routeInfo = (
                 <div key="info"className="RoutePane-info">
-                    <ul key="infoList" className="RoutePane-infoList">
-                        { createInfoItem('address_count',
-                            formatMessage(
-                                { id: 'panes.route.info.addresses' },
-                                { count: addressCount })) }
-
-                        { createInfoItem('household_count',
-                            formatMessage(
-                                { id: 'panes.route.info.households' },
-                                { count: route.household_count})) }
-                    </ul>
+                    <InfoList data={[
+                        {
+                            name: 'address_count',
+                            msgId: 'panes.route.info.addresses',
+                            msgValues: { count: addressCount }
+                        }, {
+                            name: 'household_count',
+                            msgId: 'panes.route.info.households',
+                            msgValues: { count: route.household_count }
+                        }
+                    ]} />
                     <Button
                         className="RoutePane-editLink"
                         labelMsg="panes.route.editLink"

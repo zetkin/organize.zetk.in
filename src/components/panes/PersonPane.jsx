@@ -15,9 +15,9 @@ import {
     removeTagFromPerson,
     retrieveTagsForPerson,
 } from '../../actions/personTag';
+import InfoList from '../misc/InfoList';
 
 
-const BASIC_FIELDS = [ 'email', 'phone' ];
 const ADDR_FIELDS = [ 'co_address', 'street_address', 'zip_code', 'city' ];
 
 const mapStateToProps = (state, props) => ({
@@ -101,21 +101,16 @@ export default class PersonPane extends PaneBase {
 
             return [
                 <DraggableAvatar key="avatar" ref="avatar" person={ person }/>,
-                <ul key="info" className="PersonPane-info">
-                    { createInfoItem('user', person.is_user?
-                        formatMessage({ id: 'panes.person.user.connected' }) :
-                        formatMessage({ id: 'panes.person.user.notConnected' }),
-                        !person.is_user)
-                    }
-                    { BASIC_FIELDS.map(field => (
-                        createInfoItem(field, person[field])
-                    )) }
-                    { createInfoItem('address',
-                        addrFields.length? addrFields : null) }
-                </ul>,
-                <Link key="editLink"
-                    msgId="panes.person.editLink"
-                    onClick={ this.onClickEdit.bind(this) }/>,
+                <InfoList key="info"
+                    data={[
+                        { name: 'user', msgId: person.is_user ?
+                            'panes.person.user.connected' : 'panes.person.user.notConnected' },
+                        { name: 'email', value: person.email },
+                        { name: 'phone', value: person.phone },
+                        { name: 'address', value: addrFields.length? addrFields : null },
+                        { name: 'editLink', msgId: 'panes.person.editLink', onClick: this.onClickEdit.bind(this) }
+                    ]}
+                />,
                 <div key="tags" className="PersonPane-tags">
                     <Msg tagName="h3" id="panes.person.tagHeader"/>
                     { tagCloud }

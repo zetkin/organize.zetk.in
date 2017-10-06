@@ -11,24 +11,22 @@
 
     .RoutePane-info {
         color: lighten($c-text, 40);
-        padding-bottom: 2em;
-        border-bottom: 1px solid darken($c-ui-bg, 10);
         position: relative;
 
-        .RoutePane-infoList {
+        .InfoList {
             li {
                 font-size: 1.4em;
                 margin: 0.5em 0;
             }
         }
 
-        .RoutePane-address_count {
+        .InfoListItem-address_count {
             &:before {
                 @include icon($fa-var-map-marker);
             }
         }
 
-        .RoutePane-household_count {
+        .InfoListItem-household_count {
             &:before {
                 @include icon($fa-var-home);
             }

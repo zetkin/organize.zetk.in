@@ -45,10 +45,6 @@ export default class RouteFromAddressesPane extends PaneBase {
             return sum + (addr? addr.household_count : 0);
         }, 0);
 
-        let householdsLabel = this.props.intl.formatMessage(
-            { id: 'panes.routeFromSelection.info.households' },
-            { count: householdCount });
-
         let bounds = new google.maps.LatLngBounds();
         selection.selectedIds.forEach(addrId => {
             let addr = this.props.addressById[addrId];
@@ -59,19 +55,22 @@ export default class RouteFromAddressesPane extends PaneBase {
         let dist = google.maps.geometry.spherical.computeDistanceBetween(
             bounds.getSouthWest(), bounds.getNorthEast());
 
-        let sizeLabel = this.props.intl.formatMessage(
-            { id: 'panes.routeFromSelection.info.size' },
-            { radius: Math.round(dist/10) * 10 });
-
         let content = [
-            <InfoList key="info">
-                <InfoList.Item key="households">
-                    { householdsLabel }
-                </InfoList.Item>
-                <InfoList.Item key="size">
-                    { sizeLabel }
-                </InfoList.Item>
-            </InfoList>,
+            <InfoList
+                key="info"
+                data={[
+                    {
+                        name: 'households',
+                        msgId: 'panes.allRoutes.selectionPanel.info.households',
+                        msgValues: { count: householdCount }
+                    },
+                    {
+                        name: 'size',
+                        msgId: dist > 0 ? 'panes.allRoutes.selectionPanel.info.size' : null,
+                        msgValues: { radius: Math.round(dist/10) * 10 }
+                    }
+                ]}
+            />,
             <div key="create"
                 className="RouteFromAddressesPane-create">
                 <Msg tagName="h3" id="panes.routeFromSelection.create.h"/>
