@@ -8,7 +8,10 @@ import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import { getListItemById } from '../../utils/store';
 import { createSelection } from '../../actions/selection';
-import { retrieveCanvassAssignment } from '../../actions/canvassAssignment';
+import {
+    retrieveCanvassAssignment,
+    retrieveCanvassAssignmentRoutes,
+} from '../../actions/canvassAssignment';
 
 
 const mapStateToProps = (state, props) => {
@@ -16,6 +19,7 @@ const mapStateToProps = (state, props) => {
     let assignmentId = props.paneData.params[0];
 
     return {
+        routeList: state.routes.routesByAssignment[assignmentId],
         assignmentItem: assignmentList?
             getListItemById(assignmentList, assignmentId) : null,
     };
@@ -26,6 +30,7 @@ export default class CanvassAssignmentPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
         this.props.dispatch(retrieveCanvassAssignment(this.getParam(0)));
+        this.props.dispatch(retrieveCanvassAssignmentRoutes(this.getParam(0)));
     }
 
     getRenderData() {
@@ -46,6 +51,7 @@ export default class CanvassAssignmentPane extends PaneBase {
     renderPaneContent(data) {
         if (data.assignmentItem && data.assignmentItem.data) {
             let assignment = data.assignmentItem.data;
+            let routesSection = null;
 
             let canvassAssignmentInfo = (
                 <div key="info" className="CanvassAssignmentPane-info">
@@ -62,13 +68,22 @@ export default class CanvassAssignmentPane extends PaneBase {
                 </div>
             );
 
+            if (this.props.routeList) {
+                routesSection = (
+                    <Button key="routesLink"
+                        className="CanvassAssignmentPane-routesLink"
+                        labelMsg="panes.canvassAssignment.routesLink"
+                        onClick={ this.onRoutesLinkClick.bind(this) }
+                        />
+                );
+            }
+            else {
+                routesSection = <LoadingIndicator key="routesSpinner" />;
+            }
+
             return [
                 canvassAssignmentInfo,
-                <Button key="routesLink"
-                    className="CanvassAssignmentPane-routesLink"
-                    labelMsg="panes.canvassAssignment.routesLink"
-                    onClick={ this.onRoutesLinkClick.bind(this) }
-                    />
+                routesSection,
             ];
         }
         else {
@@ -83,9 +98,13 @@ export default class CanvassAssignmentPane extends PaneBase {
 
     onRoutesLinkClick() {
         let assignmentId = this.getParam(0);
-        let action = createSelection('route', null, null, ids => {
+        let selectedIds = null;
+        if (this.props.routeList) {
+            selectedIds = this.props.routeList.items.map(i => i.data.id);
+        }
+
+        let action = createSelection('route', selectedIds, null, ids => {
             console.log(ids);
-            //this.props.dispatch(addTagsToLocation(locationId, ids));
         });
 
         this.props.dispatch(action);
