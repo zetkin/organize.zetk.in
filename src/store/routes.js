@@ -2,6 +2,7 @@ import * as types from '../actions';
 import {
     createList,
     updateOrAddListItem,
+    updateOrAddListItems,
 } from '../utils/store';
 
 
@@ -35,6 +36,16 @@ export default function routes(state = null, action) {
 
         return Object.assign({}, state, {
             routeList: createList(routes),
+        });
+    }
+    else if (action.type == types.RETRIEVE_CANVASS_ASSIGNMENT_ROUTES + '_FULFILLED') {
+        let routes = action.payload.data.data;
+
+        return Object.assign({}, state, {
+            routesByAssignment: Object.assign({}, state.routesByAssignment, {
+                [action.meta.assignmentId]: createList(routes),
+            }),
+            routeList: updateOrAddListItems(state.routeList, routes),
         });
     }
     else if (action.type == types.ADD_ADDRESSES_TO_ROUTE + '_FULFILLED') {
@@ -92,6 +103,7 @@ export default function routes(state = null, action) {
             },
             draftList: null,
             routeList: createList(),
+            routesByAssignment: {},
         };
     }
 }

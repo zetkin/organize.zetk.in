@@ -30,6 +30,23 @@ export function retrieveCanvassAssignments() {
     };
 }
 
+export function retrieveCanvassAssignmentRoutes(id) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_CANVASS_ASSIGNMENT_ROUTES,
+            meta: {
+                assignmentId: id
+            },
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'canvass_assignments', id, 'routes').get(),
+            }
+        });
+    }
+}
+
 export function createCanvassAssignment(data, paneId) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
