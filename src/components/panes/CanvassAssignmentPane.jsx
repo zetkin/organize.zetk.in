@@ -8,6 +8,7 @@ import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import { getListItemById } from '../../utils/store';
 import { createSelection } from '../../actions/selection';
+import { retrieveCanvassAssignment } from '../../actions/canvassAssignment';
 
 
 const mapStateToProps = (state, props) => {
@@ -15,7 +16,8 @@ const mapStateToProps = (state, props) => {
     let assignmentId = props.paneData.params[0];
 
     return {
-        assignmentItem: getListItemById(assignmentList, assignmentId),
+        assignmentItem: assignmentList?
+            getListItemById(assignmentList, assignmentId) : null,
     };
 };
 
@@ -23,6 +25,7 @@ const mapStateToProps = (state, props) => {
 export default class CanvassAssignmentPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
+        this.props.dispatch(retrieveCanvassAssignment(this.getParam(0)));
     }
 
     getRenderData() {
