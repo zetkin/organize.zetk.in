@@ -46,14 +46,11 @@ export default class CanvassAssignmentPane extends PaneBase {
 
             let canvassAssignmentInfo = (
                 <div key="info" className="CanvassAssignmentPane-info">
-                    <InfoList key="info">
-                        <InfoList.Item key="description">
-                            { assignment.description }
-                        </InfoList.Item>
-                        <InfoList.Item key="dates">
-                            { assignment.start_date } - { assignment.end_date }
-                        </InfoList.Item>
-                    </InfoList>
+                    <InfoList key="info" data={[
+                        { name: 'description', value: assignment.description },
+                        { name: 'dates', value: assignment.start_date + ' - ' + assignment.end_date },
+                        ]}
+                        />
                     <Button key="editLink"
                         className="CanvassAssignmentPane-editLink"
                         labelMsg="panes.canvassAssignment.editLink"
