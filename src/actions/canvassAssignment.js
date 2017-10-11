@@ -75,3 +75,37 @@ export function updateCanvassAssignment(id, data) {
         });
     };
 }
+
+export function addRoutesToCanvassAssignment(id, routeIds) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.ADD_ROUTES_TO_CANVASS_ASSIGNMENT,
+            meta: { id, routeIds },
+            payload: {
+                promise: Promise.all(routeIds.map(routeId =>
+                    z.resource('orgs', orgId, 'canvass_assignments', id,
+                        'routes', routeId).put()
+                )),
+            },
+        });
+    };
+}
+
+export function removeRoutesFromCanvassAssignment(id, routeIds) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.REMOVE_ROUTES_FROM_CANVASS_ASSIGNMENT,
+            meta: { id, routeIds },
+            payload: {
+                promise: Promise.all(routeIds.map(routeId =>
+                    z.resource('orgs', orgId, 'canvass_assignments', id,
+                        'routes', routeId).del()
+                )),
+            },
+        });
+    };
+}

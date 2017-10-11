@@ -1,6 +1,7 @@
 import * as types from '../actions';
 import {
     createList,
+    removeListItem,
     updateOrAddListItem,
     updateOrAddListItems,
 } from '../utils/store';
@@ -80,6 +81,41 @@ export default function routes(state = null, action) {
         return Object.assign({}, state, {
             routeList: updateOrAddListItem(state.routeList,
                 routeAfterAll.id, routeAfterAll),
+        });
+    }
+    else if (action.type == types.ADD_ROUTES_TO_CANVASS_ASSIGNMENT + '_FULFILLED') {
+        let assignmentId = action.meta.id;
+        let routes = action.payload.map(p => p.data.data);
+        let routesByAssignment = Object.assign({}, state.routesByAssignment);
+
+        if (routesByAssignment[assignmentId]) {
+            routesByAssignment[assignmentId] =
+                updateOrAddListItems(routesByAssignment[assignmentId], routes);
+        }
+        else {
+            routesByAssignment[assignmentId] = createList(routes);
+        }
+
+        return Object.assign({}, state, {
+            routeList: updateOrAddListItems(state.routeList, routes),
+            routesByAssignment: routesByAssignment,
+        });
+    }
+    else if (action.type == types.REMOVE_ROUTES_FROM_CANVASS_ASSIGNMENT + '_FULFILLED') {
+        let assignmentId = action.meta.id;
+        let routesByAssignment = Object.assign({}, state.routesByAssignment);
+
+        if (!routesByAssignment[assignmentId]) {
+            return state;
+        }
+
+        action.meta.routeIds.forEach(routeId => {
+            routesByAssignment[assignmentId] =
+                removeListItem(routesByAssignment[assignmentId], routeId);
+        });
+
+        return Object.assign({}, state, {
+            routesByAssignment: routesByAssignment,
         });
     }
     else if (action.type == types.DISCARD_ROUTE_DRAFTS) {
