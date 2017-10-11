@@ -90,11 +90,13 @@ export default class RoutePanel extends React.Component {
                     <p>
                         <Msg id="panes.allRoutes.routePanel.intro.p"/>
                     </p>
+                    {/*
                     <Button
                         className="RoutePanel-introStartButton"
                         labelMsg="panes.allRoutes.routePanel.intro.startButton"
                         onClick={ this.onStartButtonClick.bind(this) }
                         />
+                    */}
                 </div>
             );
         }
