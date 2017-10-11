@@ -5,6 +5,7 @@ import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 import Button from '../../misc/Button';
 import RootPaneBase from '../RootPaneBase';
 import CanvassAssignmentList from '../../lists/CanvassAssignmentList';
+import { retrieveCanvassAssignments } from '../../../actions/canvassAssignment';
 
 
 const mapStateToProps = state => ({
@@ -14,6 +15,10 @@ const mapStateToProps = state => ({
 @connect(mapStateToProps)
 @injectIntl
 export default class AllCanvassAssignmentsPane extends RootPaneBase {
+    componentDidMount() {
+        this.props.dispatch(retrieveCanvassAssignments());
+    }
+
     getRenderData() {
         return {
         };

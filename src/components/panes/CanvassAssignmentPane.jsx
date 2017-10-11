@@ -8,6 +8,12 @@ import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import { getListItemById } from '../../utils/store';
 import { createSelection } from '../../actions/selection';
+import {
+    addRoutesToCanvassAssignment,
+    removeRoutesFromCanvassAssignment,
+    retrieveCanvassAssignment,
+    retrieveCanvassAssignmentRoutes,
+} from '../../actions/canvassAssignment';
 
 
 const mapStateToProps = (state, props) => {
@@ -15,7 +21,9 @@ const mapStateToProps = (state, props) => {
     let assignmentId = props.paneData.params[0];
 
     return {
-        assignmentItem: getListItemById(assignmentList, assignmentId),
+        routeList: state.routes.routesByAssignment[assignmentId],
+        assignmentItem: assignmentList?
+            getListItemById(assignmentList, assignmentId) : null,
     };
 };
 
@@ -23,6 +31,8 @@ const mapStateToProps = (state, props) => {
 export default class CanvassAssignmentPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
+        this.props.dispatch(retrieveCanvassAssignment(this.getParam(0)));
+        this.props.dispatch(retrieveCanvassAssignmentRoutes(this.getParam(0)));
     }
 
     getRenderData() {
@@ -43,17 +53,15 @@ export default class CanvassAssignmentPane extends PaneBase {
     renderPaneContent(data) {
         if (data.assignmentItem && data.assignmentItem.data) {
             let assignment = data.assignmentItem.data;
+            let routesSection = null;
 
             let canvassAssignmentInfo = (
                 <div key="info" className="CanvassAssignmentPane-info">
-                    <InfoList key="info">
-                        <InfoList.Item key="description">
-                            { assignment.description }
-                        </InfoList.Item>
-                        <InfoList.Item key="dates">
-                            { assignment.start_date } - { assignment.end_date }
-                        </InfoList.Item>
-                    </InfoList>
+                    <InfoList key="info" data={[
+                        { name: 'description', value: assignment.description },
+                        { name: 'dates', value: assignment.start_date + ' - ' + assignment.end_date },
+                        ]}
+                        />
                     <Button key="editLink"
                         className="CanvassAssignmentPane-editLink"
                         labelMsg="panes.canvassAssignment.editLink"
@@ -62,13 +70,22 @@ export default class CanvassAssignmentPane extends PaneBase {
                 </div>
             );
 
+            if (this.props.routeList) {
+                routesSection = (
+                    <Button key="routesLink"
+                        className="CanvassAssignmentPane-routesLink"
+                        labelMsg="panes.canvassAssignment.routesLink"
+                        onClick={ this.onRoutesLinkClick.bind(this) }
+                        />
+                );
+            }
+            else {
+                routesSection = <LoadingIndicator key="routesSpinner" />;
+            }
+
             return [
                 canvassAssignmentInfo,
-                <Button key="routesLink"
-                    className="CanvassAssignmentPane-routesLink"
-                    labelMsg="panes.canvassAssignment.routesLink"
-                    onClick={ this.onRoutesLinkClick.bind(this) }
-                    />
+                routesSection,
             ];
         }
         else {
@@ -83,9 +100,23 @@ export default class CanvassAssignmentPane extends PaneBase {
 
     onRoutesLinkClick() {
         let assignmentId = this.getParam(0);
-        let action = createSelection('route', null, null, ids => {
-            console.log(ids);
-            //this.props.dispatch(addTagsToLocation(locationId, ids));
+        let selectedIds = null;
+        if (this.props.routeList) {
+            selectedIds = this.props.routeList.items.map(i => i.data.id);
+        }
+
+        let action = createSelection('route', selectedIds, null, ids => {
+            let newIds = ids.filter(id => selectedIds.indexOf(id) < 0);
+            if (newIds.length) {
+                this.props.dispatch(
+                    addRoutesToCanvassAssignment(assignmentId, newIds));
+            }
+
+            let removedIds = selectedIds.filter(id => ids.indexOf(id) < 0);
+            if (removedIds.length) {
+                this.props.dispatch(
+                    removeRoutesFromCanvassAssignment(assignmentId, removedIds));
+            }
         });
 
         this.props.dispatch(action);
