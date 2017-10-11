@@ -1,0 +1,10 @@
+addresses:
+    item:
+        deleteButton: Delete
+        households: >-
+            {count, plural,
+                =1 {One household}
+                other {# households}
+            }
+    h: Addresses in route
+title: Route {id}

@@ -43,9 +43,25 @@ export default class ListItem extends React.Component {
             <li className={ classes }>
                 { checkbox }
                 <ItemComponent data={ item.data }
+                    onItemMouseOut={ this.onItemMouseOut.bind(this) }
+                    onItemMouseOver={ this.onItemMouseOver.bind(this) }
                     onItemClick={ this.onItemClick.bind(this) }/>
             </li>
         );
+    }
+
+    onItemMouseOver(ev) {
+        if (this.props.onItemMouseOver) {
+            let item = this.props.item;
+            this.props.onItemMouseOver(item, ev);
+        }
+    }
+
+    onItemMouseOut(ev) {
+        if (this.props.onItemMouseOut) {
+            let item = this.props.item;
+            this.props.onItemMouseOut(item, ev);
+        }
     }
 
     onItemClick(ev) {

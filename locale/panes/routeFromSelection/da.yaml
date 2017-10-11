@@ -1,0 +1,21 @@
+create:
+    createButton: Dan rute
+    desc: 'En ny rute med kun disse adresser vil blive dannet '
+    h: Dan rute
+extend:
+    addButton: Udvid rute
+    desc: Vælg en eksisterende rute for at udvide den.
+    empty: Der er ingen flere ruter at udvide.
+    h: Udvid rute.
+info:
+    households: |
+        {count, plural,
+            =1 {En husstand}
+            other {# husstande}
+        }
+    size: 'Området er ca {radius} m'
+title: |-
+    { count, plural,
+        =1 {Tilføj en adresse til rute}
+        other {Tilføj # adresser til rute}
+    }

@@ -125,6 +125,10 @@
             }
 
             .RootPaneBase-filterApplyButton {
+                position: absolute;
+                bottom: 1em;
+                right: 1em;
+
                 @include button($icon:$fa-var-check);
             }
         }
