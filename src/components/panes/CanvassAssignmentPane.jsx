@@ -9,6 +9,8 @@ import PaneBase from './PaneBase';
 import { getListItemById } from '../../utils/store';
 import { createSelection } from '../../actions/selection';
 import {
+    addRoutesToCanvassAssignment,
+    removeRoutesFromCanvassAssignment,
     retrieveCanvassAssignment,
     retrieveCanvassAssignmentRoutes,
 } from '../../actions/canvassAssignment';
@@ -104,7 +106,17 @@ export default class CanvassAssignmentPane extends PaneBase {
         }
 
         let action = createSelection('route', selectedIds, null, ids => {
-            console.log(ids);
+            let newIds = ids.filter(id => selectedIds.indexOf(id) < 0);
+            if (newIds.length) {
+                this.props.dispatch(
+                    addRoutesToCanvassAssignment(assignmentId, newIds));
+            }
+
+            let removedIds = selectedIds.filter(id => ids.indexOf(id) < 0);
+            if (removedIds.length) {
+                this.props.dispatch(
+                    removeRoutesFromCanvassAssignment(assignmentId, removedIds));
+            }
         });
 
         this.props.dispatch(action);

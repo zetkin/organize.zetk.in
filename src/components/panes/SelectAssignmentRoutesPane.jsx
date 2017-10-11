@@ -14,6 +14,9 @@ import {
     removeFromSelection,
 } from '../../actions/selection';
 
+import { retrieveAddresses } from '../../actions/address';
+import { retrieveRoutes } from '../../actions/route';
+
 
 const mapStateToProps = (state, props) => {
     let selectionList = state.selections.selectionList;
@@ -38,7 +41,13 @@ export default class SelectAssignmentRoutesPane extends PaneBase {
             addressSelection: this.mockAddressSelection(props.selectionItem),
         };
 
-        this.addresses = this.props.addressList.items.map(i => i.data);
+        this.addresses = this.props.addressList?
+            this.props.addressList.items.map(i => i.data) : [];
+    }
+
+    componentDidMount() {
+        this.props.dispatch(retrieveAddresses());
+        this.props.dispatch(retrieveRoutes());
     }
 
     getRenderData() {
