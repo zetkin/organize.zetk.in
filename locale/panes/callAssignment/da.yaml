@@ -1,7 +1,7 @@
 callers:
-    addCaller: Træk og drop personer her eller
+    addCaller: Træk og drop personer her eller {selectLink}
     h: Ringere
-    selectLink: Vælg ringere
+    selectLink: vælg ringere
 instructions:
     editLink: Rediger instruktionerne
     h: Instruktioner
