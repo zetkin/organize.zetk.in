@@ -1,6 +1,10 @@
 addSelectionToRouteButton: Tilføj til rute
 clearSelectionButton: Vælg ingen adresser
 filters:
+    route:
+        label: Adresser i ruter
+        nullOption: (Uafhængig af rute)
+        zeroOption: (Adresser der ikke tilhører nogen rute)
     street:
         label: Adresser på gaden
         nullOption: (Hvilken som helst gade)
@@ -21,6 +25,7 @@ routePanel:
         info:
             text: Ruterne vil blive dannet når udkastet er gemt.
             title: Udkast til genererede ruter.
+        label: 'Udkast {id}'
     form:
         generateButton: Generer
         selection:
@@ -42,7 +47,6 @@ routePanel:
     progress:
         counting: '{count} dannede ruter...'
     routeList:
-        label: Rut {id}
         addresses: |
             {count, plural,
                 =1 {1 address}
@@ -51,6 +55,7 @@ routePanel:
             {count, plural,
                 =1 {# husstand}
                 other {# husstande}}
+        label: 'Rut {id}'
     tabs:
         generator: Generer
         routes: Ruter
