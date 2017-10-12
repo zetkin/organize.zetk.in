@@ -1,3 +1,4 @@
+editLink: Rediger rutens indhold
 info:
     addresses: |-
         {count, plural,
@@ -13,4 +14,4 @@ owner:
 tags:
     emptyLabel: 'Ruten '
     h: Etiketter i ruten
-title: Rut {id}
+title: 'Rut {id}'

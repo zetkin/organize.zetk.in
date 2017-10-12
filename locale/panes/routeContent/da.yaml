@@ -7,4 +7,4 @@ addresses:
                 =1 {En husstand}
                 other {# husstande}
             }
-title: Rut {id}
+title: 'Rut {id}'

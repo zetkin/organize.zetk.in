@@ -1,11 +1,11 @@
 labels:
     campaign: Kampagne
+    canvass: Canvass
     dialog: Dialog
     maps: 'Karter '
     people: Mennesker
     settings: Indstillinger
     survey: Spørgeskema
-    canvass: Canvass
 menu:
     backToDashboard: Tilbage
     helpLink:
@@ -19,6 +19,10 @@ subSections:
         actions: Aktioner
         distribution: Spredning
         playback: Afspil
+    canvass:
+        assignments: Opgaver
+        routes: Ruter
+        visits: Besøgslog
     dialog:
         assignments: Ringeopgave
         calls: Samtalelog
@@ -34,7 +38,3 @@ subSections:
     survey:
         submissions: Spørgeskemabesvarelser
         surveys: Spørgeskemaer
-    canvass:
-        assignments: Opgaver
-        routes: Ruter
-        visits: Besøgslog
