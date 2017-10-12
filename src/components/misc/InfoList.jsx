@@ -23,7 +23,13 @@ export default class InfoList extends React.Component {
                     if (!value) {
                         value = '-';
                     }
-                    return <li className={ className } key={item.name}>{value}</li>
+
+                    return (
+                        <li className={ className } key={item.name}
+                            onClick={ item.onClick }>
+                            {value}
+                        </li>
+                    );
                 })
             }
             </ul>

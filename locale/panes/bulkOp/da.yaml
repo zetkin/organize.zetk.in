@@ -1,6 +1,15 @@
 headers:
     person:
-        delete: 'Slet, en person, personer'
-        export: 'Eksporter, en person, personer'
-        tag: 'Sæt etiket på (tag), en person, personer'
+        delete: |-
+            Slet {count, plural,
+                =1 {en person}
+                other {# personer}}
+        export: |-
+            Eksporter {count, plural,
+                =1 {en person}
+                other {# personer}}
+        tag: |-
+            Sæt etiket på {count, plural,
+                =1 {en person}
+                other {# personer}}
 submitButton: Udfør

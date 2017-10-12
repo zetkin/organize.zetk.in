@@ -5,8 +5,8 @@ search:
                 =1 {En aktion {date}}
                 other {# aktioner {date}}
             }
-        query: Smart søgning
-        surveySubmission: 'Svar fra, på'
+        query: 'Smart søgning: {title}'
+        surveySubmission: 'Svar fra {respondent} på {survey}'
     scopes:
         all: Alt
         campaign: Kampagne
