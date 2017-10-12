@@ -158,11 +158,20 @@ export default class RelSelectInput extends InputBase {
 
 
     getFilteredObjects() {
+        let filter = this.state.inputValue;
+        let filterLen = filter? filter.length : 0;
+        let minLen = this.props.minFilterLength || 0;
+
+        // Return an empty array if the filter is not long enough
+        if (filterLen < minLen) {
+            return [];
+        }
+
         // Filter objects based on input value, unless it's undefined or
         // an empty string in which case all objects should be displayed.
         return this.props.objects.filter(o =>
-            (!this.state.inputValue || this.getLabel(o).toLowerCase()
-                .indexOf(this.state.inputValue.toLowerCase()) >= 0));
+            (!filter || this.getLabel(o).toLowerCase()
+                .indexOf(filter.toLowerCase()) >= 0));
     }
 
     onInputChange(ev) {
@@ -180,6 +189,7 @@ export default class RelSelectInput extends InputBase {
         const objects = this.getFilteredObjects();
         const valueCount = this.values.length;
         const maxIndex = valueCount - 1;
+        const listDOMNode = ReactDOM.findDOMNode(this.refs.objectList);
 
         if (ev.keyCode == 40) {
             // User pressed down, increment or set to zero if undefined
@@ -187,6 +197,15 @@ export default class RelSelectInput extends InputBase {
                 focusedIndex: Math.min(maxIndex,
                     (focusedIndex === undefined)? 0 : focusedIndex + 1)
             });
+
+            // Scroll the list
+            const newFocusedIndex = this.state.focusedIndex;
+            if(newFocusedIndex !== undefined && newFocusedIndex != 0) {
+                const element = listDOMNode.children[newFocusedIndex];
+                listDOMNode.scrollTop = Math.min(listDOMNode.scrollHeight, 
+                    listDOMNode.scrollTop + element.offsetHeight);
+            }
+
 
             ev.preventDefault();
         }
@@ -196,6 +215,15 @@ export default class RelSelectInput extends InputBase {
                 focusedIndex: Math.max(0, (focusedIndex === undefined)?
                     maxIndex : focusedIndex - 1)
             });
+
+            // Scroll the list
+            // When scrolling up, the scrollIntoView() function doesn't work properly
+            const newFocusedIndex = this.state.focusedIndex;
+            if(newFocusedIndex !== undefined && newFocusedIndex != maxIndex) {
+                const element = listDOMNode.children[newFocusedIndex];
+                listDOMNode.scrollTop = Math.max(0, 
+                    listDOMNode.scrollTop - element.offsetHeight);
+            }
 
             ev.preventDefault();
         }
@@ -290,6 +318,7 @@ RelSelectInput.propTypes = {
     valueField: React.PropTypes.string,
     labelField: React.PropTypes.string,
     labelFunc: React.PropTypes.func,
+    minFilterLength: React.PropTypes.number,
     nullLabel: React.PropTypes.string,
     showCreateOption: React.PropTypes.bool,
     showEditLink: React.PropTypes.bool,

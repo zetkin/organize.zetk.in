@@ -1,0 +1,35 @@
+.AddressList {
+    font-size: 1.0em;
+
+    .ListHeader {
+        @include col-offset(2,12);
+        margin-bottom: 1em;
+        padding-left: 1em;
+    }
+
+    .ListItem.ListItem-withCheckbox {
+        background: $c-ui-bg;
+        box-shadow: none;
+        border-radius: 0;
+        border-bottom: 1px solid darken($c-ui-bg, 10);
+        margin: 0;
+
+        &:hover {
+            background: darken($c-ui-bg, 1);
+        }
+    }
+
+    &.List .List-selectAllCheckbox {
+        @include col(2,12);
+    }
+
+    .ListItem.ListItem-withCheckbox  {
+        > :nth-child(2) {
+            padding: 2em 1em;
+        }
+    }
+
+    .ListItem.ListItem-withCheckbox .ListItem-selection {
+        @include col(2,12);
+    }
+}

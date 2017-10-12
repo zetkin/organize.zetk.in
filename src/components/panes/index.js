@@ -5,6 +5,7 @@ import AddActionPane from './AddActionPane';
 import AddActivityPane from './AddActivityPane';
 import AddCallAssignmentPane from './AddCallAssignmentPane';
 import AddCampaignPane from './AddCampaignPane';
+import AddCanvassAssignmentPane from './AddCanvassAssignmentPane';
 import AddPersonPane from './AddPersonPane';
 import AddPersonTagPane from './AddPersonTagPane';
 import AddLocationPane from './AddLocationPane';
@@ -13,16 +14,19 @@ import AddSurveyPane from './AddSurveyPane';
 import AddSurveyQuestionPane from './AddSurveyQuestionPane';
 import AddSurveyTextBlockPane from './AddSurveyTextBlockPane';
 import AddQueryPane from './AddQueryPane';
+import AddressPane from './AddressPane';
 import BulkOpPane from './BulkOpPane';
 import CallPane from './CallPane';
 import CallAssignmentPane from './CallAssignmentPane';
 import CampaignPane from './CampaignPane';
+import CanvassAssignmentPane from './CanvassAssignmentPane';
 import LinkSubmissionPane from './LinkSubmissionPane';
 import EditActionPane from './EditActionPane';
 import EditActivityPane from './EditActivityPane';
 import EditCallAssignmentPane from './EditCallAssignmentPane';
 import EditCallerPane from './EditCallerPane';
 import EditCampaignPane from './EditCampaignPane';
+import EditCanvassAssignmentPane from './EditCanvassAssignmentPane';
 import EditLocationPane from './EditLocationPane';
 import EditLocationTagPane from './EditLocationTagPane';
 import EditPersonPane from './EditPersonPane';
@@ -38,8 +42,13 @@ import MoveParticipantsPane from './MoveParticipantsPane';
 import PersonPane from './PersonPane';
 import PlaceLocationPane from './PlaceLocationPane';
 import QueryPane from './QueryPane';
+import RoutePane from './RoutePane';
+import RouteContentPane from './RouteContentPane';
+import RouteFromAddressesPane from './RouteFromAddressesPane';
+import SelectAssignmentRoutesPane from './SelectAssignmentRoutesPane';
 import SelectPeoplePane from './SelectPeoplePane';
 import SelectLocationTagsPane from './SelectLocationTagsPane';
+import SelectStreetAddressPane from './SelectStreetAddressPane';
 import SelectPersonTagsPane from './SelectPersonTagsPane';
 import SurveyPane from './SurveyPane';
 import SurveyOutlinePane from './SurveyOutlinePane';
@@ -53,6 +62,7 @@ var _panes = {
     'addactivity': AddActivityPane,
     'addcallassignment': AddCallAssignmentPane,
     'addcampaign': AddCampaignPane,
+    'addcanvassassignment': AddCanvassAssignmentPane,
     'addlocation': AddLocationPane,
     'addlocationtag': AddLocationTagPane,
     'addperson': AddPersonPane,
@@ -61,16 +71,19 @@ var _panes = {
     'addsurveyquestion': AddSurveyQuestionPane,
     'addsurveytextblock': AddSurveyTextBlockPane,
     'addquery': AddQueryPane,
+    'address': AddressPane,
     'bulk': BulkOpPane,
     'call': CallPane,
     'callassignment': CallAssignmentPane,
     'campaign': CampaignPane,
+    'canvassassignment': CanvassAssignmentPane,
     'linksubmission': LinkSubmissionPane,
     'editaction': EditActionPane,
     'editactivity': EditActivityPane,
     'editcallassignment': EditCallAssignmentPane,
     'editcaller': EditCallerPane,
     'editcampaign': EditCampaignPane,
+    'editcanvassassignment': EditCanvassAssignmentPane,
     'editlocation': EditLocationPane,
     'editlocationtag': EditLocationTagPane,
     'editperson': EditPersonPane,
@@ -86,9 +99,14 @@ var _panes = {
     'person': PersonPane,
     'placelocation': PlaceLocationPane,
     'query': QueryPane,
+    'route': RoutePane,
+    'routecontent': RouteContentPane,
+    'routefromaddresses': RouteFromAddressesPane,
+    'selectassignmentroutes': SelectAssignmentRoutesPane,
     'selectpeople': SelectPeoplePane,
     'selectlocationtags': SelectLocationTagsPane,
     'selectpersontags': SelectPersonTagsPane,
+    'selectstreetaddr': SelectStreetAddressPane,
     'survey': SurveyPane,
     'surveyoutline': SurveyOutlinePane,
     'surveysubmission': SurveySubmissionPane,

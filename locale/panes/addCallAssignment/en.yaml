@@ -30,6 +30,7 @@ goal:
         {goalType, select,
             inform {Create assignment to inform}
             mobilize {Create assignment to mobilize}
+            survey {Create assignment to survey targets}
             stayintouch {Create assignment to stay in touch}
         }
 target:
@@ -65,6 +66,9 @@ templates:
             three: Every three months
             twelve: Once a year
         title: Stay in touch
+    survey:
+        instructions: Select the survey for which you're collecting responses.
+        title: Survey
     tagTarget:
         instructions: >-
             Select a tag. The target group will be made up of all people with

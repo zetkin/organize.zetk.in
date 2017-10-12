@@ -33,3 +33,19 @@ function convertDDToDMS(D, lng){
 
 export const convertLngToDMS = d => convertDDToDMS(d, true);
 export const convertLatToDMS = d => convertDDToDMS(d, false);
+
+
+export function dmsStringFromLatLng(lat, lng) {
+    let latDMS = convertLatToDMS(lat), lngDMS = convertLngToDMS(lng);
+    let latStr = latDMS.deg.toString()
+        .concat('° ', latDMS.min, '\' ', latDMS.sec, '" ', latDMS.dir);
+    let lngStr = lngDMS.deg.toString()
+        .concat('° ', lngDMS.min, '\' ', lngDMS.sec, '" ', lngDMS.dir);
+
+    return latStr + ' ' + lngStr;
+}
+
+
+export function stringFromAddress(addr) {
+    return (addr.street || '') + ' ' + (addr.number || '') + (addr.suffix || '');
+}

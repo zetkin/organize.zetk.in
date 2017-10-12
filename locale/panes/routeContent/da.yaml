@@ -1,0 +1,10 @@
+addresses:
+    h: Adresser i denne rute
+    item:
+        deleteButton: Slet
+        households: |-
+            {count, plural,
+                =1 {En husstand}
+                other {# husstande}
+            }
+title: Rut {id}

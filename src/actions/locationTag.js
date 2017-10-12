@@ -94,7 +94,54 @@ export function removeTagFromLocation(id, tagId) {
             meta: { id, tagId },
             payload: {
                 promise: z.resource('orgs', orgId,
-                    'locations', id, 'tags', tagId).del(),
+                    'addresses', id, 'tags', tagId).del(),
+            }
+        });
+    };
+}
+
+export function retrieveTagsForAddress(id) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_TAGS_FOR_ADDRESS,
+            meta: { id },
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'addresses', id, 'tags').get()
+            }
+        });
+    };
+}
+
+export function addTagsToAddress(id, tagIds) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        let promises = tagIds.map(tagId =>
+            z.resource('orgs', orgId, 'addresses', id, 'tags', tagId).put());
+
+        dispatch({
+            type: types.ADD_TAGS_TO_ADDRESS,
+            meta: { id, tagIds },
+            payload: {
+                promise: Promise.all(promises),
+            }
+        });
+    };
+}
+
+export function removeTagFromAddress(id, tagId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.REMOVE_TAG_FROM_ADDRESS,
+            meta: { id, tagId },
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'addresses', id, 'tags', tagId).del(),
             }
         });
     };

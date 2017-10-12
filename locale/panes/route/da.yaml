@@ -1,0 +1,16 @@
+info:
+    addresses: |-
+        {count, plural,
+          =1 {En adresse}
+          other {# adresser}}
+    households: |-
+        {count, plural,
+          =1 {En husstand}
+          other {# husstande}}
+owner:
+    h: |
+        Tovholder
+tags:
+    emptyLabel: 'Ruten '
+    h: Etiketter i ruten
+title: Rut {id}

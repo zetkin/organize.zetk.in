@@ -5,6 +5,7 @@ labels:
     people: Mennesker
     settings: Indstillinger
     survey: Spørgeskema
+    canvass: Canvass
 menu:
     backToDashboard: Tilbage
     helpLink:
@@ -33,3 +34,7 @@ subSections:
     survey:
         submissions: Spørgeskemabesvarelser
         surveys: Spørgeskemaer
+    canvass:
+        assignments: Opgaver
+        routes: Ruter
+        visits: Besøgslog

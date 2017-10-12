@@ -1,0 +1,11 @@
+saveButton: |
+    {numSelected, plural,
+        =0 {Close without selecting}
+        =1 {Select one address}
+        other {Select # addresses}
+    }
+title: 'Vælg adresser fra {gade}'
+views:
+    all: Alle
+    even: Lige numre
+    odd: Ulige numre

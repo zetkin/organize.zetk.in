@@ -12,11 +12,11 @@ const DEFAULT_KEYS = [
 
 const fuseOptions = {
     location: 0,
-    distance: 10,
+    distance: 50,
     includeScore: true,
     includeMatches: true,
     maxPatternLength: 32,
-    minMatchCharLength: 1,
+    minMatchCharLength: 2,
     threshold: 0.2,
 };
 

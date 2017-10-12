@@ -1,0 +1,77 @@
+addSelectionToRouteButton: Lägg till i rutt
+clearSelectionButton: Välj inga adresser
+filters:
+    route:
+        label: Adresser i rutter
+        nullOption: (Oavsett rutt)
+        zeroOption: (Adresser som inte förekommer i en rutt)
+    street:
+        label: Adresser på gata
+        nullOption: (Vilken gata som helst)
+    tag:
+        label: Adresser med etiketten
+        nullOption: (Alla adresser)
+loader:
+    empty: Det finns inga adresser i er databas. Kontakta Zetkin Foundation.
+    error: På grund av ett fel kunde adresser inte laddas.
+    loading: Laddar adresser...
+mapModes:
+    browse: Browse
+    select: Select
+routePanel:
+    drafts:
+        commit: Spara rutter
+        discard: Kassera rutter
+        info:
+            title: Utkast av genererade rutter
+            text: Rutterna kommer att skapas när utkastet sparas.
+        label: Utkast {id}
+    intro:
+        h: Låt Zetkin generera rutterna!
+        p: |
+            Detta är en guide som automatiskt skapar rutter åt dig.
+            I nästa steg kan du göra dina inställningar.
+            Den genererade listan samlas i ett utkast som du kan redigera
+            eller spara.
+        startButton: Start wizard
+    form:
+        selection:
+            all: Alla tillgängliga adresser
+            filter: Filtrerade (synliga) adresser
+            h: Adressurval
+        settings:
+            h: Inställningar
+            households:
+                h: Önskad ruttstorlek
+                label: hushåll
+        generateButton: Skapa rutter
+    progress:
+        counting: '{count} rutter skapade...'
+    routeList:
+        label: Rutt {id}
+        addresses: |
+                    {count, plural,
+                        =1 {1 adress}
+                        other {# adresser}}
+        households: |
+                    {count, plural,
+                        =1 {# hushåll}
+                        other {# hushåll}}
+    tabs:
+        routes: Rutter
+        generator: Generera
+selectionPanel:
+    addButton: Lägg till i rutt
+    clearButton: Nollställ urvalet
+    h: |
+        { count, plural,
+            =1 {En vald adress}
+            other {# valda adresser}
+        }
+    info:
+        households: |
+            {count, plural,
+                =1 {Ett hushåll}
+                other {# hushåll}
+            }
+        size: Området är ca {radius, number} m stort

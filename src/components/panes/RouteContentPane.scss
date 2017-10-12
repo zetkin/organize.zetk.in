@@ -1,0 +1,51 @@
+.RouteContentPane {
+
+    .RouteContentPane-addresses {
+        h3 {
+            &:before {
+                @include icon($fa-var-map-marker);
+            }
+        }
+    }
+
+    .RouteContentPane-addressList {
+        font-size: 1.3em;
+
+        li {
+            border-bottom: 1px solid darken($c-ui-bg, 10);
+            padding: 1em 0;
+            position: relative;
+        }
+    }
+
+    .RouteContentPane-addressName {
+        margin:0 0 0.5em 0;
+
+    }
+
+    .RouteContentPane-addressHouseholds {
+        font-size: 0.9em;
+        color: lighten($c-text, 50);
+        &:before {
+            @include icon($fa-var-home);
+        }
+    }
+
+    .RouteContentPane-addressDeleteButton {
+        position: absolute;
+        top: 1.5em;
+        right: 0;
+        color: lighten($c-text, 60);
+
+        @include icon-button($fa-var-trash);
+
+        max-width: 2em;
+        overflow: hidden;
+        transition: max-width 0.3s ease;
+
+        &:hover {
+            color: lighten($c-text, 30);
+            max-width: 5em;
+        }
+    }
+}

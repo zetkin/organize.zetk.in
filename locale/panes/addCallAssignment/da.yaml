@@ -57,6 +57,9 @@ templates:
             three: Hver tredje måned
             twelve: En gang om året
         title: Hold kontakten
+    survey:
+        instructions: Vælg hvilket spørgeskema du vil indsamle besvarelser på.
+        title: Indsaml spørgeskemabesvarelser
     tagTarget:
         instructions: >-
             Vælg en etiket. Målgruppen kommer til at bestå af alle personer med

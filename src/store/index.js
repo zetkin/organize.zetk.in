@@ -6,8 +6,10 @@ import loginRedirect from '../common/redux/middleware/loginRedirect';
 import actions from './actions';
 import actionResponses from './actionResponses';
 import activities from './activities';
+import addresses from './addresses';
 import callAssignments from './callAssignments';
 import calls from './calls';
+import canvassAssignments from './canvassAssignments';
 import campaigns from './campaigns';
 import dashboard from './dashboard';
 import documents from './documents';
@@ -22,6 +24,7 @@ import people from './people';
 import importer from './importer';
 import personTags from './personTags';
 import queries from './queries';
+import routes from './routes';
 import search from './search';
 import selections from './selections';
 import surveys from './surveys';
@@ -36,8 +39,10 @@ const appReducer = combineReducers({
     actions,
     actionResponses,
     activities,
+    addresses,
     callAssignments,
     calls,
+    canvassAssignments,
     campaigns,
     dashboard,
     documents,
@@ -52,6 +57,7 @@ const appReducer = combineReducers({
     personTags,
     locationTags,
     queries,
+    routes,
     search,
     selections,
     surveys,

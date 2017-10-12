@@ -216,6 +216,20 @@
             }
         }
 
+        &.Section-canvass {
+            .Section-navItem-assignments a:before {
+                background-image: url(/static/images/section-nav/canvass-assignments.png);
+            }
+
+            .Section-navItem-routes a:before {
+                background-image: url(/static/images/section-nav/canvass-routes.png);
+            }
+
+            .Section-navItem-visits a:before {
+                background-image: url(/static/images/section-nav/canvass-visits.png);
+            }
+        }
+
         &.Section-settings {
             .Section-navItem-officials a:before {
                 background-image: url(/static/images/section-nav/settings-officials.png);

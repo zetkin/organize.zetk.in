@@ -1,6 +1,9 @@
 import ActionDistributionPane from './campaign/ActionDistributionPane';
 import AllActionsPane from './campaign/AllActionsPane';
 import AllCallAssignmentsPane from './dialog/AllCallAssignmentsPane';
+import AllCanvassAssignmentsPane from './canvass/AllCanvassAssignmentsPane';
+import AllRoutesPane from './canvass/AllRoutesPane';
+import AllVisitsPane from './canvass/AllVisitsPane';
 import CallLogPane from './dialog/CallLogPane';
 import CampaignPlaybackPane from './campaign/CampaignPlaybackPane';
 import InvitePane from './people/InvitePane';
@@ -56,6 +59,16 @@ export const SECTIONS = {
                 startPane: SurveyListPane },
             { path: 'submissions',
                 startPane: SurveySubmissionsPane },
+        ],
+    },
+    canvass: {
+        subSections: [
+            { path: 'assignments',
+                startPane: AllCanvassAssignmentsPane },
+            { path: 'routes',
+                startPane: AllRoutesPane },
+            { path: 'visits',
+                startPane: AllVisitsPane },
         ],
     },
     settings: {

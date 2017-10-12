@@ -4,14 +4,14 @@ import { getListItemById } from '../utils/store';
 
 
 export function createSelection(objType, selectedIds,
-                                instructions, doneCallback) {
+                                instructions, doneCallback, meta) {
 
     let id = '$' + makeRandomString(6);
     selectedIds = selectedIds || [];
 
     return {
         type: types.CREATE_SELECTION,
-        payload: { id, objType, selectedIds, instructions, doneCallback },
+        payload: { id, objType, selectedIds, instructions, doneCallback, meta },
     };
 }
 
@@ -26,6 +26,13 @@ export function removeFromSelection(id, objId) {
     return {
         type: types.REMOVE_FROM_SELECTION,
         payload: { id, objId },
+    };
+}
+
+export function clearSelection(id) {
+    return {
+        type: types.CLEAR_SELECTION,
+        payload: { id },
     };
 }
 
