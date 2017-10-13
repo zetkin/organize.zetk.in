@@ -1,23 +1,5 @@
 .ActionPane {
-    .ActionPane-summary {
-        padding-bottom: 2em;
-        margin-bottom: 2em;
-        border-bottom: 1px solid #ececec;
-        span {
-            display: flex;
-            font-size: 1.3em;
-            line-height: 1.6em;
-            margin: 10px 0;
-
-            &::before {
-                margin-right: 10px;
-                display: flex;
-                min-width: 1.6em;
-            }
-        }
-    }
-
-    .ActionPane-summaryDesc {
+    .InfoListItem-desc {
         position: relative;
         max-height: 8em;
         overflow: hidden;
@@ -39,34 +21,38 @@
         }
     }
 
-    .ActionPane-summaryDate {
+    .InfoListItem-date {
         &::before {
             @include icon($fa-var-calendar);
         }
     }
 
-    .ActionPane-summaryTime {
+    .InfoListItem-time {
         &::before {
             @include icon($fa-var-clock-o);
         }
     }
 
-    .ActionPane-summaryLocation {
+    .InfoListItem-location {
         &::before {
             @include icon($fa-var-map-marker);
         }
     }
 
-    .ActionPane-summaryActivity {
+    .InfoListItem-activity {
         &::before {
             @include icon($fa-var-flag);
         }
     }
 
-    .ActionPane-summaryRequired {
+    .InfoListItem-required {
         &::before {
             @include icon($fa-var-users);
         }
+    }
+
+    .InfoListItem-editLink {
+        font-size: 1em;
     }
 
     .ActionPane-responses {

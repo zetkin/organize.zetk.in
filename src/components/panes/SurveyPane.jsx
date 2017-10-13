@@ -9,6 +9,7 @@ import Link from '../misc/Link';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import { getListItemById } from '../../utils/store';
 import { retrieveSurvey } from '../../actions/survey';
+import InfoList from '../misc/InfoList';
 
 
 const mapStateToProps = (state, props) => {
@@ -47,20 +48,15 @@ export default class SurveyPane extends PaneBase {
         let surveyItem = this.props.surveyItem;
         if (surveyItem && !surveyItem.isPending) {
             let survey = surveyItem.data;
-            let accessLabelMsg = 'panes.survey.summary.access.' + survey.access;
-            let accessLabel = this.props.intl.formatMessage(
-                { id: accessLabelMsg });
+            let accessLabelMsgId = 'panes.survey.summary.access.' + survey.access;
 
-            let anonymousLabelMsg = null;
+            let anonymousLabelMsgId = null;
             if (survey.allow_anonymous) {
-                anonymousLabelMsg = 'panes.survey.summary.anonymous.allow';
+                anonymousLabelMsgId = 'panes.survey.summary.anonymous.allow';
             }
             else {
-                anonymousLabelMsg = 'panes.survey.summary.anonymous.deny';
+                anonymousLabelMsgId = 'panes.survey.summary.anonymous.deny';
             }
-
-            let anonymousLabel = this.props.intl.formatMessage(
-                { id: anonymousLabelMsg });
 
             let linkUrl = '//www.' + process.env.ZETKIN_DOMAIN + '/o/'
                 + survey.organization.id + '/surveys/' + survey.id;
@@ -90,21 +86,15 @@ export default class SurveyPane extends PaneBase {
             }
 
             return [
-                <div key="summary"
-                    className="SurveyPane-summary">
-                    <span className="SurveyPane-summaryDesc">
-                        { survey.info_text }</span>
-                    <span className="SurveyPane-summaryAccess">
-                        { accessLabel }</span>
-                    <span className="SurveyPane-summaryAnonymous">
-                        { anonymousLabel }</span>
-                    <span className="SurveyPane-link">
-                        <Link href={ linkUrl } target="_blank"
-                            msgId="panes.survey.summary.viewLink"/>
-                    </span>
-                    <Link msgId="panes.survey.summary.editLink"
-                        onClick={ this.onEditSummaryClick.bind(this) }/>
-                </div>,
+                <InfoList key="summary-infolist"
+                    data={[
+                        { name: 'desc', value: survey.info_text },
+                        { name: 'access', msgId: accessLabelMsgId },
+                        { name: 'anonymous', msgId: anonymousLabelMsgId },
+                        { name: 'link', href: linkUrl, target: '_blank', msgId: 'panes.survey.summary.viewLink' },
+                        { name: 'editLink', onClick: this.onEditSummaryClick.bind(this), msgId: 'panes.survey.summary.editLink' }
+                    ]}
+                />,
                 <div key="content"
                     className="SurveyPane-content">
                     <Msg tagName="h3" id="panes.survey.content.h"/>

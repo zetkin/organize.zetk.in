@@ -1,5 +1,6 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
+import Link from './Link';
 
 
 @injectIntl
@@ -16,8 +17,15 @@ export default class InfoList extends React.Component {
                     let className = 'InfoListItem InfoListItem-' + item.name;
                     let value = item.value;
 
-                    if (item.msgId) {
+                    // use custom value if set, using the msgId as a fallback
+                    if (!value && item.msgId) {
                         value = this.props.intl.formatMessage({ id: item.msgId }, item.msgValues);
+                    }
+
+                    if (value && (item.onClick || item.href)) {
+                        value = <Link onClick={item.onClick} href={item.href} target={item.target}>
+                            {value}
+                        </Link>;
                     }
 
                     if (!value) {
@@ -25,8 +33,7 @@ export default class InfoList extends React.Component {
                     }
 
                     return (
-                        <li className={ className } key={item.name}
-                            onClick={ item.onClick }>
+                        <li className={ className } key={item.name}>
                             {value}
                         </li>
                     );
