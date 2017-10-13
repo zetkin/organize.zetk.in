@@ -33,8 +33,7 @@ export default class InfoList extends React.Component {
                     }
 
                     return (
-                        <li className={ className } key={item.name}
-                            onClick={ item.onClick }>
+                        <li className={ className } key={item.name}>
                             {value}
                         </li>
                     );
