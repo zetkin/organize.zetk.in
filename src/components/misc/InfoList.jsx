@@ -1,5 +1,6 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
+import Link from './Link';
 
 
 @injectIntl
@@ -18,6 +19,12 @@ export default class InfoList extends React.Component {
 
                     if (item.msgId) {
                         value = this.props.intl.formatMessage({ id: item.msgId }, item.msgValues);
+                    }
+
+                    if (value && (item.onClick || item.href)) {
+                        value = <Link onClick={item.onClick} href={item.href} target={item.target}>
+                            {value}
+                        </Link>;
                     }
 
                     if (!value) {
