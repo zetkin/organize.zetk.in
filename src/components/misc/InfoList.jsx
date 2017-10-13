@@ -17,7 +17,8 @@ export default class InfoList extends React.Component {
                     let className = 'InfoListItem InfoListItem-' + item.name;
                     let value = item.value;
 
-                    if (item.msgId) {
+                    // use custom value if set, using the msgId as a fallback
+                    if (!value && item.msgId) {
                         value = this.props.intl.formatMessage({ id: item.msgId }, item.msgValues);
                     }
 
