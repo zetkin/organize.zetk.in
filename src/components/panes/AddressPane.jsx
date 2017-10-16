@@ -23,6 +23,8 @@ const mapStateToProps = (state, props) => {
     return {
         tagList: state.locationTags.tagList,
         addrItem: addrList? getListItemById(addrList, addrId) : null,
+        addressesByRoute: state.addresses.addressesByRoute,
+        routeList: state.routes.routeList,
     };
 };
 
@@ -70,6 +72,45 @@ export default class AddressPane extends PaneBase {
                     getListItemById(this.props.tagList, tagItem.data.id).data);
             }
 
+            let routeSection = null;
+            if (this.props.addressesByRoute) {
+                let routes = Object.keys(this.props.addressesByRoute)
+                    .filter(routeId => {
+                        let routeAddresses = this.props.addressesByRoute[routeId];
+                        return (routeAddresses.indexOf(addr.id) >= 0);
+                    })
+                    .map(routeId => getListItemById(this.props.routeList, routeId));
+
+                if (routes.length) {
+                    let routeItems = routes.map(routeItem => {
+                        let route = routeItem.data;
+                        return (
+                            <li key={ route.id }
+                                onClick={ () => this.openPane('route', route.id) }>
+                                { route.id }
+                            </li>
+                        );
+                    });
+
+                    routeSection = (
+                        <div className="AddressPane-routes">
+                            <Msg tagName="h2" id="panes.address.routes.h"/>
+                            <ul className="AddressPane-routeList">
+                                { routeItems }
+                            </ul>
+                        </div>
+                    );
+                }
+                else {
+                    routeSection = (
+                        <div className="AddressPane-routes">
+                            <Msg tagName="h2" id="panes.address.routes.h"/>
+                            <Msg tagName="p" id="panes.address.routes.empty"/>
+                        </div>
+                    );
+                }
+            }
+
             return [
                 <InfoList key="info" data={[
                     { name: 'address', value: addrLabel },
@@ -80,7 +121,8 @@ export default class AddressPane extends PaneBase {
                     showRemoveButtons={ true }
                     onAdd={ this.onAddTag.bind(this) }
                     onRemove={ this.onRemoveTag.bind(this) }
-                    />
+                    />,
+                routeSection,
             ];
         }
         else {
