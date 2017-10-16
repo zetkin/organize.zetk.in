@@ -104,6 +104,8 @@ export default class RouteContentPane extends PaneBase {
 
             return [
                 <div key="add">
+                    <Msg tagName="h3" id="panes.routeContent.add.h"/>
+                    <Msg tagName="p" id="panes.routeContent.add.p"/>
                     <RelSelectInput name="address"
                         labelFunc={ o => o.title || stringFromAddress(o) }
                         minFilterLength={ 3 }
