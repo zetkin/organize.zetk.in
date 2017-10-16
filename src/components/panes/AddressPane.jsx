@@ -114,7 +114,10 @@ export default class AddressPane extends PaneBase {
             return [
                 <InfoList key="info" data={[
                     { name: 'address', value: addrLabel },
-                    { name: 'position', value: posLabel }
+                    { name: 'position', value: posLabel },
+                    { name: 'households',
+                        msgId: 'panes.address.info.households',
+                        msgValues: { count: addr.household_count } },
                 ]} />,
                 <TagCloud key="tags" tags={ tags }
                     showAddButton={ true }

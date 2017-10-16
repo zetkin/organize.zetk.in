@@ -15,6 +15,12 @@
         }
     }
 
+    .InfoListItem-households {
+        &:before {
+            @include icon($fa-var-home);
+        }
+    }
+
     .TagCloud {
         margin-top: 2em;
     }
