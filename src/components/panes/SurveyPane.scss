@@ -1,23 +1,5 @@
 .SurveyPane {
-    .SurveyPane-summary {
-        padding-bottom: 2em;
-        margin-bottom: 2em;
-        border-bottom: 1px solid #ececec;
-        span {
-            display: flex;
-            font-size: 1.3em;
-            line-height: 1.6em;
-            margin: 10px 0;
-
-            &::before {
-                margin-right: 10px;
-                display: flex;
-                min-width: 1.6em;
-            }
-        }
-    }
-
-    .SurveyPane-summaryDesc {
+    .InfoListItem-desc {
         position: relative;
         max-height: 8em;
         overflow: hidden;
@@ -39,22 +21,26 @@
         }
     }
 
-    .SurveyPane-summaryAccess {
+    .InfoListItem-access {
         &::before {
             @include icon($fa-var-eye);
         }
     }
 
-    .SurveyPane-summaryAnonymous {
+    .InfoListItem-anonymous {
         &::before {
             @include icon($fa-var-pencil-square-o);
         }
     }
 
-    .SurveyPane-link {
+    .InfoListItem-link {
         &::before {
             @include icon($fa-var-external-link);
         }
+    }
+
+    .InfoListItem-editLink {
+        font-size: 1em;
     }
 
     .SurveyPane-contentBreakdown {

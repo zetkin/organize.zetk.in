@@ -18,6 +18,7 @@ import {
     retrieveCallAssignmentCallers,
     retrieveCallAssignmentStats,
 } from '../../actions/callAssignment';
+import InfoList from '../misc/InfoList';
 
 
 @connect(state => state)
@@ -123,15 +124,14 @@ export default class CallAssignmentPane extends PaneBase {
                 { cooldown: assignment.cooldown });
 
             return [
-                <div key="summary"
-                    className="CallAssignmentPane-summary">
-                    <span className="CallAssignmentPane-summaryDesc">{ assignment.description }</span>
-                    <span className="CallAssignmentPane-summaryDate">{ assignment.start_date } - { assignment.end_date }</span>
-                    <span className="CallAssignmentPane-summaryCooldown">
-                        { cooldownLabel }</span>
-                    <Link msgId="panes.callAssignment.summary.editLink"
-                        onClick={ this.onClickEditSettings.bind(this) }/>
-                </div>,
+                <InfoList key="summary-infolist"
+                    data={[
+                        { name: 'desc', value: assignment.description },
+                        { name: 'date', value: assignment.start_date + ' - ' + assignment.end_date },
+                        { name: 'cooldown', value: cooldownLabel },
+                        { name: 'editLink', onClick: this.onClickEditSettings.bind(this), msgId: 'panes.callAssignment.summary.editLink' }
+                    ]}
+                />,
 
                 <div key="instructions"
                     className="CallAssignmentPane-instructions">

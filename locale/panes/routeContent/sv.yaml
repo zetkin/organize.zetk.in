@@ -1,3 +1,6 @@
+add:
+    h: Lägg till adresser
+    p: Välj en adress att lägga till, eller en hel gata för fler alternativ
 addresses:
     item:
         deleteButton: Radera

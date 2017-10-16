@@ -16,8 +16,8 @@ loader:
     error: På grund av ett fel kunde adresser inte laddas.
     loading: Laddar adresser...
 mapModes:
-    browse: Browse
-    select: Select
+    browse: Navigera
+    select: Välj
 routePanel:
     drafts:
         commit: Spara rutter

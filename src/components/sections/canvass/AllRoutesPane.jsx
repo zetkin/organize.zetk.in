@@ -327,7 +327,8 @@ export default class AllRoutesPane extends RootPaneBase {
         if (tagId != this.props.filterTagId) {
             this.props.dispatch(retrieveAddresses(tagId));
         }
-
-        this.filteredAddresses = this.getFilteredAddresses();
+        else {
+            this.filteredAddresses = this.getFilteredAddresses();
+        }
     }
 }

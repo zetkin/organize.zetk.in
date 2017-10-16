@@ -1,3 +1,6 @@
+add:
+    h: Add address to route
+    p: Choose an address to add, or an entire street for more options
 addresses:
     item:
         deleteButton: Delete

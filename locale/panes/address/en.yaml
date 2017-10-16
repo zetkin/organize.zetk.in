@@ -1,0 +1,8 @@
+info:
+    households: |-
+        {count, plural,
+          =1 {One household}
+          other {# households}}
+routes:
+    h: Related routes
+    empty: This address does not belong to any routes

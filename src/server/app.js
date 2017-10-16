@@ -39,6 +39,7 @@ if (SENTRY_DSN) {
 
 const authOpts = {
     loginUrl: process.env.ZETKIN_LOGIN_URL,
+    logoutRedirPath: '/logged-out',
     app: {
         id: process.env.ZETKIN_APP_ID,
         key: process.env.ZETKIN_APP_KEY,
@@ -75,6 +76,10 @@ export default function initApp(messages) {
         { fallthrough: false }));
 
     app.use(cookieParser());
+
+    app.get('/logged-out', (req, res) => {
+        res.redirect('//www.' + process.env.ZETKIN_DOMAIN);
+    });
 
     app.use(auth.initialize(authOpts));
     app.get('/', auth.callback(authOpts));

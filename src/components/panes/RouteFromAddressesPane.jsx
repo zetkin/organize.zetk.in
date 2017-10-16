@@ -7,8 +7,9 @@ import InfoList from '../misc/InfoList';
 import PaneBase from './PaneBase';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
 import { getListItemById } from '../../utils/store';
-import { finishSelection } from '../../actions/selection';
+import { clearSelection } from '../../actions/selection';
 import { createRoute } from '../../actions/route';
+import { addAddressesToRoute } from '../../actions/address';
 
 
 const mapStateToProps = (state, props) => {
@@ -83,11 +84,12 @@ export default class RouteFromAddressesPane extends PaneBase {
         ];
 
         if (routes.length) {
-            let addButton = null;
+            let extendButton = null;
             if (this.state.routeId) {
-                addButton = (
+                extendButton = (
                     <Button
-                        labelMsg="panes.routeFromSelection.extend.addButton"
+                        labelMsg="panes.routeFromSelection.extend.extendButton"
+                        onClick={ this.onExtendButtonClick.bind(this) }
                            />
                 );
             }
@@ -101,7 +103,7 @@ export default class RouteFromAddressesPane extends PaneBase {
                         objects={ routes } value={ this.state.routeId }
                         onValueChange={ this.onRouteChange.bind(this) }
                         />
-                    { addButton }
+                    { extendButton }
                 </div>
             );
         }
@@ -120,11 +122,19 @@ export default class RouteFromAddressesPane extends PaneBase {
     onCreateButtonClick() {
         let selection = this.props.selectionItem.data;
         this.props.dispatch(createRoute(selection.selectedIds, this.props.paneData.id));
+        this.props.dispatch(clearSelection(selection.id));
     }
 
     onRouteChange(name, value) {
         this.setState({
             routeId: value,
         });
+    }
+
+    onExtendButtonClick() {
+        let selection = this.props.selectionItem.data;
+        this.props.dispatch(addAddressesToRoute(this.state.routeId, selection.selectedIds));
+        this.props.dispatch(clearSelection(selection.id));
+        this.closePane();
     }
 }

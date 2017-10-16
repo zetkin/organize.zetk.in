@@ -34,7 +34,7 @@ export function createRoute(addressIds, paneId) {
 
         dispatch({
             type: types.CREATE_ROUTE,
-            meta: { paneId },
+            meta: { paneId, addressIds },
             payload: {
                 promise: z.resource('orgs', orgId, 'canvass_routes').post(data),
             }

@@ -15,7 +15,32 @@
         }
     }
 
+    .InfoListItem-households {
+        &:before {
+            @include icon($fa-var-home);
+        }
+    }
+
     .TagCloud {
         margin-top: 2em;
+    }
+
+    .AddressPane-routes {
+        margin-top: 3em;
+
+        li {
+            @include card;
+            padding: 1em;
+            font-size: 1.3em;
+            cursor: pointer;
+
+            &:hover {
+                background-color: darken(white, 1%);
+            }
+
+            &:before {
+                @include icon($fa-var-compass);
+            }
+        }
     }
 }
