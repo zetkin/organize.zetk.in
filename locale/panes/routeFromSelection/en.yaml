@@ -3,7 +3,7 @@ create:
     desc: A new route will be created from the selected addresses.
     h: Create route
 extend:
-    addButton: Extend route
+    extendButton: Extend route
     desc: Pick an existing route to be extended with these addresses.
     h: Extend route
     empty: There are no routes to extend.

@@ -3,7 +3,7 @@ create:
     desc: En ny rutt skapas med enbart dessa adresser.
     h: Skapa ny rutt
 extend:
-    addButton: Utöka rutt
+    extendButton: Utöka rutt
     desc: Välj en befintlig rutt för att utöka den.
     h: Utöka befintlig rutt
     empty: Det finns inga befintliga rutter att utöka.
