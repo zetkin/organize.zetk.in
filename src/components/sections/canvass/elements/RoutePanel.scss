@@ -3,15 +3,28 @@
 
     .RoutePanel-tabs {
         .RoutePanel-routesTab {
-            @include tab-button($icon: $fa-var-compass);
+            // TODO: Uncomment when generator is live
+            //@include tab-button($icon: $fa-var-compass);
         }
 
         .RoutePanel-generatorTab {
             @include tab-button($icon: $fa-var-magic);
         }
         .Button {
+            /*
             width: 50%;
             overflow: hidden;
+            */
+
+            // TODO: Remove this, and comments, when generator is live
+            &:before {
+                @include icon($fa-var-compass);
+            }
+            cursor: default;
+            background-color: white;
+            border-width: 0;
+            padding: 1em;
+            width: 100%;
         }
     }
 
@@ -47,9 +60,11 @@
             overflow-y:scroll;
         }
 
+        /* TODO: Uncomment when generator is live
         .RoutePanel-tabs .Button:last-child {
             @include tab-button($passive: true);
         }
+        */
     }
 
     &.generator {

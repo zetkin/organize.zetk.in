@@ -171,6 +171,12 @@ export default class AddressMap extends React.Component {
             this.props.onAddressClick(addr);
         }
         else if (this.props.mode == 'select') {
+            if (this.mapDragMode == 'selecting' && this.selectionRect) {
+                // If dragging, handle this as a normal mouse up event
+                this.onMapMouseUp();
+                return;
+            }
+
             let selection = this.props.selection;
 
             if (selection.selectedIds.indexOf(addr.id) >= 0) {

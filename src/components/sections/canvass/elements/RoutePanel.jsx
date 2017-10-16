@@ -45,11 +45,13 @@ export default class RoutePanel extends React.Component {
                         labelMsg="panes.allRoutes.routePanel.tabs.routes"
                         onClick={ this.onTabClick.bind(this, 'routes') }
                         />
+                    {/* TODO: Uncomment once generator is live
                     <Button
                         className="RoutePanel-generatorTab"
                         labelMsg="panes.allRoutes.routePanel.tabs.generator"
                         onClick={ this.onTabClick.bind(this, 'generator') }
                         />
+                    */}
                 </div>
                 <div className="RoutePanel-content">
                     { content }
