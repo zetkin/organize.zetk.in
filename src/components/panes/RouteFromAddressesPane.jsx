@@ -7,7 +7,7 @@ import InfoList from '../misc/InfoList';
 import PaneBase from './PaneBase';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
 import { getListItemById } from '../../utils/store';
-import { finishSelection } from '../../actions/selection';
+import { clearSelection } from '../../actions/selection';
 import { createRoute } from '../../actions/route';
 import { addAddressesToRoute } from '../../actions/address';
 
@@ -122,6 +122,7 @@ export default class RouteFromAddressesPane extends PaneBase {
     onCreateButtonClick() {
         let selection = this.props.selectionItem.data;
         this.props.dispatch(createRoute(selection.selectedIds, this.props.paneData.id));
+        this.props.dispatch(clearSelection(selection.id));
     }
 
     onRouteChange(name, value) {
@@ -133,6 +134,7 @@ export default class RouteFromAddressesPane extends PaneBase {
     onExtendButtonClick() {
         let selection = this.props.selectionItem.data;
         this.props.dispatch(addAddressesToRoute(this.state.routeId, selection.selectedIds));
+        this.props.dispatch(clearSelection(selection.id));
         this.closePane();
     }
 }
