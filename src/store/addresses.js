@@ -85,6 +85,15 @@ export default function addresses(state = null, action) {
             streetList: createList(streets),
         });
     }
+    else if (action.type == types.CREATE_ROUTE + '_FULFILLED') {
+        let routeId = action.payload.data.data.id;
+
+        return Object.assign({}, state, {
+            addressesByRoute: Object.assign({}, state.addressesByRoute, {
+                [routeId]: action.meta.addressIds,
+            }),
+        });
+    }
     else if (action.type == types.RETRIEVE_ROUTE_ADDRESSES + '_FULFILLED') {
         let routeId = action.meta.routeId;
         let addresses = action.payload.data.data;
