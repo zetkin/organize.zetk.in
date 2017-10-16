@@ -93,7 +93,7 @@ export default class AddressPane extends PaneBase {
                     });
 
                     routeSection = (
-                        <div className="AddressPane-routes">
+                        <div key="routes" className="AddressPane-routes">
                             <Msg tagName="h2" id="panes.address.routes.h"/>
                             <ul className="AddressPane-routeList">
                                 { routeItems }
@@ -103,7 +103,7 @@ export default class AddressPane extends PaneBase {
                 }
                 else {
                     routeSection = (
-                        <div className="AddressPane-routes">
+                        <div key="routes" className="AddressPane-routes">
                             <Msg tagName="h2" id="panes.address.routes.h"/>
                             <Msg tagName="p" id="panes.address.routes.empty"/>
                         </div>
