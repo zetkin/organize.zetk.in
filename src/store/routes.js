@@ -39,6 +39,23 @@ export default function routes(state = null, action) {
             routeList: createList(routes),
         });
     }
+    else if (action.type == types.RETRIEVE_ASSIGNED_ROUTES + '_FULFILLED') {
+        let assignedRoutes = action.payload.data.data;
+        let routesById = {};
+
+        assignedRoutes.forEach(ar => {
+            if (!routesById.hasOwnProperty(ar.route.id)) {
+                routesById[ar.route.id] = ar.route;
+            }
+        });
+
+        let routes = Object.keys(routesById).map(id => routesById[id]);
+
+        return Object.assign({}, state, {
+            assignedRouteList: createList(assignedRoutes),
+            routeList: updateOrAddListItems(state.routeList, routes),
+        });
+    }
     else if (action.type == types.RETRIEVE_CANVASS_ASSIGNMENT_ROUTES + '_FULFILLED') {
         let routes = action.payload.data.data;
 
@@ -140,6 +157,7 @@ export default function routes(state = null, action) {
             draftList: null,
             routeList: createList(),
             routesByAssignment: {},
+            assignedRouteList: createList(),
         };
     }
 }
