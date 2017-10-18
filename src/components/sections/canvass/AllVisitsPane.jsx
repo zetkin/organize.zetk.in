@@ -6,12 +6,15 @@ import RootPaneBase from '../RootPaneBase';
 import ViewSwitch from '../../misc/ViewSwitch';
 import HouseholdVisitList from '../../lists/HouseholdVisitList';
 import AddressVisitList from '../../lists/AddressVisitList';
+import AssignedRouteList from '../../lists/AssignedRouteList';
 import { retrieveHouseholdVisits } from '../../../actions/visit';
+import { retrieveAssignedRoutes } from '../../../actions/route';
 
 
 const mapStateToProps = state => ({
     addressVisitList: state.visits.addressVisitList,
     householdVisitList: state.visits.householdVisitList,
+    assignedRouteList: state.routes.assignedRouteList,
 });
 
 @connect(mapStateToProps)
@@ -29,12 +32,16 @@ export default class AllVisitsPane extends RootPaneBase {
     componentWillUpdate(nextProps, nextState) {
         if (nextState.viewMode != this.state.viewMode) {
             if (nextState.viewMode == 'route') {
-                // TODO: Retrieve allocated routes
+                this.props.dispatch(retrieveAssignedRoutes());
             }
             else if (this.state.viewMode == 'route') {
                 this.props.dispatch(retrieveHouseholdVisits());
             }
         }
+    }
+
+    componentDidMount() {
+        this.props.dispatch(retrieveAssignedRoutes());
     }
 
     getRenderData() {
@@ -62,7 +69,16 @@ export default class AllVisitsPane extends RootPaneBase {
     }
 
     renderPaneContent(data) {
-        if (this.state.viewMode == 'household') {
+        if (this.state.viewMode == 'route') {
+            if (this.props.assignedRouteList) {
+                return (
+                    <AssignedRouteList
+                        assignedRouteList={ this.props.assignedRouteList }
+                        />
+                );
+            }
+        }
+        else if (this.state.viewMode == 'household') {
             if (this.props.householdVisitList) {
                 return (
                     <HouseholdVisitList

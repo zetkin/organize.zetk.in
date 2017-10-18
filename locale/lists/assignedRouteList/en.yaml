@@ -1,0 +1,6 @@
+header:
+    route: Route
+    assignment: Assignment
+    canvasser: Asignee
+item:
+    unassigned: No one assigned
