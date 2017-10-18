@@ -5,10 +5,12 @@ import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 import RootPaneBase from '../RootPaneBase';
 import ViewSwitch from '../../misc/ViewSwitch';
 import HouseholdVisitList from '../../lists/HouseholdVisitList';
+import AddressVisitList from '../../lists/AddressVisitList';
 import { retrieveHouseholdVisits } from '../../../actions/visit';
 
 
 const mapStateToProps = state => ({
+    addressVisitList: state.visits.addressVisitList,
     householdVisitList: state.visits.householdVisitList,
 });
 
@@ -65,6 +67,15 @@ export default class AllVisitsPane extends RootPaneBase {
                 return (
                     <HouseholdVisitList
                         visitList={ this.props.householdVisitList }
+                        />
+                );
+            }
+        }
+        else if (this.state.viewMode == 'address') {
+            if (this.props.addressVisitList) {
+                return (
+                    <AddressVisitList
+                        visitList={ this.props.addressVisitList }
                         />
                 );
             }
