@@ -33,6 +33,7 @@ import surveys from './surveys';
 import surveySubmissions from './surveySubmissions';
 import user from './user';
 import view from './view';
+import visits from './visits';
 
 import { urlMiddleware } from './middleware/url';
 
@@ -66,6 +67,7 @@ const appReducer = combineReducers({
     surveySubmissions,
     user,
     view,
+    visits,
 });
 
 export const configureStore = (initialState, z) => {
