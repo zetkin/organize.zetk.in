@@ -15,6 +15,7 @@ import AddSurveyQuestionPane from './AddSurveyQuestionPane';
 import AddSurveyTextBlockPane from './AddSurveyTextBlockPane';
 import AddQueryPane from './AddQueryPane';
 import AddressPane from './AddressPane';
+import AssignedRoutePane from './AssignedRoutePane';
 import BulkOpPane from './BulkOpPane';
 import CallPane from './CallPane';
 import CallAssignmentPane from './CallAssignmentPane';
@@ -72,6 +73,7 @@ var _panes = {
     'addsurveytextblock': AddSurveyTextBlockPane,
     'addquery': AddQueryPane,
     'address': AddressPane,
+    'assignedroute': AssignedRoutePane,
     'bulk': BulkOpPane,
     'call': CallPane,
     'callassignment': CallAssignmentPane,

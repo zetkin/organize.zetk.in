@@ -74,6 +74,7 @@ export default class AllVisitsPane extends RootPaneBase {
                 return (
                     <AssignedRouteList
                         assignedRouteList={ this.props.assignedRouteList }
+                        onItemClick={ this.onAssignedRouteClick.bind(this) }
                         />
                 );
             }
@@ -105,5 +106,9 @@ export default class AllVisitsPane extends RootPaneBase {
     }
 
     onFiltersApply(filters) {
+    }
+
+    onAssignedRouteClick(item) {
+        this.openPane('assignedroute', item.data.id);
     }
 }

@@ -1,0 +1,6 @@
+title: Assigned route
+assignee:
+    h: Assignee
+    p: |
+        Only the assignee can canvass the route. If you just want to reserve
+        the route for now, you don't have to pick an assignee.

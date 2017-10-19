@@ -1,0 +1,15 @@
+.AssignedRoutePane {
+    .InfoList {
+        .InfoListItem-route {
+            &:before {
+                @include icon($fa-var-map-signs);
+            }
+        }
+
+        .InfoListItem-assignment {
+            &:before {
+                @include icon($fa-var-bullseye);
+            }
+        }
+    }
+}
