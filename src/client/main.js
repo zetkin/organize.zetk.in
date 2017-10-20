@@ -13,6 +13,7 @@ import Z from 'zetkin';
 
 import polyfills from '../utils/polyfills';
 import App from '../components/App';
+import AssignedRoutePrint from '../components/prints/AssignedRoutePrint';
 import { configureStore } from '../store';
 import IntlReduxProvider from '../components/IntlReduxProvider';
 import { subscribeToUrlChanges } from '../store/middleware/url';
@@ -39,14 +40,26 @@ window.onload = function() {
     }
 
     let stateElem = document.getElementById('App-initialState');
+    let componentName = document.body.dataset.component || 'App';
     let stateJson = stateElem.innerText || stateElem.textContent;
     let initialState = JSON.parse(stateJson);
     let store = configureStore(initialState, Z);
     let props = { initialState, }
 
+    let Component;
+
+    switch (componentName) {
+        case 'AssignedRoutePrint':
+            Component = AssignedRoutePrint;
+            break;
+        default:
+            Component = App;
+            break;
+    }
+
     // Route when history state changes
     store = subscribeToUrlChanges(store);
 
     ReactDOM.render(React.createElement(IntlReduxProvider, { store },
-        React.createElement(App, props)), document);
+        React.createElement(Component, props)), document);
 };

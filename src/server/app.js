@@ -13,6 +13,7 @@ import api from './api';
 import dataRouter from './datarouter';
 import search from './search';
 import widgets from './widgets';
+import prints from './prints';
 import { loadLocaleHandler } from './locale';
 import App from '../components/App';
 import ActivistPage from '../components/fullpages/ActivistPage';
@@ -90,6 +91,8 @@ export default function initApp(messages) {
     app.use('/api', api);
     app.get('/l10n', loadLocaleHandler());
     app.use('/widgets', widgets);
+
+    app.use('/prints', prints);
 
     expressWs(app);
     app.ws('/search', search);
