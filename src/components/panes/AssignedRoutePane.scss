@@ -11,5 +11,11 @@
                 @include icon($fa-var-bullseye);
             }
         }
+
+        .InfoListItem-print {
+            &:before {
+                @include icon($fa-var-print);
+            }
+        }
     }
 }
