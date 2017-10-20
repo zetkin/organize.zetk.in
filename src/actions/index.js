@@ -1,4 +1,5 @@
 export const SET_INTL_DATA = 'SET_INTL_DATA';
+export const SET_PRINT_DATA = 'SET_PRINT_DATA';
 
 // Flux actions relate to view state
 export const SET_PANES_FROM_URL_PATH = 'SET_PANES_FROM_URL_PATH';
