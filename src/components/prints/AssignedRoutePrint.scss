@@ -1,0 +1,156 @@
+.AssignedRoutePrint {
+    background-color: transparent;
+
+    @media screen {
+        background-color: #eee;
+        overflow-y: scroll;
+    }
+
+    .AssignedRoutePrint-pages {
+        max-width: 210mm;
+        background-color: white;
+
+        @media screen {
+            margin: 2em auto;
+            padding: 2em;
+            box-shadow: 0 0 10px rgba(0,0,0, 0.1);
+        }
+    }
+
+    header {
+        .AssignedRoutePrint-route {
+            float: left;
+            font-weight: bold;
+        }
+
+        .AssignedRoutePrint-assignedRoute {
+            float: right;
+        }
+
+        &:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    }
+
+    .AssignedRoutePrint-introPage {
+        .AssignedRoutePrint-info {
+            .InfoList {
+                margin-top: 1em;
+
+                .InfoListItem {
+                    width: 30%;
+                    float: left;
+                    margin-right: 3%;
+                }
+
+                .InfoListItem-radius {
+                    &:before {
+                        @include icon($fa-var-bullseye);
+                    }
+                }
+
+                .InfoListItem-addresses {
+                    &:before {
+                        @include icon($fa-var-map-marker);
+                    }
+                }
+
+                .InfoListItem-households {
+                    &:before {
+                        @include icon($fa-var-users);
+                    }
+                }
+
+                &:after {
+                    content: "";
+                    display: block;
+                    clear: both;
+                }
+            }
+        }
+
+        .AssignedRoutePrint-unassigned {
+            .AssignedRoutePrint-assigneeName,
+            .AssignedRoutePrint-assigneePhone,
+            .AssignedRoutePrint-assigneeEmail {
+                display: inline-block;
+                margin: 1em 0;
+
+                span {
+                    display: block;
+                    font-size: 1.3em;
+                    margin: 0 0 0.3em;
+                }
+
+                &:after {
+                    content: "";
+                    display: block;
+                    height: 4em;
+                    border: 1px solid black;
+                }
+            }
+
+            .AssignedRoutePrint-assigneeName {
+                float: left;
+                width: 58%;
+            }
+
+            .AssignedRoutePrint-assigneePhone {
+                float: right;
+                width: 38%;
+            }
+
+            .AssignedRoutePrint-assigneeEmail {
+                clear: both;
+                width: 100%;
+            }
+        }
+
+        .AssignedRoutePrint-assignee {
+            margin: 2em 0;
+            width: 50%;
+
+            .Avatar {
+                width: 30mm;
+                float: left;
+            }
+
+            .InfoList {
+                float: right;
+                border-bottom-width: 0;
+
+                .InfoListItem-name {
+                    &:before {
+                        @include icon($fa-var-user);
+                    }
+                }
+
+                .InfoListItem-email {
+                    &:before {
+                        @include icon($fa-var-envelope);
+                    }
+                }
+
+                .InfoListItem-phone {
+                    &:before {
+                        @include icon($fa-var-phone);
+                    }
+                }
+            }
+
+            &:after {
+                content: "";
+                display: block;
+                clear: both;
+            }
+        }
+
+        .AddressMap {
+            margin-top: 3em;
+            width: 100%;
+            height: 180mm;
+        }
+    }
+}

@@ -1,0 +1,20 @@
+assignee:
+    h: Assignee
+info:
+    radius: '{radius, number} m radius'
+    households: |-
+        {count, plural,
+            =1 {one household}
+            other {# households}}
+    addresses: |-
+        {count, plural,
+            =1 {one address}
+            other {# addresses}}
+header:
+    route: Route { route }
+title: Print assigned route
+unassigned:
+    email: E-mail address
+    h: Assignee
+    name: Name
+    phone: Phone

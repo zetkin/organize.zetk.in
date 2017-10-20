@@ -33,6 +33,7 @@
     "express-zetkin-auth": "git://github.com/zetkin/express-zetkin-auth.git",
     "flat": "^2.0.1",
     "fuse.js": "^3.0.0",
+    "geodist": "^0.2.1",
     "gulp": "^3.8.10",
     "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.0",
