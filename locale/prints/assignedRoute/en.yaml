@@ -1,3 +1,11 @@
+addrList:
+    h: Address list – please read instructions
+    instructions: |-
+        These are the addresses that should be visited in this route. You can
+        visit them in any order and if you like you can check them off as you
+        go, although that's only necessary if you don't plan on finishing the
+        entire route. Note that some may already have been visited during this
+        assignment. They will already be checked off in the list.
 assignee:
     h: Assignee
 info:

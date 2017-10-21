@@ -1,18 +1,25 @@
 .AssignedRoutePrint {
+    width: 100%;
     background-color: transparent;
+    position: absolute;
 
     @media screen {
         background-color: #eee;
         overflow-y: scroll;
     }
 
-    .AssignedRoutePrint-pages {
-        max-width: 210mm;
-        background-color: white;
+    .AssignedRoutePrint-introPage,
+    .AssignedRoutePrint-instructionsPage,
+    .AssignedRoutePrint-addrPage {
+        width: 100%;
+        page-break-after: always;
+        page-break-inside: avoid;
 
         @media screen {
+            max-width: 210mm;
             margin: 2em auto;
             padding: 2em;
+            background-color: white;
             box-shadow: 0 0 10px rgba(0,0,0, 0.1);
         }
     }
@@ -151,6 +158,71 @@
             margin-top: 3em;
             width: 100%;
             height: 180mm;
+        }
+    }
+
+    .AssignedRoutePrint-addrPage {
+        .AssignedRoutePrint-addrIntro {
+            margin: 1em 0 2em;
+
+            h2 {
+                font-weight: bold;
+            }
+
+            p {
+                columns: 2;
+            }
+        }
+
+        .AssignedRoutePrint-addressList {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            height: 240mm;
+
+            .AssignedRoutePrint-addressListItem {
+                width: 48%;
+                margin: 0.2em 2% 0.3em 0;
+                border-top: 1px solid #eee;
+
+                &:after {
+                    content: "";
+                    display: block;
+                    clear: both;
+                }
+
+                .AssignedRoutePrint-address {
+                    display: block;
+                    float: left;
+                    margin: 0.7em 0 0 0.5em;
+                    width: 70%;
+
+                    &:before {
+                        @include icon($fa-var-map-marker);
+                    }
+                }
+
+                .AssignedRoutePrint-households {
+                    display: block;
+                    float: left;
+                    margin: 0.7em 0 0 0;
+                    width: 15%;
+
+                    &:before {
+                        @include icon($fa-var-home);
+                    }
+                }
+
+                .AssignedRoutePrint-visited {
+                    display: block;
+                    float: left;
+                    border: 1px solid #888;
+                    border-radius: 0.2em;
+                    width: 1.8em;
+                    height: 1.8em;
+                    margin: 0.5em 0 0;
+                }
+            }
         }
     }
 }

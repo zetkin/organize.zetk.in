@@ -24,6 +24,19 @@ export default class AssignedRoutePrint extends React.Component {
 
     render() {
         let stateJson = JSON.stringify(this.props.initialState);
+        let addresses = this.props.routeAddresses.concat().sort((a0, a1) => {
+            let cmp = a0.street.localeCompare(a1.street);
+
+            if (cmp == 0) {
+                cmp = a0.number - a1.number;
+            }
+
+            if (cmp == 0 && a0.suffix && a1.suffix) {
+                cmp = a0.suffix.localeCompare(a1.suffix);
+            }
+
+            return cmp;
+        });
 
         return (
             <html>
@@ -43,12 +56,15 @@ export default class AssignedRoutePrint extends React.Component {
                             ar={ this.props.ar }
                             route={ this.props.route }
                             assignee={ this.props.assignee }
-                            addresses={ this.props.routeAddresses }
+                            addresses={ addresses }
                             />
                         <InstructionsPage
                             assignment={ this.props.assignment }
                             />
                         <AddressPages
+                            ar={ this.props.ar }
+                            route={ this.props.route }
+                            addresses={ addresses }
                             />
                     </div>
                     <script type="text/json"
@@ -161,10 +177,59 @@ function InstructionsPage(props) {
 }
 
 function AddressPages(props) {
+    let curPage = null;
+    let pageData = [];
+
+    props.addresses.forEach(addr => {
+        if (!curPage || curPage.addresses.length == 56) {
+            pageData.push(curPage = {
+                addresses: [],
+            });
+        }
+
+        curPage.addresses.push(addr);
+    });
+
+    let pages = pageData.map(page => {
+        let addressItems = page.addresses.map(addr => {
+            return (
+                <li className="AssignedRoutePrint-addressListItem">
+                    <span className="AssignedRoutePrint-address">
+                        { addr.street } { addr.number }{ addr.suffix }</span>
+                    <span className="AssignedRoutePrint-households">
+                        { addr.household_count }</span>
+                    <span className="AssignedRoutePrint-visited"/>
+                </li>
+            );
+        });
+
+        return (
+            <div className="AssignedRoutePrint-addrPage">
+                <header>
+                    <div className="AssignedRoutePrint-route">
+                        <Msg id="prints.assignedRoute.header.route"
+                            values={{ route: props.route.id }}/>
+                    </div>
+                    <div className="AssignedRoutePrint-assignedRoute">
+                        # { props.ar.id }
+                    </div>
+                </header>
+
+                <div className="AssignedRoutePrint-addrIntro">
+                    <Msg tagName="h2" id="prints.assignedRoute.addrList.h"/>
+                    <Msg tagName="p" id="prints.assignedRoute.addrList.instructions"/>
+                </div>
+
+                <ul className="AssignedRoutePrint-addressList">
+                    { addressItems }
+                </ul>
+            </div>
+        );
+    });
+
     return (
         <div className="AssignedRoutePrint-addrPages">
-            <div className="AssignedRoutePrint-addrPage">
-            </div>
+            { pages }
         </div>
     );
 }
