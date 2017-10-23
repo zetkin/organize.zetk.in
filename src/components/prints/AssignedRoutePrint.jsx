@@ -135,11 +135,6 @@ function SummaryPage(props) {
 
     return (
         <div className="AssignedRoutePrint-introPage">
-            <PageHeader pageNumber={ pageNumber }
-                route={ props.route }
-                ar={ props.ar }
-                />
-
             <div className="AssignedRoutePrint-info">
                 <InfoList data={[
                     { name: 'radius', msgId: 'prints.assignedRoute.info.radius',
@@ -156,6 +151,11 @@ function SummaryPage(props) {
             <AddressMap addresses={ props.addresses }
                 mode="browse"
                 />
+
+            <PageFooter pageNumber={ pageNumber }
+                route={ props.route }
+                ar={ props.ar }
+                />
         </div>
     );
 }
@@ -169,14 +169,14 @@ function InstructionsPage(props) {
 
         return (
             <div className="AssignedRoutePrint-instructionsPage">
-                <PageHeader pageNumber={ pageNumber }
-                    route={ props.route }
-                    ar={ props.ar }
-                    />
-
                 <h1>{ props.assignment.title }</h1>
                 <div className="AssignmentRoutePrint-instructions"
                     dangerouslySetInnerHTML={{ __html: instructions }}
+                    />
+
+                <PageFooter pageNumber={ pageNumber }
+                    route={ props.route }
+                    ar={ props.ar }
                     />
             </div>
         );
@@ -220,11 +220,6 @@ function AddressPages(props) {
             <div key={ pageNumber }
                 className="AssignedRoutePrint-addrPage">
 
-                <PageHeader pageNumber={ pageNumber }
-                    route={ props.route }
-                    ar={ props.ar }
-                    />
-
                 <div className="AssignedRoutePrint-addrIntro">
                     <Msg tagName="h2" id="prints.assignedRoute.addrList.h"/>
                     <Msg tagName="p" id="prints.assignedRoute.addrList.instructions"/>
@@ -233,6 +228,11 @@ function AddressPages(props) {
                 <ul className="AssignedRoutePrint-addressList">
                     { addressItems }
                 </ul>
+
+                <PageFooter pageNumber={ pageNumber }
+                    route={ props.route }
+                    ar={ props.ar }
+                    />
             </div>
         );
     });
@@ -244,9 +244,9 @@ function AddressPages(props) {
     );
 }
 
-function PageHeader(props) {
+function PageFooter(props) {
     return (
-        <header>
+        <footer className="AssignedRoutePrint-footer">
             <div className="AssignedRoutePrint-route">
                 <Msg id="prints.assignedRoute.header.route"
                     values={{ route: props.route.id }}/>
@@ -257,6 +257,6 @@ function PageHeader(props) {
                     values={{ pageNumber: props.pageNumber }}
                     />
             </div>
-        </header>
+        </footer>
     );
 };

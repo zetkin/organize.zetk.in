@@ -24,7 +24,10 @@
         }
     }
 
-    header {
+    .AssignedRoutePrint-footer {
+        width: 98%;
+        margin: 2em auto 0;
+
         .AssignedRoutePrint-route {
             float: left;
             font-weight: bold;
@@ -48,8 +51,6 @@
     .AssignedRoutePrint-introPage {
         .AssignedRoutePrint-info {
             .InfoList {
-                margin-top: 1em;
-
                 .InfoListItem {
                     width: 30%;
                     float: left;
@@ -70,7 +71,7 @@
 
                 .InfoListItem-households {
                     &:before {
-                        @include icon($fa-var-users);
+                        @include icon($fa-var-home);
                     }
                 }
 
@@ -185,8 +186,9 @@
             height: 240mm;
 
             .AssignedRoutePrint-addressListItem {
-                width: 48%;
-                margin: 0.2em 2% 0.3em 0;
+                width: 49%;
+                margin: 0.2em 1% 0.3em 0;
+                padding-right: 1%;
                 border-top: 1px solid #eee;
 
                 &:after {
@@ -199,7 +201,7 @@
                     display: block;
                     float: left;
                     margin: 0.7em 0 0 0.5em;
-                    width: 70%;
+                    width: 75%;
 
                     &:before {
                         @include icon($fa-var-map-marker);
