@@ -148,6 +148,18 @@ function SummaryPage(props) {
 
             { assigneeInfo }
 
+            <div className="AssignedRoutePrint-status">
+                <div className="AssignedRoutePrint-assignedDate">
+                    <Msg id="prints.assignedRoute.status.assigned"/>
+                </div>
+                <div className="AssignedRoutePrint-returnedDate">
+                    <Msg id="prints.assignedRoute.status.returned"/>
+                </div>
+                <div className="AssignedRoutePrint-completed">
+                    <Msg id="prints.assignedRoute.status.completed"/>
+                </div>
+            </div>
+
             <AddressMap addresses={ props.addresses }
                 mode="browse"
                 />

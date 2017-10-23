@@ -22,6 +22,10 @@ header:
     page: p. { pageNumber }
     route: Route { route }
 title: Print assigned route
+status:
+    assigned: Handed out (date/time)
+    returned: Returned (date/time)
+    completed: Done
 unassigned:
     email: E-mail address
     h: Assignee
