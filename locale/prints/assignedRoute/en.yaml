@@ -19,6 +19,7 @@ info:
             =1 {one address}
             other {# addresses}}
 header:
+    page: p. { pageNumber }
     route: Route { route }
 title: Print assigned route
 unassigned:

@@ -38,6 +38,9 @@ export default class AssignedRoutePrint extends React.Component {
             return cmp;
         });
 
+        let pageNumber = 1;
+        let getNextPageNumber = () => pageNumber++;
+
         return (
             <html>
                 <head>
@@ -53,15 +56,18 @@ export default class AssignedRoutePrint extends React.Component {
                 <body data-component="AssignedRoutePrint" className="AssignedRoutePrint">
                     <div className="AssignedRoutePrint-pages">
                         <SummaryPage
+                            getNextPageNumber={ getNextPageNumber }
                             ar={ this.props.ar }
                             route={ this.props.route }
                             assignee={ this.props.assignee }
                             addresses={ addresses }
                             />
                         <InstructionsPage
+                            getNextPageNumber={ getNextPageNumber }
                             assignment={ this.props.assignment }
                             />
                         <AddressPages
+                            getNextPageNumber={ getNextPageNumber }
                             ar={ this.props.ar }
                             route={ this.props.route }
                             addresses={ addresses }
@@ -78,6 +84,7 @@ export default class AssignedRoutePrint extends React.Component {
 
 function SummaryPage(props) {
     let assigneeInfo;
+    let pageNumber = props.getNextPageNumber();
 
     if (props.assignee) {
         assigneeInfo = (
@@ -128,15 +135,10 @@ function SummaryPage(props) {
 
     return (
         <div className="AssignedRoutePrint-introPage">
-            <header>
-                <div className="AssignedRoutePrint-route">
-                    <Msg id="prints.assignedRoute.header.route"
-                        values={{ route: props.route.id }}/>
-                </div>
-                <div className="AssignedRoutePrint-assignedRoute">
-                    # { props.ar.id }
-                </div>
-            </header>
+            <PageHeader pageNumber={ pageNumber }
+                route={ props.route }
+                ar={ props.ar }
+                />
 
             <div className="AssignedRoutePrint-info">
                 <InfoList data={[
@@ -152,6 +154,7 @@ function SummaryPage(props) {
             { assigneeInfo }
 
             <AddressMap addresses={ props.addresses }
+                mode="browse"
                 />
         </div>
     );
@@ -162,8 +165,15 @@ function InstructionsPage(props) {
     let instructions = props.assignment.instructions;
 
     if (instructions) {
+        let pageNumber = props.getNextPageNumber();
+
         return (
             <div className="AssignedRoutePrint-instructionsPage">
+                <PageHeader pageNumber={ pageNumber }
+                    route={ props.route }
+                    ar={ props.ar }
+                    />
+
                 <h1>{ props.assignment.title }</h1>
                 <div className="AssignmentRoutePrint-instructions"
                     dangerouslySetInnerHTML={{ __html: instructions }}
@@ -191,9 +201,12 @@ function AddressPages(props) {
     });
 
     let pages = pageData.map(page => {
+        let pageNumber = props.getNextPageNumber();
+
         let addressItems = page.addresses.map(addr => {
             return (
-                <li className="AssignedRoutePrint-addressListItem">
+                <li key={ addr.id }
+                    className="AssignedRoutePrint-addressListItem">
                     <span className="AssignedRoutePrint-address">
                         { addr.street } { addr.number }{ addr.suffix }</span>
                     <span className="AssignedRoutePrint-households">
@@ -204,16 +217,13 @@ function AddressPages(props) {
         });
 
         return (
-            <div className="AssignedRoutePrint-addrPage">
-                <header>
-                    <div className="AssignedRoutePrint-route">
-                        <Msg id="prints.assignedRoute.header.route"
-                            values={{ route: props.route.id }}/>
-                    </div>
-                    <div className="AssignedRoutePrint-assignedRoute">
-                        # { props.ar.id }
-                    </div>
-                </header>
+            <div key={ pageNumber }
+                className="AssignedRoutePrint-addrPage">
+
+                <PageHeader pageNumber={ pageNumber }
+                    route={ props.route }
+                    ar={ props.ar }
+                    />
 
                 <div className="AssignedRoutePrint-addrIntro">
                     <Msg tagName="h2" id="prints.assignedRoute.addrList.h"/>
@@ -233,3 +243,20 @@ function AddressPages(props) {
         </div>
     );
 }
+
+function PageHeader(props) {
+    return (
+        <header>
+            <div className="AssignedRoutePrint-route">
+                <Msg id="prints.assignedRoute.header.route"
+                    values={{ route: props.route.id }}/>
+            </div>
+            <div className="AssignedRoutePrint-assignedRoute">
+                <span># { props.ar.id }</span>
+                <Msg id="prints.assignedRoute.header.page"
+                    values={{ pageNumber: props.pageNumber }}
+                    />
+            </div>
+        </header>
+    );
+};
