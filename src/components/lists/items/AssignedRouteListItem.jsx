@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage as Msg } from 'react-intl';
 
 import Avatar from '../../misc/Avatar';
+import Route from '../../misc/elements/Route';
 
 
 @connect(() => ({}))
@@ -32,12 +33,9 @@ export default class AssignedRouteListItem extends React.Component {
         return (
             <div className="AssignedRouteListItem"
                 onClick={ this.props.onItemClick.bind(this, ar) }>
-                <div className="AssignedRouteListItem-route">
-                    <span className="AssignedRouteListItem-name">
-                        { ar.route.id }</span>
-                </div>
-                <div className="AssignedRouteListItem-assignment">
-                    <span className="AssignedRouteListItem-assignmentTitle">
+                <div className="AssignedRouteListItem-info">
+                    <Route route={ ar.route }/>
+                    <span className="AssignedRouteListItem-assignment">
                         { ar.assignment.title }</span>
                 </div>
                 <div className="AssignedRouteListItem-assignee">

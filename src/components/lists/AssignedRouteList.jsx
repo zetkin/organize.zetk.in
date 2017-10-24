@@ -18,8 +18,6 @@ export default class AssignedRouteList extends React.Component {
         let columns = [
             {
                 'route': 'lists.assignedRouteList.header.route',
-            },
-            {
                 'assignment': 'lists.assignedRouteList.header.assignment',
             },
             {
