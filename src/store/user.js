@@ -19,9 +19,13 @@ export default function user(state = null, action) {
                     officialMemberships[0] : null,
             });
 
-        case types.SET_ACTIVE_MEMBERSHIP:
+        case types.SET_ACTIVE_ORG:
+            let orgId = action.payload.orgId;
+            let membership = state.memberships
+                .find(m => m.organization.id == orgId);
+
             return Object.assign({}, state, {
-                activeMembership: action.payload.membership
+                activeMembership: membership,
             });
 
         default:

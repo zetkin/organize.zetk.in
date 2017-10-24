@@ -11,7 +11,7 @@ export const GOTO_SECTION = 'GOTO_SECTION';
 // Flux actions related to users
 export const GET_USER_INFO = 'GET_USER_INFO';
 export const GET_USER_MEMBERSHIPS = 'GET_USER_MEMBERSHIPS';
-export const SET_ACTIVE_MEMBERSHIP = 'SET_ACTIVE_MEMBERSHIP';
+export const SET_ACTIVE_ORG = 'SET_ACTIVE_ORG';
 
 // Redux actions related to people
 export const CREATE_PERSON = 'CREATE_PERSON';

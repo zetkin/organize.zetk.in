@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { FormattedMessage as Msg } from 'react-intl';
 
 import { setActiveMembership } from '../../actions/user';
 
@@ -14,17 +15,20 @@ export default class OrgPicker extends React.Component {
             return (
                 <div className="OrgPicker OrgUserMenu-activeOrg">
                     <span className="OrgPicker-label">
-                        Switch organization</span>
+                        <Msg id="header.userMenu.switchOrganization"/>
+                    </span>
                     <ul className="OrgPicker-list">
                         {memberships.map(function(ms) {
                             if(ms.organization.id === activeOrg.id){
-                                return
+                                return;
                             }
+
+                            let href = '/?org=' + ms.organization.id;
+
                             return (
                                 <li key={ ms.organization.id }
-                                    className="OrgPicker-item"
-                                    onClick={ this.onOrgClick.bind(this, ms) }>
-                                    { ms.organization.title }
+                                    className="OrgPicker-item">
+                                    <a href={ href }>{ ms.organization.title }</a>
                                 </li>
                             );
 
