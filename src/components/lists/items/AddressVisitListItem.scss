@@ -1,0 +1,21 @@
+.AddressVisitListItem {
+    &:after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+
+    .AddressVisitListItem-address {
+        float: left;
+        font-weight: bold;
+    }
+
+    .AddressVisitListItem-progress {
+        width: 19em;
+        float: right;
+
+        .ProgressBar {
+            margin: 0.5em 0 0;
+        }
+    }
+}

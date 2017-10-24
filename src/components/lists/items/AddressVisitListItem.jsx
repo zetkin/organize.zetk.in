@@ -3,7 +3,7 @@ import cx from 'classnames';
 import { connect } from 'react-redux';
 import { FormattedMessage as Msg } from 'react-intl';
 
-import LoadingIndicator from '../../misc/LoadingIndicator';
+import ProgressBar from '../../misc/ProgressBar';
 
 
 @connect(() => ({}))
@@ -21,24 +21,23 @@ export default class AddressVisitListItem extends React.Component {
         let stateClass = "AddressVisitListItem-state";
         let stateLabel = null;
         let actionStatus = null;
+        let progress = visit.households_visited / visit.households_allocated;
 
         return (
             <div className="AddressVisitListItem"
                 onClick={ this.props.onItemClick.bind(this, visit) }>
-                <div className="AddressVisitListItem-target">
-                    <span className="AddressVisitListItem-address">
-                        { visit.address }</span>
+                <div className="AddressVisitListItem-address">
+                    { visit.address }
                 </div>
-                <div className="AddressVisitListItem-visitInfo">
+                <div className="AddressVisitListItem-progress">
                     <Msg id="lists.addressVisitList.item.householdsVisited"
                         values={{
                             allocated: visit.households_allocated,
                             visited: visit.households_visited,
                         }}
                         />
+                    <ProgressBar progress={ progress }/>
                 </div>
-                <div className="AddressVisitListItem-visitStatuses"/>
-                <div className="AddressVisitListItem-organizerStatuses"/>
             </div>
         );
     }
