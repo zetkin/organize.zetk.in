@@ -18,13 +18,15 @@ export default class OrgPicker extends React.Component {
                     <ul className="OrgPicker-list">
                         {memberships.map(function(ms) {
                             if(ms.organization.id === activeOrg.id){
-                                return
+                                return;
                             }
+
+                            let href = '/?org=' + ms.organization.id;
+
                             return (
                                 <li key={ ms.organization.id }
-                                    className="OrgPicker-item"
-                                    onClick={ this.onOrgClick.bind(this, ms) }>
-                                    { ms.organization.title }
+                                    className="OrgPicker-item">
+                                    <a href={ href }>{ ms.organization.title }</a>
                                 </li>
                             );
 
