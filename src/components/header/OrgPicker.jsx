@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { FormattedMessage as Msg } from 'react-intl';
 
 import { setActiveMembership } from '../../actions/user';
 
@@ -14,7 +15,8 @@ export default class OrgPicker extends React.Component {
             return (
                 <div className="OrgPicker OrgUserMenu-activeOrg">
                     <span className="OrgPicker-label">
-                        Switch organization</span>
+                        <Msg id="header.userMenu.switchOrganization"/>
+                    </span>
                     <ul className="OrgPicker-list">
                         {memberships.map(function(ms) {
                             if(ms.organization.id === activeOrg.id){

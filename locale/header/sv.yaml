@@ -18,3 +18,4 @@ search:
 userMenu:
     accountLink: Konto-inställningar
     logOutLink: Logga ut
+    switchOrganization: Växla organisation

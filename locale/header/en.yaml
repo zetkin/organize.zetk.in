@@ -18,3 +18,4 @@ search:
 userMenu:
     accountLink: Account settings
     logOutLink: Log out
+    switchOrganization: Switch organization
