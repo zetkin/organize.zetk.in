@@ -1,0 +1,281 @@
+.AssignedRoutePrint {
+    width: 100%;
+    background-color: transparent;
+    position: absolute;
+
+    @media screen {
+        background-color: #eee;
+        overflow-y: scroll;
+    }
+
+    .AssignedRoutePrint-introPage,
+    .AssignedRoutePrint-instructionsPage,
+    .AssignedRoutePrint-addrPage {
+        position: relative;
+        width: 100%;
+        page-break-inside: avoid;
+
+        @media screen {
+            max-width: 210mm;
+            margin: 2em auto;
+            padding: 2em;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0, 0.1);
+        }
+    }
+
+    .AssignedRoutePrint-footer {
+        width: 98%;
+        margin: 2em auto 0;
+        page-break-after: always;
+
+        .AssignedRoutePrint-route {
+            float: left;
+            font-weight: bold;
+        }
+
+        .AssignedRoutePrint-assignedRoute {
+            float: right;
+
+            span {
+                margin: 0 0 0 1em;
+            }
+        }
+
+        &:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    }
+
+    .AssignedRoutePrint-introPage {
+        .AssignedRoutePrint-info {
+            .InfoList {
+                .InfoListItem {
+                    width: 30%;
+                    float: left;
+                    margin-right: 3%;
+                }
+
+                .InfoListItem-radius {
+                    &:before {
+                        @include icon($fa-var-bullseye);
+                    }
+                }
+
+                .InfoListItem-addresses {
+                    &:before {
+                        @include icon($fa-var-map-marker);
+                    }
+                }
+
+                .InfoListItem-households {
+                    &:before {
+                        @include icon($fa-var-home);
+                    }
+                }
+
+                &:after {
+                    content: "";
+                    display: block;
+                    clear: both;
+                }
+            }
+        }
+
+        .AssignedRoutePrint-unassigned {
+            .AssignedRoutePrint-assigneeName,
+            .AssignedRoutePrint-assigneePhone,
+            .AssignedRoutePrint-assigneeEmail {
+                display: inline-block;
+                margin: 0.5em 0;
+
+                span {
+                    display: block;
+                    font-size: 1.3em;
+                    margin: 0 0 0.3em;
+                }
+
+                &:after {
+                    content: "";
+                    display: block;
+                    height: 3em;
+                    border: 1px solid #ccc;
+                }
+            }
+
+            .AssignedRoutePrint-assigneeName {
+                float: left;
+                width: 58%;
+            }
+
+            .AssignedRoutePrint-assigneePhone {
+                float: right;
+                width: 38%;
+            }
+
+            .AssignedRoutePrint-assigneeEmail {
+                clear: both;
+                width: 100%;
+            }
+        }
+
+        .AssignedRoutePrint-status {
+            .AssignedRoutePrint-assignedDate,
+            .AssignedRoutePrint-returnedDate,
+            .AssignedRoutePrint-completed {
+                display: inline-block;
+                margin: 0.5em 0;
+                font-size: 0.7em;
+
+                span {
+                    display: block;
+                    font-size: 1.3em;
+                    margin: 0 0 0.3em;
+                }
+
+                &:after {
+                    content: "";
+                    display: block;
+                    height: 4em;
+                    border: 1px solid #ccc;
+                }
+            }
+
+            .AssignedRoutePrint-assignedDate {
+                float: left;
+                width: 44%;
+                margin-right: 3%;
+            }
+
+            .AssignedRoutePrint-returnedDate {
+                float: left;
+                width: 44%;
+            }
+
+            .AssignedRoutePrint-completed {
+                float: right;
+                width: 6%;
+            }
+
+            &:after {
+                content: "";
+                display: block;
+                clear: both;
+            }
+        }
+
+        .AssignedRoutePrint-assignee {
+            margin: 1em 0;
+            width: 45%;
+
+            .Avatar {
+                width: 24mm;
+                float: left;
+            }
+
+            .InfoList {
+                float: right;
+                border-bottom-width: 0;
+
+                .InfoListItem-name {
+                    margin-top: 0;
+                    &:before {
+                        @include icon($fa-var-user);
+                    }
+                }
+
+                .InfoListItem-email {
+                    &:before {
+                        @include icon($fa-var-envelope);
+                    }
+                }
+
+                .InfoListItem-phone {
+                    &:before {
+                        @include icon($fa-var-phone);
+                    }
+                }
+            }
+
+            &:after {
+                content: "";
+                display: block;
+                clear: both;
+            }
+        }
+
+        .AddressMap {
+            margin-top: 2em;
+            width: 100%;
+            height: 180mm;
+        }
+    }
+
+    .AssignedRoutePrint-addrPage {
+        .AssignedRoutePrint-addrIntro {
+            margin: 1em 0 2em;
+
+            h2 {
+                font-weight: bold;
+            }
+
+            p {
+                columns: 2;
+            }
+        }
+
+        .AssignedRoutePrint-addressList {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            height: 240mm;
+
+            .AssignedRoutePrint-addressListItem {
+                width: 49%;
+                margin: 0.2em 1% 0.3em 0;
+                padding-right: 1%;
+                border-top: 1px solid #eee;
+
+                &:after {
+                    content: "";
+                    display: block;
+                    clear: both;
+                }
+
+                .AssignedRoutePrint-address {
+                    display: block;
+                    float: left;
+                    margin: 0.7em 0 0 0.5em;
+                    width: 75%;
+
+                    &:before {
+                        @include icon($fa-var-map-marker);
+                    }
+                }
+
+                .AssignedRoutePrint-households {
+                    display: block;
+                    float: left;
+                    margin: 0.7em 0 0 0;
+                    width: 15%;
+
+                    &:before {
+                        @include icon($fa-var-home);
+                    }
+                }
+
+                .AssignedRoutePrint-visited {
+                    display: block;
+                    float: left;
+                    border: 1px solid #888;
+                    border-radius: 0.2em;
+                    width: 1.8em;
+                    height: 1.8em;
+                    margin: 0.5em 0 0;
+                }
+            }
+        }
+    }
+}

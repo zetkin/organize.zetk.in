@@ -13,6 +13,7 @@ import { getListItemById } from '../../utils/store';
 
 
 const mapStateToProps = (state, props) => ({
+    orgId: state.org.activeId,
     assignedRouteItem: getListItemById(state.routes.assignedRouteList,
         props.paneData.params[0])
 });
@@ -38,6 +39,7 @@ export default class AssignedRoutePane extends PaneBase {
     renderPaneContent(data) {
         if (data.assignedRouteItem) {
             let ar = data.assignedRouteItem.data;
+            let orgId = this.props.orgId;
 
             return [
                 <InfoList key="info" data={[
@@ -45,6 +47,9 @@ export default class AssignedRoutePane extends PaneBase {
                         onClick: () => this.openPane('canvassassignment', ar.assignment.id), },
                     { name: 'route', value: ar.route.id,
                         onClick: () => this.openPane('route', ar.route.id), },
+                    { name: 'print', msgId: 'panes.assignedRoute.info.print',
+                        href: '/prints/assigned_route/' + orgId + ',' + ar.id,
+                        target: '_blank' },
                 ]}/>,
                 <div key="assignee" className="AssignedRoutePane-assignee">
                     <Msg tagName="h3" id="panes.assignedRoute.assignee.h"/>
