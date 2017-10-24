@@ -57,7 +57,8 @@ export default class AllVisitsPane extends RootPaneBase {
         let viewModes = {
             route: 'panes.allVisits.viewModes.route',
             address: 'panes.allVisits.viewModes.address',
-            household: 'panes.allVisits.viewModes.household',
+            // TODO: Finish and re-enable this
+            //household: 'panes.allVisits.viewModes.household',
         };
 
         return [
