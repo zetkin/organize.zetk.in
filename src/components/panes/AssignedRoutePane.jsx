@@ -15,6 +15,7 @@ import { getListItemById } from '../../utils/store';
 import {
     retrieveAssignedRoute,
     retrieveAssignedRouteStats,
+    updateAssignedRoute,
 } from '../../actions/route';
 
 
@@ -91,6 +92,7 @@ export default class AssignedRoutePane extends PaneBase {
                 <div key="assignee" className="AssignedRoutePane-assignee">
                     <Msg tagName="h3" id="panes.assignedRoute.assignee.h"/>
                     <PersonSelectWidget
+                        onSelect={ this.onAssigneeSelect.bind(this) }
                         person={ ar.canvasser }
                         />
                     <Msg tagName="p" id="panes.assignedRoute.assignee.p"/>
@@ -100,5 +102,14 @@ export default class AssignedRoutePane extends PaneBase {
         else {
             return <LoadingIndicator/>;
         }
+    }
+
+    onAssigneeSelect(person) {
+        let arId = this.getParam(0);
+        let data = {
+            canvasser_id: person? person.id : null,
+        };
+
+        this.props.dispatch(updateAssignedRoute(arId, data));
     }
 }

@@ -99,6 +99,20 @@ export function createAssignedRoute(data, paneId) {
     };
 }
 
+export function updateAssignedRoute(id, data) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.UPDATE_ASSIGNED_ROUTE,
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'assigned_routes', id).patch(data),
+            }
+        });
+    };
+}
+
 export function generateRoutes(addressIds, config = {}) {
     config = Object.assign({}, ROUTE_GEN_DEFAULTS, config);
 
