@@ -3,12 +3,15 @@ import { FormattedMessage as Msg } from 'react-intl';
 
 
 export default function Route(props) {
-    // TODO: Use title instead once routes can be named
+    let content = props.route.title || (
+        <Msg id="misc.elements.route"
+            values={{ id: props.route.id }}
+            />
+    );
+
     return (
         <span className="Route">
-            <Msg id="misc.elements.route"
-                values={{ id: props.route.id }}
-                />
+            { content }
         </span>
     );
 }

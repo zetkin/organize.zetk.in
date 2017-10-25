@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import InfoList from '../misc/InfoList';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
+import Route from '../misc/elements/Route';
 import TagCloud from '../misc/tagcloud/TagCloud';
 import { getListItemById } from '../../utils/store';
 import { dmsStringFromLatLng } from '../../utils/location';
@@ -87,7 +88,7 @@ export default class AddressPane extends PaneBase {
                         return (
                             <li key={ route.id }
                                 onClick={ () => this.openPane('route', route.id) }>
-                                { route.id }
+                                <Route route={ route }/>
                             </li>
                         );
                     });
