@@ -265,6 +265,10 @@ function PageFooter(props) {
                 <Msg id="prints.assignedRoute.header.route"
                     values={{ route: props.route.id }}/>
             </div>
+            <div className="AssignedRoutePrint-logo">
+                <img alt="Zetkin" title="Zetkin"
+                    src="/static/images/logo-zetkin-hori-black.png"/>
+            </div>
             <div className="AssignedRoutePrint-assignedRoute">
                 <span># { props.ar.id }</span>
                 <Msg id="prints.assignedRoute.header.page"

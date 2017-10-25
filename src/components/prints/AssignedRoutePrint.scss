@@ -31,11 +31,25 @@
 
         .AssignedRoutePrint-route {
             float: left;
+            width: 20%;
             font-weight: bold;
+        }
+
+        .AssignedRoutePrint-logo {
+            float: left;
+            text-align: center;
+            width: 60%;
+
+            img {
+                width: 20mm;
+                height: auto;
+            }
         }
 
         .AssignedRoutePrint-assignedRoute {
             float: right;
+            text-align: right;
+            width: 20%;
 
             span {
                 margin: 0 0 0 1em;
