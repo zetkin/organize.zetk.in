@@ -110,6 +110,13 @@ export default class RoutePane extends PaneBase {
                             name: 'household_count',
                             msgId: 'panes.route.info.households',
                             msgValues: { count: route.household_count }
+                        }, {
+                            name: 'info',
+                            value: route.info_text,
+                        }, {
+                            name: 'edit',
+                            msgId: 'panes.route.info.editLink',
+                            onClick: () => this.openPane('editroute', this.getParam(0)),
                         }
                     ]} />
                     <Button
