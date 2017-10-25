@@ -57,6 +57,14 @@ export default function routes(state = null, action) {
             routeList: updateOrAddListItems(state.routeList, routes),
         });
     }
+    else if (action.type == types.CREATE_ASSIGNED_ROUTE + '_FULFILLED') {
+        let ar = action.payload.data.data;
+
+        return Object.assign({}, state, {
+            assignedRouteList: updateOrAddListItem(state.assignedRouteList, ar.id, ar),
+            routeList: updateOrAddListItem(state.routeList, ar.route.id, ar.route),
+        });
+    }
     else if (action.type == types.RETRIEVE_ASSIGNED_ROUTE + '_FULFILLED') {
         let ar = action.payload.data.data;
 
