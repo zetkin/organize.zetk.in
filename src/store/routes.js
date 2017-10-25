@@ -33,6 +33,20 @@ export default function routes(state = null, action) {
             routeList: updateOrAddListItem(state.routeList, route.id, route),
         });
     }
+    else if (action.type == types.UPDATE_ROUTE + '_FULFILLED') {
+        let route = action.payload.data.data;
+
+        return Object.assign({}, state, {
+            routeList: updateOrAddListItem(state.routeList, route.id, route),
+        });
+    }
+    else if (action.type == types.RETRIEVE_ROUTE + '_FULFILLED') {
+        let route = action.payload.data.data;
+
+        return Object.assign({}, state, {
+            routeList: updateOrAddListItem(state.routeList, route.id, route),
+        });
+    }
     else if (action.type == types.RETRIEVE_ROUTES + '_FULFILLED') {
         let routes = action.payload.data.data;
 

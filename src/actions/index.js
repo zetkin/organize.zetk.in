@@ -203,6 +203,8 @@ export const CREATE_ADDRESS_TAG = 'CREATE_ADDRESS_TAG';
 
 // Redux actions related to routes
 export const CREATE_ROUTE = 'CREATE_ROUTE';
+export const UPDATE_ROUTE = 'UPDATE_ROUTE';
+export const RETRIEVE_ROUTE = 'RETRIEVE_ROUTE';
 export const RETRIEVE_ROUTES = 'RETRIEVE_ROUTES';
 export const GENERATE_ROUTES = 'GENERATE_ROUTES';
 export const DISCARD_ROUTE_DRAFTS = 'DISCARD_ROUTE_DRAFTS';
