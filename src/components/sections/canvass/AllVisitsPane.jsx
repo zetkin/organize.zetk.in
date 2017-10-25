@@ -6,15 +6,12 @@ import RootPaneBase from '../RootPaneBase';
 import ViewSwitch from '../../misc/ViewSwitch';
 import HouseholdVisitList from '../../lists/HouseholdVisitList';
 import AddressVisitList from '../../lists/AddressVisitList';
-import AssignedRouteList from '../../lists/AssignedRouteList';
 import { retrieveHouseholdVisits } from '../../../actions/visit';
-import { retrieveAssignedRoutes } from '../../../actions/route';
 
 
 const mapStateToProps = state => ({
     addressVisitList: state.visits.addressVisitList,
     householdVisitList: state.visits.householdVisitList,
-    assignedRouteList: state.routes.assignedRouteList,
 });
 
 @connect(mapStateToProps)
@@ -25,23 +22,12 @@ export default class AllVisitsPane extends RootPaneBase {
 
         this.state = {
             filters: {},
-            viewMode: 'route',
+            viewMode: 'address',
         };
     }
 
-    componentWillUpdate(nextProps, nextState) {
-        if (nextState.viewMode != this.state.viewMode) {
-            if (nextState.viewMode == 'route') {
-                this.props.dispatch(retrieveAssignedRoutes());
-            }
-            else if (this.state.viewMode == 'route') {
-                this.props.dispatch(retrieveHouseholdVisits());
-            }
-        }
-    }
-
     componentDidMount() {
-        this.props.dispatch(retrieveAssignedRoutes());
+        this.props.dispatch(retrieveHouseholdVisits());
     }
 
     getRenderData() {
@@ -54,11 +40,10 @@ export default class AllVisitsPane extends RootPaneBase {
     }
 
     getPaneTools(data) {
+        /*
         let viewModes = {
-            route: 'panes.allVisits.viewModes.route',
             address: 'panes.allVisits.viewModes.address',
-            // TODO: Finish and re-enable this
-            //household: 'panes.allVisits.viewModes.household',
+            household: 'panes.allVisits.viewModes.household',
         };
 
         return [
@@ -67,20 +52,11 @@ export default class AllVisitsPane extends RootPaneBase {
                 onSwitch={ this.onViewStateSwitch.bind(this) }
                 />,
         ]
+        */
     }
 
     renderPaneContent(data) {
-        if (this.state.viewMode == 'route') {
-            if (this.props.assignedRouteList) {
-                return (
-                    <AssignedRouteList
-                        assignedRouteList={ this.props.assignedRouteList }
-                        onItemClick={ this.onAssignedRouteClick.bind(this) }
-                        />
-                );
-            }
-        }
-        else if (this.state.viewMode == 'household') {
+        if (this.state.viewMode == 'household') {
             if (this.props.householdVisitList) {
                 return (
                     <HouseholdVisitList
@@ -107,9 +83,5 @@ export default class AllVisitsPane extends RootPaneBase {
     }
 
     onFiltersApply(filters) {
-    }
-
-    onAssignedRouteClick(item) {
-        this.openPane('assignedroute', item.data.id);
     }
 }
