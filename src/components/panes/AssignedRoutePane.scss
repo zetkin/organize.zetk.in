@@ -18,4 +18,17 @@
             }
         }
     }
+
+    div.AssignedRoutePane-progress {
+        border-bottom: 1px solid darken($c-ui-bg, 10);
+        padding-bottom: 2em;
+    }
+
+    div.AssignedRoutePane-assignee {
+        border-bottom: 1px solid darken($c-ui-bg, 10);
+
+        p {
+            font-size: 1.1em;
+        }
+    }
 }

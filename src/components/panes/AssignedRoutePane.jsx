@@ -5,6 +5,8 @@ import cx from 'classnames';
 
 import PaneBase from './PaneBase';
 import Avatar from '../misc/Avatar';
+import Button from '../misc/Button';
+import ProgressBar from '../misc/ProgressBar';
 import Link from '../misc/Link';
 import InfoList from '../misc/InfoList';
 import LoadingIndicator from '../misc/LoadingIndicator';
@@ -51,6 +53,13 @@ export default class AssignedRoutePane extends PaneBase {
                         href: '/prints/assigned_route/' + orgId + ',' + ar.id,
                         target: '_blank' },
                 ]}/>,
+                <div key="progress" className="AssignedRoutePane-progress">
+                    <Msg tagName="h3" id="panes.assignedRoute.progress.h"/>
+                    <ProgressBar progress={ 0.5 }/>
+                    <Button labelMsg="panes.assignedRoute.progress.updateButton"
+                        onClick={ () => this.openPane('assignedroutevisits', ar.id) }
+                        />
+                </div>,
                 <div key="assignee" className="AssignedRoutePane-assignee">
                     <Msg tagName="h3" id="panes.assignedRoute.assignee.h"/>
                     <PersonSelectWidget

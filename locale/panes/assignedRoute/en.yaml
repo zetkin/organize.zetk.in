@@ -5,4 +5,7 @@ assignee:
         the route for now, you don't have to pick an assignee.
 info:
     print: Print for canvasser
+progress:
+    h: Progress
+    updateButton: Update progress
 title: Assigned route
