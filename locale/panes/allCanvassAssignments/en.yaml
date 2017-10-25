@@ -1,4 +1,5 @@
 addButton: Add assignment
+assignButton: Assign route
 viewModes:
     assignment: Assignments
     route: Assigned routes

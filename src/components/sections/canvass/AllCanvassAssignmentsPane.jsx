@@ -88,15 +88,16 @@ export default class AllCanvassAssignmentsPane extends RootPaneBase {
             <Button key="addButton"
                 className="AllCanvassAssignmentsPane-addButton"
                 labelMsg="panes.allCanvassAssignments.addButton"
-                onClick={ this.onAddClick.bind(this) }/>,
+                onClick={ () => this.openPane('addcanvassassignment') }/>,
+            <Button key="assignButton"
+                className="AllCanvassAssignmentsPane-assignButton"
+                labelMsg="panes.allCanvassAssignments.assignButton"
+                onClick={ () => this.openPane('assignroute') }
+                />,
         ];
     }
 
     onFiltersApply(filters) {
-    }
-
-    onAddClick() {
-        this.openPane('addcanvassassignment');
     }
 
     onAssignmentClick(item) {
