@@ -7,5 +7,9 @@ info:
     print: Print for canvasser
 progress:
     h: Progress
+    label: |-
+        { visited } of { allocated, plural,
+            =1 {1 household}
+            other {# households}} visited
     updateButton: Update progress
 title: Assigned route

@@ -12,6 +12,10 @@ import InfoList from '../misc/InfoList';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PersonSelectWidget from '../misc/PersonSelectWidget';
 import { getListItemById } from '../../utils/store';
+import {
+    retrieveAssignedRoute,
+    retrieveAssignedRouteStats,
+} from '../../actions/route';
 
 
 const mapStateToProps = (state, props) => ({
@@ -26,6 +30,10 @@ const mapStateToProps = (state, props) => ({
 export default class AssignedRoutePane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
+
+        let arId = this.getParam(0);
+        this.props.dispatch(retrieveAssignedRoute(arId));
+        this.props.dispatch(retrieveAssignedRouteStats(arId));
     }
 
     getRenderData() {
@@ -43,6 +51,29 @@ export default class AssignedRoutePane extends PaneBase {
             let ar = data.assignedRouteItem.data;
             let orgId = this.props.orgId;
 
+            let progressContent = <LoadingIndicator/>;
+            if (ar && ar.statsItem && ar.statsItem.data) {
+                let stats = {
+                    allocated: ar.statsItem.data.num_households_allocated,
+                    visited: ar.statsItem.data.num_households_visited,
+                };
+
+                let progress = stats.visited / stats.allocated;
+
+                progressContent = [
+                    <ProgressBar key="bar"
+                        progress={ progress }/>,
+                    <Msg key="label" tagName="p"
+                        id="panes.assignedRoute.progress.label"
+                        values={ stats }
+                        />,
+                    <Button key="updateButton"
+                        labelMsg="panes.assignedRoute.progress.updateButton"
+                        onClick={ () => this.openPane('assignedroutevisits', ar.id) }
+                        />,
+                ];
+            }
+
             return [
                 <InfoList key="info" data={[
                     { name: 'assignment', value: ar.assignment.title,
@@ -55,10 +86,7 @@ export default class AssignedRoutePane extends PaneBase {
                 ]}/>,
                 <div key="progress" className="AssignedRoutePane-progress">
                     <Msg tagName="h3" id="panes.assignedRoute.progress.h"/>
-                    <ProgressBar progress={ 0.5 }/>
-                    <Button labelMsg="panes.assignedRoute.progress.updateButton"
-                        onClick={ () => this.openPane('assignedroutevisits', ar.id) }
-                        />
+                    { progressContent }
                 </div>,
                 <div key="assignee" className="AssignedRoutePane-assignee">
                     <Msg tagName="h3" id="panes.assignedRoute.assignee.h"/>
