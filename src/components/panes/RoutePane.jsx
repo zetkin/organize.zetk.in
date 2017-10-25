@@ -122,11 +122,14 @@ export default class RoutePane extends PaneBase {
 
             return [
                 routeInfo,
+
+                /*
                 <div key="owner" className="RoutePane-owner">
                     <Msg tagName="h3" id="panes.route.owner.h"/>
                     <PersonSelectWidget person={ route.owner }
                         onSelect={ this.onOwnerSelect.bind(this) }/>
                 </div>,
+                */
 
                 <div key="tags" className="RoutePane-tags">
                     <Msg tagName="h3" id="panes.route.tags.h"/>

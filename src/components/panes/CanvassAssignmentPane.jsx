@@ -21,7 +21,8 @@ const mapStateToProps = (state, props) => {
     let assignmentId = props.paneData.params[0];
 
     return {
-        routeList: state.routes.routesByAssignment[assignmentId],
+        // TODO: Add this back at some point
+        //routeList: state.routes.routesByAssignment[assignmentId],
         assignmentItem: assignmentList?
             getListItemById(assignmentList, assignmentId) : null,
     };
@@ -32,7 +33,8 @@ export default class CanvassAssignmentPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
         this.props.dispatch(retrieveCanvassAssignment(this.getParam(0)));
-        this.props.dispatch(retrieveCanvassAssignmentRoutes(this.getParam(0)));
+        // TODO: Add this back at some point
+        //this.props.dispatch(retrieveCanvassAssignmentRoutes(this.getParam(0)));
     }
 
     getRenderData() {
@@ -85,7 +87,8 @@ export default class CanvassAssignmentPane extends PaneBase {
 
             return [
                 canvassAssignmentInfo,
-                routesSection,
+                // TODO: Add this back at some point
+                //routesSection,
             ];
         }
         else {
