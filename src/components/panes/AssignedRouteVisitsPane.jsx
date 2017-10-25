@@ -56,10 +56,11 @@ export default class AssignedRouteVisitsPane extends PaneBase {
             this.props.dispatch(retrieveAssignedRoute(this.getParam(0)));
         }
         else if (!this.props.addressItems) {
-            let routeId = this.props.assignedRouteItem.route.id;
+            let arId = this.props.assignedRouteItem.data.id;
+            let routeId = this.props.assignedRouteItem.data.route.id;
+
             this.props.dispatch(retrieveRouteAddresses(routeId));
-            // TODO: Only retrieve relevant visits
-            this.props.dispatch(retrieveHouseholdVisits());
+            this.props.dispatch(retrieveHouseholdVisits(arId));
         }
 
         // TODO: Move this until after all data has been fetched?
@@ -73,10 +74,11 @@ export default class AssignedRouteVisitsPane extends PaneBase {
         let curRouteItem = this.props.assignedRouteItem;
 
         if (!!curRouteItem && curRouteItem != prevRouteItem) {
+            let arId = curRouteItem.data.id;
             let routeId = curRouteItem.data.route.id;
+
             this.props.dispatch(retrieveRouteAddresses(routeId));
-            // TODO: Only retrieve relevant visits
-            this.props.dispatch(retrieveHouseholdVisits());
+            this.props.dispatch(retrieveHouseholdVisits(arId));
         }
     }
 
