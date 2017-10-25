@@ -99,6 +99,7 @@ export default function addresses(state = null, action) {
         let addresses = action.payload.data.data;
 
         return Object.assign({}, state, {
+            addressList: updateOrAddListItems(state.addressList, addresses),
             addressesByRoute: Object.assign({}, state.addressesByRoute, {
                 [routeId]: addresses.map(a => a.id),
             }),

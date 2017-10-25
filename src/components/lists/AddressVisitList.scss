@@ -1,0 +1,13 @@
+.AddressVisitList {
+    .ListHeader {
+        li:nth-child(2) {
+            float: right;
+            width: 20em;
+        }
+    }
+
+    .ListItem:hover {
+        cursor: default;
+        background-color: white;
+    }
+}

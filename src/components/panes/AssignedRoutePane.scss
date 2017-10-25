@@ -1,0 +1,34 @@
+.AssignedRoutePane {
+    .InfoList {
+        .InfoListItem-route {
+            &:before {
+                @include icon($fa-var-map-signs);
+            }
+        }
+
+        .InfoListItem-assignment {
+            &:before {
+                @include icon($fa-var-bullseye);
+            }
+        }
+
+        .InfoListItem-print {
+            &:before {
+                @include icon($fa-var-print);
+            }
+        }
+    }
+
+    div.AssignedRoutePane-progress {
+        border-bottom: 1px solid darken($c-ui-bg, 10);
+        padding-bottom: 2em;
+    }
+
+    div.AssignedRoutePane-assignee {
+        border-bottom: 1px solid darken($c-ui-bg, 10);
+
+        p {
+            font-size: 1.1em;
+        }
+    }
+}

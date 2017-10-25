@@ -31,6 +31,18 @@
                 @include icon($fa-var-home);
             }
         }
+
+        .InfoListItem-info {
+            &:before {
+                @include icon($fa-var-info-circle);
+            }
+        }
+
+        .InfoListItem-edit {
+            &:before {
+                @include icon($fa-var-pencil);
+            }
+        }
     }
 
     .RoutePane-editLink {

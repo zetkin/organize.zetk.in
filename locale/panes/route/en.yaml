@@ -4,6 +4,7 @@ info:
         {count, plural,
           =1 {One address}
           other {# addresses}}
+    editLink: Edit info
     households: |-
         {count, plural,
           =1 {One household}

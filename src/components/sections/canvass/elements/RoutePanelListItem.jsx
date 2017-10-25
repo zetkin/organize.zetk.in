@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage as Msg } from 'react-intl';
 
 import LoadingIndicator from '../../../misc/LoadingIndicator';
+import Route from '../../../misc/elements/Route';
 import { retrieveRouteAddresses } from '../../../../actions/address';
 
 
@@ -15,8 +16,6 @@ const mapStateToProps = (state, props) => ({
 export default class RoutePanelListItem extends React.Component {
     render() {
         let route = this.props.route;
-        let labelMsg = this.props.labelMsg
-            || 'panes.allRoutes.routePanel.routeList.label';
 
         let addressCount = <LoadingIndicator/>;
         if (this.props.addresses) {
@@ -37,7 +36,7 @@ export default class RoutePanelListItem extends React.Component {
                 onMouseOver={ this.props.onMouseOver }
                 onMouseOut={ this.props.onMouseOut }>
                 <h3 className="RoutePanelListItem-title">
-                    <Msg id={ labelMsg } values={{ id: route.id }}/>
+                    <Route route={ route }/>
                 </h3>
                 <span className="RoutePanelListItem-addrCount">
                     { addressCount }

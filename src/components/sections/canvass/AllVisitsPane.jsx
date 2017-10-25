@@ -4,9 +4,14 @@ import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 
 import RootPaneBase from '../RootPaneBase';
 import ViewSwitch from '../../misc/ViewSwitch';
+import HouseholdVisitList from '../../lists/HouseholdVisitList';
+import AddressVisitList from '../../lists/AddressVisitList';
+import { retrieveHouseholdVisits } from '../../../actions/visit';
 
 
 const mapStateToProps = state => ({
+    addressVisitList: state.visits.addressVisitList,
+    householdVisitList: state.visits.householdVisitList,
 });
 
 @connect(mapStateToProps)
@@ -17,11 +22,12 @@ export default class AllVisitsPane extends RootPaneBase {
 
         this.state = {
             filters: {},
-            viewMode: 'route',
+            viewMode: 'address',
         };
     }
 
     componentDidMount() {
+        this.props.dispatch(retrieveHouseholdVisits());
     }
 
     getRenderData() {
@@ -34,9 +40,10 @@ export default class AllVisitsPane extends RootPaneBase {
     }
 
     getPaneTools(data) {
+        /*
         let viewModes = {
-            browse: 'panes.allVisits.viewModes.route',
-            select: 'panes.allVisits.viewModes.address',
+            address: 'panes.allVisits.viewModes.address',
+            household: 'panes.allVisits.viewModes.household',
         };
 
         return [
@@ -45,10 +52,28 @@ export default class AllVisitsPane extends RootPaneBase {
                 onSwitch={ this.onViewStateSwitch.bind(this) }
                 />,
         ]
+        */
     }
 
     renderPaneContent(data) {
-        return null;
+        if (this.state.viewMode == 'household') {
+            if (this.props.householdVisitList) {
+                return (
+                    <HouseholdVisitList
+                        visitList={ this.props.householdVisitList }
+                        />
+                );
+            }
+        }
+        else if (this.state.viewMode == 'address') {
+            if (this.props.addressVisitList) {
+                return (
+                    <AddressVisitList
+                        visitList={ this.props.addressVisitList }
+                        />
+                );
+            }
+        }
     }
 
     onViewStateSwitch(state) {

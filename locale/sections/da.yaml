@@ -21,7 +21,7 @@ subSections:
         playback: Afspil
     canvass:
         assignments: Opgaver
-        routes: Ruter
+        routes: Rutekort
         visits: Besøgslog
     dialog:
         assignments: Ringeopgave

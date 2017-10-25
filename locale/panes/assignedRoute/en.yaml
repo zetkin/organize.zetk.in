@@ -1,0 +1,15 @@
+assignee:
+    h: Assignee
+    p: |
+        Only the assignee can canvass the route. If you just want to reserve
+        the route for now, you don't have to pick an assignee.
+info:
+    print: Print for canvasser
+progress:
+    h: Progress
+    label: |-
+        { visited } of { allocated, plural,
+            =1 {1 household}
+            other {# households}} visited
+    updateButton: Update progress
+title: Assigned route

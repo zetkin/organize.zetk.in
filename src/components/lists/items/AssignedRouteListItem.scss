@@ -1,0 +1,41 @@
+.AssignedRouteListItem {
+    &:after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+
+    .AssignedRouteListItem-info {
+        float: left;
+
+        span {
+            display: block;
+        }
+
+        .Route {
+            margin: 0 0 0.5em;
+            font-weight: bold;
+        }
+    }
+
+    .AssignedRouteListItem-assignee {
+        float: right;
+        width: 19em;
+
+        .Avatar {
+            width: 3em;
+            float: left;
+            margin: 0 0.5em 0 0;
+        }
+
+        span {
+            color: $c-ui-dark;
+            font-style: italic;
+        }
+
+        .AssignedRouteListItem-assigneeName {
+            color: $c-text;
+            font-style: normal;
+        }
+    }
+}

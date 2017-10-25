@@ -15,6 +15,9 @@ import AddSurveyQuestionPane from './AddSurveyQuestionPane';
 import AddSurveyTextBlockPane from './AddSurveyTextBlockPane';
 import AddQueryPane from './AddQueryPane';
 import AddressPane from './AddressPane';
+import AssignRoutePane from './AssignRoutePane';
+import AssignedRoutePane from './AssignedRoutePane';
+import AssignedRouteVisitsPane from './AssignedRouteVisitsPane';
 import BulkOpPane from './BulkOpPane';
 import CallPane from './CallPane';
 import CallAssignmentPane from './CallAssignmentPane';
@@ -32,6 +35,7 @@ import EditLocationTagPane from './EditLocationTagPane';
 import EditPersonPane from './EditPersonPane';
 import EditPersonTagPane from './EditPersonTagPane';
 import EditQueryPane from './EditQueryPane';
+import EditRoutePane from './EditRoutePane';
 import EditSurveyPane from './EditSurveyPane';
 import EditSurveyQuestionPane from './EditSurveyQuestionPane';
 import EditSurveyTextBlockPane from './EditSurveyTextBlockPane';
@@ -72,6 +76,9 @@ var _panes = {
     'addsurveytextblock': AddSurveyTextBlockPane,
     'addquery': AddQueryPane,
     'address': AddressPane,
+    'assignroute': AssignRoutePane,
+    'assignedroute': AssignedRoutePane,
+    'assignedroutevisits': AssignedRouteVisitsPane,
     'bulk': BulkOpPane,
     'call': CallPane,
     'callassignment': CallAssignmentPane,
@@ -89,6 +96,7 @@ var _panes = {
     'editperson': EditPersonPane,
     'editpersontag': EditPersonTagPane,
     'editquery': EditQueryPane,
+    'editroute': EditRoutePane,
     'editsurvey': EditSurveyPane,
     'editsurveyquestion': EditSurveyQuestionPane,
     'editsurveytextblock': EditSurveyTextBlockPane,
