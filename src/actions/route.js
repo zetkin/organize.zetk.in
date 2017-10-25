@@ -38,6 +38,20 @@ export function retrieveAssignedRoutes() {
     };
 }
 
+export function retrieveAssignedRoute(arId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_ASSIGNED_ROUTE,
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'assigned_routes', arId).get(),
+            },
+        });
+    };
+}
+
 export function createRoute(addressIds, paneId) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
