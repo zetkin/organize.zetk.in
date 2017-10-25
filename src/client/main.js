@@ -60,6 +60,45 @@ window.onload = function() {
     // Route when history state changes
     store = subscribeToUrlChanges(store);
 
-    ReactDOM.render(React.createElement(IntlReduxProvider, { store },
-        React.createElement(Component, props)), document);
+    try {
+        ReactDOM.render(React.createElement(IntlReduxProvider, { store },
+            React.createElement(Component, props)), document);
+    }
+    catch (err) {
+        // TODO: Report error
+        const RDS = require('react-dom/server');
+        window.serverHtml = document.documentElement.outerHTML;
+        window.clientHtml = RDS.renderToString(React.createElement(IntlReduxProvider, { store },
+            React.createElement(Component, props)), document);
+
+        // Strip <html> and checksum
+        let serverHtml = window.serverHtml
+            .substr(window.serverHtml.indexOf('<body'))
+            .replace('/>', '>');
+
+        let clientHtml = window.clientHtml
+            .substr(window.clientHtml.indexOf('<body'))
+            .replace('/>', '>');
+
+        // Find inconsistency
+        let length = Math.min(serverHtml.length, clientHtml.length);
+        let mismatchIndex = null;
+        for (let i = 0; i < length; i++) {
+            if (serverHtml[i] != clientHtml[i]) {
+                mismatchIndex = i;
+                break;
+            }
+        }
+
+        if (mismatchIndex !== null) {
+            console.warn('Server/client inconsistency near:');
+            console.warn('Client: ', clientHtml.substr(mismatchIndex - 40, 80));
+            console.warn('Server: ', serverHtml.substr(mismatchIndex - 40, 80));
+            console.warn('Full HTML available in window.serverHtml and window.clientHtml');
+            console.error(err);
+        }
+        else {
+            console.error(err);
+        }
+    }
 };
