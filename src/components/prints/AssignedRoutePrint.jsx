@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage as Msg } from 'react-intl';
 
 import Avatar from '../misc/Avatar';
+import Route from '../misc/elements/Route';
 import AddressMap from '../sections/canvass/elements/AddressMap';
 import InfoList from '../misc/InfoList';
 
@@ -135,6 +136,7 @@ function SummaryPage(props) {
 
     return (
         <div className="AssignedRoutePrint-introPage">
+            <h1><Route route={ props.route }/></h1>
             <div className="AssignedRoutePrint-info">
                 <InfoList data={[
                     { name: 'radius', msgId: 'prints.assignedRoute.info.radius',

@@ -50,8 +50,16 @@
     }
 
     .AssignedRoutePrint-introPage {
+        h1 {
+            font-size: 1.2em;
+            text-align: center;
+            font-weight: bold;
+        }
+
         .AssignedRoutePrint-info {
             .InfoList {
+                padding-bottom: 1em;
+
                 .InfoListItem {
                     width: 30%;
                     float: left;
@@ -89,7 +97,7 @@
             .AssignedRoutePrint-assigneePhone,
             .AssignedRoutePrint-assigneeEmail {
                 display: inline-block;
-                margin: 0.5em 0;
+                margin: 0 0 0.5em;
 
                 span {
                     display: block;
@@ -178,6 +186,8 @@
             .InfoList {
                 float: right;
                 border-bottom-width: 0;
+                padding: 0;
+                margin: 0 0 1em;
 
                 .InfoListItem-name {
                     margin-top: 0;
