@@ -38,15 +38,31 @@ export function retrieveAssignedRoutes() {
     };
 }
 
-export function retrieveAssignedRoute(arId) {
+export function retrieveAssignedRoute(id) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
 
         dispatch({
             type: types.RETRIEVE_ASSIGNED_ROUTE,
+            meta: { id },
             payload: {
                 promise: z.resource('orgs', orgId,
-                    'assigned_routes', arId).get(),
+                    'assigned_routes', id).get(),
+            },
+        });
+    };
+}
+
+export function retrieveAssignedRouteStats(id) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_ASSIGNED_ROUTE_STATS,
+            meta: { id },
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'assigned_routes', id, 'stats').get(),
             },
         });
     };
