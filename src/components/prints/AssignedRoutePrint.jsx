@@ -66,6 +66,8 @@ export default class AssignedRoutePrint extends React.Component {
                         <InstructionsPage
                             getNextPageNumber={ getNextPageNumber }
                             assignment={ this.props.assignment }
+                            route={ this.props.route }
+                            ar={ this.props.ar }
                             />
                         <AddressPages
                             getNextPageNumber={ getNextPageNumber }
@@ -180,13 +182,29 @@ function InstructionsPage(props) {
 
     if (instructions) {
         let pageNumber = props.getNextPageNumber();
+        let routeDescription = null;
+
+        if (props.route.info_text) {
+            routeDescription = (
+                <div className="AssignedRoutePrint-routeDescription">
+                    <h1><Route route={ props.route }/></h1>
+                    <p>{ props.route.info_text }</p>
+                </div>
+            );
+        }
 
         return (
             <div className="AssignedRoutePrint-instructionsPage">
                 <h1>{ props.assignment.title }</h1>
-                <div className="AssignmentRoutePrint-instructions"
+                <div className="AssignedRoutePrint-assignmentDescription">
+                    { props.assignment.description }
+                </div>
+
+                <div className="AssignedRoutePrint-instructions"
                     dangerouslySetInnerHTML={{ __html: instructions }}
                     />
+
+                { routeDescription }
 
                 <PageFooter pageNumber={ pageNumber }
                     route={ props.route }

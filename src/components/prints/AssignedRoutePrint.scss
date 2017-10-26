@@ -3,6 +3,13 @@
     background-color: transparent;
     position: absolute;
 
+    @media print {
+      @page {
+            size: 210mm 297mm;
+            margin: 10mm;
+        }
+    }
+
     @media screen {
         background-color: #eee;
         overflow-y: scroll;
@@ -12,8 +19,10 @@
     .AssignedRoutePrint-instructionsPage,
     .AssignedRoutePrint-addrPage {
         position: relative;
-        width: 100%;
+        max-width: 200mm;
+        height: 275mm;
         page-break-inside: avoid;
+        page-break-after: always;
 
         @media screen {
             max-width: 210mm;
@@ -25,9 +34,14 @@
     }
 
     .AssignedRoutePrint-footer {
-        width: 98%;
+        position: absolute;
+        bottom: 0;
+        width: 94%;
         margin: 2em auto 0;
-        page-break-after: always;
+
+        @media screen {
+            bottom: 1em;
+        }
 
         .AssignedRoutePrint-route {
             float: left;
@@ -233,7 +247,37 @@
         .AddressMap {
             margin-top: 2em;
             width: 100%;
-            height: 180mm;
+            height: 170mm;
+        }
+    }
+
+    .AssignedRoutePrint-instructionsPage {
+        .AssignedRoutePrint-assignmentDescription {
+            font-size: 1.4em;
+            margin: 0 0 2em;
+        }
+
+        .AssignedRoutePrint-instructions {
+            column-count: 2;
+            column-gap: 3em;
+
+            > * {
+                margin: 0 0 1em;
+                break-inside: avoid;
+            }
+
+            ul {
+                padding-left: 2em;
+                li {
+                    list-style-type: disc;
+                }
+            }
+        }
+
+        .AssignedRoutePrint-routeDescription {
+            p {
+                font-size: 1.4em;
+            }
         }
     }
 
@@ -247,6 +291,7 @@
 
             p {
                 columns: 2;
+                column-gap: 3em;
             }
         }
 

@@ -21,6 +21,8 @@ info:
 header:
     page: p. { pageNumber }
     route: Route { route }
+routeDescription:
+    h: 'Route information:'
 title: Print assigned route
 status:
     assigned: Handed out (date/time)
