@@ -34,9 +34,9 @@ export default class PeopleListPane extends RootPaneBase {
     constructor(props) {
         super(props);
 
-        this.state = {
+        this.state = Object.assign({}, this.state, {
             selectedQueryId: undefined,
-        };
+        });
     }
 
     componentWillReceiveProps(nextProps) {

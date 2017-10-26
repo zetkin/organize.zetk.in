@@ -44,10 +44,9 @@ export default class AllRoutesPane extends RootPaneBase {
     constructor(props) {
         super(props);
 
-        this.state = {
-            filters: {},
+        this.state = Object.assign({}, this.state, {
             mapMode: 'browse',
-        };
+        });
 
         this.selectionId = null;
         this.filteredAddresses = this.getFilteredAddresses();

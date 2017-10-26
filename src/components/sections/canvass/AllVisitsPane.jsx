@@ -20,10 +20,9 @@ export default class AllVisitsPane extends RootPaneBase {
     constructor(props) {
         super(props);
 
-        this.state = {
-            filters: {},
+        this.state = Object.assign({}, this.state, {
             viewMode: 'address',
-        };
+        });
     }
 
     componentDidMount() {
