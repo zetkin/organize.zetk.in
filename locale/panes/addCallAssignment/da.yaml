@@ -1,21 +1,17 @@
 breadcrumbs:
-    form: Indstilninger
-    goal: |-
-        Målsætning{goalType, select,
-          inform {: Informere}
-          mobilize {: Mobilisere}
-          stayintouch {: Hold kontakten}
-          custom {: Intet template}
-          other {}
-        }
-    target: |-
-        Målgruppe{targetType, select,
-          allTarget {: Ring alle}
-          tagTarget {: Ring alle med en bestemt etiket}
-          randomTarget {: Ring tilfældigt udvalgte}
-          custom {: Intet template}
-          other {}
-        }
+    formLabel: Indstilninger
+    goalLabel: Målsætning
+    targetLabel: Målgruppe
+    goals:
+        inform: Informere
+        mobilize: Mobilisere
+        stayintouch: Hold kontakten
+        custom: Intet template
+    targets:
+        allTarget: Ring alle
+        tagTarget: Ring alle med en bestemt etiket
+        randomTarget: Ring tilfældigt udvalgte
+        custom: Intet template
 form:
     instructions: >-
         3. skridt ud af 3. Udfyld titel, beskrivelse og indstilninger for
@@ -26,15 +22,17 @@ goal:
     instructions: >-
         2. skridt ud af 3. Vælg formål med rundringningen for automatisk at
         oprette regler for udvælgelse 
-    saveButton: >-
-        Opret rundringning for at informere, opret rundringning for at
-        mobilisere, opret rundringning for at holde kontakten
+    saveButton:
+        inform: Opret rundringning for at informere
+        mobilize: Opret rundringning for at mobilisere
+        stayintouch: Opret rundringning for at holde kontakten
 target:
     customLink: Definer regler for udvælgelse manuelt på et senere tidspunkt
     instructions: 1. skridt ud af 3. Vælg målgruppe for rundringningen
-    saveButton: >-
-        Vælg alle som målgruppe, vælg målgruppe ud fra etiketter, vælg en
-        tilfældig målgruppe
+    saveButton:
+        allTarget: Vælg alle som målgruppe
+        tagTarget: Vælg målgruppe ud fra etiketter
+        randomTarget: Tilfældig målgruppe
 templates:
     allTarget:
         instructions: Målgruppen er alle personer i databasen
@@ -59,7 +57,7 @@ templates:
         title: Hold kontakten
     survey:
         instructions: Vælg hvilket spørgeskema du vil indsamle besvarelser på.
-        title: Indsaml spørgeskemabesvarelser
+        title: Indsaml spørgeskema
     tagTarget:
         instructions: >-
             Vælg en etiket. Målgruppen kommer til at bestå af alle personer med
