@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 
+import { stringFromAddress } from '../../../../utils/location';
 import {
     addToSelection,
     removeFromSelection,
@@ -121,7 +122,7 @@ export default class AddressMap extends React.Component {
                     icon: icon,
                     position: latLng,
                     map: this.map,
-                    title: addr.title,
+                    title: stringFromAddress(addr),
                     zIndex: 0,
                 });
 
