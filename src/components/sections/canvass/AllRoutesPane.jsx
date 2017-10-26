@@ -94,8 +94,11 @@ export default class AllRoutesPane extends RootPaneBase {
         };
 
         if (this.props.streetList && this.props.streetList.items) {
-            this.props.streetList.items.forEach(item => {
-                streetOptions[item.data.id] = item.data.title;
+            let addressItems = this.props.streetList.items.concat()
+                .sort((i0, i1) => i0.data.title.localeCompare(i1.data.title));
+
+            addressItems.forEach(i => {
+                streetOptions[i.data.id] = i.data.title;
             });
         }
 
