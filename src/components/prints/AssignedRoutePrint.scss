@@ -204,15 +204,15 @@
 
         .AssignedRoutePrint-assignee {
             margin: 1em 0;
-            width: 45%;
 
             .Avatar {
                 width: 24mm;
                 float: left;
+                margin-right: 2em;
             }
 
             .InfoList {
-                float: right;
+                float: left;
                 border-bottom-width: 0;
                 padding: 0;
                 margin: 0 0 1em;
