@@ -12,7 +12,7 @@ export default class OrgUserMenu extends React.Component {
         let userStore = this.props.user;
 
         const wwwUrl =  '//www.' + process.env.ZETKIN_DOMAIN;
-        const dbUrl = wwwUrl + '/dashboard';
+        const myPageUrl = wwwUrl + '/dashboard';
         const settingsUrl = wwwUrl + '/settings';
 
         const membership = userStore.activeMembership;
@@ -25,7 +25,7 @@ export default class OrgUserMenu extends React.Component {
                 <Avatar person={ profile }/>
                 <div className="OrgUserMenu-info">
                     <div className="OrgUserMenu-user">
-                        <a href={ dbUrl }>
+                        <a href={ myPageUrl }>
                             <span className="OrgUserMenu-name">
                                 { profile.name }
                             </span>
@@ -34,14 +34,19 @@ export default class OrgUserMenu extends React.Component {
                     </div>
                     <ul>
                         <li>
-                            <Link className="OrgUserMenu-logout"
-                                href="/logout"
-                                msgId="header.userMenu.logOutLink"/>
+                            <Link className="OrgUserMenu-myPage"
+                                href={ myPageUrl }
+                                msgId="header.userMenu.myPageLink"/>
                         </li>
                         <li>
                             <Link className="OrgUserMenu-account"
                                 href={ settingsUrl }
                                 msgId="header.userMenu.accountLink"/>
+                        </li>
+                        <li>
+                            <Link className="OrgUserMenu-logout"
+                                href="/logout"
+                                msgId="header.userMenu.logOutLink"/>
                         </li>
                         <li>
                             <OrgPicker memberships={ memberships }

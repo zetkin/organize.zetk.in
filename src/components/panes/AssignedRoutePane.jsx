@@ -85,10 +85,12 @@ export default class AssignedRoutePane extends PaneBase {
                         href: '/prints/assigned_route/' + orgId + ',' + ar.id,
                         target: '_blank' },
                 ]}/>,
+                /*
                 <div key="progress" className="AssignedRoutePane-progress">
                     <Msg tagName="h3" id="panes.assignedRoute.progress.h"/>
                     { progressContent }
                 </div>,
+                */
                 <div key="assignee" className="AssignedRoutePane-assignee">
                     <Msg tagName="h3" id="panes.assignedRoute.assignee.h"/>
                     <PersonSelectWidget

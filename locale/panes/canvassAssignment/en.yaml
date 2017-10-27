@@ -1,2 +1,5 @@
 editLink: Edit
+instructions:
+    h: Instructions
+    editLink: Edit instructions
 routesLink: Select routes

@@ -66,17 +66,35 @@ export default class AddCallAssignmentPane extends PaneBase {
         let breadcrumbs = (
             <ul key="breadcrumbs" className="AddCallAssignmentPane-breadcrumbs">
             { STEPS.map((step, idx) => {
-                let msgId = 'panes.addCallAssignment.breadcrumbs.' + step;
                 let classes = cx('AddCallAssignmentPane-breadcrumb', {
                     past: idx < stepIdx,
                     current: idx === stepIdx,
                     future: idx > stepIdx,
                 });
 
+                let labelMsgId = 'panes.addCallAssignment.breadcrumbs.' + step + 'Label';
+
+                let value = null;
+                let valueMsgId = 'panes.addCallAssignment.breadcrumbs.';
+                if (step == 'goal' && this.state.goalType) {
+                    valueMsgId += 'goals.' + this.state.goalType;
+                    value = (
+                        <Msg id={ valueMsgId }/>
+                    );
+                }
+                else if (step == 'target' && this.state.targetType) {
+                    valueMsgId += 'targets.' + this.state.targetType;
+                    value = (
+                        <Msg id={ valueMsgId }/>
+                    );
+                }
+
                 return (
-                    <li key={ step } className={ classes }
-                        onClick={ this.onStepClick.bind(this, step) }>
-                        <Msg id={ msgId } values={ this.state }/>
+                    <li key={ step } className={ classes }>
+                        <a onClick={ this.onStepClick.bind(this, step) }>
+                            <Msg id={ labelMsgId }/>
+                            { value }
+                        </a>
                     </li>
                 );
             }) }
@@ -165,10 +183,13 @@ export default class AddCallAssignmentPane extends PaneBase {
     renderPaneFooter(data) {
         let step = this.state.step;
         let msgId = 'panes.addCallAssignment.' + step + '.saveButton';
-        let msgValues = {
-            goalType: this.state.goalType,
-            targetType: this.state.targetType,
-        };
+
+        if (step == 'goal') {
+            msgId += '.' + this.state.goalType;
+        }
+        else if (step == 'target') {
+            msgId += '.' + this.state.targetType;
+        }
 
         let enabled = true;
         if (step == 'target') {
@@ -184,7 +205,7 @@ export default class AddCallAssignmentPane extends PaneBase {
         if (enabled) {
             return (
                 <Button className="AddCallAssignmentPane-saveButton"
-                    labelMsg={ msgId } labelValues={ msgValues }
+                    labelMsg={ msgId }
                     onClick={ this.onSubmit.bind(this) }/>
             );
         }

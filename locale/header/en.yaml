@@ -18,4 +18,5 @@ search:
 userMenu:
     accountLink: Account settings
     logOutLink: Log out
+    myPageLink: My page
     switchOrganization: Switch organization

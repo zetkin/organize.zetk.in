@@ -51,6 +51,9 @@
     .OrgUserMenu-account:before {
         @include icon($fa-var-user);
     }
+    .OrgUserMenu-myPage:before {
+        @include icon($fa-var-home);
+    }
     .OrgUserMenu-activeOrg:before {
         @include icon($fa-var-sitemap);
     }

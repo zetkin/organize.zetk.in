@@ -13,6 +13,7 @@ export default class RootPaneBase extends React.Component {
         this.state = {
             scrolled: false,
             showFilters: false,
+            pendingFilters: {},
             filters: {}
         };
     }
@@ -53,7 +54,7 @@ export default class RootPaneBase extends React.Component {
         });
 
         let filterDrawer = null;
-        let filters = this.getPaneFilters(data, this.state.filters);
+        let filters = this.getPaneFilters(data, this.state.pendingFilters);
         var toolbar = this.getPaneTools(data);
 
         if (filters || toolbar) {
@@ -69,7 +70,7 @@ export default class RootPaneBase extends React.Component {
                         <Button key="filterButton"
                             className="RootPaneBase-filterApplyButton"
                             labelMsg="panes.filterApplyButton"
-                            onClick={ this.onFilterButtonClick.bind(this) }/>
+                            onClick={ this.onFilterApplyButtonClick.bind(this) }/>
                         </div>
                     </div>
                 );
@@ -179,7 +180,7 @@ export default class RootPaneBase extends React.Component {
 
     onFilterChange(name, value) {
         this.setState({
-            filters: Object.assign({}, this.state.filters, {
+            pendingFilters: Object.assign({}, this.state.pendingFilters, {
                 [name]: value,
             }),
         });
@@ -187,12 +188,24 @@ export default class RootPaneBase extends React.Component {
 
     onFilterButtonClick() {
         let showFilters = !this.state.showFilters;
+        let state = { showFilters };
 
-        this.setState({ showFilters });
-
-        if (!showFilters && this.onFiltersApply) {
-            this.onFiltersApply(this.state.filters);
+        if (showFilters) {
+            state.pendingFilters = Object.assign({}, this.state.filters);
         }
+
+        this.setState(state);
+    }
+
+    onFilterApplyButtonClick() {
+        this.setState({
+            showFilters: false,
+            filters: Object.assign({}, this.state.filters, this.state.pendingFilters),
+        }, () => this.onFiltersApply(this.state.filters));
+    }
+
+    onFiltersApply(filters) {
+        // To be overridden
     }
 
     onCloseClick(ev) {

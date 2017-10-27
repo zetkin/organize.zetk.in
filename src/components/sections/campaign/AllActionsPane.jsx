@@ -23,9 +23,9 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
     constructor(props) {
         super(props);
 
-        this.state = {
+        this.state = Object.assign({}, this.state, {
             viewMode: 'cal',
-        };
+        });
     }
 
     componentDidMount() {

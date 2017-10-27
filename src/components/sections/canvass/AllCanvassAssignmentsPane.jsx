@@ -22,10 +22,9 @@ export default class AllCanvassAssignmentsPane extends RootPaneBase {
     constructor(props) {
         super(props);
 
-        this.state = {
-            filters: {},
+        this.state = Object.assign({}, this.state, {
             viewMode: 'assignment',
-        };
+        });
     }
 
     componentWillUpdate(nextProps, nextState) {

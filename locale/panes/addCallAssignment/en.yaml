@@ -1,21 +1,18 @@
 breadcrumbs:
-    form: Settings
-    goal: |-
-        Goal{goalType, select,
-            inform {: Inform}
-            mobilize {: Mobilize for campaign}
-            stayintouch {: Stay in touch}
-            custom {: No template}
-            other {}
-        }
-    target: |-
-        Target group{targetType, select,
-            allTarget {: Everyone}
-            tagTarget {: Everyone with a certain tag}
-            randomTarget {: Random selection}
-            custom {: No template}
-            other {}
-        }
+    formLabel: Settings
+    goalLabel: Goal
+    targetLabel: Target group
+    goals:
+        custom: No template
+        inform: Inform
+        mobilize: Mobilize for campaign
+        stayintouch: Stay in touch
+        survey: Survey
+    targets:
+        allTarget: Everyone
+        custom: No template
+        randomTarget: Random selection
+        tagTarget: By tag
 form:
     instructions: >-
         Step 3 of 3. Define the title, description and settings for the
@@ -26,22 +23,18 @@ goal:
     instructions: >-
         Step 2 of 3. Select the goal of the assignment to create goal query
         automatically.
-    saveButton: |-
-        {goalType, select,
-            inform {Create assignment to inform}
-            mobilize {Create assignment to mobilize}
-            survey {Create assignment to survey targets}
-            stayintouch {Create assignment to stay in touch}
-        }
+    saveButton:
+        inform: Create assignment to inform
+        mobilize: Create assignment to mobilize
+        survey: Create assignment to survey targets
+        stayintouch: Create assignment to stay in touch
 target:
     customLink: Define selection manually later
     instructions: Step 1 of 3. Define the target group of the assignment.
-    saveButton: |-
-        {targetType, select,
-            allTarget {Select everyone as target group}
-            tagTarget {Select target group based on tag}
-            randomTarget {Select random target group}
-        }
+    saveButton:
+        allTarget: Select everyone as target group
+        tagTarget: Select target group based on tag
+        randomTarget: Select random target group
 templates:
     allTarget:
         instructions: The target group is made up of all people in the database.

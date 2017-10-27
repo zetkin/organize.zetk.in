@@ -6,13 +6,16 @@ import InfoList from '../misc/InfoList';
 import Button from '../misc/Button';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
+import Link from '../misc/Link';
 import { getListItemById } from '../../utils/store';
 import { createSelection } from '../../actions/selection';
+import { createTextDocument } from '../../actions/document';
 import {
     addRoutesToCanvassAssignment,
     removeRoutesFromCanvassAssignment,
     retrieveCanvassAssignment,
     retrieveCanvassAssignmentRoutes,
+    updateCanvassAssignment,
 } from '../../actions/canvassAssignment';
 
 
@@ -55,6 +58,7 @@ export default class CanvassAssignmentPane extends PaneBase {
     renderPaneContent(data) {
         if (data.assignmentItem && data.assignmentItem.data) {
             let assignment = data.assignmentItem.data;
+            let instructions = assignment.instructions;
             let routesSection = null;
 
             let canvassAssignmentInfo = (
@@ -87,6 +91,15 @@ export default class CanvassAssignmentPane extends PaneBase {
 
             return [
                 canvassAssignmentInfo,
+                <div key="instructions"
+                    className="CanvassAssignmentPane-instructions">
+                    <Msg tagName="h3"
+                        id="panes.canvassAssignment.instructions.h"/>
+                    <div dangerouslySetInnerHTML={{ __html: instructions }}/>
+                    <Link msgId="panes.canvassAssignment.instructions.editLink"
+                        onClick={ this.onClickEditInstructions.bind(this) }/>
+                </div>,
+
                 // TODO: Add this back at some point
                 //routesSection,
             ];
@@ -124,5 +137,21 @@ export default class CanvassAssignmentPane extends PaneBase {
 
         this.props.dispatch(action);
         this.openPane('selectassignmentroutes', action.payload.id);
+    }
+
+    onClickEditInstructions(ev) {
+        let id = this.getParam(0);
+        let instructions = this.props.assignmentItem.data.instructions;
+
+        let action = createTextDocument(instructions, content => {
+            let values = {
+                instructions: content,
+            };
+
+            this.props.dispatch(updateCanvassAssignment(id, values));
+        });
+
+        this.props.dispatch(action);
+        this.openPane('edittext', action.payload.id);
     }
 }

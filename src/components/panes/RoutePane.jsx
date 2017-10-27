@@ -21,7 +21,7 @@ const mapStateToProps = (state, props) => {
 
     let addressIds = state.addresses.addressesByRoute[routeId];
     let addresses = null;
-    if (item && item.data && addressIds) {
+    if (item && item.data && addressIds && state.addresses.addressById) {
         addresses = addressIds.map(id => state.addresses.addressById[id]);
     }
 

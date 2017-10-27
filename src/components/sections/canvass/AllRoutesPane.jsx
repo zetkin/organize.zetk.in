@@ -44,10 +44,9 @@ export default class AllRoutesPane extends RootPaneBase {
     constructor(props) {
         super(props);
 
-        this.state = {
-            filters: {},
+        this.state = Object.assign({}, this.state, {
             mapMode: 'browse',
-        };
+        });
 
         this.selectionId = null;
         this.filteredAddresses = this.getFilteredAddresses();
@@ -94,8 +93,11 @@ export default class AllRoutesPane extends RootPaneBase {
         };
 
         if (this.props.streetList && this.props.streetList.items) {
-            this.props.streetList.items.forEach(item => {
-                streetOptions[item.data.id] = item.data.title;
+            let addressItems = this.props.streetList.items.concat()
+                .sort((i0, i1) => i0.data.title.localeCompare(i1.data.title));
+
+            addressItems.forEach(i => {
+                streetOptions[i.data.id] = i.data.title;
             });
         }
 
@@ -233,7 +235,7 @@ export default class AllRoutesPane extends RootPaneBase {
             props.addressList.items.map(i => i.data) : [];
 
         if (streetId && streetId != '_') {
-            let streetItem = getListItemById(this.props.streetList, streetId);
+            let streetItem = getListItemById(props.streetList, streetId);
 
             if (streetItem) {
                 let streetAddresses = streetItem.data.addresses;
@@ -245,10 +247,10 @@ export default class AllRoutesPane extends RootPaneBase {
         if (routeId && routeId != '_') {
             if (routeId == '0') {
                 addresses = addresses.filter(addr => {
-                    let routeIds = Object.keys(this.props.addressesByRoute);
+                    let routeIds = Object.keys(props.addressesByRoute);
                     for (let i = 0; i < routeIds.length; i++) {
                         let routeId = routeIds[i];
-                        let routeAddresses = this.props.addressesByRoute[routeId];
+                        let routeAddresses = props.addressesByRoute[routeId];
                         if (routeAddresses.indexOf(addr.id) >= 0) {
                             return false;
                         }
@@ -258,7 +260,7 @@ export default class AllRoutesPane extends RootPaneBase {
                 });
             }
             else {
-                let routeAddresses = this.props.addressesByRoute[routeId];
+                let routeAddresses = props.addressesByRoute[routeId];
                 if (routeAddresses) {
                     addresses = addresses
                         .filter(addr => routeAddresses.indexOf(addr.id) >= 0);
@@ -329,6 +331,7 @@ export default class AllRoutesPane extends RootPaneBase {
         }
         else {
             this.filteredAddresses = this.getFilteredAddresses();
+            this.forceUpdate();
         }
     }
 }
