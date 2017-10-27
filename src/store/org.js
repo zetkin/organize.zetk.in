@@ -18,9 +18,9 @@ export default function org(state = null, action) {
                 return state;
             }
 
-        case types.SET_ACTIVE_MEMBERSHIP:
+        case types.SET_ACTIVE_ORG:
             return Object.assign({}, state, {
-                activeId: action.payload.membership.organization.id,
+                activeId: action.payload.orgId,
             });
 
         default:

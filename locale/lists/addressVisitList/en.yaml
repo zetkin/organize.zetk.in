@@ -1,0 +1,5 @@
+header:
+    address: Address
+    status: Status
+item:
+    householdsVisited: '{visited}/{allocated} households visited'

@@ -4,7 +4,7 @@ header:
     title: Tiel
 item:
     info:
-        callers: Ringere
+        callers: '{ count } ringere'
     stats:
         calls: Opringninger
         goal: Mangler

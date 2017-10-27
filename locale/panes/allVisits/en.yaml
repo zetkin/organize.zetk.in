@@ -1,3 +1,4 @@
 viewModes:
     route: Routes
     address: Addresses
+    household: Households

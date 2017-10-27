@@ -23,9 +23,9 @@ export function getUserMemberships() {
     }
 }
 
-export function setActiveMembership(membership) {
+export function setActiveOrg(orgId) {
     return {
-        type: types.SET_ACTIVE_MEMBERSHIP,
-        payload: { membership },
+        type: types.SET_ACTIVE_ORG,
+        payload: { orgId },
     };
 }

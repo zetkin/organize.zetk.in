@@ -2,10 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 
+import { stringFromAddress } from '../../../../utils/location';
 import {
     addToSelection,
     removeFromSelection,
 } from '../../../../actions/selection';
+
+const MARKER_SIZE = 8;
+const MARKER_OFFS = MARKER_SIZE/2;
 
 
 @connect(state => ({}))
@@ -33,20 +37,20 @@ export default class AddressMap extends React.Component {
 
         this.defaultIcon = {
             url: '/static/images/address-marker-black.png',
-            scaledSize: { width: 6, height: 6 },
-            anchor: { x: 3, y: 3 },
+            scaledSize: { width: MARKER_SIZE, height: MARKER_SIZE },
+            anchor: { x: MARKER_OFFS, y: MARKER_OFFS },
         };
 
         this.activeIcon = {
             url: '/static/images/address-marker-red.png',
-            scaledSize: { width: 6, height: 6 },
-            anchor: { x: 3, y: 3 },
+            scaledSize: { width: MARKER_SIZE, height: MARKER_SIZE },
+            anchor: { x: MARKER_OFFS, y: MARKER_OFFS },
         };
 
         this.selectedIcon = {
             url: '/static/images/address-marker-blue.png',
-            scaledSize: { width: 6, height: 6 },
-            anchor: { x: 3, y: 3 },
+            scaledSize: { width: MARKER_SIZE, height: MARKER_SIZE },
+            anchor: { x: MARKER_OFFS, y: MARKER_OFFS },
         };
 
         this.centerSetFromData = false;
@@ -118,7 +122,7 @@ export default class AddressMap extends React.Component {
                     icon: icon,
                     position: latLng,
                     map: this.map,
-                    title: addr.title,
+                    title: stringFromAddress(addr),
                     zIndex: 0,
                 });
 

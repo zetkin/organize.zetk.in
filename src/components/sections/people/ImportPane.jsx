@@ -20,9 +20,9 @@ export default class ImportPane extends RootPaneBase {
     constructor(props) {
         super(props);
 
-        this.state = {
+        this.state = Object.assign({}, this.state, {
             isDragging: false,
-        };
+        });
     }
 
     renderPaneContent(data) {

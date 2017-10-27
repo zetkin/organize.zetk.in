@@ -1,0 +1,37 @@
+addrList:
+    h: Address list – please read instructions
+    instructions: |-
+        These are the addresses that should be visited in this route. You can
+        visit them in any order and if you like you can check them off as you
+        go, although that's only necessary if you don't plan on finishing the
+        entire route. Note that some may already have been visited during this
+        assignment. They will already be checked off in the list.
+addrSummary:
+    h: Address summary
+assignee:
+    h: Assignee
+info:
+    radius: '{radius} m radius'
+    households: |-
+        {count, plural,
+            =1 {one household}
+            other {# households}}
+    addresses: |-
+        {count, plural,
+            =1 {one address}
+            other {# addresses}}
+header:
+    page: p. { pageNumber }
+    route: Route { route }
+routeDescription:
+    h: 'Route information:'
+title: Print assigned route
+status:
+    assigned: Handed out (date/time)
+    returned: Returned (date/time)
+    completed: Done
+unassigned:
+    email: E-mail address
+    h: Assignee
+    name: Name
+    phone: Phone

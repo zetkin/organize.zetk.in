@@ -25,6 +25,7 @@ import participants from './participants';
 import people from './people';
 import importer from './importer';
 import personTags from './personTags';
+import prints from './prints';
 import queries from './queries';
 import routes from './routes';
 import search from './search';
@@ -33,6 +34,7 @@ import surveys from './surveys';
 import surveySubmissions from './surveySubmissions';
 import user from './user';
 import view from './view';
+import visits from './visits';
 
 import { urlMiddleware } from './middleware/url';
 
@@ -58,6 +60,7 @@ const appReducer = combineReducers({
     importer,
     personTags,
     locationTags,
+    prints,
     queries,
     routes,
     search,
@@ -66,6 +69,7 @@ const appReducer = combineReducers({
     surveySubmissions,
     user,
     view,
+    visits,
 });
 
 export const configureStore = (initialState, z) => {

@@ -25,6 +25,63 @@ export function retrieveRoutes() {
     };
 }
 
+export function retrieveRoute(id) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_ROUTES,
+            meta: { id, },
+            payload: {
+                promise: z.resource('orgs', orgId, 'canvass_routes', id).get(),
+            },
+        });
+    };
+}
+
+export function retrieveAssignedRoutes() {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_ASSIGNED_ROUTES,
+            payload: {
+                promise: z.resource('orgs', orgId, 'assigned_routes').get(),
+            },
+        });
+    };
+}
+
+export function retrieveAssignedRoute(id) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_ASSIGNED_ROUTE,
+            meta: { id },
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'assigned_routes', id).get(),
+            },
+        });
+    };
+}
+
+export function retrieveAssignedRouteStats(id) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_ASSIGNED_ROUTE_STATS,
+            meta: { id },
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'assigned_routes', id, 'stats').get(),
+            },
+        });
+    };
+}
+
 export function createRoute(addressIds, paneId) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
@@ -37,6 +94,48 @@ export function createRoute(addressIds, paneId) {
             meta: { paneId, addressIds },
             payload: {
                 promise: z.resource('orgs', orgId, 'canvass_routes').post(data),
+            }
+        });
+    };
+}
+
+export function updateRoute(id, data) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.UPDATE_ROUTE,
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'canvass_routes', id).patch(data),
+            }
+        });
+    };
+}
+
+export function createAssignedRoute(data, paneId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.CREATE_ASSIGNED_ROUTE,
+            meta: { paneId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'assigned_routes').post(data),
+            }
+        });
+    };
+}
+
+export function updateAssignedRoute(id, data) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.UPDATE_ASSIGNED_ROUTE,
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'assigned_routes', id).patch(data),
             }
         });
     };

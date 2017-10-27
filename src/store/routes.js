@@ -1,6 +1,7 @@
 import * as types from '../actions';
 import {
     createList,
+    createListItem,
     removeListItem,
     updateOrAddListItem,
     updateOrAddListItems,
@@ -32,11 +33,86 @@ export default function routes(state = null, action) {
             routeList: updateOrAddListItem(state.routeList, route.id, route),
         });
     }
+    else if (action.type == types.UPDATE_ROUTE + '_FULFILLED') {
+        let route = action.payload.data.data;
+
+        return Object.assign({}, state, {
+            routeList: updateOrAddListItem(state.routeList, route.id, route),
+        });
+    }
+    else if (action.type == types.RETRIEVE_ROUTE + '_FULFILLED') {
+        let route = action.payload.data.data;
+
+        return Object.assign({}, state, {
+            routeList: updateOrAddListItem(state.routeList, route.id, route),
+        });
+    }
     else if (action.type == types.RETRIEVE_ROUTES + '_FULFILLED') {
         let routes = action.payload.data.data;
 
         return Object.assign({}, state, {
             routeList: createList(routes),
+        });
+    }
+    else if (action.type == types.RETRIEVE_ASSIGNED_ROUTES + '_FULFILLED') {
+        let assignedRoutes = action.payload.data.data;
+        let routesById = {};
+
+        assignedRoutes.forEach(ar => {
+            if (!routesById.hasOwnProperty(ar.route.id)) {
+                routesById[ar.route.id] = ar.route;
+            }
+        });
+
+        let routes = Object.keys(routesById).map(id => routesById[id]);
+
+        return Object.assign({}, state, {
+            assignedRouteList: createList(assignedRoutes),
+            routeList: updateOrAddListItems(state.routeList, routes),
+        });
+    }
+    else if (action.type == types.CREATE_ASSIGNED_ROUTE + '_FULFILLED') {
+        let ar = action.payload.data.data;
+
+        return Object.assign({}, state, {
+            assignedRouteList: updateOrAddListItem(state.assignedRouteList, ar.id, ar),
+            routeList: updateOrAddListItem(state.routeList, ar.route.id, ar.route),
+        });
+    }
+    else if (action.type == types.RETRIEVE_ASSIGNED_ROUTE + '_FULFILLED') {
+        let ar = action.payload.data.data;
+
+        return Object.assign({}, state, {
+            assignedRouteList: updateOrAddListItem(state.assignedRouteList, ar.id, ar),
+            routeList: updateOrAddListItem(state.routeList, ar.route.id, ar.route),
+        });
+    }
+    else if (action.type == types.UPDATE_ASSIGNED_ROUTE + '_FULFILLED') {
+        let ar = action.payload.data.data;
+
+        return Object.assign({}, state, {
+            assignedRouteList: updateOrAddListItem(state.assignedRouteList, ar.id, ar),
+            routeList: updateOrAddListItem(state.routeList, ar.route.id, ar.route),
+        });
+    }
+    else if (action.type == types.RETRIEVE_ASSIGNED_ROUTE_STATS + '_PENDING') {
+        let ar = {
+            id: action.meta.id,
+            statsItem: createListItem(null, { isPending: true }),
+        };
+
+        return Object.assign({}, state, {
+            assignedRouteList: updateOrAddListItem(state.assignedRouteList, ar.id, ar),
+        });
+    }
+    else if (action.type == types.RETRIEVE_ASSIGNED_ROUTE_STATS + '_FULFILLED') {
+        let ar = {
+            id: action.meta.id,
+            statsItem: createListItem(action.payload.data.data),
+        };
+
+        return Object.assign({}, state, {
+            assignedRouteList: updateOrAddListItem(state.assignedRouteList, ar.id, ar),
         });
     }
     else if (action.type == types.RETRIEVE_CANVASS_ASSIGNMENT_ROUTES + '_FULFILLED') {
@@ -140,6 +216,7 @@ export default function routes(state = null, action) {
             draftList: null,
             routeList: createList(),
             routesByAssignment: {},
+            assignedRouteList: createList(),
         };
     }
 }

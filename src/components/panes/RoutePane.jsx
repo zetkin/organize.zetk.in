@@ -7,9 +7,10 @@ import Button from '../misc/Button';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import PersonSelectWidget from '../misc/PersonSelectWidget';
-import TagCloud from '../misc/tagcloud/TagCloud';
+import Route from '../misc/elements/Route';
 import { getListItemById } from '../../utils/store';
 import { retrieveRouteAddresses } from '../../actions/address';
+import { retrieveRoute } from '../../actions/route';
 import InfoList from '../misc/InfoList';
 
 
@@ -20,7 +21,7 @@ const mapStateToProps = (state, props) => {
 
     let addressIds = state.addresses.addressesByRoute[routeId];
     let addresses = null;
-    if (item && item.data && addressIds) {
+    if (item && item.data && addressIds && state.addresses.addressById) {
         addresses = addressIds.map(id => state.addresses.addressById[id]);
     }
 
@@ -37,8 +38,7 @@ export default class RoutePane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        // TODO: Retrieve route data
-        //this.props.dispatch(retrieveRoute(this.getParam(0)));
+        this.props.dispatch(retrieveRoute(this.getParam(0)));
         this.props.dispatch(retrieveRouteAddresses(this.getParam(0)));
     }
 
@@ -50,8 +50,7 @@ export default class RoutePane extends PaneBase {
 
     getPaneTitle(data) {
         if (data.routeItem && data.routeItem.data) {
-            return this.props.intl.formatMessage({ id: 'panes.route.title' },
-                { id: data.routeItem.data.id });
+            return <Route route={ data.routeItem.data }/>
         }
         else {
             return null;
@@ -110,6 +109,13 @@ export default class RoutePane extends PaneBase {
                             name: 'household_count',
                             msgId: 'panes.route.info.households',
                             msgValues: { count: route.household_count }
+                        }, {
+                            name: 'info',
+                            value: route.info_text,
+                        }, {
+                            name: 'edit',
+                            msgId: 'panes.route.info.editLink',
+                            onClick: () => this.openPane('editroute', this.getParam(0)),
                         }
                     ]} />
                     <Button
@@ -122,11 +128,14 @@ export default class RoutePane extends PaneBase {
 
             return [
                 routeInfo,
+
+                /*
                 <div key="owner" className="RoutePane-owner">
                     <Msg tagName="h3" id="panes.route.owner.h"/>
                     <PersonSelectWidget person={ route.owner }
                         onSelect={ this.onOwnerSelect.bind(this) }/>
                 </div>,
+                */
 
                 <div key="tags" className="RoutePane-tags">
                     <Msg tagName="h3" id="panes.route.tags.h"/>

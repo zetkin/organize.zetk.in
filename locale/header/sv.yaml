@@ -18,3 +18,5 @@ search:
 userMenu:
     accountLink: Konto-inställningar
     logOutLink: Logga ut
+    myPageLink: Min sida
+    switchOrganization: Växla organisation

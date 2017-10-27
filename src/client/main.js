@@ -13,6 +13,7 @@ import Z from 'zetkin';
 
 import polyfills from '../utils/polyfills';
 import App from '../components/App';
+import AssignedRoutePrint from '../components/prints/AssignedRoutePrint';
 import { configureStore } from '../store';
 import IntlReduxProvider from '../components/IntlReduxProvider';
 import { subscribeToUrlChanges } from '../store/middleware/url';
@@ -39,14 +40,65 @@ window.onload = function() {
     }
 
     let stateElem = document.getElementById('App-initialState');
+    let componentName = document.body.dataset.component || 'App';
     let stateJson = stateElem.innerText || stateElem.textContent;
     let initialState = JSON.parse(stateJson);
     let store = configureStore(initialState, Z);
     let props = { initialState, }
 
+    let Component;
+
+    switch (componentName) {
+        case 'AssignedRoutePrint':
+            Component = AssignedRoutePrint;
+            break;
+        default:
+            Component = App;
+            break;
+    }
+
     // Route when history state changes
     store = subscribeToUrlChanges(store);
 
-    ReactDOM.render(React.createElement(IntlReduxProvider, { store },
-        React.createElement(App, props)), document);
+    try {
+        ReactDOM.render(React.createElement(IntlReduxProvider, { store },
+            React.createElement(Component, props)), document);
+    }
+    catch (err) {
+        // TODO: Report error
+        const RDS = require('react-dom/server');
+        window.serverHtml = document.documentElement.outerHTML;
+        window.clientHtml = RDS.renderToString(React.createElement(IntlReduxProvider, { store },
+            React.createElement(Component, props)), document);
+
+        // Strip <html> and checksum
+        let serverHtml = window.serverHtml
+            .substr(window.serverHtml.indexOf('<body'))
+            .replace('/>', '>');
+
+        let clientHtml = window.clientHtml
+            .substr(window.clientHtml.indexOf('<body'))
+            .replace('/>', '>');
+
+        // Find inconsistency
+        let length = Math.min(serverHtml.length, clientHtml.length);
+        let mismatchIndex = null;
+        for (let i = 0; i < length; i++) {
+            if (serverHtml[i] != clientHtml[i]) {
+                mismatchIndex = i;
+                break;
+            }
+        }
+
+        if (mismatchIndex !== null) {
+            console.warn('Server/client inconsistency near:');
+            console.warn('Client: ', clientHtml.substr(mismatchIndex - 40, 80));
+            console.warn('Server: ', serverHtml.substr(mismatchIndex - 40, 80));
+            console.warn('Full HTML available in window.serverHtml and window.clientHtml');
+            console.error(err);
+        }
+        else {
+            console.error(err);
+        }
+    }
 };

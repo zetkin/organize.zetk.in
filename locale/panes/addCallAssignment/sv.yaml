@@ -1,21 +1,18 @@
 breadcrumbs:
-    form: Inställningar
-    goal: |-
-        Syfte{goalType, select,
-            inform {: Informera}
-            mobilize {: Mobilisera till kampanj}
-            stayintouch {: Hålla kontakten}
-            custom {: Ingen mall}
-            other {}
-        }
-    target: |-
-        Målgrupp{targetType, select,
-            allTarget {: Ring alla}
-            tagTarget {: Ring alla med en viss etikett}
-            randomTarget {: Ring slumpmässigt urval}
-            custom {: Ingen mall}
-            other {}
-        }
+    formLabel: Inställningar
+    goalLabel: Syfte
+    targetLabel: Målgrupp
+    goals:
+        custom: Ingen mall
+        inform: Informera
+        mobilize: Mobilisera till kampanj
+        stayintouch: Hålla kontakten
+        survey: Samla in enkät
+    targets:
+        allTarget: Alla
+        custom: Ingen mall
+        randomTarget: Slumpmässigt urval
+        tagTarget: Baserat på etikett
 form:
     instructions: |
         Steg 3 av 3. Fyll i och kontrollera titel, beskrivning och inställningar
@@ -27,22 +24,18 @@ goal:
         Steg 2 av 3. Välj syfte med ringuppdraget för att skapa urvalsregler
         automatiskt.
     saveButton: |-
-        {goalType, select,
-            inform {Skapa uppdrag för att informera}
-            mobilize {Skapa mobiliseringsuppdrag}
-            survey {Skapa uppdrag för att samla in enkätsvar}
-            stayintouch {Skapa uppdrag för att hålla kontakten}
-        }
+        inform: Skapa uppdrag för att informera
+        mobilize: Skapa mobiliseringsuppdrag
+        survey: Skapa uppdrag för att samla in enkätsvar
+        stayintouch: Skapa uppdrag för att hålla kontaktan
 target:
     customLink: Definiera urvalsregler manuellt senare
     instructions: |
         Steg 1 av 3. Välj ringuppdragets målgrupp.
     saveButton: |-
-        {targetType, select,
-            allTarget {Välj alla som målgrupp}
-            tagTarget {Välj målgrupp utifrån etikett}
-            randomTarget {Välj slumpmässig målgrupp}
-        }
+        allTarget: Välj alla som målgrupp
+        tagTarget: Välj målgrupp utifrån etikett
+        randomTarget: Välj slumpmässig målgrupp
 templates:
     allTarget:
         instructions: Målgruppen utgörs av alla personer i databasen.

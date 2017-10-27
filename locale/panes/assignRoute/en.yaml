@@ -1,0 +1,9 @@
+assignment:
+    h: Canvass assignment
+route:
+    h: Route
+    info: |-
+        You can select any route that has not already been assigned as part of
+        this assignment.
+saveButton: Assign this route
+title: Assign a route
