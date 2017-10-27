@@ -69,7 +69,8 @@ function renderAssignedRoute(req, args) {
             route = result.data.data;
 
             // 5. Retrieve route addresses
-            return req.z.resource('orgs', orgId, 'addresses').get();
+            return req.z.resource('orgs', orgId,
+                'canvass_routes', route.id, 'addresses').get();
         })
         .then(result => {
             routeAddresses = result.data.data;
