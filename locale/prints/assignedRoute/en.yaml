@@ -6,6 +6,8 @@ addrList:
         go, although that's only necessary if you don't plan on finishing the
         entire route. Note that some may already have been visited during this
         assignment. They will already be checked off in the list.
+addrSummary:
+    h: Address summary
 assignee:
     h: Assignee
 info:

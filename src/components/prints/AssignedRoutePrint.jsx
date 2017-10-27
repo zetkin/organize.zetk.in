@@ -66,6 +66,7 @@ export default class AssignedRoutePrint extends React.Component {
                         <InstructionsPage
                             getNextPageNumber={ getNextPageNumber }
                             assignment={ this.props.assignment }
+                            addresses={ addresses }
                             route={ this.props.route }
                             ar={ this.props.ar }
                             />
@@ -179,43 +180,33 @@ function SummaryPage(props) {
 
 function InstructionsPage(props) {
     let instructions = props.assignment.instructions;
+    let pageNumber = props.getNextPageNumber();
+    let routeDescription = null;
 
-    if (instructions) {
-        let pageNumber = props.getNextPageNumber();
-        let routeDescription = null;
-
-        if (props.route.info_text) {
-            routeDescription = (
-                <div className="AssignedRoutePrint-routeDescription">
-                    <h1><Route route={ props.route }/></h1>
-                    <p>{ props.route.info_text }</p>
-                </div>
-            );
-        }
-
-        return (
-            <div className="AssignedRoutePrint-instructionsPage">
-                <h1>{ props.assignment.title }</h1>
-                <div className="AssignedRoutePrint-assignmentDescription">
-                    { props.assignment.description }
-                </div>
-
-                <div className="AssignedRoutePrint-instructions"
-                    dangerouslySetInnerHTML={{ __html: instructions }}
-                    />
-
-                { routeDescription }
-
-                <PageFooter pageNumber={ pageNumber }
-                    route={ props.route }
-                    ar={ props.ar }
-                    />
+    return (
+        <div className="AssignedRoutePrint-instructionsPage">
+            <h1>{ props.assignment.title }</h1>
+            <div className="AssignedRoutePrint-assignmentDescription">
+                { props.assignment.description }
             </div>
-        );
-    }
-    else {
-        return null;
-    }
+
+            <div className="AssignedRoutePrint-instructions"
+                dangerouslySetInnerHTML={{ __html: instructions }}
+                />
+
+            <div className="AssignedRoutePrint-routeDescription">
+                <h1><Route route={ props.route }/></h1>
+                <p>{ props.route.info_text }</p>
+                <AddressSummary
+                    addresses={ props.addresses }/>
+            </div>
+
+            <PageFooter pageNumber={ pageNumber }
+                route={ props.route }
+                ar={ props.ar }
+                />
+        </div>
+    );
 }
 
 function AddressPages(props) {
@@ -272,6 +263,63 @@ function AddressPages(props) {
     return (
         <div className="AssignedRoutePrint-addrPages">
             { pages }
+        </div>
+    );
+}
+
+function AddressSummary(props) {
+    let addressesByStreet = {};
+    props.addresses.forEach(addr => {
+        if (!addressesByStreet.hasOwnProperty(addr.street)) {
+            addressesByStreet[addr.street] = [];
+        }
+
+        addressesByStreet[addr.street].push(addr);
+    });
+
+    let streetItems = Object.keys(addressesByStreet).map(street => {
+        let curSeries = null;
+        let series = [];
+        let addresses = addressesByStreet[street];
+        let prevNum = null;
+
+        console.log(addresses);
+
+        addresses.forEach(addr => {
+            let number = parseInt(addr.number);
+
+            if (!curSeries) {
+                series.push(curSeries = [number]);
+                prevNum = number;
+            }
+            else if (number && prevNum && number == (prevNum + 1)) {
+                curSeries[1] = addr.number;
+                prevNum = addr.number;
+            }
+            else {
+                curSeries = null;
+                prevNum = null;
+            }
+        });
+
+        let seriesLabel = series
+            .map(s => s.join('-'))
+            .join(', ');
+
+        return (
+            <li key={ street }>
+                <span className="AssignedRoutePrint-street">{ street }</span>
+                <span className="AssignedRoutePrint-numbers">{ seriesLabel }</span>
+            </li>
+        );
+    });
+
+    return (
+        <div className="AssignedRoutePrint-addressSummary">
+            <Msg tagName="h2" id="prints.assignedRoute.addrSummary.h"/>
+            <ul>
+                { streetItems }
+            </ul>
         </div>
     );
 }

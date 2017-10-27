@@ -279,6 +279,24 @@
                 font-size: 1.4em;
             }
         }
+
+        .AssignedRoutePrint-addressSummary {
+            width: 80%;
+
+            li {
+                float: left;
+                padding: 0.2em 0.4em;
+                background-color: #eee;
+                border-radius: 0.2em;
+                margin: 0.2em;
+
+                .AssignedRoutePrint-street {
+                    &:after {
+                        content: " ";
+                    }
+                }
+            }
+        }
     }
 
     .AssignedRoutePrint-addrPage {
