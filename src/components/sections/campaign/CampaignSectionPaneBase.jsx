@@ -22,10 +22,7 @@ export default class CampaignSectionPaneBase extends RootPaneBase {
     getPaneFilters(data, filters) {
         filters = filters || {};
 
-        let activityOptions = {
-            _: 'No filter',
-        };
-
+        let activityOptions = {}
         if (this.props.activityList) {
             this.props.activityList.items.forEach(i => {
                 activityOptions[i.data.id] = i.data.title;
@@ -51,9 +48,11 @@ export default class CampaignSectionPaneBase extends RootPaneBase {
                 onCreate={ this.onCreateCampaign.bind(this) }
                 onEdit={ this.onEditCampaign.bind(this) }/>,
             <SelectInput key="activity" name="activity"
-                value={ filters.activity || '_' }
-                labelMsg="panes.allActions.filters.activity"
+                value={ filters.activity }
+                labelMsg="panes.allActions.filters.activity.label"
                 options={ activityOptions }
+                orderAlphabetically={ true }
+                nullOptionMsg="panes.allActions.filters.activity.nullOption"
                 onValueChange={ this.onFilterChange.bind(this) }
                 />
         ];

@@ -1,6 +1,8 @@
 addButton: Add action
 filters:
-    activity: Activity
+    activity:
+        label: Activity
+        nullOption: (Regardless of activity)
     afterDate: After date
     beforeDate: Before date
 viewModes:
