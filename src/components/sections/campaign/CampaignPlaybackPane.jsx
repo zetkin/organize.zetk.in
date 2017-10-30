@@ -7,6 +7,7 @@ import ActionMiniCalendar from '../../misc/actioncal/ActionMiniCalendar';
 import { getLocationAverage } from '../../../utils/location';
 import { retrieveActions } from '../../../actions/action';
 import { retrieveLocations } from '../../../actions/location';
+import { retrieveActivities } from '../../../actions/activity';
 import { filteredActionList } from '../../../store/actions';
 
 
@@ -14,6 +15,7 @@ const mapStateToProps = state => ({
     actions: state.actions,
     locations: state.locations,
     campaigns: state.campaigns,
+    activityList: state.activities.activityList,
     filteredActionList: filteredActionList(state)
 });
 

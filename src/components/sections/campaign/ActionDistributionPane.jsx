@@ -6,6 +6,7 @@ import CampaignSectionPaneBase from './CampaignSectionPaneBase';
 import ActionDistribution from '../../misc/actiondistro/ActionDistribution';
 import ActionMiniCalendar from '../../misc/actioncal/ActionMiniCalendar';
 import { retrieveCampaigns } from '../../../actions/campaign';
+import { retrieveActivities } from '../../../actions/activity';
 import {
     clearActionHighlights,
     highlightActionActivity,
@@ -20,6 +21,7 @@ import { filteredActionList } from '../../../store/actions';
 const mapStateToProps = state => ({
     actions: state.actions,
     campaigns: state.campaigns,
+    activityList: state.activities.activityList,
     filteredActionList: filteredActionList(state)
 });
 

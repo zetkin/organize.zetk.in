@@ -1,5 +1,6 @@
 addButton: Tilføj ny aktion
 filters:
+    activity: Aktivitet
     afterDate: Efter dato
     beforeDate: Før dato
 viewModes:

@@ -28,6 +28,7 @@ export default function actions(state = null, action) {
         case types.RETRIEVE_ACTIONS + '_PENDING':
             return Object.assign({}, state, {
                 filters: {
+                    activity: action.meta.activity,
                     afterDate: action.meta.afterDate,
                     beforeDate: action.meta.beforeDate,
                 },
@@ -135,6 +136,7 @@ export default function actions(state = null, action) {
                 filters: {
                     afterDate: startDate.format('{yyyy}-{MM}-{dd}'),
                     beforeDate: null,
+                    activity: null,
                 },
                 actionList: createList(),
             };

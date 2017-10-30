@@ -83,12 +83,20 @@ export default messages => {
 
     router.get(/campaign\/playback$/, waitForActions(req => [
         retrieveActions(),
+        retrieveActivities(),
         retrieveCampaigns(),
         retrieveLocations()
     ]));
 
+    router.get(/campaign\/distribution$/, waitForActions(req => [
+        retrieveActions(),
+        retrieveActivities(),
+        retrieveCampaigns()
+    ]));
+
     router.get(/campaign\/actions$/, waitForActions(req => [
         retrieveActions(),
+        retrieveActivities(),
         retrieveCampaigns(),
     ]));
 

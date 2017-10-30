@@ -2,6 +2,7 @@ import React from 'react';
 
 import CampaignSelect from '../../misc/CampaignSelect';
 import DateInput from '../../forms/inputs/DateInput';
+import SelectInput from '../../forms/inputs/SelectInput';
 import RootPaneBase from '../RootPaneBase';
 import { selectCampaign } from '../../../actions/campaign';
 import {
@@ -14,6 +15,16 @@ import {
 export default class CampaignSectionPaneBase extends RootPaneBase {
     getPaneFilters(data, filters) {
         filters = filters || {};
+
+        let activityOptions = {
+            _: 'No filter',
+        };
+
+        if (this.props.activityList) {
+            this.props.activityList.items.forEach(i => {
+                activityOptions[i.data.id] = i.data.title;
+            });
+        }
 
         return [
             <div key="dateFilter" className="AllActionsPane-dateFilter">
@@ -32,13 +43,19 @@ export default class CampaignSectionPaneBase extends RootPaneBase {
                 value={ filters.campaign }
                 onSelect={ this.onFilterChange.bind(this, 'campaign') }
                 onCreate={ this.onCreateCampaign.bind(this) }
-                onEdit={ this.onEditCampaign.bind(this) }/>
+                onEdit={ this.onEditCampaign.bind(this) }/>,
+            <SelectInput key="activity" name="activity"
+                value={ filters.activity || '_' }
+                labelMsg="panes.allActions.filters.activity"
+                options={ activityOptions }
+                onValueChange={ this.onFilterChange.bind(this) }
+                />
         ];
     }
 
     onFiltersApply(filters) {
         this.props.dispatch(selectCampaign(filters.campaign));
-        this.props.dispatch(retrieveActions(filters.afterDate, filters.beforeDate));
+        this.props.dispatch(retrieveActions(filters.afterDate, filters.beforeDate, filters.activity));
     }
 
     onCalendarAddAction(date) {
