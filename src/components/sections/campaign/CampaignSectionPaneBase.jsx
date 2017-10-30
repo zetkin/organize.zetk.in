@@ -13,6 +13,12 @@ import {
 
 
 export default class CampaignSectionPaneBase extends RootPaneBase {
+    constructor(props) {
+        super(props);
+
+        this.state.filters = props.actions.filters;
+    }
+
     getPaneFilters(data, filters) {
         filters = filters || {};
 

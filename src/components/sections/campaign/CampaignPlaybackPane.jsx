@@ -24,33 +24,42 @@ export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        this.props.dispatch(retrieveActions());
+        if (!this.props.filteredActionList) {
+            this.props.dispatch(retrieveActions());
+            this.props.dispatch(retrieveActivities());
+            this.props.dispatch(retrieveCampaigns());
+        }
+
         this.props.dispatch(retrieveLocations());
     }
 
     renderPaneTop() {
         let actionList = this.props.filteredActionList;
-        let actions = actionList.items.map(i => i.data);
+        if (actionList && actionList.items) {
+            let actions = actionList.items.map(i => i.data);
 
-        return <ActionMiniCalendar actions={ actions }
-                    onSelectDay={ this.onSelectDay.bind(this) }
-                    onAddAction={ this.onCalendarAddAction.bind(this) }
-                    onMoveAction={ this.onCalendarMoveAction.bind(this) }
-                    onSelectAction={ this.onSelectAction.bind(this) }/>
+            return <ActionMiniCalendar actions={ actions }
+                        onSelectDay={ this.onSelectDay.bind(this) }
+                        onAddAction={ this.onCalendarAddAction.bind(this) }
+                        onMoveAction={ this.onCalendarMoveAction.bind(this) }
+                        onSelectAction={ this.onSelectAction.bind(this) }/>
+        }
     }
 
     renderPaneContent() {
         let actionList = this.props.filteredActionList;
-        let actions = actionList.items.map(i => i.data);
+        if (actionList && actionList.items) {
+            let actions = actionList.items.map(i => i.data);
 
-        let locList = this.props.locations.locationList;
-        let locations = locList.items.map(i => i.data);
-        let center = getLocationAverage(locList);
+            let locList = this.props.locations.locationList;
+            let locations = locList.items.map(i => i.data);
+            let center = getLocationAverage(locList);
 
-        return (
-            <CampaignPlayer key="player"
-                actions={ actions } locations={ locations }
-                centerLat={ center.lat } centerLng={ center.lng }/>
-        );
+            return (
+                <CampaignPlayer key="player"
+                    actions={ actions } locations={ locations }
+                    centerLat={ center.lat } centerLng={ center.lng }/>
+            );
+        }
     }
 }

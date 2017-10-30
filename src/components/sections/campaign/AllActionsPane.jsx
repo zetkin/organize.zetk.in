@@ -33,8 +33,11 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        this.props.dispatch(retrieveActions());
-        this.props.dispatch(retrieveCampaigns());
+        if (!this.props.filteredActionList) {
+            this.props.dispatch(retrieveActions());
+            this.props.dispatch(retrieveActivities());
+            this.props.dispatch(retrieveCampaigns());
+        }
     }
 
     renderPaneContent() {

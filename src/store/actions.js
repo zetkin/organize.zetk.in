@@ -40,11 +40,7 @@ export default function actions(state = null, action) {
 
         case types.RETRIEVE_ACTIONS + '_FULFILLED':
             return Object.assign({}, state, {
-                actionList: {
-                    isPending: false,
-                    error: null,
-                    items: createListItems(action.payload.data.data)
-                }
+                actionList: createList(action.payload.data.data),
             });
 
         case types.RETRIEVE_ACTIONS_ON_DAY + '_FULFILLED':
@@ -138,7 +134,7 @@ export default function actions(state = null, action) {
                     beforeDate: null,
                     activity: null,
                 },
-                actionList: createList(),
+                actionList: null,
             };
     }
 }
