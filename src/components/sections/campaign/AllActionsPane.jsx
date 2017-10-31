@@ -9,12 +9,14 @@ import ActionCalendar from '../../misc/actioncal/ActionCalendar';
 import ViewSwitch from '../../misc/ViewSwitch';
 import { retrieveCampaigns } from '../../../actions/campaign';
 import { retrieveActions } from '../../../actions/action';
+import { retrieveActivities } from '../../../actions/activity';
 import { filteredActionList } from '../../../store/actions';
 
 
 const mapStateToProps = state => ({
     actions: state.actions,
     campaigns: state.campaigns,
+    activityList: state.activities.activityList,
     filteredActionList: filteredActionList(state)
 });
 
@@ -31,8 +33,11 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        this.props.dispatch(retrieveActions());
-        this.props.dispatch(retrieveCampaigns());
+        if (!this.props.filteredActionList) {
+            this.props.dispatch(retrieveActions());
+            this.props.dispatch(retrieveActivities());
+            this.props.dispatch(retrieveCampaigns());
+        }
     }
 
     renderPaneContent() {

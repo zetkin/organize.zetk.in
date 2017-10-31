@@ -28,6 +28,7 @@ export default function actions(state = null, action) {
         case types.RETRIEVE_ACTIONS + '_PENDING':
             return Object.assign({}, state, {
                 filters: {
+                    activity: action.meta.activity,
                     afterDate: action.meta.afterDate,
                     beforeDate: action.meta.beforeDate,
                 },
@@ -39,11 +40,7 @@ export default function actions(state = null, action) {
 
         case types.RETRIEVE_ACTIONS + '_FULFILLED':
             return Object.assign({}, state, {
-                actionList: {
-                    isPending: false,
-                    error: null,
-                    items: createListItems(action.payload.data.data)
-                }
+                actionList: createList(action.payload.data.data),
             });
 
         case types.RETRIEVE_ACTIONS_ON_DAY + '_FULFILLED':
@@ -135,8 +132,9 @@ export default function actions(state = null, action) {
                 filters: {
                     afterDate: startDate.format('{yyyy}-{MM}-{dd}'),
                     beforeDate: null,
+                    activity: null,
                 },
-                actionList: createList(),
+                actionList: null,
             };
     }
 }
