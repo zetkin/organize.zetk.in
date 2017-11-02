@@ -47,9 +47,17 @@ export default class AssignedRoutePane extends PaneBase {
         return this.props.intl.formatMessage({ id: 'panes.assignedRoute.title' });
     }
 
+    componentWillUpdate(nextProps, nextState) {
+        let ar = nextProps.assignedRouteItem;
+        if (ar && ar.data && !ar.data.statsItem) {
+            this.props.dispatch(retrieveAssignedRouteStats(ar.data.id));
+        }
+    }
+
     renderPaneContent(data) {
-        if (data.assignedRouteItem) {
-            let ar = data.assignedRouteItem.data;
+        let arItem = data.assignedRouteItem;
+        if (arItem && arItem.data && arItem.data.assignment) {
+            let ar = arItem.data;
             let orgId = this.props.orgId;
 
             let progressContent = <LoadingIndicator/>;
@@ -85,12 +93,10 @@ export default class AssignedRoutePane extends PaneBase {
                         href: '/prints/assigned_route/' + orgId + ',' + ar.id,
                         target: '_blank' },
                 ]}/>,
-                /*
                 <div key="progress" className="AssignedRoutePane-progress">
                     <Msg tagName="h3" id="panes.assignedRoute.progress.h"/>
                     { progressContent }
                 </div>,
-                */
                 <div key="assignee" className="AssignedRoutePane-assignee">
                     <Msg tagName="h3" id="panes.assignedRoute.assignee.h"/>
                     <PersonSelectWidget
