@@ -110,7 +110,11 @@ export default class AllRoutesPane extends RootPaneBase {
 
         if (this.props.routeList && this.props.routeList.items) {
             this.props.routeList.items.forEach(item => {
-                routeOptions[item.data.id] = item.data.id;
+                // TODO: Create general-purpose function for this?
+                routeOptions[item.data.id] = item.data.title
+                    || this.props.intl.formatMessage(
+                        { id: 'misc.elements.route' },
+                        { id: item.data.id });
             });
         };
 
