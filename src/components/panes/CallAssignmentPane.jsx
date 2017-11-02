@@ -21,7 +21,18 @@ import {
 import InfoList from '../misc/InfoList';
 
 
-@connect(state => state)
+const mapStateToProps = (state, props) => {
+    let assignmentId = props.paneData.params[0];
+    let assignmentList = state.callAssignments.assignmentList;
+    let assignmentItem = getListItemById(assignmentList, assignmentId);
+
+    return {
+        assignmentItem
+    };
+};
+
+
+@connect(mapStateToProps)
 @injectIntl
 export default class CallAssignmentPane extends PaneBase {
     componentDidMount() {
@@ -35,8 +46,7 @@ export default class CallAssignmentPane extends PaneBase {
 
     componentWillReceiveProps(nextProps) {
         let assignmentId = this.getParam(0);
-        let assignmentList = nextProps.callAssignments.assignmentList;
-        let assignmentItem = getListItemById(assignmentList, assignmentId);
+        let assignmentItem = nextProps.assignmentItem;
 
         if (assignmentItem && assignmentItem.data
             && !assignmentItem.data.statsItem) {
@@ -48,11 +58,8 @@ export default class CallAssignmentPane extends PaneBase {
     }
 
     getRenderData() {
-        let assignmentId = this.getParam(0);
-        let assignmentList = this.props.callAssignments.assignmentList;
-
         return {
-            assignmentItem: getListItemById(assignmentList, assignmentId),
+            assignmentItem: this.props.assignmentItem,
         };
     }
 
@@ -205,25 +212,19 @@ export default class CallAssignmentPane extends PaneBase {
     }
 
     onClickEditGoal(ev) {
-        let assignmentId = this.getParam(0);
-        let assignmentList = this.props.callAssignments.assignmentList;
-        let assignmentItem = getListItemById(assignmentList, assignmentId);
+        let assignmentItem = this.props.assignmentItem;
 
         this.openPane('editquery', assignmentItem.data.goal.id);
     }
 
     onClickEditTarget(ev) {
-        let assignmentId = this.getParam(0);
-        let assignmentList = this.props.callAssignments.assignmentList;
-        let assignmentItem = getListItemById(assignmentList, assignmentId);
+        let assignmentItem = this.props.assignmentItem;
 
         this.openPane('editquery', assignmentItem.data.target.id);
     }
 
     onClickEditInstructions(ev) {
-        let assignmentId = this.getParam(0);
-        let assignmentList = this.props.callAssignments.assignmentList;
-        let assignmentItem = getListItemById(assignmentList, assignmentId);
+        let assignmentItem = this.props.assignmentItem;
         let instructions = assignmentItem.data.instructions;
 
         let action = createTextDocument(instructions, content => {
