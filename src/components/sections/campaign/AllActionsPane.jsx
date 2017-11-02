@@ -42,7 +42,7 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
 
     renderPaneContent() {
         let actionList = this.props.filteredActionList;
-        if (!actionList) {
+        if (!actionList || !actionList.items) {
             return null;
         }
 
