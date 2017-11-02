@@ -26,14 +26,14 @@ export default class AssignedRoutePrint extends React.Component {
     render() {
         let stateJson = JSON.stringify(this.props.initialState);
         let addresses = this.props.routeAddresses.concat().sort((a0, a1) => {
-            let cmp = a0.street.localeCompare(a1.street);
+            let cmp = a0.street.localeCompare(a1.street, 'en');
 
             if (cmp == 0) {
                 cmp = a0.number - a1.number;
             }
 
             if (cmp == 0 && a0.suffix && a1.suffix) {
-                cmp = a0.suffix.localeCompare(a1.suffix);
+                cmp = a0.suffix.localeCompare(a1.suffix, 'en');
             }
 
             return cmp;
@@ -282,8 +282,6 @@ function AddressSummary(props) {
         let series = [];
         let addresses = addressesByStreet[street];
         let prevNum = null;
-
-        console.log(addresses);
 
         addresses.forEach(addr => {
             let number = parseInt(addr.number);
