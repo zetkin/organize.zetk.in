@@ -42,6 +42,10 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
 
     renderPaneContent() {
         let actionList = this.props.filteredActionList;
+        if (!actionList) {
+            return null;
+        }
+
         let viewComponent;
 
         // Use afterDate filter as startDate, or today if it's null
