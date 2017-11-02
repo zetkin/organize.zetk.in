@@ -129,6 +129,11 @@ export default class Search extends React.Component {
                 paneType = 'editcampaign';
                 params = [ match.data.id ];
                 break;
+            case 'canvass_route':
+                defaultSection = 'canvass';
+                paneType = 'route';
+                params = [ match.data.id ];
+                break;
             case 'location':
                 defaultSection = 'maps';
                 paneType = 'location';

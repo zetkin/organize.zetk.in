@@ -3,6 +3,7 @@ import CallAssignmentMatch from './CallAssignmentMatch';
 import CampaignMatch from './CampaignMatch';
 import LocationMatch from './LocationMatch';
 import PersonMatch from './PersonMatch';
+import RouteMatch from './RouteMatch';
 import SurveyMatch from './SurveyMatch';
 import SurveySubmissionMatch from './SurveySubmissionMatch';
 import QueryMatch from './QueryMatch';
@@ -13,6 +14,7 @@ let _matches = {
     'campaign': CampaignMatch,
     'location': LocationMatch,
     'person': PersonMatch,
+    'canvass_route': RouteMatch,
     'survey': SurveyMatch,
     'survey_submission': SurveySubmissionMatch,
     'query': QueryMatch,

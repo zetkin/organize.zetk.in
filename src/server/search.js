@@ -52,6 +52,10 @@ function search(ws, req) {
             searchFuncs.push(new SearchSurveySubmissionProc(msg.query, req.z, msg.org, cache, msg.lang));
         }
 
+        if (!msg.scope || msg.scopr == 'canvass') {
+            searchFuncs.push(new SearchRouteProc(msg.query, req.z, msg.org, cache, msg.lang));
+        }
+
         queue = new SearchQueue(req.z, msg.org, msg.query, writeFunc, searchFuncs, msg.lang);
         queue.onComplete = (query) => {
             ws.send(JSON.stringify({
@@ -319,6 +323,18 @@ let SearchSurveySubmissionProc = searchProcFactory('survey_submission', {
     matcher: (qs, obj) => {
         return (obj.respondent && searchMatches(qs, obj.respondent,
             [ 'first_name', 'last_name', 'email' ]));
+    },
+});
+
+let SearchRouteProc = searchProcFactory('canvass_route', {
+    cache: 'canvass_routes',
+    loader: (z, orgId, qs, lang) => {
+        return z.resource('orgs', orgId, 'canvass_routes')
+            .get()
+            .then(result => result.data.data);
+    },
+    matcher: (qs, obj) => {
+        return searchMatches(qs, obj, [ 'id', 'title' ]);
     },
 });
 
