@@ -5,6 +5,7 @@ search:
                 =1 {One action on {date}}
                 other {# actions on {date}}
             }
+        assignedRoute: 'Assigned route {title}'
         query: 'Smart search: {title}'
         surveySubmission: 'Submission by {respondent} for {survey}'
     scopes:

@@ -1,4 +1,5 @@
 import ActionDayMatch from './ActionDayMatch';
+import AssignedRouteMatch from './AssignedRouteMatch';
 import CallAssignmentMatch from './CallAssignmentMatch';
 import CampaignMatch from './CampaignMatch';
 import LocationMatch from './LocationMatch';
@@ -10,6 +11,7 @@ import QueryMatch from './QueryMatch';
 
 let _matches = {
     'actionday': ActionDayMatch,
+    'assigned_route': AssignedRouteMatch,
     'call_assignment': CallAssignmentMatch,
     'campaign': CampaignMatch,
     'location': LocationMatch,

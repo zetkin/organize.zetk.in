@@ -119,6 +119,11 @@ export default class Search extends React.Component {
                 paneType = 'actionday';
                 params = [ match.data.date ];
                 break;
+            case 'assigned_route':
+                defaultSection = 'canvass';
+                paneType = 'assignedroute';
+                params = [ match.data.id ];
+                break;
             case 'call_assignment':
                 defaultSection = 'dialog';
                 paneType = 'callassignment';

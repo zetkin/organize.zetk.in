@@ -54,6 +54,7 @@ function search(ws, req) {
 
         if (!msg.scope || msg.scopr == 'canvass') {
             searchFuncs.push(new SearchRouteProc(msg.query, req.z, msg.org, cache, msg.lang));
+            searchFuncs.push(new SearchAssignedRouteProc(msg.query, req.z, msg.org, cache, msg.lang));
         }
 
         queue = new SearchQueue(req.z, msg.org, msg.query, writeFunc, searchFuncs, msg.lang);
@@ -334,7 +335,20 @@ let SearchRouteProc = searchProcFactory('canvass_route', {
             .then(result => result.data.data);
     },
     matcher: (qs, obj) => {
-        return searchMatches(qs, obj, [ 'id', 'title' ]);
+        return obj.id.indexOf(qs) >= 0 || searchMatches(qs, obj, [ 'title' ]);
+    },
+});
+
+let SearchAssignedRouteProc = searchProcFactory('assigned_route', {
+    cache: 'assigned_routes',
+    loader: (z, orgId, qs, lang) => {
+        return z.resource('orgs', orgId, 'assigned_routes')
+            .get()
+            .then(result => result.data.data);
+    },
+    matcher: (qs, obj) => {
+        return obj.id.indexOf(qs) >= 0 || obj.route.id.indexOf(qs) >= 0
+            || searchMatches(qs, obj.route, [ 'title' ]);
     },
 });
 
