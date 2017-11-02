@@ -97,8 +97,13 @@ export default function addresses(state = null, action) {
     else if (action.type == types.RETRIEVE_ROUTE_ADDRESSES + '_FULFILLED') {
         let routeId = action.meta.routeId;
         let addresses = action.payload.data.data;
+        let addressById = addresses.reduce((byId, a) => {
+            byId[a.id] = a;
+            return byId
+        }, {});
 
         return Object.assign({}, state, {
+            addressById: Object.assign({}, state.addressById, addressById),
             addressList: updateOrAddListItems(state.addressList, addresses),
             addressesByRoute: Object.assign({}, state.addressesByRoute, {
                 [routeId]: addresses.map(a => a.id),
