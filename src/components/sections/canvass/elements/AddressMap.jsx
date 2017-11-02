@@ -62,7 +62,7 @@ export default class AddressMap extends React.Component {
         if (this.markers.length) {
             let bounds = new google.maps.LatLngBounds();
             this.markers.forEach(m => bounds.extend(m.marker.getPosition()));
-            this.map.setCenter(bounds.getCenter());
+            this.map.fitBounds(bounds);
         }
 
         this.map.addListener('mousedown', this.onMapMouseDown.bind(this));
