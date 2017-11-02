@@ -40,20 +40,23 @@ export default class CallAssignmentPane extends PaneBase {
 
         let assignmentId = this.getParam(0);
         this.props.dispatch(retrieveCallAssignment(assignmentId));
-        this.props.dispatch(retrieveCallAssignmentStats(assignmentId));
-        this.props.dispatch(retrieveCallAssignmentCallers(assignmentId));
     }
 
     componentWillReceiveProps(nextProps) {
         let assignmentId = this.getParam(0);
         let assignmentItem = nextProps.assignmentItem;
 
-        if (assignmentItem && assignmentItem.data
+        if (assignmentItem && assignmentItem.data && assignmentItem.data.title
             && !assignmentItem.data.statsItem) {
             // If there are no stats for this assignment, e.g. because they
             // were removed by some operation that invalidated them, retrieve
             // call assignment statistics anew.
             this.props.dispatch(retrieveCallAssignmentStats(assignmentId));
+        }
+
+        if (assignmentItem && assignmentItem.data && assignmentItem.data.title
+            && !assignmentItem.data.callerList) {
+            this.props.dispatch(retrieveCallAssignmentCallers(assignmentId));
         }
     }
 
@@ -76,7 +79,10 @@ export default class CallAssignmentPane extends PaneBase {
     renderPaneContent(data) {
         const formatMessage = this.props.intl.formatMessage;
 
-        if (data.assignmentItem) {
+        if (data.assignmentItem && data.assignmentItem.isPending) {
+            return <LoadingIndicator />;
+        }
+        else if (data.assignmentItem && data.assignmentItem.data) {
             let assignment = data.assignmentItem.data;
             let instructions = assignment.instructions;
 
@@ -183,9 +189,6 @@ export default class CallAssignmentPane extends PaneBase {
                     { callerContent }
                 </div>
             ];
-        }
-        else {
-            return 'Loading';
         }
     }
 
