@@ -119,6 +119,11 @@ export default class Search extends React.Component {
                 paneType = 'actionday';
                 params = [ match.data.date ];
                 break;
+            case 'assigned_route':
+                defaultSection = 'canvass';
+                paneType = 'assignedroute';
+                params = [ match.data.id ];
+                break;
             case 'call_assignment':
                 defaultSection = 'dialog';
                 paneType = 'callassignment';
@@ -127,6 +132,16 @@ export default class Search extends React.Component {
             case 'campaign':
                 defaultSection = 'campaign';
                 paneType = 'editcampaign';
+                params = [ match.data.id ];
+                break;
+            case 'canvass_route':
+                defaultSection = 'canvass';
+                paneType = 'route';
+                params = [ match.data.id ];
+                break;
+            case 'canvass_assignment':
+                defaultSection = 'canvass';
+                paneType = 'canvassassignment';
                 params = [ match.data.id ];
                 break;
             case 'location':

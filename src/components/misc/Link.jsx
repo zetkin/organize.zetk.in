@@ -5,20 +5,15 @@ import { injectIntl } from 'react-intl';
 
 @injectIntl
 export default class Link extends React.Component {
-    static propTypes = React.PropTypes.oneOf([{
-        msgId: React.PropTypes.string.isRequired,
+    static propTypes = {
+        msgId: React.PropTypes.string,
         msgValues: React.PropTypes.object,
-        className: React.PropTypes.string,
-        href: React.PropTypes.string,
-        onClick: React.PropTypes.func,
-        target: React.PropTypes.string,
-    }, {
         children: React.PropTypes.object,
         className: React.PropTypes.string,
         href: React.PropTypes.string,
         onClick: React.PropTypes.func,
         target: React.PropTypes.string,
-    }]);
+    };
 
     render() {
         const formatMessage = this.props.intl.formatMessage;

@@ -1,6 +1,8 @@
 import React from 'react';
 import cx from 'classnames';
 
+import LoadingIndicator from '../../misc/LoadingIndicator';
+
 
 export default class ListItem extends React.Component {
     static propTypes = {
@@ -26,7 +28,7 @@ export default class ListItem extends React.Component {
         let checkbox = null;
         if (this.props.showCheckbox) {
             checkbox = (
-                <div className="ListItem-selection">
+                <div key="checkbox" className="ListItem-selection">
                     <input type="checkbox"
                         checked={ this.props.selected }
                         className="ListItem-checkbox"
@@ -39,13 +41,23 @@ export default class ListItem extends React.Component {
             'ListItem-withCheckbox': this.props.showCheckbox,
         });
 
-        return (
-            <li className={ classes }>
-                { checkbox }
-                <ItemComponent data={ item.data }
+        let content = null;
+        if (item.isPending) {
+            content = <LoadingIndicator />;
+        }
+        else {
+            content = [
+                checkbox,
+                <ItemComponent key="item" data={ item.data }
                     onItemMouseOut={ this.onItemMouseOut.bind(this) }
                     onItemMouseOver={ this.onItemMouseOver.bind(this) }
-                    onItemClick={ this.onItemClick.bind(this) }/>
+                    onItemClick={ this.onItemClick.bind(this) }/>,
+            ];
+        }
+
+        return (
+            <li className={ classes }>
+                { content }
             </li>
         );
     }

@@ -22,22 +22,22 @@ export default class CallAssignmentListItem extends React.Component {
 
     componentDidMount() {
         let assignment = this.props.data;
-        if (!assignment.statsItem) {
+        if (assignment.title && !assignment.statsItem) {
             this.props.dispatch(retrieveCallAssignmentStats(assignment.id));
         }
 
-        if (!assignment.callerList) {
+        if (assignment.title && !assignment.callerList) {
             this.props.dispatch(retrieveCallAssignmentCallers(assignment.id));
         }
     }
 
     componentWillUpdate(nextProps, nextState) {
         let assignment = nextProps.data;
-        if (!assignment.statsItem) {
+        if (assignment.title && !assignment.statsItem) {
             this.props.dispatch(retrieveCallAssignmentStats(assignment.id));
         }
 
-        if (!assignment.callerList) {
+        if (assignment.title && !assignment.callerList) {
             this.props.dispatch(retrieveCallAssignmentCallers(assignment.id));
         }
     }
