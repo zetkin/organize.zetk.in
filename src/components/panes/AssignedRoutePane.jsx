@@ -7,6 +7,7 @@ import PaneBase from './PaneBase';
 import Avatar from '../misc/Avatar';
 import Button from '../misc/Button';
 import ProgressBar from '../misc/ProgressBar';
+import Route from '../misc/elements/Route';
 import Link from '../misc/Link';
 import InfoList from '../misc/InfoList';
 import LoadingIndicator from '../misc/LoadingIndicator';
@@ -19,11 +20,21 @@ import {
 } from '../../actions/route';
 
 
-const mapStateToProps = (state, props) => ({
-    orgId: state.org.activeId,
-    assignedRouteItem: getListItemById(state.routes.assignedRouteList,
-        props.paneData.params[0])
-});
+const mapStateToProps = (state, props) => {
+    let arList = state.routes.assignedRouteList;
+    let assignedRouteItem = getListItemById(arList, props.paneData.params[0])
+    let routeItem = null;
+
+    if (assignedRouteItem && assignedRouteItem.data && assignedRouteItem.data.route) {
+        routeItem = getListItemById(state.routes.routeList,
+            assignedRouteItem.data.route.id);
+    }
+
+    return {
+        orgId: state.org.activeId,
+        routeItem, assignedRouteItem,
+    }
+};
 
 
 @connect(mapStateToProps)
@@ -58,6 +69,7 @@ export default class AssignedRoutePane extends PaneBase {
         let arItem = data.assignedRouteItem;
         if (arItem && arItem.data && arItem.data.assignment) {
             let ar = arItem.data;
+            let route = this.props.routeItem.data;
             let orgId = this.props.orgId;
 
             let progressContent = <LoadingIndicator/>;
@@ -87,7 +99,7 @@ export default class AssignedRoutePane extends PaneBase {
                 <InfoList key="info" data={[
                     { name: 'assignment', value: ar.assignment.title,
                         onClick: () => this.openPane('canvassassignment', ar.assignment.id), },
-                    { name: 'route', value: ar.route.id,
+                    { name: 'route', value: <Route route={ route }/>,
                         onClick: () => this.openPane('route', ar.route.id), },
                     { name: 'print', msgId: 'panes.assignedRoute.info.print',
                         href: '/prints/assigned_route/' + orgId + ',' + ar.id,
