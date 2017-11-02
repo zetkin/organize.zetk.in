@@ -115,6 +115,17 @@ export default function routes(state = null, action) {
             assignedRouteList: updateOrAddListItem(state.assignedRouteList, ar.id, ar),
         });
     }
+    else if (action.type == types.UPDATE_ASSIGNED_ROUTE_VISITS + '_FULFILLED') {
+        // After assigned route vists are updated, stats need to be re-fetched
+        let ar = {
+            id: action.meta.id,
+            statsItem: null,
+        };
+
+        return Object.assign({}, state, {
+            assignedRouteList: updateOrAddListItem(state.assignedRouteList, ar.id, ar),
+        });
+    }
     else if (action.type == types.RETRIEVE_CANVASS_ASSIGNMENT_ROUTES + '_FULFILLED') {
         let routes = action.payload.data.data;
 

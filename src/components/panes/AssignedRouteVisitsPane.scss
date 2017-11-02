@@ -1,0 +1,25 @@
+.AssignedRouteVisitsPane {
+    .AssignedRouteVisitsPane-options {
+        .RadioInput-input {
+            margin: 0 0 0.5em;
+        }
+
+        label {
+            margin: 0 0 0 1em;
+            font-size: 1.4em;
+            cursor: pointer;
+        }
+    }
+
+    .AssignedRouteVisitsPane-selection {
+        margin-top: 3em;
+
+        h3 {
+            margin-bottom: 0.2em;
+        }
+
+        p {
+            margin: 0 0 2em;
+        }
+    }
+}

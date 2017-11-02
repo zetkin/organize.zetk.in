@@ -5,13 +5,17 @@ import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 import AddressList from '../lists/AddressList';
 import Button from '../misc/Button';
 import PaneBase from './PaneBase';
-import ViewSwitch from '../misc/ViewSwitch';
+import RadioInput from '../forms/inputs/RadioInput';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import { getListItemById } from '../../utils/store';
 
 import { retrieveRouteAddresses } from '../../actions/address';
 import { retrieveHouseholdVisits } from '../../actions/visit';
-import { retrieveAssignedRoute } from '../../actions/route';
+import {
+    retrieveAssignedRoute,
+    updateAssignedRouteVisits,
+} from '../../actions/route';
+
 
 import {
     createSelection,
@@ -41,12 +45,21 @@ const mapStateToProps = (state, props) => {
         addressVisitList,
         addressItems,
         selectionList: state.selections.selectionList,
+        householdVisitList: state.visits.householdVisitList,
     };
 };
 
 @connect(mapStateToProps)
 @injectIntl
 export default class AssignedRouteVisitsPane extends PaneBase {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            selectionOption: 'all',
+        };
+    }
+
     componentDidMount() {
         super.componentDidMount();
     }
@@ -62,11 +75,6 @@ export default class AssignedRouteVisitsPane extends PaneBase {
             this.props.dispatch(retrieveRouteAddresses(routeId));
             this.props.dispatch(retrieveHouseholdVisits(arId));
         }
-
-        // TODO: Move this until after all data has been fetched?
-        let action = createSelection('address');
-        this.selectionId = action.payload.id;
-        this.props.dispatch(action);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -75,63 +83,109 @@ export default class AssignedRouteVisitsPane extends PaneBase {
 
         if (!!curRouteItem && curRouteItem != prevRouteItem) {
             let arId = curRouteItem.data.id;
-            let routeId = curRouteItem.data.route.id;
-
-            this.props.dispatch(retrieveRouteAddresses(routeId));
             this.props.dispatch(retrieveHouseholdVisits(arId));
+
+            if (curRouteItem.data.route) {
+                let routeId = curRouteItem.data.route.id;
+                this.props.dispatch(retrieveRouteAddresses(routeId));
+            }
+        }
+
+        if (curRouteItem && this.props.addressItems && !this.selectionId) {
+            let selectedIds = this.props.addressVisitList.items
+                .filter(i => i.data.state == 1)
+                .map(i => i.data.id);
+
+            let action = createSelection('address', selectedIds);
+            this.selectionId = action.payload.id;
+            this.props.dispatch(action);
         }
     }
 
     getPaneTitle(data) {
-        if (this.props.streetItem) {
-            return this.props.intl.formatMessage(
-                { id: 'panes.assignedRouteVisits.title' },
-                { street: this.props.streetItem.data.title });
-        }
-        else {
-            return null;
-        }
+        return this.props.intl.formatMessage({ id: 'panes.assignedRouteVisits.title' });
     }
 
     renderPaneContent(data) {
-        if (this.props.addressItems) {
-            // Mimic a list structure
-            let addrList = {
-                items: this.props.addressItems,
-            };
+        let selectionContent = null;
 
-            if (this.selectionId) {
-                let selectionItem = getListItemById(this.props.selectionList, this.selectionId);
-                if (selectionItem) {
-                    this.selection = selectionItem.data;
+        if (this.state.selectionOption == 'advanced') {
+            if (this.props.addressItems) {
+                // Mimic a list structure
+                let addrList = {
+                    items: this.props.addressItems,
+                };
+
+                if (this.selectionId) {
+                    let selectionItem = getListItemById(this.props.selectionList, this.selectionId);
+                    if (selectionItem) {
+                        this.selection = selectionItem.data;
+                    }
                 }
-            }
 
-            return [
-                <AddressList key="addresses" addressList={ addrList }
-                    allowBulkSelection={ true }
-                    bulkSelection={ this.selection }
-                    onItemSelect={ this.onItemSelect.bind(this) }
+                selectionContent = (
+                    <div key="selection" className="AssignedRouteVisitsPane-selection">
+                        <Msg tagName="h3" id="panes.assignedRouteVisits.list.h"/>
+                        <Msg tagName="p" id="panes.assignedRouteVisits.list.p"/>
+                        <AddressList addressList={ addrList }
+                            allowBulkSelection={ true }
+                            bulkSelection={ this.selection }
+                            onItemSelect={ this.onItemSelect.bind(this) }
+                            />
+                    </div>
+                );
+            }
+            else {
+                selectionContent = (
+                    <LoadingIndicator />
+                );
+            }
+        }
+
+        let options = {
+            'all': 'panes.assignedRouteVisits.selectionOptions.all',
+            'advanced': 'panes.assignedRouteVisits.selectionOptions.advanced',
+        };
+
+        return [
+            <div key="options" className="AssignedRouteVisitsPane-options">
+                <RadioInput options={ options } name="selectionOption"
+                    idPrefix={ this.props.paneData.id }
+                    optionLabelsAreMessages={ true }
+                    value={ this.state.selectionOption }
+                    onValueChange={ this.onSelectionOptionChange.bind(this) }
                     />
-            ];
-        }
-        else {
-            return <LoadingIndicator />;
-        }
+            </div>,
+            selectionContent,
+        ];
     }
 
     renderPaneFooter() {
-        if (this.selection) {
+        if (this.state.selectionOption == 'all') {
+            return (
+                <Button className="AssignedRouteVisitsPane-saveButton"
+                    labelMsg="panes.assignedRouteVisits.saveAllButton"
+                    onClick={ this.onSaveButtonClick.bind(this) }
+                    />
+            );
+        }
+        else if (this.selection) {
             let numSelected = this.selection.selectedIds.length;
 
             return (
                 <Button className="AssignedRouteVisitsPane-saveButton"
-                    labelMsg="panes.assignedRouteVisits.saveButton"
+                    labelMsg="panes.assignedRouteVisits.saveAdvancedButton"
                     labelValues={{ numSelected }}
                     onClick={ this.onSaveButtonClick.bind(this) }
                     />
             );
         }
+    }
+
+    onSelectionOptionChange(name, value) {
+        this.setState({
+            selectionOption: value,
+        });
     }
 
     onItemSelect(item, selected) {
@@ -146,8 +200,27 @@ export default class AssignedRouteVisitsPane extends PaneBase {
     }
 
     onSaveButtonClick() {
-        let selectionId = this.getParam(0);
-        this.props.dispatch(finishSelection(selectionId));
+        let arId = this.getParam(0);
+        let visits = this.props.householdVisitList.items
+            .map(i => i.data)
+            .filter(hhv => hhv.assigned_route.id == arId)
+            .map(hhv => {
+                let state = 0;
+
+                if (this.state.selectionOption == 'all') {
+                    state = 1;
+                }
+                else if (this.selection.selectedIds.indexOf(hhv.address.id) >= 0) {
+                    state = 1;
+                }
+
+                return {
+                    household_id: hhv.household_id,
+                    state: state,
+                };
+            });
+
+        this.props.dispatch(updateAssignedRouteVisits(arId, visits));
         this.closePane();
     }
 }

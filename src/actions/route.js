@@ -30,7 +30,7 @@ export function retrieveRoute(id) {
         let orgId = getState().org.activeId;
 
         dispatch({
-            type: types.RETRIEVE_ROUTES,
+            type: types.RETRIEVE_ROUTE,
             meta: { id, },
             payload: {
                 promise: z.resource('orgs', orgId, 'canvass_routes', id).get(),
@@ -136,6 +136,22 @@ export function updateAssignedRoute(id, data) {
             payload: {
                 promise: z.resource('orgs', orgId,
                     'assigned_routes', id).patch(data),
+            }
+        });
+    };
+}
+
+export function updateAssignedRouteVisits(id, visits) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        let data = { visits };
+
+        dispatch({
+            type: types.UPDATE_ASSIGNED_ROUTE_VISITS,
+            meta: { id, visits },
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'assigned_routes', id, 'household_visits').post(data),
             }
         });
     };

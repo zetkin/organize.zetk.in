@@ -110,7 +110,11 @@ export default class AllRoutesPane extends RootPaneBase {
 
         if (this.props.routeList && this.props.routeList.items) {
             this.props.routeList.items.forEach(item => {
-                routeOptions[item.data.id] = item.data.id;
+                // TODO: Create general-purpose function for this?
+                routeOptions[item.data.id] = item.data.title
+                    || this.props.intl.formatMessage(
+                        { id: 'misc.elements.route' },
+                        { id: item.data.id });
             });
         };
 
@@ -120,6 +124,7 @@ export default class AllRoutesPane extends RootPaneBase {
                     id="panes.allRoutes.filters.tag.label"/>
                 <SelectInput name="tag" options={ tagOptions }
                     value={ filters.tag || '_' }
+                    orderAlphabetically={ true }
                     onValueChange={ this.onFilterChange.bind(this) }
                     />
 
@@ -127,6 +132,7 @@ export default class AllRoutesPane extends RootPaneBase {
                     id="panes.allRoutes.filters.street.label"/>
                 <SelectInput name="street" options={ streetOptions }
                     value={ filters.street || '_' }
+                    orderAlphabetically={ true }
                     onValueChange={ this.onFilterChange.bind(this) }
                     />
 
@@ -135,6 +141,7 @@ export default class AllRoutesPane extends RootPaneBase {
                     />
                 <SelectInput name="route" options={ routeOptions }
                     value={ filters.route || '_' }
+                    orderAlphabetically={ true }
                     onValueChange={ this.onFilterChange.bind(this) }
                     />
             </div>

@@ -52,6 +52,12 @@ function search(ws, req) {
             searchFuncs.push(new SearchSurveySubmissionProc(msg.query, req.z, msg.org, cache, msg.lang));
         }
 
+        if (!msg.scope || msg.scopr == 'canvass') {
+            searchFuncs.push(new SearchCanvassAssignmentProc(msg.query, req.z, msg.org, cache, msg.lang));
+            searchFuncs.push(new SearchRouteProc(msg.query, req.z, msg.org, cache, msg.lang));
+            searchFuncs.push(new SearchAssignedRouteProc(msg.query, req.z, msg.org, cache, msg.lang));
+        }
+
         queue = new SearchQueue(req.z, msg.org, msg.query, writeFunc, searchFuncs, msg.lang);
         queue.onComplete = (query) => {
             ws.send(JSON.stringify({
@@ -319,6 +325,43 @@ let SearchSurveySubmissionProc = searchProcFactory('survey_submission', {
     matcher: (qs, obj) => {
         return (obj.respondent && searchMatches(qs, obj.respondent,
             [ 'first_name', 'last_name', 'email' ]));
+    },
+});
+
+let SearchRouteProc = searchProcFactory('canvass_route', {
+    cache: 'canvass_routes',
+    loader: (z, orgId, qs, lang) => {
+        return z.resource('orgs', orgId, 'canvass_routes')
+            .get()
+            .then(result => result.data.data);
+    },
+    matcher: (qs, obj) => {
+        return obj.id.indexOf(qs) >= 0 || searchMatches(qs, obj, [ 'title' ]);
+    },
+});
+
+let SearchAssignedRouteProc = searchProcFactory('assigned_route', {
+    cache: 'assigned_routes',
+    loader: (z, orgId, qs, lang) => {
+        return z.resource('orgs', orgId, 'assigned_routes')
+            .get()
+            .then(result => result.data.data);
+    },
+    matcher: (qs, obj) => {
+        return obj.id.indexOf(qs) >= 0 || obj.route.id.indexOf(qs) >= 0
+            || searchMatches(qs, obj.route, [ 'title' ]);
+    },
+});
+
+let SearchCanvassAssignmentProc = searchProcFactory('canvass_assignment', {
+    cache: 'canvass_assignments',
+    loader: (z, orgId, qs, lang) => {
+        return z.resource('orgs', orgId, 'canvass_assignments')
+            .get()
+            .then(result => result.data.data);
+    },
+    matcher: (qs, obj) => {
+        return searchMatches(qs, obj, [ 'title', 'description' ]);
     },
 });
 

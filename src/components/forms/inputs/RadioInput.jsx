@@ -2,17 +2,23 @@ import React from 'react';
 import { injectIntl } from 'react-intl';
 
 import InputBase from './InputBase';
+import makeRandomString from '../../../utils/makeRandomString';
 
 
 @injectIntl
-export default class SelectInput extends InputBase {
+export default class RadioInput extends InputBase {
     static propTypes = {
         options: React.PropTypes.object.isRequired,
+        idPrefix: React.PropTypes.string.isRequired,
         optionLabelsAreMessages: React.PropTypes.bool,
         orderAlphabetically: React.PropTypes.bool,
         nullOption: React.PropTypes.string,
         nullOptionMsg: React.PropTypes.string,
     };
+
+    constructor(props) {
+        super(props);
+    }
 
     renderInput() {
         let keys = Object.keys(this.props.options);
@@ -21,39 +27,48 @@ export default class SelectInput extends InputBase {
             keys.sort((k0, k1) => this.props.options[k0].localeCompare(this.props.options[k1]));
         }
 
-        let optionElements = keys.map(key => {
-            var label = this.props.options[key];
+        let inputElements = keys.map(key => {
+            let label = this.props.options[key];
+            let name = this.props.idPrefix + '-' + this.props.name;
+            let id = name + '-' + key;
 
             if (this.props.optionLabelsAreMessages) {
                 label = this.props.intl.formatMessage({ id: label });
             }
 
             return (
-                <option key={ key } value={ key }>
-                    { label }
-                </option>
+                <div key={ key } className="RadioInput-input">
+                    <input id={ id } type="radio"
+                        name={ name } value={ key }
+                        checked={ key == this.props.value }
+                        onChange={ this.onChange.bind(this) }
+                        />
+                    <label htmlFor={ id }>{ label }</label>
+                </div>
             );
         });
 
         if (this.props.nullOption || this.props.nullOptionMsg) {
             let label = this.props.nullOption;
+            let name = this.props.idPrefix + '-' + this.props.name;
+            let id = name + '-0';
+
             if (this.props.nullOptionMsg) {
                 label = this.props.intl.formatMessage({ id: this.props.nullOptionMsg });
             }
 
-            optionElements.unshift(
-                <option key="0" value="0">
-                    { label }
-                </option>
+            inputElements.unshift(
+                <div key="0" className="RadioInput-input">
+                    <input id={ id } type="radio"
+                        name={ name } value="key"
+                        checked={ this.props.value === null }
+                        />
+                    <label htmlFor={ id }>{ label }</label>
+                </div>
             );
         }
 
-        return (
-            <select value={ this.props.value || '0' }
-                onChange={ this.onChange.bind(this) }>
-                { optionElements }
-            </select>
-        );
+        return inputElements;
     }
 
     onChange(ev) {
@@ -64,8 +79,4 @@ export default class SelectInput extends InputBase {
             super.onChange(ev);
         }
     }
-}
-
-SelectInput.propTypes = {
-    options: React.PropTypes.object.isRequired
 }

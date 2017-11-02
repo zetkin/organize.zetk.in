@@ -6,6 +6,7 @@ import PaneBase from './PaneBase';
 import Button from '../misc/Button';
 import Link from '../misc/Link';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
+import Route from '../misc/elements/Route';
 import { getListItemById } from '../../utils/store';
 import { stringFromAddress } from '../../utils/location';
 import { createSelection } from '../../actions/selection';
@@ -53,9 +54,7 @@ export default class RouteContentPane extends PaneBase {
 
     getPaneTitle(data) {
         if (data.routeItem && data.routeItem.data) {
-            return this.props.intl.formatMessage(
-                { id: 'panes.routeContent.title' },
-                { id: data.routeItem.data.id });
+            return <Route route={ data.routeItem.data }/>
         }
         else {
             return null;
