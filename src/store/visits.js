@@ -6,7 +6,9 @@ import {
 
 
 export default function visits(state = null, action) {
-    if (action.type == types.RETRIEVE_HOUSEHOLD_VISITS + '_FULFILLED') {
+    if (action.type == types.RETRIEVE_HOUSEHOLD_VISITS + '_FULFILLED'
+        || action.type == types.UPDATE_ASSIGNED_ROUTE_VISITS + '_FULFILLED') {
+
         let householdVisits = action.payload.data.data;
         let visitsByAddress = {};
 

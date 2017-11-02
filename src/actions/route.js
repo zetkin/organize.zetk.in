@@ -141,6 +141,22 @@ export function updateAssignedRoute(id, data) {
     };
 }
 
+export function updateAssignedRouteVisits(id, visits) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        let data = { visits };
+
+        dispatch({
+            type: types.UPDATE_ASSIGNED_ROUTE_VISITS,
+            meta: { id, visits },
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'assigned_routes', id, 'household_visits').post(data),
+            }
+        });
+    };
+}
+
 export function generateRoutes(addressIds, config = {}) {
     config = Object.assign({}, ROUTE_GEN_DEFAULTS, config);
 

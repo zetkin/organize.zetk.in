@@ -74,11 +74,11 @@ window.onload = function() {
         // Strip <html> and checksum
         let serverHtml = window.serverHtml
             .substr(window.serverHtml.indexOf('<body'))
-            .replace('/>', '>');
+            .replace(new RegExp('/>', 'g'), '>');
 
         let clientHtml = window.clientHtml
             .substr(window.clientHtml.indexOf('<body'))
-            .replace('/>', '>');
+            .replace(new RegExp('/>', 'g'), '>');
 
         // Find inconsistency
         let length = Math.min(serverHtml.length, clientHtml.length);
