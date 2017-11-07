@@ -66,6 +66,9 @@ let sortFunc = (i0, i1, field) => {
         else if (ar1.canvasser && !ar0.canvasser) {
             return 1;
         }
+        else if (!ar1.canvasser && !ar0.canvasser) {
+            return 0;
+        }
         else {
             return ar0.canvasser.name.localeCompare(ar1.canvasser.name);
         }
