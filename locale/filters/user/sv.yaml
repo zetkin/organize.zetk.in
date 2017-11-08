@@ -1,0 +1,4 @@
+isUser:
+    label: Välj personer som…
+    yesOption: har en Zetkin-användare
+    noOption: inte har en Zetkin-användare
