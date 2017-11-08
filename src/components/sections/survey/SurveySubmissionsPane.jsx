@@ -24,11 +24,7 @@ export default class SurveySubmissionsPane extends RootPaneBase {
     }
 
     getPaneFilters(data, filters) {
-        let surveyOptions = {
-            '_': this.props.intl.formatMessage({
-                id: 'panes.surveySubmissions.filters.survey.nullOption' }),
-        };
-
+        let surveyOptions = {}
         if (this.props.surveyList && this.props.surveyList.items) {
             this.props.surveyList.items.forEach(item => {
                 surveyOptions[item.data.id] = item.data.title;
@@ -39,7 +35,9 @@ export default class SurveySubmissionsPane extends RootPaneBase {
             <div key="survey">
                 <Msg tagName="label" id="panes.surveySubmissions.filters.survey.label"/>
                 <SelectInput name="survey" options={ surveyOptions }
-                    value={ filters.survey || '_' }
+                    value={ filters.survey }
+                    nullOptionMsg="panes.surveySubmissions.filters.survey.nullOption"
+                    orderAlphabetically={ true }
                     onValueChange={ this.onFilterChange.bind(this) }
                     />
             </div>
