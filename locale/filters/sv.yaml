@@ -11,3 +11,4 @@ types:
     surveyOption: Enkätsvar (svarsalternativ)
     surveyResponse: Enkätsvar (fritext)
     surveySubmission: Inskickad enkät
+    user: Zetkin-användare
