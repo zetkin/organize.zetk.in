@@ -6,7 +6,7 @@ instructions:
     editLink: Rediger instruktionerne
     h: Instruktioner
 summary:
-    cooldown: 'En time, timer'
+    cooldown: '{cooldown, plural, =0 { - } =1 { en time } other {# timer}}'
     editLink: Rediger indstilninger
 target:
     editGoalLink: Rediger målsætning

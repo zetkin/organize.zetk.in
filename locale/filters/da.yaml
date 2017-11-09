@@ -11,3 +11,4 @@ types:
     surveyOption: Spørgeskemabesvarelse (svarmuligheder)
     surveyResponse: Spørgeskemabesvarelse (fritekst)
     surveySubmission: Indsendt spørgeskema
+    user: Zetkin-bruger

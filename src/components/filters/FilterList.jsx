@@ -76,6 +76,7 @@ export default class FilterList extends React.Component {
             'survey_submission': msg('filters.types.surveySubmission'),
             'survey_response': msg('filters.types.surveyResponse'),
             'survey_option': msg('filters.types.surveyOption'),
+            'user': msg('filters.types.user'),
         };
 
         let items = [];

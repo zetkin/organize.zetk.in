@@ -11,3 +11,4 @@ types:
     surveyOption: Survey response (options)
     surveyResponse: Survey response (text)
     surveySubmission: Survey submission
+    user: Zetkin user
