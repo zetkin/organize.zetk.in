@@ -1,4 +1,4 @@
 isUser:
-    label: Select people who…
-    yesOption: have a Zetkin user account
-    noOption: do not have a Zetkin user account
+    label: Select people who are…
+    yesOption: connected to a Zetkin user account
+    noOption: not connected to a Zetkin user account
