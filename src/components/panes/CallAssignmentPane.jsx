@@ -231,6 +231,7 @@ export default class CallAssignmentPane extends PaneBase {
         let instructions = assignmentItem.data.instructions;
 
         let action = createTextDocument(instructions, content => {
+            let assignmentId = assignmentItem.data.id;
             let values = {
                 instructions: content,
             };
