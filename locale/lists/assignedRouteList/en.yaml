@@ -1,7 +1,8 @@
 header:
-    route: Route
     assignment: Assignment
     canvasser: Asignee
+    progress: Progress
+    route: Route
 item:
     unassigned: No one assigned
     stats:
