@@ -4,3 +4,6 @@ header:
     canvasser: Asignee
 item:
     unassigned: No one assigned
+    stats:
+        allocated: Households
+        visited: Visited
