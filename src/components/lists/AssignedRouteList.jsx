@@ -19,9 +19,10 @@ export default class AssignedRouteList extends React.Component {
             {
                 'route': 'lists.assignedRouteList.header.route',
                 'assignment': 'lists.assignedRouteList.header.assignment',
+                'canvasser': 'lists.assignedRouteList.header.canvasser',
             },
             {
-                'canvasser': 'lists.assignedRouteList.header.canvasser',
+                'progress': 'lists.assignedRouteList.header.progress',
             },
         ];
 
@@ -72,6 +73,18 @@ let sortFunc = (i0, i1, field) => {
         else {
             return ar0.canvasser.name.localeCompare(ar1.canvasser.name);
         }
+    }
+    else if (field == 'progress') {
+        let stats0 = ar0.statsItem? ar0.statsItem.data : null;
+        let stats1 = ar1.statsItem? ar1.statsItem.data : null;
+
+        if (stats0 && stats1) {
+            let p0 = (stats0.num_households_visited / stats0.num_households_allocated) || 0;
+            let p1 = (stats1.num_households_visited / stats1.num_households_allocated) || 0;
+            return p1 - p0;
+        }
+
+        return 0;
     }
     else {
         return 0;
