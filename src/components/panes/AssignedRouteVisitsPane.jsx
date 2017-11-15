@@ -26,24 +26,20 @@ import {
 
 
 const mapStateToProps = (state, props) => {
-    let assignedRouteItem = getListItemById(state.routes.assignedRouteList,
-        props.paneData.params[0]);
-
-    let addressItems = null;
-    let addressList = state.addresses.addressList;
+    let arId = props.paneData.params[0];
+    let assignedRouteItem = getListItemById(state.routes.assignedRouteList, arId);
     let addressVisitList = state.visits.addressVisitList;
-    
-    if (addressVisitList && addressList) {
-        // TODO: filter by occurrence in route
-        addressItems = state.visits.addressVisitList.items.map(i =>
-            getListItemById(state.addresses.addressList, i.data.id))
-            .filter(i => !!i);
+
+    if (addressVisitList) {
+        addressVisitList = Object.assign({}, {
+            items: addressVisitList.items.filter(i => i.data.ar_id == arId),
+        });
     }
+
 
     return {
         assignedRouteItem,
         addressVisitList,
-        addressItems,
         selectionList: state.selections.selectionList,
         householdVisitList: state.visits.householdVisitList,
     };
@@ -61,14 +57,10 @@ export default class AssignedRouteVisitsPane extends PaneBase {
     }
 
     componentDidMount() {
-        super.componentDidMount();
-    }
-
-    componentDidMount() {
         if (!this.props.assignedRouteItem) {
             this.props.dispatch(retrieveAssignedRoute(this.getParam(0)));
         }
-        else if (!this.props.addressItems) {
+        else {
             let arId = this.props.assignedRouteItem.data.id;
             let routeId = this.props.assignedRouteItem.data.route.id;
 
@@ -85,13 +77,11 @@ export default class AssignedRouteVisitsPane extends PaneBase {
             let arId = curRouteItem.data.id;
             this.props.dispatch(retrieveHouseholdVisits(arId));
 
-            if (curRouteItem.data.route) {
-                let routeId = curRouteItem.data.route.id;
-                this.props.dispatch(retrieveRouteAddresses(routeId));
-            }
+            let routeId = curRouteItem.data.route.id;
+            this.props.dispatch(retrieveRouteAddresses(routeId));
         }
 
-        if (curRouteItem && this.props.addressItems && !this.selectionId) {
+        if (curRouteItem && this.props.addressVisitList.items.length && !this.selectionId) {
             let selectedIds = this.props.addressVisitList.items
                 .filter(i => i.data.state == 1)
                 .map(i => i.data.id);
@@ -110,12 +100,7 @@ export default class AssignedRouteVisitsPane extends PaneBase {
         let selectionContent = null;
 
         if (this.state.selectionOption == 'advanced') {
-            if (this.props.addressItems) {
-                // Mimic a list structure
-                let addrList = {
-                    items: this.props.addressItems,
-                };
-
+            if (this.props.addressVisitList) {
                 if (this.selectionId) {
                     let selectionItem = getListItemById(this.props.selectionList, this.selectionId);
                     if (selectionItem) {
@@ -127,7 +112,8 @@ export default class AssignedRouteVisitsPane extends PaneBase {
                     <div key="selection" className="AssignedRouteVisitsPane-selection">
                         <Msg tagName="h3" id="panes.assignedRouteVisits.list.h"/>
                         <Msg tagName="p" id="panes.assignedRouteVisits.list.p"/>
-                        <AddressList addressList={ addrList }
+                        <AddressList addressList={ this.props.addressVisitList }
+                            simple={ true }
                             allowBulkSelection={ true }
                             bulkSelection={ this.selection }
                             onItemSelect={ this.onItemSelect.bind(this) }
@@ -200,6 +186,9 @@ export default class AssignedRouteVisitsPane extends PaneBase {
     }
 
     onSaveButtonClick() {
+        let selectionItem = getListItemById(this.props.selectionList, this.selectionId);
+        let selection = selectionItem.data;
+
         let arId = this.getParam(0);
         let visits = this.props.householdVisitList.items
             .map(i => i.data)
@@ -210,7 +199,7 @@ export default class AssignedRouteVisitsPane extends PaneBase {
                 if (this.state.selectionOption == 'all') {
                     state = 1;
                 }
-                else if (this.selection.selectedIds.indexOf(hhv.address.id) >= 0) {
+                else if (selection.selectedIds.indexOf(hhv.address.id) >= 0) {
                     state = 1;
                 }
 

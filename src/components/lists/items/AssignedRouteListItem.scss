@@ -6,6 +6,7 @@
     }
 
     .AssignedRouteListItem-info {
+        width: 50%;
         float: left;
 
         span {
@@ -19,11 +20,10 @@
     }
 
     .AssignedRouteListItem-assignee {
-        float: right;
-        width: 19em;
+        margin: 0.5em 0 0;
 
         .Avatar {
-            width: 3em;
+            width: 1.3em;
             float: left;
             margin: 0 0.5em 0 0;
         }
@@ -36,6 +36,53 @@
         .AssignedRouteListItem-assigneeName {
             color: $c-text;
             font-style: normal;
+        }
+    }
+
+    .AssignedRouteListItem-progress {
+        float: right;
+        width: 19em;
+
+        .ProgressBar {
+            margin: 0.2em 0 0.8em;
+            height: 0.8em;
+        }
+
+        .AssignedRouteListItem-stats {
+
+            div {
+                display: inline-block;
+                width: 30%;
+                margin-right: 3%;
+
+                span {
+                    display: block;
+                    text-align: center;
+                }
+
+                .AssignedRouteListItem-statsNumber {
+                    font-size: 1.2em;
+                    margin-bottom: 0.1em;
+                    padding-right: 0.5em;
+                }
+
+                span + span {
+                    font-size: 0.9em;
+                    color: $c-ui-darker;
+                }
+            }
+
+            .AssignedRouteListItem-visited {
+                .AssignedRouteListItem-statsNumber:before {
+                    @include icon($fa-var-check);
+                }
+            }
+
+            .AssignedRouteListItem-allocated {
+                .AssignedRouteListItem-statsNumber:before {
+                    @include icon($fa-var-home);
+                }
+            }
         }
     }
 }

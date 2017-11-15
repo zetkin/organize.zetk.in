@@ -7,6 +7,7 @@ import AddressListItem from './items/AddressListItem';
 
 export default class AddressList extends React.Component {
     static propTypes = {
+        simple: React.PropTypes.bool,
         allowBulkSelection: React.PropTypes.bool,
         bulkSelection: React.PropTypes.object,
         enablePagination: React.PropTypes.bool,
@@ -25,13 +26,24 @@ export default class AddressList extends React.Component {
     }
 
     render() {
-        const columns = [
-            {
-                'street': 'lists.addressList.header.street',
-                'number': 'lists.addressList.header.number',
-                'suffix': 'lists.addressList.header.suffix',
-            },
-        ];
+        let columns = null;
+
+        if (!this.props.simple) {
+            columns = [
+                {
+                    'street': 'lists.addressList.header.street',
+                    'number': 'lists.addressList.header.number',
+                    'suffix': 'lists.addressList.header.suffix',
+                },
+            ];
+        }
+        else {
+            columns = [
+                {
+                    'address': 'lists.addressList.header.address',
+                },
+            ];
+        }
 
         return (
             <List className="AddressList"

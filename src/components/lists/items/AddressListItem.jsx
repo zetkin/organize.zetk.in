@@ -6,12 +6,18 @@ import { stringFromAddress } from '../../../utils/location';
 export default class AddressListItem extends React.Component {
     static propTypes = {
         onItemClick: React.PropTypes.func,
-        data: React.PropTypes.shape({
-            id: React.PropTypes.string.isRequired,
-            street: React.PropTypes.string.isRequired,
-            number: React.PropTypes.string,
-            suffix: React.PropTypes.string,
-        })
+        data: React.PropTypes.oneOfType([
+            React.PropTypes.shape({
+                id: React.PropTypes.string.isRequired,
+                address: React.PropTypes.string.isRequired,
+            }),
+            React.PropTypes.shape({
+                id: React.PropTypes.string.isRequired,
+                street: React.PropTypes.string.isRequired,
+                number: React.PropTypes.string,
+                suffix: React.PropTypes.string,
+            }),
+        ])
     }
 
     render() {

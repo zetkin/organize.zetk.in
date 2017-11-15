@@ -10,13 +10,17 @@ export default function visits(state = null, action) {
         || action.type == types.UPDATE_ASSIGNED_ROUTE_VISITS + '_FULFILLED') {
 
         let householdVisits = action.payload.data.data;
-        let visitsByAddress = {};
+        let visitsByRouteAndAddress = {};
 
         householdVisits.forEach(hhv => {
             let addr = hhv.address;
-            if (!visitsByAddress.hasOwnProperty(addr.id)) {
-                visitsByAddress[addr.id] = {
+            let ar = hhv.assigned_route;
+            let key = ar.id + '-' + addr.id;
+
+            if (!visitsByRouteAndAddress.hasOwnProperty(key)) {
+                visitsByRouteAndAddress[key] = {
                     id: addr.id,
+                    ar_id: ar.id,
                     address: addr.address,
                     state: hhv.state,
                     households_visited: 0,
@@ -24,14 +28,14 @@ export default function visits(state = null, action) {
                 };
             }
 
-            visitsByAddress[addr.id].households_allocated++;
+            visitsByRouteAndAddress[key].households_allocated++;
 
             if (hhv.visit_time) {
-                visitsByAddress[addr.id].households_visited++;
+                visitsByRouteAndAddress[key].households_visited++;
             }
         });
 
-        let addressVisits = Object.keys(visitsByAddress).map(id => visitsByAddress[id]);
+        let addressVisits = Object.keys(visitsByRouteAndAddress).map(id => visitsByRouteAndAddress[id]);
 
         return Object.assign({}, state, {
             addressVisitList: updateOrAddListItems(
