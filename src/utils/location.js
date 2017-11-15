@@ -47,5 +47,9 @@ export function dmsStringFromLatLng(lat, lng) {
 
 
 export function stringFromAddress(addr) {
+    if (addr.address) {
+        return addr.address;
+    }
+
     return (addr.street || '') + ' ' + (addr.number || '') + (addr.suffix || '');
 }
