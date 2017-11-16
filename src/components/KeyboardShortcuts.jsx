@@ -105,7 +105,7 @@ export default class KeyboardShortcuts extends React.Component {
         }
 
         if (this.state.keyPrefix === 'g') {
-            switch (ev.keyCode) {
+            switch (ev.charCode) {
                 case 49:    // 1 = 1st sub-section
                     this.navigateToSubSection(0);
                     break;
@@ -154,7 +154,7 @@ export default class KeyboardShortcuts extends React.Component {
             // Prevent default, which is to type '/' into the search field
             ev.preventDefault();
 
-            switch (ev.keyCode) {
+            switch (ev.charCode) {
                 case 47:    // '/'
                     this.closeReference();
                     this.props.dispatch(beginSearch(null));
@@ -184,7 +184,7 @@ export default class KeyboardShortcuts extends React.Component {
             this.setKeyPrefix(null);
         }
         else if (this.state.keyPrefix === null) {
-            switch (ev.keyCode) {
+            switch (ev.charCode) {
                 case 103: // 'g'
                     this.setKeyPrefix('g');
                     break;
@@ -216,7 +216,7 @@ export default class KeyboardShortcuts extends React.Component {
     }
 
     onKeyDown(ev) {
-        if (ev.keyCode === 27) {
+        if (ev.key === 'Escape') {
             this.closeReference();
         }
     }
