@@ -15,4 +15,5 @@ target:
     stats:
         goal: People remaining
         target: Targets
+    targetDetails: Inspect targets
 title: Call assignment
