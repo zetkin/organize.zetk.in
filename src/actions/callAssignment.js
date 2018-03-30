@@ -59,6 +59,21 @@ export function retrieveCallAssignmentStats(id) {
     };
 }
 
+export function retrieveCallAssignmentTargets(id) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_CALL_ASSIGNMENT_TARGETS,
+            meta: { id },
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'call_assignments', id, 'targets').get()
+            }
+        });
+    };
+}
+
 export function updateCallAssignment(id, data) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
