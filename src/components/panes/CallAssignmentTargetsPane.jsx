@@ -51,17 +51,20 @@ export default class CallAssignmentTargetsPane extends PaneBase {
                 <div key="pending" className="CallAssignmentTargetsPane-pending">
                     <Msg tagName="h3" id="panes.callAssignmentTargets.pending.h"
                         values={{ count: pending.length, max: targets.length }}/>
-                    <TargetList targets={ pending }/>
+                    <TargetList targets={ pending }
+                        onItemClick={ target => this.openPane('person', target.id) }/>
                 </div>,
                 <div key="blocked" className="CallAssignmentTargetsPane-blocked">
                     <Msg tagName="h3" id="panes.callAssignmentTargets.blocked.h"
                         values={{ count: blocked.length, max: targets.length }}/>
-                    <TargetList targets={ blocked }/>
+                    <TargetList targets={ blocked }
+                        onItemClick={ target => this.openPane('person', target.id) }/>
                 </div>,
                 <div key="fulfilled" className="CallAssignmentTargetsPane-fulfilled">
                     <Msg tagName="h3" id="panes.callAssignmentTargets.fulfilled.h"
                         values={{ count: fulfilled.length, max: targets.length }}/>
-                    <TargetList targets={ fulfilled }/>
+                    <TargetList targets={ fulfilled }
+                        onItemClick={ target => this.openPane('person', target.id) }/>
                 </div>,
             ];
         }
@@ -91,7 +94,9 @@ const TargetList = props => {
         }
 
         return (
-            <div key={ target.id } className={ classes }>
+            <div key={ target.id } className={ classes }
+                onClick={ props.onItemClick.bind(this, target) }>
+
                 <Avatar person={ target }/>
                 <span className="CallAssignmentTargetsPane-targetName">
                     { target.first_name + ' ' + target.last_name }

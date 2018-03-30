@@ -33,6 +33,11 @@
         top: 0.5em;
         left: 0.5em;
     }
+
+    &:hover {
+        background-color: darken(white, 2);
+        cursor: pointer;
+    }
 }
 
 .CallAssignmentTargetsPane-reasonList {
