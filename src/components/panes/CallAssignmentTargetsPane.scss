@@ -1,0 +1,49 @@
+.CallAssignmentTargetsPane-pending {
+    h3:before {
+        @include icon($fa-var-ellipsis-h);
+    }
+}
+
+.CallAssignmentTargetsPane-fulfilled {
+    h3:before {
+        @include icon($fa-var-check);
+    }
+}
+
+.CallAssignmentTargetsPane-blocked {
+    h3:before {
+        @include icon($fa-var-lock);
+    }
+}
+
+.CallAssignmentTargetsPane-targetItem {
+    @include card;
+    position: relative;
+    padding: 0.5em 1em 0.5em 5.5em;
+    margin: 0 0 0.5em;
+    min-height: 5em;
+
+    & > span {
+        font-size: 1.4em;
+    }
+
+    .Avatar {
+        position: absolute;
+        width: 4em;
+        top: 0.5em;
+        left: 0.5em;
+    }
+}
+
+.CallAssignmentTargetsPane-reasonList {
+    margin: 0.5em 0 0;
+
+    li {
+        display: inline-block;
+        margin: 0 0.5em 0.5em 0;
+        background-color: $c-ui-dark;
+        color: white;
+        padding: 0.2em 0.4em;
+        border-radius: 0.2em;
+    }
+}

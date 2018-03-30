@@ -21,6 +21,7 @@ import AssignedRouteVisitsPane from './AssignedRouteVisitsPane';
 import BulkOpPane from './BulkOpPane';
 import CallPane from './CallPane';
 import CallAssignmentPane from './CallAssignmentPane';
+import CallAssignmentTargetsPane from './CallAssignmentTargetsPane';
 import CampaignPane from './CampaignPane';
 import CanvassAssignmentPane from './CanvassAssignmentPane';
 import LinkSubmissionPane from './LinkSubmissionPane';
@@ -82,6 +83,7 @@ var _panes = {
     'bulk': BulkOpPane,
     'call': CallPane,
     'callassignment': CallAssignmentPane,
+    'callassignmenttargets': CallAssignmentTargetsPane,
     'campaign': CampaignPane,
     'canvassassignment': CanvassAssignmentPane,
     'linksubmission': LinkSubmissionPane,
