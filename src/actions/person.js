@@ -64,3 +64,20 @@ export function deletePerson(id) {
         });
     };
 }
+
+export function findDuplicates() {
+    return ({ dispatch, getState }) => {
+        let orgId = getState().org.activeId;
+        let options = {
+            credentials: 'include',
+        };
+
+        dispatch({
+            type: types.FIND_PERSON_DUPLICATES,
+            payload: {
+                promise: fetch('/api/duplicates/' + orgId + '/people', options)
+                    .then(res => res.json()),
+            },
+        });
+    };
+}
