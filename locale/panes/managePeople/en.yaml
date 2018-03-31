@@ -25,3 +25,5 @@ viewMode:
     queries: Smart searches
     tags: Tags
     duplicates: Duplicates
+queries:
+    addButton: Add Smart Search query

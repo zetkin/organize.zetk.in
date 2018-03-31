@@ -1,4 +1,9 @@
 .ManagePeoplePane {
+    .ManagePeoplePane-addButton {
+        @include inline-button($icon: $fa-var-plus);
+        float: right;
+    }
+
     .ViewSwitch-state-queries:before {
         @include icon($fa-var-bullseye);
     }

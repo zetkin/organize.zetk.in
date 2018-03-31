@@ -150,11 +150,23 @@ export default class ManagePeoplePane extends RootPaneBase {
             'duplicates': 'panes.managePeople.viewMode.duplicates',
         };
 
-        return [
+        let tools = [
             <ViewSwitch key="viewSwitch"
                 states={ viewStates } selected={ this.state.viewMode }
                 onSwitch={ vs => this.setState({ viewMode: vs }) }
                 />,
         ];
+
+        if (this.state.viewMode == 'queries') {
+            tools.push(
+                <Button key="addButton"
+                    className="ManagePeoplePane-addButton"
+                    labelMsg="panes.managePeople.queries.addButton"
+                    onClick={ () => this.openPane('addquery') }
+                    />,
+            );
+        }
+
+        return tools;
     }
 }
