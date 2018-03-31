@@ -1,9 +1,12 @@
 execButton: Merge persons
+intro: |
+    Merging duplicates will delete all but one of the persons, but keep all
+    related data and associate it with the remaining one.
 override:
     h: Object after merge
     instructions: |
-        The information is not entirely consistent across all persons. You must
-        select which values to use for the remaining person.
+        This field varies across duplicates. Select one of the values to be
+        kept for the reamining person after merging.
     fields:
         first_name: First name
         last_name: Last name

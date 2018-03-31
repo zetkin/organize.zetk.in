@@ -1,5 +1,6 @@
 import React from 'react';
 import { injectIntl, FormattedMessage as Msg } from 'react-intl';
+import cx from 'classnames';
 import { connect } from 'react-redux';
 
 import Button from '../misc/Button';
@@ -125,8 +126,12 @@ export default class MergePeoplePane extends PaneBase {
                 }
 
                 if (valueElem) {
+                    let classes = cx('MergePeoplePane-fieldItem', {
+                        multiple: values.length > 1,
+                    });
+
                     return (
-                        <li key={ field }>
+                        <li key={ field } className={ classes }>
                             <Msg tagName="label" id={ msgId }/>
                             { valueElem }
                         </li>
@@ -137,17 +142,21 @@ export default class MergePeoplePane extends PaneBase {
             let instructions = null;
             if (canChange) {
                 instructions = (
-                    <Msg tagName="p" id="panes.mergePeople.override.instructions"/>
+                    <div className="MergePeoplePane-overrideInstructions">
+                        <Msg tagName="small"
+                            id="panes.mergePeople.override.instructions"/>
+                    </div>
                 );
             }
 
             return [
-                <div key="override">
+                <Msg key="intro" tagName="p" id="panes.mergePeople.intro"/>,
+                <div key="override" className="MergePeoplePane-override">
                     <Msg tagName="h3" id="panes.mergePeople.override.h"/>
-                    { instructions }
                     <ul className="MergePeoplePane-overrideList">
                         { overrideItems }
                     </ul>
+                    { instructions }
                 </div>,
             ];
         }

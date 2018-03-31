@@ -1,3 +1,32 @@
+.MergePeoplePane-override {
+    .MergePeoplePane-overrideInstructions {
+        margin: 1em 0;
+        display: block;
+
+        &:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        &:before {
+            float: left;
+            display: block;
+            @include icon($fa-var-info-circle);
+            width: 8%;
+            margin: 0;
+        }
+
+        small {
+            display: block;
+            float: right;
+            width: 90%;
+            margin: 0;
+            font-size: 0.8em;
+        }
+    }
+}
+
 .MergePeoplePane-overrideList {
     @include card;
     padding: 0.5em 1em;
@@ -13,6 +42,14 @@
             width: 25%;
             padding-top: 0.5em;
             margin-right: 5%;
+        }
+
+        &.multiple {
+            label:after {
+                @include icon($fa-var-info-circle);
+                font-size: 0.9em;
+                color: $c-ui-darker;
+            }
         }
 
         span {
