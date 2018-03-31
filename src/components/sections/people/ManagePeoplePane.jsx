@@ -5,6 +5,7 @@ import React from 'react';
 import Avatar from '../../misc/Avatar';
 import Button from '../../misc/Button';
 import LoadingIndicator from '../../misc/LoadingIndicator';
+import PersonQueryList from '../../lists/PersonQueryList';
 import RootPaneBase from '../RootPaneBase';
 import ViewSwitch from '../../misc/ViewSwitch';
 import { findDuplicates, clearDuplicates } from '../../../actions/person';
@@ -30,7 +31,6 @@ export default class ManagePeoplePane extends RootPaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        // TODO: Do this only for queries tab
         this.props.dispatch(retrieveQueries());
     }
 
@@ -39,6 +39,18 @@ export default class ManagePeoplePane extends RootPaneBase {
 
     renderPaneContent(data) {
         if (this.state.viewMode == 'queries') {
+            let queryList = this.props.queryList;
+            if (queryList && queryList.items) {
+                queryList = Object.assign({}, queryList, {
+                    items: queryList.items.filter(i => i.data.type == 'standalone'),
+                });
+            }
+
+            return (
+                <PersonQueryList queryList={ queryList }
+                    onItemClick={ item => this.openPane('query', item.data.id) }
+                    />
+            );
         }
         else if (this.state.viewMode == 'tags') {
         }
