@@ -37,7 +37,7 @@ const OVERRIDE_FIELDS = [
 
 const stateFromProps = props => {
     let override = {};
-    let objects = props.duplicateItem.data.objects;
+    let objects = props.duplicateItem.data.objects.concat();
 
     objects.sort((o0, o1) => {
         if (o0.is_user && !o1.is_user) return -1;
@@ -91,12 +91,6 @@ export default class MergePeoplePane extends PaneBase {
         if (this.props.duplicateItem) {
             let canChange = false;
             let objects = this.props.duplicateItem.data.objects;
-
-            objects.sort((o0, o1) => {
-                if (o0.is_user && !o1.is_user) return -1;
-                if (o1.is_user && !o0.is_user) return 1;
-                return 0;
-            });
 
             let overrideItems = OVERRIDE_FIELDS.map(field => {
                 let msgId = 'panes.mergePeople.override.fields.' + field;
@@ -172,8 +166,18 @@ export default class MergePeoplePane extends PaneBase {
     }
 
     onClickExecute() {
-        let objects = this.props.duplicateItem.data.objects.map(o => o.id);
+        let objects = this.props.duplicateItem.data.objects.concat();
         let override = this.state.override;
+
+        // Sort objects so that any who are connected to a user account
+        // appear first. The master should be a user to not lose access.
+        objects.sort((o0, o1) => {
+            if (o0.is_user && !o1.is_user) return -1;
+            if (o1.is_user && !o0.is_user) return 1;
+            return 0;
+        });
+
+        objects = objects.map(o => o.id);
 
         this.props.dispatch(mergeDuplicates(objects, override, this.props.paneData.id));
     }
