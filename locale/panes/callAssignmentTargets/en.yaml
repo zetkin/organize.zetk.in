@@ -10,4 +10,4 @@ blocked:
         no_number: No number
         organizer_action_needed: Awaiting organizer
 fulfilled:
-    h: Complete ({count}/{max})
+    h: Goal fulfilled ({count}/{max})

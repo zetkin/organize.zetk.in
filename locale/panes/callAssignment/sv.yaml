@@ -15,4 +15,5 @@ target:
     stats:
         goal: Uppfyller syftet
         target: Personer i målgruppen
+    targetDetails: Visa personer i målgruppen
 title: Ringuppdrag
