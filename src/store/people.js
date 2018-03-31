@@ -150,16 +150,19 @@ export default function people(state = null, action) {
             return Object.assign({}, state, {
                 duplicateList: createList([], { isPending: true }),
             });
-            break;
 
         case types.FIND_PERSON_DUPLICATES + '_FULFILLED':
             return Object.assign({}, state, {
                 duplicateList: createList(action.payload.duplicates,
                     { isPending: false, error: null }),
             });
-            break;
 
         case types.CLEAR_PERSON_DUPLICATES:
+            return Object.assign({}, state, {
+                duplicateList: null,
+            });
+
+        case types.MERGE_PERSON_DUPLICATES + '_FULFILLED':
             return Object.assign({}, state, {
                 duplicateList: null,
             });

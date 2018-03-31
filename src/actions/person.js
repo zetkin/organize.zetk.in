@@ -87,3 +87,21 @@ export function clearDuplicates() {
         type: types.CLEAR_PERSON_DUPLICATES,
     };
 }
+
+export function mergeDuplicates(objects, override, paneId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        let data = {
+            type: 'person',
+            objects, override,
+        };
+
+        dispatch({
+            type: types.MERGE_PERSON_DUPLICATES,
+            meta: { objects, paneId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'merges').post(data),
+            },
+        });
+    };
+}
