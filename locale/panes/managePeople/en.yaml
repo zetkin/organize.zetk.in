@@ -20,7 +20,7 @@ duplicates:
             data, like actions, calls and tags.
     item:
         h: "Set of { count } similar objects"
-        mergeButton: "Merge up to { count } persons…"
+        mergeButton: "Merge { count } persons…"
 viewMode:
     queries: Smart searches
     tags: Tags
