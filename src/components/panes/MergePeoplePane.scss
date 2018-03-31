@@ -1,0 +1,33 @@
+.MergePeoplePane-overrideList {
+    @include card;
+    padding: 0.5em 1em;
+
+    li {
+        clear: both;
+        height: 3.1em;
+
+        label {
+            font-size: 1.2em;
+            display: block;
+            float: left;
+            width: 25%;
+            padding-top: 0.5em;
+            margin-right: 5%;
+        }
+
+        span {
+            padding-top: 0.5em;
+            font-size: 1.2em;
+        }
+
+        select, span {
+            display: block;
+            float: left;
+            width: 60%;
+        }
+
+        select {
+            margin: 0 0 0.2em;
+        }
+    }
+}

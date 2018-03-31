@@ -1,0 +1,16 @@
+execButton: Merge persons
+override:
+    h: Object after merge
+    instructions: |
+        The information is not entirely consistent across all persons. You must
+        select which values to use for the remaining person.
+    fields:
+        first_name: First name
+        last_name: Last name
+        email: E-mail
+        phone: Phone
+        co_address: C/O address
+        street_address: Street address
+        zip_code: Zip code
+        city: City
+title: Merge from set of {count} objects
