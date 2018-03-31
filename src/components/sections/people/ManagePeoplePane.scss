@@ -21,11 +21,26 @@
         @include button-color($c-brand-comp-light);
     }
 
+    .ManagePeoplePane-duplicateList {
+        width: 65%;
+        max-width: 60em;
+        min-width: 40em;
+        float: left;
+    }
+
+    .ManagePeoplePane-instructions {
+        font-size: 0.9em;
+        float: left;
+        margin: 0 2%;
+        width: 30%;
+        max-width: 30em;
+        min-width: 18em;
+    }
+
     .ManagePeoplePane-duplicateItem {
         @include card;
-        width: 60em;
         margin: 1em 0;
-        padding: 1em;
+        padding: 2%;
 
         &:after {
             content: "";
@@ -37,9 +52,9 @@
     .ManagePeoplePane-objectList {
         li {
             display: inline-block;
-            padding: 0.5em;
-            margin: 0 1em 0 0;
-            width: 27em;
+            padding: 1%;
+            margin: 0 1% 0 0;
+            width: 46%;
 
             &:after {
                 content: "";

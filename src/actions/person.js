@@ -81,3 +81,9 @@ export function findDuplicates() {
         });
     };
 }
+
+export function clearDuplicates() {
+    return {
+        type: types.CLEAR_PERSON_DUPLICATES,
+    };
+}

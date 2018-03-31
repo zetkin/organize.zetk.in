@@ -159,6 +159,11 @@ export default function people(state = null, action) {
             });
             break;
 
+        case types.CLEAR_PERSON_DUPLICATES:
+            return Object.assign({}, state, {
+                duplicateList: null,
+            });
+
         default:
             return state || {
                 personList: createList(),

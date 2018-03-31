@@ -7,7 +7,7 @@ import Button from '../../misc/Button';
 import LoadingIndicator from '../../misc/LoadingIndicator';
 import RootPaneBase from '../RootPaneBase';
 import ViewSwitch from '../../misc/ViewSwitch';
-import { findDuplicates } from '../../../actions/person';
+import { findDuplicates, clearDuplicates } from '../../../actions/person';
 import { retrieveQueries } from '../../../actions/query';
 
 
@@ -61,7 +61,7 @@ export default class ManagePeoplePane extends RootPaneBase {
             else if (this.props.duplicateList.isPending) {
                 content = <LoadingIndicator/>;
             }
-            else {
+            else if (this.props.duplicateList.items.length) {
                 let items = this.props.duplicateList.items.map(i => {
                     let dup = i.data;
                     let objectItems = dup.objects.map(o => {
@@ -94,11 +94,32 @@ export default class ManagePeoplePane extends RootPaneBase {
                     );
                 });
 
-                content = (
-                    <div className="ManagePeoplePane-duplicateList">
+                content = [
+                    <div key="list" className="ManagePeoplePane-duplicateList">
                         { items }
+                    </div>,
+                    <div key="instructions"
+                        className="ManagePeoplePane-instructions">
+                        <Msg tagName="p" id="panes.managePeople.duplicates.instructions.p"
+                            values={{ count: this.props.duplicateList.items.length }}/>
+                        <Button className="ManagePeoplePane-resetButton"
+                            labelMsg="panes.managePeople.duplicates.instructions.resetButton"
+                            onClick={ () => this.props.dispatch(clearDuplicates()) }
+                            />
                     </div>
-                );
+                ];
+            }
+            else {
+                content = [
+                    <Msg key="h" tagName="h2"
+                        id="panes.managePeople.duplicates.empty.h"/>,
+                    <Msg key="p" tagName="p"
+                        id="panes.managePeople.duplicates.empty.p"/>,
+                    <Button className="ManagePeoplePane-resetButton"
+                        labelMsg="panes.managePeople.duplicates.empty.resetButton"
+                        onClick={ () => this.props.dispatch(clearDuplicates()) }
+                        />
+                ];
             }
 
             return (

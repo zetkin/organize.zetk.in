@@ -1,15 +1,27 @@
-viewMode:
-    queries: Smart searches
-    tags: Tags
-    duplicates: Duplicates
 duplicates:
+    empty:
+        h: No duplicates found
+        p: |
+            Zetkin found no person objects similar enough to be likely duplicates.
+        resetButton: Search again
+    instructions:
+        p: |
+            Zetkin found { count, plural, =1 {this single set} other {these # sets}}
+            of likely duplicates in the person database, and you can merge them to
+            remove duplicates without losing any data. Clicking the merge button
+            will allow you to configure some options before merging.
+        resetButton: Reset and search again
     intro:
         findButton: Search for duplicates
         h: Find and merge duplicates
         p: |
             Zetkin can find person objects in your organization which are likely
-            which are likely duplicates, and merge them for you while keeping all
-            the associated data, like actions, calls and tags.
+            duplicates, and merge them for you while keeping all the associated
+            data, like actions, calls and tags.
     item:
-        h: "Found { count } similar objects"
+        h: "Set of { count } similar objects"
         mergeButton: "Merge up to { count } persons…"
+viewMode:
+    queries: Smart searches
+    tags: Tags
+    duplicates: Duplicates

@@ -21,6 +21,7 @@ export const RETRIEVE_PERSON = 'RETRIEVE_PERSON';
 export const UPDATE_PERSON = 'UPDATE_PERSON';
 export const DELETE_PERSON = 'DELETE_PERSON';
 export const FIND_PERSON_DUPLICATES = 'FIND_PERSON_DUPLICATES';
+export const CLEAR_PERSON_DUPLICATES = 'CLEAR_PERSON_DUPLICATES';
 
 // Flux actions related to person tags
 export const CREATE_PERSON_TAG = 'CREATE_PERSON_TAG';
