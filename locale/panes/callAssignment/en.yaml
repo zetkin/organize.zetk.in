@@ -13,7 +13,7 @@ target:
     editTargetLink: Edit target
     h: Target group
     stats:
-        goal: People remaining
+        goal: Fulfill goal
         target: Targets
     targetDetails: Inspect targets
 title: Call assignment

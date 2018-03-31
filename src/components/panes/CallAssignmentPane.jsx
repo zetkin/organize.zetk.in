@@ -104,7 +104,7 @@ export default class CallAssignmentPane extends PaneBase {
 
                 goalStats = [
                     <h1 key="goalStatsHeader">
-                        { stats.num_remaining_targets }</h1>,
+                        { stats.num_target_matches - stats.num_remaining_targets }</h1>,
                     <Msg key="goalStatsInfo"
                         id="panes.callAssignment.target.stats.goal"/>,
                 ];
