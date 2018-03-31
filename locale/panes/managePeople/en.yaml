@@ -21,6 +21,8 @@ duplicates:
     item:
         h: "Set of { count } similar objects"
         mergeButton: "Merge { count } persons…"
+tags:
+    addButton: Add tag
 viewMode:
     queries: Smart searches
     tags: Tags

@@ -6,13 +6,16 @@ import Avatar from '../../misc/Avatar';
 import Button from '../../misc/Button';
 import LoadingIndicator from '../../misc/LoadingIndicator';
 import PersonQueryList from '../../lists/PersonQueryList';
+import PersonTagList from '../../lists/PersonTagList';
 import RootPaneBase from '../RootPaneBase';
 import ViewSwitch from '../../misc/ViewSwitch';
 import { findDuplicates, clearDuplicates } from '../../../actions/person';
 import { retrieveQueries } from '../../../actions/query';
+import { retrievePersonTags } from '../../../actions/personTag';
 
 
 const mapStateToProps = state => ({
+    tagList: state.personTags.tagList,
     queryList: state.queries.queryList,
     duplicateList: state.people.duplicateList,
 });
@@ -34,7 +37,15 @@ export default class ManagePeoplePane extends RootPaneBase {
         this.props.dispatch(retrieveQueries());
     }
 
-    getRenderData() {
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.viewMode != prevState.viewMode) {
+            if (this.state.viewMode == 'queries') {
+                this.props.dispatch(retrieveQueries());
+            }
+            else if (this.state.viewMode == 'tags') {
+                this.props.dispatch(retrievePersonTags());
+            }
+        }
     }
 
     renderPaneContent(data) {
@@ -53,6 +64,13 @@ export default class ManagePeoplePane extends RootPaneBase {
             );
         }
         else if (this.state.viewMode == 'tags') {
+            let tagList = this.props.tagList;
+
+            return (
+                <PersonTagList tagList={ tagList }
+                    onItemClick={ item => this.openPane('editpersontag', item.data.id) }
+                    />
+            );
         }
         else if (this.state.viewMode == 'duplicates') {
             let content = null;
@@ -163,6 +181,15 @@ export default class ManagePeoplePane extends RootPaneBase {
                     className="ManagePeoplePane-addButton"
                     labelMsg="panes.managePeople.queries.addButton"
                     onClick={ () => this.openPane('addquery') }
+                    />,
+            );
+        }
+        else if (this.state.viewMode == 'tags') {
+            tools.push(
+                <Button key="addButton"
+                    className="ManagePeoplePane-addButton"
+                    labelMsg="panes.managePeople.tags.addButton"
+                    onClick={ () => this.openPane('addpersontag') }
                     />,
             );
         }
