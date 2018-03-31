@@ -11,3 +11,67 @@
         @include icon($fa-var-users);
     }
 }
+
+.ManagePeoplePane-duplicates {
+    & > p {
+        max-width: 40em;
+    }
+
+    .ManagePeoplePane-findButton {
+        @include button-color($c-brand-comp-light);
+    }
+
+    .ManagePeoplePane-duplicateItem {
+        @include card;
+        width: 60em;
+        margin: 1em 0;
+        padding: 1em;
+
+        &:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    }
+
+    .ManagePeoplePane-objectList {
+        li {
+            display: inline-block;
+            padding: 0.5em;
+            margin: 0 1em 0 0;
+            width: 27em;
+
+            &:after {
+                content: "";
+                display: block;
+                clear: both;
+            }
+
+            .Avatar {
+                width: 5em;
+                float: left;
+                margin-right: 1em;
+            }
+
+            span {
+                display: block;
+                margin: 0 0 0.2em;
+            }
+
+            .name {
+                font-size: 1.3em;
+            }
+
+            &:hover {
+                cursor: pointer;
+                background-color: darken(white, 3);
+            }
+        }
+    }
+
+    .ManagePeoplePane-mergeButton {
+        @include button-color($c-brand-comp-light);
+        float: right;
+        margin-right: 1.5em;
+    }
+}

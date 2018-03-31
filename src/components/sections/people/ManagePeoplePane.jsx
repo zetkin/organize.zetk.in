@@ -1,19 +1,23 @@
 import { connect } from 'react-redux';
-import { injectIntl, FormattedMessage as Msg } from 'react-intl';
+import { FormattedMessage as Msg } from 'react-intl';
 import React from 'react';
 
+import Avatar from '../../misc/Avatar';
+import Button from '../../misc/Button';
+import LoadingIndicator from '../../misc/LoadingIndicator';
 import RootPaneBase from '../RootPaneBase';
 import ViewSwitch from '../../misc/ViewSwitch';
+import { findDuplicates } from '../../../actions/person';
 import { retrieveQueries } from '../../../actions/query';
 
 
 const mapStateToProps = state => ({
     queryList: state.queries.queryList,
+    duplicateList: state.people.duplicateList,
 });
 
 
 @connect(mapStateToProps)
-@injectIntl
 export default class ManagePeoplePane extends RootPaneBase {
     constructor(props) {
         super(props);
@@ -38,7 +42,70 @@ export default class ManagePeoplePane extends RootPaneBase {
         }
         else if (this.state.viewMode == 'tags') {
         }
-        else if (this.state.viewMode == 'dupliactes') {
+        else if (this.state.viewMode == 'duplicates') {
+            let content = null;
+
+            // TODO: Handle errors separately?
+            if (!this.props.duplicateList || this.props.duplicateList.error) {
+                content = [
+                    <Msg key="h" tagName="h2"
+                        id="panes.managePeople.duplicates.intro.h"/>,
+                    <Msg key="p" tagName="p"
+                        id="panes.managePeople.duplicates.intro.p"/>,
+                    <Button key="button" className="ManagePeoplePane-findButton"
+                        labelMsg="panes.managePeople.duplicates.intro.findButton"
+                        onClick={ () => this.props.dispatch(findDuplicates()) }
+                        />
+                ];
+            }
+            else if (this.props.duplicateList.isPending) {
+                content = <LoadingIndicator/>;
+            }
+            else {
+                let items = this.props.duplicateList.items.map(i => {
+                    let dup = i.data;
+                    let objectItems = dup.objects.map(o => {
+                        return (
+                            <li key={ o.id }
+                                onClick={ () => this.openPane('person', o.id) }>
+                                <Avatar person={ o }/>
+                                <span className="name">{ o.first_name + ' ' + o.last_name }</span>
+                                <span className="email">{ o.email || '-' }</span>
+                                <span className="phone">{ o.phone || '-' }</span>
+                            </li>
+                        );
+                    });
+
+                    return (
+                        <div key={ dup.objects[0].id }
+                            className="ManagePeoplePane-duplicateItem">
+                            <Msg tagName="h2"
+                                id="panes.managePeople.duplicates.item.h"
+                                values={{ count: dup.objects.length }}
+                                />
+                            <ul className="ManagePeoplePane-objectList">
+                                { objectItems }
+                            </ul>
+                            <Button className="ManagePeoplePane-mergeButton"
+                                labelMsg="panes.managePeople.duplicates.item.mergeButton"
+                                labelValues={{ count: dup.objects.length }}
+                                />
+                        </div>
+                    );
+                });
+
+                content = (
+                    <div className="ManagePeoplePane-duplicateList">
+                        { items }
+                    </div>
+                );
+            }
+
+            return (
+                <div className="ManagePeoplePane-duplicates">
+                    { content }
+                </div>
+            );
         }
     }
 

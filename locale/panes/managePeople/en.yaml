@@ -2,3 +2,14 @@ viewMode:
     queries: Smart searches
     tags: Tags
     duplicates: Duplicates
+duplicates:
+    intro:
+        findButton: Search for duplicates
+        h: Find and merge duplicates
+        p: |
+            Zetkin can find person objects in your organization which are likely
+            which are likely duplicates, and merge them for you while keeping all
+            the associated data, like actions, calls and tags.
+    item:
+        h: "Found { count } similar objects"
+        mergeButton: "Merge up to { count } persons…"
