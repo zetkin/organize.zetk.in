@@ -1,0 +1,13 @@
+.ManagePeoplePane {
+    .ViewSwitch-state-queries:before {
+        @include icon($fa-var-bullseye);
+    }
+
+    .ViewSwitch-state-tags:before {
+        @include icon($fa-var-tags);
+    }
+
+    .ViewSwitch-state-duplicates:before {
+        @include icon($fa-var-users);
+    }
+}
