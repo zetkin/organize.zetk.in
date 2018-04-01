@@ -64,3 +64,44 @@ export function deletePerson(id) {
         });
     };
 }
+
+export function findDuplicates() {
+    return ({ dispatch, getState }) => {
+        let orgId = getState().org.activeId;
+        let options = {
+            credentials: 'include',
+        };
+
+        dispatch({
+            type: types.FIND_PERSON_DUPLICATES,
+            payload: {
+                promise: fetch('/api/duplicates/' + orgId + '/people', options)
+                    .then(res => res.json()),
+            },
+        });
+    };
+}
+
+export function clearDuplicates() {
+    return {
+        type: types.CLEAR_PERSON_DUPLICATES,
+    };
+}
+
+export function mergeDuplicates(objects, override, paneId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        let data = {
+            type: 'person',
+            objects, override,
+        };
+
+        dispatch({
+            type: types.MERGE_PERSON_DUPLICATES,
+            meta: { objects, paneId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'merges').post(data),
+            },
+        });
+    };
+}

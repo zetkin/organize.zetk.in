@@ -204,6 +204,10 @@
             .Section-navItem-import a:before {
                 background-image: url(/static/images/section-nav/people-import.png);
             }
+
+            .Section-navItem-manage a:before {
+                background-image: url(/static/images/section-nav/people-manage.png);
+            }
         }
 
         &.Section-survey {

@@ -123,7 +123,6 @@ export default function people(state = null, action) {
                 return state;
             }
 
-
         case types.REMOVE_TAG_FROM_PERSON + '_FULFILLED':
             personItem = getListItemById(state.personList, action.meta.id);
             if (personItem) {
@@ -147,9 +146,31 @@ export default function people(state = null, action) {
                     person.id, person),
             });
 
+        case types.FIND_PERSON_DUPLICATES + '_PENDING':
+            return Object.assign({}, state, {
+                duplicateList: createList([], { isPending: true }),
+            });
+
+        case types.FIND_PERSON_DUPLICATES + '_FULFILLED':
+            return Object.assign({}, state, {
+                duplicateList: createList(action.payload.duplicates,
+                    { isPending: false, error: null }),
+            });
+
+        case types.CLEAR_PERSON_DUPLICATES:
+            return Object.assign({}, state, {
+                duplicateList: null,
+            });
+
+        case types.MERGE_PERSON_DUPLICATES + '_FULFILLED':
+            return Object.assign({}, state, {
+                duplicateList: null,
+            });
+
         default:
             return state || {
                 personList: createList(),
+                duplicateList: null,
             };
     }
 }
