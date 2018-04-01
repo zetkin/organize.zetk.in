@@ -1,0 +1,31 @@
+duplicates:
+    empty:
+        h: Inga dubletter
+        p: |
+            Zetkin hittade inga sannolika dubletter i persondatabasen.
+        resetButton: Sök på nytt
+    instructions:
+        p: |
+            Zetkin hittade { count, plural, =1 {en uppsättning} other {# uppsättningar }}
+            med personobjekt som sannolikt avser samma { count, plural, =1 {person} other {personer}}.
+            Du kan slå samman dem för att radera dubletter utan att förlora data. När du
+            klickar på "Slå samman" får du fler alternativ innan själva sammanslagningen.
+        resetButton: Återställ och sök på nytt
+    intro:
+        findButton: Sök efter dubletter
+        h: Hitta och slå samman dubletter
+        p: |
+            Zetkin kan hitta personobjekt i din organisation som sannolikt avser samma
+            person, och slå samman dem utan att förlora relaterad data såsom aktioner,
+            samtal och etiketter.
+    item:
+        h: "Hittade { count } liknande objekt"
+        mergeButton: "Slå samman { count } personer…"
+tags:
+    addButton: Skapa etikett
+viewMode:
+    queries: Smarta sökningar
+    tags: Etiketter
+    duplicates: Dubletter
+queries:
+    addButton: Skapa Smart sökning

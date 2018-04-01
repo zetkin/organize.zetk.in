@@ -33,6 +33,7 @@ subSections:
         import: Importera
         invite: Inbjudan
         list: Människor
+        manage: Ordna
     settings:
         officials: Funktionärer
     survey:
