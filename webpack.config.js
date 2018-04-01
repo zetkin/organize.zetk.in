@@ -2,7 +2,7 @@ const path = require('path');
 
 const webpack = require('webpack');
 
-const APP_ID = process.env.ZETKIN_APP_ID || 'a4';
+const APP_ID = process.env.ZETKIN_APP_ID || 'a3';
 const USE_TLS = process.env.ZETKIN_USE_TLS || 0;
 const DOMAIN = process.env.ZETKIN_DOMAIN;
 
