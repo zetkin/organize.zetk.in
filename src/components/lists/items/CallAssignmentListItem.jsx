@@ -51,8 +51,8 @@ export default class CallAssignmentListItem extends React.Component {
         let goalStats = null;
         let participantIndicator = null;
         const assignmentDateStart = new Date(assignment.start_date);
-        const assignmentDateEnd = new Date(assignment.end_date);
-        const inPast = (assignmentDateEnd < (new Date()) ? true : false);
+        const assignmentDateEnd = assignment.end_date? new Date(assignment.end_date) : null;
+        const inPast = (assignmentDateEnd && assignmentDateEnd < (new Date()) ? true : false);
 
         const classNames = cx({
             'CallAssignmentListItem': true,
@@ -65,7 +65,7 @@ export default class CallAssignmentListItem extends React.Component {
                     { assignmentDateStart.format('{d}/{M}, {yyyy}') }
                 </div>
                 <div className="dateEnd">
-                    { assignmentDateEnd.format('{d}/{M}, {yyyy}') }
+                    { assignmentDateEnd? assignmentDateEnd.format('{d}/{M}, {yyyy}') : '-' }
                 </div>
             </div>
         );
