@@ -39,7 +39,7 @@
             font-size: 1.2em;
             display: block;
             float: left;
-            width: 25%;
+            width: 40%;
             padding-top: 0.5em;
             margin-right: 5%;
         }
@@ -55,12 +55,15 @@
         span {
             padding-top: 0.5em;
             font-size: 1.2em;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         select, span {
             display: block;
             float: left;
-            width: 60%;
+            width: 55%;
         }
 
         select {
