@@ -26,8 +26,10 @@ export const SECTIONS = {
                 startPane: InvitePane },
             { path: 'import',
                 startPane: ImportPane },
+            /*
             { path: 'manage',
                 startPane: ManagePeoplePane },
+                */
         ],
     },
     campaign: {
