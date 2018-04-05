@@ -1,0 +1,97 @@
+.ManagePeoplePane {
+    .ManagePeoplePane-addButton {
+        @include inline-button($icon: $fa-var-plus);
+        float: right;
+    }
+
+    .ViewSwitch-state-queries:before {
+        @include icon($fa-var-bullseye);
+    }
+
+    .ViewSwitch-state-tags:before {
+        @include icon($fa-var-tags);
+    }
+
+    .ViewSwitch-state-duplicates:before {
+        @include icon($fa-var-users);
+    }
+}
+
+.ManagePeoplePane-duplicates {
+    & > p {
+        max-width: 40em;
+    }
+
+    .ManagePeoplePane-findButton {
+        @include button-color($c-brand-comp-light);
+    }
+
+    .ManagePeoplePane-duplicateList {
+        width: 65%;
+        max-width: 60em;
+        min-width: 40em;
+        float: left;
+    }
+
+    .ManagePeoplePane-instructions {
+        font-size: 0.9em;
+        float: left;
+        margin: 0 2%;
+        width: 30%;
+        max-width: 30em;
+        min-width: 18em;
+    }
+
+    .ManagePeoplePane-duplicateItem {
+        @include card;
+        margin: 1em 0;
+        padding: 2%;
+
+        &:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    }
+
+    .ManagePeoplePane-objectList {
+        li {
+            display: inline-block;
+            padding: 1%;
+            margin: 0 1% 0 0;
+            width: 46%;
+
+            &:after {
+                content: "";
+                display: block;
+                clear: both;
+            }
+
+            .Avatar {
+                width: 5em;
+                float: left;
+                margin-right: 1em;
+            }
+
+            span {
+                display: block;
+                margin: 0 0 0.2em;
+            }
+
+            .name {
+                font-size: 1.3em;
+            }
+
+            &:hover {
+                cursor: pointer;
+                background-color: darken(white, 3);
+            }
+        }
+    }
+
+    .ManagePeoplePane-mergeButton {
+        @include button-color($c-brand-comp-light);
+        float: right;
+        margin: 1em 1.5em 0;
+    }
+}

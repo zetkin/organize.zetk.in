@@ -104,7 +104,7 @@ export default class CallAssignmentPane extends PaneBase {
 
                 goalStats = [
                     <h1 key="goalStatsHeader">
-                        { stats.num_remaining_targets }</h1>,
+                        { stats.num_target_matches - stats.num_remaining_targets }</h1>,
                     <Msg key="goalStatsInfo"
                         id="panes.callAssignment.target.stats.goal"/>,
                 ];
@@ -166,6 +166,8 @@ export default class CallAssignmentPane extends PaneBase {
                                 onClick={ this.onClickEditTarget.bind(this) }>
                                 { targetStats }
                             </div>
+                            <Link msgId="panes.callAssignment.target.editTargetLink"
+                                onClick={ this.onClickEditTarget.bind(this) }/>
                         </div>
                         <div>
                             <div key="goalStats"
@@ -173,13 +175,14 @@ export default class CallAssignmentPane extends PaneBase {
                                 onClick={ this.onClickEditGoal.bind(this) }>
                                 { goalStats }
                             </div>
+                            <Link msgId="panes.callAssignment.target.editGoalLink"
+                                onClick={ this.onClickEditGoal.bind(this) }/>
                         </div>
                     </div>
-                    <Link msgId="panes.callAssignment.target.editTargetLink"
-                        onClick={ this.onClickEditTarget.bind(this) }/>
-                    <Link msgId="panes.callAssignment.target.editGoalLink"
-                        onClick={ this.onClickEditGoal.bind(this) }/>
                     <ProgressBar progress={ progress }/>
+                    <Link className="CallAssignmentPane-targetDetailLink"
+                        msgId="panes.callAssignment.target.targetDetails"
+                        onClick={ this.onClickTargetDetails.bind(this) }/>
                 </div>,
 
                 <div key="callers"
@@ -224,6 +227,12 @@ export default class CallAssignmentPane extends PaneBase {
         let assignmentItem = this.props.assignmentItem;
 
         this.openPane('editquery', assignmentItem.data.target.id);
+    }
+
+    onClickTargetDetails(ev) {
+        let assignmentItem = this.props.assignmentItem;
+
+        this.openPane('callassignmenttargets', assignmentItem.data.id);
     }
 
     onClickEditInstructions(ev) {

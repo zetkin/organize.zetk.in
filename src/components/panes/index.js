@@ -21,6 +21,7 @@ import AssignedRouteVisitsPane from './AssignedRouteVisitsPane';
 import BulkOpPane from './BulkOpPane';
 import CallPane from './CallPane';
 import CallAssignmentPane from './CallAssignmentPane';
+import CallAssignmentTargetsPane from './CallAssignmentTargetsPane';
 import CampaignPane from './CampaignPane';
 import CanvassAssignmentPane from './CanvassAssignmentPane';
 import LinkSubmissionPane from './LinkSubmissionPane';
@@ -41,6 +42,7 @@ import EditSurveyQuestionPane from './EditSurveyQuestionPane';
 import EditSurveyTextBlockPane from './EditSurveyTextBlockPane';
 import EditTextPane from './EditTextPane';
 import LocationPane from './LocationPane';
+import MergePeoplePane from './MergePeoplePane';
 import ImporterColumnPane from './ImporterColumnPane';
 import MoveParticipantsPane from './MoveParticipantsPane';
 import PersonPane from './PersonPane';
@@ -82,6 +84,7 @@ var _panes = {
     'bulk': BulkOpPane,
     'call': CallPane,
     'callassignment': CallAssignmentPane,
+    'callassignmenttargets': CallAssignmentTargetsPane,
     'campaign': CampaignPane,
     'canvassassignment': CanvassAssignmentPane,
     'linksubmission': LinkSubmissionPane,
@@ -103,6 +106,7 @@ var _panes = {
     'edittext': EditTextPane,
     'importercolumn': ImporterColumnPane,
     'location': LocationPane,
+    'mergepeople': MergePeoplePane,
     'moveparticipants': MoveParticipantsPane,
     'person': PersonPane,
     'placelocation': PlaceLocationPane,

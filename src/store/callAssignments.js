@@ -84,6 +84,33 @@ export default function callAssignments(state = null, action) {
                     assignment.id, assignment),
             });
 
+        case types.RETRIEVE_CALL_ASSIGNMENT_STATS + '_FULFILLED':
+            assignment = {
+                id: action.meta.id,
+                statsItem: createListItem(action.payload.data.data),
+            };
+
+            return Object.assign({}, state, {
+                assignmentList: updateOrAddListItem(state.assignmentList,
+                    assignment.id, assignment),
+            });
+
+        case types.RETRIEVE_CALL_ASSIGNMENT_TARGETS + '_PENDING':
+            return Object.assign({}, state, {
+                targetsByAssignment: Object.assign({}, state.targetsByAssignment, {
+                    [action.meta.id]: createList(null, { isPending: true })
+                }),
+            });
+
+        case types.RETRIEVE_CALL_ASSIGNMENT_TARGETS + '_FULFILLED':
+            return Object.assign({}, state, {
+
+                targetsByAssignment: Object.assign({}, state.targetsByAssignment, {
+                    [action.meta.id]: updateOrAddListItems(state.targetsByAssignment[action.meta.id],
+                        action.payload.data.data, { isPending: false, error: null }),
+                }),
+            });
+
         case types.UPDATE_QUERY + '_FULFILLED':
             // Check if there is an assignment that uses this query
             let queryId = action.payload.data.data.id;
@@ -254,6 +281,7 @@ export default function callAssignments(state = null, action) {
 
         default:
             return state || {
+                targetsByAssignment: {},
                 assignmentList: createList(),
             };
     }

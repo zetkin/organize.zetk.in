@@ -33,6 +33,7 @@ subSections:
         import: Import
         invite: Invite
         list: People
+        manage: Manage
     settings:
         officials: Officials
     survey:

@@ -9,10 +9,11 @@ summary:
     cooldown: '{cooldown, plural, =0 { none } =1 { one hour } other {# hours}}'
     editLink: Edit settings
 target:
-    editGoalLink: Edit goal
-    editTargetLink: Edit target
+    editGoalLink: Edit goal query
+    editTargetLink: Edit target query
     h: Target group
     stats:
-        goal: People remaining
+        goal: Fulfill goal
         target: Targets
+    targetDetails: Show target group breakdown
 title: Call assignment

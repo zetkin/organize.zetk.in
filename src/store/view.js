@@ -233,6 +233,12 @@ export default function viewState(state = null, action) {
             }),
         });
     }
+    else if (action.type == types.MERGE_PERSON_DUPLICATES + '_FULFILLED') {
+        // Close the relevant pane
+        return Object.assign({}, state, {
+            panes: state.panes.filter(paneData => paneData.id != action.meta.paneId),
+        });
+    }
     else if (action.type == types.MOVE_ACTION_PARTICIPANT) {
         if (!state.panes.find(p => p.type == 'moveparticipants')) {
             return Object.assign({}, state, {

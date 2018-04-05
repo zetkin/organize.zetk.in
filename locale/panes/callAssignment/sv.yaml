@@ -13,6 +13,7 @@ target:
     editTargetLink: Redigera målgrupp
     h: Målgrupp
     stats:
-        goal: Personer återstår
+        goal: Uppfyller syftet
         target: Personer i målgruppen
+    targetDetails: Visa personer i målgruppen
 title: Ringuppdrag
