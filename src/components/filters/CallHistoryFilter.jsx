@@ -62,7 +62,7 @@ export default class CallHistoryFilter extends FilterBase {
         let assignmentSelect = null;
         if (op.indexOf('spec') > 0) {
             assignmentSelect = (
-                <RelSelectInput name="assignment"
+                <RelSelectInput key="assignment" name="assignment"
                     labelMsg="filters.callHistory.assignment"
                     objects={ assignments } value={ this.state.assignment }
                     onValueChange={ this.onChangeSimpleField.bind(this) }
