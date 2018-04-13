@@ -8,6 +8,6 @@ item:
         auth: Endast inloggade
         open: Vem som helst
     anonymous:
-        allow: Tillåt anonyma svar
-        deny: Endast signerade svar
+        allow: Tillåt anonyma
+        deny: Kräv signatur
     callersOnly: Endast för ringare
