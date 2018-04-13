@@ -9,7 +9,7 @@ ops:
                 =1 {en person}
                 other {# personer}}
         tag: |
-            St etiketter på {count, plural,
+            Sæt etiketter på {count, plural,
                 =1 {en person}
                 other {# personer}}
 selectLabel: Vælg handling

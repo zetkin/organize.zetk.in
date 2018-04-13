@@ -8,6 +8,6 @@ item:
         auth: Connected only
         open: Anyone
     anonymous:
-        allow: Allow anonymous submissions
-        deny: Signed submissions only
+        allow: Allow anonymous
+        deny: Require signature
     callersOnly: Callers only
