@@ -143,12 +143,17 @@ export default class CallHistoryFilter extends FilterBase {
     }
 
     onSelectOperator(name, value) {
+        const assignment = this.state.assignment;
         if (value.indexOf('any') > 0) {
-            this.setState({ op: value, campaign: null }, () =>
+            this.setState({ op: value, assignment: null }, () =>
+                this.onConfigChange());
+        }
+        else if (assignment) {
+            this.setState({ op: value, assignment: assignment }, () =>
                 this.onConfigChange());
         }
         else {
-            // Don't fire event for "spec" operators until a campaign
+            // Don't fire event for "spec" operators until an assignment
             // has actually been selected.
             this.setState({ op: value });
         }
