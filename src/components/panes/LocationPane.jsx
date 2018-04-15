@@ -7,15 +7,15 @@ import Link from '../misc/Link';
 import StaticMap from '../misc/StaticMap';
 import TagCloud from '../misc/tagcloud/TagCloud'
 
-import { 
-    retrieveLocation, 
-    updateLocation, 
+import {
+    retrieveLocation,
+    updateLocation,
     deleteLocation,
     createPendingLocation,
     savePendingLocation,
 } from '../../actions/location';
 
-import { 
+import {
     addTagsToLocation,
     retrieveTagsForLocation,
     removeTagFromLocation
@@ -24,13 +24,21 @@ import {
 import { getListItemById } from '../../utils/store';
 import { createSelection } from '../../actions/selection';
 
-@connect(state => state)
+
+const mapStateToProps = (state, props) => ({
+    locItem: getListItemById(
+                state.locations.locationList,
+                props.paneData.params[0]),
+    locationTags: state.locationTags,
+});
+
+@connect(mapStateToProps)
 export default class LocationPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
 
         let locId = this.getParam(0);
-        let locItem = getListItemById(this.props.locations.locationList, locId);
+        const { locItem } = this.props;
 
         if (!locItem) {
             this.props.dispatch(retrieveLocation(locId));
@@ -39,17 +47,10 @@ export default class LocationPane extends PaneBase {
         this.props.dispatch(retrieveTagsForLocation(locId))
     }
 
-    getRenderData() {
-        let locId = this.getParam(0);
-
-        return {
-            locItem: getListItemById(this.props.locations.locationList, locId)
-        }
-    }
-
     getPaneTitle(data) {
-        if (data.locItem) {
-            return data.locItem.data.title;
+        const { locItem } = this.props;
+        if (locItem) {
+            return locItem.data.title;
         }
         else {
             return null;
@@ -57,12 +58,13 @@ export default class LocationPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        if (data.locItem) {
-            let location = data.locItem.data;
+        const { locItem, locationTags } = this.props;
+        if (locItem) {
+            let location = locItem.data;
             let tagCloud = null;
 
             if (location.tagList && !location.tagList.isPending) {
-                let tagList = this.props.locationTags.tagList;
+                let tagList = locationTags.tagList;
                 let tags = location.tagList.items
                     .map(i => getListItemById(tagList, i.data.id))
                     .filter(i => i !== null)
@@ -82,14 +84,14 @@ export default class LocationPane extends PaneBase {
             return (
                 <div>
                     <p className="LocationPane-desc">
-                        { data.locItem.data.info_text }</p>
+                        { locItem.data.info_text }</p>
                     <Link
                         className="edit"
                         msgId="panes.locations.description.editLink"
                         onClick={ this.onLocationEdit.bind(this) }/>
 
                     <StaticMap
-                        location={ data.locItem.data }
+                        location={ locItem.data }
                         onClick={ this.onMapClick.bind(this) }
                         />
 
@@ -107,13 +109,12 @@ export default class LocationPane extends PaneBase {
     }
 
     onMapClick() {
-        let locationId = this.getParam(0);
-        let locationList = this.props.locations.locationList;
-        let locationItem = getListItemById(locationList, locationId);
+        const locationId = this.getParam(0);
+        const { locItem } = this.props;
 
         let initialPosition = {
-            lat: locationItem.data.lat,
-            lng: locationItem.data.lng,
+            lat: locItem.data.lat,
+            lng: locItem.data.lng,
         };
 
         let action = createPendingLocation(initialPosition, pos => {
