@@ -7,8 +7,11 @@ import CampaignForm from '../forms/CampaignForm';
 import Button from '../misc/Button';
 import { createCampaign } from '../../actions/campaign';
 
+const mapStateToProps = (state) => ({
+    // This component doesn't use values from state, but still uses dispatch
+});
 
-@connect(state => state)
+@connect(mapStateToProps)
 @injectIntl
 export default class AddCampaignPane extends PaneBase {
     getPaneTitle(data) {
