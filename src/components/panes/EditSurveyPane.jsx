@@ -11,8 +11,13 @@ import { getListItemById } from '../../utils/store';
 import { deleteSurvey, retrieveSurvey, updateSurvey }
     from '../../actions/survey';
 
+const mapStateToProps = (state, props) => ({
+    surveyItem: getListItemById(
+        state.surveys.surveyList,
+        props.paneData.params[0]),
+});
 
-@connect(state => state)
+@connect(mapStateToProps)
 @injectIntl
 export default class EditSurveyPane extends PaneBase {
     componentDidMount() {
@@ -22,22 +27,14 @@ export default class EditSurveyPane extends PaneBase {
         this.props.dispatch(retrieveSurvey(surveyId));
     }
 
-    getRenderData() {
-        let surveyId = this.getParam(0);
-        let surveyList = this.props.surveys.surveyList;
-
-        return {
-            surveyItem: getListItemById(surveyList, surveyId),
-        };
-    }
-
     getPaneTitle(data) {
         const formatMessage = this.props.intl.formatMessage;
+        const { surveyItem } = this.props;
 
-        if (data.surveyItem && !data.surveyItem.isPending) {
+        if (surveyItem && !surveyItem.isPending) {
             return formatMessage(
                 { id: 'panes.editSurvey.title' },
-                { title: data.surveyItem.data.title });
+                { title: surveyItem.data.title });
         }
         else {
             return null;
@@ -45,8 +42,9 @@ export default class EditSurveyPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        if (data.surveyItem && !data.surveyItem.isPending) {
-            let survey = data.surveyItem.data;
+        const { surveyItem } = this.props;
+        if (surveyItem && !surveyItem.isPending) {
+            const survey = surveyItem.data;
             return [
                 <SurveyForm key="form" ref="form"
                     survey={ survey }
