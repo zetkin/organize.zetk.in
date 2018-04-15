@@ -8,13 +8,15 @@ import Widget from './widgets/Widget';
 import { moveWidget } from '../../actions/dashboard';
 import { gotoSection } from '../../actions/view';
 
+const mapStateToProps = (state, props) => ({
+    shortcuts: state.dashboard.shortcuts,
+    widgets: state.dashboard.widgets,
+});
 
-@connect(state => state)
+@connect(mapStateToProps)
 export default class Dashboard extends React.Component {
     render() {
-        let dashboardStore = this.props.dashboard;
-        let shortcuts = dashboardStore.shortcuts;
-        let widgets = dashboardStore.widgets;
+        const { shortcuts, widgets } = this.props;
 
         let widgetElements = [];
         let favoriteElements = [];
