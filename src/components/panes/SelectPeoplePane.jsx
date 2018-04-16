@@ -14,7 +14,14 @@ import {
 } from '../../actions/selection';
 
 
-@connect(state => state)
+const mapStateToProps = (state, props) => ({
+    selectionItem: getListItemById(
+                        state.selections.selectionList,
+                        props.paneData.params[0]),
+    personList: state.people.personList,
+});
+
+@connect(mapStateToProps)
 @injectIntl
 export default class SelectPeoplePane extends PaneBase {
     componentDidMount() {
@@ -23,23 +30,14 @@ export default class SelectPeoplePane extends PaneBase {
         this.props.dispatch(retrievePeople(null, null));
     }
 
-    getRenderData() {
-        let selectionId = this.getParam(0);
-        let selectionList = this.props.selections.selectionList;
-
-        return {
-            selectionItem: getListItemById(selectionList, selectionId),
-            personList: this.props.people.personList,
-        };
-    }
-
     getPaneTitle(data) {
         const formatMessage = this.props.intl.formatMessage;
         return formatMessage({ id: 'panes.selectPeople.title' });
     }
 
     renderPaneContent(data) {
-        let selection = data.selectionItem.data;
+        const { selectionItem, personList } = this.props;
+        let selection = selectionItem.data;
 
         let instructions = null;
         if (selection.instructions) {
@@ -51,16 +49,16 @@ export default class SelectPeoplePane extends PaneBase {
         // of selected IDs.
         let selectionList = {
             items: selection.selectedIds.map(id =>
-                getListItemById(data.personList, id))
+                getListItemById(personList, id))
         }
 
         // Only show people that haven't already been selected
-        let personList = Object.assign({}, data.personList, {
-            items: data.personList.items.filter(p =>
+        const filteredPersonList = Object.assign({}, personList, {
+            items: personList.items.filter(p =>
                 selection.selectedIds.indexOf(p.data.id) < 0)
         });
 
-        let numSelected = selectionList.items.length;
+        const numSelected = selectionList.items.length;
 
         // TODO: Use something more compact than PersonList?
         return [
@@ -72,13 +70,13 @@ export default class SelectPeoplePane extends PaneBase {
                 onItemClick={ this.onDeselect.bind(this) }/>,
             <Msg tagName="h3" key="availableHeader"
                 id="panes.selectPeople.availableHeader"/>,
-            <PersonList key="availableList" personList={ personList }
+            <PersonList key="availableList" personList={ filteredPersonList }
                 onItemClick={ this.onSelect.bind(this) }/>,
         ];
     }
 
     renderPaneFooter(data) {
-        let numSelected = data.selectionItem.data.selectedIds.length;
+        let numSelected = this.props.selectionItem.data.selectedIds.length;
 
         return (
             <Button className="SelectPeoplePane-saveButton"

@@ -10,36 +10,31 @@ import { getListItemById } from '../../utils/store';
 import { retrieveCampaign, updateCampaign, deleteCampaign }
     from '../../actions/campaign';
 
+const mapStateToProps = (state, props) => ({
+    campaignItem: getListItemById(
+        state.campaigns.campaignList,
+        props.paneData.params[0]),
+});
 
-@connect(state => state)
+@connect(mapStateToProps)
 @injectIntl
 export default class EditCampaignPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        let campaignId = this.getParam(0);
-        let campaignItem = getListItemById(
-            this.props.campaigns.campaignList, campaignId);
+        const campaignId = this.getParam(0);
+        const campaignItem = this.props.campaignItem;
 
         if (!campaignItem) {
             this.props.dispatch(retrieveCampaign(campaignId));
         }
     }
 
-    getRenderData() {
-        let campaignList = this.props.campaigns.campaignList;
-        var campaignId = this.getParam(0);
-
-        return {
-            campaignItem: getListItemById(campaignList, campaignId),
-        }
-    }
-
     getPaneTitle(data) {
-        if (data.campaignItem && !data.campaignItem.isPending) {
+        if (this.props.campaignItem && !this.props.campaignItem.isPending) {
             return this.props.intl.formatMessage(
                 { id: 'panes.editCampaign.title' },
-                { campaign: data.campaignItem.data.title });
+                { campaign: this.props.campaignItem.data.title });
         }
         else {
             return null;
@@ -47,10 +42,10 @@ export default class EditCampaignPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        if (data.campaignItem) {
+        if (this.props.campaignItem) {
             return [
                 <CampaignForm key="form" ref="form"
-                    campaign={ data.campaignItem.data }
+                    campaign={ this.props.campaignItem.data }
                     onSubmit={ this.onSubmit.bind(this) }/>,
 
                 <Button key="deleteButton"

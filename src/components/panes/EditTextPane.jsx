@@ -12,30 +12,23 @@ if (typeof window != 'undefined') {
     RichTextEditor = require('react-rte').default;
 }
 
+const mapStateToProps = (state, props) => ({
+    docItem: getListItemById(
+        state.documents.docList,
+        props.paneData.params[0]),
+});
 
-@connect(state => state)
+@connect(mapStateToProps)
 @injectIntl
 export default class EditTextPane extends PaneBase {
     constructor(props) {
         super(props);
 
-        let docId = this.getParam(0);
-        let docList = this.props.documents.docList;
-        let docItem = getListItemById(docList, docId);
-        let html = docItem.data.content;
+        const html = this.props.docItem.data.content;
 
         this.state = {
             inBrowser: false,
             value: RichTextEditor.createValueFromString(html, 'html'),
-        };
-    }
-
-    getRenderData() {
-        let docId = this.getParam(0);
-        let docList = this.props.documents.docList;
-
-        return {
-            docItem: getListItemById(docList, docId),
         };
     }
 
