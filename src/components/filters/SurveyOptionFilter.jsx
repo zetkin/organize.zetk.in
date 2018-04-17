@@ -158,7 +158,7 @@ export default class SurveyOptionFilter extends FilterBase {
                 }
             }
         }
-
+        
         if (autoChanged) {
             this.onConfigChange();
         }
@@ -169,6 +169,20 @@ export default class SurveyOptionFilter extends FilterBase {
     onChangeSimpleField(name, value) {
         let state = {};
         state[name] = value;
+    
+        if (name === 'question' && this.state.question != value ) {
+            const elementList = this.props.elementsBySurvey[this.state.survey.toString()];
+            let questionElement = elementList.items.find(i =>
+                (i.data.id.toString() == value));
+
+            if (questionElement && questionElement.data) {
+                let options = questionElement.data.question.options;
+                if (options && options.length) {
+                    state.option = options[0].id;
+                }
+            }
+        }
+
         this.setState(state, () => this.onConfigChange());
     }
 }
