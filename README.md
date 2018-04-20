@@ -58,3 +58,18 @@ in your browser.
 __NOTE__: SCSS files are not hot reloaded. You must reload the page, or install
 a browser extension to reload just the CSS files, to see changes after editing
 SCSS.
+
+## Dummy users and data
+The development server (which is what you will be interfacing with) is configured
+with dummy data. It is not possible to register new users in the development
+environment, but the dummy data contains a number of users which you can use to
+log in and work with the data:
+
+Role/access    | Username                | Password
+---------------|-------------------------|---------------------------
+Administrator  | testadmin@example.com   | password
+Caller         | testcaller@example.com  | password
+Basic user     | testuser@example.com    | password
+
+To sign in to this app, Zetkin Organize, you will need to sign in using the
+_testadmin@example.com_ user.
