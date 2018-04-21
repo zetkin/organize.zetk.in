@@ -82,7 +82,9 @@ export default class CampaignPlayer extends React.Component {
     }
 
     render() {
-        const actions = this.props.actions;
+        let actions = this.props.actions.concat();
+        actions.sort((a0, a1) => new Date(a0.start_time) - new Date(a1.start_time));
+
         const startTime = actions.length?
             new Date(actions[0].start_time).getTime() : 0;
         const endTime = actions.length?
