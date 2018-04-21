@@ -8,3 +8,6 @@ footer:
     info: |
         Zetkin utvecklas av Zetkin Foundation med syfte att revolutionera
         aktivistisk organisering.
+header:
+    h1: Välkommen {user},
+    h2: Nu organiserar vi {org}!
