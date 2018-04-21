@@ -53,12 +53,11 @@ export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
 
             let locList = this.props.locations.locationList;
             let locations = locList.items.map(i => i.data);
-            let center = getLocationAverage(locList);
 
             return (
                 <CampaignPlayer key="player"
                     actions={ actions } locations={ locations }
-                    centerLat={ center.lat } centerLng={ center.lng }/>
+                    />
             );
         }
     }
