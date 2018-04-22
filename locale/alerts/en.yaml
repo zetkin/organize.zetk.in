@@ -1,0 +1,5 @@
+error:
+    rejected:
+        http403: |-
+            You attempted something you're not authorized to do. Please verify
+            your access level or speak to a more senior official.
