@@ -25,26 +25,23 @@
 @keyframes AlertMessages-messageItem-inOutAnimation {
     0% {
         opacity: 0;
-        top: 4em;
+        transform: translate(0, 4em);
     }
 
     5% {
         opacity: 1;
-        top: 0;
+        transform: translate(0, 0);
     }
 
     20% {
         opacity: 1;
-        top: 0;
     }
 
     70% {
         opacity: 0;
-        top: 0;
     }
 
     100% {
         opacity: 0;
-        top: 0;
     }
 }
