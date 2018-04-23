@@ -8,6 +8,14 @@
         width: 300px;
     }
 
+    .CampaignPlayer {
+        position: absolute;
+        top: 17em;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
     @include medium-screen {
         .campaignselect {
             width: 300px;

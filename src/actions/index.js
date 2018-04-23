@@ -231,3 +231,6 @@ export const REMOVE_ROUTES_FROM_CANVASS_ASSIGNMENT = 'REMOVE_ROUTE_FROM_CANVASS_
 
 // Redux actions related to visits
 export const RETRIEVE_HOUSEHOLD_VISITS = 'RETRIEVE_HOUSEHOLD_VISITS';
+
+// Actions related to alert messages
+export const POLL_ALERT_MESSAGES = 'POLL_ALERT_MESSAGES';

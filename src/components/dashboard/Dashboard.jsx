@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { FormattedMessage as Msg } from 'react-intl';
 import React from 'react';
 
 import Footer from './Footer';
@@ -9,7 +10,9 @@ import { moveWidget } from '../../actions/dashboard';
 import { gotoSection } from '../../actions/view';
 
 const mapStateToProps = (state, props) => ({
+    activeOrganization: state.user.activeMembership.organization,
     shortcuts: state.dashboard.shortcuts,
+    user: state.user.user,
     widgets: state.dashboard.widgets,
 });
 
@@ -55,9 +58,15 @@ export default class Dashboard extends React.Component {
             );
         }
 
+        const org = this.props.activeOrganization.title;
+        const user = this.props.user.first_name;
 
         return (
             <div className="Dashboard">
+                <header className="Dashboard-header">
+                    <Msg tagName="h1" id="dashboard.header.h1" values={{ org, user }}/>
+                    <Msg tagName="h2" id="dashboard.header.h2" values={{ org, user }}/>
+                </header>
                 <ul className="Dashboard-favorites">
                     { favoriteElements }
                 </ul>
