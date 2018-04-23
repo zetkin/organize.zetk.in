@@ -20,9 +20,9 @@ export default class CampaignPlayer extends React.Component {
     componentWillReceiveProps(nextProps) {
         const actions = nextProps.actions;
 
-        if (this.props.actions != nextProps.actions) {
+        if (this.props.actions != nextProps.actions && nextProps.actions) {
             let bounds = new google.maps.LatLngBounds();
-            this.props.actions.forEach(action => {
+            nextProps.actions.forEach(action => {
                 bounds.extend(action.location);
             });
 
