@@ -24,6 +24,9 @@ export const FIND_PERSON_DUPLICATES = 'FIND_PERSON_DUPLICATES';
 export const CLEAR_PERSON_DUPLICATES = 'CLEAR_PERSON_DUPLICATES';
 export const MERGE_PERSON_DUPLICATES = 'MERGE_PERSON_DUPLICATES';
 
+// Redux actions related to person groups
+export const RETRIEVE_GROUPS = 'RETRIEVE_GROUPS';
+
 // Flux actions related to person tags
 export const CREATE_PERSON_TAG = 'CREATE_PERSON_TAG';
 export const RETRIEVE_PERSON_TAG = 'RETRIEVE_PERSON_TAG';

@@ -16,6 +16,7 @@ import canvassAssignments from './canvassAssignments';
 import campaigns from './campaigns';
 import dashboard from './dashboard';
 import documents from './documents';
+import groups from './groups';
 import intl from './intl';
 import invites from './invites';
 import locations from './locations';
@@ -52,6 +53,7 @@ const appReducer = combineReducers({
     campaigns,
     dashboard,
     documents,
+    groups,
     invites,
     intl,
     locations,
