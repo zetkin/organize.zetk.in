@@ -6,6 +6,7 @@ import AllRoutesPane from './canvass/AllRoutesPane';
 import AllVisitsPane from './canvass/AllVisitsPane';
 import CallLogPane from './dialog/CallLogPane';
 import CampaignPlaybackPane from './campaign/CampaignPlaybackPane';
+import GroupListPane from './people/GroupListPane';
 import InvitePane from './people/InvitePane';
 import ImportPane from './people/ImportPane';
 import LocationsPane from './maps/LocationsPane';
@@ -26,6 +27,8 @@ export const SECTIONS = {
                 startPane: InvitePane },
             { path: 'import',
                 startPane: ImportPane },
+            { path: 'groups',
+                startPane: GroupListPane },
             { path: 'manage',
                 startPane: ManagePeoplePane },
         ],
