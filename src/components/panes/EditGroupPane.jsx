@@ -5,10 +5,12 @@ import { connect } from 'react-redux';
 import PaneBase from './PaneBase';
 import GroupForm from '../forms/GroupForm';
 import Button from '../misc/Button';
+import DeleteButton from '../misc/DeleteButton';
 import { getListItemById } from '../../utils/store';
 import {
     retrieveGroup,
     updateGroup,
+    deleteGroup,
 } from '../../actions/group';
 
 
@@ -40,10 +42,12 @@ export default class EditGroupPane extends PaneBase {
         if (this.props.groupItem && this.props.groupItem.data) {
             let group = this.props.groupItem.data;
 
-            return (
+            return [
                 <GroupForm ref="form" group= { group }
-                    onSubmit={ this.onSubmit.bind(this) }/>
-            );
+                    onSubmit={ this.onSubmit.bind(this) }/>,
+                <DeleteButton key="deleteButton"
+                    onClick={ this.onDeleteClick.bind(this) }/>
+            ];
         }
         else {
             return null;
@@ -66,5 +70,10 @@ export default class EditGroupPane extends PaneBase {
 
         this.props.dispatch(updateGroup(groupId, values));
         this.closePane();
+    }
+
+    onDeleteClick() {
+        const groupId = this.getParam(0);
+        this.props.dispatch(deleteGroup(groupId));
     }
 }
