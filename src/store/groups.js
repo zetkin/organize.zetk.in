@@ -20,9 +20,34 @@ export default function groups(state = null, action) {
                     group.id, group)
             });
 
+        case types.RETRIEVE_GROUP_MEMBERS + '_PENDING':
+            return Object.assign({}, state, {
+                membersByGroup: Object.assign({}, state.membersByGroup, {
+                    [action.meta.id]: createList(null, { isPending: true }),
+                }),
+            });
+
+        case types.RETRIEVE_GROUP_MEMBERS + '_FULFILLED':
+            return Object.assign({}, state, {
+                membersByGroup: Object.assign({}, state.membersByGroup, {
+                    [action.meta.id]: createList(action.payload.data.data),
+                }),
+            });
+
+        case types.PROMOTE_GROUP_MANAGER + '_FULFILLED':
+        case types.DEMOTE_GROUP_MANAGER + '_FULFILLED':
+            let memberList = state.membersByGroup[action.meta.groupId] || createList();
+            return Object.assign({}, state, {
+                membersByGroup: Object.assign({}, state.membersByGroup, {
+                    [action.meta.groupId]: updateOrAddListItem(memberList,
+                        action.meta.personId, action.payload.data.data),
+                }),
+            });
+
         default:
             return state || {
-                groupList: createList()
+                groupList: createList(),
+                membersByGroup: {},
             };
     }
 }

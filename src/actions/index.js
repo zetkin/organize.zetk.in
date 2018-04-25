@@ -27,6 +27,9 @@ export const MERGE_PERSON_DUPLICATES = 'MERGE_PERSON_DUPLICATES';
 // Redux actions related to person groups
 export const RETRIEVE_GROUPS = 'RETRIEVE_GROUPS';
 export const RETRIEVE_GROUP = 'RETRIEVE_GROUP';
+export const RETRIEVE_GROUP_MEMBERS = 'RETRIEVE_GROUP_MEMBERS';
+export const PROMOTE_GROUP_MANAGER = 'PROMOTE_GROUP_MANAGER';
+export const DEMOTE_GROUP_MANAGER = 'DEMOTE_GROUP_MANAGER';
 
 // Flux actions related to person tags
 export const CREATE_PERSON_TAG = 'CREATE_PERSON_TAG';
