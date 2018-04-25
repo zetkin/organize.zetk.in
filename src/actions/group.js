@@ -41,6 +41,19 @@ export function updateGroup(id, data) {
     };
 }
 
+export function deleteGroup(id) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.DELETE_GROUP,
+            meta: { id },
+            payload: {
+                promise: z.resource('orgs', orgId, 'groups', id).del(),
+            }
+        });
+    };
+}
+
 export function retrieveGroupMembers(id) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;

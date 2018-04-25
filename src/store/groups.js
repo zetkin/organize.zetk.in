@@ -22,6 +22,11 @@ export default function groups(state = null, action) {
                     group.id, group)
             });
 
+        case types.DELETE_GROUP + '_FULFILLED':
+            return Object.assign({}, state, {
+                groupList: removeListItem(state.groupList, action.meta.id),
+            });
+
         case types.RETRIEVE_GROUP_MEMBERS + '_PENDING':
             return Object.assign({}, state, {
                 membersByGroup: Object.assign({}, state.membersByGroup, {
