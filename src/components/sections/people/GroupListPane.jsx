@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import React from 'react';
 
+import Button from '../../misc/Button';
 import GroupList from '../../lists/GroupList';
 import RootPaneBase from '../RootPaneBase';
 import { retrieveGroups } from '../../../actions/group';
@@ -22,6 +23,16 @@ export default class GroupListPane extends RootPaneBase {
 
         // TODO: Do this only if data is old or does not exist
         this.props.dispatch(retrieveGroups());
+    }
+
+    getPaneTools(data) {
+        return [
+            <Button key="addButton"
+                className="GroupListPane-addButton"
+                labelMsg="panes.groupList.addButton"
+                onClick={ () => this.openPane('addgroup') }
+                />
+        ];
     }
 
     renderPaneContent(data) {

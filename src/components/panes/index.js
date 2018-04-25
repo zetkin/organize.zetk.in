@@ -6,6 +6,7 @@ import AddActivityPane from './AddActivityPane';
 import AddCallAssignmentPane from './AddCallAssignmentPane';
 import AddCampaignPane from './AddCampaignPane';
 import AddCanvassAssignmentPane from './AddCanvassAssignmentPane';
+import AddGroupPane from './AddGroupPane';
 import AddPersonPane from './AddPersonPane';
 import AddPersonTagPane from './AddPersonTagPane';
 import AddLocationPane from './AddLocationPane';
@@ -72,6 +73,7 @@ var _panes = {
     'addcallassignment': AddCallAssignmentPane,
     'addcampaign': AddCampaignPane,
     'addcanvassassignment': AddCanvassAssignmentPane,
+    'addgroup': AddGroupPane,
     'addlocation': AddLocationPane,
     'addlocationtag': AddLocationTagPane,
     'addperson': AddPersonPane,
