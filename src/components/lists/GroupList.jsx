@@ -29,6 +29,9 @@ export default class GroupList extends React.Component {
             {
                 'title': 'lists.groupList.header.title',
             },
+            {
+                'size': 'lists.groupList.header.size',
+            }
         ];
 
         return (

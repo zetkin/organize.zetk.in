@@ -23,6 +23,10 @@ export default class GroupListItem extends React.Component {
                     <span className="GroupListItem-title">
                         { group.title }</span>
                 </div>
+                <div className="GroupListItem-col">
+                    <span className="GroupListItem-title">
+                        { group.size }</span>
+                </div>
             </div>
         );
     }

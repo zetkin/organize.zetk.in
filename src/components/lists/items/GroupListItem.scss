@@ -1,0 +1,6 @@
+.GroupListItem-col {
+    @include col(8, 12);
+    &:last-child {
+        @include col(4, 12, $last:true);
+    }
+}
