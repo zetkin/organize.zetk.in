@@ -25,6 +25,7 @@ export const CLEAR_PERSON_DUPLICATES = 'CLEAR_PERSON_DUPLICATES';
 export const MERGE_PERSON_DUPLICATES = 'MERGE_PERSON_DUPLICATES';
 
 // Redux actions related to person groups
+export const CREATE_GROUP = 'CREATE_GROUP';
 export const RETRIEVE_GROUPS = 'RETRIEVE_GROUPS';
 export const RETRIEVE_GROUP = 'RETRIEVE_GROUP';
 export const UPDATE_GROUP = 'UPDATE_GROUP';

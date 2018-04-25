@@ -1,6 +1,19 @@
 import * as types from './';
 
 
+export function createGroup(data, paneId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.CREATE_GROUP,
+            meta: { paneId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'groups').post(data),
+            }
+        });
+    };
+}
+
 export function retrieveGroup(id) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
