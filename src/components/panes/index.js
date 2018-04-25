@@ -41,6 +41,7 @@ import EditSurveyPane from './EditSurveyPane';
 import EditSurveyQuestionPane from './EditSurveyQuestionPane';
 import EditSurveyTextBlockPane from './EditSurveyTextBlockPane';
 import EditTextPane from './EditTextPane';
+import GroupPane from './GroupPane';
 import LocationPane from './LocationPane';
 import MergePeoplePane from './MergePeoplePane';
 import ImporterColumnPane from './ImporterColumnPane';
@@ -104,6 +105,7 @@ var _panes = {
     'editsurveyquestion': EditSurveyQuestionPane,
     'editsurveytextblock': EditSurveyTextBlockPane,
     'edittext': EditTextPane,
+    'group': GroupPane,
     'importercolumn': ImporterColumnPane,
     'location': LocationPane,
     'mergepeople': MergePeoplePane,

@@ -27,8 +27,14 @@ export default class GroupListPane extends RootPaneBase {
     renderPaneContent(data) {
         if (this.props.groupList) {
             return (
-                <GroupList groupList={ this.props.groupList }/>
+                <GroupList groupList={ this.props.groupList }
+                    onItemClick={ this.onItemClick.bind(this) }
+                    />
             );
         }
+    }
+
+    onItemClick(item) {
+        this.openPane('group', item.data.id);
     }
 }

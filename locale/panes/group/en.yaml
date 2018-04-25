@@ -1,0 +1,8 @@
+managers:
+    h: Managers
+members:
+    h: All members
+pendingTitle: Loading group...
+summary:
+    size: '{size, plural, =0 {No members yet} =1 {One member} other {# members}}'
+    viewLink: View in Activist Portal
