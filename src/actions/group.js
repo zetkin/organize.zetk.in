@@ -42,6 +42,36 @@ export function retrieveGroupMembers(id) {
     };
 }
 
+export function addGroupMember(groupId, personId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.ADD_GROUP_MEMBER,
+            meta: { groupId, personId },
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'groups', groupId, 'members', personId).put(),
+            }
+        });
+    }
+}
+
+export function removeGroupMember(groupId, personId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.REMOVE_GROUP_MEMBER,
+            meta: { groupId, personId },
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'groups', groupId, 'members', personId).del()
+            }
+        });
+    }
+}
+
 export function promoteGroupManager(groupId, personId) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;

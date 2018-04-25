@@ -2,6 +2,7 @@ import * as types from '../actions';
 
 import {
     createList,
+    removeListItem,
     updateOrAddListItem,
 } from '../utils/store';
 
@@ -34,6 +35,7 @@ export default function groups(state = null, action) {
                 }),
             });
 
+        case types.ADD_GROUP_MEMBER + '_FULFILLED':
         case types.PROMOTE_GROUP_MANAGER + '_FULFILLED':
         case types.DEMOTE_GROUP_MANAGER + '_FULFILLED':
             let memberList = state.membersByGroup[action.meta.groupId] || createList();
@@ -41,6 +43,14 @@ export default function groups(state = null, action) {
                 membersByGroup: Object.assign({}, state.membersByGroup, {
                     [action.meta.groupId]: updateOrAddListItem(memberList,
                         action.meta.personId, action.payload.data.data),
+                }),
+            });
+
+        case types.REMOVE_GROUP_MEMBER + '_FULFILLED':
+            return Object.assign({}, state, {
+                membersByGroup: Object.assign({}, state.membersByGroup, {
+                    [action.meta.groupId]: removeListItem(
+                        state.membersByGroup[action.meta.groupId], action.meta.personId),
                 }),
             });
 
