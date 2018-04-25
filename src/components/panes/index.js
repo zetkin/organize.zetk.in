@@ -31,6 +31,7 @@ import EditCallAssignmentPane from './EditCallAssignmentPane';
 import EditCallerPane from './EditCallerPane';
 import EditCampaignPane from './EditCampaignPane';
 import EditCanvassAssignmentPane from './EditCanvassAssignmentPane';
+import EditGroupPane from './EditGroupPane';
 import EditLocationPane from './EditLocationPane';
 import EditLocationTagPane from './EditLocationTagPane';
 import EditPersonPane from './EditPersonPane';
@@ -96,6 +97,7 @@ var _panes = {
     'editcaller': EditCallerPane,
     'editcampaign': EditCampaignPane,
     'editcanvassassignment': EditCanvassAssignmentPane,
+    'editgroup': EditGroupPane,
     'editlocation': EditLocationPane,
     'editlocationtag': EditLocationTagPane,
     'editperson': EditPersonPane,

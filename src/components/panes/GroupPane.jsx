@@ -111,6 +111,7 @@ export default class GroupPane extends PaneBase {
                         { name: 'desc', value: group.description },
                         { name: 'size', msgId: 'panes.group.summary.size', msgValues: { size: groupSize } },
                         { name: 'link', href: linkUrl, target: '_blank', msgId: 'panes.group.summary.viewLink' },
+                        { name: 'editLink', msgId: 'panes.group.editLink', onClick: () => this.openPane('editgroup', group.id) },
                     ]}
                 />,
                 <div key="managers">
