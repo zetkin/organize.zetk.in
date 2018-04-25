@@ -28,6 +28,19 @@ export function retrieveGroups() {
     };
 }
 
+export function updateGroup(id, data) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.UPDATE_GROUP,
+            meta: { id },
+            payload: {
+                promise: z.resource('orgs', orgId, 'groups', id).patch(data),
+            }
+        });
+    };
+}
+
 export function retrieveGroupMembers(id) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;

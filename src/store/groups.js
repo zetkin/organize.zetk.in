@@ -14,6 +14,7 @@ export default function groups(state = null, action) {
                 groupList: createList(action.payload.data.data),
             });
 
+        case types.UPDATE_GROUP + '_FULFILLED':
         case types.RETRIEVE_GROUP + '_FULFILLED':
             let group = action.payload.data.data;
             return Object.assign({}, state, {
