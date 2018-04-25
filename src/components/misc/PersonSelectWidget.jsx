@@ -14,7 +14,7 @@ import { getListItemById } from '../../utils/store';
 
 const contactTarget = {
     canDrop(props, monitor) {
-        return true;
+        return !props.preventChange;
     },
 
     drop(props) {
@@ -47,6 +47,7 @@ export default class PersonSelectWidget extends React.Component {
         onSelect: React.PropTypes.func,
         person: React.PropTypes.object,
         personList: React.PropTypes.object,
+        preventChange: React.PropTypes.bool,
     };
 
     constructor(props) {
@@ -81,6 +82,7 @@ export default class PersonSelectWidget extends React.Component {
         let classes = cx('PersonSelectWidget', {
             selected: !!this.props.person,
             selecting: !this.props.person,
+            preventChange: this.props.preventChange,
             changing: this.state.forceShowInput,
         });
 
@@ -133,16 +135,23 @@ export default class PersonSelectWidget extends React.Component {
                     />
             );
 
+            let changeInstructions = null;
+            if (!this.props.preventChange) {
+                changeInstructions = (
+                    <p key="instructions"
+                        className="PersonSelectWidget-instructions">
+                        <Msg id="misc.personSelectWidget.changeInstructions"
+                            values={{ selectLink }}
+                            />
+                    </p>
+                );
+            }
+
             content.push(
                 <Person key="name"
                     person={ this.props.person }
                     />,
-                <p key="instructions"
-                    className="PersonSelectWidget-instructions">
-                    <Msg id="misc.personSelectWidget.changeInstructions"
-                        values={{ selectLink }}
-                        />
-                </p>,
+                changeInstructions,
                 <a key="clearLink"
                     className="PersonSelectWidget-clearLink"
                     onClick={ this.onClearLinkClick.bind(this) }>
