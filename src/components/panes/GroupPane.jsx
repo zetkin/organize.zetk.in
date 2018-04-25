@@ -5,7 +5,7 @@ import cx from 'classnames';
 
 import PaneBase from './PaneBase';
 import DraggableAvatar from '../misc/DraggableAvatar';
-import Button from '../misc/Button';
+import Link from '../misc/Link';
 import InfoList from '../misc/InfoList';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PersonSelectWidget from '../misc/PersonSelectWidget';
@@ -84,9 +84,14 @@ export default class GroupPane extends PaneBase {
                 });
 
                 memberContent = (
-                    <ul className="GroupPane-memberList">
-                        { memberItems }
-                    </ul>
+                    <div className="GroupPane-members">
+                        <ul className="GroupPane-memberList">
+                            { memberItems }
+                        </ul>
+                        <Link msgId="panes.group.members.editLink"
+                            onClick={ () => this.openPane('groupmembers', group.id) }
+                            />
+                    </div>
                 );
 
                 groupSize = memberItems.length;

@@ -1,0 +1,8 @@
+add:
+    h: Add member
+members:
+    h: All members
+    roles:
+        manager: Group manager
+        none: Member
+title: 'Edit members of "{ title }"'

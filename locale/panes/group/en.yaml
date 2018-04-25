@@ -1,6 +1,7 @@
 managers:
     h: Managers
 members:
+    editLink: Edit
     h: All members
 pendingTitle: Loading group...
 summary:
