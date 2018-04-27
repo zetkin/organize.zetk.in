@@ -1,6 +1,19 @@
 .GroupListItem-col {
-    @include col(8, 12);
+    @include col(10, 12);
+
     &:last-child {
-        @include col(4, 12, $last:true);
+        @include col(2, 12, $last:true);
+    }
+}
+
+.GroupListItem-title {
+    font-size: 1.2em;
+}
+
+.GroupListItem-size {
+    color: lighten($c-text, 40);
+
+    &:before {
+        @include icon($fa-var-users);
     }
 }
