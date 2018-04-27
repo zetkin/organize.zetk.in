@@ -5,7 +5,7 @@ import cx from 'classnames';
 
 import PaneBase from './PaneBase';
 import DraggableAvatar from '../misc/DraggableAvatar';
-import Link from '../misc/Link';
+import Button from '../misc/Button';
 import InfoList from '../misc/InfoList';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PersonSelectWidget from '../misc/PersonSelectWidget';
@@ -84,13 +84,15 @@ export default class GroupPane extends PaneBase {
                 });
 
                 memberContent = (
-                    <div className="GroupPane-members">
+                    <div className="GroupPane-membersCard"
+                        onClick={ () =>
+                            this.openPane('groupmembers', group.id) } >
+                        <span className="GroupPane-membersCardLink">
+                            <Msg id="panes.group.members.editLink" />
+                        </span>
                         <ul className="GroupPane-memberList">
                             { memberItems }
                         </ul>
-                        <Link msgId="panes.group.members.editLink"
-                            onClick={ () => this.openPane('groupmembers', group.id) }
-                            />
                     </div>
                 );
 
@@ -114,11 +116,13 @@ export default class GroupPane extends PaneBase {
                         { name: 'editLink', msgId: 'panes.group.editLink', onClick: () => this.openPane('editgroup', group.id) },
                     ]}
                 />,
-                <div key="managers">
+                <div key="managers"
+                    className="GroupPane-managers">
                     <Msg tagName="h3" id="panes.group.managers.h"/>
                     { managerContent }
                 </div>,
-                <div key="members">
+                <div key="members"
+                    className="GroupPane-members">
                     <Msg tagName="h3" id="panes.group.members.h"/>
                     { memberContent }
                 </div>,
