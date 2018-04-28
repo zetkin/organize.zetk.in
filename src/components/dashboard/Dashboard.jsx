@@ -5,6 +5,7 @@ import React from 'react';
 import Footer from './Footer';
 import Shortcut from './Shortcut';
 import DraggableWidget from './widgets/DraggableWidget';
+import Link from '../misc/Link';
 import Widget from './widgets/Widget';
 import { moveWidget } from '../../actions/dashboard';
 import { gotoSection } from '../../actions/view';
@@ -58,14 +59,19 @@ export default class Dashboard extends React.Component {
             );
         }
 
-        const org = this.props.activeOrganization.title;
+        const orgData = this.props.activeOrganization;
+        const org = orgData.title;
         const user = this.props.user.first_name;
+        const orgPageUrl = '//www.' + process.env.ZETKIN_DOMAIN + '/o/' + (orgData.slug || orgData.id);
 
         return (
             <div className="Dashboard">
                 <header className="Dashboard-header">
                     <Msg tagName="h1" id="dashboard.header.h1" values={{ org, user }}/>
                     <Msg tagName="h2" id="dashboard.header.h2" values={{ org, user }}/>
+                    <Link className="Dashboard-orgPageLink"
+                        msgId="dashboard.header.orgPageLink"
+                        href={ orgPageUrl } target="_blank"/>
                 </header>
                 <ul className="Dashboard-favorites">
                     { favoriteElements }
