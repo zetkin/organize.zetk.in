@@ -13,6 +13,14 @@
         margin: 0.5em 0 0;
         color: $c-ui-darker;
     }
+
+    a {
+        display: block;
+        margin: 1em 0 0;
+        font-size: 1em;
+        color: $c-ui-darker;
+        text-decoration: underline;
+    }
 }
 
 .Dashboard-favorites {

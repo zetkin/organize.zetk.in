@@ -23,8 +23,6 @@ export const SECTIONS = {
         subSections: [
             { path: 'list',
                 startPane: PeopleListPane },
-            { path: 'invite',
-                startPane: InvitePane },
             { path: 'import',
                 startPane: ImportPane },
             { path: 'groups',

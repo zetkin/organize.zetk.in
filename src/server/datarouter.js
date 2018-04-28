@@ -2,7 +2,7 @@ import express from 'express';
 
 import { createLocalizeHandler } from './locale';
 import { configureStore } from '../store';
-import { retrieveActions, retrieveAction } from '../actions/action';
+import { retrieveActions, retrieveAction, retrieveActionsOnDay } from '../actions/action';
 import { retrieveActionParticipants } from '../actions/participant';
 import { retrieveActionResponses } from '../actions/actionResponse';
 import { retrieveActivities } from '../actions/activity';
@@ -108,6 +108,10 @@ export default messages => {
         retrieveAction(req.params[0]),
         retrieveActivities(),
         retrieveLocations()
+    ]));
+
+    router.get(/actionday:([-0-9]*)/, waitForActions(req => [
+        retrieveActionsOnDay(req.params[0]),
     ]));
 
     return router;

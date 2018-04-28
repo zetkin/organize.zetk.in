@@ -11,3 +11,4 @@ footer:
 header:
     h1: Welcome {user},
     h2: Let's organize {org}!
+    orgPageLink: Visit organization in Activist Portal
