@@ -284,11 +284,13 @@ export default class RelSelectInput extends InputBase {
         //       fires if blurring hides the menu.
         setTimeout(() => {
             const listDOMNode = ReactDOM.findDOMNode(this.refs.objectList);
-            listDOMNode.scrollTop = 0;
+            if (listDOMNode) {
+                listDOMNode.scrollTop = 0;
 
-            this.setState({
-                inputFocused: false
-            });
+                this.setState({
+                    inputFocused: false
+                });
+            }
         }, 200);
     }
 

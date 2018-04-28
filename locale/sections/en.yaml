@@ -32,6 +32,7 @@ subSections:
     people:
         import: Import
         invite: Invite
+        groups: Groups
         list: People
         manage: Manage
     settings:
