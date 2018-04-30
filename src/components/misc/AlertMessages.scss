@@ -1,0 +1,47 @@
+.AlertMessages {
+    position: fixed;
+    bottom: 3em;
+    left: 2em;
+    z-index: 9999;
+
+    width: 80%;
+    max-width: 40em;
+
+    .AlertMessages-messageItem {
+        position: relative;
+        padding: 1em;
+        margin: 1em 0;
+        background-color: $c-brand-main;
+        border-radius: 0.5em;
+        box-shadow: 0 0 1em rgba(0,0,0,0.2);
+
+        font-size: 1.3em;
+        color: white;
+
+        animation: AlertMessages-messageItem-inOutAnimation 12s;
+    }
+}
+
+@keyframes AlertMessages-messageItem-inOutAnimation {
+    0% {
+        opacity: 0;
+        transform: translate(0, 4em);
+    }
+
+    5% {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

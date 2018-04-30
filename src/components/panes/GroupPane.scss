@@ -1,0 +1,83 @@
+.GroupPane {
+    .InfoListItem-desc {
+        font-style: italic;
+        &::before {
+            @include icon($fa-var-info-circle);
+        }
+    }
+
+    .InfoListItem-size {
+        &::before {
+            @include icon($fa-var-users);
+        }
+    }
+
+    .InfoListItem-link {
+        &::before {
+            @include icon($fa-var-external-link);
+        }
+    }
+
+    .InfoListItem-editLink {
+        @include inline-button($icon: $fa-var-pencil);
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}
+
+.GroupPane-managers {
+    h3 {
+        &::before {
+            @include icon($fa-var-star);
+        }
+    }
+}
+
+.GroupPane-members {
+    h3 {
+        margin-top: 2em;
+
+        &::before {
+            @include icon($fa-var-users);
+        }
+    }
+}
+
+.GroupPane-membersCard {
+    @include card();
+    padding: 1em;
+    cursor: pointer;
+
+    &:hover {
+        background-color: darken(#fefefe, 2);
+
+        .Link {
+            color: lighten($c-text, 20);
+        }
+    }
+
+    .GroupPane-membersCardLink {
+        font-size: 1.2em;
+        display: block;
+        width: 100%;
+        text-align: right;
+        padding-right: 1em;
+        color: lighten($c-text, 50);
+
+        &::before {
+            @include icon($fa-var-pencil);
+        }
+    }
+}
+
+.GroupPane-memberList {
+    li {
+        display: inline-block;
+        margin: 0 0.3em 0.3em 0;
+
+        .Avatar {
+            width: 3em;
+        }
+    }
+}

@@ -108,6 +108,24 @@ export default function viewState(state = null, action) {
             section, panes
         });
     }
+    else if (action.type == types.CREATE_GROUP + '_FULFILLED') {
+        // Replace the relevant AddGroupPane with a GroupPane showing the newly
+        // created group
+        return Object.assign({}, state, {
+            panes: state.panes.map(paneData => {
+                if (paneData.id == action.meta.paneId) {
+                    return {
+                        id: '$' + makeRandomString(6),
+                        type: 'group',
+                        params: [ action.payload.data.data.id ]
+                    };
+                }
+                else {
+                    return paneData;
+                }
+            }),
+        });
+    }
     else if (action.type == types.CREATE_CALL_ASSIGNMENT + '_FULFILLED') {
         // Replace the relevant AddCallAssignmentPane with a CallAssignmentPane
         // showing the newly created assignment.

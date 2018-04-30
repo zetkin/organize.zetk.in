@@ -36,5 +36,5 @@ subSections:
     settings:
         officials: Tovholdere
     survey:
-        submissions: Spørgeskemabesvarelser
+        submissions: Besvarelser
         surveys: Spørgeskemaer

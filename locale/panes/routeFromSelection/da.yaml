@@ -3,9 +3,9 @@ create:
     desc: 'En ny rute med kun disse adresser vil blive dannet '
     h: Dan rute
 extend:
-    extendButton: Udvid rute
     desc: Vælg en eksisterende rute for at udvide den.
     empty: Der er ingen flere ruter at udvide.
+    extendButton: Udvid rute
     h: Udvid rute.
 info:
     households: |

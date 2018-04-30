@@ -1,9 +1,9 @@
 list:
     h: Addresses visited
     p: Select which addresses have been visited successfully.
-saveAdvancedButton: Mark { numSelected } as complete
+saveAdvancedButton: 'Mark { numSelected } as complete'
 saveAllButton: Mark all as complete
 selectionOptions:
-    all: All addresses have been visited
     advanced: Only some addresses have been visited
+    all: All addresses have been visited
 title: Update route progress

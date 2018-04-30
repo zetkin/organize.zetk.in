@@ -1,13 +1,13 @@
 breadcrumbs:
     formLabel: Settings
     goalLabel: Goal
-    targetLabel: Target group
     goals:
         custom: No template
         inform: Inform
         mobilize: Mobilize for campaign
         stayintouch: Stay in touch
         survey: Survey
+    targetLabel: Target group
     targets:
         allTarget: Everyone
         custom: No template
@@ -26,15 +26,15 @@ goal:
     saveButton:
         inform: Create assignment to inform
         mobilize: Create assignment to mobilize
-        survey: Create assignment to survey targets
         stayintouch: Create assignment to stay in touch
+        survey: Create assignment to survey targets
 target:
     customLink: Define selection manually later
     instructions: Step 1 of 3. Define the target group of the assignment.
     saveButton:
         allTarget: Select everyone as target group
-        tagTarget: Select target group based on tag
         randomTarget: Select random target group
+        tagTarget: Select target group based on tag
 templates:
     allTarget:
         instructions: The target group is made up of all people in the database.

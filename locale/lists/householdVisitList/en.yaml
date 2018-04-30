@@ -1,9 +1,9 @@
 header:
-    visitTime: Time
-    state: Status
     address: Address
+    state: Status
+    visitTime: Time
 item:
     status:
         allocated: Allocated
-        success: Visited
         failure: Could not visit
+        success: Visited

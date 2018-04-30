@@ -4,7 +4,7 @@ saveButton: |
         =1 {Select one address}
         other {Select # addresses}
     }
-title: Välj adresser från {street}
+title: 'Välj adresser från {street}'
 views:
     all: Alla
     even: Jämna nummer

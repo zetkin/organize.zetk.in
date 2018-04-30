@@ -3,6 +3,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux';
 
+import AlertMessages from './misc/AlertMessages';
 import GoogleAnalytics from './misc/GoogleAnalytics';
 import Header from './header/Header';
 import Dashboard from './dashboard/Dashboard';
@@ -65,6 +66,7 @@ export default class App extends React.Component {
                             { section }
                         </div>
                         <KeyboardShortcuts/>
+                        <AlertMessages/>
                     </div>
                     <script type="text/json"
                         id="App-initialState"

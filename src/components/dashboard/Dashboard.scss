@@ -1,3 +1,28 @@
+.Dashboard-header {
+    text-align: center;
+    margin: 3em 0 0;
+
+    h1 {
+        font-size: 3em;
+        margin: 0;
+        color: $c-ui-darker;
+    }
+
+    h2 {
+        font-size: 2em;
+        margin: 0.5em 0 0;
+        color: $c-ui-darker;
+    }
+
+    a {
+        display: block;
+        margin: 1em 0 0;
+        font-size: 1em;
+        color: $c-ui-darker;
+        text-decoration: underline;
+    }
+}
+
 .Dashboard-favorites {
     @include list-unstyled;
     padding: 0.417em;

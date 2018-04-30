@@ -8,3 +8,7 @@ footer:
     info: >-
         Zetkin is developed by Zetkin Foundation, to improve organizing in
         activist organizations.
+header:
+    h1: 'Welcome {user},'
+    h2: 'Let''s organize {org}!'
+    orgPageLink: Visit organization in Activist Portal

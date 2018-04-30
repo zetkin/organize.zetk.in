@@ -11,30 +11,28 @@ import { retrievePerson, updatePerson, deletePerson }
 import { getListItemById } from '../../utils/store';
 
 
-@connect(state => state)
+const mapStateToProps = (state, props) => ({
+    personItem: getListItemById(
+                    state.people.personList,
+                    props.paneData.params[0])
+});
+
+@connect(mapStateToProps)
 export default class EditPersonPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        let personId = this.getParam(0);
-        let person = getListItemById(this.props.people.personList, personId);
+        const personId = this.getParam(0);
+        const person = this.props.personItem;
 
         if (!person) {
             this.props.dispatch(retrievePerson(personId));
         }
     }
 
-    getRenderData() {
-        let personId = this.getParam(0);
-
-        return {
-            personItem: getListItemById(this.props.people.personList, personId)
-        }
-    }
-
     getPaneTitle(data) {
-        if (data.personItem) {
-            let person = data.personItem.data;
+        if (this.props.personItem) {
+            const person = this.props.personItem.data;
             return person.first_name + ' ' + person.last_name;
         }
         else {
@@ -43,14 +41,14 @@ export default class EditPersonPane extends PaneBase {
     }
 
     renderPaneContent(data) {
-        if (data.personItem) {
-            if (data.personItem.isPending) {
+        if (this.props.personItem) {
+            if (this.props.personItem.isPending) {
                 return <LoadingIndicator/>;
             }
             else {
                 return [
                     <PersonForm key="form" ref="personForm"
-                        person={ data.personItem.data }
+                        person={ this.props.personItem.data }
                         onSubmit={ this.onSubmit.bind(this) }/>,
 
                     <Button key="deleteButton"

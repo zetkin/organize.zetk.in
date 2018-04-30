@@ -1,0 +1,19 @@
+.PCGroupMemberItem {
+    .PCGroupMemberItem-name {
+        position: absolute;
+        left: 70px;
+        top: 15px;
+        font-size: 20px;
+    }
+
+    .PCGroupMemberItem-role {
+        position: absolute;
+        left: 70px;
+        top: 40px;
+        font-size: 12px;
+
+        span {
+            color: lighten($c-text, 60);
+        }
+    }
+}

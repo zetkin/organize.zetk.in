@@ -6,6 +6,7 @@ import AddActivityPane from './AddActivityPane';
 import AddCallAssignmentPane from './AddCallAssignmentPane';
 import AddCampaignPane from './AddCampaignPane';
 import AddCanvassAssignmentPane from './AddCanvassAssignmentPane';
+import AddGroupPane from './AddGroupPane';
 import AddPersonPane from './AddPersonPane';
 import AddPersonTagPane from './AddPersonTagPane';
 import AddLocationPane from './AddLocationPane';
@@ -31,6 +32,7 @@ import EditCallAssignmentPane from './EditCallAssignmentPane';
 import EditCallerPane from './EditCallerPane';
 import EditCampaignPane from './EditCampaignPane';
 import EditCanvassAssignmentPane from './EditCanvassAssignmentPane';
+import EditGroupPane from './EditGroupPane';
 import EditLocationPane from './EditLocationPane';
 import EditLocationTagPane from './EditLocationTagPane';
 import EditPersonPane from './EditPersonPane';
@@ -41,6 +43,8 @@ import EditSurveyPane from './EditSurveyPane';
 import EditSurveyQuestionPane from './EditSurveyQuestionPane';
 import EditSurveyTextBlockPane from './EditSurveyTextBlockPane';
 import EditTextPane from './EditTextPane';
+import GroupPane from './GroupPane';
+import GroupMembersPane from './GroupMembersPane';
 import LocationPane from './LocationPane';
 import MergePeoplePane from './MergePeoplePane';
 import ImporterColumnPane from './ImporterColumnPane';
@@ -69,6 +73,7 @@ var _panes = {
     'addcallassignment': AddCallAssignmentPane,
     'addcampaign': AddCampaignPane,
     'addcanvassassignment': AddCanvassAssignmentPane,
+    'addgroup': AddGroupPane,
     'addlocation': AddLocationPane,
     'addlocationtag': AddLocationTagPane,
     'addperson': AddPersonPane,
@@ -94,6 +99,7 @@ var _panes = {
     'editcaller': EditCallerPane,
     'editcampaign': EditCampaignPane,
     'editcanvassassignment': EditCanvassAssignmentPane,
+    'editgroup': EditGroupPane,
     'editlocation': EditLocationPane,
     'editlocationtag': EditLocationTagPane,
     'editperson': EditPersonPane,
@@ -104,6 +110,8 @@ var _panes = {
     'editsurveyquestion': EditSurveyQuestionPane,
     'editsurveytextblock': EditSurveyTextBlockPane,
     'edittext': EditTextPane,
+    'group': GroupPane,
+    'groupmembers': GroupMembersPane,
     'importercolumn': ImporterColumnPane,
     'location': LocationPane,
     'mergepeople': MergePeoplePane,

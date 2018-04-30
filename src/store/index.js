@@ -9,12 +9,14 @@ import actions from './actions';
 import actionResponses from './actionResponses';
 import activities from './activities';
 import addresses from './addresses';
+import alerts from './alerts';
 import callAssignments from './callAssignments';
 import calls from './calls';
 import canvassAssignments from './canvassAssignments';
 import campaigns from './campaigns';
 import dashboard from './dashboard';
 import documents from './documents';
+import groups from './groups';
 import intl from './intl';
 import invites from './invites';
 import locations from './locations';
@@ -44,12 +46,14 @@ const appReducer = combineReducers({
     actionResponses,
     activities,
     addresses,
+    alerts,
     callAssignments,
     calls,
     canvassAssignments,
     campaigns,
     dashboard,
     documents,
+    groups,
     invites,
     intl,
     locations,

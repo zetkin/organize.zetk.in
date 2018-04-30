@@ -1,13 +1,13 @@
 breadcrumbs:
     formLabel: Inställningar
     goalLabel: Syfte
-    targetLabel: Målgrupp
     goals:
         custom: Ingen mall
         inform: Informera
         mobilize: Mobilisera till kampanj
         stayintouch: Hålla kontakten
         survey: Samla in enkät
+    targetLabel: Målgrupp
     targets:
         allTarget: Alla
         custom: Ingen mall
@@ -23,19 +23,19 @@ goal:
     instructions: |
         Steg 2 av 3. Välj syfte med ringuppdraget för att skapa urvalsregler
         automatiskt.
-    saveButton: |-
+    saveButton:
         inform: Skapa uppdrag för att informera
-        mobilize: Skapa mobiliseringsuppdrag
-        survey: Skapa uppdrag för att samla in enkätsvar
-        stayintouch: Skapa uppdrag för att hålla kontaktan
+        mobilize: Skapa uppdrag för att mobilisera
+        stayintouch: Skapa uppdrag för att hålla kontakten
+        survey: Skapa uppdrag för enkätinsamling
 target:
     customLink: Definiera urvalsregler manuellt senare
     instructions: |
         Steg 1 av 3. Välj ringuppdragets målgrupp.
-    saveButton: |-
+    saveButton:
         allTarget: Välj alla som målgrupp
-        tagTarget: Välj målgrupp utifrån etikett
         randomTarget: Välj slumpmässig målgrupp
+        tagTarget: Välj målgrupp utifrån etikett
 templates:
     allTarget:
         instructions: Målgruppen utgörs av alla personer i databasen.

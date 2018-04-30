@@ -8,6 +8,6 @@ item:
         auth: Kun indloggede
         open: Hvem som helst
     anonymous:
-        allow: Tillad anonyme svar
-        deny: Kun svar underskrevet med navn og e-mailadresse
+        allow: Tillad anonyme
+        deny: Kræv underskrift
     callersOnly: Kun for ringere

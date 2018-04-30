@@ -1,0 +1,13 @@
+.GroupList {
+    .ListHeader {
+        li {
+            &:nth-child(1) {
+                @include col(10, 12);
+            }
+
+            &:nth-child(2) {
+                @include col(2, 12);
+            }
+        }
+    }
+}

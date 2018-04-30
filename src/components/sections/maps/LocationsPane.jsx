@@ -7,7 +7,11 @@ import LocationList from '../../lists/LocationList';
 import { retrieveLocations } from '../../../actions/location';
 
 
-@connect(state => state)
+const mapStateToProps = (state) => ({
+    locationList: state.locations.locationList,
+});
+
+@connect(mapStateToProps)
 export default class LocationsPane extends RootPaneBase {
     componentDidMount() {
         super.componentDidMount();
@@ -17,8 +21,8 @@ export default class LocationsPane extends RootPaneBase {
 
     renderPaneContent() {
         let content = null;
-        let locationList = this.props.locations.locationList;
-        
+        const locationList = this.props.locationList;
+
         return (
             <div>
                 <LocationList locationList={ locationList }

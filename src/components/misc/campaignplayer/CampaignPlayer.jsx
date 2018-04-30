@@ -20,12 +20,13 @@ export default class CampaignPlayer extends React.Component {
     componentWillReceiveProps(nextProps) {
         const actions = nextProps.actions;
 
-        if (this.props.centerLat != nextProps.centerLat
-            || this.props.centerLng != nextProps.centerLng) {
+        if (this.props.actions != nextProps.actions && nextProps.actions) {
+            let bounds = new google.maps.LatLngBounds();
+            nextProps.actions.forEach(action => {
+                bounds.extend(action.location);
+            });
 
-            this.map.setCenter(new google.maps.LatLng(
-                nextProps.centerLat, nextProps.centerLng
-            ));
+            this.map.fitBounds(bounds);
         }
 
         if (actions.length) {
@@ -55,12 +56,8 @@ export default class CampaignPlayer extends React.Component {
     }
 
     componentDidMount() {
-        const centerLat = this.props.centerLat;
-        const centerLng = this.props.centerLng;
         const ctrDOMNode = ReactDOM.findDOMNode(this.refs.mapContainer);
         const mapOptions = {
-            center: { lat: centerLat, lng: centerLng },
-            zoom: 12,
             disableDefaultUI: true,
             zoomControl: true,
             zoomControlOptions: {
@@ -75,6 +72,13 @@ export default class CampaignPlayer extends React.Component {
             maxIntensity: 1.5,
             radius: 50
         });
+
+        let bounds = new google.maps.LatLngBounds();
+        this.props.actions.forEach(action => {
+            bounds.extend(action.location);
+        });
+
+        this.map.fitBounds(bounds);
     }
 
     componentWillUnmount() {
@@ -82,7 +86,9 @@ export default class CampaignPlayer extends React.Component {
     }
 
     render() {
-        const actions = this.props.actions;
+        let actions = this.props.actions.concat();
+        actions.sort((a0, a1) => new Date(a0.start_time) - new Date(a1.start_time));
+
         const startTime = actions.length?
             new Date(actions[0].start_time).getTime() : 0;
         const endTime = actions.length?

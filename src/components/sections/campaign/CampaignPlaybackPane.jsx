@@ -6,6 +6,7 @@ import CampaignPlayer from '../../misc/campaignplayer/CampaignPlayer';
 import ActionMiniCalendar from '../../misc/actioncal/ActionMiniCalendar';
 import { getLocationAverage } from '../../../utils/location';
 import { retrieveActions } from '../../../actions/action';
+import { retrieveCampaigns } from '../../../actions/campaign';
 import { retrieveLocations } from '../../../actions/location';
 import { retrieveActivities } from '../../../actions/activity';
 import { filteredActionList } from '../../../store/actions';
@@ -53,12 +54,11 @@ export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
 
             let locList = this.props.locations.locationList;
             let locations = locList.items.map(i => i.data);
-            let center = getLocationAverage(locList);
 
             return (
                 <CampaignPlayer key="player"
                     actions={ actions } locations={ locations }
-                    centerLat={ center.lat } centerLng={ center.lng }/>
+                    />
             );
         }
     }
