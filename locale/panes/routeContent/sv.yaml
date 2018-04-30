@@ -1,13 +1,13 @@
 add:
     h: Lägg till adresser
-    p: Välj en adress att lägga till, eller en hel gata för fler alternativ
+    p: 'Välj en adress att lägga till, eller en hel gata för fler alternativ'
 addresses:
+    h: Adresser i den här rutten
     item:
         deleteButton: Radera
-        households: >-
+        households: |-
             {count, plural,
                 =1 {Ett hushåll}
                 other {# hushåll}
             }
-    h: Adresser i den här rutten
-title: Rutt {id}
+title: 'Rutt {id}'

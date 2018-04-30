@@ -1,0 +1,8 @@
+add:
+    h: Lägg till medlem
+members:
+    h: Alla medlemmar
+    roles:
+        manager: Gruppansvarig
+        none: Medlem
+title: 'Redigera medlemmar i "{title}"'

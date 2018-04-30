@@ -1,6 +1,6 @@
 labels:
-    canvass: Canvass
     campaign: Campaign
+    canvass: Canvass
     dialog: Dialog
     maps: Maps
     people: People
@@ -15,14 +15,14 @@ menu:
         href: 'http://zetkin.org/en'
         text: Info
 subSections:
-    canvass:
-        assignments: Assignments
-        routes: Route map
-        visits: Visit log
     campaign:
         actions: Actions
         distribution: Distribution
         playback: Playback
+    canvass:
+        assignments: Assignments
+        routes: Route map
+        visits: Visit log
     dialog:
         assignments: Assignments
         calls: Call log
@@ -30,9 +30,9 @@ subSections:
         locations: Locations
         overview: Overview
     people:
+        groups: Groups
         import: Import
         invite: Invite
-        groups: Groups
         list: People
         manage: Manage
     settings:

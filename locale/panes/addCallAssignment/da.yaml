@@ -1,17 +1,17 @@
 breadcrumbs:
     formLabel: Indstilninger
     goalLabel: Målsætning
-    targetLabel: Målgruppe
     goals:
+        custom: Intet template
         inform: Informere
         mobilize: Mobilisere
         stayintouch: Hold kontakten
-        custom: Intet template
+    targetLabel: Målgruppe
     targets:
         allTarget: Ring alle
-        tagTarget: Ring alle med en bestemt etiket
-        randomTarget: Ring tilfældigt udvalgte
         custom: Intet template
+        randomTarget: Ring tilfældigt udvalgte
+        tagTarget: Ring alle med en bestemt etiket
 form:
     instructions: >-
         3. skridt ud af 3. Udfyld titel, beskrivelse og indstilninger for
@@ -31,8 +31,8 @@ target:
     instructions: 1. skridt ud af 3. Vælg målgruppe for rundringningen
     saveButton:
         allTarget: Vælg alle som målgruppe
-        tagTarget: Vælg målgruppe ud fra etiketter
         randomTarget: Tilfældig målgruppe
+        tagTarget: Vælg målgruppe ud fra etiketter
 templates:
     allTarget:
         instructions: Målgruppen er alle personer i databasen

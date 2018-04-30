@@ -1,8 +1,5 @@
-title: Call assignment targets
-pending:
-    h: In queue ({count}/{max})
 blocked:
-    h: Withdrawn from queue ({count}/{max})
+    h: 'Withdrawn from queue ({count}/{max})'
     reasons:
         allocated: Assigned to caller
         call_back_after: Call back later
@@ -10,4 +7,7 @@ blocked:
         no_number: No number
         organizer_action_needed: Awaiting organizer
 fulfilled:
-    h: Goal fulfilled ({count}/{max})
+    h: 'Goal fulfilled ({count}/{max})'
+pending:
+    h: 'In queue ({count}/{max})'
+title: Call assignment targets

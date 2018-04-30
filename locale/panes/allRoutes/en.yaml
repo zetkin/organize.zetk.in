@@ -23,17 +23,11 @@ routePanel:
         commit: Save routes
         discard: Discard routes
         info:
-            title: Generated draft routes
             text: The routes will be created when the draft is saved.
-        label: Draft {id}
-    intro:
-        h: Let Zetkin create the routes!
-        p: |
-            This is a wizard that creates routes for you automatically.
-            In the following step, you can enter your configurations.
-            The generated list is collected in a draft for you to edit or commit.
-        startButton: Start wizard
+            title: Generated draft routes
+        label: 'Draft {id}'
     form:
+        generateButton: Generate routes
         selection:
             all: All available addresses
             filter: Filtered (visible) addresses
@@ -43,22 +37,31 @@ routePanel:
             households:
                 h: Desired route size
                 label: households
-        generateButton: Generate routes
+    intro:
+        h: Let Zetkin create the routes!
+        p: >
+            This is a wizard that creates routes for you automatically.
+
+            In the following step, you can enter your configurations.
+
+            The generated list is collected in a draft for you to edit or
+            commit.
+        startButton: Start wizard
     progress:
         counting: '{count} routes created...'
     routeList:
-        label: Route {id}
         addresses: |
-                    {count, plural,
-                        =1 {1 address}
-                        other {# addresses}}
+            {count, plural,
+                =1 {1 address}
+                other {# addresses}}
         households: |
-                    {count, plural,
-                        =1 {# household}
-                        other {# households}}
+            {count, plural,
+                =1 {# household}
+                other {# households}}
+        label: 'Route {id}'
     tabs:
-        routes: Routes
         generator: Auto create
+        routes: Routes
 selectionPanel:
     addButton: Add to route
     clearButton: Clear selection
@@ -73,4 +76,4 @@ selectionPanel:
                 =1 {One household}
                 other {# households}
             }
-        size: Radius is roughly {radius, number} m
+        size: 'Radius is roughly {radius, number} m'

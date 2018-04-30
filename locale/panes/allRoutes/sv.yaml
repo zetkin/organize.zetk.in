@@ -23,18 +23,11 @@ routePanel:
         commit: Spara rutter
         discard: Kassera rutter
         info:
-            title: Utkast av genererade rutter
             text: Rutterna kommer att skapas när utkastet sparas.
-        label: Utkast {id}
-    intro:
-        h: Låt Zetkin generera rutterna!
-        p: |
-            Detta är en guide som automatiskt skapar rutter åt dig.
-            I nästa steg kan du göra dina inställningar.
-            Den genererade listan samlas i ett utkast som du kan redigera
-            eller spara.
-        startButton: Start wizard
+            title: Utkast av genererade rutter
+        label: 'Utkast {id}'
     form:
+        generateButton: Skapa rutter
         selection:
             all: Alla tillgängliga adresser
             filter: Filtrerade (synliga) adresser
@@ -44,22 +37,29 @@ routePanel:
             households:
                 h: Önskad ruttstorlek
                 label: hushåll
-        generateButton: Skapa rutter
+    intro:
+        h: Låt Zetkin generera rutterna!
+        p: |
+            Detta är en guide som automatiskt skapar rutter åt dig.
+            I nästa steg kan du göra dina inställningar.
+            Den genererade listan samlas i ett utkast som du kan redigera
+            eller spara.
+        startButton: Start wizard
     progress:
         counting: '{count} rutter skapade...'
     routeList:
-        label: Rutt {id}
         addresses: |
-                    {count, plural,
-                        =1 {1 adress}
-                        other {# adresser}}
+            {count, plural,
+                =1 {1 adress}
+                other {# adresser}}
         households: |
-                    {count, plural,
-                        =1 {# hushåll}
-                        other {# hushåll}}
+            {count, plural,
+                =1 {# hushåll}
+                other {# hushåll}}
+        label: 'Rutt {id}'
     tabs:
-        routes: Rutter
         generator: Generera
+        routes: Rutter
 selectionPanel:
     addButton: Lägg till i rutt
     clearButton: Nollställ urvalet
@@ -74,4 +74,4 @@ selectionPanel:
                 =1 {Ett hushåll}
                 other {# hushåll}
             }
-        size: Området är ca {radius, number} m stort
+        size: 'Området är ca {radius, number} m stort'

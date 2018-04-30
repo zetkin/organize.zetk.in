@@ -1,5 +1,5 @@
 callers:
-    addCaller: Træk og drop personer her eller {selectLink}
+    addCaller: 'Træk og drop personer her eller {selectLink}'
     h: Ringere
     selectLink: vælg ringere
 instructions:
