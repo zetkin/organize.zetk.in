@@ -1,0 +1,12 @@
+editLink: Redigera grupp
+managers:
+    h: Gruppansvariga
+members:
+    editLink: Redigera
+    h: Alla medlemmar
+pendingTitle: Laddar grupp...
+summary:
+    size: >-
+        {size, plural, =0 {Inga medlemmar än} =1 {En medlem} other {#
+        medlemmar}}
+    viewLink: Visa i aktivistportalen
