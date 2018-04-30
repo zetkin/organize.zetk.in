@@ -10,26 +10,26 @@ addrSummary:
     h: Address summary
 assignee:
     h: Assignee
+header:
+    page: 'p. { pageNumber }'
+    route: 'Route { route }'
 info:
-    radius: '{radius} m radius'
-    households: |-
-        {count, plural,
-            =1 {one household}
-            other {# households}}
     addresses: |-
         {count, plural,
             =1 {one address}
             other {# addresses}}
-header:
-    page: p. { pageNumber }
-    route: Route { route }
+    households: |-
+        {count, plural,
+            =1 {one household}
+            other {# households}}
+    radius: '{radius} m radius'
 routeDescription:
     h: 'Route information:'
-title: Print assigned route
 status:
     assigned: Handed out (date/time)
-    returned: Returned (date/time)
     completed: Done
+    returned: Returned (date/time)
+title: Print assigned route
 unassigned:
     email: E-mail address
     h: Assignee

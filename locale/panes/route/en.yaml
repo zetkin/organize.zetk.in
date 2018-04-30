@@ -12,6 +12,6 @@ info:
 owner:
     h: Owner
 tags:
-    h: Tags in route
     emptyLabel: No tagged addresses in route
-title: Route {id}
+    h: Tags in route
+title: 'Route {id}'

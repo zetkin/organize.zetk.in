@@ -1,13 +1,13 @@
 add:
     h: Add address to route
-    p: Choose an address to add, or an entire street for more options
+    p: 'Choose an address to add, or an entire street for more options'
 addresses:
+    h: Addresses in route
     item:
         deleteButton: Delete
-        households: >-
+        households: |-
             {count, plural,
                 =1 {One household}
                 other {# households}
             }
-    h: Addresses in route
-title: Route {id}
+title: 'Route {id}'

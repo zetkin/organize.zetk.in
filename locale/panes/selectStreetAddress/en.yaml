@@ -4,7 +4,7 @@ saveButton: |
         =1 {Select one address}
         other {Select # addresses}
     }
-title: Select addresses from {street}
+title: 'Select addresses from {street}'
 views:
     all: All
     even: Even numbers

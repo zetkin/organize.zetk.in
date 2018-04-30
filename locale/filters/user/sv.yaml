@@ -1,4 +1,4 @@
 isUser:
     label: Välj personer som…
-    yesOption: är anslutna till en Zetkin-användare
     noOption: inte är anslutna till en Zetkin-användare
+    yesOption: är anslutna till en Zetkin-användare

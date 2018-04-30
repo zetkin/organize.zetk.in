@@ -3,18 +3,18 @@ intro: |
     När du slår samman personobjekt raderas alla utom ett, men relaterad data
     behålls och associeras till det återstående.
 override:
+    fields:
+        city: Ort
+        co_address: C/O-adress
+        email: E-post
+        ext_id: Externt ID
+        first_name: Förnamn
+        last_name: Efternamn
+        phone: Telefon
+        street_address: Gatuadress
+        zip_code: Postnummer
     h: Objekt efter sammanslatningen
     instructions: |
         Det här fältet varierar mellan dubletterna. Välj vilket av varianterna
         som ska gälla efter sammanslatningen.
-    fields:
-        ext_id: Externt ID
-        first_name: Förnamn
-        last_name: Efternamn
-        email: E-post
-        phone: Telefon
-        co_address: C/O-adress
-        street_address: Gatuadress
-        zip_code: Postnummer
-        city: Ort
-title: Slå samman {count} objekt
+title: 'Slå samman {count} objekt'

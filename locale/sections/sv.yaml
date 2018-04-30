@@ -1,6 +1,6 @@
 labels:
-    canvass: Canvass
     campaign: Kampanj
+    canvass: Canvass
     dialog: Dialog
     maps: Kartor
     people: Människor
@@ -15,14 +15,14 @@ menu:
         href: 'http://zetkin.org/sv'
         text: Info
 subSections:
-    canvass:
-        assignments: Uppdrag
-        routes: Ruttkarta
-        visits: Besökslogg
     campaign:
         actions: Aktioner
         distribution: Spridning
         playback: Spela upp
+    canvass:
+        assignments: Uppdrag
+        routes: Ruttkarta
+        visits: Besökslogg
     dialog:
         assignments: Ringuppdrag
         calls: Samtalslogg
@@ -30,6 +30,7 @@ subSections:
         locations: Platser
         overview: Överblick
     people:
+        groups: Grupper
         import: Importera
         invite: Inbjudan
         list: Människor

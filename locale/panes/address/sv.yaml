@@ -4,5 +4,5 @@ info:
           =1 {Ett hushåll}
           other {# hushåll}}
 routes:
-    h: Relaterade rutter
     empty: Adressen förekommer inte i några rutter
+    h: Relaterade rutter

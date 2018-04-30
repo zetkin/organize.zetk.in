@@ -1,8 +1,5 @@
-title: Målgrupp för ringuppdrag
-pending:
-    h: I ringkön ({count}/{max})
 blocked:
-    h: Utanför kön ({count}/{max})
+    h: 'Utanför kön ({count}/{max})'
     reasons:
         allocated: Tilldelad ringare
         call_back_after: Ring tillbaka senare
@@ -10,4 +7,7 @@ blocked:
         no_number: Inget nummer
         organizer_action_needed: Avvaktar organisatör
 fulfilled:
-    h: Syfte uppnått ({count}/{max})
+    h: 'Syfte uppnått ({count}/{max})'
+pending:
+    h: 'I ringkön ({count}/{max})'
+title: Målgrupp för ringuppdrag

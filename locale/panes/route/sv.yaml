@@ -11,6 +11,6 @@ info:
 owner:
     h: Ansvarig
 tags:
-    h: Etiketter i rutten
     emptyLabel: Rutten innehåller inga adresser med etiketter
-title: Rutt {id}
+    h: Etiketter i rutten
+title: 'Rutt {id}'

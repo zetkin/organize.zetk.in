@@ -4,7 +4,7 @@ header:
     progress: Progress
     route: Route
 item:
-    unassigned: No one assigned
     stats:
         allocated: Households
         visited: Visited
+    unassigned: No one assigned
