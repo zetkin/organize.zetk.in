@@ -1,5 +1,8 @@
 error:
     rejected:
+        http400: |-
+            Det fanns fel i formuläret som du skickade.
+            Var god försök igen och kontrollera att du fyller i all information som behövs.
         http403: |-
             Du försökte göra något som inte är tillåtet. Var god kontrollera din
             behörighetsnivå eller tala med någon ansvarig.

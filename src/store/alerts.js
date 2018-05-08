@@ -11,8 +11,19 @@ let cleanOldMessages = messages => {
 
 export default function alerts(state = null, action) {
     if (action.type.indexOf('_REJECTED') > 0) {
-        // Only support 403 messages for now
-        if (action.payload.httpStatus == 403) {
+        // Only support 400 and 403 messages for now
+        if (action.payload.httpStatus == 400) {
+            return Object.assign({}, state, {
+                messages: cleanOldMessages(state.messages)
+                    .concat([{
+                        id: makeRandomString(),
+                        time: new Date(),
+                        type: 'error.rejected.http' + action.payload.httpStatus,
+                        action: action,
+                    }]),
+            });
+        }
+        else if (action.payload.httpStatus == 403) {
             return Object.assign({}, state, {
                 messages: cleanOldMessages(state.messages)
                     .concat([{
