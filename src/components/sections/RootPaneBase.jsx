@@ -55,11 +55,11 @@ export default class RootPaneBase extends React.Component {
 
         let filterDrawer = null;
         let filters = this.getPaneFilters(data, this.state.pendingFilters);
-        console.log(this.state.filters);
         var toolbar = this.getPaneTools(data);
+        
+        // Check if any filter is applied
         // Get filter values (Object.values not supported in older Node an IE)
         const filterValues = Object.keys(this.state.pendingFilters).map(key => this.state.pendingFilters[key]);
-        // Check if any filter is applied
         const isFiltered = filterValues.some(element => element);
 
         if (filters || toolbar) {
