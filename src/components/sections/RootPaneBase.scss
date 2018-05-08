@@ -93,6 +93,9 @@
         .RootPaneBase-filterButton {
             @include inline-button($icon:$fa-var-filter);
         }
+        .RootPaneBase-filtered.RootPaneBase-filtersHidden .RootPaneBase-filterButton {
+            @include inline-button($color: $c-brand-comp-light, $icon:$fa-var-filter);
+        }
 
         .RootPaneBase-filterDrawer {
             max-height: 0;
