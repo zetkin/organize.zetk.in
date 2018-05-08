@@ -1,5 +1,8 @@
 error:
     rejected:
+        http400: |-
+            The data you provided had errors in it. Please verify
+            your data and try again.
         http403: |-
             You attempted something you're not authorized to do. Please verify
             your access level or speak to a more senior official.
