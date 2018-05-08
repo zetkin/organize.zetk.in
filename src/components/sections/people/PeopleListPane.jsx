@@ -127,12 +127,9 @@ export default class PeopleListPane extends RootPaneBase {
         return tools;
     }
 
-    getPaneFilters(data) {
+    getPaneFilters(data, filters) {
         const formatMessage = this.props.intl.formatMessage;
-
-        let queryId = this.state.selectedQueryId;
         let queryList = this.props.queries.queryList;
-        let query = getListItemById(queryList, queryId);
 
         // Only include queries that have a title
         // TODO: Find some better way to filter out call assignment queries,
@@ -146,11 +143,11 @@ export default class PeopleListPane extends RootPaneBase {
             <div>
                 <Msg tagName="label" id="panes.peopleList.querySelect.header" />
                 <RelSelectInput key="querySelect" name="querySelect"
-                    value={ queryId } objects={ queries } showEditLink={ true }
+                    value={ filters.querySelect } objects={ queries } showEditLink={ true }
                     allowNull={ true } nullLabel={ querySelectNullLabel }
-                    onValueChange={ this.onQueryChange.bind(this) }
+                    onValueChange={ this.onFilterChange.bind(this) }
                     onCreate={ this.onQueryCreate.bind(this) }
-                    onEdit={ this.onQueryEdit.bind(this) }/>
+                    onEdit={ this.onQueryEdit.bind(this) }/>          
             </div>
         );
     }
@@ -197,14 +194,22 @@ export default class PeopleListPane extends RootPaneBase {
         this.openPane('addperson');
     }
 
-    onQueryChange(name, value) {
-        if (value) {
-            this.props.dispatch(retrieveQueryMatches(value));
-        }
-
+    onFilterChange(name, value) {
         this.setState({
-            selectedQueryId: value
+            pendingFilters: Object.assign({}, this.state.pendingFilters, {
+                querySelect: value,
+            }),
         });
+    }
+
+    onFiltersApply(filters) {
+        this.setState({
+            selectedQueryId: filters.querySelect
+        });
+
+        if (filters.querySelect) {
+            this.props.dispatch(retrieveQueryMatches(filters.querySelect));
+        }
     }
 
     onQueryCreate(title) {
