@@ -94,7 +94,9 @@
             @include inline-button($icon:$fa-var-filter);
         }
         &.RootPaneBase-filtered.RootPaneBase-filtersHidden .RootPaneBase-filterButton {
-            @include inline-button($color: $c-brand-comp-light, $icon:$fa-var-filter);
+            &::before {
+                color: $c-brand-comp-light;
+            }
         }
 
         .RootPaneBase-filterDrawer {
