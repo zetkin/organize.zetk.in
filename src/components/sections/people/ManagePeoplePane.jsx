@@ -146,7 +146,7 @@ export default class ManagePeoplePane extends RootPaneBase {
                         id="panes.managePeople.duplicates.empty.h"/>,
                     <Msg key="p" tagName="p"
                         id="panes.managePeople.duplicates.empty.p"/>,
-                    <Button className="ManagePeoplePane-resetButton"
+                    <Button key="button" className="ManagePeoplePane-resetButton"
                         labelMsg="panes.managePeople.duplicates.empty.resetButton"
                         onClick={ () => this.props.dispatch(clearDuplicates()) }
                         />
