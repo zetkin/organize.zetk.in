@@ -253,8 +253,14 @@ export default function viewState(state = null, action) {
     }
     else if (action.type == types.MERGE_PERSON_DUPLICATES + '_FULFILLED') {
         // Close the relevant pane
+        let openPanes = state.panes.filter(paneData => paneData.id != action.meta.paneId);
+        // Open the "master" person pane
         return Object.assign({}, state, {
-            panes: state.panes.filter(paneData => paneData.id != action.meta.paneId),
+            panes: openPanes.concat([{
+                id: '$' + makeRandomString(6),
+                type: 'person',
+                params: [action.payload.data.data.id]
+            }])
         });
     }
     else if (action.type == types.MOVE_ACTION_PARTICIPANT) {
