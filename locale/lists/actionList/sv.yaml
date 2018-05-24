@@ -4,12 +4,11 @@ header:
     location: Plats
     participants: Deltagare
     startTime: Tid
-
 oldActions:
+    changeFilter: Ändra filter
     notice: |-
             Det finns {count, plural,
               =1 {en tidigare aktion}
               other {# tidigare aktioner}} 
             i det aktuella tidsspannet.
     showOld: Visa även tidigare aktioner
-    changeFilter: Ändra filter
