@@ -52,7 +52,7 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
 
         // Use afterDate filter as startDate, or today if it's null
         let startDate = this.props.actions.filters.afterDate?
-        Date.create(this.props.actions.filters.afterDate) : new Date();
+            Date.create(this.props.actions.filters.afterDate) : new Date();
 
         // Default to no end date (which displays all actions) or, if there
         // are no actions, use 8 weeks in future. If there is a filter, use
