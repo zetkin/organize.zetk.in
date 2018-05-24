@@ -17,6 +17,7 @@ menu:
 subSections:
     campaign:
         actions: Aktioner
+        campaigns: Kampanjer
         distribution: Spridning
         playback: Spela upp
     canvass:
