@@ -4,3 +4,19 @@
         float: right;
     }
 }
+.allActionsPane-oldActions {
+    font-size: 1.25em;
+    text-align: center;
+    padding: 1em;
+    border: 1px solid $c-ui-dark;
+    border-radius: 0.5em;
+    max-width: 708px;margin-bottom: 1em;
+}
+.allActionsPane-oldActionsButtons {
+    margin-top: 0.5em;
+}
+.allActionsPane-oldActionsButton {
+    text-decoration: underline;
+    margin: 0 0.5em;
+    cursor: pointer;
+}
