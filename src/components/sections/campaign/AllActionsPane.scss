@@ -1,10 +1,10 @@
-.allActionsPane {
+.AllActionsPane {
     .allActionsPane-addButton {
         @include inline-button($icon: $fa-var-plus);
         float: right;
     }
 }
-.allActionsPane-oldActions {
+.AllActionsPane-oldActions {
     font-size: 1.25em;
     text-align: center;
     padding: 1em;
@@ -12,10 +12,10 @@
     border-radius: 0.5em;
     max-width: 708px;margin-bottom: 1em;
 }
-.allActionsPane-oldActionsButtons {
+.AllActionsPane-oldActionsButtons {
     margin-top: 0.5em;
 }
-.allActionsPane-oldActionsButton {
+.AllActionsPane-oldActionsButton {
     text-decoration: underline;
     margin: 0 0.5em;
     cursor: pointer;
