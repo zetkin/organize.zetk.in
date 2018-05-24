@@ -1,0 +1,12 @@
+.CampaignListItem::after {
+    float: right;
+}
+.CampaignListItem-published::after {
+    @include icon($fa-var-eye);
+}
+.CampaignListItem-draft::after {
+    @include icon($fa-var-eye-slash);
+}
+.CampaignListItem-archived::after {
+    @include icon($fa-var-archive);
+}

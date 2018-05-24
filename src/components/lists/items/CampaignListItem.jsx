@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 
 import { stringFromAddress } from '../../../utils/location';
 
@@ -17,9 +18,15 @@ export default class CampaignListItem extends React.Component {
 
     render() {
         let campaign = this.props.data;
+        const classes = cx(
+            'CampaignListItem',
+            {'CampaignListItem-published': campaign.published},
+            {'CampaignListItem-draft': !campaign.published},
+            {'CampaignListItem-archived': campaign.archived},
+        )
 
         return (
-            <div className="CampaignListItem"
+            <div className={classes}
                 onClick={ this.props.onItemClick }>
                 {campaign.title}
             </div>
