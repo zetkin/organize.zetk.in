@@ -173,6 +173,10 @@
                 background-image: url(/static/images/section-nav/campaign-actions.png);
             }
 
+            .Section-navItem-campaigns a:before {
+                background-image: url(/static/images/section-nav/campaign-campaigns.png);
+            }
+
             .Section-navItem-distribution a:before {
                 background-image: url(/static/images/section-nav/campaign-distribution.png);
             }

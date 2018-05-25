@@ -1,0 +1,5 @@
+addButton: Lägg till ny kampanj
+campaignState:
+    archived: Arkiverad
+    draft: Utkast
+    published: Publicerad

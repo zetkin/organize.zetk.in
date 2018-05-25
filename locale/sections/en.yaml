@@ -17,6 +17,7 @@ menu:
 subSections:
     campaign:
         actions: Actions
+        campaigns: Campaigns
         distribution: Distribution
         playback: Playback
     canvass:

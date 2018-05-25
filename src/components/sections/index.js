@@ -1,6 +1,7 @@
 import ActionDistributionPane from './campaign/ActionDistributionPane';
 import AllActionsPane from './campaign/AllActionsPane';
 import AllCallAssignmentsPane from './dialog/AllCallAssignmentsPane';
+import AllCampaignsPane from './campaign/AllCampaignsPane';
 import AllCanvassAssignmentsPane from './canvass/AllCanvassAssignmentsPane';
 import AllRoutesPane from './canvass/AllRoutesPane';
 import AllVisitsPane from './canvass/AllVisitsPane';
@@ -38,7 +39,9 @@ export const SECTIONS = {
             { path: 'distribution',
                 startPane: ActionDistributionPane },
             { path: 'playback',
-                startPane: CampaignPlaybackPane }
+                startPane: CampaignPlaybackPane },
+            { path: 'campaigns',
+                startPane: AllCampaignsPane }
         ],
     },
     dialog: {
