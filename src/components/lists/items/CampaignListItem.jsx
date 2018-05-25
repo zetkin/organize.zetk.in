@@ -11,12 +11,6 @@ export default class CampaignListItem extends React.Component {
         data: React.PropTypes.object
     }
 
-    onClick() {
-        console.log('this.onClick');
-        console.log(this.props.data);
-        this.props.onItemClick(this.props.data);
-    }
-
     render() {
         const campaign = this.props.data;
         const classes = cx(
