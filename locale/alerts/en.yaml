@@ -1,5 +1,8 @@
 error:
     rejected:
+        http400: |-
+            You submitted a form where some information was invalid.
+            Please try again and make sure to enter all the necessary information.
         http403: |-
             You attempted something you're not authorized to do. Please verify
             your access level or speak to a more senior official.

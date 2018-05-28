@@ -47,15 +47,22 @@ export default class RootPaneBase extends React.Component {
 
     render() {
         const data = this.getRenderData();
+        // Check if any filter is applied
+        // Get filter values (Object.values not supported in older Node an IE)
+        const filterValues = Object.keys(this.state.pendingFilters).map(key => this.state.pendingFilters[key]);
+        const isFiltered = filterValues.some(element => element);
 
         const classes = cx(componentClassNames(this), {
             'RootPaneBase-scrolled': this.state.scrolled,
             'RootPaneBase-filtersVisible': this.state.showFilters,
+            'RootPaneBase-filtersHidden': !this.state.showFilters,
+            'RootPaneBase-filtered': isFiltered,
         });
 
         let filterDrawer = null;
         let filters = this.getPaneFilters(data, this.state.pendingFilters);
         var toolbar = this.getPaneTools(data);
+        
 
         if (filters || toolbar) {
             let filterButton = null;
@@ -75,8 +82,11 @@ export default class RootPaneBase extends React.Component {
                     </div>
                 );
 
-                let filterButtonLabel = this.state.showFilters ?
-                    "panes.filterButtonHide" : "panes.filterButtonShow";
+                let filterButtonLabel = isFiltered ?
+                    "panes.filterButtonChange" : "panes.filterButtonShow";
+                if (this.state.showFilters) {
+                    filterButtonLabel = "panes.filterButtonHide";
+                }
 
                 filterButton = (
                     <Button key="filterButton"
