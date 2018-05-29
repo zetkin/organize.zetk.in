@@ -49,8 +49,13 @@ export default class RootPaneBase extends React.Component {
         const data = this.getRenderData();
         // Check if any filter is applied
         // Get filter values (Object.values not supported in older Node an IE)
-        const filterValues = Object.keys(this.state.pendingFilters).map(key => this.state.pendingFilters[key]);
-        const isFiltered = filterValues.some(element => element);
+        let isFiltered = false;
+        if (this.state.pendingFilters) {
+            const filterValues = Object.keys(this.state.pendingFilters)
+                .map(key => this.state.pendingFilters[key]);
+
+            isFiltered = filterValues.some(element => element);
+        }
 
         const classes = cx(componentClassNames(this), {
             'RootPaneBase-scrolled': this.state.scrolled,

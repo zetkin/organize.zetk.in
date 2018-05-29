@@ -5,6 +5,8 @@ import Button from "../../misc/Button";
 import CampaignList from "../../lists/CampaignList";
 import CampaignListItem from "../../lists/items/CampaignListItem";
 import RootPaneBase from '../RootPaneBase';
+import { retrieveCampaigns } from '../../../actions/campaign';
+
 
 const mapStateToProps = state => ({
     campaigns: state.campaigns
@@ -14,6 +16,10 @@ const mapStateToProps = state => ({
 export default class AllCampaignsPane extends RootPaneBase {
     constructor() {
         super();
+    }
+
+    componentDidMount() {
+        this.props.dispatch(retrieveCampaigns());
     }
 
     getPaneTools(data) {
