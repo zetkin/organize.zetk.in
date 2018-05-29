@@ -78,8 +78,10 @@ export default class ActionCalendar extends React.Component {
 
             if (d.getDay() == 0) {
                 const week = d.getWeekNumber();
+                const key = week + '-' + d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+
                 weeks.push(
-                    <ActionWeek key={ week } week={ week }>
+                    <ActionWeek key={ key } week={ week }>
                         { days }
                     </ActionWeek>
                 );
