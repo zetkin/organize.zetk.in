@@ -91,7 +91,7 @@ export const configureStore = (initialState, z) => {
         urlMiddleware,
         promiseMiddleware(),
         thunkWithZ,
-        loginRedirect(process.env.ZETKIN_APP_ID, process.env.ZETKIN_DOMAIN),
+        loginRedirect(),
     ];
 
     let devTools = f => f;
