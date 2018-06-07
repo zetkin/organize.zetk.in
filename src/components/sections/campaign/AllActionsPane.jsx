@@ -92,7 +92,7 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
                 }
             });
 
-            if (!showOldActions && futureActions.length < allActions.length) {
+            if (!showOldActions && futureActions.length && futureActions.length < allActions.length) {
                 actions = [...futureActions];
                 oldActionNotice = <div key="oldActions" className="AllActionsPane-oldActions">
                     <Msg id="lists.actionList.oldActions.notice"
