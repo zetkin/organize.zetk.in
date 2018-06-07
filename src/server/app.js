@@ -189,30 +189,24 @@ function renderReactPage(Component, req, res) {
             initialState: req.store.getState(),
             path: req.path,
         };
-        
+
         var html = ReactDOMServer.renderToString(
             React.createElement(IntlReduxProvider, { store: req.store },
-            PageFactory(props)));
-            
+                PageFactory(props)));
+
         res.send(html);
     }
     catch (err) {
         if (SENTRY_DSN) {
             Raven.captureException(err);
         }
-        console.log(err)
         var PageFactory = React.createFactory(ServerErrorPage);
-        var props = {
-            initialState: req.store.getState(),
-            path: req.path,
-        };
-        
         var html = ReactDOMServer.renderToString(
             React.createElement(IntlReduxProvider, { store: req.store },
-            PageFactory(props)));
-            
+                PageFactory()));
+
         res.send(html);
 
-        throw err; // TODO: Better error handling
+        throw err;
     }
 }
