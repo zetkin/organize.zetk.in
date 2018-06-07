@@ -18,6 +18,7 @@ import { loadLocaleHandler } from './locale';
 import App from '../components/App';
 import ActivistPage from '../components/fullpages/ActivistPage';
 import IntlReduxProvider from '../components/IntlReduxProvider';
+import ServerErrorPage from "../components/ServerErrorPage";
 import { setPanesFromUrlPath } from '../actions/view';
 import { setActiveOrg } from '../actions/user';
 
@@ -188,17 +189,29 @@ function renderReactPage(Component, req, res) {
             initialState: req.store.getState(),
             path: req.path,
         };
-
+        
         var html = ReactDOMServer.renderToString(
             React.createElement(IntlReduxProvider, { store: req.store },
-                PageFactory(props)));
-
+            PageFactory(props)));
+            
         res.send(html);
     }
     catch (err) {
         if (SENTRY_DSN) {
             Raven.captureException(err);
         }
+        console.log(err)
+        var PageFactory = React.createFactory(ServerErrorPage);
+        var props = {
+            initialState: req.store.getState(),
+            path: req.path,
+        };
+        
+        var html = ReactDOMServer.renderToString(
+            React.createElement(IntlReduxProvider, { store: req.store },
+            PageFactory(props)));
+            
+        res.send(html);
 
         throw err; // TODO: Better error handling
     }

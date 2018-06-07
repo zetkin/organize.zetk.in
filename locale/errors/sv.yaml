@@ -1,0 +1,6 @@
+server:
+    description: |-
+        Ett fel inträffade på vår server. Felet har raporterats och kommer åtgärdas
+        så fort som möjligt
+    link: Gå till startsidan
+    title: Serverfel

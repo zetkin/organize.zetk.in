@@ -1,0 +1,33 @@
+.ServerErrorPage {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    text-align: center;
+}
+.ServerErrorPage-topBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6.8em;
+    z-index: 1000;
+    padding: 1.8em;
+    background: radial-gradient(
+        circle at 50% 50%,
+        $c-brand-main-orange,
+        $c-brand-main-pink
+    );
+    .Logo {
+        width: 5em;
+    }
+}
+.ServerErrorPage-description {
+    font-size: 16px;
+    max-width: 25em;
+    margin-bottom: 2em;
+}
+.ServerErrorPage-link {
+    @include button;
+}
