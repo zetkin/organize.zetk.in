@@ -1,0 +1,6 @@
+server:
+    description: |-
+        Something went wrong on our side. The error has been reported and will
+        be fixed as soon as possible.
+    link: Go to start page
+    title: Server Error

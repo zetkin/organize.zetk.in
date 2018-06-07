@@ -18,6 +18,7 @@ import { loadLocaleHandler } from './locale';
 import App from '../components/App';
 import ActivistPage from '../components/fullpages/ActivistPage';
 import IntlReduxProvider from '../components/IntlReduxProvider';
+import ServerErrorPage from "../components/ServerErrorPage";
 import { setPanesFromUrlPath } from '../actions/view';
 import { setActiveOrg } from '../actions/user';
 
@@ -197,7 +198,13 @@ function renderReactPage(Component, req, res) {
         if (SENTRY_DSN) {
             Raven.captureException(err);
         }
+        var PageFactory = React.createFactory(ServerErrorPage);
+        var html = ReactDOMServer.renderToString(
+            React.createElement(IntlReduxProvider, { store: req.store },
+                PageFactory()));
 
-        throw err; // TODO: Better error handling
+        res.send(html);
+
+        throw err;
     }
 }
