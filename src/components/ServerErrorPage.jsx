@@ -23,9 +23,15 @@ export default class ServerErrorPage extends React.Component {
                         <Logo/>
                     </div>
                     <div className="ServerErrorPage-content">
-                        <h1 className="ServerErrorPage-title"><Msg id="errors.server.title" /></h1>
-                        <p className="ServerErrorPage-description"><Msg id="errors.server.description" /></p>
-                        <a href="/" className="ServerErrorPage-link" ><Msg id="errors.server.link" /></a>
+                        <h1 className="ServerErrorPage-title">
+                            <Msg id="errors.server.title" />
+                        </h1>
+                        <p className="ServerErrorPage-description">
+                            <Msg id="errors.server.description" />
+                        </p>
+                        <a href="/" className="ServerErrorPage-link" >
+                            <Msg id="errors.server.link" />
+                        </a>
                     </div>
                 </div>
             </body>
