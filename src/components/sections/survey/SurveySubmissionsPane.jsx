@@ -49,8 +49,16 @@ export default class SurveySubmissionsPane extends RootPaneBase {
             <SurveySubmissionList
                 submissionList={ this.props.submissionList }
                 onItemClick={ this.onItemClick.bind(this) }
+                enablePagination={ true }
+                onLoadPage={ this.onLoadPage.bind(this) }
                 />
         );
+    }
+
+    onLoadPage(page) {
+        const {filters} = this.state;
+        const survey = filters.survey ? filters.survey : null;
+        this.props.dispatch(retrieveSurveySubmissions(survey, page));
     }
 
     onItemClick(item, ev) {
