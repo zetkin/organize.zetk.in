@@ -12,7 +12,7 @@ export default class Avatar extends React.Component {
     render() {
         const person = this.props.person;
         const avatarDomain = '//api.' + process.env.ZETKIN_DOMAIN;
-        const src = avatarDomain + '/orgs/'
+        const src = avatarDomain + '/v1/orgs/'
             + this.props.orgId + '/people/' + person.id + '/avatar';
 
         const alt = (person.first_name && person.last_name)?
