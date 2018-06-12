@@ -41,7 +41,8 @@ if (SENTRY_DSN) {
 
 
 const authOpts = {
-    ssl: !!process.env.ZETKIN_USE_TLS,
+    ssl: (process.env.ZETKIN_USE_TLS == '1')
+        && (process.env.NODE_ENV == 'production'),
     zetkinDomain: process.env.ZETKIN_DOMAIN,
     app: {
         id: process.env.ZETKIN_APP_ID,
