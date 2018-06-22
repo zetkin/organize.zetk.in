@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import express from 'express';
 import expressWs from 'express-ws';
+import helmet from 'helmet';
 import http from 'http';
 import url from 'url';
 import path from 'path';
@@ -41,6 +42,7 @@ if (SENTRY_DSN) {
 
 
 const authOpts = {
+    secret: process.env.TOKEN_SECRET,
     minAuthLevel: 2,
     ssl: (process.env.ZETKIN_USE_TLS == '1')
         && (process.env.NODE_ENV == 'production'),
@@ -81,6 +83,9 @@ export default function initApp(messages) {
         { fallthrough: false }));
 
     app.use(cookieParser());
+    app.use(helmet({
+        hsts: authOpts.ssl,
+    }));
 
     app.get('/logged-out', (req, res) => {
         res.redirect('//www.' + process.env.ZETKIN_DOMAIN);
