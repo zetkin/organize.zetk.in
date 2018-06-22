@@ -30,7 +30,7 @@
     "eventemitter3": "^0.1.6",
     "express": "^4.12.3",
     "express-ws": "^0.2.6",
-    "express-zetkin-auth": "~1.1.3",
+    "express-zetkin-auth": "~1.2.1",
     "flat": "^2.0.1",
     "fuse.js": "^3.0.0",
     "geodist": "^0.2.1",
@@ -73,7 +73,7 @@
     "worker-loader": "^0.8.1",
     "ws": "^0.7.2",
     "xlsx": "^0.8.0",
-    "zetkin": "~1.1.0"
+    "zetkin": "~1.2.0"
   },
   "devDependencies": {
     "concurrently": "^3.1.0",

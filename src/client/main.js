@@ -35,9 +35,9 @@ window.onload = function() {
         ...daLocaleData,
     ]);
 
-    let token = cookie.get('apiToken');
+    let token = cookie.get('apiAccessToken');
     if (token) {
-        Z.setToken(token);
+        Z.setAccessToken(token);
     }
 
     let stateElem = document.getElementById('App-initialState');
