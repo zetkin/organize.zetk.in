@@ -1,5 +1,7 @@
 import express from 'express';
 
+import makeRandomString from '../../utils/makeRandomString';
+
 const dupApi = express();
 
 // Calc similarity, scoring it above 10 for similar, below 10 for different.
@@ -42,6 +44,7 @@ dupApi.get('/:orgId/people', (req, res, next) => {
 
             while (master = people.pop()) {
                 let duplicate = {
+                    id: '$' + makeRandomString(6),
                     objects: [ master ],
                 };
 
