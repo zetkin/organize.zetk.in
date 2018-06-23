@@ -212,7 +212,5 @@ function renderReactPage(Component, req, res) {
                 PageFactory()));
 
         res.send(html);
-
-        throw err;
     }
 }
