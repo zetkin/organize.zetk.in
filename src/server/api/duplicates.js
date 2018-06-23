@@ -50,7 +50,7 @@ dupApi.get('/:orgId/people', (req, res, next) => {
                     let other = people[idx];
                     let score = calcSimilarity(master, other);
 
-                    if (score >= 10) {
+                    if (score > 10) {
                         duplicate.objects.push(other);
                         people.splice(idx, 1);
                     }
