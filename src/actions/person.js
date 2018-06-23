@@ -88,8 +88,9 @@ export function clearDuplicates() {
     };
 }
 
-export function mergeDuplicates(objects, override, paneId) {
+export function mergeDuplicates(dupData, override, paneId) {
     return ({ dispatch, getState, z }) => {
+        let { id, objects } = dupData;
         let orgId = getState().org.activeId;
         let data = {
             type: 'person',
@@ -98,7 +99,7 @@ export function mergeDuplicates(objects, override, paneId) {
 
         dispatch({
             type: types.MERGE_PERSON_DUPLICATES,
-            meta: { objects, paneId },
+            meta: { id, objects, paneId },
             payload: {
                 promise: z.resource('orgs', orgId, 'merges').post(data),
             },
