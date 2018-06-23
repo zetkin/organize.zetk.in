@@ -164,7 +164,7 @@ export default function people(state = null, action) {
 
         case types.MERGE_PERSON_DUPLICATES + '_FULFILLED':
             return Object.assign({}, state, {
-                duplicateList: null,
+                duplicateList: removeListItem(state.duplicateList, action.meta.id),
             });
 
         default:

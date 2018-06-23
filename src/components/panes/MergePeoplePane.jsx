@@ -177,9 +177,12 @@ export default class MergePeoplePane extends PaneBase {
             return 0;
         });
 
-        objects = objects.map(o => o.id);
+        let data = {
+            id: this.props.duplicateItem.data.id,
+            objects: objects.map(o => o.id),
+        };
 
-        this.props.dispatch(mergeDuplicates(objects, override, this.props.paneData.id));
+        this.props.dispatch(mergeDuplicates(data, override, this.props.paneData.id));
     }
 
     onOverrideChange(field, ev) {
