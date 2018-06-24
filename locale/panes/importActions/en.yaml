@@ -4,6 +4,16 @@ action:
         dateTime: Date & time
         location: Location
         info: Activists & info
+    linking:
+        create: Create new
+        options: Existing
+        originalText: Was "{title}"
+    participantCount: |-
+        {count, plural,
+            =0 {No activists}
+            =1 {One activist}
+            other {# activists}
+        } required
 dropZone:
     columns:
         activity: Name of activity

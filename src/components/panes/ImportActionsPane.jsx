@@ -9,9 +9,13 @@ import PaneBase from './PaneBase';
 import {
     parseActionImportFile,
 } from '../../actions/actionImport';
+import { retrieveActivities } from '../../actions/activity';
+import { retrieveLocations } from '../../actions/location';
 
 
 const mapStateToProps = state => ({
+    activityList: state.activities.activityList,
+    locationList: state.locations.locationList,
     tableSet: state.actionImport.tableSet,
 });
 
@@ -23,11 +27,18 @@ export default class ImportActionsPane extends PaneBase {
 
         this.state = {
             isDragging: false,
+            mappings: {
+                location: {},
+                activity: {},
+            },
         };
     }
 
     componentDidMount() {
         super.componentDidMount();
+
+        this.props.dispatch(retrieveActivities());
+        this.props.dispatch(retrieveLocations());
     }
 
     getPaneTitle(data) {
@@ -36,7 +47,9 @@ export default class ImportActionsPane extends PaneBase {
 
     renderPaneContent(data) {
         if (this.props.tableSet) {
-            // TODO Handle multiple sheets
+            // TODO: Handle multiple sheets
+            // TODO: Handle when dependencies haven't loaded
+            // TODO: Handle campaigns
             let table = this.props.tableSet.tableList.items[0].data;
             return this.renderActionsFromTable(table);
         }
@@ -88,37 +101,53 @@ export default class ImportActionsPane extends PaneBase {
 
             let dateString = data[0];
             let timeString = data[1] + '-' + data[2];
-            let locationString = data[3];
-            let activityString = data[4];
+            let locationString = data[3].toString().trim().toLowerCase();
+            let activityString = data[4].toString().trim().toLowerCase();
             let participantsString = data[5];
             let infoString = data[6];
 
             return (
                 <li key={ index } className="ImportActionsPane-actionItem">
-                    <ul className="ImportActionsPane-actionItemData">
-                        <li>
-                            <Msg tagName="label"
-                                id="panes.importActions.action.labels.dateTime"/>
-                            <span>{ dateString }</span>
-                            <span>{ timeString }</span>
-                        </li>
-                        <li>
-                            <Msg tagName="label"
-                                id="panes.importActions.action.labels.location"/>
-                            <span>{ locationString }</span>
-                        </li>
-                        <li>
-                            <Msg tagName="label"
-                                id="panes.importActions.action.labels.activity"/>
-                            <span>{ activityString }</span>
-                        </li>
-                        <li>
-                            <Msg tagName="label"
-                                id="panes.importActions.action.labels.info"/>
-                            <span>{ participantsString }</span>
-                            <span>{ infoString }</span>
-                        </li>
-                    </ul>
+                    <div className="ImportActionsPane-actionItemMeta">
+                    </div>
+                    <div className="ImportActionsPane-actionItemDate">
+                        <Msg tagName="h4"
+                            id="panes.importActions.action.labels.dateTime"/>
+                        <span>{ dateString }</span>
+                        <span>{ timeString }</span>
+                    </div>
+                    <div className="ImportActionsPane-actionItemLocation">
+                        <Msg tagName="h4"
+                            id="panes.importActions.action.labels.location"/>
+                        <LinkingWidget
+                            list={ this.props.locationList }
+                            mappings={ this.state.mappings.location }
+                            originalText={ locationString }
+                            onLinkClick={ id => this.openPane('location', id) }
+                            onMapValue={ this.onMapValue.bind(this, 'location') }
+                            onCreate={ this.onCreate.bind(this, 'location') }
+                            />
+                    </div>
+                    <div className="ImportActionsPane-actionItemActivity">
+                        <Msg tagName="h4"
+                            id="panes.importActions.action.labels.activity"/>
+                        <LinkingWidget
+                            list={ this.props.activityList }
+                            mappings={ this.state.mappings.activity }
+                            originalText={ activityString }
+                            onLinkClick={ id => this.openPane('editactivity', id) }
+                            onMapValue={ this.onMapValue.bind(this, 'activity') }
+                            onCreate={ this.onCreate.bind(this, 'activity') }
+                            />
+                    </div>
+                    <div className="ImportActionsPane-actionItemInfo">
+                        <Msg tagName="h4"
+                            id="panes.importActions.action.labels.info"/>
+                        <Msg id="panes.importActions.action.participantCount"
+                            values={{ count: participantsString }}
+                            />
+                        <span>{ infoString }</span>
+                    </div>
                 </li>
             );
         });
@@ -163,5 +192,108 @@ export default class ImportActionsPane extends PaneBase {
 
         let file = files[0];
         this.props.dispatch(parseActionImportFile(file));
+    }
+
+    onCreate(type) {
+        if (type == 'activity') {
+            this.openPane('addactivity');
+        }
+        else if (type == 'location') {
+            this.openPane('addlocation');
+        }
+    }
+
+    onMapValue(type, value, id) {
+        this.setState({
+            mappings: Object.assign({}, this.state.mappings, {
+                [type]: Object.assign({}, this.state.mappings[type], {
+                    [value]: id,
+                }),
+            }),
+        });
+    }
+}
+
+@injectIntl
+class LinkingWidget extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            selected: this.getSelectedFromProps(props),
+        };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            selected: this.getSelectedFromProps(nextProps),
+        });
+    }
+
+    render() {
+        const list = this.props.list;
+
+        let title = this.props.originalText.trim().toLowerCase();
+        let item = list.items.find(i => i.data.title.toLowerCase() == title);
+
+        if (item) {
+            return (
+                <span className="linked"
+                    onClick={ this.props.onLinkClick.bind(this, item.data.id) }>
+                    <a>{ item.data.title }</a>
+                </span>
+            );
+        }
+        else {
+            let options = list.items.map(item => (
+                <option key={ item.data.id } value={ item.data.id }>
+                    { item.data.title }
+                </option>
+            ));
+
+            const createLabel = this.props.intl.formatMessage(
+                { id: 'panes.importActions.action.linking.create' });
+            const groupLabel = this.props.intl.formatMessage(
+                { id: 'panes.importActions.action.linking.options' });
+
+            return (
+                <div>
+                    <Msg tagName="small" key="label"
+                        id="panes.importActions.action.linking.originalText"
+                        values={{ title }}
+                        />
+                    <select value={ this.state.selected }
+                        onChange={ this.onSelectChange.bind(this) }>
+                        <option value="_"></option>
+                        <option value="+">{ createLabel }</option>
+                        <optgroup label={ groupLabel }>
+                            { options }
+                        </optgroup>
+                    </select>
+                </div>
+            );
+        }
+    }
+
+    getSelectedFromProps(props) {
+        let title = props.originalText.trim().toLowerCase();
+        return props.mappings[title] || '_';
+    }
+
+    onSelectChange(ev) {
+        if (ev.target.value == '+') {
+            this.setState({
+                selected: '_',
+            });
+
+            this.props.onCreate();
+        }
+        else if (ev.target.value != '_') {
+            this.setState({
+                selected: ev.target.value,
+            });
+
+            this.props.onMapValue(this.props.originalText, ev.target.value);
+        }
     }
 }

@@ -1,5 +1,5 @@
 .PaneBase.ImportActionsPane {
-    min-width: 700px;
+    min-width: 760px;
 
     .ImportActionsPane-dropZone {
         background-color: darken($c-ui-bg,5);
@@ -52,33 +52,80 @@
 
     .ImportActionsPane-actionItem {
         @include card();
+        display: flex;
         margin: 1em 0;
     }
 
-    .ImportActionsPane-actionItemData {
-        li {
-            display: inline-block;
+    .ImportActionsPane-actionItemMeta,
+    .ImportActionsPane-actionItemDate,
+    .ImportActionsPane-actionItemLocation,
+    .ImportActionsPane-actionItemActivity,
+    .ImportActionsPane-actionItemInfo {
+        font-size: 1.2em;
+        padding: 0.8em 0.7em;
 
-            &:nth-child(1) {
-                width: 20%;
-            }
+        h4 {
+            display: block;
+            font-weight: bold;
+            font-family: franklin-gothic-urw, sans-serif;
+            font-size: inherit;
+            margin: 0 0 0.3em;
+        }
 
-            &:nth-child(2) {
-                width: 20%;
-            }
+        span {
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 0.2em 0;
+            color: $c-ui-darker;
+            white-space: nowrap;
 
-            &:nth-child(3) {
-                width: 20%;
-            }
+            &.linked {
+                cursor: pointer;
 
-            &:nth-child(4) {
-                width: 20%;
-            }
-
-            label {
-                display: block;
-                font-weight: bold;
+                &:after {
+                    @include icon($fa-var-link);
+                    font-size: 0.8em;
+                }
             }
         }
+
+        small {
+            display: block;
+            font-size: 0.8em;
+            margin-top: 0.6em;
+            color: $c-ui-dark;
+            font-style: italic;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        select {
+            margin: 0.4em 0 0;
+            padding: 0em;
+            font-size: inherit;
+        }
+    }
+
+    .ImportActionsPane-actionItemMeta {
+        width: 5%;
+        background-color: $c-ui-bg;
+    }
+
+    .ImportActionsPane-actionItemDate {
+        width: 17%;
+    }
+
+    .ImportActionsPane-actionItemLocation {
+        width: 26%;
+    }
+
+    .ImportActionsPane-actionItemActivity {
+        width: 26%;
+    }
+
+    .ImportActionsPane-actionItemInfo {
+        width: 26%;
     }
 }
