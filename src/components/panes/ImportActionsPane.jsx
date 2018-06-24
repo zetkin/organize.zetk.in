@@ -101,13 +101,17 @@ export default class ImportActionsPane extends PaneBase {
 
             let dateString = data[0];
             let timeString = data[1] + '-' + data[2];
-            let locationString = data[3].toString().trim().toLowerCase();
-            let activityString = data[4].toString().trim().toLowerCase();
+            let locationString = data[3].toString();
+            let activityString = data[4].toString();
             let participantsString = data[5];
             let infoString = data[6];
 
+            const classes = cx('ImportActionsPane-actionItem', {
+                valid: this.actionIsLinked(row.values),
+            });
+
             return (
-                <li key={ index } className="ImportActionsPane-actionItem">
+                <li key={ index } className={ classes }>
                     <div className="ImportActionsPane-actionItemMeta">
                     </div>
                     <div className="ImportActionsPane-actionItemDate">
@@ -167,6 +171,20 @@ export default class ImportActionsPane extends PaneBase {
         );
     }
 
+    actionIsLinked(row) {
+        const locationLinked = (
+            getItemByTitle(this.props.locationList, row[3])
+            || getSelectedFromMappings(this.state.mappings.location, row[3])
+        );
+
+        const activityLinked = (
+            getItemByTitle(this.props.activityList, row[4])
+            || getSelectedFromMappings(this.state.mappings.activity, row[4])
+        );
+
+        return !!(locationLinked && activityLinked);
+    }
+
     onSubmit(ev) {
         ev.preventDefault();
     }
@@ -220,21 +238,22 @@ class LinkingWidget extends React.Component {
         super(props);
 
         this.state = {
-            selected: this.getSelectedFromProps(props),
+            selected: getSelectedFromMappings(
+                props.mappings, props.originalText) || '_',
         };
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            selected: this.getSelectedFromProps(nextProps),
+            selected: getSelectedFromMappings(
+                nextProps.mappings, nextProps.originalText) || '_',
         });
     }
 
     render() {
         const list = this.props.list;
 
-        let title = this.props.originalText.trim().toLowerCase();
-        let item = list.items.find(i => i.data.title.toLowerCase() == title);
+        let item = getItemByTitle(list, this.props.originalText);
 
         if (item) {
             return (
@@ -245,12 +264,13 @@ class LinkingWidget extends React.Component {
             );
         }
         else {
-            let options = list.items.map(item => (
+            const options = list.items.map(item => (
                 <option key={ item.data.id } value={ item.data.id }>
                     { item.data.title }
                 </option>
             ));
 
+            const title = this.props.originalText;
             const createLabel = this.props.intl.formatMessage(
                 { id: 'panes.importActions.action.linking.create' });
             const groupLabel = this.props.intl.formatMessage(
@@ -275,11 +295,6 @@ class LinkingWidget extends React.Component {
         }
     }
 
-    getSelectedFromProps(props) {
-        let title = props.originalText.trim().toLowerCase();
-        return props.mappings[title] || '_';
-    }
-
     onSelectChange(ev) {
         if (ev.target.value == '+') {
             this.setState({
@@ -296,4 +311,18 @@ class LinkingWidget extends React.Component {
             this.props.onMapValue(this.props.originalText, ev.target.value);
         }
     }
+}
+
+function cleanTitle(originalTitle) {
+   return originalTitle.trim().toLowerCase();
+}
+
+function getItemByTitle(list, originalTitle) {
+    let title = cleanTitle(originalTitle);
+    return list.items.find(i => i.data.title.toLowerCase() == title);
+}
+
+function getSelectedFromMappings(mappings, originalTitle) {
+    let title = originalTitle;
+    return mappings[title] || null;
 }

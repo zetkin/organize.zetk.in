@@ -54,9 +54,43 @@
         @include card();
         display: flex;
         margin: 1em 0;
+
+        &.valid {
+            .ImportActionsPane-actionItemMeta {
+                &:after {
+                    @include fa-icon;
+                    content: $fa-var-check-circle;
+                    color: darken($c-brand-success, 20);
+                }
+            }
+        }
+
+        &:hover {
+            background-color: darken(white, 2);
+            .ImportActionsPane-actionItemMeta {
+                background-color: darken($c-ui-bg, 2);
+            }
+        }
     }
 
-    .ImportActionsPane-actionItemMeta,
+    .ImportActionsPane-actionItemMeta {
+        padding: 0.8em 0;
+        text-align: center;
+        position: relative;
+        font-size: 1.4em;
+
+        &:after {
+            @include fa-icon;
+            content: $fa-var-warning;
+            display: block;
+            color: $c-ui-warning;
+            position: absolute;
+            bottom: 0.7em;
+            left: 0;
+            right: 0;
+        }
+    }
+
     .ImportActionsPane-actionItemDate,
     .ImportActionsPane-actionItemLocation,
     .ImportActionsPane-actionItemActivity,
