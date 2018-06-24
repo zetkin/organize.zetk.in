@@ -41,6 +41,52 @@ export function setActionImportMapping(type, text, id) {
     };
 }
 
+export function executeActionImport(campaignId) {
+    return ({ dispatch, getState, z }) => {
+        const orgId = getState().org.activeId;
+        const dataRows = getState().actionImport.dataRows;
+
+        dataRows
+            .filter(row => row.selected)
+            .filter(row => row.output.locationLink && row.output.activityLink)
+            .forEach(row => {
+                const out = row.output;
+
+                const startDateTime = new Date(out.date)
+                    .setUTC(true)
+                    .addHours(out.startTime[0])
+                    .addMinutes(out.startTime[1]);
+
+                const endDateTime = new Date(out.date)
+                    .setUTC(true)
+                    .addHours(out.endTime[0])
+                    .addMinutes(out.endTime[1]);
+
+                const data = {
+                    start_time: startDateTime.toISOString(),
+                    end_time: endDateTime.toISOString(),
+                    location_id: out.locationLink,
+                    activity_id: out.activityLink,
+                    num_participants_required: out.participants,
+                    info_text: out.info,
+                };
+
+                // Mimic createAction but include relevant meta
+                // TODO: Handle loading nicely
+                dispatch({
+                    type: types.CREATE_ACTION,
+                    meta: {
+                        importRowId: row.id,
+                    },
+                    payload: {
+                        promise: z.resource('orgs', orgId,
+                            'campaigns', campaignId, 'actions').post(data)
+                    }
+                });
+            });
+    };
+}
+
 export function processActionImportData() {
     return ({ dispatch, getState }) => {
         let dataRows = getState().actionImport.dataRows;
@@ -67,7 +113,7 @@ export function processActionImportData() {
                 });
 
                 // Parse date
-                const date = Date.create(data[0]);
+                const date = Date.create(data[0], { fromUTC: true });
                 if (isNaN(date)) {
                     return Object.assign(base, {
                         error: {

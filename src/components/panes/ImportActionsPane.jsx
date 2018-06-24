@@ -265,7 +265,7 @@ export default class ImportActionsPane extends PaneBase {
     }
 
     renderPaneFooter(data) {
-        if (this.props.tableSet && this.state.campaign != '_') {
+        if (this.props.dataProcessed && this.state.campaign != '_') {
             return (
                 <Button className="ImportActionsPane-saveButton"
                     labelMsg="panes.importActions.saveButton"
@@ -279,6 +279,7 @@ export default class ImportActionsPane extends PaneBase {
     }
 
     onSubmit(ev) {
+        this.props.dispatch(executeActionImport(this.state.campaign));
         ev.preventDefault();
     }
 
