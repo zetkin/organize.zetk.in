@@ -9,6 +9,7 @@ import PaneBase from './PaneBase';
 import {
     processActionImportData,
     executeActionImport,
+    toggleActionImportRow,
     parseActionImportFile,
 } from '../../actions/actionImport';
 import { retrieveActivities } from '../../actions/activity';
@@ -33,7 +34,6 @@ export default class ImportActionsPane extends PaneBase {
         this.state = {
             campaign: '_',
             isDragging: false,
-            selected: [],
             mappings: {
                 location: {},
                 activity: {},
@@ -64,12 +64,6 @@ export default class ImportActionsPane extends PaneBase {
 
         if (nextProps.dataRows && !this.props.dataRows) {
             this.props.dispatch(processActionImportData());
-        }
-
-        if (nextProps.dataRows) {
-            this.setState({
-                selected: nextProps.dataRows.map(row => row.id),
-            });
         }
     }
 
@@ -181,7 +175,8 @@ export default class ImportActionsPane extends PaneBase {
                 numNotLinked++;
             }
 
-            const checked = actionIsLinked && this.state.selected.indexOf(row.id) >= 0;
+
+            const checked = actionIsLinked && row.selected;
             const classes = cx('ImportActionsPane-actionItem', {
                 valid: actionIsLinked,
             });
@@ -288,13 +283,8 @@ export default class ImportActionsPane extends PaneBase {
         return !!(locationLinked && activityLinked);
     }
 
-    onActionSelect(rowId, ev) {
-        let selected = this.state.selected.filter(id => id !== rowId);
-        if (ev.target.checked) {
-            selected.push(rowId);
-        }
-
-        this.setState({ selected });
+    onActionSelect(id, ev) {
+        this.props.dispatch(toggleActionImportRow(id, ev.target.checked));
     }
 
     onSubmit(ev) {

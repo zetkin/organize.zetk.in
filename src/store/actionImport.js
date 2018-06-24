@@ -26,6 +26,19 @@ export default function actionImport(state = null, action) {
             dataRows: action.payload.dataRows,
         });
     }
+    else if (action.type == types.TOGGLE_ACTION_IMPORT_ROW) {
+        return Object.assign({}, state, {
+            dataRows: state.dataRows.map(row => {
+                if (row.id == action.payload.id) {
+                    row = Object.assign({}, row, {
+                        selected: action.payload.selected,
+                    });
+                }
+
+                return row;
+            }),
+        });
+    }
     else {
         return state || {
             dataProcessed: false,

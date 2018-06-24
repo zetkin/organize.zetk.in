@@ -22,6 +22,13 @@ export function parseActionImportFile(file) {
     };
 }
 
+export function toggleActionImportRow(id, selected) {
+    return {
+        type: types.TOGGLE_ACTION_IMPORT_ROW,
+        payload: { id, selected },
+    };
+}
+
 export function processActionImportData() {
     return ({ dispatch, getState }) => {
         let dataRows = getState().actionImport.dataRows;
@@ -34,6 +41,7 @@ export function processActionImportData() {
                 const data = row.values;
                 const base = Object.assign({}, row, {
                     error: null,
+                    selected: true,
                     output: {
                         date: null,
                         startTime: null,
