@@ -92,6 +92,8 @@ export default class ImportActionsPane extends PaneBase {
 
     renderActionsFromTable(table) {
         let rows = table.rows;
+        let numNotLinked = 0;
+        let numBadRows = 0;
 
         if (rows.length == 0) {
             // TODO: Return message about empty table
@@ -108,6 +110,7 @@ export default class ImportActionsPane extends PaneBase {
                     return null;
                 }
                 else {
+                    numBadRows++;
                     return (
                         <ErrorRow key={ index } type="date"
                             index={ index } value={ data[0] }
@@ -122,7 +125,7 @@ export default class ImportActionsPane extends PaneBase {
             const endTime = parseTime(data[2]);
             if (!startTime || !endTime) {
                 let badValue = startTime? data[2] : data[1];
-                // Invalid times
+                numBadRows++;
                 return (
                     <ErrorRow key={ index } type="time"
                         index={ index } value={ badValue }
@@ -137,6 +140,7 @@ export default class ImportActionsPane extends PaneBase {
             const locationString = data[3];
             if (!locationString) {
                 // Invalid location!
+                numBadRows++;
                 return (
                     <ErrorRow key={ index } type="location"
                         index={ index } value={ data[3] }
@@ -147,6 +151,7 @@ export default class ImportActionsPane extends PaneBase {
             const activityString = data[4];
             if (!activityString) {
                 // Invalid activity!
+                numBadRows++;
                 return (
                     <ErrorRow key={ index } type="activity"
                         index={ index } value={ data[4] }
@@ -157,8 +162,12 @@ export default class ImportActionsPane extends PaneBase {
             const participantCount = parseInt(data[5]) || 2;
             const infoString = data[6] || '';
 
-            const checkEnabled = this.actionIsLinked(row.values);
-            const checked = checkEnabled && this.state.selected.indexOf(index) >= 0;
+            const actionIsLinked = this.actionIsLinked(row.values);
+            if (!actionIsLinked) {
+                numNotLinked++;
+            }
+
+            const checked = actionIsLinked && this.state.selected.indexOf(index) >= 0;
             const classes = cx('ImportActionsPane-actionItem', {
                 valid: this.actionIsLinked(row.values),
             });
@@ -167,7 +176,7 @@ export default class ImportActionsPane extends PaneBase {
                 <li key={ index } className={ classes }>
                     <div className="ImportActionsPane-actionItemMeta">
                         <input type="checkbox"
-                            disabled={ !checkEnabled } checked={ checked }
+                            disabled={ !actionIsLinked } checked={ checked }
                             onChange={ this.onActionSelect.bind(this, index) }
                             />
                     </div>
@@ -213,10 +222,31 @@ export default class ImportActionsPane extends PaneBase {
             );
         });
 
+        let warnings = [];
+        if (numNotLinked) {
+            warnings.push(
+                <div key="link" className="ImportActionsPane-linkWarning">
+                    <Msg id="panes.importActions.warnings.linking"/>
+                </div>
+            );
+        }
+
+        if (numBadRows) {
+            warnings.push(
+                <div key="format" className="ImportActionsPane-formatWarning">
+                    <Msg id="panes.importActions.warnings.format"/>
+                </div>
+            );
+        }
+
         return (
-            <ul className="ImportActionsPane-actionList">
-                { actionItems }
-            </ul>
+            <div key="actions" className="ImportActionsPane-actions">
+                <Msg tagName="h3" id="panes.importActions.actions.h"/>
+                { warnings }
+                <ul className="ImportActionsPane-actionList">
+                    { actionItems }
+                </ul>
+            </div>
         );
     }
 

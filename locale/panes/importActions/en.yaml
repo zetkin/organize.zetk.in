@@ -14,6 +14,8 @@ action:
             =1 {One activist}
             other {# activists}
         } required
+actions:
+    h: Actions to be imported
 dropZone:
     columns:
         activity: Name of activity
@@ -37,3 +39,12 @@ errorRow:
         time: The time ("{value}") was invalid.
 saveButton: Start import
 title: Import actions
+warnings:
+    format: |-
+        Not all lines could be parsed correctly. Details are in the list below.
+        If you want to make sure all lines are imported, change the file and
+        try again.
+    linking: |-
+        Not all locations and activities in the file were recognized. Make sure
+        the format is correct and if you need to create new locations or activities,
+        or you spelled them wrong, you can fix that below.
