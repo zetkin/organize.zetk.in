@@ -27,6 +27,7 @@ export default class ImportActionsPane extends PaneBase {
 
         this.state = {
             isDragging: false,
+            selected: [],
             mappings: {
                 location: {},
                 activity: {},
@@ -43,6 +44,14 @@ export default class ImportActionsPane extends PaneBase {
 
     getPaneTitle(data) {
         return this.props.intl.formatMessage({ id: 'panes.importActions.title' });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.tableSet && nextProps.tableSet != this.props.tableSet) {
+            this.setState({
+                selected: nextProps.tableSet.tableList.items[0].data.rows.map((r, i) => i),
+            });
+        }
     }
 
     renderPaneContent(data) {
@@ -89,15 +98,8 @@ export default class ImportActionsPane extends PaneBase {
             return null;
         }
 
-        // Could first row be headers? Try parsing date
-        const firstDate = Date.create(rows[0].values[0]);
-        if (isNaN(firstDate)) {
-            rows = rows.slice(1);
-        }
-
         let actionItems = rows.map((row, index) => {
             let data = row.values;
-            let date = Date.create(data[0]);
 
             let dateString = data[0];
             let timeString = data[1] + '-' + data[2];
@@ -106,6 +108,16 @@ export default class ImportActionsPane extends PaneBase {
             let participantsString = data[5];
             let infoString = data[6];
 
+            const date = Date.create(data[0]);
+            if (isNaN(date)) {
+                if (index == 0) {
+                    // Ignore faulty first row. Probably header
+                    return null;
+                }
+            }
+
+            const checkEnabled = this.actionIsLinked(row.values);
+            const checked = checkEnabled && this.state.selected.indexOf(index) >= 0;
             const classes = cx('ImportActionsPane-actionItem', {
                 valid: this.actionIsLinked(row.values),
             });
@@ -113,6 +125,10 @@ export default class ImportActionsPane extends PaneBase {
             return (
                 <li key={ index } className={ classes }>
                     <div className="ImportActionsPane-actionItemMeta">
+                        <input type="checkbox"
+                            enabled={ checkEnabled } checked={ checked }
+                            onChange={ this.onActionSelect.bind(this, index) }
+                            />
                     </div>
                     <div className="ImportActionsPane-actionItemDate">
                         <Msg tagName="h4"
@@ -183,6 +199,18 @@ export default class ImportActionsPane extends PaneBase {
         );
 
         return !!(locationLinked && activityLinked);
+    }
+
+    onActionSelect(index, ev) {
+        let row = this.props.tableSet.tableList.items[0].data.rows[index];
+        if (this.actionIsLinked(row.values)) {
+            let selected = this.state.selected.filter(i => i !== index);
+            if (ev.target.checked) {
+                selected.push(index);
+            }
+
+            this.setState({ selected });
+        }
     }
 
     onSubmit(ev) {
