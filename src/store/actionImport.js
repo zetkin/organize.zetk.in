@@ -26,6 +26,16 @@ export default function actionImport(state = null, action) {
             dataRows: action.payload.dataRows,
         });
     }
+    else if (action.type == types.SET_ACTION_IMPORT_MAPPING) {
+        const { type, text, id } = action.payload;
+        return Object.assign({}, state, {
+            mappings: Object.assign({}, state.mappings, {
+                [type]: Object.assign({}, state.mappings[type], {
+                    [text]: id,
+                }),
+            }),
+        });
+    }
     else if (action.type == types.TOGGLE_ACTION_IMPORT_ROW) {
         return Object.assign({}, state, {
             dataRows: state.dataRows.map(row => {
@@ -41,6 +51,10 @@ export default function actionImport(state = null, action) {
     }
     else {
         return state || {
+            mappings: {
+                activity: {},
+                location: {},
+            },
             dataProcessed: false,
             dataRows: null,
         };

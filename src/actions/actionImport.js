@@ -1,5 +1,6 @@
 import * as types from '.';
 
+import { getListItemById } from '../utils/store';
 import { parseWorkbook } from '../utils/import';
 
 
@@ -29,10 +30,22 @@ export function toggleActionImportRow(id, selected) {
     };
 }
 
+export function setActionImportMapping(type, text, id) {
+    return ({ dispatch }) => {
+        dispatch({
+            type: types.SET_ACTION_IMPORT_MAPPING,
+            payload: { type, text, id },
+        });
+
+        dispatch(processActionImportData());
+    };
+}
+
 export function processActionImportData() {
     return ({ dispatch, getState }) => {
         let dataRows = getState().actionImport.dataRows;
 
+        const mappings = getState().actionImport.mappings;
         const activityList = getState().activities.activityList;
         const locationList = getState().locations.locationList;
 
@@ -75,9 +88,15 @@ export function processActionImportData() {
 
                 // Resolve location link if possible
                 let locationLink = null;
+                let locationMapped = false;
                 const locationString = data[3];
                 if (locationString) {
-                    let item = getItemByTitle(locationList, locationString);
+                    let id = mappings.location[locationString];
+                    let item = id?
+                        getListItemById(locationList, parseInt(id)) :
+                        getListItemByTitle(locationList, locationString);
+
+                    locationMapped = !!id;
                     locationLink = item? item.data.id : null;
                 }
                 else {
@@ -88,9 +107,15 @@ export function processActionImportData() {
 
                 // Resolve activity link if possible
                 let activityLink = null;
+                let activityMapped = false;
                 const activityString = data[4];
                 if (activityString) {
-                    let item = getItemByTitle(activityList, activityString);
+                    let id = mappings.activity[activityString];
+                    let item = id?
+                        getListItemById(activityList, parseInt(id)) :
+                        getListItemByTitle(activityList, activityString);
+
+                    activityMapped = !!id;
                     activityLink = item? item.data.id : null;
                 }
                 else {
@@ -103,8 +128,12 @@ export function processActionImportData() {
                 const info = data[6] || '';
 
                 return Object.assign(base, {
-                    output: { date, startTime, endTime,
-                        locationLink, activityLink, participants, info },
+                    output: {
+                        date, startTime, endTime,
+                        locationLink, locationMapped,
+                        activityLink, activityMapped,
+                        participants, info,
+                    },
                 });
             });
 
@@ -155,12 +184,7 @@ function cleanTitle(originalTitle) {
    return originalTitle.trim().toLowerCase();
 }
 
-function getItemByTitle(list, originalTitle) {
+function getListItemByTitle(list, originalTitle) {
     let title = cleanTitle(originalTitle);
     return list.items.find(i => i.data.title.toLowerCase() == title);
-}
-
-function getSelectedFromMappings(mappings, originalTitle) {
-    let title = originalTitle;
-    return mappings[title] || null;
 }

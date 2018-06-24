@@ -6,11 +6,13 @@ import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 
 import Button from '../misc/Button';
 import PaneBase from './PaneBase';
+import { getListItemById } from '../../utils/store';
 import {
-    processActionImportData,
     executeActionImport,
-    toggleActionImportRow,
     parseActionImportFile,
+    processActionImportData,
+    setActionImportMapping,
+    toggleActionImportRow,
 } from '../../actions/actionImport';
 import { retrieveActivities } from '../../actions/activity';
 import { retrieveCampaigns } from '../../actions/campaign';
@@ -34,10 +36,6 @@ export default class ImportActionsPane extends PaneBase {
         this.state = {
             campaign: '_',
             isDragging: false,
-            mappings: {
-                location: {},
-                activity: {},
-            },
         };
     }
 
@@ -200,7 +198,8 @@ export default class ImportActionsPane extends PaneBase {
                             id="panes.importActions.action.labels.location"/>
                         <LinkingWidget
                             list={ this.props.locationList }
-                            mappings={ this.state.mappings.location }
+                            selectedId={ row.output.locationLink }
+                            forceMapping={ row.output.locationMapped }
                             originalText={ data[3] }
                             onLinkClick={ id => this.openPane('location', id) }
                             onMapValue={ this.onMapValue.bind(this, 'location') }
@@ -212,7 +211,8 @@ export default class ImportActionsPane extends PaneBase {
                             id="panes.importActions.action.labels.activity"/>
                         <LinkingWidget
                             list={ this.props.activityList }
-                            mappings={ this.state.mappings.activity }
+                            selectedId={ row.output.activityLink }
+                            forceMapping={ row.output.activityMapped }
                             originalText={ data[4] }
                             onLinkClick={ id => this.openPane('editactivity', id) }
                             onMapValue={ this.onMapValue.bind(this, 'activity') }
@@ -269,20 +269,6 @@ export default class ImportActionsPane extends PaneBase {
         }
     }
 
-    actionIsLinked(row) {
-        const locationLinked = (
-            getItemByTitle(this.props.locationList, row[3])
-            || getSelectedFromMappings(this.state.mappings.location, row[3])
-        );
-
-        const activityLinked = (
-            getItemByTitle(this.props.activityList, row[4])
-            || getSelectedFromMappings(this.state.mappings.activity, row[4])
-        );
-
-        return !!(locationLinked && activityLinked);
-    }
-
     onActionSelect(id, ev) {
         this.props.dispatch(toggleActionImportRow(id, ev.target.checked));
     }
@@ -324,13 +310,7 @@ export default class ImportActionsPane extends PaneBase {
     }
 
     onMapValue(type, value, id) {
-        this.setState({
-            mappings: Object.assign({}, this.state.mappings, {
-                [type]: Object.assign({}, this.state.mappings[type], {
-                    [value]: id,
-                }),
-            }),
-        });
+        this.props.dispatch(setActionImportMapping(type, value, id));
     }
 
     onCampaignChange(ev) {
@@ -344,26 +324,13 @@ export default class ImportActionsPane extends PaneBase {
 class LinkingWidget extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            selected: getSelectedFromMappings(
-                props.mappings, props.originalText) || '_',
-        };
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            selected: getSelectedFromMappings(
-                nextProps.mappings, nextProps.originalText) || '_',
-        });
     }
 
     render() {
         const list = this.props.list;
 
-        let item = getItemByTitle(list, this.props.originalText);
-
-        if (item) {
+        if (this.props.selectedId && !this.props.forceMapping) {
+            let item = getListItemById(list, this.props.selectedId);
             return (
                 <span className="linked"
                     onClick={ this.props.onLinkClick.bind(this, item.data.id) }>
@@ -385,8 +352,8 @@ class LinkingWidget extends React.Component {
                 { id: 'panes.importActions.action.linking.options' });
 
             const classes = cx({
-                unlinked: this.state.selected == '_',
-                linked: this.state.selected != '_',
+                unlinked: !this.props.selectedId,
+                linked: !!this.props.selectedId,
             });
 
             return (
@@ -395,7 +362,7 @@ class LinkingWidget extends React.Component {
                         id="panes.importActions.action.linking.originalText"
                         values={{ title }}
                         />
-                    <select className={ classes } value={ this.state.selected }
+                    <select className={ classes } value={ this.props.selectedId }
                         onChange={ this.onSelectChange.bind(this) }>
                         <option value="_"></option>
                         <option value="+">{ createLabel }</option>
@@ -410,17 +377,9 @@ class LinkingWidget extends React.Component {
 
     onSelectChange(ev) {
         if (ev.target.value == '+') {
-            this.setState({
-                selected: '_',
-            });
-
             this.props.onCreate(this.props.originalText);
         }
         else if (ev.target.value != '_') {
-            this.setState({
-                selected: ev.target.value,
-            });
-
             this.props.onMapValue(this.props.originalText, ev.target.value);
         }
     }
@@ -438,50 +397,4 @@ const ErrorRow = props => {
             <Msg id="panes.importActions.errorRow.instructions"/>
         </div>
     );
-}
-
-function parseTime(str) {
-    const fields = str.split(/[\.:]+/);
-    if (fields.length && fields.length <= 3) {
-        let h = parseInt(fields[0])
-        if (isNaN(h)) return null;
-
-        let m = 0;
-        if (fields.length > 1) {
-            m = parseInt(fields[1]);
-            if (isNaN(m)) {
-                return null;
-            }
-        }
-
-        if (m >= 0 && m < 60 && h >= 0 && h < 24) {
-            return [h, m];
-        }
-        else {
-            return null;
-        }
-    }
-    else {
-        const n = parseInt(str);
-        if (!isNaN(n)) {
-            return [n, 0];
-        }
-        else {
-            return null;
-        }
-    }
-}
-
-function cleanTitle(originalTitle) {
-   return originalTitle.trim().toLowerCase();
-}
-
-function getItemByTitle(list, originalTitle) {
-    let title = cleanTitle(originalTitle);
-    return list.items.find(i => i.data.title.toLowerCase() == title);
-}
-
-function getSelectedFromMappings(mappings, originalTitle) {
-    let title = originalTitle;
-    return mappings[title] || null;
 }
