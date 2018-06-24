@@ -1,0 +1,84 @@
+.PaneBase.ImportActionsPane {
+    min-width: 700px;
+
+    .ImportActionsPane-dropZone {
+        background-color: darken($c-ui-bg,5);
+        min-height: 200px;
+        padding: 15% 10% 10%;
+        cursor: pointer;
+        border: dashed 3px darken($c-ui-bg, 10);
+
+        &:hover {
+            background-color: darken($c-ui-bg,6);
+        }
+
+        h3, ul, p {
+            width: 90%;
+            margin: 0.2em auto 0.4em;
+        }
+
+        ul {
+            width: 80%;
+            text-align: left;
+
+            li {
+                list-style-type: disc;
+                margin-left: 3em;
+            }
+        }
+
+        &.dragging {
+            background-color: darken($c-ui-bg, 8);
+
+             .ImportActionsPane-dropZoneMessage {
+                &:before {
+                    @include icon($fa-var-file);
+                    font-size: 4em;
+                }
+             }
+        }
+    }
+
+    .ImportActionsPane-dropZoneMessage {
+        margin: -50px auto 0;
+        text-align: center;
+        color: darken($c-ui-bg, 40);
+
+        &:before {
+            @include icon($fa-var-file-o);
+            font-size: 4em;
+        }
+    }
+
+    .ImportActionsPane-actionItem {
+        @include card();
+        margin: 1em 0;
+    }
+
+    .ImportActionsPane-actionItemData {
+        li {
+            display: inline-block;
+
+            &:nth-child(1) {
+                width: 20%;
+            }
+
+            &:nth-child(2) {
+                width: 20%;
+            }
+
+            &:nth-child(3) {
+                width: 20%;
+            }
+
+            &:nth-child(4) {
+                width: 20%;
+            }
+
+            label {
+                display: block;
+                font-weight: bold;
+            }
+        }
+    }
+}
