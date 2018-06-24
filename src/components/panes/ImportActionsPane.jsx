@@ -167,7 +167,7 @@ export default class ImportActionsPane extends PaneBase {
                 <li key={ index } className={ classes }>
                     <div className="ImportActionsPane-actionItemMeta">
                         <input type="checkbox"
-                            enabled={ checkEnabled } checked={ checked }
+                            disabled={ !checkEnabled } checked={ checked }
                             onChange={ this.onActionSelect.bind(this, index) }
                             />
                     </div>
