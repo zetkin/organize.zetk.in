@@ -99,14 +99,7 @@ export default class ImportActionsPane extends PaneBase {
         }
 
         let actionItems = rows.map((row, index) => {
-            let data = row.values;
-
-            let dateString = data[0];
-            let timeString = data[1] + '-' + data[2];
-            let locationString = data[3].toString();
-            let activityString = data[4].toString();
-            let participantsString = data[5];
-            let infoString = data[6];
+            const data = row.values;
 
             const date = Date.create(data[0]);
             if (isNaN(date)) {
@@ -114,7 +107,55 @@ export default class ImportActionsPane extends PaneBase {
                     // Ignore faulty first row. Probably header
                     return null;
                 }
+                else {
+                    return (
+                        <ErrorRow key={ index } type="date"
+                            index={ index } value={ data[0] }
+                            />
+                    );
+                }
             }
+
+            const dateString = date.medium();
+
+            const startTime = parseTime(data[1]);
+            const endTime = parseTime(data[2]);
+            if (!startTime || !endTime) {
+                let badValue = startTime? data[2] : data[1];
+                // Invalid times
+                return (
+                    <ErrorRow key={ index } type="time"
+                        index={ index } value={ badValue }
+                        />
+                );
+            }
+
+            const pad = n => ('0' + n).slice(-2);
+            const timeString = pad(startTime[0]) + ':' + pad(startTime[1])
+                + '-' + pad(endTime[0]) + ':' + pad(endTime[1]);
+
+            const locationString = data[3];
+            if (!locationString) {
+                // Invalid location!
+                return (
+                    <ErrorRow key={ index } type="location"
+                        index={ index } value={ data[3] }
+                        />
+                );
+            }
+
+            const activityString = data[4];
+            if (!activityString) {
+                // Invalid activity!
+                return (
+                    <ErrorRow key={ index } type="activity"
+                        index={ index } value={ data[4] }
+                        />
+                );
+            }
+
+            const participantCount = parseInt(data[5]) || 2;
+            const infoString = data[6] || '';
 
             const checkEnabled = this.actionIsLinked(row.values);
             const checked = checkEnabled && this.state.selected.indexOf(index) >= 0;
@@ -164,7 +205,7 @@ export default class ImportActionsPane extends PaneBase {
                         <Msg tagName="h4"
                             id="panes.importActions.action.labels.info"/>
                         <Msg id="panes.importActions.action.participantCount"
-                            values={{ count: participantsString }}
+                            values={{ count: participantCount }}
                             />
                         <span>{ infoString }</span>
                     </div>
@@ -342,6 +383,52 @@ class LinkingWidget extends React.Component {
             });
 
             this.props.onMapValue(this.props.originalText, ev.target.value);
+        }
+    }
+}
+
+const ErrorRow = props => {
+    return (
+        <div className="ImportActionsPane-errorRow">
+            <Msg id="panes.importActions.errorRow.index"
+                values={{ index: props.index + 1 }}/>
+
+            <Msg id={ 'panes.importActions.errorRow.types.' + props.type }
+                values={{ value: props.value }}/>
+
+            <Msg id="panes.importActions.errorRow.instructions"/>
+        </div>
+    );
+}
+
+function parseTime(str) {
+    const fields = str.split(/[\.:]+/);
+    if (fields.length && fields.length <= 3) {
+        let h = parseInt(fields[0])
+        if (isNaN(h)) return null;
+
+        let m = 0;
+        if (fields.length > 1) {
+            m = parseInt(fields[1]);
+            if (isNaN(m)) {
+                return null;
+            }
+        }
+
+        if (m >= 0 && m < 60 && h >= 0 && h < 24) {
+            return [h, m];
+        }
+        else {
+            return null;
+        }
+    }
+    else {
+        const n = parseInt(str);
+        if (!isNaN(n)) {
+            return [n, 0];
+        }
+        else {
+            return null;
         }
     }
 }

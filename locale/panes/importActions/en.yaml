@@ -27,5 +27,13 @@ dropZone:
     p: |-
         Click here or drag and drop an Excel file containing the
         following columns in this exact order.
+errorRow:
+    index: Line {index} could not be imported.
+    instructions: You can fix the file and load it again, or this line will be ignored.
+    types:
+        activity: No activity was specified
+        date: The date ("{value}") was invalid.
+        location: No location was specified
+        time: The time ("{value}") was invalid.
 saveButton: Start import
 title: Import actions

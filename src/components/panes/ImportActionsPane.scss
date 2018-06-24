@@ -166,4 +166,22 @@
     .ImportActionsPane-actionItemInfo {
         width: 26%;
     }
+
+    .ImportActionsPane-errorRow {
+        padding: 0 0.5em 0.5em;
+        text-align: center;
+        color: $c-ui-dark;
+
+        &:before {
+            @include icon($fa-var-warning);
+            display: block;
+            margin: 0 auto;
+        }
+
+        span {
+            &:after {
+                content: " ";
+            }
+        }
+    }
 }
