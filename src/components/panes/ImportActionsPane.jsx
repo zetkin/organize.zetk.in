@@ -10,11 +10,13 @@ import {
     parseActionImportFile,
 } from '../../actions/actionImport';
 import { retrieveActivities } from '../../actions/activity';
+import { retrieveCampaigns } from '../../actions/campaign';
 import { retrieveLocations } from '../../actions/location';
 
 
 const mapStateToProps = state => ({
     activityList: state.activities.activityList,
+    campaignList: state.campaigns.campaignList,
     locationList: state.locations.locationList,
     tableSet: state.actionImport.tableSet,
 });
@@ -26,6 +28,7 @@ export default class ImportActionsPane extends PaneBase {
         super(props);
 
         this.state = {
+            campaign: '_',
             isDragging: false,
             selected: [],
             mappings: {
@@ -39,6 +42,7 @@ export default class ImportActionsPane extends PaneBase {
         super.componentDidMount();
 
         this.props.dispatch(retrieveActivities());
+        this.props.dispatch(retrieveCampaigns());
         this.props.dispatch(retrieveLocations());
     }
 
@@ -58,9 +62,30 @@ export default class ImportActionsPane extends PaneBase {
         if (this.props.tableSet) {
             // TODO: Handle multiple sheets
             // TODO: Handle when dependencies haven't loaded
-            // TODO: Handle campaigns
-            let table = this.props.tableSet.tableList.items[0].data;
-            return this.renderActionsFromTable(table);
+
+            const campaignOptions = this.props.campaignList.items.map(item => {
+                return (
+                    <option key={ item.data.id } value={ item.data.id }>
+                        { item.data.title }
+                    </option>
+                );
+            });
+
+            const table = this.props.tableSet.tableList.items[0].data;
+
+            return [
+                <div key="campaign" className="ImportActionsPane-campaign">
+                    <Msg tagName="h3" id="panes.importActions.campaign.h"/>
+                    <Msg tagName="p" id="panes.importActions.campaign.p"/>
+                    <select value={ this.state.campaign }
+                        onChange={ this.onCampaignChange.bind(this) }>
+                        <option value="_"></option>
+                        { campaignOptions }
+                    </select>
+                </div>,
+
+                this.renderActionsFromTable(table),
+            ];
         }
         else {
             let classes = cx('ImportActionsPane-dropZone', {
@@ -251,11 +276,13 @@ export default class ImportActionsPane extends PaneBase {
     }
 
     renderPaneFooter(data) {
-        return (
-            <Button className="ImportActionsPane-saveButton"
-                labelMsg="panes.importActions.saveButton"
-                onClick={ this.onSubmit.bind(this) }/>
-        );
+        if (this.props.tableSet && this.state.campaign != '_') {
+            return (
+                <Button className="ImportActionsPane-saveButton"
+                    labelMsg="panes.importActions.saveButton"
+                    onClick={ this.onSubmit.bind(this) }/>
+            );
+        }
     }
 
     actionIsLinked(row) {
@@ -327,6 +354,12 @@ export default class ImportActionsPane extends PaneBase {
                     [value]: id,
                 }),
             }),
+        });
+    }
+
+    onCampaignChange(ev) {
+        this.setState({
+            campaign: ev.target.value,
         });
     }
 }

@@ -16,6 +16,9 @@ action:
         } required
 actions:
     h: Actions to be imported
+campaign:
+    h: Select a campaign
+    p: Pick what campaign the actions should be added to as they are imported.
 dropZone:
     columns:
         activity: Name of activity
