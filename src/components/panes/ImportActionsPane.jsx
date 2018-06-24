@@ -212,12 +212,12 @@ export default class ImportActionsPane extends PaneBase {
         this.props.dispatch(parseActionImportFile(file));
     }
 
-    onCreate(type) {
+    onCreate(type, title) {
         if (type == 'activity') {
-            this.openPane('addactivity');
+            this.openPane('addactivity', title);
         }
         else if (type == 'location') {
-            this.openPane('addlocation');
+            this.openPane('addlocation', title);
         }
     }
 
@@ -301,7 +301,7 @@ class LinkingWidget extends React.Component {
                 selected: '_',
             });
 
-            this.props.onCreate();
+            this.props.onCreate(this.props.originalText);
         }
         else if (ev.target.value != '_') {
             this.setState({
