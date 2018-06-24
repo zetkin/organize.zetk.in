@@ -53,14 +53,14 @@
     .ImportActionsPane-actionItem {
         @include card();
         display: flex;
-        margin: 1em 0;
+        margin: 1.5em 0;
 
         &.valid {
             .ImportActionsPane-actionItemMeta {
                 &:after {
                     @include fa-icon;
                     content: $fa-var-check-circle;
-                    color: darken($c-brand-success, 20);
+                    color: $c-ui-dark;
                 }
             }
         }
@@ -139,6 +139,10 @@
             margin: 0.4em 0 0;
             padding: 0em;
             font-size: inherit;
+
+            &.unlinked {
+                box-shadow: 0 0 0.2em rgba($c-ui-warning, 1);
+            }
         }
     }
 

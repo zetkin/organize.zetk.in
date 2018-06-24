@@ -304,13 +304,18 @@ class LinkingWidget extends React.Component {
             const groupLabel = this.props.intl.formatMessage(
                 { id: 'panes.importActions.action.linking.options' });
 
+            const classes = cx({
+                unlinked: this.state.selected == '_',
+                linked: this.state.selected != '_',
+            });
+
             return (
-                <div>
+                <div className={ classes }>
                     <Msg tagName="small" key="label"
                         id="panes.importActions.action.linking.originalText"
                         values={{ title }}
                         />
-                    <select value={ this.state.selected }
+                    <select className={ classes } value={ this.state.selected }
                         onChange={ this.onSelectChange.bind(this) }>
                         <option value="_"></option>
                         <option value="+">{ createLabel }</option>
