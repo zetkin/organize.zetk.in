@@ -246,3 +246,6 @@ export const RETRIEVE_HOUSEHOLD_VISITS = 'RETRIEVE_HOUSEHOLD_VISITS';
 
 // Actions related to alert messages
 export const POLL_ALERT_MESSAGES = 'POLL_ALERT_MESSAGES';
+
+// Actions related to action import
+export const PARSE_ACTION_IMPORT_FILE = 'PARSE_ACTION_IMPORT_FILE';
