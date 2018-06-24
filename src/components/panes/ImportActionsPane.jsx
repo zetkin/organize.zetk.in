@@ -7,6 +7,8 @@ import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 import Button from '../misc/Button';
 import PaneBase from './PaneBase';
 import {
+    processActionImportData,
+    executeActionImport,
     parseActionImportFile,
 } from '../../actions/actionImport';
 import { retrieveActivities } from '../../actions/activity';
@@ -18,7 +20,8 @@ const mapStateToProps = state => ({
     activityList: state.activities.activityList,
     campaignList: state.campaigns.campaignList,
     locationList: state.locations.locationList,
-    tableSet: state.actionImport.tableSet,
+    dataProcessed: state.actionImport.dataProcessed,
+    dataRows: state.actionImport.dataRows,
 });
 
 @connect(mapStateToProps)
@@ -51,15 +54,38 @@ export default class ImportActionsPane extends PaneBase {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.tableSet && nextProps.tableSet != this.props.tableSet) {
+        if (nextProps.activityList != this.props.activityList) {
+            this.props.dispatch(processActionImportData());
+        }
+
+        if (nextProps.locationList != this.props.locationList) {
+            this.props.dispatch(processActionImportData());
+        }
+
+        if (nextProps.dataRows && !this.props.dataRows) {
+            this.props.dispatch(processActionImportData());
+        }
+
+        if (nextProps.dataRows) {
             this.setState({
-                selected: nextProps.tableSet.tableList.items[0].data.rows.map((r, i) => i),
+                selected: nextProps.dataRows.map(row => row.id),
             });
         }
     }
 
     renderPaneContent(data) {
-        if (this.props.tableSet) {
+        if (!this.state.inBrowser) {
+            // Only run in browser, since DropZone does not render on server
+            return null;
+        }
+
+        if (this.props.dataRows) {
+            if (!this.props.dataProcessed) {
+                // Just wait, will be processed momentarily
+                // TODO: Show loading indicator
+                return;
+            }
+
             // TODO: Handle multiple sheets
             // TODO: Handle when dependencies haven't loaded
 
@@ -70,8 +96,6 @@ export default class ImportActionsPane extends PaneBase {
                     </option>
                 );
             });
-
-            const table = this.props.tableSet.tableList.items[0].data;
 
             return [
                 <div key="campaign" className="ImportActionsPane-campaign">
@@ -84,7 +108,7 @@ export default class ImportActionsPane extends PaneBase {
                     </select>
                 </div>,
 
-                this.renderActionsFromTable(table),
+                this.renderActionsFromRows(this.props.dataRows),
             ];
         }
         else {
@@ -115,8 +139,7 @@ export default class ImportActionsPane extends PaneBase {
         }
     }
 
-    renderActionsFromTable(table) {
-        let rows = table.rows;
+    renderActionsFromRows(rows) {
         let numNotLinked = 0;
         let numBadRows = 0;
 
@@ -126,83 +149,49 @@ export default class ImportActionsPane extends PaneBase {
         }
 
         let actionItems = rows.map((row, index) => {
-            const data = row.values;
-
-            const date = Date.create(data[0]);
-            if (isNaN(date)) {
+            if (row.error) {
+                // Ignore error if this is first row. Probably just header
                 if (index == 0) {
-                    // Ignore faulty first row. Probably header
                     return null;
                 }
                 else {
                     numBadRows++;
                     return (
-                        <ErrorRow key={ index } type="date"
-                            index={ index } value={ data[0] }
+                        <ErrorRow key={ index } type={ row.error.type }
+                            index={ index } value={ row.error.value }
                             />
                     );
                 }
             }
 
-            const dateString = date.medium();
+            const data = row.values;
 
-            const startTime = parseTime(data[1]);
-            const endTime = parseTime(data[2]);
-            if (!startTime || !endTime) {
-                let badValue = startTime? data[2] : data[1];
-                numBadRows++;
-                return (
-                    <ErrorRow key={ index } type="time"
-                        index={ index } value={ badValue }
-                        />
-                );
-            }
+            const dateString = row.output.date.medium();
 
             const pad = n => ('0' + n).slice(-2);
-            const timeString = pad(startTime[0]) + ':' + pad(startTime[1])
-                + '-' + pad(endTime[0]) + ':' + pad(endTime[1]);
+            const timeString = pad(row.output.startTime[0]) + ':' + pad(row.output.startTime[1])
+                + '-' + pad(row.output.endTime[0]) + ':' + pad(row.output.endTime[1]);
 
-            const locationString = data[3];
-            if (!locationString) {
-                // Invalid location!
-                numBadRows++;
-                return (
-                    <ErrorRow key={ index } type="location"
-                        index={ index } value={ data[3] }
-                        />
-                );
-            }
 
-            const activityString = data[4];
-            if (!activityString) {
-                // Invalid activity!
-                numBadRows++;
-                return (
-                    <ErrorRow key={ index } type="activity"
-                        index={ index } value={ data[4] }
-                        />
-                );
-            }
+            const participantCount = row.output.participants;
+            const infoString = row.output.info;
 
-            const participantCount = parseInt(data[5]) || 2;
-            const infoString = data[6] || '';
-
-            const actionIsLinked = this.actionIsLinked(row.values);
+            const actionIsLinked = !!(row.output.activityLink && row.output.locationLink);
             if (!actionIsLinked) {
                 numNotLinked++;
             }
 
-            const checked = actionIsLinked && this.state.selected.indexOf(index) >= 0;
+            const checked = actionIsLinked && this.state.selected.indexOf(row.id) >= 0;
             const classes = cx('ImportActionsPane-actionItem', {
-                valid: this.actionIsLinked(row.values),
+                valid: actionIsLinked,
             });
 
             return (
-                <li key={ index } className={ classes }>
+                <li key={ row.id } className={ classes }>
                     <div className="ImportActionsPane-actionItemMeta">
                         <input type="checkbox"
                             disabled={ !actionIsLinked } checked={ checked }
-                            onChange={ this.onActionSelect.bind(this, index) }
+                            onChange={ this.onActionSelect.bind(this, row.id) }
                             />
                     </div>
                     <div className="ImportActionsPane-actionItemDate">
@@ -217,7 +206,7 @@ export default class ImportActionsPane extends PaneBase {
                         <LinkingWidget
                             list={ this.props.locationList }
                             mappings={ this.state.mappings.location }
-                            originalText={ locationString }
+                            originalText={ data[3] }
                             onLinkClick={ id => this.openPane('location', id) }
                             onMapValue={ this.onMapValue.bind(this, 'location') }
                             onCreate={ this.onCreate.bind(this, 'location') }
@@ -229,7 +218,7 @@ export default class ImportActionsPane extends PaneBase {
                         <LinkingWidget
                             list={ this.props.activityList }
                             mappings={ this.state.mappings.activity }
-                            originalText={ activityString }
+                            originalText={ data[4] }
                             onLinkClick={ id => this.openPane('editactivity', id) }
                             onMapValue={ this.onMapValue.bind(this, 'activity') }
                             onCreate={ this.onCreate.bind(this, 'activity') }
@@ -299,16 +288,13 @@ export default class ImportActionsPane extends PaneBase {
         return !!(locationLinked && activityLinked);
     }
 
-    onActionSelect(index, ev) {
-        let row = this.props.tableSet.tableList.items[0].data.rows[index];
-        if (this.actionIsLinked(row.values)) {
-            let selected = this.state.selected.filter(i => i !== index);
-            if (ev.target.checked) {
-                selected.push(index);
-            }
-
-            this.setState({ selected });
+    onActionSelect(rowId, ev) {
+        let selected = this.state.selected.filter(id => id !== rowId);
+        if (ev.target.checked) {
+            selected.push(rowId);
         }
+
+        this.setState({ selected });
     }
 
     onSubmit(ev) {

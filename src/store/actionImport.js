@@ -1,15 +1,35 @@
 import * as types from '../actions';
 
+import makeRandomString from '../utils/makeRandomString';
+
 
 export default function actionImport(state = null, action) {
     if (action.type == types.PARSE_ACTION_IMPORT_FILE + '_FULFILLED') {
+        let tableSet = action.payload.tableSet;
+
+        if (tableSet.tableList.items.length) {
+            return Object.assign({}, state, {
+                dataProcessed: false,
+                dataRows: tableSet.tableList.items[0].data.rows.map(row => ({
+                    id: '$' + makeRandomString(),
+                    values: row.values,
+                })),
+            });
+        }
+        else {
+            return state;
+        }
+    }
+    else if (action.type == types.PROCESS_ACTION_IMPORT_DATA) {
         return Object.assign({}, state, {
-            tableSet: action.payload.tableSet,
+            dataProcessed: true,
+            dataRows: action.payload.dataRows,
         });
     }
     else {
         return state || {
-            tableSet: null,
+            dataProcessed: false,
+            dataRows: null,
         };
     }
 }
