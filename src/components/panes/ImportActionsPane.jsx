@@ -34,6 +34,7 @@ export default class ImportActionsPane extends PaneBase {
         super(props);
 
         this.state = {
+            inBrowser: false,
             campaign: '_',
             isDragging: false,
         };
@@ -45,6 +46,10 @@ export default class ImportActionsPane extends PaneBase {
         this.props.dispatch(retrieveActivities());
         this.props.dispatch(retrieveCampaigns());
         this.props.dispatch(retrieveLocations());
+
+        this.setState({
+            inBrowser: true,
+        });
     }
 
     getPaneTitle(data) {
