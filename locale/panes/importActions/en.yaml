@@ -47,6 +47,10 @@ importedActions:
 saveButton:
     default: Import {count}/{max} {max, plural, =1 {action} other {actions}}
     pending: Importing ({count}/{max} complete)
+stats:
+    p: The imported actions are listed below and can also be found in the action calendar.
+    resetButton: Import more
+    closeButton: Close import
 title: Import actions
 titleCompleted: Import complete!
 warnings:

@@ -80,6 +80,13 @@ export default function actionImport(state = null, action) {
             }),
         });
     }
+    else if (action.type == types.RESET_ACTION_IMPORT) {
+        return Object.assign({}, state, {
+            isPending: false,
+            dataRows: null,
+            stats: null,
+        });
+    }
     else if (action.type == types.CREATE_ACTION + '_PENDING' && action.meta.importRowId) {
         return Object.assign({}, state, {
             dataRows: state.dataRows.map(row => {

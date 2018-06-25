@@ -12,7 +12,7 @@ import { getListItemById } from '../../utils/store';
 import {
     executeActionImport,
     parseActionImportFile,
-    processActionImportData,
+    resetActionImport,
     setActionImportMapping,
     toggleActionImportRow,
 } from '../../actions/actionImport';
@@ -55,6 +55,17 @@ export default class ImportActionsPane extends PaneBase {
         });
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.importIsPending && !this.props.importIsPending) {
+            // Content has ref defined in PaneBase
+            const contentDOMNode = ReactDOM.findDOMNode(this.refs.content);
+            if (contentDOMNode) {
+                const animatedScrollTo = require('animated-scrollto');
+                animatedScrollTo(contentDOMNode, 0, 400);
+            }
+        }
+    }
+
     getPaneTitle() {
         let msgId = 'panes.importActions.title';
         if (this.props.importStats && this.props.importStats.completed) {
@@ -73,6 +84,13 @@ export default class ImportActionsPane extends PaneBase {
         if (this.props.importStats && this.props.importStats.completed) {
             return [
                 <div key="stats" className="ImportActionsPane-stats">
+                    <Msg tagName="p" id="panes.importActions.stats.p"/>
+                    <Button labelMsg="panes.importActions.stats.resetButton"
+                        onClick={ this.onResetClick.bind(this) }
+                        />
+                    <Button labelMsg="panes.importActions.stats.closeButton"
+                        onClick={ this.onCloseClick.bind(this) }
+                        />
                 </div>,
 
                 <div key="actions" className="ImportActionsPane-actions">
@@ -188,7 +206,7 @@ export default class ImportActionsPane extends PaneBase {
                     onSelect={ this.onActionSelect.bind(this) }
                     onMapValue={ this.onMapValue.bind(this) }
                     onCreate={ this.onCreate.bind(this) }
-                    onClick={ this.onClick.bind(this) }
+                    onClick={ this.onActionClick.bind(this) }
                     />
             );
         });
@@ -303,7 +321,7 @@ export default class ImportActionsPane extends PaneBase {
         }
     }
 
-    onClick(row) {
+    onActionClick(row) {
         if (row.output && row.output.actionId) {
             this.openPane('action', row.output.actionId);
         }
@@ -317,6 +335,15 @@ export default class ImportActionsPane extends PaneBase {
         this.setState({
             campaign: ev.target.value,
         });
+    }
+
+    onCloseClick() {
+        this.props.dispatch(resetActionImport());
+        this.closePane();
+    }
+
+    onResetClick() {
+        this.props.dispatch(resetActionImport());
     }
 }
 

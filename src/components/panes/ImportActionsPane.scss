@@ -55,6 +55,12 @@
         }
     }
 
+    .ImportActionsPane-stats {
+        .Button {
+            margin-right: 1em;
+        }
+    }
+
     .ImportActionsPane-actionItem {
         @include card();
         display: flex;

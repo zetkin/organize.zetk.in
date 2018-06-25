@@ -134,3 +134,9 @@ export function executeActionImport(campaignId) {
             });
     };
 }
+
+export function resetActionImport() {
+    return {
+        type: types.RESET_ACTION_IMPORT,
+    };
+}
