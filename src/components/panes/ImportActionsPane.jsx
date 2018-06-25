@@ -168,76 +168,19 @@ export default class ImportActionsPane extends PaneBase {
                 }
             }
 
-            const data = row.values;
-
-            const dateString = row.parsed.date.medium();
-
-            const pad = n => ('0' + n).slice(-2);
-            const timeString = pad(row.parsed.startTime[0]) + ':' + pad(row.parsed.startTime[1])
-                + '-' + pad(row.parsed.endTime[0]) + ':' + pad(row.parsed.endTime[1]);
-
-
-            const participantCount = row.parsed.participants;
-            const infoString = row.parsed.info;
-
             const actionIsLinked = !!(row.parsed.activityLink && row.parsed.locationLink);
             if (!actionIsLinked) {
                 numNotLinked++;
             }
 
-
-            const checked = actionIsLinked && row.selected;
-            const classes = cx('ImportActionsPane-actionItem', {
-                valid: actionIsLinked,
-            });
-
             return (
-                <li key={ row.id } className={ classes }>
-                    <div className="ImportActionsPane-actionItemMeta">
-                        <input type="checkbox"
-                            disabled={ !actionIsLinked } checked={ checked }
-                            onChange={ this.onActionSelect.bind(this, row.id) }
-                            />
-                    </div>
-                    <div className="ImportActionsPane-actionItemDate">
-                        <Msg tagName="h4"
-                            id="panes.importActions.action.labels.dateTime"/>
-                        <span>{ dateString }</span>
-                        <span>{ timeString }</span>
-                    </div>
-                    <div className="ImportActionsPane-actionItemLocation">
-                        <Msg tagName="h4"
-                            id="panes.importActions.action.labels.location"/>
-                        <LinkingWidget
-                            list={ this.props.locationList }
-                            value={ row.parsed.locationLink || '' }
-                            originalText={ data[3] }
-                            onLinkClick={ id => this.openPane('location', id) }
-                            onMapValue={ this.onMapValue.bind(this, 'location') }
-                            onCreate={ this.onCreate.bind(this, 'location') }
-                            />
-                    </div>
-                    <div className="ImportActionsPane-actionItemActivity">
-                        <Msg tagName="h4"
-                            id="panes.importActions.action.labels.activity"/>
-                        <LinkingWidget
-                            list={ this.props.activityList }
-                            value={ row.parsed.activityLink || '' }
-                            originalText={ data[4] }
-                            onLinkClick={ id => this.openPane('editactivity', id) }
-                            onMapValue={ this.onMapValue.bind(this, 'activity') }
-                            onCreate={ this.onCreate.bind(this, 'activity') }
-                            />
-                    </div>
-                    <div className="ImportActionsPane-actionItemInfo">
-                        <Msg tagName="h4"
-                            id="panes.importActions.action.labels.info"/>
-                        <Msg id="panes.importActions.action.participantCount"
-                            values={{ count: participantCount }}
-                            />
-                        <span>{ infoString }</span>
-                    </div>
-                </li>
+                <ActionItem key={ row.id } row={ row }
+                    activityList={ this.props.activityList }
+                    locationList={ this.props.locationList }
+                    onSelect={ this.onActionSelect.bind(this) }
+                    onMapValue={ this.onMapValue.bind(this) }
+                    onCreate={ this.onCreate.bind(this) }
+                    />
             );
         });
 
@@ -353,6 +296,82 @@ export default class ImportActionsPane extends PaneBase {
         this.setState({
             campaign: ev.target.value,
         });
+    }
+}
+
+class ActionItem extends React.Component {
+    shouldComponentUpdate(nextProps) {
+        return (
+            nextProps.row != this.props.row
+            || nextProps.activityList != this.props.activityList
+            || nextProps.locationList != this.props.locationList
+        );
+    }
+
+    render() {
+        const row = this.props.row;
+
+        const dateString = row.parsed.date.medium();
+        const pad = n => ('0' + n).slice(-2);
+        const timeString = pad(row.parsed.startTime[0]) + ':' + pad(row.parsed.startTime[1])
+            + '-' + pad(row.parsed.endTime[0]) + ':' + pad(row.parsed.endTime[1]);
+
+        const actionIsLinked = !!(row.parsed.activityLink && row.parsed.locationLink);
+        const participantCount = row.parsed.participants;
+        const infoString = row.parsed.info;
+        const checked = actionIsLinked && row.selected;
+        const classes = cx('ImportActionsPane-actionItem', {
+            valid: actionIsLinked,
+        });
+
+        return (
+            <li className={ classes }>
+                <div className="ImportActionsPane-actionItemMeta">
+                    <input type="checkbox"
+                        disabled={ !actionIsLinked } checked={ checked }
+                        onChange={ this.props.onSelect.bind(this, row.id) }
+                        />
+                </div>
+                <div className="ImportActionsPane-actionItemDate">
+                    <Msg tagName="h4"
+                        id="panes.importActions.action.labels.dateTime"/>
+                    <span>{ dateString }</span>
+                    <span>{ timeString }</span>
+                </div>
+                <div className="ImportActionsPane-actionItemLocation">
+                    <Msg tagName="h4"
+                        id="panes.importActions.action.labels.location"/>
+                    <LinkingWidget
+                        list={ this.props.locationList }
+                        value={ row.parsed.locationLink || '' }
+                        originalText={ row.values[3] }
+                        onLinkClick={ id => this.openPane('location', id) }
+                        onMapValue={ this.props.onMapValue.bind(this, 'location') }
+                        onCreate={ this.props.onCreate.bind(this, 'location') }
+                        />
+                </div>
+                <div className="ImportActionsPane-actionItemActivity">
+                    <Msg tagName="h4"
+                        id="panes.importActions.action.labels.activity"/>
+                    <LinkingWidget
+                        list={ this.props.activityList }
+                        value={ row.parsed.activityLink || '' }
+                        originalText={ row.values[4] }
+                        onLinkClick={ id => this.openPane('editactivity', id) }
+                        onMapValue={ this.props.onMapValue.bind(this, 'activity') }
+                        onCreate={ this.props.onCreate.bind(this, 'activity') }
+                        />
+                </div>
+                <div className="ImportActionsPane-actionItemInfo">
+                    <Msg tagName="h4"
+                        id="panes.importActions.action.labels.info"/>
+                    <Msg id="panes.importActions.action.participantCount"
+                        values={{ count: participantCount }}
+                        />
+                    <span>{ infoString }</span>
+                </div>
+            </li>
+        );
     }
 }
 
