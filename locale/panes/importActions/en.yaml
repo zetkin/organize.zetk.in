@@ -1,4 +1,5 @@
 action:
+    clickToOpen: Click to view imported action
     labels:
         activity: Activity
         dateTime: Date & time
@@ -43,7 +44,9 @@ errorRow:
         time: The time ("{value}") was invalid.
 importedActions:
     h: Imported actions
-saveButton: Import {count}/{max} {max, plural, =1 {action} other {actions}}
+saveButton:
+    default: Import {count}/{max} {max, plural, =1 {action} other {actions}}
+    pending: Importing ({count}/{max} complete)
 title: Import actions
 titleCompleted: Import complete!
 warnings:

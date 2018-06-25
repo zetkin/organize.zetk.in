@@ -59,14 +59,61 @@
         @include card();
         display: flex;
         margin: 1.5em 0;
+        height: 9em;
+        font-size: 1.2em;
+
+        h4 {
+            font-weight: bold;
+            font-family: franklin-gothic-urw, sans-serif;
+            font-size: inherit;
+        }
+
+        &.complete {
+            flex-direction: column;
+            cursor: pointer;
+
+            h4 {
+                text-align: center;
+                margin: 1em 0 0.3em;
+
+                &:before {
+                    @include icon($fa-var-check-circle);
+                    display: block;
+                    margin: 0 auto;
+                    color: $c-brand-success;
+                    font-size: 2em;
+                }
+            }
+
+            p {
+                margin: 0;
+                text-align: center;
+                font-size: 1em;
+            }
+        }
 
         &.valid {
             .ImportActionsPane-actionItemMeta {
                 &:after {
-                    @include fa-icon;
                     content: $fa-var-check-circle;
                     color: $c-ui-dark;
                 }
+            }
+        }
+
+        &.invalid {
+            .ImportActionsPane-actionItemMeta {
+                &:after {
+                    content: $fa-var-warning;
+                    color: $c-ui-warning;
+                }
+            }
+        }
+
+        &.waiting, &.pending {
+            .ImportActionsPane-actionItemMeta {
+                display: flex;
+                align-items: center;
             }
         }
 
@@ -86,13 +133,15 @@
 
         &:after {
             @include fa-icon;
-            content: $fa-var-warning;
             display: block;
-            color: $c-ui-warning;
             position: absolute;
             bottom: 0.7em;
             left: 0;
             right: 0;
+        }
+
+        .LoadingIndicator {
+            font-size: 1.1em;
         }
     }
 
@@ -100,16 +149,8 @@
     .ImportActionsPane-actionItemLocation,
     .ImportActionsPane-actionItemActivity,
     .ImportActionsPane-actionItemInfo {
-        font-size: 1.2em;
+        font-size: inherit;
         padding: 0.8em 0.7em;
-
-        h4 {
-            display: block;
-            font-weight: bold;
-            font-family: franklin-gothic-urw, sans-serif;
-            font-size: inherit;
-            margin: 0 0 0.3em;
-        }
 
         span {
             display: block;
