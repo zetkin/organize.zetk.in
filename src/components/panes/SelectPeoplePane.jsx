@@ -27,7 +27,7 @@ export default class SelectPeoplePane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        this.props.dispatch(retrievePeople(null, null));
+        this.props.dispatch(retrievePeople());
     }
 
     getPaneTitle(data) {
@@ -71,7 +71,10 @@ export default class SelectPeoplePane extends PaneBase {
             <Msg tagName="h3" key="availableHeader"
                 id="panes.selectPeople.availableHeader"/>,
             <PersonList key="availableList" personList={ filteredPersonList }
-                onItemClick={ this.onSelect.bind(this) }/>,
+                enablePagination={ true }
+                onItemClick={ this.onSelect.bind(this) }
+                onLoadPage={ this.onLoadPage.bind(this) }
+            />,
         ];
     }
 
@@ -90,6 +93,10 @@ export default class SelectPeoplePane extends PaneBase {
         let selectionId = this.getParam(0);
         this.props.dispatch(finishSelection(selectionId));
         this.closePane();
+    }
+
+    onLoadPage(page) {
+        this.props.dispatch(retrievePeople(page));
     }
 
     onSelect(personItem) {

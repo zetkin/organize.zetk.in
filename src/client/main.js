@@ -24,7 +24,8 @@ const USE_TLS = (process.env.ZETKIN_USE_TLS == '1');
 
 window.onload = function() {
     Z.configure({
-        host: 'api.' + process.env.ZETKIN_DOMAIN,
+        clientId: process.env.ZETKIN_APP_ID,
+        zetkinDomain: process.env.ZETKIN_DOMAIN,
         port: USE_TLS? 443 : 80,
         ssl: USE_TLS,
     });
@@ -34,9 +35,9 @@ window.onload = function() {
         ...daLocaleData,
     ]);
 
-    let ticket = cookie.get('apiTicket');
-    if (ticket) {
-        Z.setTicket(JSON.parse(ticket));
+    let token = cookie.get('apiAccessToken');
+    if (token) {
+        Z.setAccessToken(token);
     }
 
     let stateElem = document.getElementById('App-initialState');

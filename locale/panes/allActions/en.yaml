@@ -5,6 +5,7 @@ filters:
         nullOption: (Regardless of activity)
     afterDate: After date
     beforeDate: Before date
+importButton: Import actions
 viewModes:
     calendar: Calendar
     list: List

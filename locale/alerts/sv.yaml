@@ -6,3 +6,6 @@ error:
         http403: |-
             Du försökte göra något som inte är tillåtet. Var god kontrollera din
             behörighetsnivå eller tala med någon ansvarig.
+        http500: |-
+            Ett fel inträffade på vår server. Felet har raporterats och kommer åtgärdas
+            så fort som möjligt.

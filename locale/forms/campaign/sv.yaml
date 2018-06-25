@@ -1,2 +1,6 @@
 description: Beskrivning
+published:
+    draft: Utkast (synlig bara för funktionärer)
+    label: Synlighet
+    published: Publicerad
 title: Titel

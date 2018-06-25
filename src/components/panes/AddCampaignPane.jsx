@@ -20,7 +20,8 @@ export default class AddCampaignPane extends PaneBase {
 
     renderPaneContent(data) {
         const initialData = {
-            title: this.getParam(0)
+            title: this.getParam(0),
+            published: true,
         };
 
         return (

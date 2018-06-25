@@ -1,2 +1,6 @@
 description: Description
+published:
+    draft: Draft (visible to officials only)
+    label: Visibility
+    published: Published
 title: Title

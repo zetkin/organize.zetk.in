@@ -6,3 +6,6 @@ error:
         http403: |-
             You attempted something you're not authorized to do. Please verify
             your access level or speak to a more senior official.
+        http500: |-
+            Something went wrong on our side. The error has been reported and will
+            be fixed as soon as possible.

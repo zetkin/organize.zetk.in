@@ -5,7 +5,7 @@
     "type": "git",
     "url": "git://github.com/zetkin/organizer-dashboard.git"
   },
-  "version": "12.0.1",
+  "version": "13.0.0",
   "main": "app",
   "scripts": {
     "postinstall": "./bin/npm/postinstall",
@@ -30,7 +30,7 @@
     "eventemitter3": "^0.1.6",
     "express": "^4.12.3",
     "express-ws": "^0.2.6",
-    "express-zetkin-auth": "git://github.com/zetkin/express-zetkin-auth.git",
+    "express-zetkin-auth": "~1.2.1",
     "flat": "^2.0.1",
     "fuse.js": "^3.0.0",
     "geodist": "^0.2.1",
@@ -46,6 +46,7 @@
     "gulp-shell": "^0.4.0",
     "gulp-streamify": "0.0.5",
     "gulp-uglify": "^1.1.0",
+    "helmet": "~3.12.1",
     "intl": "^1.2.5",
     "lodash.debounce": "^4.0.8",
     "negotiator": "^0.6.1",
@@ -73,7 +74,7 @@
     "worker-loader": "^0.8.1",
     "ws": "^0.7.2",
     "xlsx": "^0.8.0",
-    "zetkin": "git://github.com/zetkin/zetkin.js.git"
+    "zetkin": "~1.2.0"
   },
   "devDependencies": {
     "concurrently": "^3.1.0",

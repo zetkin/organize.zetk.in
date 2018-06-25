@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import express from 'express';
 import expressWs from 'express-ws';
+import helmet from 'helmet';
 import http from 'http';
 import url from 'url';
 import path from 'path';
@@ -18,6 +19,7 @@ import { loadLocaleHandler } from './locale';
 import App from '../components/App';
 import ActivistPage from '../components/fullpages/ActivistPage';
 import IntlReduxProvider from '../components/IntlReduxProvider';
+import ServerErrorPage from "../components/ServerErrorPage";
 import { setPanesFromUrlPath } from '../actions/view';
 import { setActiveOrg } from '../actions/user';
 
@@ -40,11 +42,14 @@ if (SENTRY_DSN) {
 
 
 const authOpts = {
-    loginUrl: process.env.ZETKIN_LOGIN_URL,
-    logoutRedirPath: '/logged-out',
+    secret: process.env.TOKEN_SECRET,
+    minAuthLevel: 2,
+    ssl: (process.env.ZETKIN_USE_TLS == '1')
+        && (process.env.NODE_ENV == 'production'),
+    zetkinDomain: process.env.ZETKIN_DOMAIN,
     app: {
         id: process.env.ZETKIN_APP_ID,
-        key: process.env.ZETKIN_APP_KEY,
+        secret: process.env.ZETKIN_APP_KEY,
     }
 };
 
@@ -78,13 +83,15 @@ export default function initApp(messages) {
         { fallthrough: false }));
 
     app.use(cookieParser());
+    app.use(helmet({
+        hsts: authOpts.ssl,
+    }));
 
     app.get('/logged-out', (req, res) => {
         res.redirect('//www.' + process.env.ZETKIN_DOMAIN);
     });
 
     app.use(auth.initialize(authOpts));
-    app.get('/', auth.callback(authOpts));
     app.use(auth.validate(authOpts));
     app.get('/logout', auth.logout(authOpts));
 
@@ -199,7 +206,11 @@ function renderReactPage(Component, req, res) {
         if (SENTRY_DSN) {
             Raven.captureException(err);
         }
+        var PageFactory = React.createFactory(ServerErrorPage);
+        var html = ReactDOMServer.renderToString(
+            React.createElement(IntlReduxProvider, { store: req.store },
+                PageFactory()));
 
-        throw err; // TODO: Better error handling
+        res.send(html);
     }
 }
