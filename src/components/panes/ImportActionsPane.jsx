@@ -24,7 +24,6 @@ const mapStateToProps = state => ({
     activityList: state.activities.activityList,
     campaignList: state.campaigns.campaignList,
     locationList: state.locations.locationList,
-    dataProcessed: state.actionImport.dataProcessed,
     dataRows: state.actionImport.dataRows,
     importIsPending: state.actionImport.isPending,
     importStats: state.actionImport.stats,
@@ -64,20 +63,6 @@ export default class ImportActionsPane extends PaneBase {
         return this.props.intl.formatMessage({ id: msgId });
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.activityList != this.props.activityList) {
-            this.props.dispatch(processActionImportData());
-        }
-
-        if (nextProps.locationList != this.props.locationList) {
-            this.props.dispatch(processActionImportData());
-        }
-
-        if (nextProps.dataRows && !this.props.dataRows) {
-            this.props.dispatch(processActionImportData());
-        }
-    }
-
     renderPaneContent(data) {
         if (!this.state.inBrowser) {
             // Only run in browser, since DropZone does not render on server
@@ -110,14 +95,7 @@ export default class ImportActionsPane extends PaneBase {
 
             let actionContent = null;
             if (this.props.dataRows) {
-                if (this.props.dataProcessed) {
-                    actionContent = this.renderActionsFromRows(this.props.dataRows);
-                }
-                else {
-                    // Just wait, will be processed momentarily
-                    // TODO: Show loading indicator
-                    actionContent = null;
-                }
+                actionContent = this.renderActionsFromRows(this.props.dataRows);
             }
             else {
                 let classes = cx('ImportActionsPane-dropZone', {
@@ -232,8 +210,7 @@ export default class ImportActionsPane extends PaneBase {
                             id="panes.importActions.action.labels.location"/>
                         <LinkingWidget
                             list={ this.props.locationList }
-                            selectedId={ row.parsed.locationLink || '' }
-                            forceMapping={ row.parsed.locationMapped }
+                            value={ row.parsed.locationLink || '' }
                             originalText={ data[3] }
                             onLinkClick={ id => this.openPane('location', id) }
                             onMapValue={ this.onMapValue.bind(this, 'location') }
@@ -245,8 +222,7 @@ export default class ImportActionsPane extends PaneBase {
                             id="panes.importActions.action.labels.activity"/>
                         <LinkingWidget
                             list={ this.props.activityList }
-                            selectedId={ row.parsed.activityLink || '' }
-                            forceMapping={ row.parsed.activityMapped }
+                            value={ row.parsed.activityLink || '' }
                             originalText={ data[4] }
                             onLinkClick={ id => this.openPane('editactivity', id) }
                             onMapValue={ this.onMapValue.bind(this, 'activity') }
@@ -296,7 +272,7 @@ export default class ImportActionsPane extends PaneBase {
         if (this.props.importStats && this.props.importStats.completed) {
             return null;
         }
-        else if (this.props.dataProcessed && this.state.campaign) {
+        else if (this.props.dataRows && this.state.campaign) {
             const validRows = this.props.dataRows.filter(row => !row.error);
             const rowsToImport = validRows.filter(row => row.selected
                 && !!row.parsed.activityLink
@@ -388,13 +364,13 @@ class LinkingWidget extends React.Component {
 
     render() {
         const list = this.props.list;
+        const value = this.props.value;
 
-        if (this.props.selectedId && !this.props.forceMapping) {
-            let item = getListItemById(list, this.props.selectedId);
+        if (value && value.id) {
             return (
                 <span className="linked"
-                    onClick={ this.props.onLinkClick.bind(this, item.data.id) }>
-                    <a>{ item.data.title }</a>
+                    onClick={ this.props.onLinkClick.bind(this, value.id) }>
+                    <a>{ value.title }</a>
                 </span>
             );
         }
@@ -412,8 +388,8 @@ class LinkingWidget extends React.Component {
                 { id: 'panes.importActions.action.linking.options' });
 
             const classes = cx({
-                unlinked: !this.props.selectedId,
-                linked: !!this.props.selectedId,
+                unlinked: !this.props.value,
+                linked: !!this.props.value,
             });
 
             return (
@@ -422,7 +398,7 @@ class LinkingWidget extends React.Component {
                         id="panes.importActions.action.linking.originalText"
                         values={{ title }}
                         />
-                    <select className={ classes } value={ this.props.selectedId }
+                    <select className={ classes } value={ this.props.value }
                         onChange={ this.onSelectChange.bind(this) }>
                         <option value=""></option>
                         <option value="+">{ createLabel }</option>
