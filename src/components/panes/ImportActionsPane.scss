@@ -1,6 +1,11 @@
 .PaneBase.ImportActionsPane {
     min-width: 760px;
 
+    .PaneBase-footer {
+        // TODO: Don't hardcode footer when variable-height footers work
+        height: 100px;
+    }
+
     .ImportActionsPane-dropZone {
         background-color: darken($c-ui-bg,5);
         min-height: 200px;

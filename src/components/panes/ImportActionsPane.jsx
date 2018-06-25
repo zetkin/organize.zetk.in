@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import DropZone from 'react-dropzone';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 
@@ -26,6 +27,7 @@ const mapStateToProps = state => ({
     dataProcessed: state.actionImport.dataProcessed,
     dataRows: state.actionImport.dataRows,
     importIsPending: state.actionImport.isPending,
+    importStats: state.actionImport.stats,
 });
 
 @connect(mapStateToProps)
@@ -36,7 +38,7 @@ export default class ImportActionsPane extends PaneBase {
 
         this.state = {
             inBrowser: false,
-            campaign: '_',
+            campaign: '',
             isDragging: false,
         };
     }
@@ -53,8 +55,13 @@ export default class ImportActionsPane extends PaneBase {
         });
     }
 
-    getPaneTitle(data) {
-        return this.props.intl.formatMessage({ id: 'panes.importActions.title' });
+    getPaneTitle() {
+        let msgId = 'panes.importActions.title';
+        if (this.props.importStats && this.props.importStats.completed) {
+            msgId = 'panes.importActions.titleCompleted';
+        }
+
+        return this.props.intl.formatMessage({ id: msgId });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -77,13 +84,19 @@ export default class ImportActionsPane extends PaneBase {
             return null;
         }
 
-        if (this.props.dataRows) {
-            if (!this.props.dataProcessed) {
-                // Just wait, will be processed momentarily
-                // TODO: Show loading indicator
-                return;
-            }
+        if (this.props.importStats && this.props.importStats.completed) {
+            return [
+                <div key="stats" className="ImportActionsPane-stats">
+                </div>,
 
+                <div key="actions" className="ImportActionsPane-actions">
+                    <Msg tagName="h3" id="panes.importActions.importedActions.h"/>
+                    { this.renderActionsFromRows(this.props.dataRows) }
+                </div>,
+            ];
+            return <h2>Import complete</h2>;
+        }
+        else {
             // TODO: Handle multiple sheets
             // TODO: Handle when dependencies haven't loaded
 
@@ -95,45 +108,60 @@ export default class ImportActionsPane extends PaneBase {
                 );
             });
 
+            let actionContent = null;
+            if (this.props.dataRows) {
+                if (this.props.dataProcessed) {
+                    actionContent = this.renderActionsFromRows(this.props.dataRows);
+                }
+                else {
+                    // Just wait, will be processed momentarily
+                    // TODO: Show loading indicator
+                    actionContent = null;
+                }
+            }
+            else {
+                let classes = cx('ImportActionsPane-dropZone', {
+                    'dragging': this.state.isDragging,
+                });
+
+                actionContent = (
+                    <DropZone key="dropZone" className={ classes }
+                        onDragEnter={ this.onDragEnter.bind(this) }
+                        onDragLeave={ this.onDragLeave.bind(this) }
+                        onDrop={ this.onDrop.bind(this) }>
+                        <div className="ImportActionsPane-dropZoneMessage">
+                            <Msg tagName="h3" id="panes.importActions.dropZone.h"/>
+                            <Msg tagName="p" id="panes.importActions.dropZone.p"/>
+                            <ul>
+                                <Msg tagName="li" id="panes.importActions.dropZone.columns.date"/>
+                                <Msg tagName="li" id="panes.importActions.dropZone.columns.startTime"/>
+                                <Msg tagName="li" id="panes.importActions.dropZone.columns.endTime"/>
+                                <Msg tagName="li" id="panes.importActions.dropZone.columns.location"/>
+                                <Msg tagName="li" id="panes.importActions.dropZone.columns.activity"/>
+                                <Msg tagName="li" id="panes.importActions.dropZone.columns.participants"/>
+                                <Msg tagName="li" id="panes.importActions.dropZone.columns.info"/>
+                            </ul>
+                        </div>
+                    </DropZone>
+                );
+            }
+
             return [
                 <div key="campaign" className="ImportActionsPane-campaign">
                     <Msg tagName="h3" id="panes.importActions.campaign.h"/>
                     <Msg tagName="p" id="panes.importActions.campaign.p"/>
                     <select value={ this.state.campaign }
                         onChange={ this.onCampaignChange.bind(this) }>
-                        <option value="_"></option>
+                        <option value=""></option>
                         { campaignOptions }
                     </select>
                 </div>,
 
-                this.renderActionsFromRows(this.props.dataRows),
+                <div key="actions" className="ImportActionsPane-actions">
+                    <Msg tagName="h3" id="panes.importActions.actions.h"/>
+                    { actionContent }
+                </div>,
             ];
-        }
-        else {
-            let classes = cx('ImportActionsPane-dropZone', {
-                'dragging': this.state.isDragging,
-            });
-
-            return (
-                <DropZone key="dropZone" className={ classes }
-                    onDragEnter={ this.onDragEnter.bind(this) }
-                    onDragLeave={ this.onDragLeave.bind(this) }
-                    onDrop={ this.onDrop.bind(this) }>
-                    <div className="ImportActionsPane-dropZoneMessage">
-                        <Msg tagName="h3" id="panes.importActions.dropZone.h"/>
-                        <Msg tagName="p" id="panes.importActions.dropZone.p"/>
-                        <ul>
-                            <Msg tagName="li" id="panes.importActions.dropZone.columns.date"/>
-                            <Msg tagName="li" id="panes.importActions.dropZone.columns.startTime"/>
-                            <Msg tagName="li" id="panes.importActions.dropZone.columns.endTime"/>
-                            <Msg tagName="li" id="panes.importActions.dropZone.columns.location"/>
-                            <Msg tagName="li" id="panes.importActions.dropZone.columns.activity"/>
-                            <Msg tagName="li" id="panes.importActions.dropZone.columns.participants"/>
-                            <Msg tagName="li" id="panes.importActions.dropZone.columns.info"/>
-                        </ul>
-                    </div>
-                </DropZone>
-            );
         }
     }
 
@@ -204,7 +232,7 @@ export default class ImportActionsPane extends PaneBase {
                             id="panes.importActions.action.labels.location"/>
                         <LinkingWidget
                             list={ this.props.locationList }
-                            selectedId={ row.parsed.locationLink }
+                            selectedId={ row.parsed.locationLink || '' }
                             forceMapping={ row.parsed.locationMapped }
                             originalText={ data[3] }
                             onLinkClick={ id => this.openPane('location', id) }
@@ -217,7 +245,7 @@ export default class ImportActionsPane extends PaneBase {
                             id="panes.importActions.action.labels.activity"/>
                         <LinkingWidget
                             list={ this.props.activityList }
-                            selectedId={ row.parsed.activityLink }
+                            selectedId={ row.parsed.activityLink || '' }
                             forceMapping={ row.parsed.activityMapped }
                             originalText={ data[4] }
                             onLinkClick={ id => this.openPane('editactivity', id) }
@@ -238,41 +266,59 @@ export default class ImportActionsPane extends PaneBase {
         });
 
         let warnings = [];
-        if (numNotLinked) {
-            warnings.push(
-                <div key="link" className="ImportActionsPane-linkWarning">
-                    <Msg id="panes.importActions.warnings.linking"/>
-                </div>
-            );
+        if (!this.props.importStats) {
+            if (numNotLinked) {
+                warnings.push(
+                    <div key="link" className="ImportActionsPane-linkWarning">
+                        <Msg id="panes.importActions.warnings.linking"/>
+                    </div>
+                );
+            }
+
+            if (numBadRows) {
+                warnings.push(
+                    <div key="format" className="ImportActionsPane-formatWarning">
+                        <Msg id="panes.importActions.warnings.format"/>
+                    </div>
+                );
+            }
         }
 
-        if (numBadRows) {
-            warnings.push(
-                <div key="format" className="ImportActionsPane-formatWarning">
-                    <Msg id="panes.importActions.warnings.format"/>
-                </div>
-            );
-        }
-
-        return (
-            <div key="actions" className="ImportActionsPane-actions">
-                <Msg tagName="h3" id="panes.importActions.actions.h"/>
-                { warnings }
-                <ul className="ImportActionsPane-actionList">
-                    { actionItems }
-                </ul>
-            </div>
-        );
+        return [
+            ...warnings,
+            <ul key="actionList" className="ImportActionsPane-actionList">
+                { actionItems }
+            </ul>,
+        ];
     }
 
     renderPaneFooter(data) {
-        if (this.props.dataProcessed && this.state.campaign != '_') {
-            return (
-                <Button className="ImportActionsPane-saveButton"
-                    labelMsg="panes.importActions.saveButton"
-                    onClick={ this.onSubmit.bind(this) }/>
-            );
+        if (this.props.importStats && this.props.importStats.completed) {
+            return null;
         }
+        else if (this.props.dataProcessed && this.state.campaign) {
+            const validRows = this.props.dataRows.filter(row => !row.error);
+            const rowsToImport = validRows.filter(row => row.selected
+                && !!row.parsed.activityLink
+                && !!row.parsed.locationLink);
+
+            if (rowsToImport.length) {
+                return (
+                    <Button className="ImportActionsPane-saveButton"
+                        isPending={ this.props.importIsPending }
+                        labelMsg="panes.importActions.saveButton"
+                        labelValues={{
+                            count: rowsToImport.length,
+                            max: validRows.length,
+                        }}
+                        onClick={ this.onSubmit.bind(this) }/>
+                );
+            }
+        }
+
+        return (
+            <Msg id="panes.importActions.beforeSaving"/>
+        );
     }
 
     onActionSelect(id, ev) {
@@ -282,6 +328,13 @@ export default class ImportActionsPane extends PaneBase {
     onSubmit(ev) {
         this.props.dispatch(executeActionImport(this.state.campaign));
         ev.preventDefault();
+
+        // Content has ref defined in PaneBase
+        const contentDOMNode = ReactDOM.findDOMNode(this.refs.content);
+        if (contentDOMNode) {
+            const animatedScrollTo = require('animated-scrollto');
+            animatedScrollTo(contentDOMNode, 0, 400);
+        }
     }
 
     onDragEnter() {
@@ -371,7 +424,7 @@ class LinkingWidget extends React.Component {
                         />
                     <select className={ classes } value={ this.props.selectedId }
                         onChange={ this.onSelectChange.bind(this) }>
-                        <option value="_"></option>
+                        <option value=""></option>
                         <option value="+">{ createLabel }</option>
                         <optgroup label={ groupLabel }>
                             { options }
@@ -386,7 +439,7 @@ class LinkingWidget extends React.Component {
         if (ev.target.value == '+') {
             this.props.onCreate(this.props.originalText);
         }
-        else if (ev.target.value != '_') {
+        else if (ev.target.value) {
             this.props.onMapValue(this.props.originalText, ev.target.value);
         }
     }

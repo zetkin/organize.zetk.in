@@ -16,6 +16,7 @@ action:
         } required
 actions:
     h: Actions to be imported
+beforeSaving: Select a campaign and which actions to import
 campaign:
     h: Select a campaign
     p: Pick what campaign the actions should be added to as they are imported.
@@ -40,8 +41,11 @@ errorRow:
         date: The date ("{value}") was invalid.
         location: No location was specified
         time: The time ("{value}") was invalid.
-saveButton: Start import
+importedActions:
+    h: Imported actions
+saveButton: Import {count}/{max} {max, plural, =1 {action} other {actions}}
 title: Import actions
+titleCompleted: Import complete!
 warnings:
     format: |-
         Not all lines could be parsed correctly. Details are in the list below.
