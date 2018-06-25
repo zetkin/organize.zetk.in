@@ -55,6 +55,14 @@
         }
     }
 
+    .ImportActionsPane-campaign {
+        &.invalid {
+            select {
+                box-shadow: 0 0 0.2em rgba($c-ui-warning, 1);
+            }
+        }
+    }
+
     .ImportActionsPane-stats {
         .Button {
             margin-right: 1em;
@@ -72,6 +80,7 @@
             font-weight: bold;
             font-family: franklin-gothic-urw, sans-serif;
             font-size: inherit;
+            margin: 0 0 0.3em;
         }
 
         &.complete {

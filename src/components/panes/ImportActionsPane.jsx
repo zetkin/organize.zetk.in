@@ -143,8 +143,13 @@ export default class ImportActionsPane extends PaneBase {
                 );
             }
 
+            const campaignClasses = cx('ImportActionsPane-campaign', {
+                valid: !!this.state.campaign,
+                invalid: !this.state.campaign,
+            });
+
             return [
-                <div key="campaign" className="ImportActionsPane-campaign">
+                <div key="campaign" className={ campaignClasses }>
                     <Msg tagName="h3" id="panes.importActions.campaign.h"/>
                     <Msg tagName="p" id="panes.importActions.campaign.p"/>
                     <select value={ this.state.campaign }
