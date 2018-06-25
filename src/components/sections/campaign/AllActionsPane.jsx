@@ -139,6 +139,10 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
                 className="allActionsPane-addButton"
                 labelMsg="panes.allActions.addButton"
                 onClick={ this.onAddClick.bind(this) }/>,
+            <Button key="importButton"
+                className="AllActionsPane-importButton"
+                labelMsg="panes.allActions.importButton"
+                onClick={ this.onImportClick.bind(this) }/>,
         ];
     }
 
@@ -146,6 +150,10 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         this.setState({
             viewMode: state
         });
+    }
+
+    onImportClick() {
+        this.openPane('importactions');
     }
 
     onAddClick() {

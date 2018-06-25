@@ -1,0 +1,64 @@
+action:
+    clickToOpen: Click to view imported action
+    labels:
+        activity: Activity
+        dateTime: Date & time
+        location: Location
+        info: Activists & info
+    linking:
+        create: Create new
+        options: Existing
+        originalText: Was "{title}"
+    participantCount: |-
+        {count, plural,
+            =0 {No activists}
+            =1 {One activist}
+            other {# activists}
+        } required
+actions:
+    h: Actions to be imported
+beforeSaving: Select a campaign and which actions to import
+campaign:
+    h: Select a campaign
+    p: Pick what campaign the actions should be added to as they are imported.
+dropZone:
+    columns:
+        activity: Name of activity
+        date: Date (year, month and date formatted as 2018-06-24)
+        endTime: End time (same format as start time)
+        info: Info text to be included at sign-up
+        location: Name of location
+        participants: Minimum participant count (a single number, e.g. 2 or 11)
+        startTime: Start time (24 hour format with or without minutes, e.g. 7:00, 13.00 or 16)
+    h: Drop file here
+    p: |-
+        Click here or drag and drop an Excel file containing the
+        following columns in this exact order.
+errorRow:
+    index: Line {index} could not be imported.
+    instructions: You can fix the file and load it again, or this line will be ignored.
+    types:
+        activity: No activity was specified
+        date: The date ("{value}") was invalid.
+        location: No location was specified
+        time: The time ("{value}") was invalid.
+importedActions:
+    h: Imported actions
+saveButton:
+    default: Import {count}/{max} {max, plural, =1 {action} other {actions}}
+    pending: Importing ({count}/{max} complete)
+stats:
+    p: The imported actions are listed below and can also be found in the action calendar.
+    resetButton: Import more
+    closeButton: Close import
+title: Import actions
+titleCompleted: Import complete!
+warnings:
+    format: |-
+        Not all lines could be parsed correctly. Details are in the list below.
+        If you want to make sure all lines are imported, change the file and
+        try again.
+    linking: |-
+        Not all locations and activities in the file were recognized. Make sure
+        the format is correct and if you need to create new locations or activities,
+        or you spelled them wrong, you can fix that below.

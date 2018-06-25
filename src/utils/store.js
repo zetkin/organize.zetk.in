@@ -60,6 +60,9 @@ export function getListItemById(list, id) {
     if (!id)
         return null;
 
+    if (!list)
+        return null;
+
     if (!list.items)
         return null;
 

@@ -63,6 +63,10 @@ gulp.task('js', function() {
     return gulp.src(jsSrc)
         .pipe(newer(newerConfig))
         .pipe(babel())
+        .on('error', err => {
+            console.log(err.toString());
+            this.emit('end');
+        })
         .pipe(gulp.dest(jsDest));
 });
 

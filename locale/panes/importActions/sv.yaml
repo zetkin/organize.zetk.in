@@ -1,0 +1,66 @@
+action:
+    clickToOpen: Klicka för att öppna den importerade aktionen
+    labels:
+        activity: Aktivitet
+        dateTime: Datum & tid
+        location: Plats
+        info: Aktivister & info
+    linking:
+        create: Skapa ny
+        options: Befintliga
+        originalText: Var "{title}"
+    participantCount: |-
+        {count, plural,
+            =0 {Inga aktivister}
+            =1 {En aktivist}
+            other {# aktivister}
+        } behövs
+actions:
+    h: Aktioner att importera
+beforeSaving: Välj en kampanj och vilka aktioner du vill importera
+campaign:
+    h: Välj en kampanj
+    p: |-
+        Välj vilken kampanj aktionerna ska läggas till i.
+dropZone:
+    columns:
+        activity: Aktivitetens namn
+        date: Datum (år, månad och dag, ex 1857-07-05)
+        endTime: Sluttid (samma format som starttid)
+        info: Infotext som visas vid anmälan
+        location: Platsens namn
+        participants: Minsta antal deltagare (en siffra, exempelvis 2)
+        startTime: Starttid (24-timmarsformat med eller utan minuter, exempelvis 7:00, 13:00 eller 16)
+    h: Släpp en fil här
+    p: |-
+        Klicka här eller drag och släpp en Excel-fil med följande
+        kolumner i nedanstående ordning.
+errorRow:
+    index: Rad {index} kunde inte importeras
+    instructions: Raden kommer att ignoreras om du inte åtgärdar filen.
+    types:
+        activity: Ingen aktivitet angiven.
+        date: Ogiltigt datum ("{value}").
+        location: Ingen plats angiven.
+        time: Ogiltig tid ("{value}").
+importedActions:
+    h: Skapade aktioner
+saveButton:
+    default: Skapa {count}/{max} {max, plural, =1 {aktion} other {aktioner}}
+    pending: Skapar aktioner ({count}/{max})
+stats:
+    p: Aktionerna som skapats hittar du i listan nedan och i aktionskalendern.
+    resetButton: Importera fler
+    closeButton: Avsluta importen
+title: Importera aktioner
+titleCompleted: Importen är klar
+warnings:
+    format: |-
+        Alla rader kunde inte tolkas ordentligt. Se detaljer rad för rad i
+        listan. Om du vill importera alla rader måste du ändra i filen och
+        försöka igen.
+    linking: |-
+        Vissa platser eller aktiviteter finns inte i databasen sedan tidigare.
+        Kontrollera att filen är korrekt formaterad. Om filen innehåller nya
+        platser eller aktiviteter, eller om de är stavade annorlunda, kan du
+        åtgärda det i listan.

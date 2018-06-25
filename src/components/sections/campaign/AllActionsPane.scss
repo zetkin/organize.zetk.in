@@ -1,6 +1,11 @@
 .AllActionsPane {
-    .allActionsPane-addButton {
+    .AllActionsPane-addButton {
         @include inline-button($icon: $fa-var-plus);
+        float: right;
+    }
+
+    .AllActionsPane-importButton {
+        @include inline-button($icon: $fa-var-cloud-upload);
         float: right;
     }
 }

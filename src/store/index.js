@@ -5,6 +5,7 @@ import debounce from 'lodash.debounce';
 
 import loginRedirect from '../common/redux/middleware/loginRedirect';
 
+import actionImport from './actionImport';
 import actions from './actions';
 import actionResponses from './actionResponses';
 import activities from './activities';
@@ -42,6 +43,7 @@ import { urlMiddleware } from './middleware/url';
 
 
 const appReducer = combineReducers({
+    actionImport,
     actions,
     actionResponses,
     activities,
