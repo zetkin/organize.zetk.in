@@ -46,42 +46,92 @@ export function executeActionImport(campaignId) {
         const orgId = getState().org.activeId;
         const dataRows = getState().actionImport.dataRows;
 
+        dispatch({
+            type: types.EXECUTE_ACTION_IMPORT + '_PENDING',
+            meta: { campaignId },
+            payload: {},
+        });
+
+        let curBatch = [];
+        const rowBatches = [];
+
+        // Actions are split into batches (three at a time)
         dataRows
             .filter(row => row.selected)
-            .filter(row => row.output.locationLink && row.output.activityLink)
+            .filter(row => row.parsed.locationLink && row.parsed.activityLink)
             .forEach(row => {
-                const out = row.output;
+                curBatch.push(row);
+                if (curBatch.length == 3) {
+                    rowBatches.push(curBatch);
+                    curBatch = [];
+                }
+            });
 
-                const startDateTime = new Date(out.date)
-                    .setUTC(true)
-                    .addHours(out.startTime[0])
-                    .addMinutes(out.startTime[1]);
+        if (curBatch.length) {
+            rowBatches.push(curBatch);
+            curBatch = null;
+        }
 
-                const endDateTime = new Date(out.date)
-                    .setUTC(true)
-                    .addHours(out.endTime[0])
-                    .addMinutes(out.endTime[1]);
+        // Batches are sequenced
+        let bulkPromise = Promise.resolve();
+        rowBatches.forEach(batchRows => {
+            bulkPromise = bulkPromise.then(() => {
+                let batchPromises = [];
 
-                const data = {
-                    start_time: startDateTime.toISOString(),
-                    end_time: endDateTime.toISOString(),
-                    location_id: out.locationLink,
-                    activity_id: out.activityLink,
-                    num_participants_required: out.participants,
-                    info_text: out.info,
-                };
+                batchRows.forEach(row => {
+                    const startDateTime = new Date(row.parsed.date)
+                        .setUTC(true)
+                        .addHours(row.parsed.startTime[0])
+                        .addMinutes(row.parsed.startTime[1]);
 
-                // Mimic createAction but include relevant meta
-                // TODO: Handle loading nicely
+                    const endDateTime = new Date(row.parsed.date)
+                        .setUTC(true)
+                        .addHours(row.parsed.endTime[0])
+                        .addMinutes(row.parsed.endTime[1]);
+
+                    const data = {
+                        start_time: startDateTime.toISOString(),
+                        end_time: endDateTime.toISOString(),
+                        location_id: row.parsed.locationLink,
+                        activity_id: row.parsed.activityLink,
+                        num_participants_required: row.parsed.participants,
+                        info_text: row.parsed.info,
+                    };
+
+                    const actionPromise = z.resource('orgs', orgId,
+                        'campaigns', campaignId, 'actions').post(data)
+
+                    batchPromises.push(actionPromise);
+
+                    // Mimic createAction but include relevant meta
+                    dispatch({
+                        type: types.CREATE_ACTION,
+                        meta: {
+                            importRowId: row.id,
+                        },
+                        payload: {
+                            promise: actionPromise,
+                        }
+                    });
+                });
+
+                return Promise.all(batchPromises);
+            });
+        });
+
+        bulkPromise
+            .then(() => {
                 dispatch({
-                    type: types.CREATE_ACTION,
-                    meta: {
-                        importRowId: row.id,
-                    },
-                    payload: {
-                        promise: z.resource('orgs', orgId,
-                            'campaigns', campaignId, 'actions').post(data)
-                    }
+                    type: types.EXECUTE_ACTION_IMPORT + '_FULFILLED',
+                    meta: { campaignId },
+                    payload: {},
+                });
+            })
+            .catch(err => {
+                dispatch({
+                    type: types.EXECUTE_ACTION_IMPORT + '_REJECTED',
+                    meta: { campaignId },
+                    payload: { error: err },
                 });
             });
     };
@@ -101,7 +151,7 @@ export function processActionImportData() {
                 const base = Object.assign({}, row, {
                     error: null,
                     selected: true,
-                    output: {
+                    parsed: {
                         date: null,
                         startTime: null,
                         endTime: null,
@@ -174,7 +224,7 @@ export function processActionImportData() {
                 const info = data[6] || '';
 
                 return Object.assign(base, {
-                    output: {
+                    parsed: {
                         date, startTime, endTime,
                         locationLink, locationMapped,
                         activityLink, activityMapped,

@@ -25,6 +25,7 @@ const mapStateToProps = state => ({
     locationList: state.locations.locationList,
     dataProcessed: state.actionImport.dataProcessed,
     dataRows: state.actionImport.dataRows,
+    importIsPending: state.actionImport.isPending,
 });
 
 @connect(mapStateToProps)
@@ -163,17 +164,17 @@ export default class ImportActionsPane extends PaneBase {
 
             const data = row.values;
 
-            const dateString = row.output.date.medium();
+            const dateString = row.parsed.date.medium();
 
             const pad = n => ('0' + n).slice(-2);
-            const timeString = pad(row.output.startTime[0]) + ':' + pad(row.output.startTime[1])
-                + '-' + pad(row.output.endTime[0]) + ':' + pad(row.output.endTime[1]);
+            const timeString = pad(row.parsed.startTime[0]) + ':' + pad(row.parsed.startTime[1])
+                + '-' + pad(row.parsed.endTime[0]) + ':' + pad(row.parsed.endTime[1]);
 
 
-            const participantCount = row.output.participants;
-            const infoString = row.output.info;
+            const participantCount = row.parsed.participants;
+            const infoString = row.parsed.info;
 
-            const actionIsLinked = !!(row.output.activityLink && row.output.locationLink);
+            const actionIsLinked = !!(row.parsed.activityLink && row.parsed.locationLink);
             if (!actionIsLinked) {
                 numNotLinked++;
             }
@@ -203,8 +204,8 @@ export default class ImportActionsPane extends PaneBase {
                             id="panes.importActions.action.labels.location"/>
                         <LinkingWidget
                             list={ this.props.locationList }
-                            selectedId={ row.output.locationLink }
-                            forceMapping={ row.output.locationMapped }
+                            selectedId={ row.parsed.locationLink }
+                            forceMapping={ row.parsed.locationMapped }
                             originalText={ data[3] }
                             onLinkClick={ id => this.openPane('location', id) }
                             onMapValue={ this.onMapValue.bind(this, 'location') }
@@ -216,8 +217,8 @@ export default class ImportActionsPane extends PaneBase {
                             id="panes.importActions.action.labels.activity"/>
                         <LinkingWidget
                             list={ this.props.activityList }
-                            selectedId={ row.output.activityLink }
-                            forceMapping={ row.output.activityMapped }
+                            selectedId={ row.parsed.activityLink }
+                            forceMapping={ row.parsed.activityMapped }
                             originalText={ data[4] }
                             onLinkClick={ id => this.openPane('editactivity', id) }
                             onMapValue={ this.onMapValue.bind(this, 'activity') }
