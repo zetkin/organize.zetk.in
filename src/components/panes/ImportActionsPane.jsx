@@ -374,13 +374,13 @@ class ActionItem extends React.Component {
 
         if (row.output && row.output.actionId) {
             let locData = row.parsed.locationLink;
-            if (!locData) {
+            if (!locData.id) {
                 let item = getListItemById(this.props.locationList, locData);
                 locData = item? item.data : {};
             }
 
             let actData = row.parsed.activityLink;
-            if (!actData) {
+            if (!actData.id) {
                 let item = getListItemById(this.props.activityList, actData);
                 actData = item? item.data : {};
             }
