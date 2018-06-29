@@ -1,5 +1,4 @@
 import * as types from '.';
-import searchMatches from '../utils/searchMatches';
 
 
 let queue;

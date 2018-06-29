@@ -1,5 +1,4 @@
 import * as types from '../actions';
-import searchMatches from '../utils/searchMatches';
 
 
 export default function search(state = null, action) {
