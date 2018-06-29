@@ -2,13 +2,30 @@ import * as types from '.';
 import searchMatches from '../utils/searchMatches';
 
 
+let queue;
+
 export function search(query) {
-    return ({ dispatch, getState }) => {
-        execSearch(getState, dispatch, query);
+    return ({ dispatch, getState, z }) => {
+        const orgId = getState().org.activeId;
+        const scope = getState().search.scope;
+        const lang = getState().intl.locale;
+
+        if (queue) {
+            queue.abort();
+        }
+
+        queue = new SearchQueue(orgId, query, lang);
+
+        if (!scope || scope == 'people') {
+            queue.addProc(new PersonSearchProc(z, dispatch));
+        }
 
         dispatch({
             type: types.SEARCH,
-            payload: { query },
+            meta: { query },
+            payload: {
+                promise: queue.run(),
+            },
         });
     }
 }
@@ -23,20 +40,8 @@ export function beginSearch(scope) {
 export function searchMatchFound(match) {
     return {
         type: types.SEARCH_MATCH_FOUND,
-        payload: { match },
+        payload: match,
     }
-}
-
-export function searchPending() {
-    return {
-        type: types.SEARCH_PENDING,
-    };
-}
-
-export function searchComplete() {
-    return {
-        type: types.SEARCH_COMPLETE,
-    };
 }
 
 export function changeSearchScope(scope) {
@@ -44,6 +49,12 @@ export function changeSearchScope(scope) {
         type: types.CHANGE_SEARCH_SCOPE,
         payload: { scope },
     };
+}
+
+export function resetSearchQuery() {
+    return {
+        type: types.RESET_SEARCH_QUERY,
+    }
 }
 
 export function endSearch() {
@@ -59,67 +70,81 @@ export function clearSearch(scope) {
 }
 
 
-let ws = null;
-let wsOpen = false;
+const PersonSearchProc = searchProcFactory('person');
 
-function execSearch(getState, dispatch, query) {
-    let orgId = getState().org.activeId;
-    let scope = getState().search.scope;
-    let lang = getState().intl.locale;
 
-    let sendQuery = function(query) {
-        // Don't search for really short query strings
-        if (query.length >= 3 && ws.readyState == 1) {
-            dispatch(searchPending());
+function searchProcFactory(type, opts = {}) {
+    function SearchProc(z, dispatch) {
+        let _aborted = false;
 
-            ws.send(JSON.stringify({
-                'cmd': 'search',
-                'scope': scope,
-                'lang': lang,
-                'org': orgId,
-                'query': query
-            }));
+        if (!opts.loader) {
+            opts.loader = (orgId, q) => {
+                return z.resource('orgs', orgId, 'search', type)
+                    .post({ q });
+            }
         }
-    };
 
-    if (!wsOpen) {
-        let protocol = (window.location.protocol == 'https:')? 'wss' : 'ws';
-        let url = protocol + '://' + window.location.host + '/search';
-
-        ws = new WebSocket(url);
-        ws.onopen = function() {
-            wsOpen = true;
-            sendQuery(query);
-        };
-        ws.onerror = function() {
-            dispatch(searchComplete());
-            wsOpen = false;
-        };
-        ws.onclose = function() {
-            dispatch(searchComplete());
-            wsOpen = false;
-        };
-
-
-        ws.onmessage = function(ev) {
-            let msg = JSON.parse(ev.data);
-            let currentQuery = getState().search.query;
-
-            if (msg.cmd == 'match' && msg.query == currentQuery) {
-                var existing = getState().search.results.find(
-                    m => (m.type == msg.match.type
-                            && m.data.id == msg.match.data.id));
-
-                if (existing === undefined) {
-                    dispatch(searchMatchFound(msg.match));
-                }
+        const _submitMatch = (query, data) => {
+            if (!_aborted) {
+                dispatch(searchMatchFound({ type, query, data }));
             }
-            else if (msg.cmd == 'complete' && msg.query == currentQuery) {
-                dispatch(searchComplete());
-            }
-        };
+        }
+
+        this.run = (orgId, query, lang) => {
+            return opts.loader(orgId, query, lang)
+                .then(result => {
+                    result.data.data.forEach(match => {
+                        _submitMatch(query, match)
+                    });
+                });
+        }
+
+        this.abort = () => {
+            _aborted = true;
+        }
     }
-    else {
-        sendQuery(query);
+
+    return SearchProc;
+}
+
+function SearchQueue(orgId, query, lang) {
+    let _curProc = null;
+    let _aborted = true;
+    let _searchProcs = [];
+
+    this.addProc = proc => {
+        _searchProcs.push(proc);
+    }
+
+    this.run = () => {
+        _aborted = false;
+
+        let promise = Promise.resolve();
+        _searchProcs.forEach(proc => {
+            promise = promise.then(() => {
+                if (_aborted) {
+                    return null;
+                }
+
+                _curProc = proc;
+                return proc.run(orgId, query, lang)
+                    .catch(err => {
+                        console.log('Error while searching', err);
+                        // Ignore and proceed
+                        return true;
+                    });
+            })
+        });
+
+        return promise;
+    }
+
+    this.abort = () => {
+        if (_curProc) {
+            _curProc.abort();
+            _curProc = null;
+        }
+
+        _aborted = true;
     }
 }

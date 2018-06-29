@@ -11,6 +11,7 @@ import {
     beginSearch,
     changeSearchScope,
     clearSearch,
+    resetSearchQuery,
     search,
 } from '../../../actions/search';
 
@@ -227,7 +228,14 @@ export default class Search extends React.Component {
             focusedIndex: undefined
         });
 
-        this.props.dispatch(search(ev.target.value));
+        const query = ev.target.value;
+
+        if (query) {
+            this.props.dispatch(search(ev.target.value));
+        }
+        else {
+            this.props.dispatch(resetSearchQuery());
+        }
     }
 
     onFocus(ev) {
