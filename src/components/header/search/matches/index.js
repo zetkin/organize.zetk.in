@@ -21,7 +21,7 @@ let _matches = {
     'canvass_route': RouteMatch,
     'survey': SurveyMatch,
     'survey_submission': SurveySubmissionMatch,
-    'query': QueryMatch,
+    'personquery': QueryMatch,
 };
 
 
