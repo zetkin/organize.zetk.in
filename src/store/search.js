@@ -41,6 +41,7 @@ export default function search(state = null, action) {
     }
     else if (action.type == types.RESET_SEARCH_QUERY) {
         return Object.assign({}, state, {
+            results: [],
             query: '',
         });
     }
