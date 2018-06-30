@@ -1,6 +1,4 @@
 .ImporterTable {
-    height: 100%;
-
     .ImporterTable-settings {
         position: absolute;
         top: 0;
@@ -50,9 +48,11 @@
     }
 
     .ImporterTable-container {
-        position: relative;
-        padding-top: 6em;
-        height: 100%;
+        position: absolute;
+        top: 6em;
+        bottom: 7.5em;
+        left: 0;
+        right: 0;
         overflow-x: scroll;
         @include scrollbar(darken($c-ui-bg, 10));
     }
