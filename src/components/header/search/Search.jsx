@@ -130,7 +130,7 @@ export default class Search extends React.Component {
                 paneType = 'assignedroute';
                 params = [ match.data.id ];
                 break;
-            case 'call_assignment':
+            case 'callassignment':
                 defaultSection = 'dialog';
                 paneType = 'callassignment';
                 params = [ match.data.id ];

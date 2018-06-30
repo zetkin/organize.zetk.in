@@ -21,6 +21,10 @@ export function search(query) {
             queue.addProc(new procs.ActivitySearchProc(z, dispatch));
         }
 
+        if (!scope || scope == 'dialog') {
+            queue.addProc(new procs.CallAssignmentSearchProc(z, dispatch));
+        }
+
         if (!scope || scope == 'people') {
             queue.addProc(new procs.PersonQuerySearchProc(z, dispatch));
             queue.addProc(new procs.PersonSearchProc(z, dispatch));

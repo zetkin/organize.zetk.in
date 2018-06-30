@@ -15,7 +15,7 @@ let _matches = {
     'activity': ActivityMatch,
     'actionday': ActionDayMatch,
     'assigned_route': AssignedRouteMatch,
-    'call_assignment': CallAssignmentMatch,
+    'callassignment': CallAssignmentMatch,
     'canvass_assignment': CanvassAssignmentMatch,
     'campaign': CampaignMatch,
     'location': LocationMatch,
