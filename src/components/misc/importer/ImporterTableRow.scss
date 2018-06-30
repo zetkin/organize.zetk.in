@@ -7,10 +7,11 @@
         font-size: 0.9em;
         min-width: 250px;
         max-width: 250px;
-        padding: 10px;
+        padding: 0 0.5em;
 
         span {
             display: block;
+            padding: 0.8em;
             width: 100%;
             white-space: nowrap;
             text-overflow: ellipsis;
