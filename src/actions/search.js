@@ -20,6 +20,10 @@ export function search(query) {
             queue.addProc(new PersonSearchProc(z, dispatch));
         }
 
+        if (!scope || scope == 'survey') {
+            queue.addProc(new SurveySubmissionSearchProc(z, dispatch));
+        }
+
         dispatch({
             type: types.SEARCH,
             meta: { query },
@@ -72,6 +76,7 @@ export function clearSearch(scope) {
 
 const PersonSearchProc = searchProcFactory('person');
 const PersonQuerySearchProc = searchProcFactory('personquery');
+const SurveySubmissionSearchProc = searchProcFactory('surveysubmission');
 
 
 function searchProcFactory(type, opts = {}) {
