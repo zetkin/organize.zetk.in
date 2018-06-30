@@ -31,6 +31,10 @@ export function search(query) {
             queue.addProc(new procs.PersonSearchProc(z, dispatch));
         }
 
+        if (!scope || scope == 'maps') {
+            queue.addProc(new procs.LocationSearchProc(z, dispatch));
+        }
+
         if (!scope || scope == 'survey') {
             queue.addProc(new procs.SurveySubmissionSearchProc(z, dispatch));
         }
