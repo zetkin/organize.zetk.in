@@ -115,6 +115,11 @@ export default class Search extends React.Component {
         let params;
 
         switch (match.type) {
+            case 'activity':
+                defaultSection = 'campaign';
+                paneType = 'editactivity';
+                params = [ match.data.id ];
+                break;
             case 'actionday':
                 defaultSection = 'campaign';
                 paneType = 'actionday';

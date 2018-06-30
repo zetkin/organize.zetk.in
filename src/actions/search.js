@@ -15,6 +15,10 @@ export function search(query) {
 
         queue = new SearchQueue(orgId, query, lang);
 
+        if (!scope || scope == 'campaign') {
+            queue.addProc(new ActivitySearchProc(z, dispatch));
+        }
+
         if (!scope || scope == 'people') {
             queue.addProc(new PersonQuerySearchProc(z, dispatch));
             queue.addProc(new PersonSearchProc(z, dispatch));
@@ -74,6 +78,7 @@ export function clearSearch(scope) {
 }
 
 
+const ActivitySearchProc = searchProcFactory('activity');
 const PersonSearchProc = searchProcFactory('person');
 const PersonQuerySearchProc = searchProcFactory('personquery');
 const SurveySubmissionSearchProc = searchProcFactory('surveysubmission');
