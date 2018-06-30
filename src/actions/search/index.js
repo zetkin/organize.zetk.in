@@ -18,6 +18,7 @@ export function search(query) {
         queue = new SearchQueue(orgId, query, lang);
 
         if (!scope || scope == 'campaign') {
+            queue.addProc(new procs.CampaignSearchProc(z, dispatch));
             queue.addProc(new procs.ActivitySearchProc(z, dispatch));
         }
 
