@@ -2,13 +2,14 @@ import { searchMatchFound } from '.';
 
 
 export function searchProcFactory(type, opts = {}) {
-    function SearchProc(z, dispatch) {
+    function SearchProc(dispatch) {
         let _aborted = false;
 
         if (!opts.loader) {
-            opts.loader = (orgId, q) => {
+            opts.loader = (z, orgId, q) => {
                 return z.resource('orgs', orgId, 'search', type)
-                    .post({ q });
+                    .post({ q })
+                    .then(result => result.data.data);
             }
         }
 
@@ -18,10 +19,10 @@ export function searchProcFactory(type, opts = {}) {
             }
         }
 
-        this.run = (orgId, query, lang) => {
-            return opts.loader(orgId, query, lang)
+        this.run = (z, orgId, query, lang) => {
+            return opts.loader(z, orgId, query, lang)
                 .then(result => {
-                    result.data.data.forEach(match => {
+                    result.forEach(match => {
                         _submitMatch(query, match)
                     });
                 });
@@ -35,7 +36,7 @@ export function searchProcFactory(type, opts = {}) {
     return SearchProc;
 }
 
-export function SearchQueue(orgId, query, lang) {
+export function SearchQueue(z, orgId, query, lang) {
     let _curProc = null;
     let _aborted = true;
     let _searchProcs = [];
@@ -55,7 +56,7 @@ export function SearchQueue(orgId, query, lang) {
                 }
 
                 _curProc = proc;
-                return proc.run(orgId, query, lang)
+                return proc.run(z, orgId, query, lang)
                     .catch(err => {
                         console.log('Error while searching', err);
                         // Ignore and proceed

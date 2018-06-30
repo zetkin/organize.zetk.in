@@ -15,29 +15,30 @@ export function search(query) {
             queue.abort();
         }
 
-        queue = new SearchQueue(orgId, query, lang);
+        queue = new SearchQueue(z, orgId, query, lang);
 
         if (!scope || scope == 'campaign') {
-            queue.addProc(new procs.CampaignSearchProc(z, dispatch));
-            queue.addProc(new procs.ActivitySearchProc(z, dispatch));
+            queue.addProc(new procs.ActionDaySearchProc(dispatch));
+            queue.addProc(new procs.CampaignSearchProc(dispatch));
+            queue.addProc(new procs.ActivitySearchProc(dispatch));
         }
 
         if (!scope || scope == 'dialog') {
-            queue.addProc(new procs.CallAssignmentSearchProc(z, dispatch));
+            queue.addProc(new procs.CallAssignmentSearchProc(dispatch));
         }
 
         if (!scope || scope == 'people') {
-            queue.addProc(new procs.PersonQuerySearchProc(z, dispatch));
-            queue.addProc(new procs.PersonSearchProc(z, dispatch));
+            queue.addProc(new procs.PersonQuerySearchProc(dispatch));
+            queue.addProc(new procs.PersonSearchProc(dispatch));
         }
 
         if (!scope || scope == 'maps') {
-            queue.addProc(new procs.LocationSearchProc(z, dispatch));
+            queue.addProc(new procs.LocationSearchProc(dispatch));
         }
 
         if (!scope || scope == 'survey') {
-            queue.addProc(new procs.SurveySearchProc(z, dispatch));
-            queue.addProc(new procs.SurveySubmissionSearchProc(z, dispatch));
+            queue.addProc(new procs.SurveySearchProc(dispatch));
+            queue.addProc(new procs.SurveySubmissionSearchProc(dispatch));
         }
 
         dispatch({
