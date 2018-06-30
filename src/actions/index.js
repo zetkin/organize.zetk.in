@@ -105,6 +105,7 @@ export const MOVE_WIDGET = 'MOVE_WIDGET';
 
 // Flux actions related to search
 export const SEARCH = 'SEARCH';
+export const RESET_SEARCH_QUERY = 'RESET_SEARCH_QUERY';
 export const BEGIN_SEARCH = 'BEGIN_SEARCH';
 export const SEARCH_MATCH_FOUND = 'SEARCH_MATCH_FOUND';
 export const SEARCH_PENDING = 'SEARCH_PENDING';

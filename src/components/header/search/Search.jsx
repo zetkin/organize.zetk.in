@@ -11,6 +11,7 @@ import {
     beginSearch,
     changeSearchScope,
     clearSearch,
+    resetSearchQuery,
     search,
 } from '../../../actions/search';
 
@@ -114,6 +115,11 @@ export default class Search extends React.Component {
         let params;
 
         switch (match.type) {
+            case 'activity':
+                defaultSection = 'campaign';
+                paneType = 'editactivity';
+                params = [ match.data.id ];
+                break;
             case 'actionday':
                 defaultSection = 'campaign';
                 paneType = 'actionday';
@@ -124,7 +130,7 @@ export default class Search extends React.Component {
                 paneType = 'assignedroute';
                 params = [ match.data.id ];
                 break;
-            case 'call_assignment':
+            case 'callassignment':
                 defaultSection = 'dialog';
                 paneType = 'callassignment';
                 params = [ match.data.id ];
@@ -159,12 +165,12 @@ export default class Search extends React.Component {
                 paneType = 'survey';
                 params = [ match.data.id ];
                 break;
-            case 'survey_submission':
+            case 'surveysubmission':
                 defaultSection = 'survey';
                 paneType = 'surveysubmission';
                 params = [ match.data.id ];
                 break;
-            case 'query':
+            case 'personquery':
                 defaultSection = 'people';
                 paneType = 'query';
                 params = [ match.data.id ];
@@ -227,7 +233,14 @@ export default class Search extends React.Component {
             focusedIndex: undefined
         });
 
-        this.props.dispatch(search(ev.target.value));
+        const query = ev.target.value;
+
+        if (query) {
+            this.props.dispatch(search(ev.target.value));
+        }
+        else {
+            this.props.dispatch(resetSearchQuery());
+        }
     }
 
     onFocus(ev) {

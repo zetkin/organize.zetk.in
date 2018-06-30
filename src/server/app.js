@@ -12,7 +12,6 @@ import path from 'path';
 
 import api from './api';
 import dataRouter from './datarouter';
-import search from './search';
 import widgets from './widgets';
 import prints from './prints';
 import { loadLocaleHandler } from './locale';
@@ -103,7 +102,6 @@ export default function initApp(messages) {
     app.use('/prints', prints);
 
     expressWs(app);
-    app.ws('/search', search);
 
     app.get('/activist', function(req, res, next) {
         if (req.store.getState().user.memberships.length) {
@@ -153,14 +151,6 @@ export default function initApp(messages) {
     }
 
     app.use(function(req, res, next) {
-        if (req.url == '/search') {
-            // Don't render any output for search. Because of how
-            // the express-ws middleware works, all routes must
-            // call next(), even if the route is later in the chain
-            // than the ws handler.
-            return next();
-        }
-
         if (req.store.getState().user.memberships.length == 0) {
             // User has no official roles in any organization
             res.redirect(303, '/activist');
