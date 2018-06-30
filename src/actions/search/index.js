@@ -36,6 +36,7 @@ export function search(query) {
         }
 
         if (!scope || scope == 'survey') {
+            queue.addProc(new procs.SurveySearchProc(z, dispatch));
             queue.addProc(new procs.SurveySubmissionSearchProc(z, dispatch));
         }
 

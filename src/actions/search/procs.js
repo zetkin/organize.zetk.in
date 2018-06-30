@@ -6,4 +6,5 @@ export const CampaignSearchProc = searchProcFactory('campaign');
 export const LocationSearchProc = searchProcFactory('location');
 export const PersonSearchProc = searchProcFactory('person');
 export const PersonQuerySearchProc = searchProcFactory('personquery');
+export const SurveySearchProc = searchProcFactory('survey');
 export const SurveySubmissionSearchProc = searchProcFactory('surveysubmission');
