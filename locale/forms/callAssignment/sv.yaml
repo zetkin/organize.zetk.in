@@ -1,3 +1,7 @@
+callerNotes:
+    disabled: Tillåt inte att ringar gör anteckningar
+    enabled: Tillåt ringare att göra fritextanteckningar
+    label: Ringares anteckningar
 coolDown: Timmar mellan återförsök
 description: Beskrivning
 endDate: Slutdatum
