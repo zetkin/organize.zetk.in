@@ -311,7 +311,7 @@ function parseTime(str) {
         return null;
     }
 
-    const fields = str.split(/[\.:]+/);
+    const fields = String(str).split(/[\.:]+/);
     if (fields.length && fields.length <= 3) {
         let h = parseInt(fields[0])
         if (isNaN(h)) return null;
