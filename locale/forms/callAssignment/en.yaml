@@ -1,3 +1,7 @@
+callerNotes:
+    disabled: Prevent callers from making notes
+    enabled: Allow callers to make notes
+    label: Caller notes
 coolDown: Hours between retries
 description: Description
 endDate: End date
