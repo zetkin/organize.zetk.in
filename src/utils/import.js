@@ -41,7 +41,7 @@ export function parseWorkbook(data) {
                 let rowValues = table.columnList.items.map((col, idx) => {
                     let addr = xlsx.utils.encode_cell({ r, c: idx });
                     let cell = sheet[addr];
-                    return cell? cell.v : undefined;
+                    return cell? (cell.w || cell.v) : undefined;
                 });
 
                 // Only include if there are non-null values in the row
