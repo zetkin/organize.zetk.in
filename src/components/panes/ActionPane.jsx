@@ -17,7 +17,10 @@ import {
     PCActionParticipantItem,
     PCActionResponseItem,
 } from '../misc/personcollection/items';
-import { retrieveActionResponses } from '../../actions/actionResponse';
+import {
+    deleteActionResponse,
+    retrieveActionResponses
+} from '../../actions/actionResponse';
 import {
     addActionParticipant,
     addActionParticipants,
@@ -121,8 +124,8 @@ export default class ActionPane extends PaneBase {
                 responseList = (
                     <PersonCollection items={ responses }
                         itemComponent={ PCActionResponseItem }
-                        showRemoveButtons={ false }
                         showEditButtons={ false }
+                        onRemove={ this.onRemoveResponse.bind(this) }
                         onSelect={ this.onSelectResponse.bind(this) }
                         />
                 );
@@ -266,6 +269,11 @@ export default class ActionPane extends PaneBase {
     onSelectResponse(person) {
         let actionId = this.getParam(0);
         this.props.dispatch(addActionParticipant(actionId, person.id));
+    }
+
+    onRemoveResponse(person) {
+        let actionId = this.getParam(0);
+        this.props.dispatch(deleteActionResponse(actionId, person.id));
     }
 
     onRemoveParticipant(person) {

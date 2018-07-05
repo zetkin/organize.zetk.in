@@ -1,5 +1,5 @@
 addButton: Add campaign
 campaignState:
     archived: Archived
-    draft: Craft
+    draft: Draft
     published: Published

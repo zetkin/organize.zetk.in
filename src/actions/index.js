@@ -98,6 +98,7 @@ export const REMOVE_ACTION_PARTICIPANT = 'REMOVE_ACTION_PARTICIPANT';
 
 // Flux actions realted to action responses
 export const RETRIEVE_ACTION_RESPONSES = 'RETRIEVE_ACTION_RESPONSES';
+export const DELETE_ACTION_RESPONSE = 'DELETE_ACTION_RESPONSE';
 
 // Flux actions related to dashboard
 export const LOAD_WIDGET_DATA = 'LOAD_WIDGET_DATA';
