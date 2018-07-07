@@ -106,22 +106,27 @@ export default class ActionListItem extends React.Component {
         };
     }
 
-    componentDidMount() {
-        let action = this.props.data;
-        let participants = this.props.participants.byAction[action.id];
-        let responses = this.props.responses.byAction[action.id];
+    componentDidUpdate(prevProps) {
+        if (this.props.inView && !prevProps.inView) {
+            const action = this.props.data;
+            const participants = this.props.participants.byAction[action.id];
+            const responses = this.props.responses.byAction[action.id];
 
-        // TODO: Move to load when first shown (in view)
-        if (!participants) {
-            this.props.dispatch(retrieveActionParticipants(action.id));
-        }
-        if (!responses) {
-            this.props.dispatch(retrieveActionResponses(action.id));
+            if (!participants) {
+                this.props.dispatch(retrieveActionParticipants(action.id));
+            }
+            if (!responses) {
+                this.props.dispatch(retrieveActionResponses(action.id));
+            }
         }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         var key;
+
+        if (this.props.inView != nextProps.inView) {
+            return true;
+        }
 
         for (key in nextProps) {
             if (key.indexOf('on') !== 0 && nextProps[key] != this.props[key]) {
