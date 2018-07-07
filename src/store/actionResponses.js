@@ -2,7 +2,14 @@ import * as types from '../actions';
 
 
 export default function actionResponses(state = null, action) {
-    if (action.type == types.RETRIEVE_ACTION_RESPONSES + '_FULFILLED') {
+    if (action.type == types.RETRIEVE_ACTION_RESPONSES + '_PENDING') {
+        return Object.assign({}, state, {
+            byAction: Object.assign({}, state.byAction, {
+                [action.meta.actionId]: [],
+            }),
+        });
+    }
+    else if (action.type == types.RETRIEVE_ACTION_RESPONSES + '_FULFILLED') {
         let byAction = Object.assign({}, state.byAction);
         let actionId = action.meta.actionId;
 
