@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import cx from 'classnames';
 
 import LoadingIndicator from '../../misc/LoadingIndicator';
@@ -18,6 +19,7 @@ export default class ListItem extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         return (nextProps.item != this.props.item
+            || nextProps.inView != this.props.inView
             || nextProps.selected !== this.props.selected);
     }
 
@@ -49,6 +51,7 @@ export default class ListItem extends React.Component {
             content = [
                 checkbox,
                 <ItemComponent key="item" data={ item.data }
+                    inView={ this.props.inView }
                     onItemMouseOut={ this.onItemMouseOut.bind(this) }
                     onItemMouseOver={ this.onItemMouseOver.bind(this) }
                     onItemClick={ this.onItemClick.bind(this) }/>,
