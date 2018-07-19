@@ -7,6 +7,7 @@ column:
             external: External ID
             zetkin: Zetkin ID
         person:
+            altPhone: Alt. phone number
             city: City
             coAddress: C/O address
             email: E-mail address
@@ -67,6 +68,7 @@ settings:
             gender: Gender
             lastName: Last name
             phone: Phone number
+            altPhone: Alt. phone number
             streetAddress: Street address
             zip: Zip code
         h: Select field

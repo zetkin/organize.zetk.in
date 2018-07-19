@@ -23,6 +23,7 @@ export default class ImporterColumnHead extends React.Component {
             'person.last_name': col('colOptions.person.lastName'),
             'person.email': col('colOptions.person.email'),
             'person.phone': col('colOptions.person.phone'),
+            'person.alt_phone': col('colOptions.person.altPhone'),
             'person.co_address': col('colOptions.person.coAddress'),
             'person.street_address': col('colOptions.person.streetAddress'),
             'person.zip_code': col('colOptions.person.zip'),

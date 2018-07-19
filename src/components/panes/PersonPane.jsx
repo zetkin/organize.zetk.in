@@ -98,6 +98,7 @@ export default class PersonPane extends PaneBase {
             };
 
             const formatMessage = this.props.intl.formatMessage;
+            const phoneNumbers = [ person.phone, person.alt_phone ].filter(pn => !!pn);
 
             return [
                 <DraggableAvatar key="avatar" ref="avatar" person={ person }/>,
@@ -106,7 +107,7 @@ export default class PersonPane extends PaneBase {
                         { name: 'user', msgId: person.is_user ?
                             'panes.person.user.connected' : 'panes.person.user.notConnected' },
                         { name: 'email', value: person.email },
-                        { name: 'phone', value: person.phone },
+                        { name: 'phone', value: phoneNumbers.join(', ') },
                         { name: 'address', value: addrFields.length? addrFields : null },
                         { name: 'editLink', msgId: 'panes.person.editLink', onClick: this.onClickEdit.bind(this) }
                     ]}
