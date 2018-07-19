@@ -26,6 +26,7 @@ export default class PersonDataColumnSettings extends React.Component {
             'last_name': col('lastName'),
             'email': col('email'),
             'phone': col('phone'),
+            'alt_phone': col('altPhone'),
             'co_address': col('coAddress'),
             'street_address': col('streetAddress'),
             'zip_code': col('zip'),
