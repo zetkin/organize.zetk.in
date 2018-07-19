@@ -1,11 +1,12 @@
 import * as types from './';
 
 
-export function createPerson(data) {
+export function createPerson(data, paneId) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
         dispatch({
             type: types.CREATE_PERSON,
+            meta: { paneId },
             payload: {
                 promise: z.resource('orgs', orgId, 'people').post(data)
             }
