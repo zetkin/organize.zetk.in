@@ -1,6 +1,10 @@
 description: Description
 published:
     draft: Draft (visible to officials only)
-    label: Visibility
+    label: Status
     published: Published
 title: Title
+visibility:
+    hidden: Only for connected users
+    label: Visibility
+    open: Open to anyone
