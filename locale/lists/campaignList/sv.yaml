@@ -1,0 +1,6 @@
+state:
+    archived: Arkiverad
+    draft: Utkast
+    published:
+        hidden: Publicerad men synlig endast för inloggade
+        open: Publicerad och öppen för alla

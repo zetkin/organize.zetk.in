@@ -19,16 +19,25 @@ export default class CampaignListItem extends React.Component {
             {'CampaignListItem-draft': !campaign.published},
             {'CampaignListItem-archived': campaign.archived},
         )
-        let stateMsg = campaign.published ? 'panes.allCampaigns.campaignState.published' : 'panes.allCampaigns.campaignState.draft';
+
+        let stateMsg = campaign.published?
+            'lists.campaignList.state.published' :
+            'lists.campaignList.state.draft';
+
         if (campaign.archived) {
-            stateMsg = 'panes.allCampaigns.campaignState.archived'
+            stateMsg = 'lists.campaignList.state.archived'
+        }
+        else if (campaign.published) {
+            stateMsg += '.' + campaign.visibility;
         }
 
         return (
             <div className={classes}
                 onClick={ this.props.onItemClick }>
                 <span className="CampaignListItem-title">{campaign.title}</span>
-                <span className="CampaignListItem-state"><Msg id={stateMsg}/></span>
+                <span className="CampaignListItem-state">
+                    <Msg id={ stateMsg }/>
+                </span>
             </div>
         );
     }
