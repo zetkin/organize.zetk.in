@@ -16,4 +16,5 @@ target:
         goal: Uppfyller syftet
         target: Personer i målgruppen
     targetDetails: Visa personer i målgruppen
+    targetDetailsUnavailable: Detaljer ej tillgänliga för stora uppdrag
 title: Ringuppdrag

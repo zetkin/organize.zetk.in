@@ -16,4 +16,5 @@ target:
         goal: Fulfill goal
         target: Targets
     targetDetails: Show target group breakdown
+    targetDetailsUnavailable: Details unavailable for big assignments
 title: Call assignment

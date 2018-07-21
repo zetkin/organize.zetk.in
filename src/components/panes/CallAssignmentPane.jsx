@@ -86,6 +86,7 @@ export default class CallAssignmentPane extends PaneBase {
             let assignment = data.assignmentItem.data;
             let instructions = assignment.instructions;
 
+            let targetDetailsLink = null;
             let targetStats = null;
             let goalStats = null;
             let progress = 0.05;
@@ -110,6 +111,22 @@ export default class CallAssignmentPane extends PaneBase {
                 ];
 
                 progress = (1 - stats.num_remaining_targets / stats.num_target_matches);
+
+                if (stats.num_target_matches < 3000) {
+                    targetDetailsLink = (
+                        <Link className="CallAssignmentPane-targetDetailLink"
+                            msgId="panes.callAssignment.target.targetDetails"
+                            onClick={ this.onClickTargetDetails.bind(this) }/>
+                    );
+                }
+                else {
+                    targetDetailsLink = (
+                        <span className="CallAssignmentPane-targetDetailLink">
+                            <Msg id="panes.callAssignment.target.targetDetailsUnavailable"
+                                />
+                        </span>
+                    );
+                }
             }
 
             if (data.queryItem && data.queryItem.data.matchList) {
@@ -180,9 +197,7 @@ export default class CallAssignmentPane extends PaneBase {
                         </div>
                     </div>
                     <ProgressBar progress={ progress }/>
-                    <Link className="CallAssignmentPane-targetDetailLink"
-                        msgId="panes.callAssignment.target.targetDetails"
-                        onClick={ this.onClickTargetDetails.bind(this) }/>
+                    { targetDetailsLink }
                 </div>,
 
                 <div key="callers"
