@@ -97,6 +97,7 @@ export default class MergePeoplePane extends PaneBase {
                 let values = objects
                     .map(o => o[field])
                     .filter(val => !!val)
+                    .map(val => val.trim())
                     .filter((val, idx, arr) => arr.lastIndexOf(val) === idx);
 
                 let valueElem = null;

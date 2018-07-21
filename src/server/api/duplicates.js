@@ -15,8 +15,8 @@ const dupApi = express();
 const calcSimilarity = (master, other) => {
     let score = 0;
 
-    if (master.first_name == other.first_name) score += 6;
-    if (master.last_name == other.last_name) score += 6;
+    if (master.first_name.trim() == other.first_name.trim()) score += 6;
+    if (master.last_name.trim() == other.last_name.trim()) score += 6;
     if (master.ext_id && master.ext_id == other.ext_id) score += 20;
 
     // Add 6 for identical e-mails, subtract 2 for different
