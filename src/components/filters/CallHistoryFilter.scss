@@ -5,17 +5,23 @@
         clear: both;
     }
 
-    .CallHistoryFilter-days {
-        float: left;
+
+    .CallHistoryFilter-days, .CallHistoryFilter-minTimes {
+        margin: 0 0 1em;
+
+        div {
+            display: inline-block;
+            width: 30%;
+        }
 
         input {
-            width: 50px;
+            width: 100%;
         }
-    }
 
-    .CallHistoryFilter-daysLabel {
-        float: left;
-        padding: 3px 5px;
+        label {
+            display: inline-block;
+            padding: 3px 5px;
+        }
     }
 
     .DateInput {

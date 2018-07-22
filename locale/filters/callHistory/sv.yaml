@@ -5,6 +5,9 @@ dateOptions:
     before: före ett visst datum
     between: mellan vissa datum
     inLast: under de senaste dagarna
+labels:
+    days: dagar
+    times: gånger
 opOptions:
     calledAny: Ringd överhuvudtaget
     calledSpec: Ringd i ett specifikt ringuppdrag
@@ -12,3 +15,6 @@ opOptions:
     notReachedSpec: Inte nådd i ett specifikt ringuppdrag
     reachedAny: Nådd överhuvudtaget
     reachedSpec: Nådd i ett specifikt ringuppdrag
+timesOptions:
+    any: Oavsett hur många gånger
+    min: Minst ett visst antal gånger

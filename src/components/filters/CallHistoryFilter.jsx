@@ -1,5 +1,5 @@
 import React from 'react';
-import { injectIntl } from 'react-intl';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import FilterBase from './FilterBase';
@@ -59,6 +59,12 @@ export default class CallHistoryFilter extends FilterBase {
             'inlast': msg('filters.callHistory.dateOptions.inLast'),
         };
 
+        const minTimesOption = (this.state.minTimes > 1)? 'min' : 'any';
+        const TIMES_OPTIONS = {
+            'any': msg('filters.callHistory.timesOptions.any'),
+            'min': msg('filters.callHistory.timesOptions.min'),
+        };
+
         let assignmentSelect = null;
         if (op.indexOf('spec') > 0) {
             assignmentSelect = (
@@ -92,13 +98,25 @@ export default class CallHistoryFilter extends FilterBase {
 
         let daysInput = null;
         if (timeframe == 'inlast') {
-            daysInput = [
-                <IntInput key="days" name="days" value={ this.state.days }
-                    className="CallHistoryFilter-days"
-                    onValueChange={ this.onChangeSimpleField.bind(this) }/>,
-                <label key="daysLabel"
-                    className="CallHistoryFilter-daysLabel">days</label>,
-            ];
+            daysInput = (
+                <div className="CallHistoryFilter-days">
+                    <IntInput key="days" name="days" value={ this.state.days }
+                        onValueChange={ this.onChangeSimpleField.bind(this) }/>
+                    <Msg tagName="label" id="filters.callHistory.labels.days"/>
+                </div>
+            );
+        }
+
+        let minTimesInput = null;
+        if (minTimesOption == 'min') {
+            minTimesInput = (
+                <div className="CallHistoryFilter-minTimes">
+                    <IntInput name="minTimes"
+                        value={ this.state.minTimes }
+                        onValueChange={ this.onChangeSimpleField.bind(this) }/>
+                    <Msg tagName="label" id="filters.callHistory.labels.times"/>
+                </div>
+            );
         }
 
         return [
@@ -108,6 +126,12 @@ export default class CallHistoryFilter extends FilterBase {
                 onValueChange={ this.onSelectOperator.bind(this) }/>,
 
             assignmentSelect,
+
+            <SelectInput key="minTimesSelect" name="minTimesSelect"
+                options={ TIMES_OPTIONS } value={ minTimesOption }
+                onValueChange={ this.onSelectTimesOption.bind(this) }/>,
+
+            minTimesInput,
 
             <SelectInput key="timeframe" name="timeframe"
                 options={ DATE_OPTIONS } value={ this.state.timeframe }
@@ -133,6 +157,7 @@ export default class CallHistoryFilter extends FilterBase {
             assignment: (opFields[1] == 'spec')? this.state.assignment : null,
             before: before,
             after: after,
+            minTimes: this.state.minTimes,
         };
     }
 
@@ -157,6 +182,12 @@ export default class CallHistoryFilter extends FilterBase {
             // has actually been selected.
             this.setState({ op: value });
         }
+    }
+
+    onSelectTimesOption(name, value) {
+        const minTimes = (value == 'any')? 0 : 2;
+        this.setState({ minTimes }, () =>
+            this.onConfigChange());
     }
 
     onSelectTimeframe(name, value) {
@@ -195,6 +226,7 @@ function stateFromConfig(config) {
         assignment: config.assignment,
         before: config.before,
         after: config.after,
+        minTimes: config.minTimes,
     }
 
     state.timeframe = 'any';
