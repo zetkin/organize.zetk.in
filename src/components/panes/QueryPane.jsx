@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
@@ -46,7 +47,8 @@ export default class QueryPane extends PaneBase {
     getPaneSubTitle(data) {
         return (
             <a key="editLink" onClick={ this.onEditClick.bind(this) }>
-                Edit this query</a>
+                <Msg id="panes.query.editLink"/>
+            </a>
         );
     }
 
