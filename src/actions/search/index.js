@@ -15,37 +15,39 @@ export function search(query) {
             queue.abort();
         }
 
-        queue = new SearchQueue(z, orgId, query, lang);
+        if (query.length > 2) {
+            queue = new SearchQueue(z, orgId, query, lang);
 
-        if (!scope || scope == 'campaign') {
-            queue.addProc(new procs.ActionDaySearchProc(dispatch));
-            queue.addProc(new procs.CampaignSearchProc(dispatch));
-            queue.addProc(new procs.ActivitySearchProc(dispatch));
-        }
+            if (!scope || scope == 'campaign') {
+                queue.addProc(new procs.ActionDaySearchProc(dispatch));
+                queue.addProc(new procs.CampaignSearchProc(dispatch));
+                queue.addProc(new procs.ActivitySearchProc(dispatch));
+            }
 
-        if (!scope || scope == 'dialog') {
-            queue.addProc(new procs.CallAssignmentSearchProc(dispatch));
-        }
+            if (!scope || scope == 'dialog') {
+                queue.addProc(new procs.CallAssignmentSearchProc(dispatch));
+            }
 
-        if (!scope || scope == 'people') {
-            queue.addProc(new procs.PersonQuerySearchProc(dispatch));
-            queue.addProc(new procs.PersonSearchProc(dispatch));
-        }
+            if (!scope || scope == 'people') {
+                queue.addProc(new procs.PersonQuerySearchProc(dispatch));
+                queue.addProc(new procs.PersonSearchProc(dispatch));
+            }
 
-        if (!scope || scope == 'maps') {
-            queue.addProc(new procs.LocationSearchProc(dispatch));
-        }
+            if (!scope || scope == 'maps') {
+                queue.addProc(new procs.LocationSearchProc(dispatch));
+            }
 
-        if (!scope || scope == 'survey') {
-            queue.addProc(new procs.SurveySearchProc(dispatch));
-            queue.addProc(new procs.SurveySubmissionSearchProc(dispatch));
+            if (!scope || scope == 'survey') {
+                queue.addProc(new procs.SurveySearchProc(dispatch));
+                queue.addProc(new procs.SurveySubmissionSearchProc(dispatch));
+            }
         }
 
         dispatch({
             type: types.SEARCH,
             meta: { query },
             payload: {
-                promise: queue.run(),
+                promise: queue? queue.run() : Promise.resolve(),
             },
         });
     }
