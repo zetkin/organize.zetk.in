@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { injectIntl } from 'react-intl';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 
 import LoadingIndicator from '../../misc/LoadingIndicator';
 import ScopeSelect from './ScopeSelect';
@@ -52,7 +52,16 @@ export default class Search extends React.Component {
             classes.push('focused');
         }
 
-        if (results.length || searchStore.isPending) {
+        if (searchStore.isActive && searchStore.query && searchStore.query.length < 3) {
+            resultList = (
+                <ul className="Search-results">
+                    <li className="Search-keepTyping">
+                        <Msg id="header.search.keepTyping"/>
+                    </li>
+                </ul>
+            );
+        }
+        else if (results.length || searchStore.isPending) {
             let loadingIndicator = null;
             if (searchStore.isPending) {
                 loadingIndicator = (
