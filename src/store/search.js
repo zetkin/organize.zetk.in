@@ -1,72 +1,76 @@
 import * as types from '../actions';
-import searchMatches from '../utils/searchMatches';
 
 
 export default function search(state = null, action) {
-    switch (action.type) {
-        case types.SEARCH:
+    const CLEAR_ACTIONS = [
+        types.OPEN_PANE,
+        types.PUSH_PANE,
+        types.GOTO_SECTION,
+        types.CLEAR_SEARCH,
+    ];
+
+    if (action.type == types.SEARCH + '_PENDING') {
+        return Object.assign({}, state, {
+            results: [],
+            query: action.meta.query,
+            isActive: true,
+            isPending: true,
+        });
+    }
+    else if (action.type == types.SEARCH + '_FULFILLED') {
+        return Object.assign({}, state, {
+            isPending: false,
+        });
+    }
+    else if (action.type == types.BEGIN_SEARCH) {
+        return Object.assign({}, state, {
+            scope: action.payload.scope || state.scope,
+            isActive: true,
+        });
+    }
+    else if (action.type == types.SEARCH_MATCH_FOUND) {
+        if (action.payload.query == state.query) {
             return Object.assign({}, state, {
-                query: action.payload.query,
-                isActive: true,
-
-                // Filter existing results against new query, or if the query
-                // is shorter than three characters, clear the results
-                results: action.payload.query.length < 3? [] : 
-                    state.results.filter(
-                        r => searchMatches(action.payload.query, r.data))
+                results: state.results.concat([ action.payload ]),
             });
-
-        case types.BEGIN_SEARCH:
-            return Object.assign({}, state, {
-                scope: action.payload.scope || state.scope,
-                isActive: true,
-            });
-
-
-        case types.SEARCH_PENDING:
-            return Object.assign({}, state, {
-                isPending: true,
-            });
-
-        case types.SEARCH_MATCH_FOUND:
-            return Object.assign({}, state, {
-                results: state.results.concat([ action.payload.match ]),
-            });
-
-        case types.SEARCH_COMPLETE:
-            return Object.assign({}, state, {
-                isPending: false,
-            });
-
-        case types.END_SEARCH:
-            return Object.assign({}, state, {
-                isActive: false,
-            });
-
-        case types.OPEN_PANE:
-        case types.PUSH_PANE:
-        case types.GOTO_SECTION:
-        case types.CLEAR_SEARCH:
-            return Object.assign({}, state, {
-                query: '',
-                isActive: false,
-                isPending: false,
-                scope: null,
-                results: []
-            });
-
-        case types.CHANGE_SEARCH_SCOPE:
-            return Object.assign({}, state, {
-                scope: action.payload.scope,
-            });
-
-        default:
-            return state || {
-                query: '',
-                isActive: false,
-                isPending: false,
-                scope: null,
-                results: [],
-            };
+        }
+        else {
+            console.log('Query out of sync, ignoring match', action, action);
+            return state;
+        }
+    }
+    else if (action.type == types.RESET_SEARCH_QUERY) {
+        return Object.assign({}, state, {
+            results: [],
+            query: '',
+        });
+    }
+    else if (action.type == types.END_SEARCH) {
+        return Object.assign({}, state, {
+            isActive: false,
+        });
+    }
+    else if (action.type == types.CHANGE_SEARCH_SCOPE) {
+        return Object.assign({}, state, {
+            scope: action.payload.scope,
+        });
+    }
+    else if (CLEAR_ACTIONS.indexOf(action.type) >= 0) {
+        return Object.assign({}, state, {
+            query: '',
+            isActive: false,
+            isPending: false,
+            scope: null,
+            results: []
+        });
+    }
+    else {
+        return state || {
+            query: '',
+            isActive: false,
+            isPending: false,
+            scope: null,
+            results: [],
+        };
     }
 }

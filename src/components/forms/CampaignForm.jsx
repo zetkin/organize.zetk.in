@@ -8,12 +8,19 @@ import TextInput from './inputs/TextInput';
 
 export default class ActivityForm extends React.Component {
     render() {
-        const campaign = this.props.campaign || {};
+        const campaign = this.props.campaign || {
+            visibility: 'hidden',
+        };
 
         const published = campaign.published? 'published' : 'draft';
         const publishedOptions = {
             published: 'forms.campaign.published.published',
             draft: 'forms.campaign.published.draft',
+        };
+
+        const visibilityOptions = {
+            hidden: 'forms.campaign.visibility.hidden',
+            open: 'forms.campaign.visibility.open',
         };
 
         return (
@@ -23,6 +30,11 @@ export default class ActivityForm extends React.Component {
                 <SelectInput labelMsg="forms.campaign.published.label" name="published"
                     initialValue={ published }
                     options={ publishedOptions }
+                    optionLabelsAreMessages={ true }
+                    />
+                <SelectInput labelMsg="forms.campaign.visibility.label" name="visibility"
+                    initialValue={ campaign.visibility }
+                    options={ visibilityOptions }
                     optionLabelsAreMessages={ true }
                     />
                 <TextArea labelMsg="forms.campaign.description" name="info_text"

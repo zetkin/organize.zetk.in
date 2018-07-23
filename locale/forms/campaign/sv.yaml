@@ -1,6 +1,10 @@
 description: Beskrivning
 published:
     draft: Utkast (synlig bara för funktionärer)
-    label: Synlighet
+    label: Status
     published: Publicerad
 title: Titel
+visibility:
+    hidden: Endast för anslutna användare
+    label: Synlighet
+    open: Öppen för alla

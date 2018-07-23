@@ -24,6 +24,8 @@ export default class PersonListItem extends React.Component {
             mailLink = <a href={ mailto }>{ person.email }</a>;
         }
 
+        const phoneNumbers = [ person.phone, person.alt_phone ].filter(pn => !!pn);
+
         return (
             <div className="PersonListItem"
                 onClick={ this.props.onItemClick }>
@@ -39,7 +41,7 @@ export default class PersonListItem extends React.Component {
                     <span className="PersonListItem-email">
                         { mailLink }</span>
                     <span className="PersonListItem-phone">
-                        { person.phone }</span>
+                        { phoneNumbers.join(', ') }</span>
                 </div>
             </div>
         );

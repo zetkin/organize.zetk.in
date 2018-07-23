@@ -33,6 +33,8 @@ export default class PersonForm extends React.Component {
                     initialValue={ person.email }/>
                 <TextInput labelMsg="forms.person.phone" name="phone"
                     initialValue={ person.phone }/>
+                <TextInput labelMsg="forms.person.altPhone" name="alt_phone"
+                    initialValue={ person.alt_phone }/>
 
                 <TextInput labelMsg="forms.person.coAddress" name="co_address"
                     initialValue={ person.co_address }/>

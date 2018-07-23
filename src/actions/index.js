@@ -98,6 +98,7 @@ export const REMOVE_ACTION_PARTICIPANT = 'REMOVE_ACTION_PARTICIPANT';
 
 // Flux actions realted to action responses
 export const RETRIEVE_ACTION_RESPONSES = 'RETRIEVE_ACTION_RESPONSES';
+export const DELETE_ACTION_RESPONSE = 'DELETE_ACTION_RESPONSE';
 
 // Flux actions related to dashboard
 export const LOAD_WIDGET_DATA = 'LOAD_WIDGET_DATA';
@@ -105,6 +106,7 @@ export const MOVE_WIDGET = 'MOVE_WIDGET';
 
 // Flux actions related to search
 export const SEARCH = 'SEARCH';
+export const RESET_SEARCH_QUERY = 'RESET_SEARCH_QUERY';
 export const BEGIN_SEARCH = 'BEGIN_SEARCH';
 export const SEARCH_MATCH_FOUND = 'SEARCH_MATCH_FOUND';
 export const SEARCH_PENDING = 'SEARCH_PENDING';

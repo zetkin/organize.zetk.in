@@ -1,0 +1,6 @@
+state:
+    archived: Archived
+    draft: Draft
+    published:
+        hidden: Published, for connected users only
+        open: Published and visible to anyone

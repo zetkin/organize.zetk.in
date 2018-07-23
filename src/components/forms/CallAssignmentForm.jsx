@@ -2,6 +2,7 @@ import React from 'react';
 
 import Form from './Form';
 import DateInput from './inputs/DateInput';
+import SelectInput from './inputs/SelectInput';
 import TextArea from './inputs/TextArea';
 import TextInput from './inputs/TextInput';
 import IntInput from './inputs/IntInput';
@@ -20,7 +21,12 @@ export default class CallAssignmentForm extends React.Component {
     }
 
     render() {
-        let assignment = this.props.assignment || {};
+        const assignment = this.props.assignment || {};
+        const disableNotes = assignment.disable_caller_notes? 'disabled' : 'enabled';
+        const notesOptions = {
+            disabled: 'forms.callAssignment.callerNotes.disabled',
+            enabled: 'forms.callAssignment.callerNotes.enabled',
+        };
 
         return (
             <Form className="CallAssignmentForm" ref="form" { ...this.props }>
@@ -37,15 +43,27 @@ export default class CallAssignmentForm extends React.Component {
                     name="cooldown"
                     initialValue={ assignment.cooldown }/>
 
+                <SelectInput labelMsg="forms.callAssignment.callerNotes.label"
+                    name="disable_caller_notes"
+                    initialValue={ disableNotes }
+                    options={ notesOptions }
+                    optionLabelsAreMessages={ true }
+                    />
             </Form>
         );
     }
 
     getValues() {
-        return this.refs.form.getValues();
+        let values = this.refs.form.getValues();
+        values.disable_caller_notes = (values.disable_caller_notes == 'disabled');
+        return values;
     }
 
     getChangedValues() {
-        return this.refs.form.getChangedValues();
+        let values = this.refs.form.getChangedValues();
+        if (values.disable_caller_notes) {
+            values.disable_caller_notes = (values.disable_caller_notes == 'disabled');
+        }
+        return values;
     }
 }

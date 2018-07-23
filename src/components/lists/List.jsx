@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import cx from 'classnames';
 
 import Link from '../misc/Link';
@@ -50,20 +51,55 @@ export default class List extends React.Component {
 
         this.state = {
             sortField: this.props.defaultSortField,
+            firstVisibleIndex: -1,
+            lastVisibleIndex: -1,
         };
 
         this.lastSelectedId = null;
+
+        this.scrollContainer = null;
+        this.onScroll = ev => {
+            const listDOMNode = ReactDOM.findDOMNode(this.refs.list);
+            const itemNodes = listDOMNode.querySelectorAll('.ListItem');
+            if (this.props.list.items && itemNodes.length > 2) {
+                const itemHeight = listDOMNode.getBoundingClientRect().height
+                    / this.props.list.items.length;
+
+                const ctrRect = this.scrollContainer.getBoundingClientRect();
+                const listPos = (listDOMNode.getBoundingClientRect().top - ctrRect.top)
+                    + this.scrollContainer.scrollTop;
+
+                const firstIdx = Math.floor((this.scrollContainer.scrollTop-listPos) / itemHeight);
+                const lastIdx = firstIdx + Math.ceil(ctrRect.height / itemHeight) + 1;
+
+                this.setState({
+                    firstVisibleIndex: firstIdx,
+                    lastVisibleIndex: lastIdx,
+                });
+            }
+        };
     }
 
     componentDidMount() {
         shiftKeyDown = false;
         window.addEventListener('keydown', onKeyDown);
         window.addEventListener('keyup', onKeyUp);
+
+        const node = ReactDOM.findDOMNode(this);
+        this.scrollContainer = (node.parentNode || node.parentElement);
+        if (this.scrollContainer) {
+            this.scrollContainer.addEventListener('scroll', this.onScroll);
+            this.onScroll();
+        }
     }
 
     componentWillUnmount() {
         window.removeEventListener('keydown', onKeyDown);
         window.removeEventListener('keyup', onKeyUp);
+
+        if (this.scrollContainer) {
+            this.scrollContainer.removeEventListener('scroll', this.onScroll);
+        }
     }
 
     render() {
@@ -171,17 +207,20 @@ export default class List extends React.Component {
                 { selectAllCheckbox }
                 { header }
 
-                <ul key="List-items">
+                <ul key="List-items" ref="list">
                 { items.map((i, index) => {
-                    let key = i.data? i.data.id : index;
-                    let selected = i.data?
+                    const key = i.data? i.data.id : index;
+                    const selected = i.data?
                         !!selectedIds.find(id => id == i.data.id) : false;
+                    const inView = (
+                        index >= this.state.firstVisibleIndex
+                        && index <= this.state.lastVisibleIndex);
 
                     return (
                         <ListItem key={ key } item={ i }
                             itemComponent={ this.props.itemComponent }
                             showCheckbox={ this.props.allowBulkSelection }
-                            selected={ selected }
+                            selected={ selected } inView={ inView }
                             onItemSelect={ this.onItemSelect.bind(this) }
                             onItemMouseOut={ this.props.onItemMouseOut }
                             onItemMouseOver={ this.props.onItemMouseOver }

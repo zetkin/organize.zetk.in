@@ -1,4 +1,5 @@
 search:
+    keepTyping: Keep typing to start searching...
     matches:
         actionDay: |-
             {count, plural,

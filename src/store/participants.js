@@ -17,6 +17,13 @@ export default function participants(state = null, action) {
             }
             return Object.assign({}, state, { byAction: byAction });
 
+        case types.RETRIEVE_ACTION_PARTICIPANTS + '_PENDING':
+            return Object.assign({}, state, {
+                byAction: Object.assign({}, state.byAction, {
+                    [action.meta.actionId]: [],
+                }),
+            });
+
         case types.RETRIEVE_ACTION_PARTICIPANTS + '_FULFILLED':
             byAction = Object.assign({}, state.byAction);
             actionId = action.meta.actionId;

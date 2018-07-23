@@ -1,2 +1,6 @@
 info: Description
 title: Title
+visibility:
+    hidden: Hide this tag from callers
+    label: Visibility for callers
+    visible: Let callers see this tag

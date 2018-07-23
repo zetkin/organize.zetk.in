@@ -1,3 +1,4 @@
+import ActivityMatch from './ActivityMatch';
 import ActionDayMatch from './ActionDayMatch';
 import AssignedRouteMatch from './AssignedRouteMatch';
 import CallAssignmentMatch from './CallAssignmentMatch';
@@ -11,17 +12,18 @@ import SurveySubmissionMatch from './SurveySubmissionMatch';
 import QueryMatch from './QueryMatch';
 
 let _matches = {
+    'activity': ActivityMatch,
     'actionday': ActionDayMatch,
     'assigned_route': AssignedRouteMatch,
-    'call_assignment': CallAssignmentMatch,
+    'callassignment': CallAssignmentMatch,
     'canvass_assignment': CanvassAssignmentMatch,
     'campaign': CampaignMatch,
     'location': LocationMatch,
     'person': PersonMatch,
     'canvass_route': RouteMatch,
     'survey': SurveyMatch,
-    'survey_submission': SurveySubmissionMatch,
-    'query': QueryMatch,
+    'surveysubmission': SurveySubmissionMatch,
+    'personquery': QueryMatch,
 };
 
 

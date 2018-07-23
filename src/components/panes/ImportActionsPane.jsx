@@ -363,7 +363,7 @@ class ActionItem extends React.Component {
 
     render() {
         const row = this.props.row;
-        const dateString = row.parsed.date.medium();
+        const dateString = row.parsed.date.format('{yyyy}-{MM}-{dd}');
         const pad = n => ('0' + n).slice(-2);
         const timeString = pad(row.parsed.startTime[0]) + ':' + pad(row.parsed.startTime[1])
             + '-' + pad(row.parsed.endTime[0]) + ':' + pad(row.parsed.endTime[1]);

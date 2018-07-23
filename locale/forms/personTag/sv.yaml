@@ -1,2 +1,6 @@
 info: Beskrivning
 title: Titel
+visibility:
+    hidden: Dölj etiketten från ringare
+    label: Synlighet för ringare
+    visible: Visa etiketten för ringare
