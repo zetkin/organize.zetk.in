@@ -18,8 +18,8 @@ const actionTarget = {
     canDrop(props, monitor) {
         const person = monitor.getItem();
         const action = props.data;
-        const participants = props.participants.byAction[action.id];
-        const duplicate = participants.find(p => (p.id == person.id));
+        const participants = props.participants;
+        const duplicate = participants && participants.find(p => (p.id == person.id));
 
         // Only allow drops if it wouldn't result in duplicate
         return (duplicate === undefined);
@@ -82,8 +82,8 @@ function collectContact(connect, monitor) {
     };
 }
 
-let mapStateToProps = state => ({
-    participants: state.participants,
+let mapStateToProps = (state, props) => ({
+    participants: state.participants.byAction[props.data.id],
     responses: state.actionResponses,
 });
 
@@ -93,7 +93,7 @@ let mapStateToProps = state => ({
 export default class ActionListItem extends React.Component {
     static propTypes = {
         data: React.PropTypes.object.isRequired,
-        participants: React.PropTypes.object,
+        participants: React.PropTypes.array,
         responses: React.PropTypes.object,
         onOperation: React.PropTypes.func,
     }
@@ -109,7 +109,7 @@ export default class ActionListItem extends React.Component {
     componentDidUpdate(prevProps) {
         if (this.props.inView && !prevProps.inView) {
             const action = this.props.data;
-            const participants = this.props.participants.byAction[action.id];
+            const participants = this.props.participants;
             const responses = this.props.responses.byAction[action.id];
 
             if (!participants) {
@@ -147,8 +147,7 @@ export default class ActionListItem extends React.Component {
         }
 
         let action = this.props.data;
-        if (nextProps.participants.byAction[action.id]
-            != this.props.participants.byAction[action.id]) {
+        if (nextProps.participants != this.props.participants) {
             return true;
         }
 
@@ -157,7 +156,7 @@ export default class ActionListItem extends React.Component {
 
     render() {
         let action = this.props.data;
-        let participants = this.props.participants.byAction[action.id] || [];
+        let participants = this.props.participants || [];
         let responses = this.props.responses.byAction[action.id] || [];
         const contact = action.contact;
         const actionDate = new Date(action.start_time);
