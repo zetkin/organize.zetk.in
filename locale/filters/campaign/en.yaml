@@ -1,6 +1,12 @@
+activity:
+    label: Activity
+    nullOption: (Regardless of activity)
 campaign:
     label: Campaign
     nullOption: (Regardless of campaign)
+location:
+    label: Location
+    nullOption: (Regardless of location)
 opOptions:
     inBooked: Are booked for campaign work
     inSignedUp: Have signed up to campaign work
@@ -10,9 +16,9 @@ participantStatus: Match people who
 timeframe:
     label: Timeframe
     options:
-        after: after a certain date
-        any: at any point in time
-        before: before a certain date
-        between: between certain dates
-        future: in the future
-        past: before today
+        after: After a certain date
+        any: At any point in time
+        before: Before a certain date
+        between: Between certain dates
+        future: In the future
+        past: Before today

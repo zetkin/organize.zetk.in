@@ -8,13 +8,19 @@ import DateInput from '../forms/inputs/DateInput';
 import SelectInput from '../forms/inputs/SelectInput';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
 import { retrieveCampaigns } from '../../actions/campaign';
+import { retrieveActivities } from '../../actions/activity';
+import { retrieveLocations } from '../../actions/location';
 
 
 const mapStateToProps = state => {
     const campaignList = state.campaigns.campaignList;
+    const locationList = state.locations.locationList;
+    const activityList = state.activities.activityList;
 
     return {
+        activityList,
         campaignList,
+        locationList,
     };
 };
 
@@ -34,10 +40,18 @@ export default class CampaignFilter extends FilterBase {
     componentDidMount() {
         super.componentDidMount();
 
-        const campaignList = this.props.campaignList;
+        const { campaignList, activityList, locationList } = this.props;
 
         if (campaignList.items.length == 0 && !campaignList.isPending) {
             this.props.dispatch(retrieveCampaigns());
+        }
+
+        if (activityList.items.length == 0 && !activityList.isPending) {
+            this.props.dispatch(retrieveActivities());
+        }
+
+        if (locationList.items.length == 0 && !locationList.isPending) {
+            this.props.dispatch(retrieveLocations());
         }
     }
 
@@ -68,6 +82,20 @@ export default class CampaignFilter extends FilterBase {
         campaignItems.forEach(item => {
             const campaign = item.data;
             CAMPAIGN_OPTIONS[campaign.id] = campaign.title;
+        });
+
+        const LOCATION_OPTIONS = {};
+        const locationItems = this.props.locationList.items || [];
+        locationItems.forEach(item => {
+            const location = item.data;
+            LOCATION_OPTIONS[location.id] = location.title;
+        });
+
+        const ACTIVITY_OPTIONS = {};
+        const activityItems = this.props.activityList.items || [];
+        activityItems.forEach(item => {
+            const activity = item.data;
+            ACTIVITY_OPTIONS[activity.id] = activity.title;
         });
 
         let afterInput = null;
@@ -103,6 +131,20 @@ export default class CampaignFilter extends FilterBase {
                 onValueChange={ this.onChangeSimpleField.bind(this) }
                 />,
 
+            <SelectInput key="activity" name="activity"
+                labelMsg="filters.campaign.activity.label"
+                options={ ACTIVITY_OPTIONS } value={ this.state.activity }
+                nullOptionMsg="filters.campaign.activity.nullOption"
+                onValueChange={ this.onChangeSimpleField.bind(this) }
+                />,
+
+            <SelectInput key="location" name="location"
+                labelMsg="filters.campaign.location.label"
+                options={ LOCATION_OPTIONS } value={ this.state.location }
+                nullOptionMsg="filters.campaign.location.nullOption"
+                onValueChange={ this.onChangeSimpleField.bind(this) }
+                />,
+
             <SelectInput key="timeframe" name="timeframe"
                 labelMsg="filters.campaign.timeframe.label"
                 options={ DATE_OPTIONS } value={ this.state.timeframe }
@@ -119,6 +161,8 @@ export default class CampaignFilter extends FilterBase {
         return {
             operator: opFields[0],
             campaign: this.state.campaign,
+            activity: this.state.activity,
+            location: this.state.location,
             state: (opFields[1] == 'su')? 'signed_up' : 'booked',
             before: this.state.before,
             after: this.state.after,
@@ -168,6 +212,8 @@ function stateFromConfig(config) {
     let state = {
         op: opPrefix + '_' + opSuffix,
         campaign: config.campaign,
+        activity: config.activity,
+        location: config.location,
         before: config.before,
         after: config.after,
     }
