@@ -63,6 +63,7 @@ export default class FilterList extends React.Component {
             'person_data': msg('filters.types.personData'),
             'person_tags': msg('filters.types.personTags'),
             'random': msg('filters.types.random'),
+            'sub_query': msg('filters.types.subQuery'),
             'survey_submission': msg('filters.types.surveySubmission'),
             'survey_response': msg('filters.types.surveyResponse'),
             'survey_option': msg('filters.types.surveyOption'),

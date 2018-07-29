@@ -1,0 +1,7 @@
+assignment:
+    goal: '{ assignment } (syftessökning)'
+    target: '{ assignment } (målgruppssökning)'
+queryLabel: 'Välj personer som matchar…'
+types:
+    callAssignment: Målgrupps- och syftessökningar i ringuppdrag
+    standalone: Vanliga smarta sökningar
