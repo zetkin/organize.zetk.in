@@ -1,0 +1,7 @@
+assignment:
+    goal: '{ assignment } (goal query)'
+    target: '{ assignment } (target query)'
+queryLabel: 'Select people who match…'
+types:
+    callAssignment: Call assignment target/goal queries
+    standalone: Regular Smart Search queries

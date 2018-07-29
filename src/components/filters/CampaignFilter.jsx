@@ -8,9 +8,23 @@ import DateInput from '../forms/inputs/DateInput';
 import SelectInput from '../forms/inputs/SelectInput';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
 import { retrieveCampaigns } from '../../actions/campaign';
+import { retrieveActivities } from '../../actions/activity';
+import { retrieveLocations } from '../../actions/location';
 
 
-@connect(state => ({ campaigns: state.campaigns }))
+const mapStateToProps = state => {
+    const campaignList = state.campaigns.campaignList;
+    const locationList = state.locations.locationList;
+    const activityList = state.activities.activityList;
+
+    return {
+        activityList,
+        campaignList,
+        locationList,
+    };
+};
+
+@connect(mapStateToProps)
 @injectIntl
 export default class CampaignFilter extends FilterBase {
     constructor(props) {
@@ -26,46 +40,63 @@ export default class CampaignFilter extends FilterBase {
     componentDidMount() {
         super.componentDidMount();
 
-        let campaignList = this.props.campaigns.campaignList;
+        const { campaignList, activityList, locationList } = this.props;
 
         if (campaignList.items.length == 0 && !campaignList.isPending) {
             this.props.dispatch(retrieveCampaigns());
+        }
+
+        if (activityList.items.length == 0 && !activityList.isPending) {
+            this.props.dispatch(retrieveActivities());
+        }
+
+        if (locationList.items.length == 0 && !locationList.isPending) {
+            this.props.dispatch(retrieveLocations());
         }
     }
 
     renderFilterForm(config) {
         let campaignStore = this.props.campaigns;
-        let campaigns = campaignStore.campaignList.items.map(i => i.data);
         let timeframe = this.state.timeframe;
 
         const msg = id => this.props.intl.formatMessage({ id });
 
-        const OPERATOR_OPTIONS = {
-            'in_spec': msg('filters.campaign.opOptions.inSpec'),
-            'in_any': msg('filters.campaign.opOptions.inAny'),
-            'notin_spec': msg('filters.campaign.opOptions.notInSpec'),
-            'notin_any': msg('filters.campaign.opOptions.notInAny'),
+        const OP_STATE_OPTIONS = {
+            'in_b': msg('filters.campaign.opOptions.inBooked'),
+            'in_su': msg('filters.campaign.opOptions.inSignedUp'),
+            'notin_b': msg('filters.campaign.opOptions.notInBooked'),
+            'notin_su': msg('filters.campaign.opOptions.notInSignedUp'),
         };
 
         const DATE_OPTIONS = {
-            'any': msg('filters.campaign.dateOptions.any'),
-            'future': msg('filters.campaign.dateOptions.future'),
-            'past': msg('filters.campaign.dateOptions.past'),
-            'after': msg('filters.campaign.dateOptions.after'),
-            'before': msg('filters.campaign.dateOptions.before'),
-            'between': msg('filters.campaign.dateOptions.between'),
+            'any': msg('filters.campaign.timeframe.options.any'),
+            'future': msg('filters.campaign.timeframe.options.future'),
+            'past': msg('filters.campaign.timeframe.options.past'),
+            'after': msg('filters.campaign.timeframe.options.after'),
+            'before': msg('filters.campaign.timeframe.options.before'),
+            'between': msg('filters.campaign.timeframe.options.between'),
         };
 
-        let campaignSelect = null;
-        if (this.state.op == 'in_spec' || this.state.op == 'notin_spec') {
-            campaignSelect = (
-                <RelSelectInput name="campaign" key="campaignSelect"
-                    labelMsg="filters.campaign.campaign"
-                    objects={ campaigns } value={ this.state.campaign }
-                    onValueChange={ this.onChangeSimpleField.bind(this) }
-                    showCreateOption={ false }/>
-            );
-        }
+        const CAMPAIGN_OPTIONS = {};
+        const campaignItems = this.props.campaignList.items || [];
+        campaignItems.forEach(item => {
+            const campaign = item.data;
+            CAMPAIGN_OPTIONS[campaign.id] = campaign.title;
+        });
+
+        const LOCATION_OPTIONS = {};
+        const locationItems = this.props.locationList.items || [];
+        locationItems.forEach(item => {
+            const location = item.data;
+            LOCATION_OPTIONS[location.id] = location.title;
+        });
+
+        const ACTIVITY_OPTIONS = {};
+        const activityItems = this.props.activityList.items || [];
+        activityItems.forEach(item => {
+            const activity = item.data;
+            ACTIVITY_OPTIONS[activity.id] = activity.title;
+        });
 
         let afterInput = null;
         if (timeframe == 'after' || timeframe == 'between') {
@@ -88,14 +119,34 @@ export default class CampaignFilter extends FilterBase {
         }
 
         return [
-            <SelectInput key="operator" name="operator"
+            <SelectInput key="operator" name="op"
                 labelMsg="filters.campaign.participantStatus"
-                options={ OPERATOR_OPTIONS } value={ this.state.op }
-                onValueChange={ this.onSelectOperator.bind(this) }/>,
+                options={ OP_STATE_OPTIONS } value={ this.state.op }
+                onValueChange={ this.onChangeSimpleField.bind(this) }/>,
 
-            campaignSelect,
+            <SelectInput key="campaign" name="campaign"
+                labelMsg="filters.campaign.campaign.label"
+                options={ CAMPAIGN_OPTIONS } value={ this.state.campaign }
+                nullOptionMsg="filters.campaign.campaign.nullOption"
+                onValueChange={ this.onChangeSimpleField.bind(this) }
+                />,
+
+            <SelectInput key="activity" name="activity"
+                labelMsg="filters.campaign.activity.label"
+                options={ ACTIVITY_OPTIONS } value={ this.state.activity }
+                nullOptionMsg="filters.campaign.activity.nullOption"
+                onValueChange={ this.onChangeSimpleField.bind(this) }
+                />,
+
+            <SelectInput key="location" name="location"
+                labelMsg="filters.campaign.location.label"
+                options={ LOCATION_OPTIONS } value={ this.state.location }
+                nullOptionMsg="filters.campaign.location.nullOption"
+                onValueChange={ this.onChangeSimpleField.bind(this) }
+                />,
 
             <SelectInput key="timeframe" name="timeframe"
+                labelMsg="filters.campaign.timeframe.label"
                 options={ DATE_OPTIONS } value={ this.state.timeframe }
                 onValueChange={ this.onSelectTimeframe.bind(this) }/>,
 
@@ -109,7 +160,10 @@ export default class CampaignFilter extends FilterBase {
 
         return {
             operator: opFields[0],
-            campaign: (opFields[1] == 'spec')? this.state.campaign : null,
+            campaign: this.state.campaign,
+            activity: this.state.activity,
+            location: this.state.location,
+            state: (opFields[1] == 'su')? 'signed_up' : 'booked',
             before: this.state.before,
             after: this.state.after,
         };
@@ -119,22 +173,6 @@ export default class CampaignFilter extends FilterBase {
         let state = {};
         state[name] = value;
         this.setState(state, () => this.onConfigChange());
-    }
-
-    onSelectOperator(name, value) {
-        if (value == 'in_any' || value == 'notin_any') {
-            this.setState({ op: value, campaign: null }, () =>
-                this.onConfigChange());
-        }
-        else if (this.state.campaign) {
-            this.setState({ op: value }, () =>
-                this.onConfigChange());
-        }
-        else {
-            // Don't fire event for "spec" operators until a campaign
-            // has actually been selected.
-            this.setState({ op: value });
-        }
     }
 
     onSelectTimeframe(name, value) {
@@ -169,11 +207,13 @@ export default class CampaignFilter extends FilterBase {
 
 function stateFromConfig(config) {
     let opPrefix = config.operator || 'in';
-    let opSuffix = config.campaign? 'spec' : 'any';
+    let opSuffix = (config.state == 'signed_up')? 'su' : 'b';
 
     let state = {
         op: opPrefix + '_' + opSuffix,
         campaign: config.campaign,
+        activity: config.activity,
+        location: config.location,
         before: config.before,
         after: config.after,
     }
