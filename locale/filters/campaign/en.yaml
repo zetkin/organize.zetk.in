@@ -1,14 +1,18 @@
-campaign: What campaign?
-dateOptions:
-    after: after a certain date
-    any: at all
-    before: before a certain date
-    between: between certain dates
-    future: in the future
-    past: before today
+campaign:
+    label: Campaign
+    nullOption: (Regardless of campaign)
 opOptions:
-    inAny: participate in any campaign
-    inSpec: participate in specific campaign
-    notInAny: don't participate in any campaign
-    notInSpec: don't participate in specific campaign
+    inBooked: Are booked for campaign work
+    inSignedUp: Have signed up to campaign work
+    notInBooked: Are not booked for campaign work
+    notInSignedUp: Have not signed up to campaign work
 participantStatus: Match people who
+timeframe:
+    label: Timeframe
+    options:
+        after: after a certain date
+        any: at any point in time
+        before: before a certain date
+        between: between certain dates
+        future: in the future
+        past: before today
