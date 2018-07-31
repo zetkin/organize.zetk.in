@@ -8,6 +8,7 @@ types:
     personData: Personuppgifter
     personTags: Etiketter
     random: Slumpmässigt urval
+    subQuery: Länkad Smart Sökning
     surveyOption: Enkätsvar (svarsalternativ)
     surveyResponse: Enkätsvar (fritext)
     surveySubmission: Inskickad enkät

@@ -1,14 +1,24 @@
-campaign: Vilken kampanj?
-dateOptions:
-    after: efter ett visst datum
-    any: överhuvudtaget
-    before: innan ett visst datum
-    between: mellan vissa datum
-    future: i framtiden
-    past: tidigare
+activity:
+    label: Aktivitet
+    nullOption: (Oavsett aktivitet)
+campaign:
+    label: Kampanj
+    nullOption: (Oavsett kampanj)
+location:
+    label: Plats
+    nullOption: (Oavsett plats)
 opOptions:
-    inAny: deltar i någon kampanj
-    inSpec: deltar i följande kampanj
-    notInAny: inte deltar i någon kampanj
-    notInSpec: inte deltar i följande kampanj
-participantStatus: Matcha personer som
+    inBooked: Är bokade på kampanjarbete
+    inSignedUp: Har anmält sig till kampanjarbete
+    notInBooked: Inte är bokade på kampanjarbete
+    notInSignedUp: Inte har anmält sig till kampanjarbete
+participantStatus: Matcha personer som…
+timeframe:
+    label: Tidsram
+    options:
+        after: Efter ett visst datum
+        any: När som helst
+        before: Före ett visst datum
+        between: Mellan två datum
+        future: I framtiden
+        past: Fram till idag

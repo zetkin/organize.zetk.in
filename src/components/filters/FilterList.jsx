@@ -50,16 +50,6 @@ export default class FilterList extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.filters != this.props.filters) {
-            this.setState({
-                filters: nextProps.filters.map(f => Object.assign({}, f, {
-                    id: makeRandomString(10),
-                })),
-            });
-        }
-    }
-
     render() {
         let filters = this.state.filters;
         let filterElements = [];
@@ -73,6 +63,7 @@ export default class FilterList extends React.Component {
             'person_data': msg('filters.types.personData'),
             'person_tags': msg('filters.types.personTags'),
             'random': msg('filters.types.random'),
+            'sub_query': msg('filters.types.subQuery'),
             'survey_submission': msg('filters.types.surveySubmission'),
             'survey_response': msg('filters.types.surveyResponse'),
             'survey_option': msg('filters.types.surveyOption'),
