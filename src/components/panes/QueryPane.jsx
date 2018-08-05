@@ -7,7 +7,7 @@ import InfoList from '../misc/InfoList';
 import PersonList from '../lists/PersonList';
 import { getListItemById } from '../../utils/store';
 import { retrieveQuery, retrieveQueryMatches } from '../../actions/query';
-
+import LoadingIndicator from '../misc/LoadingIndicator';
 
 const mapStateToProps = (state, props) => ({
     queryItem: getListItemById(state.queries.queryList,
@@ -57,17 +57,29 @@ export default class QueryPane extends PaneBase {
         let item = data.queryItem;
         if (item && item.data && item.data.matchList) {
             let matchList = item.data.matchList;
+            let content = [];
 
-            return [
-                <InfoList key="infoList"
-                    data={[
-                        { name: 'desc', value: data.queryItem.data.info_text },
-                        { name: 'size', msgId: 'panes.query.summary.size', msgValues: { size: matchList.items.length } },
-                    ]}
-                />,
-                <PersonList key="peopleList" personList={ matchList }
-                    onItemClick={ this.onPersonItemClick.bind(this) }/>
+            let summary = [
+              { name: 'desc', value: data.queryItem.data.info_text },
             ];
+
+            if (!matchList.isPending) {
+                summary.push({ name: 'size',
+                               msgId: 'panes.query.summary.size',
+                               msgValues: { size: matchList.items.length } });
+            }
+
+            content = content.concat([
+                <InfoList key="infoList" data={summary} />,
+            ]);
+
+            if (!matchList.isPending) {
+                content = content.concat([<PersonList key="peopleList" personList={ matchList }
+                               onItemClick={ this.onPersonItemClick.bind(this) }/>])
+            } else {
+                content = content.concat([<LoadingIndicator />]);
+            }
+            return content;
         }
     }
 
