@@ -72,9 +72,7 @@ export default class SelectPeoplePane extends PaneBase {
                 id="panes.selectPeople.availableHeader"/>,
             <PersonList key="availableList" personList={ filteredPersonList }
                 enablePagination={ true }
-                onItemClick={ this.onSelect.bind(this) }
-                onLoadPage={ this.onLoadPage.bind(this) }
-            />,
+                onItemClick={ this.onSelect.bind(this) }/>,
         ];
     }
 
