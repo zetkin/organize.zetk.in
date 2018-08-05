@@ -4,13 +4,13 @@
     }
 
     .Header {
-        @include animateAppear(2s);
+        @include animateAppear(3s);
     }
 
     .Dashboard-favorites {
         @for $i from 1 through 6 {
             li:nth-child(#{$i}) {
-                @include animateAppear(#{1.9 + $i/10}s);
+                @include animateAppear(#{2.9 + $i/10}s);
             }
         }
     }
