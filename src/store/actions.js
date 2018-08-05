@@ -125,6 +125,19 @@ export default function actions(state = null, action) {
                         action.meta.actionId, {}, { isReminderPending: false }),
             });
 
+        case types.RETRIEVE_ACTION_PARTICIPANTS + '_PENDING':
+        case types.RETRIEVE_ACTION_PARTICIPANTS + '_REJECTED':
+            return Object.assign({}, state, {
+                actionList: updateOrAddListItem(state.actionList,
+                    action.meta.actionId, { isParticipantsPending: true })
+            });
+
+        case types.RETRIEVE_ACTION_PARTICIPANTS + '_FULFILLED':
+            return Object.assign({}, state, {
+                actionList: updateOrAddListItem(state.actionList,
+                    action.meta.actionId, { isParticipantsPending: false })
+            });
+
         default:
             // By default, filter from last week and eight weeks forward
             let startDate = Date.create('last monday');
