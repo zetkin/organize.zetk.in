@@ -1,1 +1,3 @@
 editLink: Redigera den här Smarta sökningen
+summary:
+    size: '{size, plural, =0 {Inga sökträffar} =1 {En sökträff} other {# sökträffar}}'

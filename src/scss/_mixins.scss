@@ -407,3 +407,14 @@
     background-position: 0 0;
   }
 }
+
+@mixin animateAppear($delay) {
+    animation: app-content-appear 1s normal;
+    animation-fill-mode: backwards;
+    animation-delay: $delay;
+}
+
+@keyframes app-content-appear {
+    0% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}

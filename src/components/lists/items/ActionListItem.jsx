@@ -12,6 +12,7 @@ import {
     moveActionParticipant,
     retrieveActionParticipants,
 } from '../../../actions/participant';
+import LoadingIndicator from '../../../components/misc/LoadingIndicator';
 
 
 const actionTarget = {
@@ -174,15 +175,6 @@ export default class ActionListItem extends React.Component {
         const filteredParticipants = participants.filter(p =>
             !contact || p.id != contact.id);
 
-        const participantList = this.props.connectParticipantDropTarget(
-            <div className="ActionListItem-participantList">
-                <ParticipantList action={ action }
-                    maxVisible={ large? participants.length : 4 }
-                    onShowAll={ this.onShowAllParticipants.bind(this) }
-                    participants={ filteredParticipants }/>
-            </div>
-        );
-
         const contactSlot = this.props.connectContactDropTarget(
             <div className="ActionListItem-contactSlot">
                 <ContactSlot contact={ contact } action={ action }/>
@@ -242,6 +234,35 @@ export default class ActionListItem extends React.Component {
             reminderStatus
         );
 
+        let participantList = this.props.connectParticipantDropTarget(
+            <div className="ActionListItem-participantList">
+                <ParticipantList action={ action }
+                                 maxVisible={ large? participants.length : 4 }
+                                 onShowAll={ this.onShowAllParticipants.bind(this) }
+                                 participants={ filteredParticipants }/>
+            </div>
+        );
+        let participantsNumbers = (
+            <div className="ActionListItem-participantStatuses">
+                <div className={ bookedParticipantsClasses }>
+                    { bookedParticipants }
+                </div>
+                { incomingResponses }
+                <div className={ reminderClasses }>
+                    <i className="fa fa-bell-o"></i>
+                </div>
+            </div>);
+
+        if(action.isParticipantsPending){
+            participantList = (
+                <div className="ActionListItem-participantList">
+                    <LoadingIndicator/>
+                </div>
+            );
+            participantsNumbers = null;
+        }
+
+
         return (
             <div className={ classNames }
                 onClick={ this.onClick.bind(this) }>
@@ -263,15 +284,7 @@ export default class ActionListItem extends React.Component {
                 { participantList }
                 <div className="ActionListItem-actionStatuses">
                 </div>
-                <div className="ActionListItem-participantStatuses">
-                    <div className={ bookedParticipantsClasses }>
-                        { bookedParticipants }
-                    </div>
-                    { incomingResponses }
-                    <div className={ reminderClasses }>
-                        <i className="fa fa-bell-o"></i>
-                    </div>
-                </div>
+                { participantsNumbers }
             </div>
         );
     }

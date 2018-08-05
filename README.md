@@ -73,3 +73,5 @@ Basic user     | testuser@example.com    | password
 
 To sign in to this app, Zetkin Organize, you will need to sign in using the
 _testadmin@example.com_ user.
+
+Answer the SMS challenge using `999999` (six nines).

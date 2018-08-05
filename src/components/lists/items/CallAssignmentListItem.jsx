@@ -20,26 +20,39 @@ export default class CallAssignmentListItem extends React.Component {
         data: React.PropTypes.object,
     };
 
-    componentDidMount() {
-        let assignment = this.props.data;
-        if (assignment.title && !assignment.statsItem) {
-            this.props.dispatch(retrieveCallAssignmentStats(assignment.id));
-        }
+    componentDidUpdate(prevProps) {
+        if (this.props.inView) {
+            let assignment = this.props.data;
+            if (assignment.title && !assignment.statsItem) {
+                this.props.dispatch(retrieveCallAssignmentStats(assignment.id));
+            }
 
-        if (assignment.title && !assignment.callerList) {
-            this.props.dispatch(retrieveCallAssignmentCallers(assignment.id));
+            if (assignment.title && !assignment.callerList) {
+                this.props.dispatch(retrieveCallAssignmentCallers(assignment.id));
+            }
         }
     }
 
-    componentWillUpdate(nextProps, nextState) {
-        let assignment = nextProps.data;
-        if (assignment.title && !assignment.statsItem) {
-            this.props.dispatch(retrieveCallAssignmentStats(assignment.id));
+    shouldComponentUpdate(nextProps, nextState) {
+        var key;
+
+        if (this.props.inView != nextProps.inView) {
+            return true;
         }
 
-        if (assignment.title && !assignment.callerList) {
-            this.props.dispatch(retrieveCallAssignmentCallers(assignment.id));
+        for (key in nextProps) {
+            if (key.indexOf('on') !== 0 && nextProps[key] != this.props[key]) {
+                return true;
+            }
         }
+
+        for (key in nextState) {
+            if (nextState[key] != this.state[key]) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     render() {

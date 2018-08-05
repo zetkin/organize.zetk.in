@@ -2,6 +2,7 @@ import React from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux';
+import cx from 'classnames';
 
 import AlertMessages from './misc/AlertMessages';
 import GoogleAnalytics from './misc/GoogleAnalytics';
@@ -17,6 +18,20 @@ import Section from './sections/Section';
 @connect(state => state)
 @DragDropContext(HTML5Backend)
 export default class App extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            animationComplete: props.view.section !== ''
+        };
+    }
+
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({ animationComplete: true });
+        }, 6000);
+    }
+
     render() {
         let stateJson = JSON.stringify(this.props.initialState);
 
@@ -45,6 +60,10 @@ export default class App extends React.Component {
                 panes={ this.props.view.panes }/>
         );
 
+        let appClasses = cx('App', {
+          'animationComplete': this.state.animationComplete
+        });
+
         return (
             <html>
                 <head>
@@ -60,7 +79,7 @@ export default class App extends React.Component {
                         href="/static/images/favicon.png"/>
                 </head>
                 <body>
-                    <div className="App">
+                    <div className={appClasses}>
                         <Header/>
                         <div className="App-main">
                             { section }

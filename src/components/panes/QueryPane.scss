@@ -8,4 +8,21 @@
             @include icon($fa-var-pencil);
         }
     }
+
+    .InfoList {
+      margin-bottom: 2em;
+    }
+
+    .InfoListItem-desc {
+        font-style: italic;
+        &::before {
+            @include icon($fa-var-info-circle);
+        }
+    }
+
+    .InfoListItem-size {
+        &::before {
+            @include icon($fa-var-users);
+        }
+    }
 }

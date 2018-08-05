@@ -182,6 +182,9 @@ export default class RelSelectInput extends InputBase {
 
         const listDOMNode = ReactDOM.findDOMNode(this.refs.objectList);
         listDOMNode.scrollTop = 0;
+        if (this.props.onQueryChange) {
+            this.props.onQueryChange(ev.target.value);
+        }
     }
 
     onKeyDown(ev) {
