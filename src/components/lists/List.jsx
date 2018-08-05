@@ -102,6 +102,12 @@ export default class List extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        if(this.onScroll && prevProps.list.items != this.props.list.items){
+            this.onScroll();
+        }
+    }
+
     render() {
         let list = this.props.list;
         let items = list.items;
