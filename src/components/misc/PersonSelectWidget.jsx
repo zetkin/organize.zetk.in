@@ -55,26 +55,8 @@ export default class PersonSelectWidget extends React.Component {
 
         this.state = {
             forceShowInput: false,
+            needsToLoadPeople: true,
         };
-    }
-
-    componentDidMount() {
-        if (!this.props.person) {
-            this.props.dispatch(retrievePeople(null, null));
-        }
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        let inputWasVisible = this.state.forceShowInput || !this.props.person;
-        let inputWillBeVisible = nextState.forceShowInput || !nextProps.person;
-
-        if (inputWillBeVisible && !inputWasVisible) {
-            if (nextProps.personList && nextProps.personList.isPending) {
-                return;
-            }
-
-            this.props.dispatch(retrievePeople(null, null));
-        }
     }
 
     render() {
@@ -103,6 +85,7 @@ export default class PersonSelectWidget extends React.Component {
                     labelFunc={ p => p.first_name + ' ' + p.last_name }
                     minFilterLength={ 2 }
                     onValueChange={ this.onInputChange.bind(this) }
+                    onQueryChange={ this.onQueryChange.bind(this) }
                     showCreateOption={ false }
                     objects={ people }
                     />
@@ -178,6 +161,15 @@ export default class PersonSelectWidget extends React.Component {
                     this.props.onSelect(item.data)
                 }
             });
+        }
+    }
+
+    onQueryChange(query) {
+        let needsToLoadPeople = (!this.props.personList || !this.props.personList.isPending);
+
+        if (this.state.needsToLoadPeople && needsToLoadPeople) {
+            this.props.dispatch(retrievePeople(null, null));
+            this.setState({ needsToLoadPeople: false });
         }
     }
 
