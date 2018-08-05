@@ -3,6 +3,7 @@ import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
+import InfoList from '../misc/InfoList';
 import PersonList from '../lists/PersonList';
 import { getListItemById } from '../../utils/store';
 import { retrieveQuery, retrieveQueryMatches } from '../../actions/query';
@@ -58,6 +59,12 @@ export default class QueryPane extends PaneBase {
             let matchList = item.data.matchList;
 
             return [
+                <InfoList key="infoList"
+                    data={[
+                        { name: 'desc', value: data.queryItem.data.info_text },
+                        { name: 'size', msgId: 'panes.query.summary.size', msgValues: { size: matchList.items.length } },
+                    ]}
+                />,
                 <PersonList key="peopleList" personList={ matchList }
                     onItemClick={ this.onPersonItemClick.bind(this) }/>
             ];
