@@ -8,8 +8,8 @@ docker run \
     --name organize_zetk_in \
     --env TOKEN_SECRET=012345678901234567891234 \
     --env ZETKIN_LOGIN_URL=http://login.dev.zetkin.org \
-    --env ZETKIN_APP_ID=c690938258d842cba406a492b9bcfa24 \
-    --env ZETKIN_APP_KEY=MmEyYjRhOGQtMWFjMS00Y2VhLTgwY2EtNDE1NDA1YmNhMTJj \
+    --env ZETKIN_APP_ID=e406f49779ed460c9d2117ab58bfeb64 \
+    --env ZETKIN_APP_KEY=NjUyYTdmYWItODg4MS00MDcxLTkyM2MtM2IyMmE0Zjc3ODBj \
     --env ZETKIN_DOMAIN=dev.zetkin.org \
     --env TOKEN_SECRET=012345678901234567890123 \
     -p 80:80 \
