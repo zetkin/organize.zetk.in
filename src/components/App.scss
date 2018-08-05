@@ -1,3 +1,37 @@
+.App:not(.animationComplete) {
+    .Dashboard-header {
+        @include animateAppear(0.5s);
+    }
+
+    .Header {
+        @include animateAppear(2s);
+    }
+
+    .Dashboard-favorites {
+        @for $i from 1 through 6 {
+            li:nth-child(#{$i}) {
+                @include animateAppear(#{1.9 + $i/10}s);
+            }
+        }
+    }
+
+    .Dashboard-widgets {
+        @include animateAppear(3s);
+    }
+
+    .Dashboard-shortcuts {
+        @include animateAppear(4s);
+    }
+
+    .Dashboard-orgPageLink {
+        @include animateAppear(4s);
+    }
+
+    .Footer {
+        @include animateAppear(5s);
+    }
+}
+
 .App-main {
     position: absolute;
     top: 6.8em;
