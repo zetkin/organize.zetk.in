@@ -20,13 +20,16 @@ import Section from './sections/Section';
 export default class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { animationComplete: false };
+
+        this.state = {
+            animationComplete: props.view.section !== ''
+        };
     }
 
     componentDidMount() {
-      setTimeout(() => {
-        this.setState({ animationComplete: true });
-      }, 6000);
+        setTimeout(() => {
+            this.setState({ animationComplete: true });
+        }, 6000);
     }
 
     render() {

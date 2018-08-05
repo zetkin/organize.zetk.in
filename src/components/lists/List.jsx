@@ -61,7 +61,7 @@ export default class List extends React.Component {
         this.onScroll = ev => {
             const listDOMNode = ReactDOM.findDOMNode(this.refs.list);
             const itemNodes = listDOMNode.querySelectorAll('.ListItem');
-            if (this.props.list.items && itemNodes.length > 2) {
+            if (this.props.list.items && itemNodes.length > 0) {
                 const itemHeight = listDOMNode.getBoundingClientRect().height
                     / this.props.list.items.length;
 
