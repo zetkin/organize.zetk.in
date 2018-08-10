@@ -42,6 +42,7 @@ dupApi.get('/:orgId/people', (req, res, next) => {
             let duplicates = [];
 
             let people = result.data.data.map(p => {
+                p.consumed = false;
                 p.n_phone = p.phone? p.phone.replace(/\D/g, '') : null;
                 p.n_email = p.email? p.email.toLowerCase() : null;
                 p.n_first_name = p.first_name.trim().toLowerCase();
@@ -50,29 +51,45 @@ dupApi.get('/:orgId/people', (req, res, next) => {
                 return p;
             });
 
-            while (master = people.pop()) {
-                let duplicate = {
-                    id: '$' + makeRandomString(6),
-                    objects: [ master ],
-                };
 
-                let idx = 0;
-                while (idx < people.length) {
-                    let other = people[idx];
-                    let score = calcSimilarity(master, other);
+            let start = 0;
+            while (start < people.length) {
+                const master = people[start];
+                if (!master.consumed) {
+                    let objects;
 
-                    if (score > 10) {
-                        duplicate.objects.push(other);
-                        people.splice(idx, 1);
-                    }
-                    else {
+                    let idx = start + 1;
+                    while (idx < people.length) {
+                        const other = people[idx];
+                        if (!other.consumed) {
+                            let score = calcSimilarity(master, other);
+
+                            if (score >= 10) {
+                                if (!objects) {
+                                    objects = [
+                                        master,
+                                        other,
+                                    ];
+                                }
+                                else {
+                                    objects.push(other);
+                                }
+                                other.consumed = true;
+                            }
+                        }
+
                         idx++;
+                    };
+
+                    if (objects) {
+                        duplicates.push({
+                            id: '$' + makeRandomString(6),
+                            objects: objects,
+                        });
                     }
                 }
 
-                if (duplicate.objects.length > 1) {
-                    duplicates.push(duplicate);
-                }
+                start++;
             }
 
             res.status(200).json({ duplicates });
