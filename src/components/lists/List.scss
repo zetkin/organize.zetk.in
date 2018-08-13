@@ -20,7 +20,7 @@
     }
 
     .List-selectAllCheckbox {
-        @include col(1,12, $first:true, $last:true);
+        width: 3em;
         position: absolute;
         z-index: 1;
         text-align: center;

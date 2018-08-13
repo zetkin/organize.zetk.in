@@ -1,4 +1,9 @@
 headers:
+    action:
+        export: |-
+            Exportera {count, plural,
+                =1 {en aktion}
+                other {# aktioner}}
     person:
         delete: |-
             Radera {count, plural,

@@ -1,6 +1,6 @@
 header:
     activity: Activity
-    contact: Contact person
+    contact: Contact
     location: Location
     participants: Participants
     startTime: Time
@@ -11,4 +11,4 @@ oldActions:
               =1 {is one passed action}
               other {are # passed actions}} 
             in the current time span.
-    showOld: Show passed actions too
+    showOld: Also show past actions

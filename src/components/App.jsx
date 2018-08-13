@@ -29,7 +29,13 @@ export default class App extends React.Component {
     componentDidMount() {
         setTimeout(() => {
             this.setState({ animationComplete: true });
-        }, 6000);
+        }, 5000);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.view.section == '' && this.props.view.section != '') {
+            this.setState({ animationComplete: true });
+        }
     }
 
     render() {

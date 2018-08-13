@@ -41,7 +41,10 @@ export default class ActionList extends React.Component {
                 headerColumns={ columns }
                 itemComponent={ ActionListItem }
                 defaultSortField="start_time"
+                bulkSelection={ this.props.bulkSelection }
+                allowBulkSelection={ this.props.allowBulkSelection }
                 onItemClick={ this.props.onItemClick }
+                onItemSelect={ this.props.onItemSelect }
                 />
         );
     }
