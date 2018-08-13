@@ -409,7 +409,7 @@
 }
 
 @mixin animateAppear($delay) {
-    animation: app-content-appear 1s normal;
+    animation: app-content-appear 0.8s normal;
     animation-fill-mode: backwards;
     animation-delay: $delay;
 }

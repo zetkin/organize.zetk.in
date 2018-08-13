@@ -1,34 +1,57 @@
 .App:not(.animationComplete) {
     .Dashboard-header {
-        @include animateAppear(0.5s);
+        animation: Dashboard-header-appear 2.2s normal ease;
+        animation-fill-mode: backwards;
+        animation-delay: 0.5s;
     }
 
     .Header {
-        @include animateAppear(3s);
+        @include animateAppear(2.5s);
     }
 
     .Dashboard-favorites {
         @for $i from 1 through 6 {
             li:nth-child(#{$i}) {
-                @include animateAppear(#{2.9 + $i/10}s);
+                @include animateAppear(#{2.5 + $i/10}s);
             }
         }
     }
 
     .Dashboard-widgets {
-        @include animateAppear(3s);
+        @include animateAppear(2.8s);
     }
 
     .Dashboard-shortcuts {
-        @include animateAppear(4s);
+        @include animateAppear(3.5s);
     }
 
     .Dashboard-orgPageLink {
-        @include animateAppear(4s);
+        @include animateAppear(3.5s);
     }
 
     .Footer {
-        @include animateAppear(5s);
+        @include animateAppear(4s);
+    }
+}
+
+@keyframes Dashboard-header-appear {
+    0% {
+        transform: translate(0, 25vh);
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 1;
+        transform: translate(0, 25vh);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0, 0);
     }
 }
 
