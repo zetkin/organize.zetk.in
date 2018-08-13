@@ -6,9 +6,8 @@
             display: block;
 
             &:nth-child(1) {
-                @include col(4, 12);
-                @include col-offset(2,12);
-
+                @include col(3.9, 12);
+                @include col-offset(2.1,12);
             }
 
             &:nth-child(2) {
@@ -17,11 +16,20 @@
         }
     }
 
-    @include medium-screen {
-        max-width: 420px;
-        .listheader {
+    &.withCheckboxes {
+        .ListHeader {
+            li:nth-child(1) {
+                @include col(3.5, 12);
+                @include col-offset(3,12);
+            }
+
             li:nth-child(2) {
+                @include col(5, 12);
             }
         }
+    }
+
+    @include medium-screen {
+        max-width: 420px;
     }
 }

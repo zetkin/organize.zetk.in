@@ -1,4 +1,9 @@
 ops:
+    action:
+        export: |-
+            Export list of {count, plural,
+              =1 {one action}
+              other {# actions}}
     person:
         delete: |-
             Delete {count, plural,

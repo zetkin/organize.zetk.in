@@ -10,7 +10,7 @@
         padding: 0;
 
         .ListItem-selection {
-            @include col(1,12, $first:true, $last:true);
+            width: 3em;
             background-color: darken(white, 5);
             color: white;
             text-align: center;
@@ -23,7 +23,7 @@
         }
 
         & >:nth-child(2) {
-            @include col(11,12);
+            width: calc(100% - 3em);
             padding: 1em;
         }
     }
@@ -31,6 +31,10 @@
     &:hover {
         background-color: darken(white, 2);
         cursor: pointer;
+    }
+
+    .LoadingIndicator {
+        margin: 0 auto;
     }
 
     .ListItem-date {

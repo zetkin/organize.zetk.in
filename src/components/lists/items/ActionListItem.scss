@@ -18,8 +18,23 @@
         top: 5px;
     }
 
+    .ActionListItem-date {
+        @include col(2, 12);
+        margin-top: 0.8em;
+
+        .date, .time {
+            display: block;
+        }
+    }
+
+    &.past {
+        .ActionListItem-date {
+            opacity: 0.4;
+        }
+    }
+
     .ActionListItem-info {
-        @include col(6,12);
+        @include col(4.9,12);
     }
 
     .activity {
@@ -45,12 +60,13 @@
     }
 
     .ActionListItem-contactSlot {
-        @include col(1.5,12);
+        @include col(1.3,12);
         margin: 0.25em 0;
     }
 
     .ActionListItem-participantList {
-        @include col(4.5,12);
+        @include col(3.8,12);
+        position: relative;
         padding-right: 0;
         margin-bottom: 1em;
         transition: padding-bottom 0.2s ease-out;
@@ -90,11 +106,11 @@
     }
 
     .ActionListItem-actionStatuses {
-        @include col(6,12);
+        @include col(6.9,12);
     }
 
     .ActionListItem-participantStatuses {
-        @include col(6,12);
+        @include col(5.1,12);
         position: relative;
         text-align: right;
 

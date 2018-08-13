@@ -167,7 +167,9 @@ export default class List extends React.Component {
             selectedIds = this.props.bulkSelection.selectedIds;
         }
 
-        let classes = cx(this.props.className, 'List');
+        let classes = cx(this.props.className, 'List', {
+            withCheckboxes: this.props.allowBulkSelection,
+        });
 
         let loadMoreLink = null;
         if (this.props.enablePagination) {

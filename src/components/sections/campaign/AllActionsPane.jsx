@@ -5,6 +5,7 @@ import { FormattedMessage as Msg } from 'react-intl';
 import Button from '../../misc/Button';
 
 import CampaignSectionPaneBase from './CampaignSectionPaneBase';
+import BulkOpSelect from '../../bulk/BulkOpSelect';
 import ActionList from '../../lists/ActionList';
 import ActionCalendar from '../../misc/actioncal/ActionCalendar';
 import ViewSwitch from '../../misc/ViewSwitch';
@@ -12,13 +13,20 @@ import { retrieveCampaigns } from '../../../actions/campaign';
 import { retrieveActions } from '../../../actions/action';
 import { retrieveActivities } from '../../../actions/activity';
 import { filteredActionList } from '../../../store/actions';
+import { getListItemById } from '../../../utils/store';
+import {
+    createSelection,
+    addToSelection,
+    removeFromSelection,
+} from '../../../actions/selection';
 
 
 const mapStateToProps = state => ({
     actions: state.actions,
     campaigns: state.campaigns,
     activityList: state.activities.activityList,
-    filteredActionList: filteredActionList(state)
+    filteredActionList: filteredActionList(state),
+    selectionList: state.selections.selectionList,
 });
 
 @connect(mapStateToProps)
@@ -42,7 +50,17 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         }
     }
 
-    renderPaneContent() {
+    getRenderData() {
+        let selectionId = this.bulkSelectionId;
+        let selectionList = this.props.selectionList;
+        let selectionItem = getListItemById(selectionList, selectionId);
+
+        return {
+            selection: selectionItem? selectionItem.data : null,
+        };
+    }
+
+    renderPaneContent(data) {
         let actionList = this.props.filteredActionList;
         if (!actionList || !actionList.items) {
             return null;
@@ -118,6 +136,9 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
                 oldActionNotice,
                 <ActionList actionList={ {items: actions} }
                     key="actionList"
+                    bulkSelection={ data.selection }
+                    allowBulkSelection={ true }
+                    onItemSelect={ this.onItemSelect.bind(this) }
                     onItemClick={ (item, ev) => this.onSelectAction(item.data, ev) }/>
             ]
         }
@@ -131,7 +152,7 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
             'list': 'panes.allActions.viewModes.list'
         };
 
-        return [
+        let tools = [
             <ViewSwitch key="viewSwitch" states={ viewStates }
                 selected={ this.state.viewMode }
                 onSwitch={ this.onViewSwitch.bind(this) }/>,
@@ -144,6 +165,38 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
                 labelMsg="panes.allActions.importButton"
                 onClick={ this.onImportClick.bind(this) }/>,
         ];
+
+        if (data.selection && data.selection.selectedIds.length) {
+            let ops = [ 'export', ];
+
+            tools.push(
+                <BulkOpSelect key="bulkOps"
+                    objectType="action"
+                    openPane={ this.openPane.bind(this) }
+                    selection={ data.selection }
+                    operations={ ops }/>
+            );
+        }
+
+        return tools;
+    }
+
+    onItemSelect(item, selected) {
+        let selectionId = this.bulkSelectionId;
+        if (!selectionId) {
+            let action = createSelection('bulk', null, null);
+            selectionId = action.payload.id;
+
+            this.bulkSelectionId = selectionId
+            this.props.dispatch(action);
+        }
+
+        if (selected) {
+            this.props.dispatch(addToSelection(selectionId, item.data.id));
+        }
+        else {
+            this.props.dispatch(removeFromSelection(selectionId, item.data.id));
+        }
     }
 
     onViewSwitch(state) {

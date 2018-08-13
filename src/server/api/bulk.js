@@ -39,6 +39,109 @@ bulkApi.post('/', (req, res, next) => {
 
 
 let operations = {
+    'action.export': (req, res) => {
+        const orgId = req.body.orgId;
+
+        const HEADER = [
+            'ID',
+            'Date',
+            'Start time',
+            'End time',
+            'Location',
+            'Activity',
+            'Contact name',
+            'Contact e-mail',
+            'Contact phone',
+        ];
+
+        let contacts = {};
+        let actions;
+
+        return req.z.resource('orgs', orgId, 'actions').get()
+            .then(result => {
+                actions = result.data.data.filter(a =>
+                    req.body.objects.indexOf(a.id) >= 0);
+
+                // Make a list of contact IDs
+                actions.forEach(action => {
+                    if (action.contact) {
+                        contacts[action.contact.id.toString()] = null;
+                    }
+                });
+
+                // Load all contacts
+                let promise = Promise.resolve();
+                Object.keys(contacts).forEach(id => {
+                    promise = promise.then(() => {
+                        return req.z.resource('orgs', orgId, 'people', id)
+                            .get()
+                            .then(result => {
+                                const person = result.data.data;
+                                contacts[person.id.toString()] = person;
+                            });
+                    });
+                });
+
+                return promise;
+            })
+            .then(() => {
+                let lastCell = xlsx.utils.encode_cell(
+                    { c: HEADER.length, r: actions.length });
+
+                let wb = {
+                    SheetNames: ['Zetkin'],
+                    Sheets: {
+                        Zetkin: {
+                            '!ref': xlsx.utils.encode_range('A1', lastCell),
+                        },
+                    },
+                };
+
+                // First write header
+                HEADER.forEach((h, col) => {
+                    let addr = xlsx.utils.encode_cell({ c: col, r: 0 });
+                    wb.Sheets.Zetkin[addr] = { v: h };
+                });
+
+                actions.forEach((action, row) => {
+                    const startTime = new Date(action.start_time);
+                    const endTime = new Date(action.end_time);
+
+                    const values = [
+                        action.id,
+                        startTime.format('{yyyy}-{MM}-{dd}'),
+                        startTime.format('{HH}:{mm}'),
+                        endTime.format('{HH}:{mm}'),
+                        action.location.title,
+                        action.activity.title,
+                    ];
+
+                    if (action.contact) {
+                        const contact = contacts[action.contact.id.toString()];
+                        values.push(
+                            contact.first_name + ' ' + contact.last_name,
+                            contact.email,
+                            contact.phone,
+                        );
+                    }
+
+                    values.forEach((value, col) => {
+                        let addr = xlsx.utils.encode_cell({ c: col, r: row + 1 });
+                        wb.Sheets.Zetkin[addr] = { v: value };
+                    });
+                });
+
+                let buf = xlsx.write(wb, {
+                    bookType: 'xlsx',
+                    bookSST: false,
+                    type: 'buffer',
+                });
+
+                res.attachment('action-export.xlsx')
+                    .send(buf);
+            });
+    },
+
     'person.tag': (req, res) => {
         let z = req.z;
         let orgId = req.body.orgId;

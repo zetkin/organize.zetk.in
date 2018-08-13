@@ -267,7 +267,7 @@ export default class ActionListItem extends React.Component {
             <div className={ classNames }
                 onClick={ this.onClick.bind(this) }>
 
-                <div className="ListItem-date">
+                <div className="ActionListItem-date">
                     <span className="date">
                         { actionDate.toDateString() }</span>
                     <span className="time">
