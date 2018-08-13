@@ -1,14 +1,13 @@
 .ActionList {
-
     .ListHeader {
-
         li:nth-child(1) {
-            width: 9em;
+            margin-left: 1.5em;
+            width: 7em;
             display: inline-block;
         }
 
         li:nth-child(2) {
-            @include col(6,12);
+            @include col(4.8,12);
         }
 
         li:nth-child(3) {
@@ -20,18 +19,26 @@
         }
     }
 
-    .ListItem {
-        margin-left: 9em;
+    &.withCheckboxes {
+        .ListHeader {
+            li:nth-child(1) {
+                margin-left: 4.5em;
+            }
+
+            li:nth-child(2) {
+                @include col(4.4,12);
+            }
+        }
     }
 
     @include medium-screen {
         &.List {
-            max-width: 580px;
+            max-width: 720px;
         }
 
         .ListHeader {
             li:nth-child(3) {
-                @include col(1.5,12);
+                @include col(1.3,12);
             }
 
             li:nth-child(4) {
