@@ -1,4 +1,9 @@
 headers:
+    action:
+        export: |-
+            Export {count, plural,
+                =1 {one action}
+                other {# actions}}
     person:
         delete: |-
             Delete {count, plural,
