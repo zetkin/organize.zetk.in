@@ -32,6 +32,12 @@ export default class App extends React.Component {
         }, 6000);
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.view.section == '' && this.props.view.section != '') {
+            this.setState({ animationComplete: true });
+        }
+    }
+
     render() {
         let stateJson = JSON.stringify(this.props.initialState);
 
