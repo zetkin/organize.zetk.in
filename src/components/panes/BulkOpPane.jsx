@@ -66,6 +66,18 @@ export default class BulkOpPane extends PaneBase {
 
     renderPaneFooter(data) {
         if (this.state.config) {
+            if (this.getParam(0) === 'action.export') {
+                let maxActionsSupportedInExport = 100;
+
+                if (data.selection.selectedIds.length > maxActionsSupportedInExport) {
+                    return (
+                        <Button labelMsg="panes.bulkOp.tooLargeActionExport"
+                            className="tooLargeActionExport"
+                            labelValues={{ maxActionsSupportedInExport }}/>
+                    );
+                }
+            }
+
             return (
                 <Button labelMsg="panes.bulkOp.submitButton"
                     onClick={ this.onSubmitButtonClick.bind(this) }/>

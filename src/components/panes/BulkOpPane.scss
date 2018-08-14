@@ -1,0 +1,8 @@
+.PaneBase {
+    .PaneBase-footer {
+        button.tooLargeActionExport {
+            background-color: $c-ui-warning;
+            border-color: darken($c-ui-warning, 10);
+        }
+    }
+}
