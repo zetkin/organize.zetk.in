@@ -19,6 +19,7 @@ import {
     addToSelection,
     removeFromSelection,
 } from '../../../actions/selection';
+import LoadingIndicator from '../../misc/LoadingIndicator';
 
 
 const mapStateToProps = state => ({
@@ -82,8 +83,10 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         else if (actionList.items.length == 0) {
             endDate = startDate.clone().addDays(8 * 7);
         }
-
-        if (this.state.viewMode == 'cal') {
+        if (actionList.isPending) {
+            return <LoadingIndicator />;
+        }
+        else if (this.state.viewMode == 'cal') {
             let actions = actionList.items.map(i => i.data);
 
             viewComponent = <ActionCalendar actions={ actions }
