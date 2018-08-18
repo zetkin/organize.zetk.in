@@ -18,4 +18,4 @@ headers:
                 =1 {en person}
                 other {# personer}}
 submitButton: Utför
-tooLargeActionExport: Action Export too large, max number supported is { maxActionsSupportedInExport }
+tooLargeActionExport: Du kan som mest exportera { maxActionsSupportedInExport } aktioner.
