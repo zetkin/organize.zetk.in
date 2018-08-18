@@ -55,6 +55,7 @@ export default class BulkOpPane extends PaneBase {
 
             return (
                 <ConfigComponent config={ config }
+                    selection={ data.selection }
                     onConfigChange={ this.onConfigChange.bind(this) }
                     openPane={ this.openPane.bind(this) }/>
             );

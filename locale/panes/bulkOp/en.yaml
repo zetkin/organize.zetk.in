@@ -18,3 +18,4 @@ headers:
                 =1 {one person}
                 other {# persons}}
 submitButton: Perform operation
+tooLargeActionExport: You can at most export { maxActionsSupportedInExport } Actions.
