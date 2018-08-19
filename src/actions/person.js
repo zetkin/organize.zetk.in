@@ -83,6 +83,26 @@ export function findDuplicates() {
     };
 }
 
+export function addDuplicatePerson(dupId, person) {
+    return {
+        type: types.ADD_DUPLICATE_PERSON,
+        payload: {
+            id: dupId,
+            person,
+        },
+    };
+}
+
+export function removeDuplicatePerson(dupId, person) {
+    return {
+        type: types.REMOVE_DUPLICATE_PERSON,
+        payload: {
+            id: dupId,
+            person,
+        },
+    };
+}
+
 export function clearDuplicates() {
     return {
         type: types.CLEAR_PERSON_DUPLICATES,
