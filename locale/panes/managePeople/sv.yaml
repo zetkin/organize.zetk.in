@@ -31,7 +31,7 @@ duplicates:
             samtal och etiketter.
     item:
         h: 'Hittade { count } liknande objekt'
-        mergeButton: 'Slå samman { count } personer…'
+        mergeButton: 'Slå samman…'
 queries:
     addButton: Skapa Smart sökning
 tags:
