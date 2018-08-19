@@ -1,6 +1,5 @@
 import { combineReducers, compose, applyMiddleware, createStore } from 'redux';
 import promiseMiddleware from 'redux-promise-middleware';
-import { batchedSubscribe } from 'redux-batched-subscribe';
 import debounce from 'lodash.debounce';
 
 import loginRedirect from '../common/redux/middleware/loginRedirect';
@@ -87,8 +86,6 @@ export const configureStore = (initialState, z) => {
         return next(action);
     };
 
-    const debounceNotify = debounce(notify => notify());
-
     let middleware = [
         urlMiddleware,
         promiseMiddleware(),
@@ -103,7 +100,6 @@ export const configureStore = (initialState, z) => {
     let createWithMiddleware = compose(
         applyMiddleware(...middleware),
         devTools,
-        batchedSubscribe(debounceNotify),
     )(createStore);
 
     return createWithMiddleware(appReducer, initialState);

@@ -224,9 +224,15 @@ export default class List extends React.Component {
                         index >= this.state.firstVisibleIndex
                         && index <= this.state.lastVisibleIndex);
 
+                    let itemProps = this.props.itemProps;
+                    if (typeof itemProps === 'function') {
+                        itemProps = itemProps(i.data);
+                    }
+
                     return (
                         <ListItem key={ key } item={ i }
                             itemComponent={ this.props.itemComponent }
+                            itemProps={ itemProps }
                             showCheckbox={ this.props.allowBulkSelection }
                             selected={ selected } inView={ inView }
                             onItemSelect={ this.onItemSelect.bind(this) }
