@@ -64,6 +64,7 @@ export default class PersonSelectWidget extends React.Component {
         let classes = cx('PersonSelectWidget', {
             selected: !!this.props.person,
             selecting: !this.props.person,
+            draggingOver: this.props.isPersonOver,
             preventChange: this.props.preventChange,
             changing: this.state.forceShowInput,
         });
