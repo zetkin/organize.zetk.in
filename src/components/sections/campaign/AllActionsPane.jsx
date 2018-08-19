@@ -85,6 +85,9 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         if (!actionList || actionList.error) {
             return null;
         }
+        else if (actionList.isPending) {
+            return <LoadingIndicator />;
+        }
 
         let viewComponent;
 
@@ -103,10 +106,7 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
             endDate = startDate.clone().addDays(8 * 7);
         }
 
-        if (actionList.isPending) {
-            return <LoadingIndicator />;
-        }
-        else if (this.state.viewMode == 'cal') {
+        if (this.state.viewMode == 'cal') {
             let actions = actionList.items.map(i => i.data);
 
             viewComponent = <ActionCalendar actions={ actions }
