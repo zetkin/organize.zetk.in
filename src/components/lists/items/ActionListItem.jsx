@@ -1,7 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
 import { DropTarget } from 'react-dnd';
-import { connect } from 'react-redux';
 
 import ParticipantList from './elements/ParticipantList';
 import ContactSlot from './elements/ContactSlot';
@@ -83,19 +82,14 @@ function collectContact(connect, monitor) {
     };
 }
 
-let mapStateToProps = (state, props) => ({
-    participants: state.participants.byAction[props.data.id],
-    responses: state.actionResponses,
-});
-
-@connect(mapStateToProps)
 @DropTarget('person', actionTarget, collectParticipant)
 @DropTarget('person', contactTarget, collectContact)
 export default class ActionListItem extends React.Component {
     static propTypes = {
         data: React.PropTypes.object.isRequired,
+        dispatch: React.PropTypes.func.isRequired,
         participants: React.PropTypes.array,
-        responses: React.PropTypes.object,
+        responses: React.PropTypes.array,
         onOperation: React.PropTypes.func,
     }
 
@@ -111,7 +105,7 @@ export default class ActionListItem extends React.Component {
         if (this.props.inView && !prevProps.inView) {
             const action = this.props.data;
             const participants = this.props.participants;
-            const responses = this.props.responses.byAction[action.id];
+            const responses = this.props.responses;
 
             if (!participants) {
                 this.props.dispatch(retrieveActionParticipants(action.id));
@@ -135,12 +129,6 @@ export default class ActionListItem extends React.Component {
             }
         }
 
-        for (key in nextProps.action) {
-            if (nextProps.action[key] != this.props.action[key]) {
-                return true;
-            }
-        }
-
         for (key in nextState) {
             if (nextState[key] != this.state[key]) {
                 return true;
@@ -152,13 +140,17 @@ export default class ActionListItem extends React.Component {
             return true;
         }
 
+        if (nextProps.responses != this.props.responses) {
+            return true;
+        }
+
         return false;
     }
 
     render() {
         let action = this.props.data;
         let participants = this.props.participants || [];
-        let responses = this.props.responses.byAction[action.id] || [];
+        let responses = this.props.responses || [];
         const contact = action.contact;
         const actionDate = new Date(action.start_time);
         const inPast = (actionDate < (new Date()) ? true : false);
