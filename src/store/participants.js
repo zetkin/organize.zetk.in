@@ -25,10 +25,11 @@ export default function participants(state = null, action) {
             });
 
         case types.RETRIEVE_ACTION_PARTICIPANTS + '_FULFILLED':
-            byAction = Object.assign({}, state.byAction);
-            actionId = action.meta.actionId;
-            byAction[actionId] = action.payload.data.data;
-            return Object.assign({}, state, { byAction: byAction });
+            return Object.assign({}, state, {
+                byAction: Object.assign({}, state.byAction, {
+                    [action.meta.actionId]: action.payload.data.data,
+                }),
+            });
 
         case types.ADD_ACTION_PARTICIPANT + '_FULFILLED':
             byAction = Object.assign({}, state.byAction);
