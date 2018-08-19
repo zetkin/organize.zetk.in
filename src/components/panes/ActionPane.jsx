@@ -208,10 +208,10 @@ export default class ActionPane extends PaneBase {
                         value: timeLabel
                     }, {
                         name: 'location',
-                        value: action.location.title
+                        value: action.location? action.location.title : ''
                     }, {
                         name: 'activity',
-                        value: action.activity.title
+                        value: action.activity? action.activity.title : ''
                     }, {
                         name: 'editLink',
                         msgId: 'panes.action.editLink',
