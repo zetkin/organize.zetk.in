@@ -22,6 +22,10 @@ export function searchProcFactory(type, opts = {}) {
         this.run = (z, orgId, query, lang) => {
             return opts.loader(z, orgId, query, lang)
                 .then(result => {
+                    if (opts.filter) {
+                        result = opts.filter(result);
+                    }
+
                     result.forEach(match => {
                         _submitMatch(query, match)
                     });

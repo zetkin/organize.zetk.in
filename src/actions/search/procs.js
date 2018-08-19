@@ -32,11 +32,14 @@ export const ActionDaySearchProc = searchProcFactory('actionday', {
     },
 });
 
+export const PersonQuerySearchProc = searchProcFactory('personquery', {
+    filter: matches => matches.filter(m => m.type == 'standalone'),
+});
+
 export const ActivitySearchProc = searchProcFactory('activity');
 export const CallAssignmentSearchProc = searchProcFactory('callassignment');
 export const CampaignSearchProc = searchProcFactory('campaign');
 export const LocationSearchProc = searchProcFactory('location');
 export const PersonSearchProc = searchProcFactory('person');
-export const PersonQuerySearchProc = searchProcFactory('personquery');
 export const SurveySearchProc = searchProcFactory('survey');
 export const SurveySubmissionSearchProc = searchProcFactory('surveysubmission');
