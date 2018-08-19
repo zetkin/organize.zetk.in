@@ -18,4 +18,6 @@ headers:
                 =1 {en person}
                 other {# personer}}
 submitButton: Utför
-tooLargeActionExport: Du kan som mest exportera { maxActionsSupportedInExport } aktioner.
+tooLargeActionExport: |-
+    Du kan som mest exportera { maxActionsSupportedInExport } aktioner. När du
+    klickar på "Utför" exporteras de första { maxActionsSupportedInExport }.

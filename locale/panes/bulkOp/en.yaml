@@ -18,4 +18,7 @@ headers:
                 =1 {one person}
                 other {# persons}}
 submitButton: Perform operation
-tooLargeActionExport: You can at most export { maxActionsSupportedInExport } Actions.
+tooLargeActionExport: |-
+    No more than { maxActionsSupportedInExport } can be exported at once. When you
+    click "Perform operation", the first { maxActionsSupportedInExport } actions
+    will be exported.
