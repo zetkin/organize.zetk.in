@@ -18,9 +18,14 @@ export default function search(state = null, action) {
         });
     }
     else if (action.type == types.SEARCH + '_FULFILLED') {
-        return Object.assign({}, state, {
-            isPending: false,
-        });
+        if (action.meta.query == state.query) {
+            return Object.assign({}, state, {
+                isPending: false,
+            });
+        }
+        else {
+            return state
+        }
     }
     else if (action.type == types.BEGIN_SEARCH) {
         return Object.assign({}, state, {
@@ -35,7 +40,6 @@ export default function search(state = null, action) {
             });
         }
         else {
-            console.log('Query out of sync, ignoring match', action, action);
             return state;
         }
     }
