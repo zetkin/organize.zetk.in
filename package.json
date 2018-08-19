@@ -68,6 +68,7 @@
     "redux": "^3.5.2",
     "redux-batched-subscribe": "^0.1.6",
     "redux-promise-middleware": "^3.0.0",
+    "reselect": "^3.0.1",
     "run-sequence": "^1.0.2",
     "scroll": "^2.0.0",
     "sugar-date": "^2.0.4",
