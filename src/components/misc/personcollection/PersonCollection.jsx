@@ -9,34 +9,6 @@ import PersonSelectWidget from '../PersonSelectWidget';
 import { createSelection } from '../../../actions/selection';
 
 
-const personTarget = {
-    canDrop(props, monitor) {
-        let person = monitor.getItem();
-        let persons = props.items;
-        let duplicate = persons.find(p => (p.id == person.id));
-
-        // Only allow drops if it wouldn't result in duplicate
-        return (duplicate === undefined);
-    },
-
-    drop(props) {
-        return {
-            targetType: 'person',
-            onDropPerson: p => props.onAdd([ p.id ])
-        };
-    }
-};
-
-function collectPerson(connect, monitor) {
-    return {
-        connectDropTarget: connect.dropTarget(),
-        isPersonOver: monitor.isOver(),
-        canDrop: monitor.canDrop()
-    };
-}
-
-
-@DropTarget('person', personTarget, collectPerson)
 export default class PersonCollection extends React.Component {
     static propTypes = {
         items: React.PropTypes.array.isRequired,
@@ -70,12 +42,8 @@ export default class PersonCollection extends React.Component {
             );
         }
 
-        let classes = cx('PersonCollection', {
-            'PersonCollection-isPersonOver': this.props.isPersonOver,
-        });
-
         return (
-            <ul className={ classes }>
+            <ul className="PersonCollection">
                 { addItem }
             { this.props.items.map(i => (
                 <li key={ i.id } className="PersonCollection-item">
@@ -107,15 +75,5 @@ export default class PersonCollection extends React.Component {
         if (this.props.onAdd) {
             this.props.onAdd([person.id]);
         }
-    }
-
-    onClickAddPersons(ev) {
-        // TODO: Externalize instructions
-        // TODO: Add existing people as pre-selection
-        let action = createSelection('person', null, null, ids =>
-            this.props.onAdd(ids));
-
-        this.props.dispatch(action);
-        this.props.openPane('selectpeople', action.payload.id);
     }
 }
