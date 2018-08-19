@@ -5,6 +5,7 @@ import { FormattedMessage as Msg } from 'react-intl';
 
 import Link from '../Link';
 import PersonCollectionItem from './PersonCollectionItem';
+import PersonSelectWidget from '../PersonSelectWidget';
 import { createSelection } from '../../../actions/selection';
 
 
@@ -60,18 +61,12 @@ export default class PersonCollection extends React.Component {
         let addItem;
 
         if (this.props.addPersonMsg) {
-            let selectLink = (
-                <Link msgId={ this.props.selectLinkMsg }
-                    onClick={ this.onClickAddPersons.bind(this) }/>
-            );
-
-            addItem = this.props.connectDropTarget(
-                <li key="addItem"
-                    className="PersonCollection-addItem">
-                    <Msg tagName="p"
-                        id={ this.props.addPersonMsg }
-                        values={{ selectLink }}/>
-                </li>
+            // Change key when person count changes, to force the
+            // component to be reset when a new person is added
+            const key = 'addPerson' + (this.props.items.length + 1);
+            addItem = (
+                    <PersonSelectWidget person={ null } key={ key }
+                        onSelect={ this.onParticipantAdd.bind(this) }/>
             );
         }
 
@@ -105,6 +100,12 @@ export default class PersonCollection extends React.Component {
     onRemove(item) {
         if (this.props.onRemove) {
             this.props.onRemove(item);
+        }
+    }
+
+    onParticipantAdd(person) {
+        if (this.props.onAdd) {
+            this.props.onAdd([person.id]);
         }
     }
 
