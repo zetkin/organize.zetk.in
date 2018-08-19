@@ -19,6 +19,7 @@ export default class ListItem extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         return (nextProps.item != this.props.item
+            || nextProps.itemProps != this.props.itemProps
             || nextProps.inView != this.props.inView
             || nextProps.selected !== this.props.selected);
     }
@@ -51,6 +52,7 @@ export default class ListItem extends React.Component {
             content = [
                 checkbox,
                 <ItemComponent key="item" data={ item.data }
+                    { ...this.props.itemProps }
                     inView={ this.props.inView }
                     onItemMouseOut={ this.onItemMouseOut.bind(this) }
                     onItemMouseOver={ this.onItemMouseOver.bind(this) }
