@@ -1,0 +1,30 @@
+.Avatar {
+    display: inline-block;
+    width: 100%;
+    height: auto;
+
+    img {
+        width: 100%;
+        height: auto;
+        opacity: 1;
+        transition: opacity 0.5s;
+    }
+
+    &.pending {
+        background-color: rgba(0,0,0, 0.02);
+        animation: Avatar-pending-animation 0.6s;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+
+        img {
+            opacity: 0;
+            padding-top: 100%;
+        }
+    }
+}
+
+@keyframes Avatar-pending-animation {
+    100% {
+        background-color: rgba(0,0,0, 0.05);
+    }
+}

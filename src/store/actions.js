@@ -1,3 +1,4 @@
+import { createSelector } from 'reselect';
 import {
     createList,
     createListItems,
@@ -7,19 +8,26 @@ import {
 } from '../utils/store';
 import * as types from '../actions';
 
-export const filteredActionList = state => {
-    let selectedCampaign = state.campaigns.selectedCampaign;
+let cachedFilteredActionList = null;
+let cachedFilteredActionListCampaign = null;
 
-    if (!selectedCampaign) {
-        return state.actions.actionList;
+const actionListSelector = state => state.actions.actionList;
+const selectedCampaignSelector = state => state.campaigns.selectedCampaign;
+
+export const filteredActionList = createSelector(
+    actionListSelector,
+    selectedCampaignSelector,
+    (actionList, selectedCampaign) => {
+        if (!actionList || !actionList.items || !selectedCampaign) {
+            return actionList;
+        }
+
+        return Object.assign({}, actionList, {
+            items: actionList.items.filter(i =>
+                i.data.campaign && i.data.campaign.id === selectedCampaign)
+        });
     }
-
-    return Object.assign({}, state.actions.actionList, {
-        items: state.actions.actionList.items.filter(i =>
-            i.data.campaign && i.data.campaign.id === selectedCampaign),
-    });
-};
-
+);
 
 export default function actions(state = null, action) {
     let actionData;

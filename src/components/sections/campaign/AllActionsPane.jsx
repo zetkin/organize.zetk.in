@@ -19,6 +19,7 @@ import {
     addToSelection,
     removeFromSelection,
 } from '../../../actions/selection';
+import LoadingIndicator from '../../misc/LoadingIndicator';
 
 
 const mapStateToProps = state => ({
@@ -60,10 +61,32 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         };
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextState != this.state) {
+            return true;
+        }
+
+        for (let prop in nextProps) {
+            if (prop.indexOf('on') == 0) {
+                // Skip event listeners
+                continue;
+            }
+
+            if (nextProps[prop] !== this.props[prop]) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     renderPaneContent(data) {
         let actionList = this.props.filteredActionList;
-        if (!actionList || !actionList.items) {
+        if (!actionList || actionList.error) {
             return null;
+        }
+        else if (actionList.isPending) {
+            return <LoadingIndicator />;
         }
 
         let viewComponent;
@@ -214,7 +237,6 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
     }
 
     onShowOldClick() {
-        console.log('show old');
         this.setState({
             showOldActions: true
         });

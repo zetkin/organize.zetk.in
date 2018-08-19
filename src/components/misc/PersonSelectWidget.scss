@@ -70,6 +70,19 @@
         }
     }
 
+    .DraggableAvatar, .Person, .RelSelectInput, .PersonSelectWidget-instructions {
+        opacity: 1;
+        transition: opacity 0.2s;
+    }
+
+    &.draggingOver {
+        .DraggableAvatar, .Person, .RelSelectInput, .PersonSelectWidget-instructions {
+            opacity: 0.3;
+        }
+
+        border-color: rgba(0,0,0,0.4);
+    }
+
     &.changing, &.selected {
         .RelSelectInput {
             left: 70px;

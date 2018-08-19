@@ -103,13 +103,12 @@ export default class ActionPane extends PaneBase {
                 participantList = (
                     <PersonCollection items={ participants }
                         itemComponent={ PCActionParticipantItem }
-                        selectLinkMsg="panes.action.participants.selectLink"
-                        addPersonMsg="panes.action.participants.addPerson"
+                        enableAdd={ true }
                         showEditButtons={ false }
                         dispatch={ this.props.dispatch }
                         openPane={ this.openPane.bind(this) }
                         onRemove={ this.onRemoveParticipant.bind(this) }
-                        onAdd={ this.onAddParticipants.bind(this) }
+                        onAdd={ this.onAddParticipant.bind(this) }
                         />
                 );
 
@@ -208,10 +207,10 @@ export default class ActionPane extends PaneBase {
                         value: timeLabel
                     }, {
                         name: 'location',
-                        value: action.location.title
+                        value: action.location? action.location.title : ''
                     }, {
                         name: 'activity',
-                        value: action.activity.title
+                        value: action.activity? action.activity.title : ''
                     }, {
                         name: 'editLink',
                         msgId: 'panes.action.editLink',
@@ -261,9 +260,9 @@ export default class ActionPane extends PaneBase {
         this.openPane('actionreminder', actionId);
     }
 
-    onAddParticipants(ids) {
+    onAddParticipant(person) {
         let actionId = this.getParam(0);
-        this.props.dispatch(addActionParticipants(actionId, ids));
+        this.props.dispatch(addActionParticipants(actionId, [person.id]));
     }
 
     onSelectResponse(person) {

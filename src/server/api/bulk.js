@@ -56,11 +56,14 @@ let operations = {
 
         let contacts = {};
         let actions;
+        let maxActionsSupportedInExport = 100;
 
         return req.z.resource('orgs', orgId, 'actions').get()
             .then(result => {
+                let cappedSelectedActions = req.body.objects.slice(0, maxActionsSupportedInExport);
+
                 actions = result.data.data.filter(a =>
-                    req.body.objects.indexOf(a.id) >= 0);
+                    cappedSelectedActions.indexOf(a.id) >= 0);
 
                 // Make a list of contact IDs
                 actions.forEach(action => {

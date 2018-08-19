@@ -5,7 +5,13 @@ import { connect } from 'react-redux';
 
 import Button from '../misc/Button';
 import PaneBase from './PaneBase';
-import { mergeDuplicates } from '../../actions/person';
+import PersonCollection from '../misc/personcollection/PersonCollection';
+import { PCDuplicateItem } from '../misc/personcollection/items';
+import {
+    addDuplicatePerson,
+    removeDuplicatePerson,
+    mergeDuplicates,
+} from '../../actions/person';
 
 
 const mapStateToProps = (state, props) => {
@@ -146,6 +152,19 @@ export default class MergePeoplePane extends PaneBase {
 
             return [
                 <Msg key="intro" tagName="p" id="panes.mergePeople.intro"/>,
+                <div key="objects">
+                    <Msg tagName="h3" id="panes.mergePeople.objects.h"/>
+                    <PersonCollection items={ objects }
+                        itemComponent={ PCDuplicateItem }
+                        showEditButtons={ false }
+                        enableAdd={ true }
+                        dispatch={ this.props.dispatch }
+                        openPane={ this.openPane.bind(this) }
+                        onRemove={ this.onRemoveDuplicate.bind(this) }
+                        onAdd={ this.onAddDuplicate.bind(this) }
+                        onSelect={ this.onSelectDuplicate.bind(this) }
+                        />
+                </div>,
                 <div key="override" className="MergePeoplePane-override">
                     <Msg tagName="h3" id="panes.mergePeople.override.h"/>
                     <ul className="MergePeoplePane-overrideList">
@@ -184,6 +203,20 @@ export default class MergePeoplePane extends PaneBase {
         };
 
         this.props.dispatch(mergeDuplicates(data, override, this.props.paneData.id));
+    }
+
+    onRemoveDuplicate(person) {
+        const id = this.props.duplicateItem.data.id;
+        this.props.dispatch(removeDuplicatePerson(id, person));
+    }
+
+    onAddDuplicate(person) {
+        const id = this.props.duplicateItem.data.id;
+        this.props.dispatch(addDuplicatePerson(id, person));
+    }
+
+    onSelectDuplicate(person) {
+        this.openPane('person', person.id);
     }
 
     onOverrideChange(field, ev) {

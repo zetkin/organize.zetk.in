@@ -11,18 +11,4 @@
     .PersonCollectionItem {
         transition: opacity 0.2s;
     }
-
-    &.PersonCollection-isPersonOver {
-        .PersonCollection-addItem {
-            border-color: $c-ui-darker;
-
-            p {
-                opacity: 0;
-            }
-        }
-
-        .PersonCollectionItem {
-            opacity: 0.5;
-        }
-    }
 }

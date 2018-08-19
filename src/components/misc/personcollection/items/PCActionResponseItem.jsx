@@ -2,12 +2,21 @@ import React from 'react';
 
 
 export default class PCActionResponseItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    componentDidMount(){
+
+        this.setState({hasJavascript:true});
+
+    }
+
     render() {
         let item = this.props.item;
         let name = item.person.name;
-        let responseTime = Date.create(item.response_date);
-        let responseTimeLabel = responseTime.setUTC(true)
-                .format('{yyyy}-{MM}-{dd} {HH}:{mm}');
+        let responseTimeLabel = this.state.hasJavascript ? Date.create(item.response_date).format('{yyyy}-{MM}-{dd} {HH}:{mm}') :  null;
 
         return (
             <div className="PCActionResponseItem">

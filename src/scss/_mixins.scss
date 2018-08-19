@@ -211,7 +211,7 @@
 }
 
 @mixin ghost-placeholder() {
-    border: 2px dashed $c-ui-dark;
+    border: 2px dashed rgba(0,0,0, 0.2);
     text-align: center;
     padding: 15px 10px;
     margin: 0 0 10px;

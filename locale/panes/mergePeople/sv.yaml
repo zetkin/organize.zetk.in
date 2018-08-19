@@ -2,6 +2,8 @@ execButton: Slå samman personer
 intro: |
     När du slår samman personobjekt raderas alla utom ett, men relaterad data
     behålls och associeras till det återstående.
+objects:
+    h: Object att slå samman
 override:
     fields:
         city: Ort
@@ -13,8 +15,8 @@ override:
         phone: Telefon
         street_address: Gatuadress
         zip_code: Postnummer
-    h: Objekt efter sammanslatningen
+    h: Objekt efter sammanslagningen
     instructions: |
         Det här fältet varierar mellan dubletterna. Välj vilket av varianterna
-        som ska gälla efter sammanslatningen.
+        som ska gälla efter sammanslagningen.
 title: 'Slå samman {count} objekt'

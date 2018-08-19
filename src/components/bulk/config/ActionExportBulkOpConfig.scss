@@ -1,0 +1,14 @@
+.ActionExportBulkOpConfig-maxActionsWarning {
+      &:before {
+          @include icon($fa-var-warning);
+          font-size: 1.6em;
+          color: $c-ui-warning;
+          margin: 0 auto;
+          display: block;
+      }
+
+      background-color: rgba(0,0,0,0.05);
+      padding: 0.4em 3em 1em;
+      margin: 0.5em 0;
+      text-align: center;
+}

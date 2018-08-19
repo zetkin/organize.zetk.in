@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import { connect } from 'react-redux';
 
 
@@ -9,6 +10,15 @@ const mapStateToProps = state => ({
 
 @connect(mapStateToProps)
 export default class Avatar extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            pending: true,
+            error: false,
+        };
+    }
+
     render() {
         const person = this.props.person;
         const avatarDomain = '//api.' + process.env.ZETKIN_DOMAIN;
@@ -19,12 +29,41 @@ export default class Avatar extends React.Component {
             person.first_name + ' ' + person.last_name :
             person.name? person.name : '';
 
+        const classes = cx('Avatar', {
+            pending: this.state.pending,
+            error: this.state.error,
+        });
+
         return (
-            <img className="Avatar"
-                src={ src } alt={ alt } title={ alt }
-                onClick={ this.props.onClick }
-                />
+            <div className={ classes }>
+                <img ref="image"
+                    src={ src } alt={ alt } title={ alt }
+                    onLoad={ this.onLoad.bind(this) }
+                    onError={ this.onError.bind(this) }
+                    onClick={ this.props.onClick }
+                    />
+            </div>
         );
+    }
+
+    componentDidMount() {
+        if (this.refs.image.complete) {
+            this.onLoad();
+        }
+    }
+
+    onLoad() {
+        this.setState({
+            pending: false,
+            error: false,
+        });
+    }
+
+    onError() {
+        this.setState({
+            pending: false,
+            error: true,
+        });
     }
 }
 
