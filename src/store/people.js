@@ -17,7 +17,6 @@ export default function people(state = null, action) {
 
     if (action.type == types.ADD_DUPLICATE_PERSON || action.type == types.REMOVE_DUPLICATE_PERSON) {
         const dupItem = getListItemById(state.duplicateList, action.payload.id);
-        console.log(dupItem);
         let objects = dupItem.data.objects.filter(p => p.id !== action.payload.person.id);
 
         if (action.type == types.ADD_DUPLICATE_PERSON) {
