@@ -139,11 +139,10 @@ export default class CallAssignmentPane extends PaneBase {
                 callerContent = (
                     <PersonCollection items={ callers }
                         itemComponent={ PCCallerItem }
-                        selectLinkMsg="panes.callAssignment.callers.selectLink"
-                        addPersonMsg="panes.callAssignment.callers.addCaller"
+                        enableAdd={ true }
                         dispatch={ this.props.dispatch }
                         openPane={ this.openPane.bind(this) }
-                        onAdd={ this.onAddCallers.bind(this) }
+                        onAdd={ this.onAddCaller.bind(this) }
                         onSelect={ this.onSelectCaller.bind(this) }
                         onRemove={ this.onRemoveCaller.bind(this) }/>
                 );
@@ -222,9 +221,9 @@ export default class CallAssignmentPane extends PaneBase {
             assignmentId, caller.id));
     }
 
-    onAddCallers(ids) {
+    onAddCaller(person) {
         let assignmentId = this.getParam(0);
-        this.props.dispatch(addCallAssignmentCallers(assignmentId, ids));
+        this.props.dispatch(addCallAssignmentCallers(assignmentId, [person.id]));
     }
 
     onClickEditSettings(ev) {

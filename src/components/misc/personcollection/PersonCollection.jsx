@@ -15,7 +15,7 @@ export default class PersonCollection extends React.Component {
         itemComponent: React.PropTypes.func.isRequired,
         showEditButtons: React.PropTypes.bool,
         showRemoveButtons: React.PropTypes.bool,
-        addPersonMsg: React.PropTypes.string,
+        enableAdd: React.PropTypes.bool,
         selectLinkMsg: React.PropTypes.string,
         dispatch: React.PropTypes.func,
         openPane: React.PropTypes.func,
@@ -32,7 +32,7 @@ export default class PersonCollection extends React.Component {
     render() {
         let addItem;
 
-        if (this.props.addPersonMsg) {
+        if (this.props.enableAdd) {
             // Change key when person count changes, to force the
             // component to be reset when a new person is added
             const key = 'addPerson' + (this.props.items.length + 1);
@@ -73,7 +73,7 @@ export default class PersonCollection extends React.Component {
 
     onParticipantAdd(person) {
         if (this.props.onAdd) {
-            this.props.onAdd([person.id]);
+            this.props.onAdd(person);
         }
     }
 }
