@@ -63,7 +63,7 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
 
     renderPaneContent(data) {
         let actionList = this.props.filteredActionList;
-        if (!actionList || !actionList.items) {
+        if (!actionList || actionList.error) {
             return null;
         }
 
@@ -83,6 +83,7 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         else if (actionList.items.length == 0) {
             endDate = startDate.clone().addDays(8 * 7);
         }
+
         if (actionList.isPending) {
             return <LoadingIndicator />;
         }
