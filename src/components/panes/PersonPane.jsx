@@ -46,7 +46,9 @@ export default class PersonPane extends PaneBase {
     getPaneTitle(data) {
         if (data.personItem && data.personItem.data) {
             let person = data.personItem.data;
-            return person.first_name + ' ' + person.last_name;
+            return person.name
+                || ((person.first_name && person.last_name)?
+                    (person.first_name + ' ' + person.last_name) : '');
         }
         else {
             return null;

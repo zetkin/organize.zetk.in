@@ -15,6 +15,20 @@ export default function people(state = null, action) {
     let person;
     let tags;
 
+    if (action.type == types.ADD_DUPLICATE_PERSON || action.type == types.REMOVE_DUPLICATE_PERSON) {
+        const dupItem = getListItemById(state.duplicateList, action.payload.id);
+        let objects = dupItem.data.objects.filter(p => p.id !== action.payload.person.id);
+
+        if (action.type == types.ADD_DUPLICATE_PERSON) {
+            objects.push(action.payload.person);
+        }
+
+        return Object.assign({}, state, {
+            duplicateList: updateOrAddListItem(state.duplicateList,
+                action.payload.id, { objects }),
+        });
+    }
+
     switch (action.type) {
         case types.RETRIEVE_PEOPLE + '_PENDING':
             return Object.assign({}, state, {

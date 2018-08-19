@@ -26,7 +26,7 @@ duplicates:
             data, like actions, calls and tags.
     item:
         h: 'Set of { count } similar objects'
-        mergeButton: 'Merge { count } persons…'
+        mergeButton: 'Merge…'
 queries:
     addButton: Add Smart Search query
 tags:

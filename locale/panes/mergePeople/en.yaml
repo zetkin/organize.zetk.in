@@ -2,6 +2,8 @@ execButton: Merge persons
 intro: |
     Merging duplicates will delete all but one of the persons, but keep all
     related data and associate it with the remaining one.
+objects:
+    h: Objects to merge
 override:
     fields:
         city: City
