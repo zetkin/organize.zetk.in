@@ -23,7 +23,7 @@ export function updateOrAddListItem(list, id, newData, meta) {
     list = list || createList();
 
     let updated = false;
-    let items = list.items.concat();
+    let items = list.items? list.items.concat() : [];
 
     for (let i = 0; i < items.length; i++) {
         if (items[i].data && items[i].data.id == id) {
