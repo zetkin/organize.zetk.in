@@ -20,17 +20,20 @@ export function search(query) {
 
             if (!scope || scope == 'campaign') {
                 queue.addProc(new procs.ActionDaySearchProc(dispatch));
+            }
+
+            if (!scope || scope == 'people') {
+                queue.addProc(new procs.PersonQuerySearchProc(dispatch));
+                queue.addProc(new procs.PersonSearchProc(dispatch));
+            }
+
+            if (!scope || scope == 'campaign') {
                 queue.addProc(new procs.CampaignSearchProc(dispatch));
                 queue.addProc(new procs.ActivitySearchProc(dispatch));
             }
 
             if (!scope || scope == 'dialog') {
                 queue.addProc(new procs.CallAssignmentSearchProc(dispatch));
-            }
-
-            if (!scope || scope == 'people') {
-                queue.addProc(new procs.PersonQuerySearchProc(dispatch));
-                queue.addProc(new procs.PersonSearchProc(dispatch));
             }
 
             if (!scope || scope == 'maps') {
