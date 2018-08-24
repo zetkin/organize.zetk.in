@@ -19,11 +19,12 @@ export default class PersonTimeline extends React.Component {
 
         const eventItems = this.props.timeline.items
             .filter(item => now > new Date(item.data.timestamp))
-            .map(item => {
+            .map((item, idx) => {
                 const eventData = item.data;
 
                 return (
-                    <ActionTimelineEvent key={ eventData.timestamp }
+                    <ActionTimelineEvent key={ idx }
+                        onSelect={ this.onSelect.bind(this, eventData.event) }
                         eventData={ eventData }
                         />
                 );
@@ -44,6 +45,7 @@ export default class PersonTimeline extends React.Component {
             };
             const futureActionItem = (
                 <MultiActionTimelineEvent key={ eventData.timestamp }
+                    onSelect={ this.onSelect.bind(this, eventData.event) }
                     eventData={ eventData }
                     />
             );
@@ -61,5 +63,11 @@ export default class PersonTimeline extends React.Component {
                 { eventItems }
             </div>
         );
+    }
+
+    onSelect(eventType, data) {
+        if (this.props.onSelect) {
+            this.props.onSelect(eventType, data);
+        }
     }
 }

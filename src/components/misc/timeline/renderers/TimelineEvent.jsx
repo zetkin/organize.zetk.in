@@ -11,6 +11,8 @@ export default class TimelineEvent extends React.Component {
             React.PropTypes.element,
         ]),
         subItems: React.PropTypes.array,
+        onSelect: React.PropTypes.func,
+        onSubSelect: React.PropTypes.func,
     };
 
     constructor(props) {
@@ -28,7 +30,8 @@ export default class TimelineEvent extends React.Component {
         if (this.props.subItems) {
             const subItems = this.props.subItems.map((item, idx) => {
                 return (
-                    <div className="TimelineEvent-subItem" key={ idx }>
+                    <div className="TimelineEvent-subItem" key={ idx }
+                        onClick={ this.onSubClick.bind(this, idx) }>
                         { item }
                     </div>
                 );
@@ -52,11 +55,14 @@ export default class TimelineEvent extends React.Component {
         }
 
         const classes = cx('TimelineEvent', this.props.className, {
+            simple: !this.props.subItems,
+            complex: !!this.props.subItems,
             expanded: this.state.expanded
         });
 
         return (
-            <div className={ classes }>
+            <div className={ classes }
+                onClick={ this.onClick.bind(this) }>
                 <h4>{ this.props.title }</h4>
                 <div className="TimelineEvent-info">
                     { this.props.children }
@@ -65,6 +71,18 @@ export default class TimelineEvent extends React.Component {
                 { subContent }
             </div>
         );
+    }
+
+    onSubClick(idx) {
+        if (this.props.onSubSelect) {
+            this.props.onSubSelect(idx);
+        }
+    }
+
+    onClick() {
+        if (!this.props.subItems && this.props.onSelect) {
+            this.props.onSelect();
+        }
     }
 
     onToggle() {

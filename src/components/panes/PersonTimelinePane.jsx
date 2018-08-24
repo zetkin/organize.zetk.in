@@ -54,12 +54,19 @@ export default class PersonTimelinePane extends PaneBase {
                     <PersonTimeline
                         timeline={ timeline }
                         person={ person }
+                        onSelect={ this.onEventSelect.bind(this) }
                         />
                 );
             }
         }
         else {
             return null;
+        }
+    }
+
+    onEventSelect(eventType, data) {
+        if (eventType == 'action') {
+            this.openPane('action', data.id);
         }
     }
 }

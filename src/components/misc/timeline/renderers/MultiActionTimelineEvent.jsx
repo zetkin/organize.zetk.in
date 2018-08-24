@@ -47,6 +47,7 @@ export default class MultiActionTimelineEvent extends React.Component {
             <TimelineEvent className="MultiActionTimelineEvent"
                 title={ title }
                 subItems={ subItems }
+                onSubSelect={ this.onSubSelect.bind(this) }
                 >
                 <div className="MultiActionTimelineEvent-dates">
                     <FormattedDate value={ firstActionStartTime }
@@ -57,5 +58,10 @@ export default class MultiActionTimelineEvent extends React.Component {
                 </div>
             </TimelineEvent>
         );
+    }
+
+    onSubSelect(idx) {
+        const actions = this.props.eventData.data.actions;
+        this.props.onSelect(actions[idx]);
     }
 }

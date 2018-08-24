@@ -13,6 +13,7 @@ export default class ActionTimelineEvent extends React.Component {
         return (
             <TimelineEvent className="ActionTimelineEvent"
                 title={ action.activity.title }
+                onSelect={ this.onSelect.bind(this) }
                 >
                 <div className="ActionTimelineEvent-time">
                     <FormattedDate value={ startTime }
@@ -27,5 +28,10 @@ export default class ActionTimelineEvent extends React.Component {
                 </div>
             </TimelineEvent>
         );
+    }
+
+    onSelect() {
+        const action = this.props.eventData.data.action;
+        this.props.onSelect(action);
     }
 }
