@@ -1,0 +1,6 @@
+events:
+    action:
+        pastLabel: |-
+            {person} participated in an action: {activity}, {location}
+        futureLabel: |-
+            {person} is booked for an action: {activity}, {location}
