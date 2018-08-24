@@ -51,6 +51,7 @@ import MergePeoplePane from './MergePeoplePane';
 import ImporterColumnPane from './ImporterColumnPane';
 import MoveParticipantsPane from './MoveParticipantsPane';
 import PersonPane from './PersonPane';
+import PersonTimelinePane from './PersonTimelinePane';
 import PlaceLocationPane from './PlaceLocationPane';
 import QueryPane from './QueryPane';
 import RoutePane from './RoutePane';
@@ -132,6 +133,7 @@ var _panes = {
     'survey': SurveyPane,
     'surveyoutline': SurveyOutlinePane,
     'surveysubmission': SurveySubmissionPane,
+    'timeline': PersonTimelinePane,
 };
 
 export function resolvePane(name) {
