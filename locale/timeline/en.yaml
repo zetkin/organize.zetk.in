@@ -1,3 +1,6 @@
+event:
+    toggleExpanded: Show
+    toggleCollapsed: Hide
 events:
     multiAction:
         title: |-

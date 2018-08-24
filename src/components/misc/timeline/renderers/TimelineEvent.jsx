@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
+import { FormattedMessage as Msg } from 'react-intl';
 
 
 export default class TimelineEvent extends React.Component {
@@ -12,9 +13,18 @@ export default class TimelineEvent extends React.Component {
         subItems: React.PropTypes.array,
     };
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            expanded: false,
+        };
+    }
+
     render() {
         let toggle = null;
         let subContent = null;
+
         if (this.props.subItems) {
             const subItems = this.props.subItems.map((item, idx) => {
                 return (
@@ -29,9 +39,21 @@ export default class TimelineEvent extends React.Component {
                     { subItems }
                 </div>
             );
+
+            const toggleMsg = this.state.expanded?
+                'timeline.event.toggleCollapsed' : 'timeline.event.toggleExpanded';
+
+            toggle = (
+                <a className="TimelineEvent-toggle"
+                    onClick={ this.onToggle.bind(this) }>
+                    <Msg id={ toggleMsg }/>
+                </a>
+            );
         }
 
-        const classes = cx('TimelineEvent', this.props.className);
+        const classes = cx('TimelineEvent', this.props.className, {
+            expanded: this.state.expanded
+        });
 
         return (
             <div className={ classes }>
@@ -43,5 +65,11 @@ export default class TimelineEvent extends React.Component {
                 { subContent }
             </div>
         );
+    }
+
+    onToggle() {
+        this.setState({
+            expanded: !this.state.expanded,
+        });
     }
 }

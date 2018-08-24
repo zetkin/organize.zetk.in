@@ -27,10 +27,39 @@
     h4 {
         margin: 0;
     }
+
+    .TimelineEvent-toggle {
+        font-weight: 0.9em;
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        span:after {
+            @include icon($fa-var-sort-down);
+            position: relative;
+            top: -0.2em;
+        }
+    }
+
+    &.expanded {
+        .TimelineEvent-toggle {
+            span:after {
+                @include icon($fa-var-sort-up);
+                top: 0.2em;
+            }
+        }
+
+        .TimelineEvent-subItems {
+            max-height: 100em;
+        }
+    }
 }
 
 .TimelineEvent-subItems {
     margin-top: 1em;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s;
 }
 
 .TimelineEvent-subItem {
