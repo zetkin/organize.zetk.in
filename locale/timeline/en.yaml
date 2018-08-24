@@ -1,6 +1,5 @@
 events:
-    action:
-        pastLabel: |-
-            {person} participated in an action: {activity}, {location}
-        futureLabel: |-
-            {person} is booked for an action: {activity}, {location}
+    multiAction:
+        title: |-
+            Booked for {count, plural, =1 {one future action} other {# future actions}}
+nowDelimiter: Past
