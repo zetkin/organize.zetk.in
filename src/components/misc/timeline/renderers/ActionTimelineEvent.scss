@@ -1,0 +1,7 @@
+.ActionTimelineEvent {
+    &.TimelineEvent {
+        &:before {
+            @include icon($fa-var-flag);
+        }
+    }
+}

@@ -1,0 +1,55 @@
+.TimelineEvent {
+    position: relative;
+    padding: 0 0.5em 1em;
+    font-size: 1.2em;
+    margin: 0 0 1em 2em;
+    border-bottom: 1px solid lighten($c-ui-dark, 25);
+    color: $c-ui-darker;
+
+    &:before {
+        content: "";
+        color: white;
+        display: block;
+        position: absolute;
+        width: 2em !important;
+        height: 2em !important;
+        line-height: 2em !important;
+        left: -3.1em;
+        border-radius: 1em;
+        background-color: $c-brand-comp-light;
+    }
+
+    &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    h4 {
+        margin: 0;
+    }
+}
+
+.TimelineEvent-subItems {
+    margin-top: 1em;
+}
+
+.TimelineEvent-subItem {
+    padding: 0 0.5em 1em;
+    margin: 0 0 1em;
+    border-bottom: 1px solid lighten($c-ui-dark, 25);
+
+    &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    div {
+        margin-top: 0.5em;
+    }
+}
+
+.TimelineEvent-info {
+    div {
+        margin-top: 0.5em;
+    }
+}
