@@ -6,7 +6,9 @@
 
 .PersonTimeline-now {
     text-align: center;
-    padding: 2em;
+    padding: 2em 0 2.5em;
+    color: $c-ui-dark;
+    font-size: 1.1em;
 
     span {
         &:before {
