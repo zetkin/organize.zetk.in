@@ -10,7 +10,6 @@
         clear: both;
 
         li {
-            margin-bottom: 0.8em;
             @include col(12,12, $first:true);
             &:before {
                 margin-right: 0.5em;
@@ -34,7 +33,6 @@
         }
 
         .InfoListItem-email {
-            margin-top: 1em;
             &::before {
                 @include icon($fa-var-envelope-o);
             }
@@ -57,6 +55,12 @@
                 &:first-child {
                     margin-top: -1.4em;
                 }
+            }
+        }
+
+        .InfoListItem-timeline {
+            &:before {
+                @include icon($fa-var-ellipsis-v);
             }
         }
 
