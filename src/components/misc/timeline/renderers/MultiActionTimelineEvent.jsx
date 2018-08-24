@@ -14,6 +14,9 @@ export default class MultiActionTimelineEvent extends React.Component {
         const ts = new Date(this.props.eventData.timestamp);
         const actions = this.props.eventData.data.actions;
 
+        const firstActionStartTime = new Date(actions[actions.length-1].start_time);
+        const lastActionEndTime = new Date(actions[0].end_time);
+
         const title = (
             <Msg id="timeline.events.multiAction.title"
                 values={{ count: actions.length }}
@@ -45,6 +48,13 @@ export default class MultiActionTimelineEvent extends React.Component {
                 title={ title }
                 subItems={ subItems }
                 >
+                <div className="MultiActionTimelineEvent-dates">
+                    <FormattedDate value={ firstActionStartTime }
+                        year="numeric" month="numeric" day="numeric"/>
+                    <span> - </span>
+                    <FormattedDate value={ lastActionEndTime }
+                        year="numeric" month="numeric" day="numeric"/>
+                </div>
             </TimelineEvent>
         );
     }
