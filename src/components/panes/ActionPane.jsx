@@ -107,6 +107,7 @@ export default class ActionPane extends PaneBase {
                         showEditButtons={ false }
                         dispatch={ this.props.dispatch }
                         openPane={ this.openPane.bind(this) }
+                        onSelect={ this.onSelectParticipant.bind(this) }
                         onRemove={ this.onRemoveParticipant.bind(this) }
                         onAdd={ this.onAddParticipant.bind(this) }
                         />
@@ -273,6 +274,10 @@ export default class ActionPane extends PaneBase {
     onRemoveResponse(person) {
         let actionId = this.getParam(0);
         this.props.dispatch(deleteActionResponse(actionId, person.id));
+    }
+
+    onSelectParticipant(person) {
+        this.openPane('person', person.id);
     }
 
     onRemoveParticipant(person) {
