@@ -31,12 +31,30 @@ export default function participants(state = null, action) {
                 }),
             });
 
+        case types.ADD_ACTION_PARTICIPANT + '_PENDING':
+            return Object.assign({}, state, {
+                addIsPending: Object.assign({}, state.addIsPending, {
+                    [action.meta.actionId]: true,
+                }),
+            });
+
+        case types.ADD_ACTION_PARTICIPANT + '_REJECTED':
+            return Object.assign({}, state, {
+                addIsPending: Object.assign({}, state.addIsPending, {
+                    [action.meta.actionId]: false,
+                }),
+            });
+
         case types.ADD_ACTION_PARTICIPANT + '_FULFILLED':
-            byAction = Object.assign({}, state.byAction);
-            actionId = action.meta.actionId;
-            byAction[actionId] = (byAction[actionId] || []).concat();
-            byAction[actionId].push(action.payload.data.data);
-            return Object.assign({}, state, { byAction: byAction });
+            return Object.assign({}, state, {
+                addIsPending: Object.assign({}, state.addIsPending, {
+                    [action.meta.actionId]: false,
+                }),
+                byAction: Object.assign({}, state.byAction, {
+                    [action.meta.actionId]: (state.byAction[action.meta.actionId] || [])
+                        .concat([ action.payload.data.data ]),
+                }),
+            });
 
         case types.ADD_ACTION_PARTICIPANTS + '_FULFILLED':
             byAction = Object.assign({}, state.byAction);
