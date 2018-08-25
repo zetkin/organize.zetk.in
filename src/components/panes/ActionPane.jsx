@@ -23,7 +23,6 @@ import {
 } from '../../actions/actionResponse';
 import {
     addActionParticipant,
-    addActionParticipants,
     removeActionParticipant,
     retrieveActionParticipants,
 } from '../../actions/participant';
@@ -37,6 +36,7 @@ const mapStateToProps = (state, props) => {
         actionItem: getListItemById(state.actions.actionList, actionId),
         actionParticipants: state.participants.byAction[actionId],
         actionResponses: state.actionResponses.byAction[actionId],
+        addParticipantIsPending: state.participants.addIsPending[actionId],
     }
 };
 
@@ -105,6 +105,7 @@ export default class ActionPane extends PaneBase {
                         itemComponent={ PCActionParticipantItem }
                         enableAdd={ true }
                         showEditButtons={ false }
+                        addIsPending={ this.props.addParticipantIsPending }
                         dispatch={ this.props.dispatch }
                         openPane={ this.openPane.bind(this) }
                         onSelect={ this.onSelectParticipant.bind(this) }
@@ -263,7 +264,7 @@ export default class ActionPane extends PaneBase {
 
     onAddParticipant(person) {
         let actionId = this.getParam(0);
-        this.props.dispatch(addActionParticipants(actionId, [person.id]));
+        this.props.dispatch(addActionParticipant(actionId, person.id));
     }
 
     onSelectResponse(person) {
