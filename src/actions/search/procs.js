@@ -1,5 +1,8 @@
 import { searchProcFactory } from './utils';
 
+require('sugar-date/locales/sv');
+require('sugar-date/locales/da');
+
 export const ActionDaySearchProc = searchProcFactory('actionday', {
     loader: (z, orgId, qs, lang) => {
         let date = Date.create(qs, lang);
