@@ -111,6 +111,7 @@ export default class PersonPane extends PaneBase {
                         { name: 'email', value: person.email },
                         { name: 'phone', value: phoneNumbers.join(', ') },
                         { name: 'address', value: addrFields.length? addrFields : null },
+                        { name: 'timeline', msgId: 'panes.person.timelineLink', onClick: this.onClickTimeline.bind(this) },
                         { name: 'editLink', msgId: 'panes.person.editLink', onClick: this.onClickEdit.bind(this) }
                     ]}
                 />,
@@ -144,5 +145,10 @@ export default class PersonPane extends PaneBase {
     onClickEdit(ev) {
         let personId = this.getParam(0);
         this.openPane('editperson', personId);
+    }
+
+    onClickTimeline(ev) {
+        const personId = this.getParam(0);
+        this.openPane('timeline', personId);
     }
 }

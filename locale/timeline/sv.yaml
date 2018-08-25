@@ -1,0 +1,8 @@
+event:
+    toggleExpanded: Visa
+    toggleCollapsed: Dölj
+events:
+    multiAction:
+        title: |-
+            Bokad på {count, plural, =1 {en framtida aktion} other {# framtida aktioner}}
+nowDelimiter: Tidigare

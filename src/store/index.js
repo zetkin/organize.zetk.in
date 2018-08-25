@@ -34,6 +34,7 @@ import search from './search';
 import selections from './selections';
 import surveys from './surveys';
 import surveySubmissions from './surveySubmissions';
+import timelines from './timelines';
 import user from './user';
 import view from './view';
 import visits from './visits';
@@ -72,6 +73,7 @@ const appReducer = combineReducers({
     selections,
     surveys,
     surveySubmissions,
+    timelines,
     user,
     view,
     visits,
