@@ -17,6 +17,7 @@ export default class PersonCollection extends React.Component {
         showRemoveButtons: React.PropTypes.bool,
         enableAdd: React.PropTypes.bool,
         selectLinkMsg: React.PropTypes.string,
+        addIsPending: React.PropTypes.bool,
         dispatch: React.PropTypes.func,
         openPane: React.PropTypes.func,
         onSelect: React.PropTypes.func,
@@ -38,6 +39,7 @@ export default class PersonCollection extends React.Component {
             const key = 'addPerson' + (this.props.items.length + 1);
             addItem = (
                     <PersonSelectWidget person={ null } key={ key }
+                        isPending={ !!this.props.addIsPending }
                         onSelect={ this.onParticipantAdd.bind(this) }/>
             );
         }
