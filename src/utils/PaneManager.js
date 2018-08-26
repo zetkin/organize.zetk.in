@@ -17,8 +17,6 @@ function run(paneElements, container) {
 
         if (!pane) {
             let isBase = (i == 0);
-            // Use random string as ID
-            paneElem.id = (new Date * Math.random()).toString(36);
             pane = new Pane(paneElem, isBase);
         }
 
