@@ -155,29 +155,29 @@ function updateStack() {
     shade = 0.0;
     maxRight = _stackWidth;
     while (i-->0) {
-        var section = _panes[i],
-            sectionX = section.getX(),
-            sectionWidth = section.getWidth();
+        var pane = _panes[i],
+            paneX = pane.getX(),
+            paneWidth = pane.getWidth();
 
         if (i > 0) {
-            if (sectionX < (maxRight - sectionWidth)) {
-                section.setX(maxRight - sectionWidth);
+            if (paneX < (maxRight - paneWidth)) {
+                pane.setX(maxRight - paneWidth);
             }
-            else if (sectionX > (maxRight - 30)) {
-                section.setX(maxRight - 30);
+            else if (paneX > (maxRight - 30)) {
+                pane.setX(maxRight - 30);
             }
-            else if (maxRight > 30 && sectionX < 0) {
-                section.setX(0);
+            else if (maxRight > 30 && paneX < 0) {
+                pane.setX(0);
             }
         }
 
-        shade -= 0.03 * (maxRight-sectionX)/sectionWidth;
+        shade -= 0.03 * (maxRight-paneX)/paneWidth;
         if (shade < 0)
             shade = 0;
 
-        section.setShade(shade);
+        pane.setShade(shade);
 
-        maxRight = sectionX;
+        maxRight = paneX;
 
         shade += 0.08;
         if (shade > 0.5) {
