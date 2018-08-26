@@ -158,14 +158,18 @@ function updateStack() {
             }
         }
 
-        shade -= 0.15 * (maxRight-sectionX)/sectionWidth;
+        shade -= 0.03 * (maxRight-sectionX)/sectionWidth;
         if (shade < 0)
             shade = 0;
 
         section.setShade(shade);
 
-        shade += 0.2;
         maxRight = sectionX;
+
+        shade += 0.08;
+        if (shade > 0.5) {
+            shade = 0.5;
+        }
     }
 
     requestAnimationFrame(updateStack);
