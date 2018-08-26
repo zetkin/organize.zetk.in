@@ -75,7 +75,7 @@ export default class PaneBase extends React.Component {
         }
 
         return (
-            <div ref="pane" className={ classes }>
+            <div ref="pane" className={ classes } id={ this.props.paneData.id }>
                 <header className="PaneBase-header">
                     <div className="PaneBase-top">
                     { this.renderPaneTop(data) }
