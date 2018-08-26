@@ -57,6 +57,7 @@ dupApi.get('/:orgId/people', (req, res, next) => {
                 const master = people[start];
                 if (!master.consumed) {
                     let objects;
+                    let scores;
 
                     let idx = start + 1;
                     while (idx < people.length) {
@@ -70,9 +71,15 @@ dupApi.get('/:orgId/people', (req, res, next) => {
                                         master,
                                         other,
                                     ];
+
+                                    scores = [
+                                        null,
+                                        score,
+                                    ];
                                 }
                                 else {
                                     objects.push(other);
+                                    scores.push(score);
                                 }
                                 other.consumed = true;
                             }
@@ -85,6 +92,7 @@ dupApi.get('/:orgId/people', (req, res, next) => {
                         duplicates.push({
                             id: '$' + makeRandomString(6),
                             objects: objects,
+                            scores: scores,
                         });
                     }
                 }
