@@ -90,27 +90,42 @@ function resetVerticalLayout() {
 }
 
 function resetHorizontalLayout() {
-    var i, len = _panes.length;
+    const len = _panes.length;
 
-    for (i = 0; i < len; i++) {
-        var pane = _panes[i];
-
+    for (let i = 0; i < len; i++) {
+        let pane = _panes[i];
         pane.resetTransform();
     }
 
     if (_panes.length > 1) {
-        var topPane = _panes[_panes.length-1];
+        const totWidth = _panes
+            .slice(1)
+            .reduce((sum, pane) => sum + pane.getWidth(), 0);
 
-        // Position top pane so that it's shown in it's entirety
-        topPane.setX(_stackWidth - topPane.getWidth());
+        // If panes are too wide to fit within 90% of available space,
+        // stack them so that they are slightly overlapping
+        if (totWidth >= (0.9 * _stackWidth)) {
+            // Position top pane so that it's shown in it's entirety
+            const topPane = _panes[len-1];
+            topPane.setX(_stackWidth - topPane.getWidth());
 
-        // Distribute the remaining space to the left of the top pane
-        // across all of the underlying panes (except the base pane).
-        var perPane = topPane.getX() / (len - 1)
-        i = len - 1;
-        while (i-->1) {
-            pane = _panes[i];
-            pane.setX(i * perPane);
+            // Distribute the remaining space to the left of the top pane
+            // across all of the underlying panes (except the base pane).
+            let i = len - 1;
+            const perPane = topPane.getX() / (len - 1)
+            while (i-->1) {
+                let pane = _panes[i];
+                pane.setX(i * perPane);
+            }
+        }
+        else {
+            let i = len;
+            let prevX = _stackWidth;
+            while (i-->1) {
+                let pane = _panes[i];
+                pane.setX(prevX - pane.getWidth());
+                prevX = pane.getX();
+            }
         }
     }
 
