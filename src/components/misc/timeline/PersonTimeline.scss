@@ -1,0 +1,18 @@
+.PersonTimeline {
+    margin-left: 1em;
+    border-left: 2px solid lighten($c-ui-dark, 20);
+    padding: 2em 0 3em;
+}
+
+.PersonTimeline-now {
+    text-align: center;
+    padding: 2em 0 2.5em;
+    color: $c-ui-dark;
+    font-size: 1.1em;
+
+    span {
+        &:before {
+            @include icon($fa-var-rotate-left);
+        }
+    }
+}

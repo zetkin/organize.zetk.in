@@ -20,14 +20,14 @@ const calcSimilarity = (master, other) => {
     if (master.ext_id && master.ext_id == other.ext_id) score += 20;
 
     // Add 6 for identical e-mails, subtract 2 for different
-    let mEmail = master.m_email;
-    let oEmail = other.m_email;
+    let mEmail = master.n_email;
+    let oEmail = other.n_email;
     if (mEmail && mEmail == oEmail) score += 6;
     else if (mEmail && oEmail && mEmail != oEmail) score -= 2;
 
     // Add 6 for identical phone numbers, subtract 2 for different
-    let mPhone = master.m_phone;
-    let oPhone = other.m_phone;
+    let mPhone = master.n_phone;
+    let oPhone = other.n_phone;
     if (mPhone && mPhone == oPhone) score += 6;
     else if (mPhone && oPhone && mPhone != oPhone) score -= 2;
 
@@ -57,6 +57,7 @@ dupApi.get('/:orgId/people', (req, res, next) => {
                 const master = people[start];
                 if (!master.consumed) {
                     let objects;
+                    let scores;
 
                     let idx = start + 1;
                     while (idx < people.length) {
@@ -70,9 +71,15 @@ dupApi.get('/:orgId/people', (req, res, next) => {
                                         master,
                                         other,
                                     ];
+
+                                    scores = [
+                                        null,
+                                        score,
+                                    ];
                                 }
                                 else {
                                     objects.push(other);
+                                    scores.push(score);
                                 }
                                 other.consumed = true;
                             }
@@ -85,6 +92,7 @@ dupApi.get('/:orgId/people', (req, res, next) => {
                         duplicates.push({
                             id: '$' + makeRandomString(6),
                             objects: objects,
+                            scores: scores,
                         });
                     }
                 }

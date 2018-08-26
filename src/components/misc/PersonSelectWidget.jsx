@@ -6,6 +6,7 @@ import { FormattedMessage as Msg } from 'react-intl';
 
 import DraggableAvatar from './DraggableAvatar';
 import Link from './Link';
+import LoadingIndicator from './LoadingIndicator';
 import Person from './elements/Person';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
 import { retrievePeople } from '../../actions/person';
@@ -48,6 +49,7 @@ export default class PersonSelectWidget extends React.Component {
         person: React.PropTypes.object,
         personList: React.PropTypes.object,
         preventChange: React.PropTypes.bool,
+        isPending: React.PropTypes.bool,
     };
 
     constructor(props) {
@@ -67,6 +69,7 @@ export default class PersonSelectWidget extends React.Component {
             draggingOver: this.props.isPersonOver,
             preventChange: this.props.preventChange,
             changing: this.state.forceShowInput,
+            pending: this.props.isPending,
         });
 
         if (this.props.person) {
@@ -141,6 +144,12 @@ export default class PersonSelectWidget extends React.Component {
                     onClick={ this.onClearLinkClick.bind(this) }>
                     <i className="fa fa-remove"></i>
                 </a>
+            );
+        }
+
+        if (this.props.isPending) {
+            content = (
+                <LoadingIndicator/>
             );
         }
 

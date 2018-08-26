@@ -39,23 +39,12 @@ export default function people(state = null, action) {
             });
 
         case types.RETRIEVE_PEOPLE + '_FULFILLED':
-            let items = state.personList.items;
-            let page = action.meta.page;
-            if (page > state.personList.lastPage) {
-                items = items.concat(
-                    createListItems(action.payload.data.data));
-            }
-            else {
-                items = createListItems(action.payload.data.data);
-            }
-
             return Object.assign({}, state, {
-                personList: {
+                personList: updateOrAddListItems(state.personList, action.payload.data.data, {
                     isPending: false,
                     error: null,
-                    lastPage: Math.max(state.personList.lastPage, page),
-                    items: items,
-                }
+                    lastPage: Math.max(state.personList.lastPage, action.meta.page),
+                })
             });
 
         case types.RETRIEVE_PEOPLE + '_REJECTED':
@@ -78,7 +67,7 @@ export default function people(state = null, action) {
             person = { id: action.meta.id };
             return Object.assign({}, state, {
                 personList: updateOrAddListItem(state.personList,
-                        person.id, person, { pending: true }),
+                        person.id, person, { isPending: true }),
             });
 
         case types.CREATE_PERSON + '_FULFILLED':
@@ -87,7 +76,7 @@ export default function people(state = null, action) {
             person = action.payload.data.data;
             return Object.assign({}, state, {
                 personList: updateOrAddListItem(state.personList,
-                        person.id, person, { pending: false, error: null }),
+                        person.id, person, { isPending: false, error: null }),
             });
 
         case types.DELETE_PERSON + '_FULFILLED':
