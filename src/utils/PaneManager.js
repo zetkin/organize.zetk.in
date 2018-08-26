@@ -63,6 +63,7 @@ function stop() {
 
     // Stop updating
     _running = false;
+    _panes = null;
 }
 
 function resetVerticalLayout() {
