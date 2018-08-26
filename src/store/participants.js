@@ -130,6 +130,7 @@ export default function participants(state = null, action) {
         default:
             return state || {
                 byAction: {},
+                addIsPending: {},
                 moves: []
             };
     }
