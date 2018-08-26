@@ -315,8 +315,11 @@ function Pane(domElement, isBase) {
             this.shaderElement = null;
         }
 
-        this.domElement.parentNode.removeEventListener('touchmove', onDomElementTouchMove);
-        this.domElement.parentNode.removeEventListener('mousemove', onDomElementMouseMove);
+        if (this.domElement.parentNode) {
+            this.domElement.parentNode.removeEventListener('touchmove', onDomElementTouchMove);
+            this.domElement.parentNode.removeEventListener('mousemove', onDomElementMouseMove);
+        }
+
         this.domElement.removeEventListener('mousedown', onDomElementMouseDown);
         this.domElement.removeEventListener('touchstart', onDomElementTouchStart);
 
