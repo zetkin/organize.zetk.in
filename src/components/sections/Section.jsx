@@ -45,8 +45,10 @@ export default class Section extends React.Component {
         PaneManager.stop();
     }
 
-    componentDidUpdate() {
-        this.runPaneManager();
+    componentDidUpdate(prevProps) {
+        if (this.props.panes != prevProps.panes) {
+            this.runPaneManager();
+        }
     }
 
     render() {
