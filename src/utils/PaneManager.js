@@ -309,7 +309,11 @@ function Pane(domElement, isBase) {
     }
 
     this.stop = function() {
-        this.domElement.removeChild(this.shaderElement);
+        if (this.shaderElement) {
+            this.domElement.removeChild(this.shaderElement);
+            this.shaderElement = null;
+        }
+
         this.domElement.parentNode.removeEventListener('touchmove', onDomElementTouchMove);
         this.domElement.parentNode.removeEventListener('mousemove', onDomElementMouseMove);
         this.domElement.removeEventListener('mousedown', onDomElementMouseDown);
