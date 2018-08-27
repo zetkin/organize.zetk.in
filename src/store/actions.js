@@ -37,6 +37,7 @@ export default function actions(state = null, action) {
             return Object.assign({}, state, {
                 filters: {
                     activity: action.meta.activity,
+                    location: action.meta.location,
                     afterDate: action.meta.afterDate,
                     beforeDate: action.meta.beforeDate,
                 },

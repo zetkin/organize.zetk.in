@@ -14,9 +14,9 @@ import { filteredActionList } from '../../../store/actions';
 
 const mapStateToProps = state => ({
     actions: state.actions,
-    locations: state.locations,
     campaigns: state.campaigns,
     activityList: state.activities.activityList,
+    locationList: state.locations.locationList,
     filteredActionList: filteredActionList(state)
 });
 
@@ -52,7 +52,7 @@ export default class CampaignPlaybackPane extends CampaignSectionPaneBase {
         if (actionList && actionList.items) {
             let actions = actionList.items.map(i => i.data);
 
-            let locList = this.props.locations.locationList;
+            let locList = this.props.locationList;
             let locations = locList.items.map(i => i.data);
 
             return (

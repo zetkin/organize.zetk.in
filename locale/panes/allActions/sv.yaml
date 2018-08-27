@@ -5,6 +5,9 @@ filters:
         nullOption: (Oavsett aktivitet)
     afterDate: Från datum
     beforeDate: Till datum
+    location:
+        label: Plats
+        nullOption: (Oavsett plats)
 importButton: Importera aktioner
 viewModes:
     calendar: Kalender

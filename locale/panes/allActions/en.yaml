@@ -5,6 +5,9 @@ filters:
         nullOption: (Regardless of activity)
     afterDate: After date
     beforeDate: Before date
+    location:
+        label: Location
+        nullOption: (Regardless of location)
 importButton: Import actions
 viewModes:
     calendar: Calendar

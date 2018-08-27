@@ -12,6 +12,7 @@ import ViewSwitch from '../../misc/ViewSwitch';
 import { retrieveCampaigns } from '../../../actions/campaign';
 import { retrieveActions } from '../../../actions/action';
 import { retrieveActivities } from '../../../actions/activity';
+import { retrieveLocations } from '../../../actions/location';
 import { filteredActionList } from '../../../store/actions';
 import { getListItemById } from '../../../utils/store';
 import {
@@ -25,6 +26,7 @@ import LoadingIndicator from '../../misc/LoadingIndicator';
 const mapStateToProps = state => ({
     actions: state.actions,
     campaigns: state.campaigns,
+    locationList: state.locations.locationList,
     activityList: state.activities.activityList,
     filteredActionList: filteredActionList(state),
     selectionList: state.selections.selectionList,
@@ -47,6 +49,7 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         if (!this.props.filteredActionList) {
             this.props.dispatch(retrieveActions());
             this.props.dispatch(retrieveActivities());
+            this.props.dispatch(retrieveLocations());
             this.props.dispatch(retrieveCampaigns());
         }
     }
