@@ -35,7 +35,7 @@ export default class ActionDistributionPane extends CampaignSectionPaneBase {
         if (!this.props.filteredActionList) {
             this.props.dispatch(retrieveActions());
             this.props.dispatch(retrieveActivities());
-            this.props.dispatch(retrieveLoations());
+            this.props.dispatch(retrieveLocations());
             this.props.dispatch(retrieveCampaigns());
         }
     }
