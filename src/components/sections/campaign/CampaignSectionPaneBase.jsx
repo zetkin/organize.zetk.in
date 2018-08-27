@@ -36,6 +36,12 @@ export default class CampaignSectionPaneBase extends RootPaneBase {
             });
         }
 
+        const availabilityOptions = {
+            'red': 'panes.allActions.filters.availability.options.red',
+            'yellow': 'panes.allActions.filters.availability.options.yellow',
+            'green': 'panes.allActions.filters.availability.options.green',
+        };
+
         return [
             <div key="dateFilter" className="AllActionsPane-dateFilter">
                 <DateInput name="afterDate"
@@ -49,12 +55,22 @@ export default class CampaignSectionPaneBase extends RootPaneBase {
                     onValueChange={ this.onFilterChange.bind(this) }
                     />
             </div>,
-            <CampaignSelect key="campaignSelect"
-                value={ filters.campaign }
-                onSelect={ this.onFilterChange.bind(this, 'campaign') }
-                onCreate={ this.onCreateCampaign.bind(this) }
-                onEdit={ this.onEditCampaign.bind(this) }/>,
-            <div key="campaignAvailability" className="AllActionsPane-activityLocation">
+            <div key="campaignAvailability" className="AllActionsPane-campaignAvailability">
+                <CampaignSelect
+                    value={ filters.campaign }
+                    onSelect={ this.onFilterChange.bind(this, 'campaign') }
+                    onCreate={ this.onCreateCampaign.bind(this) }
+                    onEdit={ this.onEditCampaign.bind(this) }/>
+                <SelectInput name="availability"
+                    value={ filters.availability }
+                    labelMsg="panes.allActions.filters.availability.label"
+                    options={ availabilityOptions }
+                    optionLabelsAreMessages={ true }
+                    nullOptionMsg="panes.allActions.filters.availability.nullOption"
+                    onValueChange={ this.onFilterChange.bind(this) }
+                    />
+            </div>,
+            <div key="activityLocation" className="AllActionsPane-activityLocation">
                 <SelectInput name="activity"
                     value={ filters.activity }
                     labelMsg="panes.allActions.filters.activity.label"
@@ -79,7 +95,8 @@ export default class CampaignSectionPaneBase extends RootPaneBase {
         this.props.dispatch(selectCampaign(filters.campaign));
         this.props.dispatch(retrieveActions(
             filters.afterDate, filters.beforeDate,
-            filters.activity, filters.location));
+            filters.activity, filters.location,
+            filters.availability));
     }
 
     onCalendarAddAction(date) {

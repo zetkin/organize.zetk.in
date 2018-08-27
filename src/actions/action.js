@@ -1,7 +1,7 @@
 import * as types from '.';
 
 
-export function retrieveActions(afterDate, beforeDate, activity, location) {
+export function retrieveActions(afterDate, beforeDate, activity, location, availability) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
 
@@ -35,7 +35,7 @@ export function retrieveActions(afterDate, beforeDate, activity, location) {
 
         dispatch({
             type: types.RETRIEVE_ACTIONS,
-            meta: { afterDate, beforeDate, activity, location },
+            meta: { afterDate, beforeDate, activity, location, availability },
             payload: {
                 promise: z.resource('orgs', orgId, 'actions').get(
                     null, null, filters),

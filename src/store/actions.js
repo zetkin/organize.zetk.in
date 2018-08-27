@@ -13,19 +13,46 @@ let cachedFilteredActionListCampaign = null;
 
 const actionListSelector = state => state.actions.actionList;
 const selectedCampaignSelector = state => state.campaigns.selectedCampaign;
+const availabilityFilterSelector = state => state.actions.filters.availability;
 
 export const filteredActionList = createSelector(
     actionListSelector,
     selectedCampaignSelector,
-    (actionList, selectedCampaign) => {
-        if (!actionList || !actionList.items || !selectedCampaign) {
+    availabilityFilterSelector,
+    (actionList, selectedCampaign, availabilityFilter) => {
+        if (!actionList || !actionList.items || (!selectedCampaign && !availabilityFilter)) {
             return actionList;
         }
 
-        return Object.assign({}, actionList, {
-            items: actionList.items.filter(i =>
-                i.data.campaign && i.data.campaign.id === selectedCampaign)
-        });
+        let items = actionList.items;
+
+        if (availabilityFilter) {
+            let maxDiff = Infinity,
+                minDiff = -Infinity;
+
+            switch (availabilityFilter) {
+                case 'red':     minDiff = 2; break;
+                case 'yellow':  maxDiff = 1; minDiff = 1; break;
+                case 'green':   maxDiff = 0; break;
+            }
+
+            items = items
+                .filter(i => {
+                    const numNeeded = i.data.num_participants_required;
+                    const numAvailable = i.data.num_participants_available;
+                    const diff = numNeeded - numAvailable;
+                    return (diff <= maxDiff && diff >= minDiff);
+                });
+        }
+
+        if (selectedCampaign) {
+            items = items
+                .filter(i => {
+                    return i.data.campaign && i.data.campaign.id === selectedCampaign
+                });
+        }
+
+        return Object.assign({}, actionList, { items });
     }
 );
 
@@ -40,6 +67,7 @@ export default function actions(state = null, action) {
                     location: action.meta.location,
                     afterDate: action.meta.afterDate,
                     beforeDate: action.meta.beforeDate,
+                    availability: action.meta.availability,
                 },
                 actionList: Object.assign({}, state.actionList, {
                     isPending: true,
