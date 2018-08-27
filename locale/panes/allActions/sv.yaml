@@ -4,7 +4,17 @@ filters:
         label: Aktivitet
         nullOption: (Oavsett aktivitet)
     afterDate: Från datum
+    availability:
+        label: Deltagarstatus
+        nullOption: (Oavsett antal bokade/anmälda)
+        options:
+            green: "Status grön: tillräckligt många"
+            red: "Status röd: saknas två eller fler"
+            yellow: "Status gul: saknas en person"
     beforeDate: Till datum
+    location:
+        label: Plats
+        nullOption: (Oavsett plats)
 importButton: Importera aktioner
 viewModes:
     calendar: Kalender

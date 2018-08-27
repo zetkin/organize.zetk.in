@@ -4,7 +4,17 @@ filters:
         label: Activity
         nullOption: (Regardless of activity)
     afterDate: After date
+    availability:
+        label: Participant status
+        nullOption: (Regardless of participant count)
+        options:
+            green: "Status green: enough available"
+            red: "Status red: two or more missing"
+            yellow: "Status yellow: one person missing"
     beforeDate: Before date
+    location:
+        label: Location
+        nullOption: (Regardless of location)
 importButton: Import actions
 viewModes:
     calendar: Calendar
