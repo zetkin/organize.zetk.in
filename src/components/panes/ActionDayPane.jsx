@@ -14,7 +14,7 @@ const mapStateToProps = (state, props) => {
     let day = props.paneData.params[0];
     return {
         actionList: Object.assign({}, state.actions.actionList, {
-            items: state.actions.actionList.items?
+            items: (state.actions.actionList && state.actions.actionList.items)?
                 state.actions.actionList.items.filter(i => {
                     let d = new Date(i.data.start_time);
                     return d.is(day);
