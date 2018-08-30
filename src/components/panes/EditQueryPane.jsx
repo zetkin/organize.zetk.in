@@ -16,38 +16,54 @@ import {
 } from '../../actions/query';
 
 
-@connect(state => ({ queries: state.queries }))
+const mapStateToProps = (state, props) => ({
+    queryItem: getListItemById(state.queries.queryList,
+        props.paneData.params[0]),
+});
+
+@connect(mapStateToProps)
 @injectIntl
 export default class EditQueryPane extends PaneBase {
+    constructor(props) {
+        super(props);
+    }
+
     componentDidMount() {
         super.componentDidMount();
 
-        let queryId = this.getParam(0);
-        this.props.dispatch(retrieveQuery(queryId));
+        if (this.props.queryItem) {
+            this.setState({
+                query: this.props.queryItem.data,
+            });
+        }
+        else {
+            const queryId = this.getParam(0);
+            this.props.dispatch(retrieveQuery(queryId));
+        }
     }
 
-    getRenderData() {
-        let queryList = this.props.queries.queryList;
-        let queryId = this.getParam(0);
-
-        return {
-            queryItem: getListItemById(queryList, queryId)
-        };
+    componentWillReceiveProps(nextProps) {
+        if (!this.state.query && nextProps.queryItem) {
+            this.setState({
+                query: nextProps.queryItem.data,
+            });
+        }
     }
 
-    getPaneTitle(data) {
-        let type = (data.queryItem && data.queryItem.data)?
-                data.queryItem.data.type : 'standalone';
+    getPaneTitle() {
+        let type = this.state.query?
+                this.state.query.type : 'standalone';
 
         let msgId = 'panes.editQuery.title.' + type;
 
         return this.props.intl.formatMessage({ id: msgId });
     }
 
-    renderPaneContent(data) {
-        if (data.queryItem && !data.queryItem.isPending) {
-            let query = data.queryItem.data;
-            let filters = query.filter_spec;
+    renderPaneContent() {
+        if (this.state.query) {
+            const query = this.state.query;
+            const filters = query.filter_spec;
+
             let form = null;
 
             if (query.type == 'standalone') {
@@ -73,7 +89,7 @@ export default class EditQueryPane extends PaneBase {
         }
     }
 
-    renderPaneFooter(data) {
+    renderPaneFooter() {
         return (
             <Button className="EditQueryPane-saveButton"
                 labelMsg="panes.editQuery.saveButton"
