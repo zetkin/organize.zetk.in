@@ -1,13 +1,14 @@
 import * as types from '.';
 
 
-export function executeBulkOperation(op, objects, config) {
+export function executeBulkOperation(op, objects, config, paneId) {
     return ({ dispatch, getState }) => {
         let orgId = getState().org.activeId;
         let data = { orgId, op, objects, config };
 
         dispatch({
             type: types.EXECUTE_BULK_OPERATION,
+            meta: { paneId },
             payload: {
                 promise: fetch('/api/bulk', {
                     method: 'POST',

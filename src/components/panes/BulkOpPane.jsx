@@ -11,6 +11,7 @@ import { executeBulkOperation } from '../../actions/bulk';
 
 const mapStateToProps = (state, props) => ({
     selections: state.selections,
+    isPending: state.people.bulkOpIsPending,
 });
 
 @connect(state => mapStateToProps)
@@ -69,6 +70,7 @@ export default class BulkOpPane extends PaneBase {
         if (this.state.config) {
             return (
                 <Button labelMsg="panes.bulkOp.submitButton"
+                    isPending={ this.props.isPending }
                     onClick={ this.onSubmitButtonClick.bind(this) }/>
             );
         }
@@ -92,9 +94,6 @@ export default class BulkOpPane extends PaneBase {
         let objects = selectionItem.data.selectedIds;
         let config = this.state.config;
 
-        this.props.dispatch(executeBulkOperation(op, objects, config));
-
-        // TODO: Display loading indicator first and verify success?
-        this.closePane();
+        this.props.dispatch(executeBulkOperation(op, objects, config, this.props.paneData.id));
     }
 }
