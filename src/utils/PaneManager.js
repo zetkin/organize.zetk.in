@@ -13,7 +13,7 @@ function run(paneElements, container) {
     for (let i = 0; i < paneElements.length; i++) {
         let paneElem = paneElements[i];
 
-        let pane = oldPanes.find(p => p.domElement.id == paneElem.id);
+        let pane = oldPanes.find(p => p.domElement == paneElem);
 
         if (!pane) {
             let isBase = (i == 0);

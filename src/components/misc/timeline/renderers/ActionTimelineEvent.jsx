@@ -19,9 +19,9 @@ export default class ActionTimelineEvent extends React.Component {
                     <FormattedDate value={ startTime }
                         day="numeric" month="short" year="numeric"/>
                     <span>, </span>
-                    <FormattedTime value={ startTime }/>
+                    <FormattedTime value={ startTime } timeZone="UTC"/>
                     -
-                    <FormattedTime value={ endTime }/>
+                    <FormattedTime value={ endTime } timeZone="UTC"/>
                 </div>
                 <div className="ActionTimelineEvent-location">
                     { action.location.title }

@@ -22,12 +22,25 @@ export default class CampaignSectionPaneBase extends RootPaneBase {
     getPaneFilters(data, filters) {
         filters = filters || {};
 
-        let activityOptions = {}
+        let activityOptions = {};
         if (this.props.activityList) {
             this.props.activityList.items.forEach(i => {
                 activityOptions[i.data.id] = i.data.title;
             });
         }
+
+        let locationOptions = {};
+        if (this.props.locationList) {
+            this.props.locationList.items.forEach(i => {
+                locationOptions[i.data.id] = i.data.title;
+            });
+        }
+
+        const availabilityOptions = {
+            'red': 'panes.allActions.filters.availability.options.red',
+            'yellow': 'panes.allActions.filters.availability.options.yellow',
+            'green': 'panes.allActions.filters.availability.options.green',
+        };
 
         return [
             <div key="dateFilter" className="AllActionsPane-dateFilter">
@@ -42,25 +55,48 @@ export default class CampaignSectionPaneBase extends RootPaneBase {
                     onValueChange={ this.onFilterChange.bind(this) }
                     />
             </div>,
-            <CampaignSelect key="campaignSelect"
-                value={ filters.campaign }
-                onSelect={ this.onFilterChange.bind(this, 'campaign') }
-                onCreate={ this.onCreateCampaign.bind(this) }
-                onEdit={ this.onEditCampaign.bind(this) }/>,
-            <SelectInput key="activity" name="activity"
-                value={ filters.activity }
-                labelMsg="panes.allActions.filters.activity.label"
-                options={ activityOptions }
-                orderAlphabetically={ true }
-                nullOptionMsg="panes.allActions.filters.activity.nullOption"
-                onValueChange={ this.onFilterChange.bind(this) }
-                />
+            <div key="campaignAvailability" className="AllActionsPane-campaignAvailability">
+                <CampaignSelect
+                    value={ filters.campaign }
+                    onSelect={ this.onFilterChange.bind(this, 'campaign') }
+                    onCreate={ this.onCreateCampaign.bind(this) }
+                    onEdit={ this.onEditCampaign.bind(this) }/>
+                <SelectInput name="availability"
+                    value={ filters.availability }
+                    labelMsg="panes.allActions.filters.availability.label"
+                    options={ availabilityOptions }
+                    optionLabelsAreMessages={ true }
+                    nullOptionMsg="panes.allActions.filters.availability.nullOption"
+                    onValueChange={ this.onFilterChange.bind(this) }
+                    />
+            </div>,
+            <div key="activityLocation" className="AllActionsPane-activityLocation">
+                <SelectInput name="activity"
+                    value={ filters.activity }
+                    labelMsg="panes.allActions.filters.activity.label"
+                    options={ activityOptions }
+                    orderAlphabetically={ true }
+                    nullOptionMsg="panes.allActions.filters.activity.nullOption"
+                    onValueChange={ this.onFilterChange.bind(this) }
+                    />
+                <SelectInput name="location"
+                    value={ filters.location }
+                    labelMsg="panes.allActions.filters.location.label"
+                    options={ locationOptions }
+                    orderAlphabetically={ true }
+                    nullOptionMsg="panes.allActions.filters.location.nullOption"
+                    onValueChange={ this.onFilterChange.bind(this) }
+                    />
+            </div>,
         ];
     }
 
     onFiltersApply(filters) {
         this.props.dispatch(selectCampaign(filters.campaign));
-        this.props.dispatch(retrieveActions(filters.afterDate, filters.beforeDate, filters.activity));
+        this.props.dispatch(retrieveActions(
+            filters.afterDate, filters.beforeDate,
+            filters.activity, filters.location,
+            filters.availability));
     }
 
     onCalendarAddAction(date) {

@@ -7,6 +7,7 @@ import ActionDistribution from '../../misc/actiondistro/ActionDistribution';
 import ActionMiniCalendar from '../../misc/actioncal/ActionMiniCalendar';
 import { retrieveCampaigns } from '../../../actions/campaign';
 import { retrieveActivities } from '../../../actions/activity';
+import { retrieveLocations } from '../../../actions/location';
 import {
     clearActionHighlights,
     highlightActionActivity,
@@ -22,6 +23,7 @@ const mapStateToProps = state => ({
     actions: state.actions,
     campaigns: state.campaigns,
     activityList: state.activities.activityList,
+    locationList: state.locations.locationList,
     filteredActionList: filteredActionList(state)
 });
 
@@ -33,6 +35,7 @@ export default class ActionDistributionPane extends CampaignSectionPaneBase {
         if (!this.props.filteredActionList) {
             this.props.dispatch(retrieveActions());
             this.props.dispatch(retrieveActivities());
+            this.props.dispatch(retrieveLocations());
             this.props.dispatch(retrieveCampaigns());
         }
     }

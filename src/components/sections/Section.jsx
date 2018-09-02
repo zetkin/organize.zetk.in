@@ -27,7 +27,7 @@ export default class Section extends React.Component {
     runPaneManager() {
         const panes = Object.keys(this.refs)
             .filter(key => (key.indexOf('pane') == 0 && key != 'paneContainer'))
-            .sort()
+            .sort((k0, k1) => parseInt(k0.slice(4)) - parseInt(k1.slice(4)))
             .map(function(key) {
                 var paneDOMNode = ReactDOM.findDOMNode(this.refs[key]);
                 return paneDOMNode;
