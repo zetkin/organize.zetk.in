@@ -167,6 +167,16 @@ export default function people(state = null, action) {
                 duplicateList: removeListItem(state.duplicateList, action.meta.id),
             });
 
+        case types.EXECUTE_BULK_OPERATION + '_PENDING':
+            return Object.assign({}, state, {
+                bulkOpIsPending: true,
+            });
+
+        case types.EXECUTE_BULK_OPERATION + '_FULFILLED':
+            return Object.assign({}, state, {
+                bulkOpIsPending: false,
+            });
+
         default:
             return state || {
                 personList: createList(),
