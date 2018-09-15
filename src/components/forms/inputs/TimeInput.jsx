@@ -42,7 +42,6 @@ export default class TimeInput extends InputBase {
     }
 
     onHourFocus(ev) {
-        console.log('focus hour!');
         const hourDOMNode = ReactDOM.findDOMNode(this.refs.hourInput);
         hourDOMNode.select();
     }
