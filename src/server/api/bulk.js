@@ -172,6 +172,7 @@ let operations = {
             gender: 'Gender',
             email: 'E-mail',
             phone: 'Phone',
+            alt_phone: 'Alt Phone',
             co_address: 'C/o address',
             street_address: 'Street address',
             zip_code: 'Zip code',
