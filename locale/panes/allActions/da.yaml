@@ -4,7 +4,20 @@ filters:
         label: Aktivitet
         nullOption: (Uanset aktivitet)
     afterDate: Efter dato
+    availability:
+        label: Deltagerstatus
+        nullOption: (Uanset deltagerantal)
+        options:
+            green: "Status grøn: nok tilgængelige"
+            red: "Status rød: to eller flere mangler"
+            yellow: "Status gul: en person mangler"
+            notgreen: "Status ikke grøn: en eller flere mangler"
+            notred: "Status ikke rød: mangler som mest én"
     beforeDate: Før dato
+    location:
+        label: Plads
+        nullOption: (Uanset plads)
+importButton: Importér aktioner
 viewModes:
     calendar: Kalender
     list: Liste

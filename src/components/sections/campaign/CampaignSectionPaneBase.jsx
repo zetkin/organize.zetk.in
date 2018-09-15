@@ -40,6 +40,8 @@ export default class CampaignSectionPaneBase extends RootPaneBase {
             'red': 'panes.allActions.filters.availability.options.red',
             'yellow': 'panes.allActions.filters.availability.options.yellow',
             'green': 'panes.allActions.filters.availability.options.green',
+            'notgreen': 'panes.allActions.filters.availability.options.notgreen',
+            'notred': 'panes.allActions.filters.availability.options.notred',
         };
 
         return [
