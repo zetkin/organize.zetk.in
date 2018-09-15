@@ -11,7 +11,7 @@ import { executeBulkOperation } from '../../actions/bulk';
 
 const mapStateToProps = (state, props) => ({
     selections: state.selections,
-    isPending: state.people.bulkOpIsPending,
+    isPending: state.bulk.bulkOpIsPending,
 });
 
 @connect(state => mapStateToProps)
