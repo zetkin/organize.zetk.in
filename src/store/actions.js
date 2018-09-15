@@ -27,21 +27,30 @@ export const filteredActionList = createSelector(
         let items = actionList.items;
 
         if (availabilityFilter) {
-            let maxDiff = Infinity,
-                minDiff = -Infinity;
+            let fn = (diff, numNeeded) => {
+                throw new Error("Bad availability function picked. availabilityFilter: " + availabilityFilter);
+            };
 
-            switch (availabilityFilter) {
-                case 'red':     minDiff = 2; break;
-                case 'yellow':  maxDiff = 1; minDiff = 1; break;
-                case 'green':   maxDiff = 0; break;
-            }
+            let diffFilterFunctions = {
+                // Red: If two or more people are missing, OR the single person needed is missing
+                red: (diff, numNeeded) => { return (diff >= 2) || (numNeeded == 1 && diff == 1); },
+                yellow: (diff, numNeeded) => { return (diff == 1); },
+                green: (diff, numNeeded) => { return (diff <= 0); },
+                // "red" or "yellow"
+                notgreen: (diff, numNeeded) => {
+                    return (((diff >= 2) || (numNeeded == 1 && diff == 1)) || diff == 1);
+                },
+                // "green" or "yellow"
+                notred: (diff, numNeeded) => { return (diff <= 0 || diff == 1); }
+            };
+            fn = diffFilterFunctions[availabilityFilter];
 
             items = items
                 .filter(i => {
                     const numNeeded = i.data.num_participants_required;
                     const numAvailable = i.data.num_participants_available;
                     const diff = numNeeded - numAvailable;
-                    return (diff <= maxDiff && diff >= minDiff);
+                    return fn(diff, numNeeded);
                 });
         }
 

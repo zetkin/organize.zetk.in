@@ -178,7 +178,7 @@ export default class ActionListItem extends React.Component {
         const bookingDiff = (action.num_participants_required - participants.length);
         let indicator;
 
-        if (bookingDiff >= 2)
+        if (bookingDiff >= 2 || participants.length == 0)
             indicator = 'danger';
         else if (bookingDiff >= 1)
             indicator = 'low';
