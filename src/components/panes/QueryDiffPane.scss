@@ -1,0 +1,92 @@
+.QueryDiffPane {
+    min-width: 550px;
+}
+
+.QueryDiffPane-matchItem {
+    @include card();
+    margin-bottom: 0.5em;
+    padding: 0.7em 0.5em;
+    font-size: 1.2em;
+    display: flex;
+    position: relative;
+
+    .DraggableAvatar {
+        width: 4em;
+        height: 4em;
+        margin-right: 1em;
+    }
+
+    .QueryDiffPane-matchInFirst, .QueryDiffPane-matchInSecond {
+        color: lighten($c-ui-darker, 25);
+        font-size: 0.9em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        &:before {
+            @include icon($fa-var-times);
+        }
+    }
+
+    &.inFirst {
+        .QueryDiffPane-matchStatus:before {
+            @include icon($fa-var-check);
+            font-size: 1.8em;
+            color: $c-ui-dark;
+        }
+
+        .QueryDiffPane-matchInFirst {
+            color: $c-ui-darker;
+            &:before {
+                @include icon($fa-var-check);
+            }
+        }
+    }
+
+    &.inSecond {
+        .QueryDiffPane-matchStatus:after {
+            @include icon($fa-var-check);
+            font-size: 1.8em;
+            color: $c-ui-dark;
+        }
+
+        .QueryDiffPane-matchInSecond {
+            color: $c-ui-darker;
+            &:before {
+                @include icon($fa-var-check);
+            }
+        }
+    }
+}
+
+.QueryDiffPane-matchStatus {
+    width: 7em;
+    margin-right: 1em;
+    text-align: center;
+
+    &:before {
+        @include icon($fa-var-times);
+        font-size: 1.8em;
+        margin: 0.5em 0 0;
+        width: 50%;
+        color: lighten($c-ui-dark, 25);
+    }
+
+    &:after {
+        @include icon($fa-var-times);
+        font-size: 1.8em;
+        margin: 0.5em 0 0;
+        width: 50%;
+        color: lighten($c-ui-dark, 25);
+    }
+}
+
+.QueryDiffPane-matchMeta {
+    position: absolute;
+    left: 14em;
+    top: 0.5em;
+    right: 1em;
+}
+
+.QueryDiffPane-matchName {
+    font-size: 1.3em;
+}

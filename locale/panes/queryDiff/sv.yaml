@@ -1,0 +1,8 @@
+matches:
+    inList: Matchar {query}
+    notInList: Matchar inte {query}
+queries:
+    first: Smart sökning A
+    nullOption: (Välj en Smart sökning för att jämföra)
+    second: Smart sökning B
+title: Jämför Smarta sökningar

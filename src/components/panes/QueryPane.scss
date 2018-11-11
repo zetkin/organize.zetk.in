@@ -25,4 +25,10 @@
             @include icon($fa-var-users);
         }
     }
+
+    .InfoListItem-diff {
+        &::before {
+            @include icon($fa-var-clone);
+        }
+    }
 }
