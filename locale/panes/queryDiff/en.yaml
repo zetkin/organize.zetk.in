@@ -1,0 +1,8 @@
+matches:
+    inList: Matches {query}
+    notInList: Does not match {query}
+queries:
+    first: Smart Search query A
+    nullOption: (Select a Smart Search query to compare)
+    second: Smart Search query B
+title: Compare Smart Searches

@@ -54,6 +54,7 @@ import PersonPane from './PersonPane';
 import PersonTimelinePane from './PersonTimelinePane';
 import PlaceLocationPane from './PlaceLocationPane';
 import QueryPane from './QueryPane';
+import QueryDiffPane from './QueryDiffPane';
 import RoutePane from './RoutePane';
 import RouteContentPane from './RouteContentPane';
 import RouteFromAddressesPane from './RouteFromAddressesPane';
@@ -122,6 +123,7 @@ var _panes = {
     'person': PersonPane,
     'placelocation': PlaceLocationPane,
     'query': QueryPane,
+    'querydiff': QueryDiffPane,
     'route': RoutePane,
     'routecontent': RouteContentPane,
     'routefromaddresses': RouteFromAddressesPane,
