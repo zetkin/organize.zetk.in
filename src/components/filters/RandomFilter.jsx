@@ -68,7 +68,6 @@ export default class RandomFilter extends FilterBase {
             ? parseFloat('0.' + amount)
             : amount;
 
-        console.log("config", { size, amount, seed, unit })
         return { size, amount, seed, unit };
     }
 
