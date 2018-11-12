@@ -1,1 +1,6 @@
-size: Antal personer
+size: Antal
+units:
+  label: Enhed
+  percentage: Procent
+  people: Mennesker
+randomize: Randomisere

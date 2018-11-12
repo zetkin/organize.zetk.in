@@ -1,1 +1,6 @@
-size: Antal personer
+size: Antal
+units:
+  label: Enhet
+  percentage: Procent
+  people: Människor
+randomize: Slumpa urval

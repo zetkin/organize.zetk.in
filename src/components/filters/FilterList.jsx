@@ -173,7 +173,6 @@ export default class FilterList extends React.Component {
         }
 
         this.setState({ filters });
-
     }
 
     onDrop(targetIdx, item) {
