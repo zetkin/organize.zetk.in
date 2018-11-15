@@ -62,7 +62,7 @@
     left: 0;
 }
 
-@include medium-screen {
+@include small-screen {
     .App-main {
         position: fixed;
         bottom: 0;

@@ -306,12 +306,25 @@
     align-items: $alignment;
 }
 
-@mixin medium-screen {
-  @media (min-width: #{$medium-width}) {
-    @content;
-  }
+@mixin mini-screen {
+    @media (max-width: #{$mini-width}) {
+      @content;
+    }
 }
 
+@mixin small-screen {
+    @media (max-width: #{$small-width}) {
+      @content;
+    }
+}
+
+@mixin medium-screen {
+    @media (max-width: #{$medium-width}) {
+      @content;
+    }
+}
+
+// Remove this later?
 @mixin large-screen {
   @media only screen and (min-width: #{$large-width}) {
     @content;

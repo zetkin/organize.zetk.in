@@ -6,12 +6,28 @@
         font-size: 3em;
         margin: 0;
         color: $c-ui-darker;
+
+        @include small-screen {
+            font-size: 2.5em;
+        }
+
+        @include mini-screen {
+            font-size: 2em;
+        }
     }
 
     h2 {
         font-size: 2em;
         margin: 0.5em 0 0;
         color: $c-ui-darker;
+
+        @include small-screen {
+            font-size: 1.7em;
+        }
+
+        @include mini-screen {
+            font-size: 1.5em;
+        }
     }
 
     a {
@@ -20,6 +36,10 @@
         font-size: 1em;
         color: $c-ui-darker;
         text-decoration: underline;
+
+        @include medium-screen {
+           display: none;
+        }
     }
 }
 
@@ -27,12 +47,6 @@
     @include list-unstyled;
     padding: 0.417em;
     font-size: 1.2em;
-    margin: 2em;
-
-}
-
-.Dashboard-favorites {
-    @include list-unstyled;
 }
 
 .Dashboard-shortcuts {
@@ -42,7 +56,7 @@
     margin: 0 0.833em;
     font-size: 1.2em;
 
-    li{
+    li {
         display: inline-block;
         color: $c-ui-darker;
         margin-left: 0.833em;
@@ -65,10 +79,9 @@
     }
 }
 
-.Dashboard-widgets{
+.Dashboard-widgets {
     @include list-unstyled;
     margin: 0.833em;
-
 }
 
 .Dashboard-widgets .DraggableWidget-widgetcontainer {
@@ -80,62 +93,68 @@
     }
 }
 
-@include medium-screen {
-    .Dashboard {
-        position: fixed;
-        top: 6.8em;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        padding: 0 2em;
-        overflow-y: scroll;
+.Dashboard {
+    position: fixed;
+    top: 6.8em;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0 2em;
+    overflow-y: scroll;
+}
+
+.Dashboard-favorites,
+.Dashboard-shortcuts {
+    font-size: 1.6em;
+    max-width: 60em;
+}
+
+.Dashboard-favorites {
+    margin: 3em auto 1em;
+
+    @include small-screen {
+        margin-top: 1.5em;
     }
 
-    .Dashboard-favorites,
-    .Dashboard-shortcuts {
-        font-size: 1.6em;
-        max-width: 60em;
+    &::after {
+        content: "";
+        display: block;
+        clear: both;
     }
 
-    .Dashboard-favorites{
-        margin: 3em auto 1em;
+    & > li {
+        float: left;
+        width: 32%;
+        margin: 0 0 1em 2%;
 
-        &::after {
-            content: "";
-            display: block;
+        @include small-screen {
+            width: 100%;
+        }
+
+        &:nth-child(1), &:nth-child(4), &:nth-child(7) {
+            margin-left: 0;
             clear: both;
         }
 
-        & > li {
-            float: left;
-            width: 32%;
-            margin: 0 0 1em 2%;
-
-            &:nth-child(1), &:nth-child(4), &:nth-child(7) {
-                margin-left: 0;
-                clear: both;
-            }
-        }
     }
+}
 
-    .Dashboard-shortcuts {
-        margin: 0 auto;
+.Dashboard-shortcuts {
+    margin: 0 auto;
 
-        li{
-            margin-left: 1em;
-        }
+    li {
+        margin-left: 1em;
     }
+}
 
-    .Dashboard-widgets{
-        margin: 0.833em 3.2em;
-        -webkit-column-count: 2;
-        -moz-column-count: 2;
-        column-count: 2;
+.Dashboard-widgets {
+    margin: 0.833em 3.2em;
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+}
 
-    }
-
-    .Dashboard-widgets .DraggableWidget-widgetcontainer {
-        display: inline-block;
-        width: 100%;
-    }
+.Dashboard-widgets .DraggableWidget-widgetcontainer {
+    display: inline-block;
+    width: 100%;
 }
