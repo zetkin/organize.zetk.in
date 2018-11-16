@@ -48,24 +48,24 @@
 
             // WebKit browsers
             &::-webkit-input-placeholder {
-             color:  #fff;
+             color: transparent;
             }
 
             // Mozilla Firefox 4 to 18
             &:-moz-placeholder {
-               color:  #fff;
+               color: transparent;
                opacity:  1;
             }
 
             // Mozilla Firefox 19+
             &::-moz-placeholder {
-               color:  #fff;
+               color: transparent;
                opacity:  1;
             }
 
             // Internet Explorer 10+
             &:-ms-input-placeholder {
-               color: #fff;
+               color: transparent;
             }
         }
     }
