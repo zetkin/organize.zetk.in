@@ -43,10 +43,32 @@
         &:focus {
             text-align: left;
         }
+
+        @include mini-screen {
+
+            // WebKit browsers
+            &::-webkit-input-placeholder {
+             color:  #fff;
+            }
+
+            // Mozilla Firefox 4 to 18
+            &:-moz-placeholder {
+               color:  #fff;
+               opacity:  1;
+            }
+
+            // Mozilla Firefox 19+
+            &::-moz-placeholder {
+               color:  #fff;
+               opacity:  1;
+            }
+
+            // Internet Explorer 10+
+            &:-ms-input-placeholder {
+               color: #fff;
+            }
+        }
     }
-
-
-
 }
 
 .Search-keepTyping {

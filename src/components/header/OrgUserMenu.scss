@@ -17,15 +17,21 @@
     right: 0.3em;
     width: 2.4em;
     height: 2.4em;
+
+    @include small-screen {
+        top: 11px;
+        width: 1.85em;
+        height: 1.85em;
+    }
 }
-.OrgUserMenu-info{
+
+.OrgUserMenu-info {
     display: none;
     margin-top: 3em;
     margin-right: -0.6em;
     padding: 0.5em;
     color:white;
     @include card;
-    // background-color: white;
 
     ul {
         margin-top: 0.7em;
@@ -58,11 +64,7 @@
         @include icon($fa-var-sitemap);
     }
 }
-.OrgUserMenu-name,
-.OrgUserMenu-org{
-    text-align: center;
-    display: block;
-}
+
 .OrgUserMenu-name{
 }
 .OrgUserMenu-org{
@@ -134,5 +136,15 @@
     .OrgUserMenu-name,
     .OrgUserMenu-org {
         text-align: right;
+    }
+}
+
+.OrgUserMenu-name,
+.OrgUserMenu-org{
+    text-align: center;
+    display: block;
+
+    @include medium-screen {
+        display: none;
     }
 }
