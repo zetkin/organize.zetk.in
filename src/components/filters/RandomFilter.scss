@@ -1,16 +1,16 @@
 .RandomFilter {
-    &__size {
+    &-size {
         input {
             @include input-base;
         }
     }
 
-    &__size,
-    &__unit {
+    &-size,
+    &-unit {
         @include col(6,12);
     }
 
-    &__btnWrapper {
+    &-btnWrapper {
         @include col(12, 12);
         .Button {
             width: 100%;

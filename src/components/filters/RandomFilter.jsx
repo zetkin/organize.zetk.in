@@ -12,46 +12,75 @@ export default class RandomFilter extends FilterBase {
     constructor(props) {
         super(props);
 
+        const { amount, seed, unit } = this.mapConfigToState(props.config);
         this.state = {
-            amount: props.config.amount || 20,
-            seed: props.config.seed || makeRandomString(6),
-            unit: props.config.unit || 'people'
+            amount: amount || 20,
+            seed: seed || makeRandomString(6),
+            unit: unit || 'people'
         };
     }
 
-    componentReceivedProps(nextProps) {
-        if (nextProps.config !== this.props.config) {
-            this.setState({
-                amount: nextProps.config.amount,
-                seed: nextProps.config.seed,
-                unit: nextProps.config.unit,
-            });
+    shouldComponentUpdate = (_, nextState) => nextState !== this.state;
+
+    componentWillReceiveProps({ config }) {
+        const { state, mapConfigToState } = this;
+        const mappedState = mapConfigToState(config);
+
+        // We can't simply compare the objects for diffs with === because
+        // our data becomes mutable via mapConfigToState
+        for (let key in state) {
+            if (state[key] !== mappedState[key]) {
+                this.setState(mappedState)
+            }
         }
+    }
+
+    // We use percentages in the frontend
+    // e.g 0.7 => 70%
+    mapConfigToState = config => {
+        const { size, seed } = config;
+        const unit = size === 0 && this.state
+            ? this.state.unit
+            : (size > 0 && size < 1) ? 'percentage' : 'people';
+        const amount = Math.round(size * (unit === 'percentage' ? 100 : 1))
+
+        return { amount, unit, seed }
+    }
+
+    // We use fractions in the backend
+    // e.g 70% => 0.7
+    mapStateToConfig = () => {
+        const { amount, seed, unit } = this.state;
+        const size = !Number.isNaN(amount)
+            ? amount / (unit === 'percentage' ? 100 : 1)
+            : 0;
+
+        return { size, seed };
     }
 
     renderFilterForm(config) {
         const { unit, amount } = this.state;
         const msg = id => this.props.intl.formatMessage({ id });
         const units = {
-            'people': msg('filters.random.units.people'),
-            'percentage': msg('filters.random.units.percentage'),
+            people: msg('filters.random.units.people'),
+            percentage: msg('filters.random.units.percentage'),
         };
 
         return [
             <IntInput key="size" name="size"
-                className="RandomFilter__size"
+                className="RandomFilter-size"
                 labelMsg="filters.random.size"
                 value={ amount }
                 onValueChange={ this.onSizeChange }
             />,
             <SelectInput key="unit" name="unit"
-                className="RandomFilter__unit"
+                className="RandomFilter-unit"
                 labelMsg="filters.random.units.label"
                 options={ units }
-                value={ this.state.unit }
+                value={ unit }
                 onValueChange={ this.onUnitChange }
             />,
-            <div className="RandomFilter__btnWrapper">
+            <div key="seed" className="RandomFilter-btnWrapper">
                 <Button
                     labelMsg="filters.random.randomize"
                     onClick={ this.onSeedChange }
@@ -60,46 +89,37 @@ export default class RandomFilter extends FilterBase {
         ];
     }
 
-    getConfig() {
-        const { amount, seed, unit } = this.state;
-        // We're doing this because percentages are interpeted
-        // as fractions in the backend.
-        const size = unit === 'percentage'
-            ? parseFloat('0.' + amount)
-            : amount;
-
-        return { size, amount, seed, unit };
-    }
-
-    // If they want to extract all the people, they should use
-    // the 'Everyone' filter.
-    capPercentualValue = ({ amount, unit }) => {
-        unit = unit || this.state.unit;
-        amount = amount || this.state.amount;
-
+    capPercentualValue = amount => {
+        const { amount: oldAmount } = this.state;
         if (amount >= 100) {
-            amount = 99;
-            this.setState({ amount });
+            amount = oldAmount < 100
+                ? oldAmount
+                : 99;
         }
 
         return amount;
     }
 
+    getConfig = () => this.mapStateToConfig();
+
     onSizeChange = (_, amount) => {
         amount = parseInt(amount);
-        if (this.state.unit === "percentage") {
-            amount = this.capPercentualValue({ amount });
+
+        if (this.state.unit === 'percentage') {
+            amount = this.capPercentualValue(amount);
         }
 
         this.setState({ amount }, () => this.onConfigChange());
     }
 
     onUnitChange = (_, unit) => {
-        if (unit === "percentage") {
-            this.capPercentualValue({ unit });
+        let { amount } = this.state;
+
+        if (unit === 'percentage') {
+            amount = this.capPercentualValue(amount);
         }
 
-        this.setState({ unit }, () => this.onConfigChange());
+        this.setState({ unit, amount }, () => this.onConfigChange());
     }
 
     onSeedChange = () => {
