@@ -73,6 +73,21 @@ export function updateQuery(id, data) {
     };
 }
 
+export function removeQuery(id) {
+    return ({ dispatch, getState, z }) => {
+        const orgId = getState().org.activeId;
+        const where = `orgs/${orgId}/people/queries/${id}`.split('/');
+
+        dispatch({
+            type: types.REMOVE_QUERY,
+            meta: { id },
+            payload: {
+                promise: z.resource(...where).del()
+            }
+        })
+    };
+}
+
 export function addQueryFilter(id, filterType) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
