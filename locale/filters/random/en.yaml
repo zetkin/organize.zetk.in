@@ -1,1 +1,6 @@
-size: Number of people
+size: Amount
+units:
+  label: Unit
+  percentage: Percentage
+  people: People
+randomize: Randomize
