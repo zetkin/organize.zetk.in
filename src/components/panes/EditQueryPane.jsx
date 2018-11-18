@@ -46,7 +46,7 @@ export default class EditQueryPane extends PaneBase {
 
     componentWillReceiveProps(nextProps) {
         if (!nextProps.queryItem) {
-            return nextProps.onClose();
+            return this.closePane();
         }
 
         if (!this.state.query && nextProps.queryItem) {
@@ -107,7 +107,7 @@ export default class EditQueryPane extends PaneBase {
     }
 
     onDeleteClick = () => {
-        let actionId = this.getParam(0);
+        const actionId = this.getParam(0);
         this.props.dispatch(removeQuery(actionId));
     }
 

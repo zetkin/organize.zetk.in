@@ -27,6 +27,10 @@ export default class QueryPane extends PaneBase {
     componentWillReceiveProps(nextProps) {
         let queryItem = nextProps.queryItem;
 
+        if (!queryItem) {
+            return this.closePane();
+        }
+
         // Load query matches if not already loaded (or loading)
         if (queryItem && queryItem.data && !queryItem.data.matchList) {
             let queryId = this.getParam(0);
