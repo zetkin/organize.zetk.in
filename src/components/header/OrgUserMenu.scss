@@ -6,7 +6,7 @@
     font-size: 1.6em;
 
     &:hover {
-        .OrgUserMenu-info{
+        .OrgUserMenu-info {
             display: block;
         }
     }
@@ -17,15 +17,21 @@
     right: 0.3em;
     width: 2.4em;
     height: 2.4em;
+
+    @include medium-screen {
+        top: 11px;
+        width: 1.85em;
+        height: 1.85em;
+    }
 }
-.OrgUserMenu-info{
+
+.OrgUserMenu-info {
     display: none;
     margin-top: 3em;
     margin-right: -0.6em;
     padding: 0.5em;
     color:white;
     @include card;
-    // background-color: white;
 
     ul {
         margin-top: 0.7em;
@@ -58,81 +64,82 @@
         @include icon($fa-var-sitemap);
     }
 }
-.OrgUserMenu-name,
-.OrgUserMenu-org{
-    text-align: center;
+
+.OrgUserMenu {
+    transition: color 0.1s;
+
+    &::before {
+        z-index: 1000;
+        content: "";
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: black;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s;
+        pointer-events: none;
+    }
+
+    &:hover {
+        &::before {
+            opacity: 0.1;
+            visibility: visible;
+        }
+
+        .OrgUserMenu-info ul {
+            display: block;
+        }
+
+        color: white;
+    }
+}
+
+.OrgUserMenu .Avatar {
+    z-index: 3000;
+}
+
+.OrgUserMenu-info {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 3000;
+
     display: block;
+    margin-top: 0;
+    margin-right: 0.3em;
+    padding: 0;
+    background-color: transparent;
+    color: white;
+    box-shadow: none;
+
+    > ul {
+        display: none;
+        @include card;
+        padding: 0.5em;
+        margin-top: 0.8em;
+    }
 }
-.OrgUserMenu-name{
+
+.OrgUserMenu-user {
+    width: 14em;
+    padding: 0.5em 3.5em 0.45em 0;
 }
+
 .OrgUserMenu-org{
     font-size: 0.7em;
     margin-top: 0.3em;
 }
 
-@include medium-screen {
-    .OrgUserMenu {
-        transition: color 0.1s;
+.OrgUserMenu-name,
+.OrgUserMenu-org {
+    text-align: right;
+    display: block;
 
-        &::before {
-            z-index: 1000;
-            content: "";
-            display: block;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: black;
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-
-        &:hover {
-            &::before {
-                opacity: 0.1;
-                visibility: visible;
-            }
-
-            .OrgUserMenu-info ul {
-                display: block;
-            }
-
-            color: white;
-        }
-    }
-    .OrgUserMenu .Avatar {
-        z-index: 3000;
-    }
-    .OrgUserMenu-info {
-        position: absolute;
-        top: 0;
-        right: 0;
-        z-index: 3000;
-
-        display: block;
-        margin-top: 0;
-        margin-right: 0.3em;
-        padding: 0;
-        background-color: transparent;
-        color: white;
-        box-shadow: none;
-
-        > ul {
-            display: none;
-            @include card;
-            padding: 0.5em;
-            margin-top: 0.8em;
-        }
-    }
-    .OrgUserMenu-user{
-        width: 14em;
-        padding: 0.5em 3.5em 0.45em 0;
-    }
-    .OrgUserMenu-name,
-    .OrgUserMenu-org {
-        text-align: right;
+    @include medium-screen {
+        display: none;
     }
 }
