@@ -1,37 +1,94 @@
+
 .Section {
-    height: 100%;
-    background-color: #f8f8f8;
+
+    @media only screen and (max-width: 720px) {
+        height: 100%;
+        background-color: #f8f8f8;
+    }
 
     .Section-container {
-        position: relative;
+        position: absolute;
+        top: 0;
+        left: 100px;
+        right: 0;
+        bottom: 0;
+        background-color: white;
+
+        @media only screen and (max-width: 720px) {
+            position: relative;
+            left: 0;
+        }
     }
 
     .Section-nav {
+        @include flex-container(column);
+        position: fixed;
+        width: 100px;
+        top: 6.8em;
+        left: 0;
+        bottom: 0;
         background-color: black;
-        width: 100%;
-    }
 
-    .Section-nav {
-        @include flex-container;
-        min-height: 4.8em;
-        ul{
-            @include flex(4);
+        @media only screen and (max-width: 720px) {
             @include flex-container;
-            @include align-items(flex-end);
+            //position: relative;
+            background-color: #ededed;
+            //min-height: 4.8em;
+            position: static;
+            width: 100%;
+        }
+
+        ul {
+            margin: 1em 0;
+            padding: 0;
+            @include flex(none);
+            @include flex-container(column);
+
+            @media only screen and (max-width: 720px) {
+                @include flex(4);
+                @include flex-container;
+                @include align-items(flex-end);
+                margin: 0 2em;
+            }
         }
     }
 
     .Section-navMisc {
-        @include flex(2);
-        @include flex-container;
-        @include align-items(flex-end);
-        text-align: center;
+
+        @media only screen and (max-width: 720px) {
+            @include flex(2);
+            @include flex-container;
+            @include align-items(flex-end);
+            text-align: center;
+            display: none;
+        }
     }
 
+    // Info & Help
     .Section-navMisc a {
-        @include flex(1);
-        color: white;
-        padding: 1em 0;
+        color: #888;
+        padding: 0;
+        border-left: 0.1em solid #888;
+        margin-bottom: 0.4em;
+
+        @media only screen and (max-width: 720px) {
+            @include flex(1);
+            color: white;
+            padding: 1em 0;
+        }
+
+        &:first-child {
+            border-left: 0;
+            padding-left: 0;
+        }
+
+        &:last-child {
+            padding-right: 0;
+        }
+
+        &:hover {
+            color: #ddd;
+        }
     }
 
     .Section-navItem {
@@ -39,217 +96,282 @@
         text-align: center;
         color: white;
         padding: 1em 0;
+
+        @media only screen and (max-width: 720px) {
+            @include flex(none);
+            margin-right: 1em; //
+            padding: 0;
+            width: auto; //
+        }
+
         a {
-            padding: 1em 0;
+            padding: 1em 0; // ??
         }
     }
 
-    @include medium-screen {
-        .Section-nav {
-            @include flex-container(column);
-            position: fixed;
-            width: 100px;
-            top: 6.8em;
-            left: 0;
-            bottom: 0;
+    .Section-navItem a {
+        display: block;
+        position: relative;
+        list-style-type: none;
+        cursor: pointer;
+        margin-bottom: 2em;
+        padding: 0;
+        font-size: 1.3em;
+        text-align: center;
+        color: white;
 
-            ul{
-                margin: 1em 0;
-                padding: 0;
-                @include flex(none);
-                @include flex-container(column);
-            }
-        }
-        .Section-navMisc a {
-            color: #888;
-            padding: 0;
-            border-left: 0.1em solid #888;
-            margin-bottom: 0.4em;
-
-            &:first-child {
-                border-left: 0;
-                padding-left: 0;
-            }
-
-            &:last-child {
-                padding-right: 0;
-            }
-
-            &:hover {
-                color: #ddd;
-            }
+        @media only screen and (max-width: 720px) {
+            color: #505050;
+            margin-bottom: 0;
+            padding: 15px;
+            position: static;
         }
 
-        .Section-navItem{
-            @include flex(none);
-            width: 100%;
-            padding: 0;
-        }
-
-        .Section-navItem a {
+        &::before {
+            content: "";
             display: block;
-            position: relative;
-            list-style-type: none;
-            cursor: pointer;
-            margin-bottom: 2em;
-            padding: 0;
+            font-size: 0.6em;
+            width: 6.4em;
+            height: 4.8em;
+            margin: 0 auto 0.5em auto;
+            background-repeat: no-repeat;
+            background-size: cover;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+        }
 
-            font-size: 1.3em;
-            text-align: center;
+        &:hover {
+            opacity: 1.0;
+            font-weight: bold;
 
-            color: white;
+            @media only screen and (max-width: 720px) {
+                font-weight: 400;
+                text-decoration: underline;
+            }
 
             &::before {
-                content: "";
-                display: block;
-                font-size: 0.6em;
-                width: 6.4em;
-                height: 4.8em;
-                margin: 0 auto 0.5em auto;
-                background-repeat: no-repeat;
-                background-size: cover;
-
-                opacity: 0.9;
-                transition: opacity 0.3s;
-            }
-
-            &:hover {
                 opacity: 1.0;
-
-                font-weight: bold;
-
-                &::before {
-                    opacity: 1.0;
-                }
-            }
-
-            &::after {
-                content: "";
-                position: absolute;
-                background-color: $c-brand-main;
-                width: 0.5em;
-                height: 4.8em;
-                right: 0;
-                top: 0;
-
-                opacity: 0;
-                transition: opacity 0.3s;
             }
         }
 
-        .Section-navItem.selected a::after {
-            opacity: 1;
-        }
-
-        .Section-navItem.selected a::before {
-            opacity: 1.0;
-        }
-
-        .Section-container {
+        &::after {
+            content: "";
             position: absolute;
-            top: 0;
-            left: 100px;
+            background-color: $c-brand-main;
+            width: 0.5em;
+            height: 4.8em;
             right: 0;
-            bottom: 0;
-            background-color: white;
-        }
+            top: 0;
+            opacity: 0;
+            transition: opacity 0.3s;
 
-        &.Section-dialog {
-            .Section-navItem-assignments a:before {
-                background-image: url(/static/images/section-nav/dialog-assignments.png);
-            }
-
-            .Section-navItem-calls a:before {
-                background-image: url(/static/images/section-nav/dialog-calls.png);
-            }
-
-            .Section-navItem-startassignment a:before {
-                background-image: url(/static/images/section-nav/dialog-startassignment.png);
+            @media only screen and (max-width: 720px) {
+                position: static;
             }
         }
+    }
 
-        &.Section-campaign {
-            .Section-navItem-actions a:before {
-                background-image: url(/static/images/section-nav/campaign-actions.png);
-            }
+    .Section-navItem.selected a {
 
-            .Section-navItem-campaigns a:before {
-                background-image: url(/static/images/section-nav/campaign-campaigns.png);
-            }
+        @media only screen and (max-width: 720px) {
+            text-decoration: underline;
+        }
+    }
 
-            .Section-navItem-distribution a:before {
-                background-image: url(/static/images/section-nav/campaign-distribution.png);
-            }
+    .Section-navItem.selected a::after {
+        opacity: 1;
+    }
 
-            .Section-navItem-playback a:before {
-                background-image: url(/static/images/section-nav/campaign-playback.png);
-            }
+    .Section-navItem.selected a::before {
+        opacity: 1.0;
+    }
+
+    &.Section-dialog {
+        .Section-navItem-assignments a:before {
+            background-image: url(/static/images/section-nav/dialog-assignments.png);
+
+             @media only screen and (max-width: 720px) {
+                display: none;
+             }
         }
 
-        &.Section-maps {
-            .Section-navItem-overview a:before {
-                background-image: url(/static/images/section-nav/maps-overview.png);
-            }
+        .Section-navItem-calls a:before {
+            background-image: url(/static/images/section-nav/dialog-calls.png);
 
-            .Section-navItem-locations a:before {
-                background-image: url(/static/images/section-nav/maps-locations.png);
-            }
+                @media only screen and (max-width: 720px) {
+                display: none;
+             }
         }
 
-        &.Section-people {
-            .Section-navItem-list a:before {
-                background-image: url(/static/images/section-nav/people-list.png);
-            }
+        .Section-navItem-startassignment a:before {
+            background-image: url(/static/images/section-nav/dialog-startassignment.png);
 
-            .Section-navItem-groups a:before {
-                background-image: url(/static/images/section-nav/people-groups.png);
-            }
+                @media only screen and (max-width: 720px) {
+                display: none;
+             }
+        }
+    }
 
-            .Section-navItem-invite a:before {
-                background-image: url(/static/images/section-nav/people-invite.png);
-            }
+    &.Section-campaign {
+        .Section-navItem-actions a:before {
+            background-image: url(/static/images/section-nav/campaign-actions.png);
 
-            .Section-navItem-import a:before {
-                background-image: url(/static/images/section-nav/people-import.png);
-            }
-
-            .Section-navItem-manage a:before {
-                background-image: url(/static/images/section-nav/people-manage.png);
-            }
+            @media only screen and (max-width: 720px) {
+                display: none;
+             }
         }
 
-        &.Section-survey {
-            .Section-navItem-surveys a:before {
-                background-image: url(/static/images/section-nav/survey-list.png);
-            }
+        .Section-navItem-campaigns a:before {
+            background-image: url(/static/images/section-nav/campaign-campaigns.png);
 
-            .Section-navItem-submissions a:before {
-                background-image: url(/static/images/section-nav/survey-submissions.png);
-            }
+            @media only screen and (max-width: 720px) {
+                display: none;
+             }
         }
 
-        &.Section-canvass {
-            .Section-navItem-assignments a:before {
-                background-image: url(/static/images/section-nav/canvass-assignments.png);
-            }
+        .Section-navItem-distribution a:before {
+            background-image: url(/static/images/section-nav/campaign-distribution.png);
 
-            .Section-navItem-routes a:before {
-                background-image: url(/static/images/section-nav/canvass-routes.png);
-            }
-
-            .Section-navItem-visits a:before {
-                background-image: url(/static/images/section-nav/canvass-visits.png);
+            @media only screen and (max-width: 720px) {
+                display: none;
             }
         }
 
-        &.Section-settings {
-            .Section-navItem-officials a:before {
-                background-image: url(/static/images/section-nav/settings-officials.png);
+        .Section-navItem-playback a:before {
+            background-image: url(/static/images/section-nav/campaign-playback.png);
+
+            @media only screen and (max-width: 720px) {
+                display: none;
+            }
+        }
+    }
+
+    &.Section-maps {
+        .Section-navItem-overview a:before {
+            background-image: url(/static/images/section-nav/maps-overview.png);
+
+            @media only screen and (max-width: 720px) {
+                display: none;
             }
         }
 
-        .Section-navBack a:before {
-            background-image: url(/static/images/section-nav/back.png);
+        .Section-navItem-locations a:before {
+            background-image: url(/static/images/section-nav/maps-locations.png);
+
+            @media only screen and (max-width: 720px) {
+                display: none;
+            }
         }
+    }
+
+    &.Section-people {
+        .Section-navItem-list a:before {
+            background-image: url(/static/images/section-nav/people-list.png);
+
+            @media only screen and (max-width: 720px) {
+                display: none;
+            }
+        }
+
+        .Section-navItem-groups a:before {
+            background-image: url(/static/images/section-nav/people-groups.png);
+
+            @media only screen and (max-width: 720px) {
+                display: none;
+            }
+        }
+
+        .Section-navItem-invite a:before {
+            background-image: url(/static/images/section-nav/people-invite.png);
+
+            @media only screen and (max-width: 720px) {
+                display: none;
+            }
+        }
+
+        .Section-navItem-import a:before {
+            background-image: url(/static/images/section-nav/people-import.png);
+
+            @media only screen and (max-width: 720px) {
+                display: none;
+            }
+        }
+
+        .Section-navItem-manage a:before {
+            background-image: url(/static/images/section-nav/people-manage.png);
+
+            @media only screen and (max-width: 720px) {
+                display: none;
+            }
+        }
+    }
+
+    &.Section-survey {
+        .Section-navItem-surveys a:before {
+            background-image: url(/static/images/section-nav/survey-list.png);
+
+            @media only screen and (max-width: 720px) {
+                display: none;
+            }
+        }
+
+        .Section-navItem-submissions a:before {
+            background-image: url(/static/images/section-nav/survey-submissions.png);
+
+                @media only screen and (max-width: 720px) {
+                display: none;
+            }
+        }
+    }
+
+    &.Section-canvass {
+        .Section-navItem-assignments a:before {
+            background-image: url(/static/images/section-nav/canvass-assignments.png);
+
+            @media only screen and (max-width: 720px) {
+                display: none;
+            }
+        }
+
+        .Section-navItem-routes a:before {
+            background-image: url(/static/images/section-nav/canvass-routes.png);
+
+            @media only screen and (max-width: 720px) {
+                display: none;
+            }
+        }
+
+        .Section-navItem-visits a:before {
+            background-image: url(/static/images/section-nav/canvass-visits.png);
+
+            @media only screen and (max-width: 720px) {
+                display: none;
+            }
+        }
+    }
+
+    &.Section-settings {
+        .Section-navItem-officials a:before {
+            background-image: url(/static/images/section-nav/settings-officials.png);
+
+            @media only screen and (max-width: 720px) {
+                display: none;
+            }
+        }
+    }
+
+    .Section-navBack a:before {
+        background-image: url(/static/images/section-nav/back.png);
+
+        @media only screen and (max-width: 720px) {
+            display: none;
+        }
+    }
+}
+
+.Section-navItem-import {
+
+     @media only screen and (max-width: 720px) {
+        display: none;
     }
 }

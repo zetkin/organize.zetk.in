@@ -48,17 +48,26 @@
         overflow-y: scroll;
         overflow-x: hidden;
 
+        // This is temporary
+        @media only screen and (max-width: 720px) {
+            padding: 0 0 80px;
+            top: 100px;
+        }
+
         h2 {
             margin-top: 0;
             font-size: 2.0em;
         }
+
         h3 {
             font-size: 1.7em;
         }
+
         p {
             font-size: 1.4em;
             line-height: 1.8em
         }
+
         small {
             font-size: 1.1em;
         }
@@ -171,8 +180,8 @@
         right: 0;
 
         .RootPaneBase-content {
-            padding-left: 20px;
-            margin-top: 1em;
+            // padding-left: 20px;
+            // margin-top: 1em;
         }
 
         header {
