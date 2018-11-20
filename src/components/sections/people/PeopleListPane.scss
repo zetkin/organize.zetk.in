@@ -2,6 +2,10 @@
     .PeopleListPane-addButton {
         @include inline-button($icon: $fa-var-plus);
         float: right;
-    }
 
+        @include small-screen {
+            background-color: transparent;
+            border: 0;
+        }
+    }
 }

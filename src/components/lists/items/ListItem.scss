@@ -4,6 +4,14 @@
     padding: 1em;
     @include card;
 
+    // On all???
+    @include small-screen {
+        background-color: transparent;
+        box-shadow: none;
+        border-radius: 0;
+        border-bottom: 1px solid #e9e9e9;
+    }
+
     &.ListItem-withCheckbox {
         position: relative;
         display: flex;
@@ -14,6 +22,11 @@
             background-color: darken(white, 5);
             color: white;
             text-align: center;
+
+            // Hide on all???
+            @include small-screen {
+                display: none;
+            }
 
             .ListItem-checkbox {
                 margin-top: 3em;

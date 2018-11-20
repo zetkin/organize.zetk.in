@@ -17,25 +17,59 @@
 
     .DraggableAvatar {
         @include col(2, 12, $first:true);
+
+        @include small-screen {
+            width: 40px;
+            vertical-align: middle;
+            display: inline-block;
+            padding-left: 0;
+            padding-right: 0.5em;
+        }
+
+        @include mini-screen {
+            width: 30px;
+            vertical-align: middle;
+            display: inline-block;
+            padding-left: 0;
+            padding-right: 0.5em;
+        }
     }
 
     .PersonListItem-col {
         @include col(4, 12);
+
+        @include small-screen {
+            vertical-align: middle;
+        }
+
         &:last-child {
             @include col(6, 12, $last:true);
+
         }
     }
 
-    .PersonListItem-firstName {
-
-    }
-
+    .PersonListItem-firstName,
     .PersonListItem-lastName {
 
+        @include small-screen {
+            display: inline-block;
+            margin-right: 4px;
+            overflow: visible;
+            font-size: 1.4em;
+        }
+
+        @include mini-screen {
+            font-size: 1.2em;
+        }
     }
 
-    .PersonListItem-email, .PersonListItem-phone {
+    .PersonListItem-email,
+    .PersonListItem-phone {
         font-size: 1.0em;
+
+        @include small-screen {
+            display: none;
+        }
 
         a {
             &:hover {

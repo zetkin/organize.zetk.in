@@ -12,6 +12,10 @@
             color: #888;
             list-style-type: none;
             display: inline-block;
+
+            @include small-screen {
+                font-size: 0.95em;
+            }
         }
     }
 

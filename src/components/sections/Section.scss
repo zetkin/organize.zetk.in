@@ -369,9 +369,13 @@
     }
 }
 
-.Section-navItem-import {
-
-     @media only screen and (max-width: 720px) {
+// Don't show theese navigation items on small screens
+.Section-navItem-import,
+.Section-navMisc a,
+.Section-navItem-playback,
+.Section-navItem-distribution,
+.Section-navItem-routes {
+    @include small-screen {
         display: none;
     }
 }
