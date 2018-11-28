@@ -121,6 +121,10 @@
         &:before {
             @include icon($icon);
         }
+        @include small-screen {
+            background-color: transparent;
+            border: 0;
+        }
     }
 }
 

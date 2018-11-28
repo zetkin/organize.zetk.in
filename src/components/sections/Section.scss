@@ -1,81 +1,74 @@
-
 .Section {
+    height: 100%;
 
-    @media only screen and (max-width: 720px) {
-        height: 100%;
+    @include small-screen {
         background-color: #f8f8f8;
     }
 
     .Section-container {
-        position: absolute;
-        top: 0;
-        left: 100px;
-        right: 0;
         bottom: 0;
-        background-color: white;
+        left: 100px;
+        overflow: scroll;
+        position: absolute;
+        right: 0;
+        top: 0;
 
-        @media only screen and (max-width: 720px) {
-            position: relative;
+        @include small-screen {
             left: 0;
+            top: 60px;
         }
     }
 
     .Section-nav {
         @include flex-container(column);
-        position: fixed;
-        width: 100px;
-        top: 6.8em;
-        left: 0;
-        bottom: 0;
         background-color: black;
+        bottom: 0;
+        left: 0;
+        position: fixed;
+        top: 6.8em;
+        width: 100px;
+        z-index: 4;
 
-        @media only screen and (max-width: 720px) {
-            @include flex-container;
-            //position: relative;
+        @include small-screen {
             background-color: #ededed;
-            //min-height: 4.8em;
-            position: static;
+            display: block;
+            height: 60px;
+            line-height: 30px;
             width: 100%;
         }
 
         ul {
-            margin: 1em 0;
-            padding: 0;
             @include flex(none);
             @include flex-container(column);
+            margin: 1em 0;
+            padding: 0;
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 @include flex(4);
                 @include flex-container;
-                @include align-items(flex-end);
                 margin: 0 2em;
             }
         }
     }
 
     .Section-navMisc {
+        @include flex(2);
+        @include flex-container;
+        @include align-items(flex-end);
+        text-align: center;
 
-        @media only screen and (max-width: 720px) {
-            @include flex(2);
-            @include flex-container;
-            @include align-items(flex-end);
-            text-align: center;
+        @include small-screen {
             display: none;
         }
     }
 
-    // Info & Help
     .Section-navMisc a {
-        color: #888;
-        padding: 0;
+        @include flex(1);
         border-left: 0.1em solid #888;
+        color: white;
         margin-bottom: 0.4em;
-
-        @media only screen and (max-width: 720px) {
-            @include flex(1);
-            color: white;
-            padding: 1em 0;
-        }
+        padding: 0;
+        padding: 1em 0;
 
         &:first-child {
             border-left: 0;
@@ -97,15 +90,11 @@
         color: white;
         padding: 1em 0;
 
-        @media only screen and (max-width: 720px) {
+        @include small-screen {
             @include flex(none);
-            margin-right: 1em; //
+            margin-right: 1em;
             padding: 0;
-            width: auto; //
-        }
-
-        a {
-            padding: 1em 0; // ??
+            width: auto;
         }
     }
 
@@ -114,13 +103,12 @@
         position: relative;
         list-style-type: none;
         cursor: pointer;
-        margin-bottom: 2em;
         padding: 0;
         font-size: 1.3em;
         text-align: center;
         color: white;
 
-        @media only screen and (max-width: 720px) {
+        @include small-screen {
             color: #505050;
             margin-bottom: 0;
             padding: 15px;
@@ -144,7 +132,7 @@
             opacity: 1.0;
             font-weight: bold;
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 font-weight: 400;
                 text-decoration: underline;
             }
@@ -165,7 +153,7 @@
             opacity: 0;
             transition: opacity 0.3s;
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 position: static;
             }
         }
@@ -173,7 +161,7 @@
 
     .Section-navItem.selected a {
 
-        @media only screen and (max-width: 720px) {
+        @include small-screen {
             text-decoration: underline;
         }
     }
@@ -190,7 +178,7 @@
         .Section-navItem-assignments a:before {
             background-image: url(/static/images/section-nav/dialog-assignments.png);
 
-             @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
              }
         }
@@ -198,7 +186,7 @@
         .Section-navItem-calls a:before {
             background-image: url(/static/images/section-nav/dialog-calls.png);
 
-                @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
              }
         }
@@ -206,7 +194,7 @@
         .Section-navItem-startassignment a:before {
             background-image: url(/static/images/section-nav/dialog-startassignment.png);
 
-                @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
              }
         }
@@ -216,7 +204,7 @@
         .Section-navItem-actions a:before {
             background-image: url(/static/images/section-nav/campaign-actions.png);
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
              }
         }
@@ -224,7 +212,7 @@
         .Section-navItem-campaigns a:before {
             background-image: url(/static/images/section-nav/campaign-campaigns.png);
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
              }
         }
@@ -232,7 +220,7 @@
         .Section-navItem-distribution a:before {
             background-image: url(/static/images/section-nav/campaign-distribution.png);
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
             }
         }
@@ -240,7 +228,7 @@
         .Section-navItem-playback a:before {
             background-image: url(/static/images/section-nav/campaign-playback.png);
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
             }
         }
@@ -250,7 +238,7 @@
         .Section-navItem-overview a:before {
             background-image: url(/static/images/section-nav/maps-overview.png);
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
             }
         }
@@ -258,7 +246,7 @@
         .Section-navItem-locations a:before {
             background-image: url(/static/images/section-nav/maps-locations.png);
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
             }
         }
@@ -268,7 +256,7 @@
         .Section-navItem-list a:before {
             background-image: url(/static/images/section-nav/people-list.png);
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
             }
         }
@@ -276,7 +264,7 @@
         .Section-navItem-groups a:before {
             background-image: url(/static/images/section-nav/people-groups.png);
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
             }
         }
@@ -284,7 +272,7 @@
         .Section-navItem-invite a:before {
             background-image: url(/static/images/section-nav/people-invite.png);
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
             }
         }
@@ -292,7 +280,7 @@
         .Section-navItem-import a:before {
             background-image: url(/static/images/section-nav/people-import.png);
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
             }
         }
@@ -300,7 +288,7 @@
         .Section-navItem-manage a:before {
             background-image: url(/static/images/section-nav/people-manage.png);
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
             }
         }
@@ -310,7 +298,7 @@
         .Section-navItem-surveys a:before {
             background-image: url(/static/images/section-nav/survey-list.png);
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
             }
         }
@@ -318,7 +306,7 @@
         .Section-navItem-submissions a:before {
             background-image: url(/static/images/section-nav/survey-submissions.png);
 
-                @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
             }
         }
@@ -328,7 +316,7 @@
         .Section-navItem-assignments a:before {
             background-image: url(/static/images/section-nav/canvass-assignments.png);
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
             }
         }
@@ -336,7 +324,7 @@
         .Section-navItem-routes a:before {
             background-image: url(/static/images/section-nav/canvass-routes.png);
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
             }
         }
@@ -344,7 +332,7 @@
         .Section-navItem-visits a:before {
             background-image: url(/static/images/section-nav/canvass-visits.png);
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
             }
         }
@@ -354,7 +342,7 @@
         .Section-navItem-officials a:before {
             background-image: url(/static/images/section-nav/settings-officials.png);
 
-            @media only screen and (max-width: 720px) {
+            @include small-screen {
                 display: none;
             }
         }
@@ -363,7 +351,7 @@
     .Section-navBack a:before {
         background-image: url(/static/images/section-nav/back.png);
 
-        @media only screen and (max-width: 720px) {
+        @include small-screen {
             display: none;
         }
     }

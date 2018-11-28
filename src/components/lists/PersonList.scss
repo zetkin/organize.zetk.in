@@ -1,5 +1,10 @@
 .PersonList {
     font-size: 1.0em;
+    max-width: 420px;
+
+    @include small-screen {
+        max-width: none;
+    }
 
     .ListHeader {
 
@@ -32,10 +37,6 @@
                 @include col(5, 12);
             }
         }
-    }
-
-    @include medium-screen {
-        max-width: 420px;
     }
 
     .List-selectAllCheckbox {

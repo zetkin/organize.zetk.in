@@ -1,16 +1,28 @@
 .CampaignListItem-title {
     font-size: 1.5em;
+
+    @include small-screen {
+        font-size: 1.1em;
+    }
 }
+
 .CampaignListItem-state {
     display: block;
     margin-top: 0.25em;
+
+    @include small-screen {
+        font-size: 0.9em;
+    }
 }
+
 .CampaignListItem-published .CampaignListItem-state::before {
     @include icon($fa-var-eye);
 }
+
 .CampaignListItem-draft .CampaignListItem-state::before {
     @include icon($fa-var-eye-slash);
 }
+
 .CampaignListItem-archived .CampaignListItem-state::before {
     @include icon($fa-var-archive);
 }

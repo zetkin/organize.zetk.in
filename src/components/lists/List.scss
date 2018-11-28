@@ -1,7 +1,12 @@
 .List {
+    max-width: 720px;
     width: 100%;
     font-size: 1.3em;
     position: relative;
+
+    @include small-screen {
+       margin-top: 20px;
+    }
 
     .ListHeader {
         position: relative;
@@ -17,10 +22,6 @@
                 font-size: 0.95em;
             }
         }
-    }
-
-    @include medium-screen {
-        max-width: 720px;
     }
 
     .List-selectAllCheckbox {

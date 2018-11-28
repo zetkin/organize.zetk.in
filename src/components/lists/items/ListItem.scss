@@ -4,7 +4,6 @@
     padding: 1em;
     @include card;
 
-    // On all???
     @include small-screen {
         background-color: transparent;
         box-shadow: none;
@@ -23,7 +22,6 @@
             color: white;
             text-align: center;
 
-            // Hide on all???
             @include small-screen {
                 display: none;
             }
@@ -32,7 +30,6 @@
                 margin-top: 3em;
                 cursor: pointer;
             }
-
         }
 
         & >:nth-child(2) {
