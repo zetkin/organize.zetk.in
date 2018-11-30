@@ -5,7 +5,7 @@
     min-width: 400px;
     background-color: $c-ui-bg;
     color: lighten($c-text, .3);
-    z-index: 1;
+    z-index: 4;
 
     .PaneBase-content {
         padding: 0 2em 2em;
@@ -83,7 +83,7 @@
         }
     }
 
-    @include medium-screen {
+    //@include medium-screen {
         position: absolute;
         top: 0;
         bottom: 0;
@@ -241,5 +241,5 @@
             }
         }
 
-    }
+    //}
 }

@@ -6,6 +6,10 @@
     left: 0.5em;
     z-index: 4000;
 
+    @include small-screen {
+        left: 20%;
+    }
+
     &.open {
         .ScopeSelect-value {
             &::after {

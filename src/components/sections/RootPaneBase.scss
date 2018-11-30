@@ -10,14 +10,14 @@
 
     &.RootPaneBase-scrolled {
         .RootPaneBase-header {
+            background-color: white;
+            box-shadow: 0 0 0.2em rgba(0,0,0,0.1);
             z-index: 5;
         }
     }
 
     .RootPaneBase-header {
         background-color: $c-ui-bg;
-        background-color: white;
-        box-shadow: 0 0 0.2em rgba(0,0,0,0.1);
         padding: 1em;
         position: fixed;
         transition: background-color .2s;
@@ -55,6 +55,8 @@
     }
 
     .RootPaneBase-content {
+        height: 100%;
+        overflow: scroll;
         padding: 80px 20px 0;
 
         @include small-screen {

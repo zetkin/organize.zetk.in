@@ -8,7 +8,6 @@
     .Section-container {
         bottom: 0;
         left: 100px;
-        overflow: scroll;
         position: absolute;
         right: 0;
         top: 0;
@@ -46,7 +45,7 @@
             @include small-screen {
                 @include flex(4);
                 @include flex-container;
-                margin: 0 2em;
+                margin: 0;
             }
         }
     }
@@ -92,7 +91,6 @@
 
         @include small-screen {
             @include flex(none);
-            margin-right: 1em;
             padding: 0;
             width: auto;
         }
