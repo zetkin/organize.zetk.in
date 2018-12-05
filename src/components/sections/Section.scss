@@ -23,6 +23,8 @@
         background-color: black;
         bottom: 0;
         left: 0;
+        overflow-y: scroll;
+        overflow-x: hidden;
         position: fixed;
         top: 6.8em;
         width: 100px;
@@ -33,6 +35,8 @@
             display: block;
             height: 60px;
             line-height: 30px;
+            overflow-y: visible;
+            overflow-x: scroll;
             width: 100%;
         }
 
@@ -93,6 +97,11 @@
             @include flex(none);
             padding: 0;
             width: auto;
+
+            // Puts the Section-navBack-link as the first navigation option to the left
+            &.Section-navBack {
+                order: -1;
+            }
         }
     }
 
@@ -111,6 +120,11 @@
             margin-bottom: 0;
             padding: 15px;
             position: static;
+        }
+
+        @include mini-screen {
+            font-size: 1.2em;
+            padding: 15px 10px;
         }
 
         &::before {
@@ -350,7 +364,8 @@
         background-image: url(/static/images/section-nav/back.png);
 
         @include small-screen {
-            display: none;
+            @include icon($fa-var-home);
+            background-image: none;
         }
     }
 }

@@ -23,6 +23,10 @@
         width: 1.85em;
         height: 1.85em;
     }
+
+    @include mini-screen {
+        right: 11px;
+    }
 }
 
 .OrgUserMenu-info {

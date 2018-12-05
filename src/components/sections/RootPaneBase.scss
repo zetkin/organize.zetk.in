@@ -4,6 +4,10 @@
     min-width: 400px;
     z-index: 1;
 
+    @include small-screen {
+        width: 100%;
+    }
+
     .RootPaneBase-filterDrawer {
         padding: 0 1em;
     }
@@ -60,7 +64,7 @@
         padding: 80px 20px 0;
 
         @include small-screen {
-            padding: 60px 20px 0;
+            padding: 60px 0 0;
         }
 
         h2 {
