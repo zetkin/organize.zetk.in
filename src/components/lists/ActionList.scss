@@ -31,24 +31,32 @@
         }
     }
 
-    @include medium-screen {
-        &.List {
-            max-width: 720px;
+    &.List {
+        max-width: 720px;
+
+        @include small-screen {
+            border-top: 1px solid #e9e9e9;
+            max-width: 100vw;
+        }
+    }
+
+    .ListHeader {
+        li:nth-child(3) {
+            @include col(1.3,12);
         }
 
-        .ListHeader {
-            li:nth-child(3) {
-                @include col(1.3,12);
-            }
-
-            li:nth-child(4) {
-                display: inline-block;
-            }
+        li:nth-child(4) {
+            display: inline-block;
         }
     }
 
     .ListItem {
         min-height: 7.8em;
+
+        @include small-screen {
+            min-height: 0;
+        }
+
         .LoadingIndicator {
             margin-top: 30px;
         }

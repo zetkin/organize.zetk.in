@@ -36,6 +36,10 @@
         & >:nth-child(2) {
             width: calc(100% - 3em);
             padding: 1em;
+
+            @include small-screen {
+                width: 100%;
+            }
         }
     }
 
