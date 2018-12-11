@@ -33,7 +33,7 @@ export default class EditQueryPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        if (this.props.queryItem) {
+        if (this.props.queryItem && !this.props.queryItem.isPending) {
             this.setState({
                 query: this.props.queryItem.data,
             });
@@ -49,7 +49,7 @@ export default class EditQueryPane extends PaneBase {
             return this.closePane();
         }
 
-        if (!this.state.query && nextProps.queryItem) {
+        if (!this.state.query && nextProps.queryItem && !nextProps.queryItem.isPending) {
             this.setState({
                 query: nextProps.queryItem.data,
             });
