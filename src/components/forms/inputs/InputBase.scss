@@ -1,0 +1,7 @@
+.InputBase {
+    input,
+    textarea,
+    select {
+        @include input-base;
+    }
+}
