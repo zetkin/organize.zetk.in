@@ -71,11 +71,17 @@ export default class EditQueryPane extends PaneBase {
             const filters = query.filter_spec;
 
             let form = null;
+            let deleteButton = null;
 
             if (query.type == 'standalone') {
                 form = (
                     <QueryForm key="form" ref="form" query={ query }
                         onSubmit={ this.onSubmit.bind(this) }/>
+                );
+
+                deleteButton = (
+                    <DeleteButton key="deleteButton"
+                        onClick={ this.onDeleteClick }/>
                 );
             }
 
@@ -87,9 +93,7 @@ export default class EditQueryPane extends PaneBase {
                     id="panes.editQuery.filterIntro"/>,
                 <FilterList ref="filters" key="filters" filters={ filters }
                     openPane={ this.openPane.bind(this) }/>, // TODO: Remove eventually
-                <DeleteButton key="deleteButton"
-                    onClick={ this.onDeleteClick }
-                />
+                deleteButton,
             ];
         }
         else {
