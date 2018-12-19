@@ -248,9 +248,7 @@ export default class ActionListItem extends React.Component {
                     <LoadingIndicator/>
                 </div>
             );
-            participantsNumbers = null;
         }
-
 
         return (
             <div className={ classNames }
