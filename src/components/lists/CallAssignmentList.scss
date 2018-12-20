@@ -14,5 +14,9 @@
 
     .ListItem {
         margin-left: 9em;
+
+        @include small-screen {
+            margin-left: 0;
+        }
     }
 }

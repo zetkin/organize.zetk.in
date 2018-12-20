@@ -4,23 +4,50 @@
 
     .ListItem-date {
         text-align: center;
+
+        @include small-screen {
+            @include flex-container;
+            color: $c-ui-darker;
+            font-size: 0.9em;
+        }
     }
 
     .dateStart {
         margin-top: 1em;
 
+        @include small-screen {
+            margin-right: 0.5em;
+            margin-top: 0;
+        }
+
         &:after {
             @include icon($fa-var-arrows-h);
             width: 100%;
+
+            @include small-screen {
+                display: inline;
+                margin-left: 0.5em;
+                margin-right: 0;
+            }
         }
     }
 
     .CallAssignmentListItem-info {
         @include col(6,12);
 
+        @include small-screen {
+            @include col(12,12);
+            padding: 0;
+        }
+
         .CallAssignmentListItem-infoTitle {
             margin: 0.5em 0;
             font-size: 1.3em;
+
+            @include small-screen {
+                font-size: 1.1em;
+                padding: 0;
+            }
         }
 
         .CallAssignmentListItem-infoCallers, .LoadingIndicator {
@@ -28,18 +55,31 @@
             bottom: 0;
             font-size: 1.1em;
 
+            @include small-screen {
+                position: static;
+                font-size: 1em;
+            }
+
             i {
                 font-size: 1.2em;
+
+                @include small-screen {
+                    margin-right: 0.8em;
+                    font-size: 1em;
+                }
+
                 &:after {
                     @include icon($fa-var-phone);
                     font-size: 0.7em;
+
+                    @include small-screen {
+                        display: none;
+                    }
                 }
             }
 
         }
     }
-
-
 
     .CallAssignmentListItem-stats {
         @include col(6,12);
@@ -47,9 +87,21 @@
         text-align: center;
         color: lighten($c-text, 20);
 
+        @include small-screen {
+            @include col(12,12);
+            font-size: 1em;
+            padding: 0;
+            text-align: left;
+        }
+
         div {
             @include col(3,12);
-            padding: 0;
+
+            @include mini-screen {
+                padding-left: 0.8em;
+                padding-right: 0.8em;
+                width: auto;
+            }
 
             span {
                 display: block;
@@ -65,6 +117,15 @@
             width: 100%;
             padding: 0;
             text-align: left;
+
+            @include small-screen {
+                display: block;
+                width: 95vw;
+            }
+
+            @include mini-screen {
+                width: 93vw;
+            }
         }
 
         .LoadingIndicator {
