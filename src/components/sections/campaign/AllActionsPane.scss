@@ -9,6 +9,7 @@
         float: right;
     }
 }
+
 .AllActionsPane-oldActions {
     font-size: 1.25em;
     text-align: center;
@@ -17,12 +18,40 @@
     border-radius: 0.5em;
     max-width: 708px;
     margin-bottom: 1em;
+
+    @include small-screen {
+        border: 0;
+    }
 }
+
 .AllActionsPane-oldActionsButtons {
     margin-top: 0.5em;
 }
+
 .AllActionsPane-oldActionsButton {
     text-decoration: underline;
     margin: 0 0.5em;
     cursor: pointer;
+
+    @include small-screen {
+        text-decoration: none;
+    }
+
+    &:nth-child(2) {
+        @include small-screen {
+            display: none;
+        }
+    }
+
+    span:first-of-type {
+        @include small-screen {
+            color: #666;
+            display: block;
+
+            &:before {
+                @include icon($fa-var-history);
+                color: #666;
+            }
+        }
+    }
 }

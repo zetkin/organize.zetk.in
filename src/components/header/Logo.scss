@@ -6,10 +6,11 @@
 
     @include small-screen {
         top: 20px;
+        z-index: 2000;
     }
 
     @include mini-screen {
-        left: 15px;
+        left: 10px;
     }
 
     img {

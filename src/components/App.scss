@@ -56,15 +56,9 @@
 }
 
 .App-main {
-    position: absolute;
+    position: fixed;
     top: 6.8em;
     right: 0;
     left: 0;
-}
-
-@include small-screen {
-    .App-main {
-        position: fixed;
-        bottom: 0;
-    }
+    bottom: 0;
 }

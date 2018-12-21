@@ -67,7 +67,7 @@ export default class RootPaneBase extends React.Component {
         let filterDrawer = null;
         let filters = this.getPaneFilters(data, this.state.pendingFilters);
         var toolbar = this.getPaneTools(data);
-        
+
 
         if (filters || toolbar) {
             let filterButton = null;

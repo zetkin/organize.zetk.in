@@ -1,8 +1,35 @@
+// Media queries
+@mixin mini-screen {
+    @media (max-width: #{$mini-width}) {
+      @content;
+    }
+}
+
+@mixin small-screen {
+    @media (max-width: #{$small-width}) {
+      @content;
+    }
+}
+
+@mixin medium-screen {
+    @media (max-width: #{$medium-width}) {
+      @content;
+    }
+}
+
+// Remove this later?
+@mixin large-screen {
+  @media only screen and (min-width: #{$large-width}) {
+    @content;
+  }
+}
+
 @mixin list-unstyled {
     margin: 0;
     padding: 0;
     list-style: none;
 }
+
 @mixin card {
     color: #333;
     background-color: #fefefe;
@@ -120,6 +147,10 @@
         padding-left: .3em;
         &:before {
             @include icon($icon);
+        }
+        @include small-screen {
+            background-color: transparent;
+            border: 0;
         }
     }
 }
@@ -304,31 +335,6 @@
 @mixin align-items($alignment: flex-start){
     -webkit-align-items: $alignment;
     align-items: $alignment;
-}
-
-@mixin mini-screen {
-    @media (max-width: #{$mini-width}) {
-      @content;
-    }
-}
-
-@mixin small-screen {
-    @media (max-width: #{$small-width}) {
-      @content;
-    }
-}
-
-@mixin medium-screen {
-    @media (max-width: #{$medium-width}) {
-      @content;
-    }
-}
-
-// Remove this later?
-@mixin large-screen {
-  @media only screen and (min-width: #{$large-width}) {
-    @content;
-  }
 }
 
 @mixin col ($col, $sum, $gap: 0.5em, $align: top, $first: false, $last: false) {

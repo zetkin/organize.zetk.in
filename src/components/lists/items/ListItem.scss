@@ -4,6 +4,14 @@
     padding: 1em;
     @include card;
 
+    @include small-screen {
+        background-color: transparent;
+        box-shadow: none;
+        border-radius: 0;
+        border-bottom: 1px solid #e9e9e9;
+        margin: 0;
+    }
+
     &.ListItem-withCheckbox {
         position: relative;
         display: flex;
@@ -15,16 +23,23 @@
             color: white;
             text-align: center;
 
+            @include small-screen {
+                display: none;
+            }
+
             .ListItem-checkbox {
                 margin-top: 3em;
                 cursor: pointer;
             }
-
         }
 
         & >:nth-child(2) {
             width: calc(100% - 3em);
             padding: 1em;
+
+            @include small-screen {
+                width: 100%;
+            }
         }
     }
 
