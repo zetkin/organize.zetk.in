@@ -5,6 +5,7 @@
     z-index: 1;
 
     @include small-screen {
+        min-width: auto;
         width: 100%;
     }
 
