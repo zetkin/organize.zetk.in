@@ -2,6 +2,10 @@
 
     .ListHeader {
 
+        @include medium-screen {
+            display: none;
+        }
+
         li:nth-child(1) {
             width: 9em;
             display: inline-block;
@@ -14,5 +18,9 @@
 
     .ListItem {
         margin-left: 9em;
+
+        @include medium-screen {
+            margin-left: 0;
+        }
     }
 }

@@ -3,8 +3,12 @@
     border: 1px solid darken($c-ui-bg, 3);
     border-radius: 5px;
     width: 100%;
-    height: 1em;
+    height: 1.6em;
     overflow: hidden;
+
+    @include small-screen {
+        height: 1.9em;
+    }
 }
 
 .ProgressBar-content {

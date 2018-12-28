@@ -60,8 +60,26 @@
         padding-right: 1em;
         border-right: 1px solid #000;
 
+        @include medium-screen {
+            border-right: 0;
+            height: auto;
+            padding-right: 0;
+            position: static;
+            width: auto;
+        }
+
         .date, .time {
             display: block;
+
+            @include medium-screen {
+                color: $c-ui-darker;;
+                display: inline-block;
+                font-size: 0.9em;
+            }
+        }
+
+        .time {
+            margin-left: 0.5em;
         }
     }
 

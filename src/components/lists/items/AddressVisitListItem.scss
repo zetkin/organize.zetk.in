@@ -8,11 +8,21 @@
     .AddressVisitListItem-address {
         float: left;
         font-weight: bold;
+
+        @include medium-screen {
+            float: none;
+        }
     }
 
     .AddressVisitListItem-progress {
         width: 19em;
         float: right;
+
+        @include medium-screen {
+            float: none;
+            margin-top: 1em;
+            width: auto;
+        }
 
         .ProgressBar {
             margin: 0.5em 0 0;
