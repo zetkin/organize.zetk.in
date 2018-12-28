@@ -1,5 +1,30 @@
 .ActionCalendar {
 
+    .ActionWeek {
+        @include flex-container;
+
+        @include medium-screen {
+            display: block;
+        }
+
+        h2 {
+            font-size: 1.2em;
+            font-weight: normal;
+            margin-top: 0.5em;
+            width: 4%;
+
+            @include medium-screen {
+                width: auto;
+            }
+        }
+
+        &::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    }
+
     .ActionDay {
         h4 {
             &:hover {
@@ -24,26 +49,5 @@
         top: calc(50% - 0.8em);
         right: 0.25em;
         cursor: -webkit-grab;
-    }
-}
-
-@include medium-screen {
-    .ActionCalendar{
-        .ActionWeek {
-            @include flex-container;
-
-            h2 {
-                font-size: 1.2em;
-                font-weight: normal;
-                width: 4%;
-                margin-top: 0.5em;
-            }
-
-            &::after {
-                content: "";
-                display: block;
-                clear: both;
-            }
-        }
     }
 }
