@@ -33,14 +33,6 @@
 @mixin form-base {
     color: lighten($c-text, 40);
 
-    input,
-    input[type="text"],
-    input[type="email"],
-    textarea,
-    input[type="password"] {
-        @include input-base;
-    }
-
     input[type="submit"] {
         @include button;
         display: block;

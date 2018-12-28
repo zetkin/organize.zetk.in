@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedMessage as Msg } from 'react-intl';
+import cx from 'classnames';
 
 
 export default class InputBase extends React.Component {
@@ -16,6 +17,8 @@ export default class InputBase extends React.Component {
 
     render() {
         let label = null;
+        let classes = cx('InputBase', this.props.className);
+
         if (this.props.labelMsg) {
             label = (
                 <Msg tagName="label"
@@ -23,7 +26,7 @@ export default class InputBase extends React.Component {
             );
         }
         return (
-            <div className={ this.props.className }>
+            <div className={ classes }>
                 { label }
                 { this.renderInput() }
             </div>

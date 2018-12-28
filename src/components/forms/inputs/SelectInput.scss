@@ -1,10 +1,9 @@
-select{
-    @include input-base;
+.SelectInput select {
     background: inherit;
     font-family: inherit;
     height: 33px;
 
-    &:focus{
+    &:focus {
         padding: calc(0.25em - 1px);
     }
 }
