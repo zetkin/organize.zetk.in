@@ -1,8 +1,27 @@
 .PersonPane {
+
     .DraggableAvatar {
         float: left;
         height: 12em;
         @include col(4,12, $first:true);
+
+        @include small-screen {
+            height: auto;
+            width: 55px;
+            vertical-align: middle;
+            display: inline-block;
+            padding-left: 0;
+            padding-right: 1em;
+        }
+    }
+
+    .PaneBase-content h2 {
+
+        @include small-screen {
+            display: inline-block;
+            font-size: 1.4em;
+            line-height: 45px;
+        }
     }
 
     .InfoList {
