@@ -1,6 +1,10 @@
 .TagCloudItem {
     @include tag;
 
+    @include small-screen {
+        font-size: 1.1em;
+    }
+
     .TagCloudItem-removeButton, .TagCloudItem-editButton {
         position: absolute;
         right: 0;
@@ -22,15 +26,12 @@
             @include icon($fa-var-pencil);
             margin-right: 0;
         }
-    }    
+    }
     &:hover {
 
         .TagCloudItem-removeButton, .TagCloudItem-editButton {
             cursor: pointer;
             opacity: 1;
-            
-            
         }
-        
     }
 }

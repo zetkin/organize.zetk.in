@@ -20,13 +20,16 @@
         padding: .5em .8em .5em 1.6em;
         color: lighten($c-text, 40);
         cursor: pointer;
-        
+
+        @include small-screen {
+            font-size: 1.1em;
+        }
+
         &:before {
             @include icon($fa-var-plus);
             position: absolute;
             left: 0;
             margin-top: -1px;
-        
         }
 
         &:hover {
