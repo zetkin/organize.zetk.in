@@ -28,6 +28,11 @@
         font-size: 20px;
         white-space: nowrap;
         z-index: 0;
+
+        @include small-screen {
+            font-size: 1.4em;
+            line-height: 40px;
+        }
     }
 
     .RelSelectInput {
