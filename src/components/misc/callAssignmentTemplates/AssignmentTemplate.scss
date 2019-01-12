@@ -26,6 +26,10 @@
             border: 1px solid darken(white, 10);
             margin-right: 1em;
             vertical-align: middle;
+
+            @include small-screen {
+                margin-bottom: 1em;
+            }
         }
 
         h2 {
@@ -33,6 +37,11 @@
             display: inline-block;
             vertical-align: middle;
             margin: 0;
+
+            @include small-screen {
+                font-size: 1.4em;
+                vertical-align: inherit;
+            }
         }
     }
 
