@@ -96,6 +96,10 @@
                 display: none;
                 height: 30px;
 
+                @include small-screen {
+                    display: block;
+                }
+
                 &:before {
                     @include icon($fa-var-pencil);
                     line-height: 2.4em;
