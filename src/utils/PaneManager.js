@@ -138,7 +138,7 @@ function resetHorizontalLayout() {
 }
 
 function updateStack() {
-    var i, len, shade, maxRight;
+    var i, len, maxRight;
 
     if (!_running) {
         // The loop has been requested to stop. Bail
@@ -153,7 +153,6 @@ function updateStack() {
     }
 
     i=len;
-    shade = 0.0;
     maxRight = _stackWidth;
     while (i-->0) {
         var pane = _panes[i],
@@ -172,18 +171,7 @@ function updateStack() {
             }
         }
 
-        shade -= 0.03 * (maxRight-paneX)/paneWidth;
-        if (shade < 0)
-            shade = 0;
-
-        pane.setShade(shade);
-
         maxRight = paneX;
-
-        shade += 0.08;
-        if (shade > 0.5) {
-            shade = 0.5;
-        }
     }
 
     requestAnimationFrame(updateStack);
@@ -194,9 +182,6 @@ function updateStack() {
 function Pane(domElement, isBase) {
     this.domElement = domElement;
     this.contentElement = domElement.getElementsByClassName('PaneBase-content')[0];
-    this.shaderElement = document.createElement('div');
-    this.shaderElement.className = isBase? 'RootPaneBase-shader' : 'PaneBase-shader';
-    this.domElement.appendChild(this.shaderElement);
     this.dragging = false;
     this.isBase = isBase;
 
@@ -224,16 +209,6 @@ function Pane(domElement, isBase) {
         this.domElement.style.top = val+'px';
         this.domElement.style.minHeight = 'calc(100vh - ' + val + 'px)';
     };
-
-    var shade = 0;
-    this.getShade = function() {
-        return shade;
-    }
-    this.setShade = function(val) {
-        shade = Math.max(0.0, Math.min(val, 1.0));
-        this.shaderElement.style.backgroundColor = 'rgba(0,0,0,'+shade+')';
-    }
-
 
     var w = this.domElement.offsetWidth;
     this.getWidth = function() {
@@ -310,11 +285,6 @@ function Pane(domElement, isBase) {
     }
 
     this.stop = function() {
-        if (this.shaderElement) {
-            this.domElement.removeChild(this.shaderElement);
-            this.shaderElement = null;
-        }
-
         if (this.domElement.parentNode) {
             this.domElement.parentNode.removeEventListener('touchmove', onDomElementTouchMove);
             this.domElement.parentNode.removeEventListener('mousemove', onDomElementMouseMove);

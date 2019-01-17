@@ -20,10 +20,6 @@
     &:last-child {
         position: absolute;
         top: 0;
-
-        .PaneBase-shader {
-            display: none;
-        }
     }
 
     &:not(:first-child) {
@@ -152,21 +148,6 @@
                 cursor: pointer;
                 text-decoration: underline;
             }
-        }
-    }
-
-    .PaneBase-shader {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        pointer-events: none;
-        z-index: 10;
-
-        @include small-screen {
-            display: none;
         }
     }
 
