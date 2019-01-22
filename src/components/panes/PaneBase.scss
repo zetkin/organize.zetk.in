@@ -12,14 +12,23 @@
     right: auto;
 
     @include small-screen {
+        bottom: 0;
         box-shadow: none;
-        min-width: auto;
-        width: 100%;
+
+        &[class] {
+            min-width: auto;
+        }
     }
 
     &:last-child {
         position: absolute;
         top: 0;
+
+        @include small-screen {
+            position: fixed;
+            top: 6.8em;
+            width: 100%;
+        }
     }
 
     &:not(:first-child) {
@@ -56,7 +65,6 @@
 
         .PaneBase-content {
             padding-top: 70px;
-            margin-bottom: 20px;
 
             @include small-screen {
                 padding-top: 20px;
@@ -102,7 +110,7 @@
         outline: none;
 
         @include small-screen {
-            padding: 50px 20px 140px 20px;
+            padding: 50px 10px 140px 10px;
         }
 
         h2 {
