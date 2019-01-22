@@ -6,12 +6,9 @@
         @include col(4,12, $first:true);
 
         @include small-screen {
+            @include col(2,12, $first:true);
             height: auto;
             width: 55px;
-            vertical-align: middle;
-            display: inline-block;
-            padding-left: 0;
-            padding-right: 1em;
         }
     }
 
@@ -21,6 +18,7 @@
             display: inline-block;
             font-size: 1.4em;
             line-height: 45px;
+            margin-left: 0.5em;
         }
     }
 
