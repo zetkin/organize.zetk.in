@@ -67,26 +67,6 @@ function stop() {
 }
 
 function resetVerticalLayout() {
-    var i, len = _panes.length;
-
-    for (i = 0; i < len; i++) {
-        var pane = _panes[i];
-
-        pane.resetTransform();
-        pane.setY(40 * i);
-    }
-
-    if (len > 2) {
-        var animatedScrollTo = require('animated-scrollto');
-
-        // Scroll down to show the topmost pane as well as the
-        // header of the one underneith (vertically above) that.
-        var scrollTop = (len - 2) * 40;
-        setTimeout(function() {
-            animatedScrollTo(document.body, scrollTop, 400);
-        }, 70);
-    }
-
     _running = false;
 }
 
@@ -177,8 +157,6 @@ function updateStack() {
     requestAnimationFrame(updateStack);
 }
 
-
-
 function Pane(domElement, isBase) {
     this.domElement = domElement;
     this.contentElement = domElement.getElementsByClassName('PaneBase-content')[0];
@@ -200,15 +178,6 @@ function Pane(domElement, isBase) {
         this.domElement.style.transform = 'translate3d('+x+'px,0,0)';
         this.domElement.style.webkitTransform = 'translate3d('+x+'px,0,0)';
     }
-
-    var y = 0;
-    this.getY = function() {
-        return y;
-    };
-    this.setY = function(val) {
-        this.domElement.style.top = val+'px';
-        this.domElement.style.minHeight = 'calc(100vh - ' + val + 'px)';
-    };
 
     var w = this.domElement.offsetWidth;
     this.getWidth = function() {
