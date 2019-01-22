@@ -1,9 +1,5 @@
 .CallPane.PaneBase {
     min-width: 500px;
-
-    @include small-screen {
-        min-width: 100%;
-    }
 }
 
 .CallPane {
