@@ -2,7 +2,7 @@
     @include tag;
 
     @include small-screen {
-        font-size: 1.1em;
+        margin: 0 8px 8px 0;
     }
 
     .TagCloudItem-removeButton, .TagCloudItem-editButton {
@@ -12,21 +12,44 @@
         opacity: 0;
         transition: opacity 0.3s;
         color: lighten($c-text, 60);
+
         &:hover {
             color: lighten($c-text, 40);
         }
     }
+
+    .TagCloudItem-removeButton {
+        @include small-screen {
+            margin-top: 0;
+            opacity: 1;
+            position: static;
+        }
+    }
+
     .TagCloudItem-removeButton:after {
         @include icon($fa-var-remove);
         margin-right: 0;
+
+        @include small-screen {
+            text-align: right;
+            height: 0;
+            line-height: 0;
+        }
     }
+
     .TagCloudItem-editButton {
         margin-top: -2px;
+
+        @include small-screen {
+            display: none;
+        }
+
         &:after {
             @include icon($fa-var-pencil);
             margin-right: 0;
         }
     }
+
     &:hover {
 
         .TagCloudItem-removeButton, .TagCloudItem-editButton {
