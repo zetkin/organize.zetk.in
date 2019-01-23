@@ -1,34 +1,192 @@
 .PaneBase {
     left: 0;
-    right: 0;
     position: absolute;
     min-width: 400px;
     background-color: $c-ui-bg;
     color: lighten($c-text, .3);
     z-index: 5;
+    top: 0;
+    bottom: 0;
+    display: block;
+    box-shadow: 0 0 2em rgba(0, 0, 0, 0.1);
+    right: auto;
 
-    .PaneBase-content {
-        padding: 0 2em 2em;
+    @include small-screen {
+        bottom: 0;
+        box-shadow: none;
 
-        h3 {
-            font-size: 18px
+        &[class] {
+            min-width: auto;
         }
     }
 
-    .PaneBase-shader {
-        display: none;
+    &:last-child {
+        position: absolute;
+        top: 0;
+
+        @include small-screen {
+            position: fixed;
+            top: 6.8em;
+            width: 100%;
+        }
+    }
+
+    &:not(:first-child) {
+        // Sub pane specific styling
+        .PaneBase-header {
+            width: 20px;
+            height: 100%;
+
+            @include small-screen {
+                height: auto;
+                width: 100%;
+            }
+
+            &:hover {
+                cursor:col-resize;
+                .PaneBase-closelink {
+                    color: lighten($c-text, 80);
+                }
+            }
+
+            &:before {
+                @include icon($fa-var-ellipsis-v);
+                position: absolute;
+                top: calc(50% - 1em);
+                left: -1.5px;
+                color: darken($c-ui-bg, 5);
+                font-size: 2em;
+
+                @include small-screen {
+                    display: none;
+                }
+            }
+        }
+
+        .PaneBase-content {
+            padding-top: 70px;
+
+            @include small-screen {
+                padding-top: 20px;
+            }
+        }
+
+        &.PaneBase-scrolled {
+            .PaneBase-closelink {
+                top: 0;
+                left: -1.5px;
+                font-size: 2em;
+                color: lighten($c-text, 95);
+
+                @include small-screen {
+                    font-size: 1.5em;
+                    left: 0;
+                    top: 0;
+                }
+
+                &:hover {
+                    color: lighten($c-text, 80);
+                }
+            }
+        }
+
+        &.PaneBase-hasFooter {
+            .PaneBase-content {
+                height: calc(100% - 100px);
+            }
+        }
+    }
+
+    .PaneBase-content {
+        display: block;
+        padding: 50px 30px 80px;
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        pointer-events: none;
-        z-index: 10;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        outline: none;
+
+        @include small-screen {
+            padding: 50px 10px 140px 10px;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 2.0em;
+
+            @include small-screen {
+                font-size: 1.6em;
+            }
+        }
+
+        h3 {
+            font-size: 1.7em;
+
+            @include small-screen {
+                font-size: 1.4em;
+            }
+        }
+
+        p {
+            font-size: 1.4em;
+            line-height: 1.8em;
+
+            @include small-screen {
+                font-size: 1.2em;
+            }
+        }
+
+        small {
+            font-size: 1.1em;
+        }
+
+        .edit {
+            display: block;
+            margin-bottom: 1em;
+            font-size: 1.2em;
+
+            &:before {
+                @include icon($fa-var-pencil);
+            }
+
+            &:hover {
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
     }
 
     &:not(:last-child) .PaneBase-content {
-        height: 40px;
-        overflow: hidden;
+    // If there are more than one pane open
+        height: auto;
+        overflow-y: scroll;
+
+        @include small-screen {
+            height: 40px;
+            overflow: hidden;
+        }
+    }
+
+    .PaneBase-filterDrawer {
+        padding: 1em;
+        opacity: 0;
+        transition: opacity 0.2s 0.2s;
+    }
+
+    &.PaneBase-filtersVisible {
+        .PaneBase-header {
+            background-color: white;
+            max-height: 400px;
+            overflow: visible;
+            transition: background-color .3s, max-height .5s;
+        }
+
+        .PaneBase-filterDrawer {
+            opacity: 1;
+        }
     }
 
     // Completely transparent link placed just over the pane (where the header
@@ -44,6 +202,25 @@
         height: 40px;
     }
 
+    .PaneBase-closeLink {
+        top: 0;
+        left: -5px;
+        right: auto;
+        transition: all .1s;
+        font-size: 2.5em;
+        color: lighten($c-text, 85);
+
+        @include small-screen {
+            font-size: 1.5em;
+            left: 0;
+            top: 1em;
+        }
+
+        &::before{
+            @include icon($fa-var-close);
+        }
+    }
+
     &::before {
         content: "";
         display: block;
@@ -53,6 +230,10 @@
         width: 100%;
         height: 40px;
         background: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.1) 80%, rgba(0,0,0,0.2));
+
+        @include small-screen {
+            display: none;
+        }
     }
 
     .PaneBase-footer {
@@ -72,6 +253,18 @@
     }
 
     .PaneBase-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        background-color: $c-ui-bg;
+        transition: background-color .2s .2s, max-height .3s;
+
+        @include small-screen {
+            background-color: transparent;
+        }
+
         .PaneBase-toolbar {
             padding: 1em;
             color: #666666;
@@ -82,164 +275,4 @@
             }
         }
     }
-
-    //@include medium-screen {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: auto;
-        display: block;
-        box-shadow: 0 0 2em rgba(0, 0, 0, 0.1);
-
-        &:not(:last-child) .PaneBase-content{
-        // If there are more than one pane open
-            height: auto;
-            overflow-y: scroll;
-        }
-
-        .PaneBase-header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1;
-            background-color: $c-ui-bg;
-            transition: background-color .2s .2s, max-height .3s;
-        }
-
-        .PaneBase-filterDrawer {
-            padding: 1em;
-            opacity: 0;
-            transition: opacity 0.2s 0.2s;
-        }
-
-        &.PaneBase-filtersVisible {
-            .PaneBase-header {
-                background-color: white;
-                max-height: 400px;
-                overflow: visible;
-                transition: background-color .3s, max-height .5s;
-            }
-
-            .PaneBase-filterDrawer {
-                opacity: 1;
-            }
-        }
-
-        .PaneBase-closeLink {
-            top: 0;
-            left: -5px;
-            right: auto;
-            transition: all .1s;
-            font-size: 2.5em;
-            color: lighten($c-text, 85);
-            &::before{
-                @include icon($fa-var-close);
-            }
-        }
-
-        .PaneBase-content {
-            display: block;
-            padding: 50px 30px 80px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            outline: none;
-
-            h2 {
-                margin-top: 0;
-                font-size: 2.0em;
-            }
-            h3 {
-                font-size: 1.7em;
-            }
-            p {
-                font-size: 1.4em;
-                line-height: 1.8em
-            }
-            small {
-                font-size: 1.1em;
-            }
-
-            .edit {
-                display: block;
-                margin-bottom: 1em;
-                font-size: 1.2em;
-
-                &:before {
-                    @include icon($fa-var-pencil);
-                }
-
-                &:hover {
-                    cursor: pointer;
-                    text-decoration: underline;
-                }
-            }
-        }
-
-        .PaneBase-shader {
-            display: block;
-        }
-
-        &:last-child {
-            position: absolute;
-            top: 0;
-
-            .PaneBase-shader {
-                display: none;
-            }
-        }
-
-        &:not(:first-child) {
-            // Sub pane specific styling
-            .PaneBase-header {
-                width: 20px;
-                height: 100%;
-
-                &:hover {
-                    cursor:col-resize;
-                    .PaneBase-closelink {
-                        color: lighten($c-text, 80);
-                    }
-                }
-
-                &:before {
-                    @include icon($fa-var-ellipsis-v);
-                    position: absolute;
-                    top: calc(50% - 1em);
-                    left: -1.5px;
-                    color: darken($c-ui-bg, 5);
-                    font-size: 2em;
-                }
-            }
-
-            .PaneBase-content {
-                padding-top: 70px;
-                margin-bottom: 20px;
-            }
-
-            &.PaneBase-scrolled {
-                .PaneBase-closelink {
-                    top: 0;
-                    left: -1.5px;
-                    font-size: 2em;
-                    color: lighten($c-text, 95);
-                    &:hover {
-                        color: lighten($c-text, 80);
-                    }
-                }
-            }
-
-            &.PaneBase-hasFooter {
-                .PaneBase-content {
-                    height: calc(100% - 100px);
-                }
-            }
-        }
-
-    //}
 }

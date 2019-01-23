@@ -67,26 +67,6 @@ function stop() {
 }
 
 function resetVerticalLayout() {
-    var i, len = _panes.length;
-
-    for (i = 0; i < len; i++) {
-        var pane = _panes[i];
-
-        pane.resetTransform();
-        pane.setY(40 * i);
-    }
-
-    if (len > 2) {
-        var animatedScrollTo = require('animated-scrollto');
-
-        // Scroll down to show the topmost pane as well as the
-        // header of the one underneith (vertically above) that.
-        var scrollTop = (len - 2) * 40;
-        setTimeout(function() {
-            animatedScrollTo(document.body, scrollTop, 400);
-        }, 70);
-    }
-
     _running = false;
 }
 
@@ -138,7 +118,7 @@ function resetHorizontalLayout() {
 }
 
 function updateStack() {
-    var i, len, shade, maxRight;
+    var i, len, maxRight;
 
     if (!_running) {
         // The loop has been requested to stop. Bail
@@ -153,7 +133,6 @@ function updateStack() {
     }
 
     i=len;
-    shade = 0.0;
     maxRight = _stackWidth;
     while (i-->0) {
         var pane = _panes[i],
@@ -172,31 +151,15 @@ function updateStack() {
             }
         }
 
-        shade -= 0.03 * (maxRight-paneX)/paneWidth;
-        if (shade < 0)
-            shade = 0;
-
-        pane.setShade(shade);
-
         maxRight = paneX;
-
-        shade += 0.08;
-        if (shade > 0.5) {
-            shade = 0.5;
-        }
     }
 
     requestAnimationFrame(updateStack);
 }
 
-
-
 function Pane(domElement, isBase) {
     this.domElement = domElement;
     this.contentElement = domElement.getElementsByClassName('PaneBase-content')[0];
-    this.shaderElement = document.createElement('div');
-    this.shaderElement.className = isBase? 'RootPaneBase-shader' : 'PaneBase-shader';
-    this.domElement.appendChild(this.shaderElement);
     this.dragging = false;
     this.isBase = isBase;
 
@@ -215,25 +178,6 @@ function Pane(domElement, isBase) {
         this.domElement.style.transform = 'translate3d('+x+'px,0,0)';
         this.domElement.style.webkitTransform = 'translate3d('+x+'px,0,0)';
     }
-
-    var y = 0;
-    this.getY = function() {
-        return y;
-    };
-    this.setY = function(val) {
-        this.domElement.style.top = val+'px';
-        this.domElement.style.minHeight = 'calc(100vh - ' + val + 'px)';
-    };
-
-    var shade = 0;
-    this.getShade = function() {
-        return shade;
-    }
-    this.setShade = function(val) {
-        shade = Math.max(0.0, Math.min(val, 1.0));
-        this.shaderElement.style.backgroundColor = 'rgba(0,0,0,'+shade+')';
-    }
-
 
     var w = this.domElement.offsetWidth;
     this.getWidth = function() {
@@ -310,11 +254,6 @@ function Pane(domElement, isBase) {
     }
 
     this.stop = function() {
-        if (this.shaderElement) {
-            this.domElement.removeChild(this.shaderElement);
-            this.shaderElement = null;
-        }
-
         if (this.domElement.parentNode) {
             this.domElement.parentNode.removeEventListener('touchmove', onDomElementTouchMove);
             this.domElement.parentNode.removeEventListener('mousemove', onDomElementMouseMove);

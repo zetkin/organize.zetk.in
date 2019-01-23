@@ -13,7 +13,17 @@
         color: lighten($c-text, 40);
         position: relative;
 
+        @include small-screen {
+            border-bottom: 1px solid darken($c-ui-bg, 10);
+        }
+
         .InfoList {
+
+            @include small-screen {
+                border-bottom: 0;
+                padding-bottom:  0;
+            }
+
             li {
                 font-size: 1.4em;
                 margin: 0.5em 0;
@@ -50,6 +60,10 @@
         top: 0;
         right: 0;
 
+        @include small-screen {
+            margin: 0.4em 0 1.4em;
+            position: static;
+        }
 
         &:before {
             @include icon($fa-var-pencil);

@@ -132,6 +132,10 @@
         pointer-events: none;
         @include button-color(lighten($color, 5), $amount);
     }
+
+    @include small-screen {
+        padding: 0.9em 0.7em 0.6em;
+    }
 }
 
 @mixin inline-button($color: lighten($c-ui-bg, 1), $amount:5, $icon:false) {
