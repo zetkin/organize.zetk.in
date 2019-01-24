@@ -2,17 +2,18 @@
     width: 98%;
     text-align: center;
 
-    @include small-screen {
-        text-align: left;
-    }
-
     a {
         cursor: pointer;
 
         span {
 
             @include medium-screen {
-                display: none;
+                display: block;
+                margin-top: 1.6em;
+            }
+
+            @include small-screen {
+                margin-top: 1.2em;
             }
         }
     }
