@@ -113,6 +113,7 @@
     margin: 3em auto 1em;
 
     @include small-screen {
+        margin-left: -15%;
         margin-top: 1.5em;
     }
 
