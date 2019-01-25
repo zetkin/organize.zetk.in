@@ -16,7 +16,6 @@
         left: 0;
         right: 0;
         z-index: 2000;
-
         display: none;
         background-color: white;
         border: 1px solid #eaeaea;
@@ -35,6 +34,10 @@
                 margin: 0;
                 padding: 0.5em 1em 0.5em 2em;
                 font-size: inherit;
+
+                @include small-screen {
+                    padding: 1em 1em 1em 2em;
+                }
 
                 &::before {
                     @include icon($fa-var-check);
@@ -103,6 +106,10 @@
                 &:before {
                     @include icon($fa-var-pencil);
                     line-height: 2.4em;
+
+                    @include small-screen {
+                        line-height: 3em;
+                    }
                 }
 
                 &:hover {
