@@ -121,6 +121,10 @@
             @include col(3,12, $gap:2em);
             border-right: 1px solid $c-ui-bg;
 
+            @include small-screen {
+                @include col(12,12);
+            }
+
             &:last-of-type {
                 border-right: 0;
             }
@@ -138,11 +142,14 @@
         }
 
         .RootPaneBase-filterApplyButton {
-            position: absolute;
+            @include button($icon:$fa-var-check);
             bottom: 1em;
+            position: absolute;
             right: 1em;
 
-            @include button($icon:$fa-var-check);
+            @include small-screen {
+                position: static;
+            }
         }
     }
 
@@ -153,6 +160,11 @@
             max-height: 250px;
             animation: RootPaneBase-filter-openAnimation .3s;
             overflow: visible;
+
+            @include small-screen {
+                max-height: auto;
+                overflow: scroll;
+            }
         }
 
         &:after {
