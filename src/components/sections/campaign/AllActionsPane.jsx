@@ -38,7 +38,7 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         super(props);
 
         this.state = Object.assign({}, this.state, {
-            viewMode: 'cal',
+            viewMode: (window.innerWidth > 720)? 'cal' : 'list',
             showOldActions: false
         });
     }
@@ -151,7 +151,6 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
                             <Msg id="lists.actionList.oldActions.changeFilter" />
                         </span>
                     </div>
-                    
                 </div>;
             }
             else {
@@ -179,11 +178,13 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         };
 
         let tools = [
-            <ViewSwitch key="viewSwitch" states={ viewStates }
+            <ViewSwitch key="viewSwitch"
+                className="AllActionsPane-viewSwitch"
+                states={ viewStates }
                 selected={ this.state.viewMode }
                 onSwitch={ this.onViewSwitch.bind(this) }/>,
             <Button key="addButton"
-                className="allActionsPane-addButton"
+                className="AllActionsPane-addButton"
                 labelMsg="panes.allActions.addButton"
                 onClick={ this.onAddClick.bind(this) }/>,
             <Button key="importButton"

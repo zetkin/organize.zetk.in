@@ -1,4 +1,9 @@
 .AllActionsPane {
+    .AllActionsPane-viewSwitch.ViewSwitch {
+        @include small-screen {
+            display: none;
+        }
+    }
     .AllActionsPane-addButton {
         @include inline-button($icon: $fa-var-plus);
         float: right;
