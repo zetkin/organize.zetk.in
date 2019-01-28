@@ -17,7 +17,6 @@
     }
 }
 
-// Remove this later?
 @mixin large-screen {
   @media only screen and (min-width: #{$large-width}) {
     @content;
