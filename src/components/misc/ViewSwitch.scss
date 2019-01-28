@@ -1,5 +1,14 @@
 .ViewSwitch{
     display: inline-block;
+
+    @include small-screen {
+        width: 106%;
+        overflow-x: scroll;
+        white-space: nowrap;
+        padding-bottom: 0.5em;
+        margin-left: -3%;
+    }
+
     button {
         &:focus {
             outline: 0;
@@ -12,6 +21,11 @@
         &:last-child {
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
+        }
+
+        @include small-screen {
+            background-color: none;
+            border: none;
         }
     }
 
