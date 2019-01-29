@@ -12,6 +12,10 @@
     .AllActionsPane-importButton {
         @include inline-button($icon: $fa-var-cloud-upload);
         float: right;
+
+        @include small-screen {
+            display: none;
+        }
     }
 }
 

@@ -50,13 +50,6 @@
                 }
 
                 &.Button {
-
-                    @include small-screen {
-                        &.AllActionsPane-importButton {
-                            display: none;
-                        }
-                    }
-
                     &:before {
                         height: 1.6em;
                         line-height: 1.6;
