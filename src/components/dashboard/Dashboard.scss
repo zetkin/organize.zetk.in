@@ -83,20 +83,6 @@
     }
 }
 
-.Dashboard-widgets {
-    @include list-unstyled;
-    margin: 0.833em;
-}
-
-.Dashboard-widgets .DraggableWidget-widgetcontainer {
-    padding: 0.5em 0;
-    border-top: 1px dashed transparent;
-
-    &.dragover {
-        border-top: 1px dashed #666;
-    }
-}
-
 .Dashboard {
     position: fixed;
     top: 6.8em;
@@ -150,16 +136,4 @@
     li {
         margin-left: 1em;
     }
-}
-
-.Dashboard-widgets {
-    margin: 0.833em 3.2em;
-    -webkit-column-count: 2;
-    -moz-column-count: 2;
-    column-count: 2;
-}
-
-.Dashboard-widgets .DraggableWidget-widgetcontainer {
-    display: inline-block;
-    width: 100%;
 }

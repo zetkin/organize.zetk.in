@@ -17,10 +17,6 @@
         }
     }
 
-    .Dashboard-widgets {
-        @include animateAppear(2.8s);
-    }
-
     .Dashboard-shortcuts {
         @include animateAppear(3.5s);
     }
