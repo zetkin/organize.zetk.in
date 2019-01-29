@@ -139,4 +139,16 @@
             }
         }
     }
+
+    &.Shortcut-maps {
+        @include small-screen  {
+            display: none;
+        }
+    }
+
+    &.Shortcut-survey {
+        @include small-screen  {
+            display: none;
+        }
+    }
 }
