@@ -73,7 +73,7 @@
 
     .RootPaneBase-content {
         height: 100%;
-        overflow: scroll;
+        overflow-y: scroll;
         padding: 80px 20px 0;
 
         @include small-screen {
