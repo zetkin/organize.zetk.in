@@ -56,6 +56,18 @@
                     }
                 }
             }
+
+            .ViewSwitch {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding-bottom: 0;
+
+                button {
+                    padding: 1em;
+                }
+            }
         }
     }
 
