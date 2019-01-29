@@ -103,8 +103,8 @@ export default class RootPaneBase extends React.Component {
 
             toolbar = (
                 <div className="RootPaneBase-toolbar">
-                    { toolbar }
                     { filterButton }
+                    { toolbar }
                 </div>
             );
         }
