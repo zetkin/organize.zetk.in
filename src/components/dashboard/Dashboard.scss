@@ -56,6 +56,10 @@
     margin: 0 0.833em;
     font-size: 1.2em;
 
+    @include small-screen {
+        display: none;
+    }
+
     li {
         display: inline-block;
         color: $c-ui-darker;
