@@ -9,6 +9,7 @@
         float: right;
     }
 
+    .RootPaneBase-toolbar
     .AllActionsPane-importButton {
         @include inline-button($icon: $fa-var-cloud-upload);
         float: right;
