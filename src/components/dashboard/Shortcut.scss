@@ -137,6 +137,30 @@
                     font-size: 0.85em;
                 }
             }
+
+            .Shortcut-import {
+                @include small-screen {
+                    display: none;
+                }
+            }
+
+            .Shortcut-distribution {
+                @include small-screen {
+                    display: none;
+                }
+            }
+
+            .Shortcut-playback {
+                @include small-screen {
+                    display: none;
+                }
+            }
+
+            .Shortcut-routes {
+                @include small-screen {
+                    display: none;
+                }
+            }
         }
     }
 

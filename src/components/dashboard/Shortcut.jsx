@@ -29,9 +29,11 @@ export default class Shortcut extends React.Component {
             let subListItems = SECTIONS[section].subSections.map(sub => {
                 let path = sub.path;
                 let subMsgId = 'sections.subSections.' + section + '.' + path;
+                let linkClasses = cx('Shortcut-' + path);
 
                 return (
-                    <li key={ path }>
+                    <li key={ path }
+                        className={ linkClasses }>
                         <Link msgId={ subMsgId }
                             onClick={ this.onSubClick.bind(this, path) }
                             />
