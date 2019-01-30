@@ -16,7 +16,7 @@ export default class CampaignList extends React.Component {
 
     render() {
         return (
-            <List className="AddressList"
+            <List className="CampaignList"
                 itemComponent={ CampaignListItem }
                 list={ this.props.campaignList }
                 onItemClick={ this.props.onItemClick }
