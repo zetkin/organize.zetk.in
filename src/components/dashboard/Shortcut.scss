@@ -2,6 +2,10 @@
     width: 98%;
     text-align: center;
 
+    @include small-screen {
+        width: 100%;
+    }
+
     a {
         cursor: pointer;
 
@@ -22,13 +26,17 @@
         margin: 20px 1%;
         display: block;
 
+        @include small-screen {
+            margin: 1em 0;
+        }
+
         & > a {
             display: block;
             position: relative;
 
             @include small-screen {
                 display: inline-block;
-                width: 50%;
+                width: 60%;
             }
 
             &:after {
@@ -110,6 +118,8 @@
             @include small-screen  {
                 display: inline-block;
                 margin: 0;
+                width: 40%;
+                vertical-align: top;
             }
 
             a {
