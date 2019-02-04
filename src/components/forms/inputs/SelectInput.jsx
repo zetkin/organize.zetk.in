@@ -31,10 +31,12 @@ export default class SelectInput extends InputBase {
         }
 
         return (
-            <select value={ this.props.value || '0' }
-                onChange={ this.onChange.bind(this) }>
-                { optionElements }
-            </select>
+            <div className="SelectInput">
+                <select value={ this.props.value || '0' }
+                    onChange={ this.onChange.bind(this) }>
+                    { optionElements }
+                </select>
+            </div>
         );
     }
 

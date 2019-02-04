@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import PaneBase from './PaneBase';
 import QueryForm from '../forms/QueryForm';
 import Button from '../misc/Button';
+import DeleteButton from '../misc/DeleteButton';
 import FilterList from '../filters/FilterList';
 import { getListItemById } from '../../utils/store';
 import {
@@ -13,6 +14,7 @@ import {
     updateQueryFilter,
     removeQueryFilter,
     retrieveQuery,
+    removeQuery
 } from '../../actions/query';
 
 
@@ -31,7 +33,7 @@ export default class EditQueryPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        if (this.props.queryItem) {
+        if (this.props.queryItem && !this.props.queryItem.isPending) {
             this.setState({
                 query: this.props.queryItem.data,
             });
@@ -43,7 +45,11 @@ export default class EditQueryPane extends PaneBase {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (!this.state.query && nextProps.queryItem) {
+        if (!nextProps.queryItem) {
+            return this.closePane();
+        }
+
+        if (!this.state.query && nextProps.queryItem && !nextProps.queryItem.isPending) {
             this.setState({
                 query: nextProps.queryItem.data,
             });
@@ -65,11 +71,17 @@ export default class EditQueryPane extends PaneBase {
             const filters = query.filter_spec;
 
             let form = null;
+            let deleteButton = null;
 
             if (query.type == 'standalone') {
                 form = (
                     <QueryForm key="form" ref="form" query={ query }
                         onSubmit={ this.onSubmit.bind(this) }/>
+                );
+
+                deleteButton = (
+                    <DeleteButton key="deleteButton"
+                        onClick={ this.onDeleteClick }/>
                 );
             }
 
@@ -81,6 +93,7 @@ export default class EditQueryPane extends PaneBase {
                     id="panes.editQuery.filterIntro"/>,
                 <FilterList ref="filters" key="filters" filters={ filters }
                     openPane={ this.openPane.bind(this) }/>, // TODO: Remove eventually
+                deleteButton,
             ];
         }
         else {
@@ -95,6 +108,11 @@ export default class EditQueryPane extends PaneBase {
                 labelMsg="panes.editQuery.saveButton"
                 onClick={ this.onSubmit.bind(this) }/>
         );
+    }
+
+    onDeleteClick = () => {
+        const actionId = this.getParam(0);
+        this.props.dispatch(removeQuery(actionId));
     }
 
     onSubmit(ev) {

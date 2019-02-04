@@ -164,10 +164,15 @@ export default class FilterList extends React.Component {
     }
 
     onFilterRemove(filterIndex) {
-        let filters = this.state.filters;
-        this.setState({
-            filters: filters.filter((f, idx) => idx != filterIndex),
-        });
+        let filters = this.state.filters.filter((f, idx) => idx != filterIndex);
+
+        // Counteracts weirdness with the "new" first filter having
+        // a sub relationship to the removed filter
+        if (filters.length) {
+            filters[0].op = "add";
+        }
+
+        this.setState({ filters });
     }
 
     onDrop(targetIdx, item) {

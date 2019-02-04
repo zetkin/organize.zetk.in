@@ -11,6 +11,8 @@ filters:
             green: "Status green: enough available"
             red: "Status red: two or more missing"
             yellow: "Status yellow: one person missing"
+            notgreen: "Status not green: one or more missing"
+            notred: "Status not red: at most one missing"
     beforeDate: Before date
     location:
         label: Location

@@ -11,6 +11,16 @@
     }
 }
 
+.CallPane-info {
+    color: lighten($c-text, 40);
+}
+
+.CallPane-infoCallAssignment {
+    &:before {
+        @include icon($fa-var-list-ul);
+    }
+}
+
 .CallPane-target {
     margin-bottom: 1em;
 

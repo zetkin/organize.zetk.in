@@ -1,0 +1,19 @@
+.RandomFilter {
+    &-size {
+        input {
+            @include input-base;
+        }
+    }
+
+    &-size,
+    &-unit {
+        @include col(6,12);
+    }
+
+    &-btnWrapper {
+        @include col(12, 12);
+        .Button {
+            width: 100%;
+        }
+    }
+}

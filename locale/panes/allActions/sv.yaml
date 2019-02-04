@@ -11,6 +11,8 @@ filters:
             green: "Status grön: tillräckligt många"
             red: "Status röd: saknas två eller fler"
             yellow: "Status gul: saknas en person"
+            notgreen: "Status ej grön: saknas en eller flera personer"
+            notred: "Status ej röd: saknas som mest en person"
     beforeDate: Till datum
     location:
         label: Plats

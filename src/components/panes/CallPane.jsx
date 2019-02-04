@@ -9,14 +9,30 @@ import Button from '../misc/Button';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import { getListItemById } from '../../utils/store';
 import {
+    retrieveCallAssignment,
+    retrieveCallAssignments,
+}  from '../../actions/callAssignment';
+import {
     retrieveCall,
     toggleCallActionTaken,
 } from '../../actions/call';
+import hasData from '../../utils/hasData';
 
+const mapStateToProps = (state, props) => {
+    let callItem = getListItemById(
+        state.calls.callList,
+        props.paneData.params[0]);
 
-const mapStateToProps = (state, props) => ({
-    callItem: getListItemById(state.calls.callList, props.paneData.params[0]),
-});
+    let callAssignmentItem = null;
+
+    if (callItem && callItem.data) {
+        callAssignmentItem = getListItemById(
+            state.callAssignments.assignmentList,
+            callItem.data.assignment_id);
+    }
+
+    return { callItem, callAssignmentItem }
+};
 
 
 @connect(mapStateToProps)
@@ -25,13 +41,22 @@ export default class CallPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
 
+        let callItem = this.props.callItem;
+
         let callId = this.getParam(0);
         this.props.dispatch(retrieveCall(callId));
+        this.props.dispatch(retrieveCallAssignments());
+
+        if (callItem && callItem.data) {
+            this.props.dispatch(
+                retrieveCallAssignment(callItem.data.assignment_id));
+        }
     }
 
     getRenderData() {
         return {
             callItem: this.props.callItem,
+            callAssignmentItem: this.props.callAssignmentItem,
         };
     }
 
@@ -45,9 +70,28 @@ export default class CallPane extends PaneBase {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        let callItem = nextProps.callItem;
+
+        // Can't load callAssignment until we know which one to load
+        if (!hasData(callItem, ['data']))
+            return;
+
+        // Shouldn't load if already loading
+        if (nextProps.callAssignmentItem
+            && nextProps.callAssignmentItem.isPending)
+            return;
+
+        this.props.dispatch(
+            retrieveCallAssignment(callItem.data.assignment_id));
+    }
+
     renderPaneContent(data) {
         if (data.callItem && !data.callItem.isPending) {
             let call = data.callItem.data;
+            let callAssignmentTitle = data.callAssignmentItem?
+                data.callAssignmentItem.data.title : null;
+
             let timestamp = Date.create(call.allocation_time);
 
             let callerNote = null;
@@ -86,7 +130,8 @@ export default class CallPane extends PaneBase {
                     actionResponseButton = (
                         <Button className="CallPane-actionResponseButton"
                             labelMsg="panes.call.action.response.unresolve"
-                            onClick={ this.onActionTakenClick.bind(this, false) }/>
+                            onClick={
+                                this.onActionTakenClick.bind(this, false) }/>
                         );
                 }
                 else if (call.organizer_action_needed) {
@@ -96,11 +141,12 @@ export default class CallPane extends PaneBase {
                     actionResponseButton = (
                         <Button className="CallPane-actionResponseButton"
                             labelMsg="panes.call.action.response.resolve"
-                            onClick={ this.onActionTakenClick.bind(this, true) }/>
+                            onClick={
+                                this.onActionTakenClick.bind(this, true) }/>
                         );
                 }
 
-                 let actionClassNames  = cx('CallPane-action', actionStatus );
+                let actionClassNames  = cx('CallPane-action', actionStatus );
 
                 if (call.message_to_organizer) {
                     actionMessage = <p>{ call.message_to_organizer }</p>;
@@ -133,6 +179,10 @@ export default class CallPane extends PaneBase {
 
             return (
                 <div className={ classes }>
+                    <div key="info" className="CallPane-info">
+                        <p className="CallPane-infoCallAssignment">
+                         { callAssignmentTitle }</p>
+                    </div>
                     <div className="CallPane-target">
                         <Avatar key="targetAvatar" person={ call.target }
                             onClick={ this.onTargetClick.bind(this) }/>
@@ -149,7 +199,8 @@ export default class CallPane extends PaneBase {
                             />
                     </div>
                     <div className="CallPane-caller">
-                        <Avatar key="callerAvatar" className="CallPane-callerAvatar"
+                        <Avatar key="callerAvatar"
+                            className="CallPane-callerAvatar"
                             person={ call.caller }/>
                         <span key="callerName" className="CallPane-callerName">
                             { call.caller.name } </span>

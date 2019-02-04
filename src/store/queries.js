@@ -3,6 +3,7 @@ import {
     createList,
     updateOrAddListItem,
     updateOrAddListItems,
+    removeListItem
 } from '../utils/store';
 
 
@@ -70,6 +71,12 @@ export default function queries(state = null, action) {
                 queryList: updateOrAddListItem(state.queryList,
                     query.id, query)
             });
+
+        case types.REMOVE_QUERY + '_FULFILLED':
+            return {
+                ...state,
+                queryList: removeListItem(state.queryList, action.meta.id)
+            };
 
         case types.RETRIEVE_CALL_ASSIGNMENTS + '_FULFILLED':
             let assignments = action.payload.data.data;
