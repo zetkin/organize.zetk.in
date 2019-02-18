@@ -12,6 +12,7 @@ docker run \
     --env ZETKIN_APP_KEY=MGU0YzNjYTktM2FjNS00OTQ5LTgyMTktN2JiOTJmNzQ3MTdm \
     --env ZETKIN_DOMAIN=dev.zetkin.org \
     --env TOKEN_SECRET=012345678901234567890123 \
+    --env ZETKIN_USE_TLS=0 \
     -p 80:80 \
     -p 81:81 \
     -t \
