@@ -3,6 +3,11 @@
     margin: 0 auto 0 auto;
     width: 65%;
 
+    @include small-screen {
+        margin: 0;
+        width: 100%;
+    }
+
     &::before {
         content: "";
         display: block;
@@ -14,12 +19,12 @@
         background-color: black;
         opacity: 0.0;
         z-index: 1000;
-
         visibility: hidden;
         transition: opacity 0.4s;
     }
 
     &.focused {
+
         &::before {
             visibility: visible;
             opacity: 0.2;
@@ -40,13 +45,47 @@
         font-family: Arial, sans-serif;
         -webkit-appearance: none;
 
+        @include small-screen {
+            font-size: 1.2em;
+            height: 32px;
+            margin: 0 auto;
+            padding: 0.4em 0.4em 0.4em 3.7em;
+            width: 65%;
+        }
+
+        @include mini-screen {
+            width: 75%;
+        }
+
         &:focus {
             text-align: left;
         }
+
+        @include mini-screen {
+
+            // WebKit browsers
+            &::-webkit-input-placeholder {
+             color: transparent;
+            }
+
+            // Mozilla Firefox 4 to 18
+            &:-moz-placeholder {
+               color: transparent;
+               opacity:  1;
+            }
+
+            // Mozilla Firefox 19+
+            &::-moz-placeholder {
+               color: transparent;
+               opacity:  1;
+            }
+
+            // Internet Explorer 10+
+            &:-ms-input-placeholder {
+               color: transparent;
+            }
+        }
     }
-
-
-
 }
 
 .Search-keepTyping {
@@ -63,10 +102,14 @@
     left: 0;
     right: 0;
     background-color: white;
-}
+    overflow: scroll;
+    max-height: 100vh;
 
-@include medium-screen {
-    .Search {
-        max-width: 500px;
+    @include small-screen {
+        left: -1.8em;
+        padding: 1em;
+        top: 55px;
+        width: 100vw;
+        max-height: calc(100vh - 75px);
     }
 }

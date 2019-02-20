@@ -66,13 +66,9 @@ export default class CanvassAssignmentPane extends PaneBase {
                     <InfoList key="info" data={[
                         { name: 'description', value: assignment.description },
                         { name: 'dates', value: assignment.start_date + ' - ' + assignment.end_date },
+                        { name: 'editLink', msgId: 'panes.canvassAssignment.editLink', onClick: this.onEditLinkClick.bind(this)},
                         ]}
-                        />
-                    <Button key="editLink"
-                        className="CanvassAssignmentPane-editLink"
-                        labelMsg="panes.canvassAssignment.editLink"
-                        onClick={ this.onEditLinkClick.bind(this) }
-                        />
+                    />
                 </div>
             );
 

@@ -1,24 +1,20 @@
 .ParticipantList {
-    display: none;
+    display: block;
+    min-height: 5em;
+    float: left;
 
-    @include medium-screen {
-        display: block;
-        min-height: 5em;
+    li {
         float: left;
-
-        li {
-            float: left;
-            margin: 0.25em;
-            &:nth-child(4n+1) {
-                margin-left: 0;
-            }
+        margin: 0.25em;
+        &:nth-child(4n+1) {
+            margin-left: 0;
         }
+    }
 
-        &::after {
-            content: "";
-            display: block;
-            clear: both;
-        }
+    &::after {
+        content: "";
+        display: block;
+        clear: both;
     }
 
     .ParticipantList-moreParticipants {

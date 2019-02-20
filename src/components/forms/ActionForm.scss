@@ -7,6 +7,10 @@
     .Form-end_time {
         width: 30%;
         float: left;
+
+        @include small-screen {
+            width: auto;
+        }
     }
 
     .Form-num_participants_required {

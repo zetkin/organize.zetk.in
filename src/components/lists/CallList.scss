@@ -1,5 +1,15 @@
 .CallList {
+
+    @include small-screen {
+        border-top: 1px solid #e9e9e9;
+    }
+
     .ListHeader {
+
+        @include medium-screen {
+            display: none;
+        }
+
         li:nth-child(1) {
             @include col(3,12);
         }
@@ -12,11 +22,9 @@
     .ListItem {
         margin-left: 9em;
         padding: 0;
-    }
 
-    @include medium-screen {
-        &.List {
-            max-width: 485px;
+        @include medium-screen {
+            margin-left: 0;
         }
     }
 }

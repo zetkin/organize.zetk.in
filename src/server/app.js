@@ -196,6 +196,10 @@ function renderReactPage(Component, req, res) {
         if (SENTRY_DSN) {
             Raven.captureException(err);
         }
+        else {
+            console.error(err);
+        }
+
         var PageFactory = React.createFactory(ServerErrorPage);
         var html = ReactDOMServer.renderToString(
             React.createElement(IntlReduxProvider, { store: req.store },

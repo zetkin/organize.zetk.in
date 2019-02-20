@@ -1,11 +1,21 @@
 .ActionDay {
-    position: relative;
+    @include flex;
     border-left: 1px solid #F1F1F1;
-    padding-bottom: 2em;
     color: darken($c-ui-darker, 10);
+    padding-bottom: 2em;
+    position: relative;
+
+    &:last-child {
+        border-right: 1px solid #f4f4f4;
+    }
 
     &:hover {
         background-color: darken($c-ui-bg, 1);
+    }
+
+    &:hover .ActionDay-addButton {
+        opacity: 1;
+        visibility: visible;
     }
 
     h4 {
@@ -22,10 +32,24 @@
     }
 
     .cloneHint {
-        display: none;
+        position: absolute;
+        left: 1em;
+        right: 1em;
+        bottom: 1em;
+        text-align: center;
+        color: #999;
+
+        @include medium-screen {
+            display: none;
+        }
+
+        code {
+            @include key-reference
+            background-color: darken(#eee, 3);
+        }
     }
 
-    &.dragOver{
+    &.dragOver {
         background-color: #eee;
 
         .ActionDay-addButton {
@@ -35,15 +59,21 @@
 }
 
 .ActionDay-addButton {
-    display: block;
-    width: 100%;
     background-color: #eee;
     border-width: 0;
-    cursor: pointer;
-    text-align: center;
     color: #aaa;
-
+    cursor: pointer;
+    display: block;
+    text-align: center;
     transition: opacity 0.3s 0.1s;
+    width: 100%;
+    visibility: hidden;
+    opacity: 0;
+
+    @include medium-screen {
+        visibility: visible;
+        opacity: 1;
+    }
 
     &::before {
         @include icon($fa-var-plus);
@@ -51,39 +81,5 @@
 
     &:hover {
         background-color: darken(#eee, 1);
-    }
-}
-@include medium-screen {
-
-    .ActionDay {
-        @include flex;
-
-        &:last-child {
-            border-right: 1px solid #f4f4f4;
-        }
-
-        .cloneHint {
-            display: block;
-            position: absolute;
-            left: 1em;
-            right: 1em;
-            bottom: 1em;
-            text-align: center;
-            color: #999;
-
-            code {
-                @include key-reference
-                background-color: darken(#eee, 3);
-            }
-        }
-    }
-
-    .ActionDay-addButton {
-        visibility: hidden;
-        opacity: 0;
-    }
-    .ActionDay:hover .ActionDay-addButton  {
-        visibility: visible;
-        opacity: 1;
     }
 }

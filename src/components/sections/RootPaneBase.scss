@@ -1,11 +1,13 @@
 .RootPaneBase {
-    position: absolute;
-    left: 0;
-    right: 0;
-    min-width: 400px;
     background-color: $c-ui-bg;
     color: lighten($c-text, .3);
+    min-width: 400px;
     z-index: 1;
+
+    @include small-screen {
+        min-width: auto;
+        width: 100%;
+    }
 
     .RootPaneBase-filterDrawer {
         padding: 0 1em;
@@ -13,20 +15,41 @@
 
     &.RootPaneBase-scrolled {
         .RootPaneBase-header {
-            z-index: 5;
             background-color: white;
             box-shadow: 0 0 0.2em rgba(0,0,0,0.1);
+            z-index: 5;
         }
     }
 
     .RootPaneBase-header {
+        background-color: $c-ui-bg;
+        padding: 1em;
+        position: fixed;
+        transition: background-color .2s;
+        width: calc(100% - 100px);
+        z-index: 3;
+
+        @include small-screen {
+            width: 100%;
+            padding: 1em 0.5em;
+        }
+
         .RootPaneBase-toolbar {
-            padding: 1em;
             color: #666666;
-            > * { // All direct children
+
+            // All direct children
+            > * {
                 display: inline-block;
-                margin-right: 0.5em;
                 margin-bottom: 0;
+
+                + * {
+                    margin-left: 1em;
+
+                    @include small-screen {
+                        margin-left: 0.5em;
+                    }
+                }
+
                 &.Button {
                     &:before {
                         height: 1.6em;
@@ -34,38 +57,52 @@
                     }
                 }
             }
+
+            @include small-screen {
+                .ViewSwitch {
+                    position: fixed;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    padding-bottom: 0;
+
+                    button {
+                        padding: 1em;
+                    }
+                }
+            }
         }
     }
 
     .RootPaneBase-content {
-        display: block;
-        padding: 50px 30px 80px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        height: 100%;
         overflow-y: scroll;
-        overflow-x: hidden;
+        padding: 80px 20px 0;
+
+        @include small-screen {
+            padding: 60px 20px 0;
+        }
 
         h2 {
             margin-top: 0;
             font-size: 2.0em;
         }
+
         h3 {
             font-size: 1.7em;
         }
+
         p {
             font-size: 1.4em;
             line-height: 1.8em
         }
+
         small {
             font-size: 1.1em;
         }
     }
 
     .RootPaneBase-shader {
-        display: none;
         position: absolute;
         top: 0;
         left: 0;
@@ -75,123 +112,87 @@
         z-index: 10;
     }
 
-    @include medium-screen {
-        top: 0;
-        bottom: 0;
-        display: block;
+    .RootPaneBase-filterButton {
+        @include inline-button($icon:$fa-var-filter);
+    }
 
-        .RootPaneBase-header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 3;
-            background-color: $c-ui-bg;
-            transition: background-color .2s;
+    &.RootPaneBase-filtered.RootPaneBase-filtersHidden .RootPaneBase-filterButton {
+        &::before {
+            color: $c-brand-comp-light;
+        }
+    }
+
+    .RootPaneBase-filterDrawer {
+        max-height: 0;
+        transition: max-height .3s;
+        overflow: hidden;
+        position: relative;
+
+        .RootPaneBase-filterContent {
+            padding-top: 1em;
         }
 
-        .RootPaneBase-filterButton {
-            @include inline-button($icon:$fa-var-filter);
-        }
-        &.RootPaneBase-filtered.RootPaneBase-filtersHidden .RootPaneBase-filterButton {
-            &::before {
-                color: $c-brand-comp-light;
+        .RootPaneBase-filterContent > div {
+            @include col(3,12, $gap:2em);
+            border-right: 1px solid $c-ui-bg;
+
+            @include small-screen {
+                @include col(12,12);
+            }
+
+            &:last-of-type {
+                border-right: 0;
             }
         }
+
+        label {
+            display: block;
+            font-size: 1.3em;
+            margin: 0 0 0.5em;
+        }
+
+        .RootPaneBase-filterFooter {
+            padding: 1em;
+            text-align: right;
+        }
+
+        .RootPaneBase-filterApplyButton {
+            @include button($icon:$fa-var-check);
+            bottom: 1em;
+            position: absolute;
+            right: 1em;
+
+            @include small-screen {
+                position: static;
+            }
+        }
+    }
+
+    &.RootPaneBase-filtersVisible {
 
         .RootPaneBase-filterDrawer {
-            max-height: 0;
-            transition: max-height .3s;
-            overflow: hidden;
-            position: relative;
+            opacity: 1;
+            max-height: 250px;
+            animation: RootPaneBase-filter-openAnimation .3s;
+            overflow: visible;
 
-            .RootPaneBase-filterContent {
-                padding-top: 1em;
-            }
-
-            .RootPaneBase-filterContent > div {
-                @include col(3,12, $gap:2em);
-                border-right: 1px solid $c-ui-bg;
-
-                &:last-of-type {
-                    border-right: 0;
-                }
-            }
-
-            label {
-                display: block;
-                font-size: 1.3em;
-                margin: 0 0 0.5em;
-            }
-
-            .RootPaneBase-filterFooter {
-                padding: 1em;
-                text-align: right;
-            }
-
-            .RootPaneBase-filterApplyButton {
-                position: absolute;
-                bottom: 1em;
-                right: 1em;
-
-                @include button($icon:$fa-var-check);
+            @include small-screen {
+                max-height: auto;
+                overflow: scroll;
             }
         }
 
-        &.RootPaneBase-filtersVisible {
-            .RootPaneBase-header {
-                background-color: white;
-                box-shadow: 0 0 0.2em rgba(0,0,0,0.1);
-            }
-
-            .RootPaneBase-filterDrawer {
-                opacity: 1;
-                max-height: 250px;
-                animation: RootPaneBase-filter-openAnimation .3s;
-                overflow: visible;
-            }
-
-            &:after {
-                content: ' ';
-                display: block;
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                animation: RootPaneBase-filter-bg-openAnimation 1s;
-                background: rgba(black, 0.2);
-            }
-        }
-
-        // Use smaller padding on base pane, which does not have a close
-        // button that needs to be avoided
-        // Base pane, always full-width and not interactive
-        left: 0;
-        right: 0;
-
-        .RootPaneBase-content {
-            padding-left: 20px;
-            margin-top: 1em;
-        }
-
-        header {
-            margin-top: 0;
-        }
-
-        .RootPaneBase-shader {
+        &:after {
+            content: ' ';
             display: block;
-        }
-
-        &:last-child {
             position: absolute;
+            left: 0;
             top: 0;
-
-            .RootPaneBase-shader {
-                display: none;
-            }
+            width: 100%;
+            height: 100%;
+            animation: RootPaneBase-filter-bg-openAnimation 1s;
+            background: rgba(black, 0.2);
         }
-
     }
 }
 

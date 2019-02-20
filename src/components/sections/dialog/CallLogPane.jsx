@@ -15,6 +15,8 @@ const mapStateToProps = state => ({
 @connect(mapStateToProps)
 export default class CallLogPane extends RootPaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         this.props.dispatch(retrieveCalls());
     }
 

@@ -31,6 +31,10 @@
 
     .CallPane-targetName {
         @include col(9.5,12, $align:middle);
+
+        @include small-screen {
+            font-size: 1.7em;
+        }
     }
 }
 .CallPane-content {
@@ -160,6 +164,10 @@
     font-size: 1.4em;
     margin: 0em 2em 1.5em;
     font-style: italic;
+
+    @include small-screen {
+        font-size: 1.2em;
+    }
 }
 
 .CallPane-caller {
@@ -172,6 +180,10 @@
     .CallPane-callerName {
         @include col(9,12, $align:middle);
         font-size: 1.5em;
+
+        @include small-screen {
+            font-size: 1.3em;
+        }
     }
 }
 
@@ -179,6 +191,10 @@
     @include col(6,12, $align:middle);
     font-size: 1.5em;
     text-align: right;
+
+    @include small-screen {
+        font-size: 1.2em;
+    }
 
     &:before {
         @include icon($fa-var-clock-o);
@@ -235,6 +251,10 @@
         padding: 0.5em;
         border-radius: 2px 2px 0 0;
 
+        @include small-screen {
+            font-size: 1.3em;
+        }
+
         &:before {
             @include icon($fa-var-bell-o);
         }
@@ -248,13 +268,33 @@
     .CallPane-actionResponse {
         padding: 1em;
         text-align: right;
+
+        @include small-screen {
+            text-align: center;
+        }
     }
 
     &.needed .CallPane-actionResponseButton {
         @include button($icon:$fa-var-check, $color:$c-brand-success);
+
+        @include small-screen {
+            text-align: center;
+            width: 100%;
+        }
     }
 
     &.taken .CallPane-actionResponseButton {
         @include inline-button($icon:$fa-var-undo);
+
+        @include small-screen {
+            text-align: center;
+            width: 100%;
+        }
+    }
+
+    h3 {
+        @include small-screen {
+            font-size: 1.2em !important;
+        }
     }
 }

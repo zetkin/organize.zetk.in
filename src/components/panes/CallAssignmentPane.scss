@@ -111,6 +111,11 @@
 
             .CallAssignmentPane-targetStats {
                 h1 {
+
+                    @include small-screen {
+                        font-size: 1.5em;
+                    }
+
                     &::before {
                         @include icon($fa-var-users);
                     }
@@ -119,6 +124,11 @@
 
             .CallAssignmentPane-goalStats {
                 h1 {
+
+                    @include small-screen {
+                        font-size: 1.5em;
+                    }
+
                     &::before {
                         @include icon($fa-var-flag-checkered);
                     }

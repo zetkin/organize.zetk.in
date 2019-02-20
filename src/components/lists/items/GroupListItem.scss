@@ -8,6 +8,10 @@
 
 .GroupListItem-title {
     font-size: 1.2em;
+
+    @include small-screen {
+        font-size: 1em;
+    }
 }
 
 .GroupListItem-size {

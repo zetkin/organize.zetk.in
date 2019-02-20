@@ -234,11 +234,8 @@ export default class ActionListItem extends React.Component {
                                  participants={ filteredParticipants }/>
             </div>
         );
-        let participantsNumbers = (
-            <div className="ActionListItem-participantStatuses">
-                <div className={ bookedParticipantsClasses }>
-                    { bookedParticipants }
-                </div>
+        let notifier = (
+            <div className="ActionListItem-notifier">
                 { incomingResponses }
                 <div className={ reminderClasses }>
                     <i className="fa fa-bell-o"></i>
@@ -251,9 +248,7 @@ export default class ActionListItem extends React.Component {
                     <LoadingIndicator/>
                 </div>
             );
-            participantsNumbers = null;
         }
-
 
         return (
             <div className={ classNames }
@@ -274,9 +269,12 @@ export default class ActionListItem extends React.Component {
 
                 { contactSlot }
                 { participantList }
-                <div className="ActionListItem-actionStatuses">
+
+                <div className={ bookedParticipantsClasses }>
+                    { bookedParticipants }
                 </div>
-                { participantsNumbers }
+
+                { notifier }
             </div>
         );
     }

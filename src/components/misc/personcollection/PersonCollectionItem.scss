@@ -7,6 +7,7 @@
 
     &:hover {
         a {
+            color: lighten($c-text, 50);
             opacity: 1.0;
             cursor: pointer;
         }
@@ -22,16 +23,16 @@
     .PersonCollectionItem-removeButton {
         position: absolute;
         right: 10px;
-        color: lighten($c-text, 50);
+        color: lighten($c-text, 80);
         font-size: 1.5em;
-        opacity: 0;
+        opacity: 1;
         transition: opacity 0.2s;
     }
 
     .PersonCollectionItem-removeButton {
         top: 10px;
     }
-    
+
     .PersonCollectionItem-editButton {
         top: 40px;
     }

@@ -4,6 +4,10 @@
         left: 70px;
         top: 15px;
         font-size: 20px;
+
+        @include small-screen {
+            font-size: 1.4em;
+        }
     }
 
     .PCActionParticipantItem-reminder {

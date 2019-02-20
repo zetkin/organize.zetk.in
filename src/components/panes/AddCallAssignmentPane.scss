@@ -5,6 +5,10 @@
         margin: 0.5em 0;
         cursor: pointer;
 
+        @include small-screen {
+            font-size: 1.2em;
+        }
+
         &:hover {
             text-decoration: none;
         }

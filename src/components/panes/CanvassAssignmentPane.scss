@@ -2,7 +2,6 @@
     min-width: 450px;
 }
 
-
 .CanvassAssignmentPane {
     .InfoListItem-description {
         &:before {
@@ -20,10 +19,7 @@
         position: relative;
     }
 
-    .CanvassAssignmentPane-editLink {
-        position: absolute;
-        top: 0;
-        right: 0;
+    .InfoListItem-editLink {
 
         &:before {
             @include icon($fa-var-pencil);
