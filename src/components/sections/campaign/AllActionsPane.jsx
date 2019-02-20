@@ -38,7 +38,7 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
         super(props);
 
         this.state = Object.assign({}, this.state, {
-            viewMode: (window.innerWidth > 720)? 'cal' : 'list',
+            viewMode: 'cal',
             showOldActions: false
         });
     }
@@ -52,6 +52,11 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
             this.props.dispatch(retrieveLocations());
             this.props.dispatch(retrieveCampaigns());
         }
+
+
+        this.setState({
+            viewMode: (window.innerWidth > 720)? 'cal' : 'list',
+        });
     }
 
     getRenderData() {
