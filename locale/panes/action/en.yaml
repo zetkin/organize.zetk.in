@@ -16,6 +16,7 @@ reminders:
     received:
         all: All participants have received reminders
         notAll: Not all participants have received reminders
+        notAllActionPassed: Not all participants have received reminders. The time of the action has passed
 responses:
     guide: Click in list to book
     h: Sign-ups

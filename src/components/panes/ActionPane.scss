@@ -132,7 +132,7 @@
                     }
                 }
 
-                &.waiting {
+                &.waiting, &.missing {
                     &::before {
                         @include icon($fa-var-hourglass-o);
                     }
