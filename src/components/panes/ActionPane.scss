@@ -138,6 +138,12 @@
                     }
                 }
 
+                &.missing {
+                    &::before {
+                        @include icon($fa-var-hourglass-end);
+                    }
+                }
+
                 &.missingContact {
                     &::before {
                         @include icon($fa-var-star-o);
