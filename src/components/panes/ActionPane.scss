@@ -132,9 +132,15 @@
                     }
                 }
 
-                &.waiting, &.missing {
+                &.waiting {
                     &::before {
                         @include icon($fa-var-hourglass-o);
+                    }
+                }
+
+                &.missing {
+                    &::before {
+                        @include icon($fa-var-hourglass-end);
                     }
                 }
 
