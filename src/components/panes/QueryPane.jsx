@@ -78,6 +78,12 @@ export default class QueryPane extends PaneBase {
                 onClick: () => this.openPane('querydiff', item.data.id),
             });
 
+            summary.push({
+                name: 'refresh',
+                msgId:  "panes.query.summary.refresh",
+                onClick: () => this.props.dispatch(retrieveQueryMatches(this.getParam(0)))
+            })
+
             content = content.concat([
                 <InfoList key="infoList" data={summary} />,
             ]);

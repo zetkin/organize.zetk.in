@@ -32,4 +32,10 @@
             @include icon($fa-var-clone);
         }
     }
+
+    .InfoListItem-refresh {
+        &::before {
+            @include icon($fa-var-refresh);
+        }
+    }
 }
