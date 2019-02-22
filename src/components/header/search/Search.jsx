@@ -18,7 +18,7 @@ import {
 
 
 @injectIntl
-@connect(state => ({ search: state.search, view: state.view }))
+@connect(state => ({ search: state.search.top, view: state.view }))
 export default class Search extends React.Component {
     constructor(props) {
         super(props);

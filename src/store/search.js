@@ -11,16 +11,20 @@ export default function search(state = null, action) {
 
     if (action.type == types.SEARCH + '_PENDING') {
         return Object.assign({}, state, {
-            results: [],
-            query: action.meta.query,
-            isActive: true,
-            isPending: true,
+            top: Object.assign({}, state.top, {
+                results: [],
+                query: action.meta.query,
+                isActive: true,
+                isPending: true,
+            })
         });
     }
     else if (action.type == types.SEARCH + '_FULFILLED') {
         if (action.meta.query == state.query) {
             return Object.assign({}, state, {
-                isPending: false,
+                top: Object.assign({}, state.top, {
+                    isPending: false,
+                })
             });
         }
         else {
@@ -29,14 +33,18 @@ export default function search(state = null, action) {
     }
     else if (action.type == types.BEGIN_SEARCH) {
         return Object.assign({}, state, {
-            scope: action.payload.scope || state.scope,
-            isActive: true,
+            top: Object.assign({}, state.top, {
+                scope: action.payload.scope || state.scope,
+                isActive: true,
+            })
         });
     }
     else if (action.type == types.SEARCH_MATCH_FOUND) {
-        if (action.payload.query == state.query) {
+        if (action.payload.query == state.top.query) {
             return Object.assign({}, state, {
-                results: state.results.concat([ action.payload ]),
+                top: Object.assign({}, state.top, {
+                    results: state.top.results.concat([ action.payload ]),
+                })
             });
         }
         else {
@@ -45,36 +53,46 @@ export default function search(state = null, action) {
     }
     else if (action.type == types.RESET_SEARCH_QUERY) {
         return Object.assign({}, state, {
-            results: [],
-            query: '',
+            top: Object.assign({}, state.top, {
+                results: [],
+                query: '',
+            })
         });
     }
     else if (action.type == types.END_SEARCH) {
         return Object.assign({}, state, {
-            isActive: false,
+            top: Object.assign({}, state.top, {
+                isActive: false,
+            })
         });
     }
     else if (action.type == types.CHANGE_SEARCH_SCOPE) {
         return Object.assign({}, state, {
-            scope: action.payload.scope,
+            top: Object.assign({}, state.top, {
+                scope: action.payload.scope,
+            })
         });
     }
     else if (CLEAR_ACTIONS.indexOf(action.type) >= 0) {
         return Object.assign({}, state, {
-            query: '',
-            isActive: false,
-            isPending: false,
-            scope: null,
-            results: []
+            top: Object.assign({}, state.top, {
+                query: '',
+                isActive: false,
+                isPending: false,
+                scope: null,
+                results: []
+            })
         });
     }
     else {
         return state || {
-            query: '',
-            isActive: false,
-            isPending: false,
-            scope: null,
-            results: [],
+            top: {
+                query: '',
+                isActive: false,
+                isPending: false,
+                scope: null,
+                results: [],
+            }
         };
     }
 }
