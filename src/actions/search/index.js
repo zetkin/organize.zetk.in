@@ -5,10 +5,10 @@ import { SearchQueue } from './utils';
 
 let queue;
 
-export function search(query) {
+export function search(query, field) {
     return ({ dispatch, getState, z }) => {
         const orgId = getState().org.activeId;
-        const scope = getState().search.scope;
+        const scope = getState().search[field].scope;
         const lang = getState().intl.locale;
 
         if (queue) {
@@ -16,7 +16,7 @@ export function search(query) {
         }
 
         if (query.length > 2) {
-            queue = new SearchQueue(z, orgId, query, lang);
+            queue = new SearchQueue(z, orgId, query, lang, field);
 
             if (!scope || scope == 'campaign') {
                 queue.addProc(new procs.ActionDaySearchProc(dispatch));
@@ -48,7 +48,7 @@ export function search(query) {
 
         dispatch({
             type: types.SEARCH,
-            meta: { query },
+            meta: { query, field },
             payload: {
                 promise: queue? queue.run() : Promise.resolve(),
             },
@@ -56,41 +56,47 @@ export function search(query) {
     }
 }
 
-export function beginSearch(scope) {
+export function beginSearch(field, scope) {
     return {
         type: types.BEGIN_SEARCH,
+        meta: { field },
         payload: { scope },
     };
 }
 
-export function searchMatchFound(match) {
+export function searchMatchFound(field, match) {
     return {
         type: types.SEARCH_MATCH_FOUND,
+        meta: { field },
         payload: match,
     }
 }
 
-export function changeSearchScope(scope) {
+export function changeSearchScope(field, scope) {
     return {
         type: types.CHANGE_SEARCH_SCOPE,
+        meta: { field },
         payload: { scope },
     };
 }
 
-export function resetSearchQuery() {
+export function resetSearchQuery(field) {
     return {
         type: types.RESET_SEARCH_QUERY,
+        meta: { field }
     }
 }
 
-export function endSearch() {
+export function endSearch(field) {
     return {
         type: types.END_SEARCH,
+        meta: { field }
     };
 }
 
-export function clearSearch(scope) {
+export function clearSearch(field, scope) {
     return {
         type: types.CLEAR_SEARCH,
+        meta: { field },
     };
 }

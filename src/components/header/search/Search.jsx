@@ -15,10 +15,10 @@ import {
     search,
 } from '../../../actions/search';
 
-
+const field = "top"
 
 @injectIntl
-@connect(state => ({ search: state.search.top, view: state.view }))
+@connect(state => ({ search: state.search[field], view: state.view }))
 export default class Search extends React.Component {
     constructor(props) {
         super(props);
@@ -115,7 +115,7 @@ export default class Search extends React.Component {
     }
 
     onScopeSelect(scope) {
-        this.props.dispatch(changeSearchScope(scope));
+        this.props.dispatch(changeSearchScope(field, scope));
     }
 
     onMatchSelect(match) {
@@ -206,7 +206,7 @@ export default class Search extends React.Component {
 
         if (ev.keyCode == 27 && ev.target == inputDOMNode) {
             inputDOMNode.blur();
-            this.props.dispatch(clearSearch());
+            this.props.dispatch(clearSearch(field));
         }
         else if (ev.keyCode == 40 && searchStore.isActive) {
             // Down
@@ -245,23 +245,23 @@ export default class Search extends React.Component {
         const query = ev.target.value;
 
         if (query) {
-            this.props.dispatch(search(ev.target.value));
+            this.props.dispatch(search(ev.target.value, field));
         }
         else {
-            this.props.dispatch(resetSearchQuery());
+            this.props.dispatch(resetSearchQuery(field));
         }
     }
 
     onFocus(ev) {
         var searchStore = this.props.search;
         if (!searchStore.isActive) {
-            this.props.dispatch(beginSearch());
+            this.props.dispatch(beginSearch(field));
         }
     }
 
     onBlur(ev) {
         setTimeout(() => {
-            this.props.dispatch(clearSearch());
+            this.props.dispatch(clearSearch(field));
         }, 350);
     }
 }

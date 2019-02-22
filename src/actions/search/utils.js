@@ -13,13 +13,13 @@ export function searchProcFactory(type, opts = {}) {
             }
         }
 
-        const _submitMatch = (query, data) => {
+        const _submitMatch = (field, query, data) => {
             if (!_aborted) {
-                dispatch(searchMatchFound({ type, query, data }));
+                dispatch(searchMatchFound(field, { type, query, data }));
             }
         }
 
-        this.run = (z, orgId, query, lang) => {
+        this.run = (z, orgId, query, lang, field) => {
             return opts.loader(z, orgId, query, lang)
                 .then(result => {
                     if (opts.filter) {
@@ -27,7 +27,7 @@ export function searchProcFactory(type, opts = {}) {
                     }
 
                     result.forEach(match => {
-                        _submitMatch(query, match)
+                        _submitMatch(field, query, match)
                     });
                 });
         }
@@ -40,7 +40,7 @@ export function searchProcFactory(type, opts = {}) {
     return SearchProc;
 }
 
-export function SearchQueue(z, orgId, query, lang) {
+export function SearchQueue(z, orgId, query, lang, field) {
     let _curProc = null;
     let _aborted = true;
     let _searchProcs = [];
@@ -60,7 +60,7 @@ export function SearchQueue(z, orgId, query, lang) {
                 }
 
                 _curProc = proc;
-                return proc.run(z, orgId, query, lang)
+                return proc.run(z, orgId, query, lang, field)
                     .catch(err => {
                         console.log('Error while searching', err);
                         // Ignore and proceed
