@@ -9,9 +9,13 @@ import Link from './Link';
 import LoadingIndicator from './LoadingIndicator';
 import Person from './elements/Person';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
-import { retrievePeople } from '../../actions/person';
 import { getListItemById } from '../../utils/store';
-
+import {
+    beginSearch,
+    clearSearch,
+    resetSearchQuery,
+    search,
+} from '../../actions/search';
 
 const contactTarget = {
     canDrop(props, monitor) {
@@ -37,7 +41,7 @@ const collectPerson = (connect, monitor) => ({
 });
 
 const mapStateToProps = state => ({
-    personList: state.people.personList,
+    searchStore: state.search.pane
 });
 
 
@@ -47,7 +51,7 @@ export default class PersonSelectWidget extends React.Component {
     static propTypes = {
         onSelect: React.PropTypes.func,
         person: React.PropTypes.object,
-        personList: React.PropTypes.object,
+        searchStore: React.PropTypes.object,
         preventChange: React.PropTypes.bool,
         isPending: React.PropTypes.bool,
     };
@@ -57,7 +61,6 @@ export default class PersonSelectWidget extends React.Component {
 
         this.state = {
             forceShowInput: false,
-            needsToLoadPeople: true,
         };
     }
 
@@ -81,13 +84,15 @@ export default class PersonSelectWidget extends React.Component {
         }
 
         if (this.state.forceShowInput || !this.props.person) {
-            let personList = this.props.personList;
-            let people = personList.items? personList.items.map(i => i.data) : [];
+            let searchStore = this.props.searchStore;
+            let people = searchStore.results? searchStore.results.map(i => i.data) : [];
 
             content.push(
                 <RelSelectInput key="input" name="person"
                     labelFunc={ p => p.first_name + ' ' + p.last_name }
                     minFilterLength={ 2 }
+                    onFocus={ this.onFocus.bind(this) }
+                    onBlur={ this.onBlur.bind(this) }
                     onValueChange={ this.onInputChange.bind(this) }
                     onQueryChange={ this.onQueryChange.bind(this) }
                     showCreateOption={ false }
@@ -161,7 +166,7 @@ export default class PersonSelectWidget extends React.Component {
     }
 
     onInputChange(name, value) {
-        let item = getListItemById(this.props.personList, value);
+        let item = this.props.searchStore.results.find(i => i.data && i.data.id.toString() == value);
 
         if (item) {
             this.setState({
@@ -174,13 +179,26 @@ export default class PersonSelectWidget extends React.Component {
         }
     }
 
-    onQueryChange(query) {
-        let needsToLoadPeople = (!this.props.personList || !this.props.personList.isPending);
-
-        if (this.state.needsToLoadPeople && needsToLoadPeople) {
-            this.props.dispatch(retrievePeople(null, null));
-            this.setState({ needsToLoadPeople: false });
+    onFocus(ev) {
+        let searchStore = this.props.searchStore;
+        if (!searchStore.isActive) {
+            this.props.dispatch(beginSearch("pane"));
         }
+    }
+
+    onQueryChange(query) {
+        if(query){
+            this.props.dispatch(search("pane", query));
+        }
+        else {
+            this.props.dispatch(resetSearchQuery("pane"));
+        }
+    }
+
+    onBlur(ev) {
+        setTimeout(() => {
+            this.props.dispatch(clearSearch("pane"));
+        }, 350);
     }
 
     onSelectLinkClick() {

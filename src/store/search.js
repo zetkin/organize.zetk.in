@@ -19,7 +19,7 @@ export default function search(state = null, action) {
         });
     }
     else if (action.type == types.SEARCH + '_FULFILLED') {
-        if (action.meta.query == state.query) {
+        if (action.meta.query == state[action.meta.field].query) {
             return Object.assign({}, state, {
                 [action.meta.field]: Object.assign({}, state[action.meta.field], {
                     isPending: false,
@@ -80,12 +80,26 @@ export default function search(state = null, action) {
                 isPending: false,
                 scope: null,
                 results: []
+            },
+            pane: {
+                query: '',
+                isActive: false,
+                isPending: false,
+                scope: null,
+                results: []
             }
         });
     }
     else {
         return state || {
             top: {
+                query: '',
+                isActive: false,
+                isPending: false,
+                scope: null,
+                results: [],
+            },
+            pane: {
                 query: '',
                 isActive: false,
                 isPending: false,

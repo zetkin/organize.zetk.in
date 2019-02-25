@@ -275,6 +275,7 @@ export default class RelSelectInput extends InputBase {
     }
 
     onFocus(ev) {
+        this.props.onFocus();
         this.setState({
             inputValue: undefined,
             inputFocused: true
@@ -282,6 +283,7 @@ export default class RelSelectInput extends InputBase {
     }
 
     onBlur(ev) {
+        this.props.onBlur();
         // TODO: This is a smelly solution to the onClick/onMouseDown problem
         //       The blur event fires on mouse down, so the click event never
         //       fires if blurring hides the menu.
@@ -291,6 +293,7 @@ export default class RelSelectInput extends InputBase {
                 listDOMNode.scrollTop = 0;
 
                 this.setState({
+                    inputValue: undefined,
                     inputFocused: false
                 });
             }
