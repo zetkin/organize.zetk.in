@@ -33,7 +33,7 @@ export default function search(state = null, action) {
     else if (action.type == types.BEGIN_SEARCH) {
         return Object.assign({}, state, {
             [action.meta.field]: Object.assign({}, state[action.meta.field], {
-                scope: action.payload.scope || state.scope,
+                scope: action.payload.scope || state[action.meta.field].scope,
                 isActive: true,
             })
         });
@@ -74,13 +74,13 @@ export default function search(state = null, action) {
     }
     else if (CLEAR_ACTIONS.indexOf(action.type) >= 0) {
         return Object.assign({}, state, {
-            [action.meta.field]: Object.assign({}, state[action.meta.field], {
+            top: {
                 query: '',
                 isActive: false,
                 isPending: false,
                 scope: null,
                 results: []
-            })
+            }
         });
     }
     else {

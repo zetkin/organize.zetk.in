@@ -5,7 +5,7 @@ import { SearchQueue } from './utils';
 
 let queue;
 
-export function search(query, field) {
+export function search(field, query) {
     return ({ dispatch, getState, z }) => {
         const orgId = getState().org.activeId;
         const scope = getState().search[field].scope;
