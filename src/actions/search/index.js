@@ -27,6 +27,10 @@ export function search(field, query) {
                 queue.addProc(new procs.PersonSearchProc(dispatch));
             }
 
+            if (!scope || scope == 'person') {
+                queue.addProc(new procs.PersonSearchProc(dispatch));
+            }
+
             if (!scope || scope == 'campaign') {
                 queue.addProc(new procs.CampaignSearchProc(dispatch));
                 queue.addProc(new procs.ActivitySearchProc(dispatch));
