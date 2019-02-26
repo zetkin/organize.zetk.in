@@ -182,7 +182,7 @@ export default class PersonSelectWidget extends React.Component {
     onFocus(ev) {
         let searchStore = this.props.searchStore;
         if (!searchStore.isActive) {
-            this.props.dispatch(beginSearch("pane", "person"));
+            this.props.dispatch(beginSearch("pane", ["person"]));
         }
     }
 

@@ -3,7 +3,7 @@ import React from 'react';
 import cx from 'classnames';
 
 
-const SCOPES = [ 'all', 'people', 'campaign', 'dialog', 'maps', 'survey' ];
+const SCOPES = [ ['all'], ['people', 'person'], ['campaign'], ['dialog'], ['maps'], ['survey'] ];
 
 export default class ScopeSelect extends React.Component {
     constructor(props) {
@@ -15,10 +15,10 @@ export default class ScopeSelect extends React.Component {
     }
 
     render() {
-        var selectedScope = this.props.value || 'all';
+        var selectedScope = this.props.value.length ? this.props.value : ['all'];
         var selectedClassNames = cx(
             'ScopeSelect-value',
-            selectedScope
+            ...selectedScope
         );
 
         var listClassNames = cx({
@@ -30,19 +30,19 @@ export default class ScopeSelect extends React.Component {
             <ul className={ listClassNames }
                 onClick={ this.onListClick.bind(this) }>
 
-                <li key={ selectedScope } className={ selectedClassNames }/>
+                <li key={ selectedScope.join('-') } className={ selectedClassNames }/>
 
                 {SCOPES.map(function(scope) {
                     var classNames = cx(
                         'ScopeSelect-item',
-                        scope,
-                        {'selected': scope == selectedScope}
+                        ...scope,
+                        {'selected': scope.every(s => selectedScope.includes(s))}
                     );
 
                     return (
-                        <li key={ scope } className={ classNames }
+                        <li key={ scope.join('-') } className={ classNames }
                             onClick={ this.onScopeClick.bind(this, scope) }>
-                            <Msg id={ 'header.search.scopes.' + scope }/></li>
+                            <Msg id={ 'header.search.scopes.' + scope[0] }/></li>
                     );
                 }, this)}
             </ul>
@@ -63,6 +63,6 @@ export default class ScopeSelect extends React.Component {
 }
 
 ScopeSelect.propTypes = {
-    value: React.PropTypes.string,
+    value: React.PropTypes.array,
     onSelect: React.PropTypes.func
 };
