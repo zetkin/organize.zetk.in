@@ -78,14 +78,14 @@ export default function search(state = null, action) {
                 query: '',
                 isActive: false,
                 isPending: false,
-                scope: [],
+                scope: null,
                 results: []
             },
             pane: {
                 query: '',
                 isActive: false,
                 isPending: false,
-                scope: [],
+                scope: null,
                 results: []
             }
         });
@@ -96,14 +96,14 @@ export default function search(state = null, action) {
                 query: '',
                 isActive: false,
                 isPending: false,
-                scope: [],
+                scope: null,
                 results: [],
             },
             pane: {
                 query: '',
                 isActive: false,
                 isPending: false,
-                scope: [],
+                scope: null,
                 results: [],
             }
         };

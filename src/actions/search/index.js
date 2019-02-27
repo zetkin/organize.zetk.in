@@ -18,33 +18,39 @@ export function search(field, query) {
         if (query.length > 2) {
             queue = new SearchQueue(z, orgId, query, lang, field);
 
-            if (!scope.length || scope.includes('campaign')) {
+            if (!scope || scope.includes('action')) {
                 queue.addProc(new procs.ActionDaySearchProc(dispatch));
             }
 
-            if (!scope.length || scope.includes('people')) {
+            if (!scope || scope.includes('personquery')) {
                 queue.addProc(new procs.PersonQuerySearchProc(dispatch));
             }
 
-            if (!scope.length || scope.includes('person')) {
+            if (!scope || scope.includes('person')) {
                 queue.addProc(new procs.PersonSearchProc(dispatch));
             }
 
-            if (!scope.length || scope.includes('campaign')) {
+            if (!scope || scope.includes('campaign')) {
                 queue.addProc(new procs.CampaignSearchProc(dispatch));
+            }
+
+            if (!scope || scope.includes('activity')) {
                 queue.addProc(new procs.ActivitySearchProc(dispatch));
             }
 
-            if (!scope.length || scope.includes('dialog')) {
+            if (!scope || scope.includes('callassignment')) {
                 queue.addProc(new procs.CallAssignmentSearchProc(dispatch));
             }
 
-            if (!scope.length || scope.includes('maps')) {
+            if (!scope || scope.includes('location')) {
                 queue.addProc(new procs.LocationSearchProc(dispatch));
             }
 
-            if (!scope.length || scope.includes('survey')) {
+            if (!scope || scope.includes('survey')) {
                 queue.addProc(new procs.SurveySearchProc(dispatch));
+            }
+
+            if (!scope || scope.includes('surveysubmission')) {
                 queue.addProc(new procs.SurveySubmissionSearchProc(dispatch));
             }
         }
