@@ -1,11 +1,10 @@
 import * as types from '../actions';
 
 export default function search(state = null, action) {
-    const CLEAR_ACTIONS = [
+    const TOP_CLEAR_ACTIONS = [
         types.OPEN_PANE,
         types.PUSH_PANE,
         types.GOTO_SECTION,
-        types.CLEAR_SEARCH,
     ];
 
     if (action.type == types.SEARCH + '_PENDING') {
@@ -35,6 +34,7 @@ export default function search(state = null, action) {
             [action.meta.field]: Object.assign({}, state[action.meta.field], {
                 scope: action.payload.scope || state[action.meta.field].scope,
                 isActive: true,
+                results: []
             })
         });
     }
@@ -72,16 +72,24 @@ export default function search(state = null, action) {
             })
         });
     }
-    else if (CLEAR_ACTIONS.indexOf(action.type) >= 0) {
-        return Object.assign({}, state, {
-            top: {
+    else if (action.type == types.CLEAR_SEARCH) {
+        const modified = Object.assign({}, state);
+        delete modified[action.meta.field];
+        if (action.meta.field == 'top') {
+            modified.top = {
                 query: '',
                 isActive: false,
                 isPending: false,
                 scope: null,
                 results: []
-            },
-            pane: {
+            };
+        }
+
+        return modified;
+    }
+    else if (TOP_CLEAR_ACTIONS.indexOf(action.type) >= 0) {
+        return Object.assign({}, state, {
+            top: {
                 query: '',
                 isActive: false,
                 isPending: false,
@@ -93,13 +101,6 @@ export default function search(state = null, action) {
     else {
         return state || {
             top: {
-                query: '',
-                isActive: false,
-                isPending: false,
-                scope: null,
-                results: [],
-            },
-            pane: {
                 query: '',
                 isActive: false,
                 isPending: false,
