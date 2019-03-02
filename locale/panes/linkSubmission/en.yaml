@@ -1,3 +1,5 @@
+createButton: Create {firstName} {lastName}
+createEmptyButton: Create new person
 instructions: |-
     Linking a submission to a person in the person database is necessary to be
     able to find that person based on survey searches.
@@ -6,4 +8,11 @@ person:
 saveButton:
     linkLabel: Link submission
     unlinkLabel: Unlink submission
+suggestions:
+    empty: |-
+        Zetkin tried finding a matching person from the database but found
+        nothing.
+    found: |-
+        Click a suggestion to select that person.
+    h: Suggestions
 title: Link survey submission

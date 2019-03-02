@@ -1,0 +1,32 @@
+.LinkSubmissionPane-actions {
+    margin-top: 3em;
+}
+
+.LinkSubmissionPane-suggestionList {
+    margin-bottom: 2em;
+}
+
+.LinkSubmissionPane-suggestion {
+    @include card;
+
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    padding: 0.5em;
+    margin: 0 0 0.4em;
+
+    .Avatar {
+        max-width: 3em;
+        margin-right: 1em;
+    }
+
+    div {
+        .LinkSubmissionPane-suggestionName {
+            font-size: 1.3em;
+        }
+
+        span {
+            display: block;
+        }
+    }
+}
