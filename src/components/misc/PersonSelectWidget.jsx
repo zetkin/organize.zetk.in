@@ -184,7 +184,7 @@ export default class PersonSelectWidget extends React.Component {
     }
 
     onQueryChange(query) {
-        if(query){
+        if (query){
             this.props.dispatch(search(this.state.field, query));
         }
         else {

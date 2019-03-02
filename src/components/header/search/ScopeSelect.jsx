@@ -23,10 +23,17 @@ export default class ScopeSelect extends React.Component {
     render() {
         var selectedScope = this.props.value;
 
-        let scopeKey = selectedScope? Object.keys(SCOPES).find((key) => {
-                if(key == 'all') return false
-                else return SCOPES[key].every(s => selectedScope.includes(s))
-            }): 'all'
+        let scopeKey = 'all';
+        if (selectedScope) {
+            scopeKey = Object.keys(SCOPES).find((key) => {
+                if (key == 'all') {
+                    return false;
+                }
+                else {
+                    return SCOPES[key].every(s => selectedScope.includes(s));
+                }
+            });
+        }
 
         var selectedClassNames = cx(
             'ScopeSelect-value',
