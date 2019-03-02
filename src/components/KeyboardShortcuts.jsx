@@ -157,27 +157,27 @@ export default class KeyboardShortcuts extends React.Component {
             switch (ev.charCode) {
                 case 47:    // '/'
                     this.closeReference();
-                    this.props.dispatch(beginSearch(null));
+                    this.props.dispatch(beginSearch('top'));
                     break;
                 case 100:    // 'd' == dialog
                     this.closeReference();
-                    this.props.dispatch(beginSearch('dialog'));
+                    this.props.dispatch(beginSearch('top', ['callassignment']));
                     break;
                 case 99:    // 'c' == campaign
                     this.closeReference();
-                    this.props.dispatch(beginSearch('campaign'));
+                    this.props.dispatch(beginSearch('top', ['action', 'campaign', 'activity']));
                     break;
                 case 109:   // 'm' == maps
                     this.closeReference();
-                    this.props.dispatch(beginSearch('maps'));
+                    this.props.dispatch(beginSearch('top', ['location']));
                     break;
                 case 112:   // 'p' == people
                     this.closeReference();
-                    this.props.dispatch(beginSearch('people'));
+                    this.props.dispatch(beginSearch('top', ['personquery', 'person']));
                     break;
                 case 115:   // 's' == survey
                     this.closeReference();
-                    this.props.dispatch(beginSearch('survey'));
+                    this.props.dispatch(beginSearch('top', ['survey', 'surveysubmission']));
                     break;
             }
 

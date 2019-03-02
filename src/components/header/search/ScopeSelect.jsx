@@ -2,8 +2,14 @@ import { FormattedMessage as Msg } from 'react-intl';
 import React from 'react';
 import cx from 'classnames';
 
-
-const SCOPES = [ 'all', 'people', 'campaign', 'dialog', 'maps', 'survey' ];
+const SCOPES = {
+    'all' : null,
+    'people': ['personquery', 'person'],
+    'campaign': ['action', 'campaign', 'activity'],
+    'dialog': ['callassignment'],
+    'maps': ['location'],
+    'survey': ['survey', 'surveysubmission'],
+};
 
 export default class ScopeSelect extends React.Component {
     constructor(props) {
@@ -15,10 +21,23 @@ export default class ScopeSelect extends React.Component {
     }
 
     render() {
-        var selectedScope = this.props.value || 'all';
+        var selectedScope = this.props.value;
+
+        let scopeKey = 'all';
+        if (selectedScope) {
+            scopeKey = Object.keys(SCOPES).find((key) => {
+                if (key == 'all') {
+                    return false;
+                }
+                else {
+                    return SCOPES[key].every(s => selectedScope.includes(s));
+                }
+            });
+        }
+
         var selectedClassNames = cx(
             'ScopeSelect-value',
-            selectedScope
+            scopeKey
         );
 
         var listClassNames = cx({
@@ -30,19 +49,20 @@ export default class ScopeSelect extends React.Component {
             <ul className={ listClassNames }
                 onClick={ this.onListClick.bind(this) }>
 
-                <li key={ selectedScope } className={ selectedClassNames }/>
+                <li key={ scopeKey } className={ selectedClassNames }/>
 
-                {SCOPES.map(function(scope) {
+                {Object.keys(SCOPES).map((key) => {
                     var classNames = cx(
                         'ScopeSelect-item',
-                        scope,
-                        {'selected': scope == selectedScope}
+                        key,
+                        {'selected': key == scopeKey }
                     );
 
+
                     return (
-                        <li key={ scope } className={ classNames }
-                            onClick={ this.onScopeClick.bind(this, scope) }>
-                            <Msg id={ 'header.search.scopes.' + scope }/></li>
+                        <li key={ key } className={ classNames }
+                            onClick={ this.onScopeClick.bind(this, SCOPES[key]) }>
+                            <Msg id={ 'header.search.scopes.' + key }/></li>
                     );
                 }, this)}
             </ul>
@@ -63,6 +83,6 @@ export default class ScopeSelect extends React.Component {
 }
 
 ScopeSelect.propTypes = {
-    value: React.PropTypes.string,
+    value: React.PropTypes.array,
     onSelect: React.PropTypes.func
 };
