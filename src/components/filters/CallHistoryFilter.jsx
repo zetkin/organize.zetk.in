@@ -208,7 +208,7 @@ export default class CallHistoryFilter extends FilterBase {
                 break;
             case 'between':
                 after = today;
-                before = (new Date()).advance({ days: 30}).format('{yyyy}-{MM}-{dd}');
+                before = (new Date()).advance({ days: 30 }).format('{yyyy}-{MM}-{dd}');
                 break;
         }
 
