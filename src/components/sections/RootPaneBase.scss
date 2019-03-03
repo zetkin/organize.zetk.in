@@ -179,6 +179,7 @@
             @include small-screen {
                 max-height: auto;
                 overflow: scroll;
+                margin-top: 0.5em;
             }
         }
 
