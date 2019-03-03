@@ -8,7 +8,7 @@ export function executeBulkOperation(op, objects, config, paneId) {
 
         dispatch({
             type: types.EXECUTE_BULK_OPERATION,
-            meta: { paneId },
+            meta: { paneId, op, objects },
             payload: {
                 promise: fetch('/api/bulk', {
                     method: 'POST',
@@ -22,7 +22,7 @@ export function executeBulkOperation(op, objects, config, paneId) {
                     let disp = res.headers.get('content-disposition');
                     let saveAs = require('browser-filesaver').saveAs;
 
-                    if (disp.indexOf('attachment') === 0) {
+                    if (disp && disp.indexOf('attachment') === 0) {
                         let filename = 'file.dat';
                         let fnIdx = disp.indexOf('filename=');
                         if (fnIdx) {

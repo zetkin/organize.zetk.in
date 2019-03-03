@@ -28,6 +28,17 @@ export default function people(state = null, action) {
                 action.payload.id, { objects }),
         });
     }
+    else if (action.type == types.EXECUTE_BULK_OPERATION + '_FULFILLED'
+        && action.meta.op == 'person.delete') {
+        let list = state.personList;
+        action.meta.objects.forEach(id => {
+            list = removeListItem(list, id);
+        });
+
+        return Object.assign({}, state, {
+            personList: list,
+        });
+    }
 
     switch (action.type) {
         case types.RETRIEVE_PEOPLE + '_PENDING':
