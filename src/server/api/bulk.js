@@ -157,8 +157,20 @@ let operations = {
 
     'person.delete': (req, res) => {
         let orgId = req.body.orgId;
-        return Promise.all(req.body.objects.map(id =>
-            req.z.resource('orgs', orgId, 'people', id).del()));
+        return req.z.resource('users', 'me', 'memberships')
+            .get()
+            .then(result => {
+                const userPersonId = result.data.data
+                    .find(m => m.organization.id === orgId)
+                    .profile.id;
+
+                const promises = req.body.objects
+                    .filter(id => id != userPersonId)
+                    .map(id =>
+                        req.z.resource('orgs', orgId, 'people', id).del());
+
+                return Promise.all(promises);
+            });
     },
 
     'person.export': (req, res) => {
