@@ -8,7 +8,7 @@ export function executeBulkOperation(op, objects, config, paneId) {
 
         dispatch({
             type: types.EXECUTE_BULK_OPERATION,
-            meta: { paneId },
+            meta: { paneId, op, objects },
             payload: {
                 promise: fetch('/api/bulk', {
                     method: 'POST',
