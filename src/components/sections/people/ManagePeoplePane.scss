@@ -28,18 +28,14 @@
 
     .ManagePeoplePane-duplicateList {
         width: 65%;
-        max-width: 60em;
-        min-width: 40em;
         float: left;
     }
 
     .ManagePeoplePane-instructions {
         font-size: 0.9em;
-        float: left;
+        float: right;
         margin: 0 2%;
-        width: 30%;
-        max-width: 30em;
-        min-width: 18em;
+        width: 31%;
     }
 
     .ManagePeoplePane-duplicateItem {
@@ -93,5 +89,29 @@
         @include button-color($c-brand-comp-light);
         float: right;
         margin: 1em 1.5em 0;
+    }
+
+    @include small-screen {
+        .ManagePeoplePane-duplicateList {
+            float: none;
+            width: auto;
+        }
+
+        .ManagePeoplePane-instructions {
+            float: none;
+            width: auto;
+            margin-bottom: 2em;
+
+            p {
+                margin-top: 0;
+            }
+        }
+
+        .ManagePeoplePane-objectList {
+            li {
+                display: block;
+                width: auto;
+            }
+        }
     }
 }

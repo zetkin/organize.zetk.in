@@ -80,7 +80,7 @@
         padding: 80px 20px 0;
 
         @include small-screen {
-            padding: 60px 20px 0;
+            padding: 60px 20px 5em;
         }
 
         h2 {
