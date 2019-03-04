@@ -64,21 +64,23 @@ export default class SurveyQuestionOutline extends React.Component {
                     />
             );
 
-            addSection = [
-                <Msg key="instructions" tagName="p"
-                    id="misc.surveyOutline.option.bulkInstructions"
-                    />,
-                <textarea key="bulkText"
-                    value={ this.state.bulkText }
-                    onChange={ this.onBulkTextChange.bind(this) }
-                    />,
-                saveButton,
-                <Button key="cancelBulkButton"
-                    className="SurveyQuestionOutline-cancelBulkButton"
-                    labelMsg="misc.surveyOutline.option.cancelButton"
-                    onClick={ this.onOptionCancel.bind(this) }
-                    />,
-            ];
+            addSection = (
+                <div className="SurveyQuestionOutline-addBulk">
+                    <Msg tagName="p"
+                        id="misc.surveyOutline.option.bulkInstructions"
+                        />
+                    <textarea
+                        value={ this.state.bulkText }
+                        onChange={ this.onBulkTextChange.bind(this) }
+                        />
+                    <Button
+                        className="SurveyQuestionOutline-cancelBulkButton"
+                        labelMsg="misc.surveyOutline.option.cancelButton"
+                        onClick={ this.onOptionCancel.bind(this) }
+                        />
+                    { saveButton }
+                </div>
+            );
         }
         else {
             addSection = [
