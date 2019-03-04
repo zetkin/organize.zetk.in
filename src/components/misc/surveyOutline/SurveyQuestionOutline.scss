@@ -1,5 +1,37 @@
 .SurveyQuestionOutline {
-    button {
+    .SurveyQuestionOutline-addBulk {
+        @include card;
+        padding: 1em;
+
+        p {
+            margin: 0 0 0.5em;
+        }
+    }
+
+    .SurveyQuestionOutline-addButton {
         @include inline-button($icon:$fa-var-plus);
+    }
+
+    .SurveyQuestionOutline-cancelBulkButton {
+        @include inline-button($icon:$fa-var-times);
+    }
+
+    .SurveyQuestionOutline-saveBulkButton {
+        @include inline-button($icon:$fa-var-floppy-o,
+            $color: $c-brand-comp-light);
+        margin: 0;
+        float: right;
+    }
+
+    .Button {
+        margin-right: 0.3em;
+    }
+
+    textarea {
+        font-size: 1.2em;
+        display: block;
+        width: 100%;
+        height: 6em;
+        margin: 0 0 0.5em;
     }
 }

@@ -49,8 +49,11 @@ surveyOutline:
             text: Text
     option:
         addButton: Add response option
+        addBulkButton: Add multiple
+        bulkInstructions: Type one option per line.
         cancelButton: Cancel
         deleteButton: Delete
         saveButton: Save
+        saveBulkButton: Create {numLines, plural, =1 {one option} other {# options}}
 tagCloud:
     addButton: Add tag
