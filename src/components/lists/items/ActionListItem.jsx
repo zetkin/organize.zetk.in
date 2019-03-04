@@ -114,15 +114,13 @@ export default class ActionListItem extends React.Component {
     }
 
     loadSubData() {
-        const action = this.props.data;
-        const participants = this.props.participants;
-        const responses = this.props.responses;
+        const { data, participants, responses } = this.props;
 
         if (!participants) {
-            this.props.dispatch(retrieveActionParticipants(action.id));
+            this.props.dispatch(retrieveActionParticipants(data.id));
         }
         if (!responses) {
-            this.props.dispatch(retrieveActionResponses(action.id));
+            this.props.dispatch(retrieveActionResponses(data.id));
         }
     }
 
