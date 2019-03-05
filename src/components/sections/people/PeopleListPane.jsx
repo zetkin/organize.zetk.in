@@ -53,7 +53,8 @@ export default class PeopleListPane extends RootPaneBase {
     }
 
     componentWillUpdate(nextProps, nextState) {
-        if (nextState.selectedQueryId != this.state.selectedQueryId) {
+        if (nextState.selectedQueryId != this.state.selectedQueryId
+            || nextProps.people.personList != this.props.people.personList) {
             this.bulkSelectionId = null;
         }
     }

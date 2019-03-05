@@ -11,6 +11,7 @@ export default class ServerErrorPage extends React.Component {
                 <script src="https://use.typekit.net/tqq3ylv.js"></script>
                 <script>{"try{Typekit.load({ async: true })}catch(e){}"}</script>
                 <title>Zetkin Organize</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <script src="/static/main.js"></script>
                 <link rel="stylesheet" type="text/css"
                     href="/static/css/style.css"/>

@@ -15,6 +15,7 @@ import {
     deleteSurveyElement,
     updateSurveyOption,
     createSurveyOption,
+    createSurveyOptions,
     deleteSurveyOption,
     reorderSurveyOptions,
 } from '../../actions/survey';
@@ -63,6 +64,7 @@ export default class EditSurveyQuestionPane extends PaneBase {
                         <SurveyQuestionOutline
                             options={ question.options }
                             onOptionCreate={ this.onOptionCreate.bind(this) }
+                            onOptionsCreate={ this.onOptionsCreate.bind(this) }
                             onOptionTextChange={ this.onOptionTextChange.bind(this) }
                             onOptionDelete={ this.onOptionDelete.bind(this) }
                             onReorder={ this.onOptionReorder.bind(this) }
@@ -116,6 +118,15 @@ export default class EditSurveyQuestionPane extends PaneBase {
 
         this.props.dispatch(createSurveyOption(
             surveyId, elementId, data));
+    }
+
+    onOptionsCreate(lines) {
+        const surveyId = this.getParam(0);
+        const elementId = this.getParam(1);
+        const options = lines.map(text => ({ text }));
+
+        this.props.dispatch(createSurveyOptions(
+            surveyId, elementId, options));
     }
 
     onOptionReorder(order) {

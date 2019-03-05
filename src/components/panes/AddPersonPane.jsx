@@ -16,8 +16,14 @@ export default class AddPersonPane extends PaneBase {
     }
 
     renderPaneContent(data) {
+        const initialData = {
+            first_name: this.getParam(0),
+            last_name: this.getParam(1),
+            email: this.getParam(2),
+        };
+
         return (
-            <PersonForm ref="personForm"
+            <PersonForm ref="personForm" person={ initialData }
                 onSubmit={ this.onSubmit.bind(this) }/>
         );
     }

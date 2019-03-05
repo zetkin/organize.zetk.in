@@ -58,7 +58,7 @@ export default class List extends React.Component {
         this.lastSelectedId = null;
 
         this.scrollContainer = null;
-        this.onScroll = ev => {
+        this.onScroll = () => {
             const listDOMNode = ReactDOM.findDOMNode(this.refs.list);
             const itemNodes = listDOMNode.querySelectorAll('.ListItem');
             if (this.props.list.items && itemNodes.length > 0) {
@@ -103,7 +103,7 @@ export default class List extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(this.onScroll && prevProps.list.items != this.props.list.items){
+        if (this.onScroll && prevProps.list.items != this.props.list.items){
             this.onScroll();
         }
     }
@@ -234,7 +234,8 @@ export default class List extends React.Component {
                             itemComponent={ this.props.itemComponent }
                             itemProps={ itemProps }
                             showCheckbox={ this.props.allowBulkSelection }
-                            selected={ selected } inView={ inView }
+                            selected={ selected }
+                            inView={ inView }
                             onItemSelect={ this.onItemSelect.bind(this) }
                             onItemMouseOut={ this.props.onItemMouseOut }
                             onItemMouseOver={ this.props.onItemMouseOver }

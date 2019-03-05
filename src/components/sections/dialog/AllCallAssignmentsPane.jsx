@@ -14,6 +14,8 @@ const mapStateToProps = (state, props) => ({
 @connect(mapStateToProps)
 export default class AllCallAssignmentsPane extends RootPaneBase {
     componentDidMount() {
+        super.componentDidMount();
+
         this.props.dispatch(retrieveCallAssignments());
     }
 

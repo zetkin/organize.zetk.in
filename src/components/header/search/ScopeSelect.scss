@@ -4,7 +4,15 @@
     position: absolute;
     top: 0.5em;
     left: 0.5em;
-    z-index: 4000;
+    z-index: 6000;
+
+    @include small-screen {
+        left: 20%;
+    }
+
+    @include mini-screen {
+        left: 15%;
+    }
 
     &.open {
         .ScopeSelect-value {

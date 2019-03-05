@@ -34,6 +34,10 @@
         padding: 0.5em;
         border-radius: 2px 2px 0 0;
 
+        @include small-screen {
+            font-size: 1.3em;
+        }
+
         &:before {
             @include icon($fa-var-bell-o);
         }

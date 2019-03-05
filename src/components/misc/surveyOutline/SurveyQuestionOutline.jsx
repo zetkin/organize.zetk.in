@@ -1,3 +1,4 @@
+import { FormattedMessage as Msg } from 'react-intl';
 import React from 'react';
 
 import Button from '../Button';
@@ -18,6 +19,7 @@ export default class SurveyQuestionOutline extends React.Component {
         this.state = {
             adding: false,
             openOption: null,
+            bulkText: '',
         }
     }
 
@@ -38,7 +40,7 @@ export default class SurveyQuestionOutline extends React.Component {
 
         let addSection;
 
-        if (this.state.adding) {
+        if (this.state.adding === 'single') {
             addSection = (
                 <SurveyQuestionOption
                     option={{ text: '' }} open={ true }
@@ -47,12 +49,50 @@ export default class SurveyQuestionOutline extends React.Component {
                     />
             );
         }
-        else {
-            addSection = (
-                <Button labelMsg="misc.surveyOutline.option.addButton"
-                    onClick={ this.onAddButtonClick.bind(this) }
+        else if (this.state.adding === 'bulk') {
+            const numLines = this.state.bulkText
+                .split('\n')
+                .filter(s => Boolean(s))
+                .length;
+
+            const saveButton = (numLines == 0)? null : (
+                <Button key="saveBulkButton"
+                    className="SurveyQuestionOutline-saveBulkButton"
+                    labelMsg="misc.surveyOutline.option.saveBulkButton"
+                    labelValues={{ numLines }}
+                    onClick={ this.onSaveBulkButtonClick.bind(this) }
                     />
             );
+
+            addSection = (
+                <div className="SurveyQuestionOutline-addBulk">
+                    <Msg tagName="p"
+                        id="misc.surveyOutline.option.bulkInstructions"
+                        />
+                    <textarea
+                        value={ this.state.bulkText }
+                        onChange={ this.onBulkTextChange.bind(this) }
+                        />
+                    <Button
+                        className="SurveyQuestionOutline-cancelBulkButton"
+                        labelMsg="misc.surveyOutline.option.cancelButton"
+                        onClick={ this.onOptionCancel.bind(this) }
+                        />
+                    { saveButton }
+                </div>
+            );
+        }
+        else {
+            addSection = [
+                <Button key="addButton" labelMsg="misc.surveyOutline.option.addButton"
+                    className="SurveyQuestionOutline-addButton"
+                    onClick={ this.onAddButtonClick.bind(this, 'single') }
+                    />,
+                <Button key="bulkButton" labelMsg="misc.surveyOutline.option.addBulkButton"
+                    className="SurveyQuestionOutline-bulkButton"
+                    onClick={ this.onAddButtonClick.bind(this, 'bulk') }
+                    />
+            ];
         }
 
         return (
@@ -72,10 +112,31 @@ export default class SurveyQuestionOutline extends React.Component {
         }
     }
 
-    onAddButtonClick() {
+    onAddButtonClick(type) {
         this.setState({
             openOption: null,
-            adding: true,
+            bulkText: '',
+            adding: type,
+        });
+    }
+
+    onBulkTextChange(ev) {
+        this.setState({
+            bulkText: ev.target.value,
+        });
+    }
+
+    onSaveBulkButtonClick() {
+        if (this.props.onOptionsCreate) {
+            const lines = this.state.bulkText
+                .split('\n')
+                .filter(line => Boolean(line));
+
+            this.props.onOptionsCreate(lines);
+        }
+
+        this.setState({
+            adding: false,
         });
     }
 
@@ -99,6 +160,7 @@ export default class SurveyQuestionOutline extends React.Component {
     onOptionCancel(o) {
         this.setState({
             openOption: null,
+            adding: false,
         });
     }
 

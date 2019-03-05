@@ -4,16 +4,21 @@
     bottom: 15px;
     left: 15px;
 
+    @include small-screen {
+        top: 20px;
+        z-index: 2000;
+    }
+
+    @include mini-screen {
+        left: 10px;
+    }
+
     img {
         height: 100%;
         width: auto;
-    }
-}
 
-@include medium-screen {
-    .Logo {
-        top: 10px;
-        bottom: 10px;
-        left: 28px;
+        @include small-screen {
+            height: 75%;
+        }
     }
 }

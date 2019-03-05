@@ -23,6 +23,11 @@
         position: absolute;
         top: 0;
         right: 0;
+
+        @include small-screen {
+            padding: 0;
+            position: static;
+        }
     }
 }
 
@@ -49,6 +54,10 @@
     padding: 1em;
     cursor: pointer;
 
+    @include small-screen {
+        margin-bottom: 60px;
+    }
+
     &:hover {
         background-color: darken(#fefefe, 2);
 
@@ -64,6 +73,11 @@
         text-align: right;
         padding-right: 1em;
         color: lighten($c-text, 50);
+
+        @include small-screen {
+            margin-bottom: 1em;
+            text-align: left;
+        }
 
         &::before {
             @include icon($fa-var-pencil);

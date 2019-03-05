@@ -34,10 +34,18 @@
         }
     }
 
-    @include medium-screen {
+    @media screen and (min-width: 720px) {
+
+        .RootPaneBase-header {
+            padding: 0;
+        }
+
+        .RootPaneBase-filterButton {
+            margin: 1em 0 1em 1em;
+        }
 
         .RootPaneBase-content {
-            margin-top: 13em;
+            padding-top: 20em;
         }
 
         .campaignselect {

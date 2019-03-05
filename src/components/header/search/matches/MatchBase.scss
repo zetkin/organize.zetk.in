@@ -23,4 +23,9 @@
     right: 20px;
     font-weight: bold;
     font-size: 1.5em;
+
+    @include small-screen {
+        font-size: 1.2em;
+        font-weight: normal;
+    }
 }

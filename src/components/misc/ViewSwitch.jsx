@@ -8,7 +8,8 @@ export default class ViewSwitch extends React.Component {
     static propTypes = {
         states: React.PropTypes.object.isRequired,
         selected: React.PropTypes.string.isRequired,
-        onSwitch: React.PropTypes.func
+        onSwitch: React.PropTypes.func,
+        className: React.PropTypes.string,
     };
 
     render() {
@@ -16,9 +17,10 @@ export default class ViewSwitch extends React.Component {
         const stateNames = Object.keys(this.props.states);
 
         const formatMessage = this.props.intl.formatMessage;
+        let className = cx("ViewSwitch", this.props.className);
 
         return (
-            <div className="ViewSwitch">
+            <div className={ className }>
             {stateNames.map(function(state) {
                 const label = formatMessage({ id: states[state] });
                 const classes = cx('ViewSwitch-state-' + state, {

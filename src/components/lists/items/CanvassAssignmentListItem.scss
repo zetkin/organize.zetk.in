@@ -2,25 +2,55 @@
     position: relative;
     min-height: 5em;
 
+    @include medium-screen {
+        min-height: auto;
+    }
+
     .ListItem-date {
         text-align: center;
+
+        @include medium-screen {
+            @include flex-container;
+            color: $c-ui-darker;
+            font-size: 0.9em;
+        }
     }
 
     .dateStart {
         margin-top: 1em;
 
+        @include medium-screen {
+            margin-right: 0.5em;
+            margin-top: 0;
+        }
+
         &:after {
             @include icon($fa-var-arrows-h);
             width: 100%;
+
+            @include medium-screen {
+                display: inline;
+                margin-left: 0.5em;
+                margin-right: 0;
+            }
         }
     }
 
     .CanvassAssignmentListItem-info {
-        @include col(6,12);
+        @in.CanvassAssignmentListItemclude col(6,12);
+
+        @include medium-screen {
+            @include col(12,12);
+            padding: 0;
+        }
 
         .CanvassAssignmentListItem-infoTitle {
             margin: 0.5em 0;
             font-size: 1.3em;
+
+            @include medium-screen {
+                font-size: 1.1em;
+            }
         }
     }
 }

@@ -2,38 +2,75 @@
     position: relative;
     display: flex;
 
+    @include medium-screen {
+        display: block;
+    }
+
     .ListItem-date {
         padding: 1em;
+
+        @include medium-screen {
+            padding: 1em 0 0 1em;
+        }
     }
 
     .CallListItem-content {
         @include col(11,12);
         padding: 1em;
+
+        @include medium-screen {
+            @include col(12,12);
+        }
     }
-    
+
     .CallListItem-target {
         @include col(12,12);
     }
 
     .Avatar {
         @include col(1.5,12, $align:middle);
+
+        @include medium-screen {
+            padding: 0;
+            width: 8%;
+        }
+
         &:first-child {
             @include col(1.5,12, $align:middle, $first:true);
+
+            @include medium-screen {
+                padding: 0;
+                width: 8%;
+            }
         }
     }
 
     .CallListItem-targetName {
         @include col(10.5,12, $align:middle);
         font-size: 1.5em;
+
+        @include medium-screen {
+            font-size: 1.1em;
+        }
     }
 
     .CallListItem-callInfo {
         @include col(12,12, $align: middle);
-        margin: 0.5em 0 0.25em; 
+        margin: 0.5em 0 0.25em;
         color: lighten($c-text, 20);
+
+        @include medium-screen {
+            font-size: 0.9em;
+        }
 
         .CallListItem-callStatus {
             @include col(4,12, $align:middle, $first:true);
+
+            @include medium-screen {
+                @include col(12,12);
+                margin-top: 0.5em;
+                padding: 0;
+            }
 
             &.CallListItem-stateAllocated {
                 &:before {
@@ -60,6 +97,12 @@
         .CallListItem-caller {
             @include col(8,12, $align:middle);
 
+            @include small-screen {
+                @include col(12,12);
+                margin-top: 0.5em;
+                padding: 0;
+            }
+
             &:before {
                 @include icon($fa-var-phone);
             }
@@ -72,13 +115,32 @@
         color: white;
         text-align: center;
 
+        @include medium-screen {
+            bottom: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
         &.taken {
             color: $c-ui-darker;
             &::before {
                 @include icon($fa-var-check);
+
+                @include medium-screen {
+                    display: block;
+                    font-size: 0.9em;
+                    width: auto;
+                }
             }
             &::after {
                 @include icon($fa-var-bell-o);
+
+                @include medium-screen {
+                    display: block;
+                    font-size: 0.9em;
+                    width: auto;
+                }
             }
         }
 
@@ -86,18 +148,40 @@
             background-color: $c-ui-warning;
             &::before {
                 @include icon($fa-var-exclamation-circle);
+
+                @include medium-screen {
+                    display: block;
+                    font-size: 0.9em;
+                    width: auto;
+                }
             }
             &::after {
                 @include icon($fa-var-bell-o);
+
+                @include medium-screen {
+                    display: block;
+                    font-size: 0.9em;
+                    width: auto;
+                }
             }
         }
         &::before {
             margin-top: 2em;
             margin-right:0!important;
+
+            @include medium-screen {
+                display: block;
+                margin-bottom: 0.5em;
+                margin-top: 4em;
+            }
         }
         &::after {
-            margin-right:0!important;
+            margin-right: 0!important;
+
+            @include medium-screen {
+                display: block;
+                margin-bottom: 0.5em;
+            }
         }
     }
 }
-

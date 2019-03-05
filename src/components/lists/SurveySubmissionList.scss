@@ -1,4 +1,8 @@
 .SurveySubmissionList {
+    &.List {
+        max-width: 485px;
+    }
+
     .ListHeader {
         width: calc(100% + 9em);
 
@@ -19,11 +23,5 @@
     .ListItem {
         margin-left: 9em;
         padding: 0;
-    }
-
-    @include medium-screen {
-        &.List {
-            max-width: 485px;
-        }
     }
 }

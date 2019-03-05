@@ -1,22 +1,32 @@
 .List {
+    max-width: 720px;
     width: 100%;
     font-size: 1.3em;
     position: relative;
+
+    @include small-screen {
+        left: -20px;
+        width: calc(100% + 40px);
+    }
 
     .ListHeader {
         position: relative;
         z-index: 0;
         height: 15px;
 
+        @include small-screen {
+            display: none;
+        }
+
         li {
             color: #888;
             list-style-type: none;
             display: inline-block;
-        }
-    }
 
-    @include medium-screen {
-        max-width: 720px;
+            @include small-screen {
+                font-size: 0.95em;
+            }
+        }
     }
 
     .List-selectAllCheckbox {
@@ -24,6 +34,10 @@
         position: absolute;
         z-index: 1;
         text-align: center;
+
+        @include small-screen {
+            display: none;
+        }
     }
 
     .List-loadMoreLink {

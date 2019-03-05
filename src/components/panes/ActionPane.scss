@@ -21,6 +21,12 @@
         }
     }
 
+    .InfoListItem-campaign {
+        &::before {
+            @include icon($fa-var-flag)
+        }
+    }
+
     .InfoListItem-date {
         &::before {
             @include icon($fa-var-calendar);
@@ -41,7 +47,7 @@
 
     .InfoListItem-activity {
         &::before {
-            @include icon($fa-var-flag);
+            @include icon($fa-var-hand-rock-o);
         }
     }
 
@@ -129,6 +135,12 @@
                 &.waiting {
                     &::before {
                         @include icon($fa-var-hourglass-o);
+                    }
+                }
+
+                &.missing {
+                    &::before {
+                        @include icon($fa-var-hourglass-end);
                     }
                 }
 

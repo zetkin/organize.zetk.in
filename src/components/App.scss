@@ -17,10 +17,6 @@
         }
     }
 
-    .Dashboard-widgets {
-        @include animateAppear(2.8s);
-    }
-
     .Dashboard-shortcuts {
         @include animateAppear(3.5s);
     }
@@ -56,15 +52,9 @@
 }
 
 .App-main {
-    position: absolute;
+    position: fixed;
     top: 6.8em;
     right: 0;
     left: 0;
-}
-
-@include medium-screen {
-    .App-main {
-        position: fixed;
-        bottom: 0;
-    }
+    bottom: 0;
 }

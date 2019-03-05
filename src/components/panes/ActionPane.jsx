@@ -148,34 +148,46 @@ export default class ActionPane extends PaneBase {
 
                 if (participants.find(p => !p.reminder_sent)) {
                     // Not all have reminders yet.
-                    reminderStatus = "waiting";
-
-                    let missingContact = null;
-
-                    if (action.contact) {
-                        reminderButton = (
-                            <Button
-                                className="ActionPane-reminderButton"
-                                labelMsg="panes.action.reminders.button"
-                                onClick={ this.onClickReminders.bind(this) }/>
+                    if (endDate < Date.now()) {
+                        // Action date has passed
+                        reminderStatus = "missing"
+                        reminderStatusMsg = (
+                            <div>
+                                <p className={ reminderStatus }>
+                                    <Msg id="panes.action.reminders.received.notAllActionPassed"/>
+                                </p>
+                            </div>
                         );
                     }
                     else {
-                        missingContact = (
-                            <p className="missingContact">
-                                <Msg id="panes.action.reminders.missingContact"/>
-                            </p>
+                        reminderStatus = "waiting";
+                        let missingContact = null;
+
+                        if (action.contact) {
+                            reminderButton = (
+                                <Button
+                                    className="ActionPane-reminderButton"
+                                    labelMsg="panes.action.reminders.button"
+                                    onClick={ this.onClickReminders.bind(this) }/>
+                            );
+                        }
+                        else {
+                            missingContact = (
+                                <p className="missingContact">
+                                    <Msg id="panes.action.reminders.missingContact"/>
+                                </p>
+                            );
+                        }
+
+                        reminderStatusMsg = (
+                            <div>
+                                <p className={ reminderStatus }>
+                                    <Msg id="panes.action.reminders.received.notAll"/>
+                                </p>
+                                { missingContact }
+                            </div>
                         );
                     }
-
-                    reminderStatusMsg = (
-                        <div>
-                            <p className={ reminderStatus }>
-                                <Msg id="panes.action.reminders.received.notAll"/>
-                            </p>
-                            { missingContact }
-                        </div>
-                    );
                 }
                 else {
                     // All have reminders
@@ -201,6 +213,9 @@ export default class ActionPane extends PaneBase {
                         name: 'desc',
                         value: action.info_text,
                         msgId: 'panes.action.summary.noDesc'
+                    }, {
+                        name: 'campaign',
+                        value: action.campaign.title
                     }, {
                         name: 'date',
                         value: dateLabel

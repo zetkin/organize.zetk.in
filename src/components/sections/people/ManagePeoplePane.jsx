@@ -126,9 +126,6 @@ export default class ManagePeoplePane extends RootPaneBase {
                 });
 
                 content = [
-                    <div key="list" className="ManagePeoplePane-duplicateList">
-                        { items }
-                    </div>,
                     <div key="instructions"
                         className="ManagePeoplePane-instructions">
                         <Msg tagName="p" id="panes.managePeople.duplicates.instructions.p"
@@ -137,7 +134,10 @@ export default class ManagePeoplePane extends RootPaneBase {
                             labelMsg="panes.managePeople.duplicates.instructions.resetButton"
                             onClick={ () => this.props.dispatch(clearDuplicates()) }
                             />
-                    </div>
+                    </div>,
+                    <div key="list" className="ManagePeoplePane-duplicateList">
+                        { items }
+                    </div>,
                 ];
             }
             else {

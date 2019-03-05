@@ -142,6 +142,32 @@ export function createSurveyOption(surveyId, elementId, data) {
     };
 }
 
+export function createSurveyOptions(surveyId, elementId, options) {
+    return ({ dispatch, getState, z }) => {
+        const orgId = getState().org.activeId;
+
+        // Dispatch CREATE_SURVEY_OPTION actions in sequence
+        let promise = Promise.resolve();
+        options.forEach(option => {
+            promise = promise
+                .then(() => {
+                    const req = z.resource('orgs', orgId, 'surveys', surveyId,
+                        'elements', elementId, 'options').post(option)
+
+                    dispatch({
+                        type: types.CREATE_SURVEY_OPTION,
+                        meta: { surveyId, elementId },
+                        payload: {
+                            promise: req,
+                        },
+                    });
+
+                    return req;
+                });
+        });
+    };
+}
+
 export function updateSurveyOption(surveyId, elementId, optionId, data) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;

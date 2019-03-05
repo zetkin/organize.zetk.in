@@ -2,3 +2,4 @@ editLink: Edit this Smart Search query
 summary:
     diff: Compare with another query
     size: '{size, plural, =0 {No search results} =1 {One search result} other {# search results}}'
+    refresh: Refresh results

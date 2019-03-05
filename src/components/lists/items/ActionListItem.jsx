@@ -103,16 +103,24 @@ export default class ActionListItem extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.inView && !prevProps.inView) {
-            const action = this.props.data;
-            const participants = this.props.participants;
-            const responses = this.props.responses;
+            this.loadSubData();
+        }
+    }
 
-            if (!participants) {
-                this.props.dispatch(retrieveActionParticipants(action.id));
-            }
-            if (!responses) {
-                this.props.dispatch(retrieveActionResponses(action.id));
-            }
+    componentDidMount() {
+        if (this.props.inView) {
+            this.loadSubData();
+        }
+    }
+
+    loadSubData() {
+        const { data, participants, responses } = this.props;
+
+        if (!participants) {
+            this.props.dispatch(retrieveActionParticipants(data.id));
+        }
+        if (!responses) {
+            this.props.dispatch(retrieveActionResponses(data.id));
         }
     }
 
@@ -234,11 +242,8 @@ export default class ActionListItem extends React.Component {
                                  participants={ filteredParticipants }/>
             </div>
         );
-        let participantsNumbers = (
-            <div className="ActionListItem-participantStatuses">
-                <div className={ bookedParticipantsClasses }>
-                    { bookedParticipants }
-                </div>
+        let notifier = (
+            <div className="ActionListItem-notifier">
                 { incomingResponses }
                 <div className={ reminderClasses }>
                     <i className="fa fa-bell-o"></i>
@@ -251,9 +256,7 @@ export default class ActionListItem extends React.Component {
                     <LoadingIndicator/>
                 </div>
             );
-            participantsNumbers = null;
         }
-
 
         return (
             <div className={ classNames }
@@ -274,9 +277,12 @@ export default class ActionListItem extends React.Component {
 
                 { contactSlot }
                 { participantList }
-                <div className="ActionListItem-actionStatuses">
+
+                <div className={ bookedParticipantsClasses }>
+                    { bookedParticipants }
                 </div>
-                { participantsNumbers }
+
+                { notifier }
             </div>
         );
     }
