@@ -215,7 +215,7 @@ export default class ActionPane extends PaneBase {
                         msgId: 'panes.action.summary.noDesc'
                     }, {
                         name: 'campaign',
-                        value: action.campaign.title
+                        value: action.campaign? action.campaign.title : ''
                     }, {
                         name: 'date',
                         value: dateLabel
