@@ -19,7 +19,8 @@ export default function queries(state = null, action) {
 
         case types.RETRIEVE_QUERIES + '_FULFILLED':
             return Object.assign({}, state, {
-                queryList: createList(action.payload.data.data,
+                queryList: updateOrAddListItems(state.queryList,
+                    action.payload.data.data,
                     { isPending: false, error: null })
             });
 
