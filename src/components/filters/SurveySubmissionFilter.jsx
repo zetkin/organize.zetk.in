@@ -83,9 +83,11 @@ export default class SurveySubmissionFilter extends FilterBase {
     }
 
     onChangeSimpleField(name, value) {
-        let state = {};
-        state[name] = value;
-        this.setState(state, () => this.onConfigChange());
+        if (value) {
+            let state = {};
+            state[name] = value;
+            this.setState(state, () => this.onConfigChange());
+        }
     }
 
     onSelectTimeframe(name, value) {
@@ -113,7 +115,7 @@ function stateFromConfig(config) {
 
     if (config.after) {
         state.timeframe = 'after';
-        state.after = Date(config.after);
+        state.after = config.after;
     }
 
     return state;
