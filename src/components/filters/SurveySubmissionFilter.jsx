@@ -48,6 +48,7 @@ export default class SurveySubmissionFilter extends FilterBase {
 
             <FilterTimeFrameSelect key="timeframe"
                 config={ this.state }
+                future={ false }
                 labelMsgStem="filters.surveySubmission.timeframe"
                 onChange={ this.onSelectTimeframe.bind(this) }
                 />
