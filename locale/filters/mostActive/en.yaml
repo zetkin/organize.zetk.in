@@ -1,1 +1,10 @@
 size: Number of most active people
+timeframe:
+    label: Timeframe
+    options:
+        after: After a certain date
+        any: At any point in time
+        before: Before a certain date
+        between: Between certain dates
+        future: In the future
+        past: Before today
