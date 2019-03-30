@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import FilterBase from './FilterBase';
 import Form from '../forms/Form';
-import DateInput from '../forms/inputs/DateInput';
+import FilterTimeFrameSelect from './FilterTimeFrameSelect';
 import SelectInput from '../forms/inputs/SelectInput';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
 import { retrieveCampaigns } from '../../actions/campaign';
@@ -57,7 +57,6 @@ export default class CampaignFilter extends FilterBase {
 
     renderFilterForm(config) {
         let campaignStore = this.props.campaigns;
-        let timeframe = this.state.timeframe;
 
         const msg = id => this.props.intl.formatMessage({ id });
 
@@ -66,15 +65,6 @@ export default class CampaignFilter extends FilterBase {
             'in_su': msg('filters.campaign.opOptions.inSignedUp'),
             'notin_b': msg('filters.campaign.opOptions.notInBooked'),
             'notin_su': msg('filters.campaign.opOptions.notInSignedUp'),
-        };
-
-        const DATE_OPTIONS = {
-            'any': msg('filters.campaign.timeframe.options.any'),
-            'future': msg('filters.campaign.timeframe.options.future'),
-            'past': msg('filters.campaign.timeframe.options.past'),
-            'after': msg('filters.campaign.timeframe.options.after'),
-            'before': msg('filters.campaign.timeframe.options.before'),
-            'between': msg('filters.campaign.timeframe.options.between'),
         };
 
         const CAMPAIGN_OPTIONS = {};
@@ -97,26 +87,6 @@ export default class CampaignFilter extends FilterBase {
             const activity = item.data;
             ACTIVITY_OPTIONS[activity.id] = activity.title;
         });
-
-        let afterInput = null;
-        if (timeframe == 'after' || timeframe == 'between') {
-            afterInput = (
-                <DateInput key="after" name="after"
-                    className="CampaignFilter-after"
-                    value={ this.state.after }
-                    onValueChange={ this.onChangeSimpleField.bind(this) }/>
-            );
-        }
-
-        let beforeInput = null;
-        if (timeframe == 'before' || timeframe == 'between') {
-            beforeInput = (
-                <DateInput key="before" name="before"
-                    className="CampaignFilter-before"
-                    value={ this.state.before }
-                    onValueChange={ this.onChangeSimpleField.bind(this) }/>
-            );
-        }
 
         return [
             <SelectInput key="operator" name="op"
@@ -145,13 +115,11 @@ export default class CampaignFilter extends FilterBase {
                 onValueChange={ this.onChangeSimpleField.bind(this) }
                 />,
 
-            <SelectInput key="timeframe" name="timeframe"
-                labelMsg="filters.campaign.timeframe.label"
-                options={ DATE_OPTIONS } value={ this.state.timeframe }
-                onValueChange={ this.onSelectTimeframe.bind(this) }/>,
-
-            afterInput,
-            beforeInput,
+            <FilterTimeFrameSelect key="timeframe"
+                config={ this.state }
+                labelMsgStem="filters.campaign.timeframe"
+                onChange={ this.onChangeTimeFrame.bind(this) }
+                />,
         ];
     }
 
@@ -169,39 +137,14 @@ export default class CampaignFilter extends FilterBase {
         };
     }
 
+    onChangeTimeFrame({ before, after }) {
+        this.setState({ before, after }, () => this.onConfigChange());
+    }
+
     onChangeSimpleField(name, value) {
         let state = {};
         state[name] = value;
         this.setState(state, () => this.onConfigChange());
-    }
-
-    onSelectTimeframe(name, value) {
-        let before = undefined;
-        let after = undefined;
-        let today = Date.create();
-        let todayStr = today.format('{yyyy}-{MM}-{dd}');
-
-        switch (value) {
-            case 'future':
-                after = 'now';
-                break;
-            case 'past':
-                before = 'now';
-                break;
-            case 'after':
-                after = todayStr;
-                break;
-            case 'before':
-                before = todayStr;
-                break;
-            case 'between':
-                after = todayStr;
-                before = today.addDays(30).format('{yyyy}-{MM}-{dd}');
-                break;
-        }
-
-        this.setState({ timeframe: value, before, after }, () =>
-            this.onConfigChange());
     }
 }
 
@@ -216,23 +159,6 @@ function stateFromConfig(config) {
         location: config.location,
         before: config.before,
         after: config.after,
-    }
-
-    state.timeframe = 'any';
-    if (config.before && config.after) {
-        state.timeframe = 'between';
-    }
-    else if (config.before == 'now') {
-        state.timeframe = 'past';
-    }
-    else if (config.before) {
-        state.timeframe = 'before';
-    }
-    else if (config.after == 'now') {
-        state.timeframe = 'future';
-    }
-    else if (config.after) {
-        state.timeframe = 'after';
     }
 
     return state;
