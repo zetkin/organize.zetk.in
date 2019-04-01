@@ -1,23 +1,29 @@
 import * as types from '.';
 
 
-export function retrieveSurveySubmissions(surveyId = null, page = 0, perPage = 20) {
+export function retrieveSurveySubmissions(surveyId = null, linked = null, page = 0, perPage = 20) {
     return ({ dispatch, getState, z }) => {
-        let orgId = getState().org.activeId;
+        const filters = [];
+        const orgId = getState().org.activeId;
         let promise;
+
+        if (linked !== null) {
+            linked = linked? ((filters.linked == 'linked')? 1 : 0) : null;
+            filters.push(['linked', '==', linked? 1 : 0]);
+        }
 
         if (surveyId) {
             promise = z.resource('orgs', orgId, 'surveys', surveyId,
-                'submissions').get(page, perPage);
+                'submissions').get(page, perPage, filters);
         }
         else {
             promise = z.resource('orgs', orgId, 'survey_submissions')
-                .get(page, perPage);
+                .get(page, perPage, filters);
         }
 
         dispatch({
             type: types.RETRIEVE_SURVEY_SUBMISSIONS,
-            meta: { page, surveyId },
+            meta: { page, linked, surveyId },
             payload: { promise },
         });
     };

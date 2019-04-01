@@ -8,54 +8,68 @@ import {
 } from '../utils/store';
 
 
-
 export default function surveySubmissions(state = null, action) {
-    let submissionData;
+    if (action.type == types.RETRIEVE_SURVEY_SUBMISSIONS + '_PENDING') {
+        const filters = {
+            linked: action.meta.linked,
+            survey: action.meta.surveyId,
+        };
 
-    switch (action.type) {
-        case types.RETRIEVE_SURVEY_SUBMISSIONS + '_PENDING':
+        if (action.meta.surveyId != state.filters.survey || action.meta.linked != state.filters.linked) {
             return Object.assign({}, state, {
+                filters,
+                submissionList: createList(null, {
+                    isPending: true,
+                    error: null,
+                }),
+            });
+        }
+        else {
+            return Object.assign({}, state, {
+                filters,
                 submissionList: Object.assign({}, state.submissionList, {
                     isPending: true,
                     error:null,
                 })
             });
-
-        case types.RETRIEVE_SURVEY_SUBMISSIONS + '_FULFILLED':
-            return Object.assign({}, state, {
-                submissionList: updateOrAddListItems(state.submissionList, action.payload.data.data, {
-                    isPending: false,
-                    error: null,
-                    lastPage: Math.max(state.submissionList.lastPage, action.meta.page),
-                })
-            });
-
-        case types.RETRIEVE_SURVEY_SUBMISSIONS + '_REJECTED':
-            return Object.assign({}, state, {
-                submissionList: {
-                    isPending: false,
-                    error: action.payload,
-                }
-            });
-
-        case types.RETRIEVE_SURVEY_SUBMISSION + '_PENDING':
-            submissionData = { id: action.meta.id };
-            return Object.assign({}, state, {
-                submissionList: updateOrAddListItem(state.submissionList,
-                        submissionData.id, submissionData, { isPending: true }),
-            });
-
-        case types.UPDATE_SURVEY_SUBMISSION + '_FULFILLED':
-        case types.RETRIEVE_SURVEY_SUBMISSION + '_FULFILLED':
-            submissionData = action.payload.data.data
-            return Object.assign({}, state, {
-                submissionList: updateOrAddListItem(state.submissionList,
-                    submissionData.id, submissionData, { isPending: false, error: null }),
-            });
-
-        default:
-            return state || {
-                submissionList: createList(),
-            };
+        }
+    }
+    else if (action.type == types.RETRIEVE_SURVEY_SUBMISSIONS + '_FULFILLED') {
+        return Object.assign({}, state, {
+            submissionList: updateOrAddListItems(state.submissionList, action.payload.data.data, {
+                isPending: false,
+                error: null,
+                lastPage: Math.max(state.submissionList.lastPage, action.meta.page),
+            })
+        });
+    }
+    else if (action.type == types.RETRIEVE_SURVEY_SUBMISSIONS + '_REJECTED') {
+        return Object.assign({}, state, {
+            submissionList: {
+                isPending: false,
+                error: action.payload,
+            }
+        });
+    }
+    else if (action.type == types.RETRIEVE_SURVEY_SUBMISSION + '_PENDING') {
+        const submissionData = { id: action.meta.id };
+        return Object.assign({}, state, {
+            submissionList: updateOrAddListItem(state.submissionList,
+                    submissionData.id, submissionData, { isPending: true }),
+        });
+    }
+    else if (action.type == types.UPDATE_SURVEY_SUBMISSION + '_FULFILLED'
+     || action.type == types.RETRIEVE_SURVEY_SUBMISSION + '_FULFILLED') {
+        const submissionData = action.payload.data.data
+        return Object.assign({}, state, {
+            submissionList: updateOrAddListItem(state.submissionList,
+                submissionData.id, submissionData, { isPending: false, error: null }),
+        });
+    }
+    else {
+        return state || {
+            submissionList: createList(),
+            filters: {},
+        };
     }
 }
