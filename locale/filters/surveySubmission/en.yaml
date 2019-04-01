@@ -1,4 +1,10 @@
-dateOptions:
-    after: After a certain date
-    any: At any point in time
 survey: Survey
+timeframe:
+    label: Timeframe
+    options:
+        after: After a certain date
+        any: At any point in time
+        before: Before a certain date
+        between: Between certain dates
+        future: In the future
+        past: Before today

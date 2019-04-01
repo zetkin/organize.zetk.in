@@ -7,6 +7,10 @@ import DateInput from '../forms/inputs/DateInput';
 
 @injectIntl
 export default class FilterTimeFrameSelect extends React.Component {
+    static defaultProps = {
+        future: true,
+    }
+
     constructor(props) {
         super(props);
 
@@ -26,6 +30,10 @@ export default class FilterTimeFrameSelect extends React.Component {
             'before': msg('options.before'),
             'between': msg('options.between'),
         };
+
+        if (!this.props.future) {
+            delete DATE_OPTIONS['future'];
+        }
 
         let afterInput = null;
         if (timeframe == 'after' || timeframe == 'between') {
