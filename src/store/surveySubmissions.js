@@ -23,7 +23,11 @@ export default function surveySubmissions(state = null, action) {
 
         case types.RETRIEVE_SURVEY_SUBMISSIONS + '_FULFILLED':
             return Object.assign({}, state, {
-                submissionList: createList(action.payload.data.data),
+                submissionList: updateOrAddListItems(state.submissionList, action.payload.data.data, {
+                    isPending: false,
+                    error: null,
+                    lastPage: Math.max(state.submissionList.lastPage, action.meta.page),
+                })
             });
 
         case types.RETRIEVE_SURVEY_SUBMISSIONS + '_REJECTED':

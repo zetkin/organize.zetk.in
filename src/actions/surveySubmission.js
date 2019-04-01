@@ -17,7 +17,7 @@ export function retrieveSurveySubmissions(surveyId = null, page = 0, perPage = 2
 
         dispatch({
             type: types.RETRIEVE_SURVEY_SUBMISSIONS,
-            meta: { surveyId },
+            meta: { page, surveyId },
             payload: { promise },
         });
     };
