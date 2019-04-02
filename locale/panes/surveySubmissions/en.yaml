@@ -1,4 +1,9 @@
 filters:
+    linked:
+        label: Linking status
+        linked: Linked to person (searchable)
+        nullOption: Regardless of linking status
+        unlinked: Not linked to person (not searchable)
     survey:
         label: Survey
         nullOption: All surveys
