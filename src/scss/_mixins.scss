@@ -101,15 +101,34 @@
     border-color: darken($color, $amount*2);
 }
 
-@mixin button($color: $c-brand-confirm, $amount:5, $icon:false) {
+@mixin button($color: $c-brand-confirm, $amount:5, $icon:false, $transparent:false, $border:0) {
     font-size: 1.4em;
     font-weight: 500;
-    border-width: 0;
+    border-width: $border;
     display: inline-block;
     padding: 1.2em 1em 0.9em;
     border-bottom: 3px solid;
     border-radius: 3px;
-    @include button-color($color, $amount);
+    @if $transparent {
+            background-color: transparentize($color, 1);
+            border:2px solid $color;
+            &:hover {
+                background-color: transparentize($color, 0.8);
+                border:2px solid $color;
+            }
+            &:focus {
+                background-color: transparentize($color, 0.7);
+                border:2px solid $color;
+                outline: none;
+            }
+            &.selected {
+                background-color: transparentize($color, 0.6);
+                border:2px solid $color;
+            }
+        }
+        @else {
+            @include button-color($color, $amount);
+        }
     @if $icon {
         &:before {
             @include icon($icon);
