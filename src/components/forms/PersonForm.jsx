@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Form from './Form';
+import PhoneInput from './inputs/PhoneInput';
 import TextInput from './inputs/TextInput';
 import SelectInput from './inputs/SelectInput';
-
 
 export default class PersonForm extends React.Component {
     render() {
@@ -31,9 +31,9 @@ export default class PersonForm extends React.Component {
                     initialValue={ person.gender }/>
                 <TextInput labelMsg="forms.person.email" name="email"
                     initialValue={ person.email }/>
-                <TextInput labelMsg="forms.person.phone" name="phone"
+                <PhoneInput labelMsg="forms.person.phone" name="phone"
                     initialValue={ person.phone }/>
-                <TextInput labelMsg="forms.person.altPhone" name="alt_phone"
+                <PhoneInput labelMsg="forms.person.altPhone" name="alt_phone"
                     initialValue={ person.alt_phone }/>
 
                 <TextInput labelMsg="forms.person.coAddress" name="co_address"
