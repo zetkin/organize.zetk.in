@@ -110,25 +110,26 @@
     border-bottom: 3px solid;
     border-radius: 3px;
     @if $transparent {
-            background-color: transparentize($color, 1);
+        background-color: transparentize($color, 1);
+        border:2px solid $color;
+        &:hover {
+            background-color: transparentize($color, 0.8);
             border:2px solid $color;
-            &:hover {
-                background-color: transparentize($color, 0.8);
-                border:2px solid $color;
-            }
-            &:focus {
-                background-color: transparentize($color, 0.7);
-                border:2px solid $color;
-                outline: none;
-            }
-            &.selected {
-                background-color: transparentize($color, 0.6);
-                border:2px solid $color;
-            }
         }
-        @else {
-            @include button-color($color, $amount);
+        &:focus {
+            background-color: transparentize($color, 0.7);
+            border:2px solid $color;
+            outline: none;
         }
+        &.selected {
+            background-color: transparentize($color, 0.6);
+            border:2px solid $color;
+        }
+    }
+    @else {
+        @include button-color($color, $amount);
+    }
+
     @if $icon {
         &:before {
             @include icon($icon);
