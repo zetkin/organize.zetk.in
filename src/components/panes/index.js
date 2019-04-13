@@ -11,6 +11,7 @@ import AddPersonPane from './AddPersonPane';
 import AddPersonTagPane from './AddPersonTagPane';
 import AddLocationPane from './AddLocationPane';
 import AddLocationTagPane from './AddLocationTagPane'
+import AddSmsDistributionPane from './AddSmsDistributionPane';
 import AddSurveyPane from './AddSurveyPane';
 import AddSurveyQuestionPane from './AddSurveyQuestionPane';
 import AddSurveyTextBlockPane from './AddSurveyTextBlockPane';
@@ -63,6 +64,7 @@ import SelectPeoplePane from './SelectPeoplePane';
 import SelectLocationTagsPane from './SelectLocationTagsPane';
 import SelectStreetAddressPane from './SelectStreetAddressPane';
 import SelectPersonTagsPane from './SelectPersonTagsPane';
+import SmsDistributionPane from './SmsDistributionPane';
 import SurveyPane from './SurveyPane';
 import SurveyOutlinePane from './SurveyOutlinePane';
 import SurveySubmissionPane from './SurveySubmissionPane';
@@ -81,6 +83,7 @@ var _panes = {
     'addlocationtag': AddLocationTagPane,
     'addperson': AddPersonPane,
     'addpersontag': AddPersonTagPane,
+    'addsmsdistribution': AddSmsDistributionPane,
     'addsurvey': AddSurveyPane,
     'addsurveyquestion': AddSurveyQuestionPane,
     'addsurveytextblock': AddSurveyTextBlockPane,
@@ -132,6 +135,7 @@ var _panes = {
     'selectlocationtags': SelectLocationTagsPane,
     'selectpersontags': SelectPersonTagsPane,
     'selectstreetaddr': SelectStreetAddressPane,
+    'smsdistribution': SmsDistributionPane,
     'survey': SurveyPane,
     'surveyoutline': SurveyOutlinePane,
     'surveysubmission': SurveySubmissionPane,

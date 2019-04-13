@@ -27,6 +27,7 @@ subSections:
     dialog:
         assignments: Assignments
         calls: Call log
+        sms-distributions: SMS Distributions
     maps:
         locations: Locations
         overview: Overview

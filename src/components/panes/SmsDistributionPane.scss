@@ -1,0 +1,19 @@
+.PaneBase.SmsDistributionPane {
+    @mixin InfolistItem($name, $icon) {
+        .InfoListItem-#{$name} {
+            &::before {
+                @include icon($icon);
+            }
+        }
+    }
+
+    color: lighten($c-text, 20);
+
+    @include InfolistItem(title, $fa-var-tag);
+    @include InfolistItem(sender, $fa-var-user);
+    @include InfolistItem(message, $fa-var-comment);
+
+    .InfoListItem-message {
+        white-space: pre-wrap;
+    }
+}
