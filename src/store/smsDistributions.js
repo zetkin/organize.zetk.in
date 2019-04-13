@@ -94,6 +94,22 @@ export default function smsDistributions(state = null, action) {
                 }),
             });
 
+        case types.UPDATE_SMS_DISTRIBUTION + '_FULFILLED': {
+            const distribution = {
+                ...action.payload.data.data,
+                statsItem: null,
+            };
+
+            return Object.assign({}, state, {
+                distributionList: updateOrAddListItem(
+                    state.distributionList,
+                    distribution.id,
+                    distribution,
+                    { isPending: false, error: null },
+                ),
+            });
+        }
+
         case types.UPDATE_QUERY + '_FULFILLED': {
             let queryId = action.payload.data.data.id;
             let distributionItem = state.distributionList.items.find(i => i.data

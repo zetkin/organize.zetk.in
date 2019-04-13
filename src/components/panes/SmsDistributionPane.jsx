@@ -11,6 +11,7 @@ import LoadingIndicator from '../misc/LoadingIndicator';
 import {
     retrieveSmsDistribution,
     retrieveSmsDistributionStats,
+    updateSmsDistribution,
 } from '../../actions/smsDistribution';
 import { getListItemById } from '../../utils/store';
 
@@ -105,6 +106,8 @@ export default class SmsDistributionPane extends PaneBase {
 
         if (state === 'draft') {
             return this.renderDraftPaneContent(data);
+        } else if (state === 'confirm') {
+            return this.renderConfirmPaneContent(data);
         }
     }
 
@@ -120,7 +123,15 @@ export default class SmsDistributionPane extends PaneBase {
 
         if (state === 'draft') {
             return this.renderDraftPaneFooter(data);
+        } else if (state === 'confirm') {
+            return this.renderConfirmPaneFooter(data);
         }
+    }
+
+    renderCreditsStats(data) {
+        return (
+            <h3 key="credits">CREDITS PLACEHOLDER</h3>
+        )
     }
 
     // Draft
@@ -174,10 +185,74 @@ export default class SmsDistributionPane extends PaneBase {
     renderDraftPaneFooter(data) {
         return (
             <div>
-                <h3 key="credits">CREDITS PLACEHOLDER</h3>
+                {this.renderCreditsStats(data)}
                 <Button key="confirm" className="SmsDistributionPane-confirmButton"
                     labelMsg="panes.smsDistribution.confirmButton"
                     onClick={this.onConfirmClick.bind(this)} />
+            </div>
+        );
+    }
+
+    // Confirm
+
+    renderConfirmPaneContent({ title, sender, message, stats }) {
+        return (
+            <div>
+                <InfoList
+                    data={[{
+                        name: 'title',
+                        value: title,
+                    }, {
+                        name: 'sender',
+                        value: sender,
+                    }, {
+                        name: 'message',
+                        value: message,
+                    }]}
+                />
+
+                <Msg tagName="h3" id="panes.smsDistribution.messages" />
+                {!stats ? (
+                    <LoadingIndicator />
+                ) : (
+                        <InfoList
+                            data={[{
+                                name: 'num_messages',
+                                msgId: 'panes.smsDistribution.stats.num_messages',
+                                msgValues: stats,
+                            }, {
+                                name: 'num_confirm_messages',
+                                msgId: 'panes.smsDistribution.stats.num_confirm_messages',
+                                msgValues: stats,
+                            }, {
+                                name: 'num_failed_messages',
+                                msgId: 'panes.smsDistribution.stats.num_failed_messages',
+                                msgValues: stats,
+                            },
+                            {
+                                name: 'showMessagesLink',
+                                msgId: 'panes.smsDistribution.showMessagesLink',
+                                onClick: this.onShowMessagesClick.bind(this),
+                            }, stats.target_matches_have_changed && {
+                                name: 'target_matches_have_changed',
+                                msgId: 'panes.smsDistribution.target_matches_have_changed'
+                            }]}
+                        />
+                    )}
+            </div>
+        );
+    }
+
+    renderConfirmPaneFooter(data) {
+        return (
+            <div>
+                {this.renderCreditsStats(data)}
+                <Button key="revertToDraft" className="SmsDistributionPane-revertToDraftButton"
+                    labelMsg="panes.smsDistribution.revertToDraftButton"
+                    onClick={this.onRevertToDraftClick.bind(this)} />
+                <Button key="confirm" className="SmsDistributionPane-sendButton"
+                    labelMsg="panes.smsDistribution.sendButton"
+                    onClick={this.onSendClick.bind(this)} />
             </div>
         );
     }
@@ -202,7 +277,33 @@ export default class SmsDistributionPane extends PaneBase {
         this.openPane('editquery', queryId);
     }
 
+    onShowMessagesClick() {
+        const distributionId = this.getParam(0);
+
+        this.openPane('smsdistributionmessages', distributionId);
+    }
+
     onConfirmClick() {
-        alert('Not implemented.');
+        const distributionId = this.getParam(0);
+
+        this.props.dispatch(updateSmsDistribution(distributionId, {
+            state: 'confirm',
+        }));
+    }
+
+    onSendClick() {
+        const distributionId = this.getParam(0);
+
+        this.props.dispatch(updateSmsDistribution(distributionId, {
+            state: 'sending',
+        }));
+    }
+
+    onRevertToDraftClick() {
+        const distributionId = this.getParam(0);
+
+        this.props.dispatch(updateSmsDistribution(distributionId, {
+            state: 'draft',
+        }));
     }
 }

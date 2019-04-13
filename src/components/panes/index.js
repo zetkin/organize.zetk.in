@@ -66,6 +66,7 @@ import SelectLocationTagsPane from './SelectLocationTagsPane';
 import SelectStreetAddressPane from './SelectStreetAddressPane';
 import SelectPersonTagsPane from './SelectPersonTagsPane';
 import SmsDistributionPane from './SmsDistributionPane';
+import SmsDistributionMessagesPane from './SmsDistributionMessagesPane';
 import SmsDistributionTargetsPane from './SmsDistributionTargetsPane';
 import SurveyPane from './SurveyPane';
 import SurveyOutlinePane from './SurveyOutlinePane';
@@ -139,6 +140,7 @@ var _panes = {
     'selectpersontags': SelectPersonTagsPane,
     'selectstreetaddr': SelectStreetAddressPane,
     'smsdistribution': SmsDistributionPane,
+    'smsdistributionmessages': SmsDistributionMessagesPane,
     'smsdistributiontargets': SmsDistributionTargetsPane,
     'survey': SurveyPane,
     'surveyoutline': SurveyOutlinePane,

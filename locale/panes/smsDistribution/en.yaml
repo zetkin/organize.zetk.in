@@ -1,7 +1,15 @@
 confirmButton: Confirm
 editLink: Edit
-targets: Targets
-showTargetsLink: Show Targets
 editTargetQueryLink: Edit Target Query
+messages: Messages
+showTargetsLink: Show Targets
+revertToDraftButton: Revert to Draft
+sendButton: Send
+showMessagesLink: Show Messages
 stats:
   num_target_matches: '{ num_target_matches } Targets'
+  num_messages: '{ num_messages } Messages'
+  num_confirm_messages: '{ num_confirm_messages } To Confirm'
+  num_failed_messages: '{ num_failed_messages } Failed'
+targets: Targets
+target_matches_have_changed: The target query's matches have changed since confirming

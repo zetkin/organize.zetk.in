@@ -14,6 +14,10 @@ export default class InfoList extends React.Component {
             <ul className="InfoList">
             {
                 this.props.data.map(item => {
+                    if (!item) {
+                        return null;
+                    }
+
                     let className = 'InfoListItem InfoListItem-' + item.name;
                     let value = item.value;
 
