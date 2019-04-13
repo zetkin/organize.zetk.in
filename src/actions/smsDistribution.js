@@ -56,3 +56,18 @@ export function retrieveSmsDistributionStats(id) {
         });
     };
 }
+
+export function retrieveSmsDistributionTargets(id) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_SMS_DISTRIBUTION_TARGETS,
+            meta: { id },
+            payload: {
+                promise: z.resource('orgs', orgId, 'sms_distributions', id,
+                    'targets').get()
+            }
+        });
+    };
+}

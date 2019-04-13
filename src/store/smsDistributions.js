@@ -4,6 +4,7 @@ import {
     createListItems,
     createListItem,
     updateOrAddListItem,
+    updateOrAddListItems,
 } from '../utils/store';
 
 
@@ -76,14 +77,28 @@ export default function smsDistributions(state = null, action) {
             });
         }
 
+        case types.RETRIEVE_SMS_DISTRIBUTION_TARGETS + '_PENDING':
+            return Object.assign({}, state, {
+                targetsByDistribution: Object.assign({}, state.targetsByDistribution, {
+                    [action.meta.id]: createList(null, { isPending: true }),
+                }),
+            });
+
+        case types.RETRIEVE_SMS_DISTRIBUTION_TARGETS + '_FULFILLED':
+            return Object.assign({}, state, {
+                targetsByDistribution: Object.assign({}, state.targetsByDistribution, {
+                    [action.meta.id]: updateOrAddListItems(state.targetsByDistribution[action.meta.id],
+                        action.payload.data.data,
+                        { isPending: false, error: null },
+                    ),
+                }),
+            });
+
         case types.UPDATE_QUERY + '_FULFILLED': {
-            // Check if there is an distribution that uses this query
             let queryId = action.payload.data.data.id;
             let distributionItem = state.distributionList.items.find(i => i.data
                 && (i.data.target.id === queryId));
 
-            // If the query that was updated affects an distribution, remove
-            // the stats to indicate that they were invalidated
             if (distributionItem) {
                 return Object.assign({}, state, {
                     distributionList: updateOrAddListItem(state.distributionList,
@@ -91,6 +106,9 @@ export default function smsDistributions(state = null, action) {
                             statsItem: null,
                             target: action.payload.data.data,
                         }),
+                    targetsByDistribution: Object.assign({}, state.targetsByDistribution, {
+                        [distributionItem.data.id]: null,
+                    }),
                 });
             }
         }
@@ -98,6 +116,7 @@ export default function smsDistributions(state = null, action) {
         default:
             return state || {
                 distributionList: createList(),
+                targetsByDistribution: {},
             };
     }
 };
