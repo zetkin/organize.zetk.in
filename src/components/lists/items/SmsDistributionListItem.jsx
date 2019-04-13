@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
+import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 @connect(() => ({}))
@@ -10,18 +11,30 @@ export default class SmsDistributionListItem extends React.Component {
     };
 
     render() {
-        let distribution = this.props.data;
-
-        const classNames = cx({
-            'SmsDistributionListItem': true,
-        });
+        const {
+            title,
+            state,
+            sent,
+        } = this.props.data;
 
         return (
-            <div className={ classNames } onClick={ this.props.onItemClick }>
-                <div className="SmsDistributionListItem-info">
-                    <h3 className="SmsDistributionListItem-infoTitle">
-                        { distribution.title }
-                    </h3>
+            <div className="SmsDistributionListItem"
+                onClick={this.props.onItemClick}>
+                <div className="SmsDistributionListItem-title">
+                    {title}
+                </div>
+                <div className="SmsDistributionListItem-sent">
+                    {sent && (
+                        Date
+                            .create(sent, { fromUTC: true })
+                            .format('{yyyy}-{MM}-{dd} {HH}:{mm}')
+                    )}
+                </div>
+                <div className={cx(
+                    'SmsDistributionListItem-state',
+                    `SmsDistributionListItem-state--${state}`,
+                )}>
+                    <Msg id={`lists.smsDistributionList.item.state.${state}`} />
                 </div>
             </div>
         );
