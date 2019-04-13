@@ -40,6 +40,7 @@ import EditPersonPane from './EditPersonPane';
 import EditPersonTagPane from './EditPersonTagPane';
 import EditQueryPane from './EditQueryPane';
 import EditRoutePane from './EditRoutePane';
+import EditSmsDistributionPane from './EditSmsDistributionPane';
 import EditSurveyPane from './EditSurveyPane';
 import EditSurveyQuestionPane from './EditSurveyQuestionPane';
 import EditSurveyTextBlockPane from './EditSurveyTextBlockPane';
@@ -65,6 +66,7 @@ import SelectLocationTagsPane from './SelectLocationTagsPane';
 import SelectStreetAddressPane from './SelectStreetAddressPane';
 import SelectPersonTagsPane from './SelectPersonTagsPane';
 import SmsDistributionPane from './SmsDistributionPane';
+import SmsDistributionTargetsPane from './SmsDistributionTargetsPane';
 import SurveyPane from './SurveyPane';
 import SurveyOutlinePane from './SurveyOutlinePane';
 import SurveySubmissionPane from './SurveySubmissionPane';
@@ -112,6 +114,7 @@ var _panes = {
     'editpersontag': EditPersonTagPane,
     'editquery': EditQueryPane,
     'editroute': EditRoutePane,
+    'editsmsdistribution': EditSmsDistributionPane,
     'editsurvey': EditSurveyPane,
     'editsurveyquestion': EditSurveyQuestionPane,
     'editsurveytextblock': EditSurveyTextBlockPane,
@@ -136,6 +139,7 @@ var _panes = {
     'selectpersontags': SelectPersonTagsPane,
     'selectstreetaddr': SelectStreetAddressPane,
     'smsdistribution': SmsDistributionPane,
+    'smsdistributiontargets': SmsDistributionTargetsPane,
     'survey': SurveyPane,
     'surveyoutline': SurveyOutlinePane,
     'surveysubmission': SurveySubmissionPane,

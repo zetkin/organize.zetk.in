@@ -6,4 +6,5 @@ saveButton: Save query
 title:
     callassignment_goal: Edit goal query
     callassignment_target: Edit target query
+    smsdistribution_target: Edit target query
     standalone: Edit smart search query

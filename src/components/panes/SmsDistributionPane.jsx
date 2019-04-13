@@ -4,13 +4,18 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 
+import Button from '../misc/Button';
 import InfoList from '../misc/InfoList';
 import LoadingIndicator from '../misc/LoadingIndicator';
 
+import {
+    retrieveSmsDistribution,
+    retrieveSmsDistributionStats,
+} from '../../actions/smsDistribution';
 import { getListItemById } from '../../utils/store';
 
 const mapStateToProps = (state, props) => {
-    let distributionId = props.paneData.params[0];
+    const distributionId = props.paneData.params[0];
 
     return {
         distributionItem: getListItemById(
@@ -23,6 +28,31 @@ const mapStateToProps = (state, props) => {
 @connect(mapStateToProps)
 @injectIntl
 export default class SmsDistributionPane extends PaneBase {
+    componentDidMount() {
+        super.componentDidMount();
+
+        let distributionId = this.getParam(0);
+
+        this.props.dispatch(retrieveSmsDistribution(distributionId));
+    }
+
+    componentWillUnmount() {
+        super.componentWillUnmount();
+
+        clearInterval(this.state.interval);
+    }
+
+    componentDidUpdate() {
+        const distributionItem = this.props.distributionItem;
+        const data = distributionItem && !distributionItem.isPending &&
+            distributionItem.data;
+        const statsItem = data && data.statsItem;
+
+        if (data && !statsItem) {
+            this.props.dispatch(retrieveSmsDistributionStats(data.id));
+        }
+    }
+
     getRenderData() {
         const {
             distributionItem,
@@ -38,6 +68,8 @@ export default class SmsDistributionPane extends PaneBase {
         const sender = data && data.sender;
         const message = data && data.message;
 
+        const stats = data && data.statsItem && data.statsItem.data;
+
         return {
             isLoaded,
 
@@ -46,6 +78,8 @@ export default class SmsDistributionPane extends PaneBase {
             title,
             sender,
             message,
+
+            stats,
         };
     }
 
@@ -59,24 +93,116 @@ export default class SmsDistributionPane extends PaneBase {
         return this.props.distributionItem.data.title;
     }
 
-    renderPaneContent({ isLoaded, title, sender, message }) {
+    renderPaneContent(data) {
+        const {
+            isLoaded,
+            state,
+        } = data;
+
         if (!isLoaded) {
             return <LoadingIndicator />;
         }
 
+        if (state === 'draft') {
+            return this.renderDraftPaneContent(data);
+        }
+    }
+
+    renderPaneFooter(data) {
+        const {
+            isLoaded,
+            state,
+        } = data;
+
+        if (!isLoaded) {
+            return <LoadingIndicator />;
+        }
+
+        if (state === 'draft') {
+            return this.renderDraftPaneFooter(data);
+        }
+    }
+
+    // Draft
+
+    renderDraftPaneContent({ title, sender, message, stats }) {
         return (
-            <InfoList
-                data={[{
-                    name: 'title',
-                    value: title,
-                }, {
-                    name: 'sender',
-                    value: sender,
-                }, {
-                    name: 'message',
-                    value: message,
-                }]}
-            />
+            <div>
+                <InfoList
+                    data={[{
+                        name: 'title',
+                        value: title,
+                    }, {
+                        name: 'sender',
+                        value: sender,
+                    }, {
+                        name: 'message',
+                        value: message,
+                    },
+                    {
+                        name: 'editLink',
+                        msgId: 'panes.smsDistribution.editLink',
+                        onClick: this.onEditSettingsClick.bind(this),
+                    }]}
+                />
+
+                <Msg tagName="h3" id="panes.smsDistribution.targets" />
+                {!stats ? (
+                    <LoadingIndicator />
+                ) : (
+                    <InfoList
+                        data={[{
+                            name: 'num_target_matches',
+                            msgId: 'panes.smsDistribution.stats.num_target_matches',
+                            msgValues: stats,
+                        },
+                        {
+                            name: 'showTargetsLink',
+                            msgId: 'panes.smsDistribution.showTargetsLink',
+                            onClick: this.onShowTargetsClick.bind(this),
+                        }, {
+                            name: 'editTargetQueryLink',
+                            msgId: 'panes.smsDistribution.editTargetQueryLink',
+                            onClick: this.onEditTargetQueryClick.bind(this),
+                        }]}
+                    />
+                )}
+            </div>
         );
+    }
+
+    renderDraftPaneFooter(data) {
+        return (
+            <div>
+                <h3 key="credits">CREDITS PLACEHOLDER</h3>
+                <Button key="confirm" className="SmsDistributionPane-confirmButton"
+                    labelMsg="panes.smsDistribution.confirmButton"
+                    onClick={this.onConfirmClick.bind(this)} />
+            </div>
+        );
+    }
+
+    // Handlers
+
+    onEditSettingsClick() {
+        const distributionId = this.getParam(0);
+
+        this.openPane('editsmsdistribution', distributionId);
+    }
+
+    onShowTargetsClick() {
+        const distributionId = this.getParam(0);
+
+        this.openPane('smsdistributiontargets', distributionId);
+    }
+
+    onEditTargetQueryClick() {
+        const queryId = this.props.distributionItem.data.target.id;
+
+        this.openPane('editquery', queryId);
+    }
+
+    onConfirmClick() {
+        alert('Not implemented.');
     }
 }

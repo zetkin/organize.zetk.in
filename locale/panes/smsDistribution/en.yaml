@@ -1,0 +1,7 @@
+confirmButton: Confirm
+editLink: Edit
+targets: Targets
+showTargetsLink: Show Targets
+editTargetQueryLink: Edit Target Query
+stats:
+  num_target_matches: '{ num_target_matches } Targets'
