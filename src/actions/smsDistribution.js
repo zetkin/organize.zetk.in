@@ -72,6 +72,21 @@ export function retrieveSmsDistributionTargets(id) {
     };
 }
 
+export function retrieveSmsDistributionMessages(id) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_SMS_DISTRIBUTION_MESSAGES,
+            meta: { id },
+            payload: {
+                promise: z.resource('orgs', orgId, 'sms_distributions', id,
+                    'messages').get()
+            }
+        });
+    };
+}
+
 export function updateSmsDistribution(id, data) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;

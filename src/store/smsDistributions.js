@@ -94,6 +94,24 @@ export default function smsDistributions(state = null, action) {
                 }),
             });
 
+        case types.RETRIEVE_SMS_DISTRIBUTION_MESSAGES + '_PENDING':
+            return Object.assign({}, state, {
+                messagesByDistribution: Object.assign({}, state.messagesByDistribution, {
+                    [action.meta.id]: createList(null, { isPending: true })
+                }),
+            });
+
+        case types.RETRIEVE_SMS_DISTRIBUTION_MESSAGES + '_FULFILLED':
+            return Object.assign({}, state, {
+                messagesByDistribution: Object.assign({}, state.messagesByDistribution, {
+                    [action.meta.id]: updateOrAddListItems(
+                        state.messagesByDistribution[action.meta.id],
+                        action.payload.data.data,
+                        { isPending: false, error: null }
+                    ),
+                }),
+            });
+
         case types.UPDATE_SMS_DISTRIBUTION + '_FULFILLED': {
             const distribution = {
                 ...action.payload.data.data,
@@ -133,6 +151,7 @@ export default function smsDistributions(state = null, action) {
             return state || {
                 distributionList: createList(),
                 targetsByDistribution: {},
+                messagesByDistribution: {},
             };
     }
 };
