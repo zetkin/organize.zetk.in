@@ -4,7 +4,10 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 
+import SmsDistributionForm from '../forms/SmsDistributionForm';
 import Button from '../misc/Button';
+
+import { createSmsDistribution } from '../../actions/smsDistribution';
 
 const mapStateToProps = (state, props) => ({
 });
@@ -19,7 +22,8 @@ export default class AddSmsDistributionPane extends PaneBase {
 
     renderPaneContent(data) {
         return (
-            <h1>Placeholder</h1>
+            <SmsDistributionForm key="form" ref="form"
+                onSubmit={this.onSubmit.bind(this)} />
         );
     }
 
@@ -32,6 +36,15 @@ export default class AddSmsDistributionPane extends PaneBase {
     }
 
     onSubmit(ev) {
-        alert('Not implemented.');
+        ev.preventDefault();
+
+        const paneId = this.props.paneData.id;
+        const values = this.refs.form.getValues();
+        const data = {
+            ...values,
+            target_filters: [],
+        };
+
+        this.props.dispatch(createSmsDistribution(data, paneId));
     }
 }
