@@ -106,14 +106,17 @@ export default class SmsDistributionPane extends PaneBase {
         };
     }
 
-    getPaneTitle(data) {
-        const { distributionItem } = this.props;
+    getPaneTitle({ isLoaded, title, state }) {
+        const formatMessage = this.props.intl.formatMessage;
 
-        if (!distributionItem || !distributionItem.data || distributionItem.isPending) {
+        if (!isLoaded) {
             return null;
         }
 
-        return this.props.distributionItem.data.title;
+        return formatMessage(
+            { id: `panes.smsDistribution.title.${state}` },
+            { title },
+        );
     }
 
     renderPaneContent(data) {

@@ -22,3 +22,8 @@ stats:
   num_delivered_messages: '{ num_delivered_messages } Delivered'
 targets: Targets
 target_matches_have_changed: The target query's matches have changed since confirming
+title:
+  draft: '{ title }'
+  confirm: 'Confirm "{ title }"'
+  sending: 'Sending "{ title }"'
+  sent: 'Sent "{ title }"'
