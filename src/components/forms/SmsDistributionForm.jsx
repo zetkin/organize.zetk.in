@@ -2,6 +2,7 @@ import React from 'react';
 
 import Form from './Form';
 import SmsMessageInput from './inputs/SmsMessageInput';
+import SmsSenderInput from './inputs/SmsSenderInput';
 import TextInput from './inputs/TextInput';
 
 export default class SmsDistributionForm extends React.Component {
@@ -21,8 +22,8 @@ export default class SmsDistributionForm extends React.Component {
             <Form className="SmsDistributionForm" ref="form" { ...this.props }>
                 <TextInput labelMsg="forms.smsDistribution.title" name="title"
                     initialValue={ distribution.title }/>
-                <TextInput labelMsg="forms.smsDistribution.sender" name="sender"
-                    initialValue={ distribution.sender } maxlength={11}/>
+                <SmsSenderInput labelMsg="forms.smsDistribution.sender" name="sender"
+                    initialValue={ distribution.sender }/>
                 <SmsMessageInput labelMsg="forms.smsDistribution.message" name="message"
                     initialValue={ distribution.message }/>
             </Form>
