@@ -18,15 +18,15 @@ export default class SmsDistributionMessageList extends React.Component {
     render() {
         const columns = [
             {
-                'first_name': 'lists.smsDistributionMessageList.header.firstName',
-                'last_name': 'lists.smsDistributionMessageList.header.lastName',
+                'target.first_name': 'lists.smsDistributionMessageList.header.firstName',
+                'target.last_name': 'lists.smsDistributionMessageList.header.lastName',
                 'phone': 'lists.smsDistributionMessageList.header.phone',
             }
         ];
 
         return (
             <List className="SmsDistributionMessageList"
-                defaultSortField={this.props.sortByDefault ? 'first_name' : null}
+                defaultSortField={this.props.sortByDefault ? 'target.first_name' : null}
                 headerColumns={columns} itemComponent={SmsDistributionMessageListItem}
                 list={this.props.messageList}
                 onItemClick={this.props.onItemClick}

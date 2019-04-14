@@ -11,9 +11,11 @@ import {
 } from '../../actions/smsDistribution';
 import { createList } from '../../utils/store';
 
+const REFRESH_INTERVAL = 10000;
+
 const mapStateToProps = (state, { paneData: { params: [id] } }) => ({
-    distribution: getListItemById(state.smsDistributions.distributionList, id),
-    messages: state.smsDistributions.messagesByDistribution[id],
+    distributionItem: getListItemById(state.smsDistributions.distributionList, id),
+    messageList: state.smsDistributions.messagesByDistribution[id],
 });
 
 @connect(mapStateToProps)
@@ -23,21 +25,57 @@ export default class SmsDistributionMessagesPane extends PaneBase {
         super.componentDidMount();
 
         const {
-            messages,
+            messageList,
             paneData: {
                 params: [distributionId],
             },
         } = this.props;
 
-        if (!messages) {
+        if (!messageList) {
             this.props.dispatch(retrieveSmsDistributionMessages(distributionId));
         }
     }
 
+    componentDidUpdate() {
+        const distributionItem = this.props.distributionItem;
+        const data = distributionItem && !distributionItem.isPending &&
+            distributionItem.data;
+        const state = data && data.state;
+
+        const { interval } = this.state;
+
+        if ((state === 'sending' || state === 'sent') && !interval) {
+            const interval = setInterval(
+                this.onRefreshInterval.bind(this),
+                REFRESH_INTERVAL,
+            );
+
+            this.setState({
+                interval,
+            });
+        }
+    }
+
+    componentWillUnmount() {
+        super.componentWillUnmount();
+
+        clearInterval(this.state.interval);
+    }
+
     getRenderData() {
+        const {
+            distributionItem,
+            messageList,
+        } = this.props;
+
+        const title = distributionItem && distributionItem.data &&
+            distributionItem.data.title;
+
+        const items = messageList && messageList.items;
+
         return {
-            distribution: this.props.distribution,
-            messages: this.props.messages,
+            title,
+            items,
         }
     }
 
@@ -47,19 +85,21 @@ export default class SmsDistributionMessagesPane extends PaneBase {
         return formatMessage({ id: 'panes.smsDistributionMessages.title' });
     }
 
-    getPaneSubTitle({ distribution }) {
-        return distribution && distribution.data && distribution.data.title;
+    getPaneSubTitle({ title }) {
+        return title;
     }
 
-    renderPaneContent({ messages }) {
-        if (!messages || messages.isPending) {
+    renderPaneContent({ items }) {
+        if (!items) {
             return <LoadingIndicator />;
         }
 
         const onItemClick = this.onItemClick.bind(this);
 
-        const filterMessages = (fn) => createList(messages.items.map(i => i
-            .data).filter(fn));
+        const filterMessages = (fn) => createList(items
+            .map(i => i.data)
+            .filter(fn)
+        );
 
         const queuedMessages = filterMessages(m => m.status === 'confirm' || m
             .status === 'created');
@@ -105,6 +145,12 @@ export default class SmsDistributionMessagesPane extends PaneBase {
                 </div>
             )),
         ];
+    }
+
+    onRefreshInterval() {
+        const distributionId = this.getParam(0);
+
+        this.props.dispatch(retrieveSmsDistributionMessages(distributionId));
     }
 
     onItemClick(item, event) {

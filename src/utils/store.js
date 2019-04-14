@@ -55,7 +55,6 @@ export function updateOrAddListItems(list, newItems, meta) {
     return Object.assign({}, newList, meta);
 }
 
-
 export function getListItemById(list, id) {
     if (!id)
         return null;

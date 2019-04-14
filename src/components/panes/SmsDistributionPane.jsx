@@ -15,6 +15,8 @@ import {
 } from '../../actions/smsDistribution';
 import { getListItemById } from '../../utils/store';
 
+const REFRESH_INTERVAL = 10000;
+
 const mapStateToProps = (state, props) => {
     const distributionId = props.paneData.params[0];
 
@@ -37,12 +39,6 @@ export default class SmsDistributionPane extends PaneBase {
         this.props.dispatch(retrieveSmsDistribution(distributionId));
     }
 
-    componentWillUnmount() {
-        super.componentWillUnmount();
-
-        clearInterval(this.state.interval);
-    }
-
     componentDidUpdate() {
         const distributionItem = this.props.distributionItem;
         const data = distributionItem && !distributionItem.isPending &&
@@ -52,6 +48,27 @@ export default class SmsDistributionPane extends PaneBase {
         if (data && !statsItem) {
             this.props.dispatch(retrieveSmsDistributionStats(data.id));
         }
+
+        const { interval } = this.state;
+
+        const state = data && data.state;
+
+        if ((state === 'sending' || state === 'sent') && !interval) {
+            const interval = setInterval(
+                this.onRefreshInterval.bind(this),
+                REFRESH_INTERVAL,
+            );
+
+            this.setState({
+                interval,
+            });
+        }
+    }
+
+    componentWillUnmount() {
+        super.componentWillUnmount();
+
+        clearInterval(this.state.interval);
     }
 
     getRenderData() {
@@ -384,6 +401,12 @@ export default class SmsDistributionPane extends PaneBase {
     }
 
     // Handlers
+
+    onRefreshInterval() {
+        const distributionId = this.getParam(0);
+
+        this.props.dispatch(retrieveSmsDistributionStats(distributionId));
+    }
 
     onEditSettingsClick() {
         const distributionId = this.getParam(0);
