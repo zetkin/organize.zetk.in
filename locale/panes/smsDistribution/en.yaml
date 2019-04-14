@@ -11,5 +11,8 @@ stats:
   num_messages: '{ num_messages } Messages'
   num_confirm_messages: '{ num_confirm_messages } To Confirm'
   num_failed_messages: '{ num_failed_messages } Failed'
+  num_created_messages: '{ num_created_messages } Created'
+  num_sent_messages: '{ num_created_messages } Sent'
+  num_delivered_messages: '{ num_created_messages } Delivered'
 targets: Targets
 target_matches_have_changed: The target query's matches have changed since confirming

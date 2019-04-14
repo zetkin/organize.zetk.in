@@ -12,6 +12,14 @@
     @include InfolistItem(title, $fa-var-tag);
     @include InfolistItem(sender, $fa-var-user);
     @include InfolistItem(message, $fa-var-comment);
+    @include InfolistItem(sent, $fa-var-calendar);
+    @include InfolistItem(num_messages, $fa-var-comment);
+    @include InfolistItem(num_confirm_messages, $fa-var-ellipsis-h);
+    @include InfolistItem(num_created_messages, $fa-var-square-o);
+    @include InfolistItem(num_sent_messages, $fa-var-check-square-o);
+    @include InfolistItem(num_delivered_messages, $fa-var-check-square);
+    @include InfolistItem(num_failed_messages, $fa-var-exclamation-triangle);
+    @include InfolistItem(num_charged_messages, $fa-var-usd);
 
     .InfoListItem-message {
         white-space: pre-wrap;

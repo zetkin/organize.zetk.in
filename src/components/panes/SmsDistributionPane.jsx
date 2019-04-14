@@ -69,6 +69,8 @@ export default class SmsDistributionPane extends PaneBase {
         const sender = data && data.sender;
         const message = data && data.message;
 
+        const sent = data && data.sent;
+
         const stats = data && data.statsItem && data.statsItem.data;
 
         return {
@@ -79,6 +81,8 @@ export default class SmsDistributionPane extends PaneBase {
             title,
             sender,
             message,
+
+            sent,
 
             stats,
         };
@@ -108,6 +112,8 @@ export default class SmsDistributionPane extends PaneBase {
             return this.renderDraftPaneContent(data);
         } else if (state === 'confirm') {
             return this.renderConfirmPaneContent(data);
+        } else if (state === 'sending') {
+            return this.renderSendingPaneContent(data);
         }
     }
 
@@ -253,6 +259,67 @@ export default class SmsDistributionPane extends PaneBase {
                 <Button key="confirm" className="SmsDistributionPane-sendButton"
                     labelMsg="panes.smsDistribution.sendButton"
                     onClick={this.onSendClick.bind(this)} />
+            </div>
+        );
+    }
+
+    // Sending
+
+    renderSendingPaneContent({ title, sender, message, sent, stats }) {
+        return (
+            <div>
+                <InfoList
+                    data={[{
+                        name: 'title',
+                        value: title,
+                    }, {
+                        name: 'sender',
+                        value: sender,
+                    }, {
+                        name: 'message',
+                        value: message,
+                    }, {
+                        name: 'sent',
+                        value: Date.create(sent, { fromUTC: true }).format(),
+                    }]}
+                />
+
+                <Msg tagName="h3" id="panes.smsDistribution.messages" />
+                {!stats ? (
+                    <LoadingIndicator />
+                ) : (
+                    <InfoList
+                        data={[{
+                            name: 'num_messages',
+                            msgId: 'panes.smsDistribution.stats.num_messages',
+                            msgValues: stats,
+                        }, {
+                            name: 'num_failed_messages',
+                            msgId: 'panes.smsDistribution.stats.num_failed_messages',
+                            msgValues: stats,
+                        }, {
+                            name: 'num_confirm_messages',
+                            msgId: 'panes.smsDistribution.stats.num_confirm_messages',
+                            msgValues: stats,
+                        }, {
+                            name: 'num_created_messages',
+                            msgId: 'panes.smsDistribution.stats.num_created_messages',
+                            msgValues: stats,
+                        }, {
+                            name: 'num_sent_messages',
+                            msgId: 'panes.smsDistribution.stats.num_sent_messages',
+                            msgValues: stats,
+                        }, {
+                            name: 'num_delivered_messages',
+                            msgId: 'panes.smsDistribution.stats.num_delivered_messages',
+                            msgValues: stats,
+                        }, {
+                            name: 'showMessagesLink',
+                            msgId: 'panes.smsDistribution.showMessagesLink',
+                            onClick: this.onShowMessagesClick.bind(this),
+                        }]}
+                    />
+                )}
             </div>
         );
     }
