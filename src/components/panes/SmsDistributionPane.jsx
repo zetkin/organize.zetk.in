@@ -91,6 +91,17 @@ export default class SmsDistributionPane extends PaneBase {
 
         const stats = data && data.statsItem && data.statsItem.data;
 
+        let amount;
+        if (stats) {
+            if (state === 'draft') {
+                const split = splitter(message);
+
+                amount = split.parts.length * stats.num_target_matches;
+            } else {
+                amount = stats.amount;
+            }
+        }
+
         return {
             isLoaded,
 
@@ -102,6 +113,7 @@ export default class SmsDistributionPane extends PaneBase {
 
             sent,
 
+            amount,
             stats,
         };
     }
@@ -165,14 +177,7 @@ export default class SmsDistributionPane extends PaneBase {
 
     // Draft
 
-    renderDraftPaneContent({ title, sender, message, stats }) {
-        let estimated_amount;
-        if (stats) {
-            const split = splitter(message);
-
-            estimated_amount = split.parts.length * stats.num_target_matches;
-        }
-
+    renderDraftPaneContent({ title, sender, message, amount, stats }) {
         return (
             <div>
                 <InfoList
@@ -201,7 +206,7 @@ export default class SmsDistributionPane extends PaneBase {
                     <InfoList data={[{
                         name: 'estimated_amount',
                         msgId: 'panes.smsDistribution.credits.estimated_amount',
-                        msgValues: { amount: estimated_amount },
+                        msgValues: { amount },
                     }]}/>
                 )}
 
@@ -236,6 +241,7 @@ export default class SmsDistributionPane extends PaneBase {
                 {this.renderCreditsStats(data)}
                 <Button key="confirm" className="SmsDistributionPane-confirmButton"
                     labelMsg="panes.smsDistribution.confirmButton"
+                    isDisabled={!data.amount}
                     onClick={this.onConfirmClick.bind(this)} />
             </div>
         );
@@ -243,7 +249,7 @@ export default class SmsDistributionPane extends PaneBase {
 
     // Confirm
 
-    renderConfirmPaneContent({ title, sender, message, stats }) {
+    renderConfirmPaneContent({ title, sender, message, amount, stats }) {
         return (
             <div>
                 <InfoList
@@ -266,7 +272,7 @@ export default class SmsDistributionPane extends PaneBase {
                     <InfoList data={[{
                         name: 'estimated_amount',
                         msgId: 'panes.smsDistribution.credits.estimated_amount',
-                        msgValues: stats,
+                        msgValues: { amount },
                     }]}/>
                 )}
 
@@ -319,7 +325,7 @@ export default class SmsDistributionPane extends PaneBase {
 
     // Sending
 
-    renderSendingPaneContent({ title, sender, message, sent, stats }) {
+    renderSendingPaneContent({ title, sender, message, sent, amount, stats }) {
         return (
             <div>
                 <InfoList
@@ -345,7 +351,7 @@ export default class SmsDistributionPane extends PaneBase {
                     <InfoList data={[{
                         name: 'reserved_amount',
                         msgId: 'panes.smsDistribution.credits.reserved_amount',
-                        msgValues: stats,
+                        msgValues: { amount },
                     }]}/>
                 )}
 
@@ -391,7 +397,7 @@ export default class SmsDistributionPane extends PaneBase {
 
     // Sent
 
-    renderSentPaneContent({ title, sender, message, sent, stats }) {
+    renderSentPaneContent({ title, sender, message, sent, amount, stats }) {
         return (
             <div>
                 <InfoList
@@ -417,7 +423,7 @@ export default class SmsDistributionPane extends PaneBase {
                     <InfoList data={[{
                         name: 'amount',
                         msgId: 'panes.smsDistribution.credits.amount',
-                        msgValues: stats,
+                        msgValues: { amount },
                     }]}/>
                 )}
 
