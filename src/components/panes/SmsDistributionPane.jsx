@@ -1,6 +1,7 @@
 import React from 'react';
 import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
+import { split as splitter } from 'split-sms';
 
 import PaneBase from './PaneBase';
 
@@ -162,6 +163,13 @@ export default class SmsDistributionPane extends PaneBase {
     // Draft
 
     renderDraftPaneContent({ title, sender, message, stats }) {
+        let estimated_amount;
+        if (stats) {
+            const split = splitter(message);
+
+            estimated_amount = split.parts.length * stats.num_target_matches;
+        }
+
         return (
             <div>
                 <InfoList
@@ -181,6 +189,18 @@ export default class SmsDistributionPane extends PaneBase {
                         onClick: this.onEditSettingsClick.bind(this),
                     }]}
                 />
+
+
+                <Msg tagName="h3" id="panes.smsDistribution.credits.h" />
+                {!stats ? (
+                    <LoadingIndicator />
+                ) : (
+                    <InfoList data={[{
+                        name: 'estimated_amount',
+                        msgId: 'panes.smsDistribution.credits.estimated_amount',
+                        msgValues: { amount: estimated_amount },
+                    }]}/>
+                )}
 
                 <Msg tagName="h3" id="panes.smsDistribution.targets" />
                 {!stats ? (
@@ -235,6 +255,18 @@ export default class SmsDistributionPane extends PaneBase {
                         value: message,
                     }]}
                 />
+
+                <Msg tagName="h3" id="panes.smsDistribution.credits.h" />
+                {!stats ? (
+                    <LoadingIndicator />
+                ) : (
+                    <InfoList data={[{
+                        name: 'estimated_amount',
+                        msgId: 'panes.smsDistribution.credits.estimated_amount',
+                        msgValues: stats,
+                    }]}/>
+                )}
+
 
                 <Msg tagName="h3" id="panes.smsDistribution.messages" />
                 {!stats ? (
@@ -303,6 +335,17 @@ export default class SmsDistributionPane extends PaneBase {
                     }]}
                 />
 
+                <Msg tagName="h3" id="panes.smsDistribution.credits.h" />
+                {!stats ? (
+                    <LoadingIndicator />
+                ) : (
+                    <InfoList data={[{
+                        name: 'reserved_amount',
+                        msgId: 'panes.smsDistribution.credits.reserved_amount',
+                        msgValues: stats,
+                    }]}/>
+                )}
+
                 <Msg tagName="h3" id="panes.smsDistribution.messages" />
                 {!stats ? (
                     <LoadingIndicator />
@@ -363,6 +406,17 @@ export default class SmsDistributionPane extends PaneBase {
                         value: Date.create(sent, { fromUTC: true }).format(),
                     }]}
                 />
+
+                <Msg tagName="h3" id="panes.smsDistribution.credits.h" />
+                {!stats ? (
+                    <LoadingIndicator />
+                ) : (
+                    <InfoList data={[{
+                        name: 'amount',
+                        msgId: 'panes.smsDistribution.credits.amount',
+                        msgValues: stats,
+                    }]}/>
+                )}
 
                 <Msg tagName="h3" id="panes.smsDistribution.messages" />
                 {!stats ? (

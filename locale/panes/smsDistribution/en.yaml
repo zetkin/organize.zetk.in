@@ -1,4 +1,9 @@
 confirmButton: Confirm
+credits:
+  amount: 'Cost: { amount } credits'
+  estimated_amount: 'Estimated Cost: { amount } credits'
+  h: Credits
+  reserved_amount: 'Reserved Cost: { amount } credits'
 editLink: Edit
 editTargetQueryLink: Edit Target Query
 messages: Messages
