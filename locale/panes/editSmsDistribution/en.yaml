@@ -1,0 +1,4 @@
+notDraft: Cannot edit non-draft distributions.
+pendingTitle: Edit SMS Distribution
+saveButton: Save
+title: 'Edit: { title }'
