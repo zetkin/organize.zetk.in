@@ -114,6 +114,8 @@ export default class SmsDistributionPane extends PaneBase {
             return this.renderConfirmPaneContent(data);
         } else if (state === 'sending') {
             return this.renderSendingPaneContent(data);
+        } else if (state === 'sent') {
+            return this.renderSentPaneContent(data);
         }
     }
 
@@ -299,7 +301,64 @@ export default class SmsDistributionPane extends PaneBase {
                             msgValues: stats,
                         }, {
                             name: 'num_confirm_messages',
-                            msgId: 'panes.smsDistribution.stats.num_confirm_messages',
+                            msgId: 'panes.smsDistribution.stats.num_confirmed_messages',
+                            msgValues: stats,
+                        }, {
+                            name: 'num_created_messages',
+                            msgId: 'panes.smsDistribution.stats.num_created_messages',
+                            msgValues: stats,
+                        }, {
+                            name: 'num_sent_messages',
+                            msgId: 'panes.smsDistribution.stats.num_sent_messages',
+                            msgValues: stats,
+                        }, {
+                            name: 'num_delivered_messages',
+                            msgId: 'panes.smsDistribution.stats.num_delivered_messages',
+                            msgValues: stats,
+                        }, {
+                            name: 'showMessagesLink',
+                            msgId: 'panes.smsDistribution.showMessagesLink',
+                            onClick: this.onShowMessagesClick.bind(this),
+                        }]}
+                    />
+                )}
+            </div>
+        );
+    }
+
+    // Sent
+
+    renderSentPaneContent({ title, sender, message, sent, stats }) {
+        return (
+            <div>
+                <InfoList
+                    data={[{
+                        name: 'title',
+                        value: title,
+                    }, {
+                        name: 'sender',
+                        value: sender,
+                    }, {
+                        name: 'message',
+                        value: message,
+                    }, {
+                        name: 'sent',
+                        value: Date.create(sent, { fromUTC: true }).format(),
+                    }]}
+                />
+
+                <Msg tagName="h3" id="panes.smsDistribution.messages" />
+                {!stats ? (
+                    <LoadingIndicator />
+                ) : (
+                    <InfoList
+                        data={[{
+                            name: 'num_messages',
+                            msgId: 'panes.smsDistribution.stats.num_messages',
+                            msgValues: stats,
+                        }, {
+                            name: 'num_failed_messages',
+                            msgId: 'panes.smsDistribution.stats.num_failed_messages',
                             msgValues: stats,
                         }, {
                             name: 'num_created_messages',
