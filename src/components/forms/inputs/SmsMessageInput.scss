@@ -1,0 +1,17 @@
+.SmsMessageInput {
+    .InfoListItem-partCount::before {
+        @include icon($fa-var-comment);
+    }
+
+    .InfoListItem-length::before {
+        @include icon($fa-var-font);
+    }
+
+    .InfoListItem-remainingInPart::before {
+        @include icon($fa-var-ellipsis-h);
+    }
+
+    .InfoListItem-unicodeWarning::before {
+        @include icon($fa-var-exclamation-triangle);
+    }
+}

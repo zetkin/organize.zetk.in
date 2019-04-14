@@ -71,6 +71,7 @@
     "reselect": "^3.0.1",
     "run-sequence": "^1.0.2",
     "scroll": "^2.0.0",
+    "split-sms": "^0.1.7",
     "sugar-date": "^2.0.4",
     "webpack": "^2.2.1",
     "worker-loader": "^0.8.1",

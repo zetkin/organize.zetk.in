@@ -1,3 +1,8 @@
 message: Message
+messageInput:
+  length: '{ length } Characters'
+  partCount: '{ partCount } Parts'
+  remainingInPart: '{ remainingInPart } Characters Remaining in Part'
+  unicodeWarning: If you use emojis, you will have a lot fever characters per message part.
 sender: Sender
 title: Title
