@@ -177,12 +177,63 @@ export default function smsDistributions(state = null, action) {
                 creditsItem: createListItem(action.payload.data.data),
             });
 
+        case types.BEGIN_SMS_DISTRIBUTION_CREDIT_PURCHASE:
+            return Object.assign({}, state, {
+                purchases: Object.assign({}, state.purchases, {
+                    [action.meta.id]: {
+                        isPending: false,
+                        error: null,
+                        data: null,
+                    },
+                }),
+            });
+
+        case types.COMPLETE_SMS_DISTRIBUTION_CREDIT_PURCHASE + '_PENDING':
+            return Object.assign({}, state, {
+                purchases: Object.assign({}, state.purchases, {
+                    [action.meta.id]: {
+                        isPending: true,
+                        error: null,
+                        data: null,
+                    },
+                }),
+            });
+        case types.COMPLETE_SMS_DISTRIBUTION_CREDIT_PURCHASE + '_REJECTED':
+            return Object.assign({}, state, {
+                purchases: Object.assign({}, state.purchases, {
+                    [action.meta.id]: {
+                        isPending: false,
+                        error: action.payload,
+                        data: null,
+                    },
+                }),
+            });
+
+        case types.COMPLETE_SMS_DISTRIBUTION_CREDIT_PURCHASE + '_FULFILLED':
+            return Object.assign({}, state, {
+                purchases: Object.assign({}, state.purchases, {
+                    [action.meta.id]: {
+                        isPending: false,
+                        error: null,
+                        data: action.payload.data.data,
+                    },
+                }),
+            });
+
+        case types.END_SMS_DISTRIBUTION_CREDIT_PURCHASE:
+            return Object.assign({}, state, {
+                purchases: Object.assign({}, state.purchases, {
+                    [action.meta.id]: null,
+                }),
+            });
+
         default:
             return state || {
                 distributionList: createList(),
                 targetsByDistribution: {},
                 messagesByDistribution: {},
                 creditsItem: null,
+                purchases: {},
             };
     }
 };

@@ -1,0 +1,62 @@
+.PurchaseSmsDistributionCreditsPane {
+    form {
+        @include form-base;
+    }
+
+    input {
+        @include input-base;
+    }
+
+    @mixin containerIcon($name, $icon) {
+        &-#{$name}Container label::before {
+            @include icon($icon);
+        }
+    }
+
+    @include containerIcon(amount, tag);
+    @include containerIcon(cost, usd);
+
+    &-tiers {
+        font-variant-numeric: tabular-nums;
+    }
+    &-tierMinQuantity,
+    &-tierMaxQuantity,
+    &-tierUnitPrice {
+        text-align: right;
+    }
+
+    &-error {
+        margin: 0.5em 0;
+
+        font-weight: bold;
+    }
+
+    &-checkoutCost {
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.5em;
+    }
+
+    @include containerIcon(name, $fa-var-user);
+    @include containerIcon(cardNumber, $fa-var-credit-card);
+    @include containerIcon(expiry, $fa-var-calendar);
+    @include containerIcon(cvc, $fa-var-cc);
+
+    .StripeElement {
+        @include input-base;
+
+        background: white;
+    }
+
+    &-checkoutCost {
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.5em;
+    }
+
+    .StripeElement {
+        @include input-base;
+
+        background: white;
+    }
+}

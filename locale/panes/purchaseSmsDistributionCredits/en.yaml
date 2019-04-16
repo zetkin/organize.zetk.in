@@ -1,0 +1,21 @@
+amountLabel: Amount
+cardNumberLabel: Card Number
+checkoutButton: Checkout
+checkoutCost: '{ cost } SEK'
+cost: '{ amount } SEK'
+costLabel: Cost
+cvcLabel: CVC
+expiryLabel: Expiry Date
+done:
+  cost: '{ cost } SEK'
+  credits: '{ credits } Credits'
+  receipt: View Receipt
+nameLabel: Cardholder Name
+payButton: Pay
+tierUnitPrice: '{ unitPrice } SEK / credit'
+tiersTitle: Price Tiers
+title:
+  cart: Purchase Credits
+  checkout: Payment Details
+  done: Payment Confirmation
+toFewCredits: 'You must purchase at least { minCredits } credits.'

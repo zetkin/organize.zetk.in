@@ -114,3 +114,45 @@ export function retrieveSmsDistributionCredits() {
         });
     };
 }
+
+export function beginSmsDistributionCreditPurchase(id) {
+    return {
+        type: types.BEGIN_SMS_DISTRIBUTION_CREDIT_PURCHASE,
+        meta: { id },
+    };
+}
+
+export function completeSmsDistributionCreditPurchase(id, stripe, name, credits, cost) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.COMPLETE_SMS_DISTRIBUTION_CREDIT_PURCHASE,
+            meta: { id },
+            payload: {
+                promise: stripe
+                    .createToken({ name })
+                    .then(({ error, token }) => {
+                        if (error) {
+                            throw error;
+                        }
+
+                        return z
+                            .resource('orgs', orgId, 'sms_distribution_credit_transactions')
+                            .post({
+                                stripe_source_token_id: token.id,
+                                credit_amount: credits,
+                                charge_amount: cost,
+                            })
+                    })
+            },
+        });
+    };
+}
+
+export function endSmsDistributionCreditPurchase(id) {
+    return {
+        type: types.END_SMS_DISTRIBUTION_CREDIT_PURCHASE,
+        meta: { id },
+    };
+}

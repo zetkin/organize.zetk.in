@@ -55,6 +55,7 @@ import MoveParticipantsPane from './MoveParticipantsPane';
 import PersonPane from './PersonPane';
 import PersonTimelinePane from './PersonTimelinePane';
 import PlaceLocationPane from './PlaceLocationPane';
+import PurchaseSmsDistributionCreditsPane from './PurchaseSmsDistributionCreditsPane';
 import QueryPane from './QueryPane';
 import QueryDiffPane from './QueryDiffPane';
 import RoutePane from './RoutePane';
@@ -129,6 +130,7 @@ var _panes = {
     'moveparticipants': MoveParticipantsPane,
     'person': PersonPane,
     'placelocation': PlaceLocationPane,
+    'purchasesmsdistributioncredits': PurchaseSmsDistributionCreditsPane,
     'query': QueryPane,
     'querydiff': QueryDiffPane,
     'route': RoutePane,
