@@ -353,15 +353,29 @@ export default class SmsDistributionPane extends PaneBase {
     }
 
     renderConfirmPaneFooter(data) {
+        const { stats, availableCredits } = data;
+
+
         return (
             <div>
                 {this.renderCreditsStats(data)}
-                <Button key="revertToDraft" className="SmsDistributionPane-revertToDraftButton"
+                <Button
+                    className="SmsDistributionPane-revertToDraftButton"
                     labelMsg="panes.smsDistribution.revertToDraftButton"
                     onClick={this.onRevertToDraftClick.bind(this)} />
-                <Button key="confirm" className="SmsDistributionPane-sendButton"
-                    labelMsg="panes.smsDistribution.sendButton"
-                    onClick={this.onSendClick.bind(this)} />
+                {stats && (
+                    stats.amount > availableCredits ? (
+                        <Button
+                            className="SmsDistributionPane-purchaseCreditsButton"
+                            labelMsg="panes.smsDistribution.purchaseCreditsButton"
+                            onClick={this.onPurchaseCreditsClick.bind(this)} />
+                    ) : (
+                        <Button
+                            className="SmsDistributionPane-sendButton"
+                            labelMsg="panes.smsDistribution.sendButton"
+                            onClick={this.onPurchaseCreditsClick.bind(this)} />
+                    )
+                )}
             </div>
         );
     }
@@ -544,6 +558,10 @@ export default class SmsDistributionPane extends PaneBase {
         this.props.dispatch(updateSmsDistribution(distributionId, {
             state: 'confirm',
         }));
+    }
+
+    onPurchaseCreditsClick() {
+        this.openPane('purchasesmsdistributioncredits');
     }
 
     onSendClick() {
