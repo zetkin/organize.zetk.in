@@ -4,6 +4,10 @@ credits:
   estimated_amount: 'Estimated Cost: { amount } credits'
   h: Credits
   reserved_amount: 'Reserved Cost: { amount } credits'
+creditsInfo:
+  content: '{ amount } / { availableCredits } available'
+  title: Estimated credits to be used
+  warning: There are not enough available credits to send the message.
 editLink: Edit
 editTargetQueryLink: Edit Target Query
 messages: Messages

@@ -167,11 +167,22 @@ export default function smsDistributions(state = null, action) {
             }
         }
 
+        case types.RETRIEVE_SMS_DISTRIBUTION_CREDITS + '_PENDING':
+            return Object.assign({}, state, {
+                creditsItem: createListItem({}, { isPending: true }),
+            });
+
+        case types.RETRIEVE_SMS_DISTRIBUTION_CREDITS + '_FULFILLED':
+            return Object.assign({}, state, {
+                creditsItem: createListItem(action.payload.data.data),
+            });
+
         default:
             return state || {
                 distributionList: createList(),
                 targetsByDistribution: {},
                 messagesByDistribution: {},
+                creditsItem: null,
             };
     }
 };

@@ -13,6 +13,7 @@ import {
     retrieveSmsDistribution,
     retrieveSmsDistributionStats,
     updateSmsDistribution,
+    retrieveSmsDistributionCredits,
 } from '../../actions/smsDistribution';
 import { getListItemById } from '../../utils/store';
 
@@ -26,6 +27,7 @@ const mapStateToProps = (state, props) => {
             state.smsDistributions.distributionList,
             distributionId,
         ),
+        creditsItem: state.smsDistributions.creditsItem,
     };
 };
 
@@ -38,6 +40,7 @@ export default class SmsDistributionPane extends PaneBase {
         let distributionId = this.getParam(0);
 
         this.props.dispatch(retrieveSmsDistribution(distributionId));
+        this.props.dispatch(retrieveSmsDistributionCredits());
     }
 
     componentDidUpdate() {
@@ -75,6 +78,7 @@ export default class SmsDistributionPane extends PaneBase {
     getRenderData() {
         const {
             distributionItem,
+            creditsItem,
         } = this.props;
 
         const isLoaded = distributionItem && !distributionItem.isPending && distributionItem.data;
@@ -89,18 +93,19 @@ export default class SmsDistributionPane extends PaneBase {
 
         const sent = data && data.sent;
 
-        const stats = data && data.statsItem && data.statsItem.data;
+        let stats = data && data.statsItem && data.statsItem.data;
 
-        let amount;
-        if (stats) {
-            if (state === 'draft') {
-                const split = splitter(message);
+        if (stats && state === 'draft') {
+            const split = splitter(message);
 
-                amount = split.parts.length * stats.num_target_matches;
-            } else {
-                amount = stats.amount;
-            }
+            stats.amount = split.parts.length * stats.num_target_matches;
         }
+
+        const creditsIsLoaded = !!(creditsItem && !creditsItem.isPending && creditsItem.data);
+
+        const creditsData = creditsItem && creditsItem.data;
+
+        const availableCredits = creditsData && creditsData.available;
 
         return {
             isLoaded,
@@ -113,8 +118,10 @@ export default class SmsDistributionPane extends PaneBase {
 
             sent,
 
-            amount,
             stats,
+
+            creditsIsLoaded,
+            availableCredits,
         };
     }
 
@@ -169,15 +176,49 @@ export default class SmsDistributionPane extends PaneBase {
         }
     }
 
-    renderCreditsStats(data) {
+    renderCreditsStats({ stats, creditsIsLoaded, availableCredits }) {
+        if (!stats || !creditsIsLoaded) {
+            return <LoadingIndicator />;
+        }
+
+        const { amount } = stats;
+
+        const cappedAvailableCredits = Math.max(1, availableCredits);
+        const cappedAmount = Math.max(0, Math.min(amount, cappedAvailableCredits));
+        const relativeWidth = cappedAmount / cappedAvailableCredits;
+
         return (
-            <h3 key="credits">CREDITS PLACEHOLDER</h3>
+            <div className="SmsDistributionPane-creditsInfo">
+                <div className="SmsDistributionPane-creditsInfoBar">
+                    <div
+                        className="SmsDistributionPane-creditsInfoBarInner"
+                        style={{ width: 100 * relativeWidth + '%' }}
+                    />
+                </div>
+
+                <div className="SmsDistributionPane-creditsInfoBarMessage">
+                    <div className="SmsDistributionPane-creditsInfoBarMessageTitle">
+                        <Msg id="panes.smsDistribution.creditsInfo.title"/>
+                    </div>
+
+                    <div className="SmsDistributionPane-creditsInfoBarMessageContent">
+                        <Msg id="panes.smsDistribution.creditsInfo.content"
+                            values={{ amount, availableCredits: availableCredits }}/>
+                    </div>
+                </div>
+
+                {amount > availableCredits && (
+                    <div className="SmsDistributionPane-creditsInfoBarWarning">
+                        <Msg id="panes.smsDistribution.creditsInfo.warning"/>
+                    </div>
+                )}
+            </div>
         )
     }
 
     // Draft
 
-    renderDraftPaneContent({ title, sender, message, amount, stats }) {
+    renderDraftPaneContent({ title, sender, message, stats }) {
         return (
             <div>
                 <InfoList
@@ -206,7 +247,7 @@ export default class SmsDistributionPane extends PaneBase {
                     <InfoList data={[{
                         name: 'estimated_amount',
                         msgId: 'panes.smsDistribution.credits.estimated_amount',
-                        msgValues: { amount },
+                        msgValues: stats,
                     }]}/>
                 )}
 
@@ -236,12 +277,14 @@ export default class SmsDistributionPane extends PaneBase {
     }
 
     renderDraftPaneFooter(data) {
+        const { stats } = data;
+
         return (
             <div>
                 {this.renderCreditsStats(data)}
                 <Button key="confirm" className="SmsDistributionPane-confirmButton"
                     labelMsg="panes.smsDistribution.confirmButton"
-                    isDisabled={!data.amount}
+                    isDisabled={!stats || !stats.amount}
                     onClick={this.onConfirmClick.bind(this)} />
             </div>
         );
@@ -249,7 +292,7 @@ export default class SmsDistributionPane extends PaneBase {
 
     // Confirm
 
-    renderConfirmPaneContent({ title, sender, message, amount, stats }) {
+    renderConfirmPaneContent({ title, sender, message, stats }) {
         return (
             <div>
                 <InfoList
@@ -272,7 +315,7 @@ export default class SmsDistributionPane extends PaneBase {
                     <InfoList data={[{
                         name: 'estimated_amount',
                         msgId: 'panes.smsDistribution.credits.estimated_amount',
-                        msgValues: { amount },
+                        msgValues: stats,
                     }]}/>
                 )}
 
@@ -325,7 +368,7 @@ export default class SmsDistributionPane extends PaneBase {
 
     // Sending
 
-    renderSendingPaneContent({ title, sender, message, sent, amount, stats }) {
+    renderSendingPaneContent({ title, sender, message, sent, stats }) {
         return (
             <div>
                 <InfoList
@@ -351,7 +394,7 @@ export default class SmsDistributionPane extends PaneBase {
                     <InfoList data={[{
                         name: 'reserved_amount',
                         msgId: 'panes.smsDistribution.credits.reserved_amount',
-                        msgValues: { amount },
+                        msgValues: stats,
                     }]}/>
                 )}
 
@@ -397,7 +440,7 @@ export default class SmsDistributionPane extends PaneBase {
 
     // Sent
 
-    renderSentPaneContent({ title, sender, message, sent, amount, stats }) {
+    renderSentPaneContent({ title, sender, message, sent, stats }) {
         return (
             <div>
                 <InfoList
@@ -423,7 +466,7 @@ export default class SmsDistributionPane extends PaneBase {
                     <InfoList data={[{
                         name: 'amount',
                         msgId: 'panes.smsDistribution.credits.amount',
-                        msgValues: { amount },
+                        msgValues: stats,
                     }]}/>
                 )}
 

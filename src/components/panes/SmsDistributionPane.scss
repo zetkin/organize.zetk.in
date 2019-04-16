@@ -1,4 +1,4 @@
-.PaneBase.SmsDistributionPane {
+.SmsDistributionPane {
     @mixin InfolistItem($name, $icon) {
         .InfoListItem-#{$name} {
             &::before {
@@ -23,5 +23,43 @@
 
     .InfoListItem-message {
         white-space: pre-wrap;
+    }
+
+    &-creditsInfo {
+    }
+    &-creditsInfoBar {
+        position: relative;
+        height: 2em;
+        margin-bottom: 0.5em;
+        background-color: darken($c-ui-bg, 5);
+        border-radius: 3px;
+        overflow: hidden;
+    }
+    &-creditsInfoBarInner {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        background: $c-brand-main;
+    }
+    &-creditsInfoBarMessage {
+        position: relative;
+        margin-bottom: 1em;
+        text-align: left;
+    }
+    &-creditsInfoBarMessageTitle {
+        font-weight: bold;
+    }
+    &-creditsInfoBarMessageContent {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    &-creditsInfoBarWarning {
+        margin-bottom: 1em;
+
+        &::before {
+            @include icon($fa-var-exclamation-triangle);
+        }
     }
 }

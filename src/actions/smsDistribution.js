@@ -100,3 +100,17 @@ export function updateSmsDistribution(id, data) {
         });
     }
 }
+
+export function retrieveSmsDistributionCredits() {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_SMS_DISTRIBUTION_CREDITS,
+            payload: {
+                promise: z.resource('orgs', orgId, 'sms_distribution_credits')
+                    .get()
+            }
+        });
+    };
+}
