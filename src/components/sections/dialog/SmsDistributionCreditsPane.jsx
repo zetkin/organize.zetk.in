@@ -11,9 +11,12 @@ import {
 } from '../../../actions/smsDistribution';
 import Button from '../../misc/Button';
 import Link from '../../../components/misc/Link';
+import InfoList from '../../misc/InfoList';
 
 const cn = (suffix = '') => `SmsDistributionCreditsPane${suffix}`;
 const msgId = suffix => `panes.smsDistributionCredits.${suffix}`;
+
+const oreToKrona = (ore = 0) => (ore / 100).toFixed(2);
 
 const mapStateToProps = state => ({
     creditsItem: state.smsDistributions.creditsItem,
@@ -48,7 +51,13 @@ export default class SmsDistributionCreditsPane extends RootPaneBase {
 
         const creditsData = creditsItem.data;
 
-        const availableCredits = creditsData.available;
+        const {
+            available: availableCredits,
+            stats: {
+                sum_charges_this_year: sumOfChargesThisYear,
+                num_charges_this_year: numberOfChargesThisYear,
+            },
+        } = creditsData;
 
         return {
             formatMessage,
@@ -56,6 +65,8 @@ export default class SmsDistributionCreditsPane extends RootPaneBase {
             isLoaded,
 
             availableCredits,
+            sumOfChargesThisYear,
+            numberOfChargesThisYear,
         };
     }
 
@@ -76,6 +87,11 @@ export default class SmsDistributionCreditsPane extends RootPaneBase {
                     </div>
                     <div className={cn('-col')}>
                         {this.renderAbout(data)}
+                    </div>
+                </div>
+                <div className={cn('-row')}>
+                    <div className={cn('-col')}>
+                        {this.renderPurchaseHistory(data)}
                     </div>
                 </div>
             </div>
@@ -122,7 +138,33 @@ export default class SmsDistributionCreditsPane extends RootPaneBase {
         )
     }
 
+    renderPurchaseHistory({ sumOfChargesThisYear, numberOfChargesThisYear }) {
+        return (
+            <div className={cn('-purchaseHistory')}>
+                <Msg tagName="h3" id={msgId('purchaseHistory.title')} />
+
+                <div className={cn('-purchaseHistoryInner')}>
+                    <div className={cn('-purchaseHistoryCostThisYear')}>
+                        <Msg id={msgId('purchaseHistory.costThisYear')}
+                            values={{ cost: oreToKrona(sumOfChargesThisYear) }} />
+                    </div>
+                    <div className={cn('-purchaseHistoryCountThisYear')}>
+                        <Msg id={msgId('purchaseHistory.countThisYear')}
+                            values={{ count: numberOfChargesThisYear }} />
+                    </div>
+                    <Link msgId={msgId('purchaseHistory.viewAllLink')}
+                        className={cn('-purchaseHistoryViewAllLink')}
+                        onClick={this.onViewAllPurchasesClick.bind(this)} />
+                </div>
+            </div>
+        )
+    }
+
     onPurchaseCreditsClick() {
         this.openPane('purchasesmsdistributioncredits');
+    }
+
+    onViewAllPurchasesClick() {
+        this.openPane('smsdistributioncreditpurchases');
     }
 }

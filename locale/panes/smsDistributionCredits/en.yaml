@@ -8,3 +8,8 @@ availableCredits:
   credits: '{ credits }'
   purchaseButton: Purchase Credits
   title: Available Credits
+purchaseHistory:
+  title: Purchase History
+  costThisYear: '{ cost } SEK this year'
+  countThisYear: '{ count } purchases'
+  viewAllLink: View full history

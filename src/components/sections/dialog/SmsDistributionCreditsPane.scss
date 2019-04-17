@@ -44,4 +44,37 @@
             }
         }
     }
+
+    &-purchaseHistory {
+        &Inner {
+            position: relative;
+            background: white;
+            padding: 3em 3em 5em;
+        }
+
+        &CostThisYear {
+            font-weight: bold;
+
+            &::before {
+                @include icon($fa-var-usd);
+            }
+        }
+        &CountThisYear {
+            font-weight: bold;
+
+            &::before {
+                @include icon($fa-var-credit-card);
+            }
+        }
+
+        &ViewAllLink {
+            position: absolute;
+            bottom: 2em;
+            right: 3em;
+
+            &:before {
+                @include icon($fa-var-history);
+            }
+        }
+    }
 }
