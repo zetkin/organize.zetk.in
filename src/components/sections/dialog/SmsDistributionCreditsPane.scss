@@ -5,6 +5,30 @@
         @include col(1, 2);
     }
 
+    &-about {
+        &Inner {
+            position: relative;
+            background: white;
+            padding: 3em 3em 5em;
+        }
+
+        &Content {
+            a {
+                text-decoration: underline;
+            }
+        }
+
+        &ReadMoreLink {
+            position: absolute;
+            bottom: 2em;
+            right: 3em;
+
+            &:before {
+                @include icon($fa-var-book);
+            }
+        }
+    }
+
     &-availableCredits {
         &Inner {
             background: white;
