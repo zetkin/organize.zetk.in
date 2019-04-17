@@ -28,6 +28,7 @@ subSections:
         assignments: Assignments
         calls: Call log
         sms-distributions: SMS Distributions
+        sms-distribution-credits: SMS Distribution Credits
     maps:
         locations: Locations
         overview: Overview

@@ -6,6 +6,7 @@ import AllCanvassAssignmentsPane from './canvass/AllCanvassAssignmentsPane';
 import AllRoutesPane from './canvass/AllRoutesPane';
 import AllVisitsPane from './canvass/AllVisitsPane';
 import AllSmsDistributionsPane from './dialog/AllSmsDistributionsPane';
+import SmsDistributionCreditsPane from './dialog/SmsDistributionCreditsPane';
 import CallLogPane from './dialog/CallLogPane';
 import CampaignPlaybackPane from './campaign/CampaignPlaybackPane';
 import GroupListPane from './people/GroupListPane';
@@ -53,6 +54,8 @@ export const SECTIONS = {
                 startPane: CallLogPane },
             { path: 'sms-distributions',
                 startPane: AllSmsDistributionsPane },
+            { path: 'sms-distribution-credits',
+                startPane: SmsDistributionCreditsPane },
         ],
     },
     maps: {

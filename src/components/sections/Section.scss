@@ -211,6 +211,14 @@
              }
         }
 
+        .Section-navItem-sms-distribution-credits a:before {
+            background-image: url(/static/images/section-nav/dialog-sms-distribution-credits.png);
+
+            @include small-screen {
+                display: none;
+             }
+        }
+
         .Section-navItem-startassignment a:before {
             background-image: url(/static/images/section-nav/dialog-startassignment.png);
 
