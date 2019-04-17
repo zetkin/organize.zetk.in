@@ -1,0 +1,23 @@
+.SmsDistributionCreditsPane {
+    &-row {
+    }
+    &-col {
+        @include col(1, 2);
+    }
+
+    &-availableCredits {
+        &Inner {
+            background: white;
+            padding: 1em;
+            font-size: 3em;
+        }
+
+        button {
+            width: 100%;
+
+            &:before {
+                @include icon($fa-var-plus);
+            }
+        }
+    }
+}
