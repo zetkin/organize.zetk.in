@@ -45,6 +45,32 @@
         }
     }
 
+    &-balanceHistory {
+        &Inner {
+            position: relative;
+            background: white;
+            padding: 3em 3em 5em;
+        }
+
+        &Content {
+            width: 100%;
+
+            background: rgba($c-brand-main, 0.10);
+            fill: $c-brand-main;
+            stroke: none;
+        }
+
+        &ViewAllLink {
+            position: absolute;
+            bottom: 2em;
+            right: 3em;
+
+            &:before {
+                @include icon($fa-var-history);
+            }
+        }
+    }
+
     &-purchaseHistory {
         &Inner {
             position: relative;

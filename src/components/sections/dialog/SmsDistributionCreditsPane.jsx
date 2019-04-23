@@ -53,11 +53,33 @@ export default class SmsDistributionCreditsPane extends RootPaneBase {
 
         const {
             available: availableCredits,
-            stats: {
-                sum_charges_this_year: sumOfChargesThisYear,
-                num_charges_this_year: numberOfChargesThisYear,
-            },
+            stats,
         } = creditsData;
+
+        const statsKeys = Object.keys(stats).sort();
+
+        const now = new Date();
+        const year = now.getFullYear();
+
+        const numberOfChargesThisYear = statsKeys
+            .filter(k => k.startsWith(year))
+            .reduce((num, key) => num + stats[key].num_purchase, 0);
+        const sumOfChargesThisYear = statsKeys
+            .filter(k => k.startsWith(year))
+            .reduce((sum, key) => sum + stats[key].sum_purchase_charge, 0);
+
+        const balanceHistory = [];
+        statsKeys.forEach((k, i) => {
+            const previousBalance = balanceHistory[i - 1] || 0;
+            const balance = previousBalance + stats[k].sum;
+
+            balanceHistory.push(balance);
+        });
+
+        balanceHistory.splice(0, balanceHistory.length - 12);
+        while (balanceHistory.length < 12) {
+            balanceHistory.splice(0, 0, 0);
+        }
 
         return {
             formatMessage,
@@ -67,6 +89,7 @@ export default class SmsDistributionCreditsPane extends RootPaneBase {
             availableCredits,
             sumOfChargesThisYear,
             numberOfChargesThisYear,
+            balanceHistory,
         };
     }
 
@@ -90,6 +113,9 @@ export default class SmsDistributionCreditsPane extends RootPaneBase {
                     </div>
                 </div>
                 <div className={cn('-row')}>
+                    <div className={cn('-col')}>
+                        {this.renderBalanceHistory(data)}
+                    </div>
                     <div className={cn('-col')}>
                         {this.renderPurchaseHistory(data)}
                     </div>
@@ -138,6 +164,40 @@ export default class SmsDistributionCreditsPane extends RootPaneBase {
         )
     }
 
+    renderBalanceHistory({ balanceHistory }) {
+        const monthWidth = 10;
+        const height = 50;
+        const topPadding = 5;
+
+        const maxBalance = balanceHistory.reduce((a, b) => Math.max(a, b));
+
+        const points = [
+            [11 * monthWidth, height],
+            [0, height],
+            ...balanceHistory.map((v, i) => [
+                i * monthWidth,
+                height - v / maxBalance * (height - topPadding),
+            ]),
+        ].map(p => p.join(' ')).join(', ');
+
+        return (
+            <div className={cn('-balanceHistory')}>
+                <Msg tagName="h3" id={msgId('balanceHistory.title')} />
+
+                <div className={cn('-balanceHistoryInner')}>
+                    <svg className={cn('-balanceHistoryContent')}
+                        viewBox={`0 0 ${11 * monthWidth} ${height}`}>
+                        <polygon points={points}/>
+                    </svg>
+
+                    <Link msgId={msgId('balanceHistory.viewAllLink')}
+                        className={cn('-balanceHistoryViewAllLink')}
+                        onClick={this.onViewAllTransactionsClick.bind(this)} />
+                </div>
+            </div>
+        )
+    }
+
     renderPurchaseHistory({ sumOfChargesThisYear, numberOfChargesThisYear }) {
         return (
             <div className={cn('-purchaseHistory')}>
@@ -166,5 +226,9 @@ export default class SmsDistributionCreditsPane extends RootPaneBase {
 
     onViewAllPurchasesClick() {
         this.openPane('smsdistributioncreditpurchases');
+    }
+
+    onViewAllTransactionsClick() {
+        this.openPane('smsdistributioncredittransactions');
     }
 }
