@@ -16,6 +16,7 @@ export default class Button extends React.Component {
         const formatMessage = this.props.intl.formatMessage;
 
         let classes = cx("Button", this.props.className, {
+            "disabled": this.props.isDisabled,
             "pending": this.props.isPending,
         });
 
@@ -23,7 +24,7 @@ export default class Button extends React.Component {
             this.props.labelValues);
 
         return (
-            <button className={ classes }
+            <button className={ classes } disabled={this.props.isDisabled}
                 onClick={ this.onClick.bind(this) }>
                 { label }
             </button>
@@ -31,8 +32,10 @@ export default class Button extends React.Component {
     }
 
     onClick(ev) {
-        if(!this.props.isPending && this.props.onClick) {
-            this.props.onClick(ev);
+        if(this.props.isDisabled || this.props.isPending || !this.props.onClick) {
+            return;
         }
+
+        this.props.onClick(ev);
     }
 }

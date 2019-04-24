@@ -1,0 +1,18 @@
+about:
+  content: 'This is a brief description of what the credits are all about. You can read more about them on our { readMoreLink }.'
+  contentReadMoreLink: our site
+  readMoreLink: Read More
+  readMoreUrl: http://example.com/
+  title: About
+availableCredits:
+  credits: '{ credits }'
+  purchaseButton: Purchase Credits
+  title: Available Credits
+balanceHistory:
+  title: Credit Balance History
+  viewAllLink: View full history
+purchaseHistory:
+  title: Purchase History
+  costThisYear: '{ cost } SEK this year'
+  countThisYear: '{ count } purchases'
+  viewAllLink: View full history

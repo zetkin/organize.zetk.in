@@ -1,0 +1,42 @@
+.SmsDistributionListItem {
+    position: relative;
+    min-height: 5em;
+
+    &-title {
+        @include col(6, 12);
+
+        font-weight: bold;
+    }
+
+    &-sent {
+        @include col(3, 12);
+    }
+
+    &-state {
+        @include col(3, 12);
+
+        &--draft {
+            &::before {
+                @include icon($fa-var-pencil-square-o);
+            }
+        }
+
+        &--confirm {
+            &::before {
+                @include icon($fa-var-check-square-o);
+            }
+        }
+
+        &--sending {
+            &::before {
+                @include icon($fa-var-send-o);
+            }
+        }
+
+        &--sent {
+            &::before {
+                @include icon($fa-var-send);
+            }
+        }
+    }
+}

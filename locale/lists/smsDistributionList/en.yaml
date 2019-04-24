@@ -1,0 +1,10 @@
+header:
+  title: Title
+  sent: Sent
+  state: State
+item:
+  state:
+    draft: Draft
+    confirm: Confirm
+    sending: Sending
+    sent: Sent

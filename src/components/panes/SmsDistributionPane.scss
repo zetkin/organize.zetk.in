@@ -1,0 +1,65 @@
+.SmsDistributionPane {
+    @mixin InfolistItem($name, $icon) {
+        .InfoListItem-#{$name} {
+            &::before {
+                @include icon($icon);
+            }
+        }
+    }
+
+    color: lighten($c-text, 20);
+
+    @include InfolistItem(title, $fa-var-tag);
+    @include InfolistItem(sender, $fa-var-user);
+    @include InfolistItem(message, $fa-var-comment);
+    @include InfolistItem(sent, $fa-var-calendar);
+    @include InfolistItem(num_messages, $fa-var-comment);
+    @include InfolistItem(num_confirm_messages, $fa-var-ellipsis-h);
+    @include InfolistItem(num_created_messages, $fa-var-square-o);
+    @include InfolistItem(num_sent_messages, $fa-var-check-square-o);
+    @include InfolistItem(num_delivered_messages, $fa-var-check-square);
+    @include InfolistItem(num_failed_messages, $fa-var-exclamation-triangle);
+    @include InfolistItem(num_charged_messages, $fa-var-usd);
+
+    .InfoListItem-message {
+        white-space: pre-wrap;
+    }
+
+    &-creditsInfo {
+    }
+    &-creditsInfoBar {
+        position: relative;
+        height: 2em;
+        margin-bottom: 0.5em;
+        background-color: darken($c-ui-bg, 5);
+        border-radius: 3px;
+        overflow: hidden;
+    }
+    &-creditsInfoBarInner {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        background: $c-brand-main;
+    }
+    &-creditsInfoBarMessage {
+        position: relative;
+        margin-bottom: 1em;
+        text-align: left;
+    }
+    &-creditsInfoBarMessageTitle {
+        font-weight: bold;
+    }
+    &-creditsInfoBarMessageContent {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    &-creditsInfoBarWarning {
+        margin-bottom: 1em;
+
+        &::before {
+            @include icon($fa-var-exclamation-triangle);
+        }
+    }
+}

@@ -6,4 +6,5 @@ saveButton: Spara sökfråga
 title:
     callassignment_goal: Redigera syftessökning
     callassignment_target: Redigera målgruppssökning
+    smsdistribution_target: Redigera mottagarsökning
     standalone: Redigera smart sökning

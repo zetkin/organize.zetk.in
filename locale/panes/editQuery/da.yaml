@@ -6,4 +6,5 @@ saveButton: Gem søgningen
 title:
     callassignment_goal: Rediger søgning på målsætning
     callassignment_target: Rediger søgning på målgruppe
+    smsdistribution_target: Rediger søgning på modtagere
     standalone: Rediger smartsøgning

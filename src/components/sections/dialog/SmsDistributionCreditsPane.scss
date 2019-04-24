@@ -1,0 +1,106 @@
+.SmsDistributionCreditsPane {
+    &-row {
+    }
+    &-col {
+        @include col(1, 2);
+    }
+
+    &-about {
+        &Inner {
+            position: relative;
+            background: white;
+            padding: 3em 3em 5em;
+        }
+
+        &Content {
+            a {
+                text-decoration: underline;
+            }
+        }
+
+        &ReadMoreLink {
+            position: absolute;
+            bottom: 2em;
+            right: 3em;
+
+            &:before {
+                @include icon($fa-var-book);
+            }
+        }
+    }
+
+    &-availableCredits {
+        &Inner {
+            background: white;
+            padding: 1em;
+            font-size: 3em;
+        }
+
+        button {
+            width: 100%;
+
+            &:before {
+                @include icon($fa-var-plus);
+            }
+        }
+    }
+
+    &-balanceHistory {
+        &Inner {
+            position: relative;
+            background: white;
+            padding: 3em 3em 5em;
+        }
+
+        &Content {
+            width: 100%;
+
+            background: rgba($c-brand-main, 0.10);
+            fill: $c-brand-main;
+            stroke: none;
+        }
+
+        &ViewAllLink {
+            position: absolute;
+            bottom: 2em;
+            right: 3em;
+
+            &:before {
+                @include icon($fa-var-history);
+            }
+        }
+    }
+
+    &-purchaseHistory {
+        &Inner {
+            position: relative;
+            background: white;
+            padding: 3em 3em 5em;
+        }
+
+        &CostThisYear {
+            font-weight: bold;
+
+            &::before {
+                @include icon($fa-var-usd);
+            }
+        }
+        &CountThisYear {
+            font-weight: bold;
+
+            &::before {
+                @include icon($fa-var-credit-card);
+            }
+        }
+
+        &ViewAllLink {
+            position: absolute;
+            bottom: 2em;
+            right: 3em;
+
+            &:before {
+                @include icon($fa-var-history);
+            }
+        }
+    }
+}

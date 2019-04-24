@@ -1,0 +1,34 @@
+confirmButton: Confirm
+credits:
+  amount: 'Cost: { amount } credits'
+  estimated_amount: 'Estimated Cost: { amount } credits'
+  h: Credits
+  reserved_amount: 'Reserved Cost: { amount } credits'
+creditsInfo:
+  content: '{ amount } / { availableCredits } available'
+  title: Estimated credits to be used
+  warning: There are not enough available credits to send the message.
+editLink: Edit
+editTargetQueryLink: Edit Target Query
+messages: Messages
+showTargetsLink: Show Targets
+purchaseCreditsButton: Purchase Credits
+revertToDraftButton: Revert to Draft
+sendButton: Send
+showMessagesLink: Show Messages
+stats:
+  num_target_matches: '{ num_target_matches } Targets'
+  num_messages: '{ num_messages } Messages'
+  num_failed_messages: '{ num_failed_messages } Failed'
+  num_confirm_messages: '{ num_confirm_messages } To Confirm'
+  num_confirmed_messages: '{ num_confirm_messages } To Send'
+  num_created_messages: '{ num_created_messages } Created'
+  num_sent_messages: '{ num_sent_messages } Sent'
+  num_delivered_messages: '{ num_delivered_messages } Delivered'
+targets: Targets
+target_matches_have_changed: The target query's matches have changed since confirming
+title:
+  draft: '{ title }'
+  confirm: 'Confirm "{ title }"'
+  sending: 'Sending "{ title }"'
+  sent: 'Sent "{ title }"'

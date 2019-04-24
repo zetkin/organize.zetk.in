@@ -1,0 +1,47 @@
+.SmsDistributionCreditTransactionListItem {
+    font-variant-numeric: tabular-nums;
+
+    &-createdIcon {
+        @include col(1, 12);
+
+        &:before {
+            @include icon($fa-var-calendar);
+        }
+    }
+    &-created {
+        @include col(8, 12);
+    }
+    &-showBalance &-created {
+        @include col(5, 12);
+    }
+
+    &-amountIcon {
+        @include col(1, 12);
+
+        &:before {
+            @include icon($fa-var-plus);
+        }
+
+        &-negative:before {
+            @include icon($fa-var-minus);
+        }
+    }
+    &-amount {
+        @include col(2, 12);
+
+        text-align: right;
+    }
+
+    &-balanceIcon {
+        @include col(1, 12);
+
+        &:before {
+            @include icon($fa-var-exchange);
+        }
+    }
+    &-balance {
+        @include col(2, 12);
+
+        text-align: right;
+    }
+}

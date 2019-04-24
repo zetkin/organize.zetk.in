@@ -27,12 +27,14 @@ import org from './org';
 import participants from './participants';
 import people from './people';
 import importer from './importer';
+import payments from './payments';
 import personTags from './personTags';
 import prints from './prints';
 import queries from './queries';
 import routes from './routes';
 import search from './search';
 import selections from './selections';
+import smsDistributions from './smsDistributions';
 import surveys from './surveys';
 import surveySubmissions from './surveySubmissions';
 import timelines from './timelines';
@@ -66,6 +68,7 @@ const appReducer = combineReducers({
     participants,
     people,
     importer,
+    payments,
     personTags,
     locationTags,
     prints,
@@ -73,6 +76,7 @@ const appReducer = combineReducers({
     routes,
     search,
     selections,
+    smsDistributions,
     surveys,
     surveySubmissions,
     timelines,

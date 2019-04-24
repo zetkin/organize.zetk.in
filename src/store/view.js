@@ -180,6 +180,24 @@ export default function viewState(state = null, action) {
             }),
         });
     }
+    else if (action.type == types.CREATE_SMS_DISTRIBUTION + '_FULFILLED') {
+        // Replace the relevant AddSmsDistributionPane with a SmsDistributionPane
+        // showing the newly created distribution.
+        return Object.assign({}, state, {
+            panes: state.panes.map(paneData => {
+                if (paneData.id == action.meta.paneId) {
+                    return {
+                        id: '$' + makeRandomString(6),
+                        type: 'smsdistribution',
+                        params: [ action.payload.data.data.id ]
+                    };
+                }
+                else {
+                    return paneData;
+                }
+            }),
+        });
+    }
     else if (action.type == types.CREATE_SURVEY_ELEMENT + '_FULFILLED' && action.meta.paneId) {
         // Replace the relevant AddSurveyPane with a SurveyPane
         // showing the newly created survey.
