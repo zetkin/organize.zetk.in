@@ -1,0 +1,8 @@
+amount: '{ amount } Credits'
+purchase:
+  chargeAmount: '{ chargeAmount } SEK'
+  receipt: View Receipt
+title:
+  distribution: Distribution
+  manual: Manual
+  purchase: Purchase

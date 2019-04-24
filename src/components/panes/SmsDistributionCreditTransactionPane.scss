@@ -1,0 +1,22 @@
+.SmsDistributionCreditTransactionPane {
+    .InfoListItem-created::before {
+        @include icon($fa-var-calendar);
+    }
+    .InfoListItem-amount::before {
+        @include icon($fa-var-circle);
+    }
+
+    .InfoListItem-description::before {
+        @include icon($fa-var-pencil-square-o);
+    }
+
+    .InfoListItem-chargeAmount::before {
+        @include icon($fa-var-usd);
+    }
+    .InfoListItem-last4::before {
+        @include icon($fa-var-credit-card);
+    }
+    .InfoListItem-receipt::before {
+        @include icon($fa-var-file-pdf-o);
+    }
+}

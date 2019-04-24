@@ -262,6 +262,24 @@ export default function smsDistributions(state = null, action) {
             });
         }
 
+        case types.RETRIEVE_SMS_DISTRIBUTION_CREDIT_TRANSACTION + '_PENDING': {
+            const transaction = { id: action.meta.id };
+
+            return Object.assign({}, state, {
+                transactionList: updateOrAddListItem(state.transactionList,
+                    transaction.id, transaction, { isPending: true })
+            });
+        }
+
+        case types.RETRIEVE_SMS_DISTRIBUTION_CREDIT_TRANSACTION + '_FULFILLED': {
+            const transaction = action.payload.data.data;
+
+            return Object.assign({}, state, {
+                transactionList: updateOrAddListItem(state.transactionList,
+                    transaction.id, transaction, { isPending: false })
+            });
+        }
+
         default:
             return state || {
                 distributionList: createList(),

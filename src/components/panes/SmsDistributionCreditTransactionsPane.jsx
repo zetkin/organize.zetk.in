@@ -64,6 +64,6 @@ export default class SmsDistributionCreditTransactionsPane extends PaneBase {
     }
 
     onItemClick(item) {
-        this.openPane('smsdistributioncredittransaction', item.data.target.id);
+        this.openPane('smsdistributioncredittransaction', item.data.id);
     }
 }

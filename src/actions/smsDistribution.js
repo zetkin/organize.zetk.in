@@ -170,3 +170,18 @@ export function retrieveSmsDistributionCreditTransactions() {
         });
     };
 }
+
+export function retrieveSmsDistributionCreditTransaction(id) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_SMS_DISTRIBUTION_CREDIT_TRANSACTION,
+            meta: { id },
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'sms_distribution_credit_transactions', id).get()
+            }
+        });
+    };
+}

@@ -27,7 +27,6 @@ import {
 import LoadingIndicator from '../../common/misc/LoadingIndicator';
 
 import makeRandomString from '../../utils/makeRandomString';
-import InfoList from '../misc/InfoList';
 
 const cn = (suffix = '') => 'PurchaseSmsDistributionCreditsPane' + suffix;
 const msgId = suffix => 'panes.purchaseSmsDistributionCredits.' + suffix;
@@ -81,7 +80,7 @@ export default class PurchaseSmsDistributionCreditsPane extends PaneBase {
         super(props);
 
         this.state = {
-            state: 'cart', // 'checkout', 'done'
+            state: 'cart',
             rawCredits: 100,
         };
     }
@@ -124,16 +123,23 @@ export default class PurchaseSmsDistributionCreditsPane extends PaneBase {
 
         const purchase = purchases[purchaseId];
 
-        if (!purchase) {
+        if (!purchase || !purchase.data) {
             return;
         }
 
-        if (purchase.data && state !== 'done') {
+        const {
+            id: transactionId,
+        } = purchase.data;
+
+        if (state !== 'done') {
             this.setState({
                 state: 'done',
             });
 
             this.props.dispatch(retrieveSmsDistributionCredits());
+
+            this.props.onReplace('smsdistributioncredittransaction',
+                [transactionId]);
         }
     }
 
@@ -167,8 +173,6 @@ export default class PurchaseSmsDistributionCreditsPane extends PaneBase {
         const isPending = !!(purchase && purchase.isPending);
 
         const error = purchase && purchase.error && purchase.error.message;
-
-        const receiptUrl = 'http://example.com#not-implemented';
 
         const {
             config: {
@@ -218,13 +222,12 @@ export default class PurchaseSmsDistributionCreditsPane extends PaneBase {
             toFewCredits,
 
             error,
-            receiptUrl,
 
             stripe,
         };
     }
 
-    getPaneTitle({ formatMessage, state = 'cart'}) {
+    getPaneTitle({ formatMessage, state = 'cart' }) {
         return formatMessage({ id: msgId(`title.${state}`) });
     }
 
@@ -239,8 +242,6 @@ export default class PurchaseSmsDistributionCreditsPane extends PaneBase {
             return this.renderCartPaneContent(data);
         } else if (state === 'checkout') {
             return this.renderCheckoutPaneContent(data);
-        } else if (state === 'done') {
-            return this.renderDonePaneContent(data);
         }
     }
 
@@ -387,7 +388,7 @@ export default class PurchaseSmsDistributionCreditsPane extends PaneBase {
                     <div className={cn('-checkoutCost')}>
                         <Msg id={msgId('checkoutCost')} values={{
                             cost: oreToKrona(cost),
-                        }}/>
+                        }} />
                     </div>
                 </form>
             </div>
@@ -431,28 +432,5 @@ export default class PurchaseSmsDistributionCreditsPane extends PaneBase {
             credits,
             cost,
         ));
-    }
-
-    // Done
-
-    renderDonePaneContent({ credits, cost, receiptUrl }) {
-        return (
-            <div className={cn()}>
-                <InfoList data={[{
-                    name: 'credits',
-                    msgId: msgId('done.credits'),
-                    msgValues: { credits },
-                }, {
-                    name: 'cost',
-                    msgId: msgId('done.cost'),
-                    msgValues: { cost: oreToKrona(cost) },
-                }, {
-                    name: 'receipt',
-                    msgId: msgId('done.receipt'),
-                    href: receiptUrl,
-                    target: '_blank',
-                }]} />
-            </div>
-        )
     }
 }
