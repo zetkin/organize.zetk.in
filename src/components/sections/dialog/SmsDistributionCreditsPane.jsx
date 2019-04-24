@@ -225,7 +225,7 @@ export default class SmsDistributionCreditsPane extends RootPaneBase {
     }
 
     onViewAllPurchasesClick() {
-        this.openPane('smsdistributioncreditpurchases');
+        this.openPane('smsdistributioncredittransactions', 'purchase');
     }
 
     onViewAllTransactionsClick() {

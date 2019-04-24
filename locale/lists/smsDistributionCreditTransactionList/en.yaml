@@ -1,0 +1,7 @@
+header:
+  created: Date
+  amount: Amount
+  balance: Balance
+item:
+  amount: '{ amount }'
+  balance: '{ balance }'

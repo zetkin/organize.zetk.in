@@ -227,6 +227,41 @@ export default function smsDistributions(state = null, action) {
                 }),
             });
 
+        case types.RETRIEVE_SMS_DISTRIBUTION_CREDIT_TRANSACTIONS + '_PENDING':
+            return Object.assign({}, state, {
+                transactionList: Object.assign({}, state.transactionList, {
+                    isPending: true,
+                    error: null,
+                }),
+            });
+
+        case types.RETRIEVE_SMS_DISTRIBUTION_CREDIT_TRANSACTIONS + '_FULFILLED': {
+            let data = action.payload.data.data;
+
+            data.concat().sort((a, b) => a.created < b.created ? -1 : 1);
+
+            let balance = 0;
+
+            data = data.map(transaction => {
+                balance += transaction.amount;
+
+                return {
+                    ...transaction,
+                    balance
+                };
+            });
+
+            data.reverse();
+
+            return Object.assign({}, state, {
+                transactionList: {
+                    isPending: false,
+                    error: null,
+                    items: createListItems(data),
+                },
+            });
+        }
+
         default:
             return state || {
                 distributionList: createList(),
@@ -234,6 +269,7 @@ export default function smsDistributions(state = null, action) {
                 messagesByDistribution: {},
                 creditsItem: null,
                 purchases: {},
+                transactionList: createList(),
             };
     }
 };

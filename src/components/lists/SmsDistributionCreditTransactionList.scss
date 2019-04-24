@@ -1,0 +1,23 @@
+.SmsDistributionCreditTransactionList {
+    .ListHeader {
+        :nth-child(1) {
+            @include col(9, 12);
+        }
+
+        :nth-child(2) {
+            @include col(3, 12);
+        }
+    }
+
+    &-showBalance {
+        .ListHeader {
+            :nth-child(1) {
+                @include col(6, 12);
+            }
+
+            :nth-child(3) {
+                @include col(3, 12);
+            }
+        }
+    }
+}

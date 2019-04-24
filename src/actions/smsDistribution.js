@@ -156,3 +156,17 @@ export function endSmsDistributionCreditPurchase(id) {
         meta: { id },
     };
 }
+
+export function retrieveSmsDistributionCreditTransactions() {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_SMS_DISTRIBUTION_CREDIT_TRANSACTIONS,
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'sms_distribution_credit_transactions').get()
+            }
+        });
+    };
+}
