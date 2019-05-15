@@ -152,13 +152,18 @@ export default class CallHistoryFilter extends FilterBase {
             after = '-' + this.state.days + 'd';
         }
 
-        return {
+        const cfg = {
             operator: opFields[0],
             assignment: (opFields[1] == 'spec')? this.state.assignment : null,
             before: before,
             after: after,
-            minTimes: this.state.minTimes,
         };
+
+        if (this.state.minTimes) {
+            cfg.minTimes = parseInt(this.state.minTimes);
+        }
+
+        return cfg;
     }
 
     onChangeSimpleField(name, value) {
