@@ -5,6 +5,7 @@ import ReactDOMServer from 'react-dom/server';
 import IntlReduxProvider from '../components/IntlReduxProvider';
 import AssignedRoutePrint from '../components/prints/AssignedRoutePrint';
 import { setPrintData } from '../actions/print';
+import { setActiveOrg } from '../actions/user';
 
 
 const prints = express.Router();
@@ -36,6 +37,8 @@ function renderAssignedRoute(req, args) {
         assignee,
         route,
         routeAddresses;
+
+    req.store.dispatch(setActiveOrg(orgId));
 
     // 1. Retrieve assigned route info
     return req.z.resource('orgs', orgId, 'assigned_routes', arId).get()
