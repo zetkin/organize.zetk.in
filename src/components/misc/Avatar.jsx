@@ -3,8 +3,8 @@ import cx from 'classnames';
 import { connect } from 'react-redux';
 
 
-const mapStateToProps = state => ({
-    orgId: state.org.activeId,
+const mapStateToProps = (state, props) => ({
+    orgId: props.orgId || state.org.activeId,
 });
 
 
