@@ -96,8 +96,7 @@ function SummaryPage(props) {
             <div className="AssignedRoutePrint-assignee">
                 <Msg tagName="h2" id="prints.assignedRoute.assignee.h"/>
 
-                <Avatar orgId={ props.assignment.organization.id }
-                    person={ props.assignee }/>
+                <Avatar person={ props.assignee }/>
                 <InfoList data={[
                     { name: 'name', value: props.assignee.first_name + ' ' + props.assignee.last_name },
                     { name: 'email', value: props.assignee.email },
