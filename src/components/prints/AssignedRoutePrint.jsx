@@ -61,6 +61,7 @@ export default class AssignedRoutePrint extends React.Component {
                             ar={ this.props.ar }
                             route={ this.props.route }
                             assignee={ this.props.assignee }
+                            assignment={ this.props.assignment }
                             addresses={ addresses }
                             />
                         <InstructionsPage
@@ -95,7 +96,8 @@ function SummaryPage(props) {
             <div className="AssignedRoutePrint-assignee">
                 <Msg tagName="h2" id="prints.assignedRoute.assignee.h"/>
 
-                <Avatar person={ props.assignee }/>
+                <Avatar orgId={ props.assignment.organization.id }
+                    person={ props.assignee }/>
                 <InfoList data={[
                     { name: 'name', value: props.assignee.first_name + ' ' + props.assignee.last_name },
                     { name: 'email', value: props.assignee.email },

@@ -60,6 +60,10 @@ export default class PersonSelectWidget extends React.Component {
         };
     }
 
+    componentWillUnmount(){
+        this.props.dispatch(clearSearch(this.state.field));
+    }
+
     render() {
         let searchStore = this.props.search[this.state.field];
         let content = [];

@@ -5,6 +5,7 @@ types:
     callHistory: Call history
     campaignParticipation: Campaign participation
     joinDate: Join date
+    mostActive: Most active campaigners
     personData: Personal data
     personTags: Tags
     random: Random selection

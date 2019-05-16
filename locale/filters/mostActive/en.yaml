@@ -1,4 +1,4 @@
-survey: Survey
+size: Number of most active people
 timeframe:
     label: Timeframe
     options:

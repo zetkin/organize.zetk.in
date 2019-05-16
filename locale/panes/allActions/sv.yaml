@@ -18,6 +18,14 @@ filters:
         label: Plats
         nullOption: (Oavsett plats)
 importButton: Importera aktioner
+oldActions:
+    changeFilter: Ändra filter
+    notice: |-
+            Det finns {count, plural,
+              =1 {en tidigare aktion}
+              other {# tidigare aktioner}}
+            i det aktuella tidsspannet.
+    showOld: Visa även tidigare aktioner
 viewModes:
     calendar: Kalender
     list: Lista

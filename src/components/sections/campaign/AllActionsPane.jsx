@@ -144,16 +144,16 @@ export default class AllActionsPane extends CampaignSectionPaneBase {
             if (!showOldActions && futureActions.length && futureActions.length < allActions.length) {
                 actions = [...futureActions];
                 oldActionNotice = <div key="oldActions" className="AllActionsPane-oldActions">
-                    <Msg id="lists.actionList.oldActions.notice"
+                    <Msg id="panes.allActions.oldActions.notice"
                         values={{ count: allActions.length - futureActions.length }}/>
                     <div className="AllActionsPane-oldActionsButtons" >
                         <span className="AllActionsPane-oldActionsButton"
                             onClick={this.onShowOldClick.bind(this)}>
-                            <Msg id="lists.actionList.oldActions.showOld"/>
+                            <Msg id="panes.allActions.oldActions.showOld"/>
                         </span>
                         <span className="AllActionsPane-oldActionsButton"
                             onClick={this.onFilterButtonClick.bind(this)}>
-                            <Msg id="lists.actionList.oldActions.changeFilter" />
+                            <Msg id="panes.allActions.oldActions.changeFilter" />
                         </span>
                     </div>
                 </div>;

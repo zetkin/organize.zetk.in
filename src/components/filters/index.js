@@ -1,6 +1,7 @@
 import AllFilter from './AllFilter';
 import CallHistoryFilter from './CallHistoryFilter';
 import CampaignFilter from './CampaignFilter';
+import MostActiveFilter from './MostActiveFilter';
 import PersonDataFilter from './PersonDataFilter';
 import PersonTagsFilter from './PersonTagsFilter';
 import RandomFilter from './RandomFilter';
@@ -14,6 +15,7 @@ const filterComponents = {
     'all': AllFilter,
     'call_history': CallHistoryFilter,
     'campaign_participation': CampaignFilter,
+    'most_active': MostActiveFilter,
     'person_data': PersonDataFilter,
     'person_tags': PersonTagsFilter,
     'random': RandomFilter,

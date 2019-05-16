@@ -4,11 +4,3 @@ header:
     location: Location
     participants: Participants
     startTime: Time
-oldActions:
-    changeFilter: Change filter
-    notice: |-
-            There {count, plural,
-              =1 {is one passed action}
-              other {are # passed actions}} 
-            in the current time span.
-    showOld: Also show past actions

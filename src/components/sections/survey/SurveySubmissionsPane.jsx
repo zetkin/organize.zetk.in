@@ -40,6 +40,17 @@ export default class SurveySubmissionsPane extends RootPaneBase {
                     orderAlphabetically={ true }
                     onValueChange={ this.onFilterChange.bind(this) }
                     />
+                <Msg tagName="label" id="panes.surveySubmissions.filters.linked.label"/>
+                <SelectInput name="linked"
+                    value={ filters.linked }
+                    nullOptionMsg="panes.surveySubmissions.filters.linked.nullOption"
+                    options={{
+                        'linked': 'panes.surveySubmissions.filters.linked.linked',
+                        'unlinked': 'panes.surveySubmissions.filters.linked.unlinked',
+                    }}
+                    optionLabelsAreMessages={ true }
+                    onValueChange={ this.onFilterChange.bind(this) }
+                    />
             </div>
         ];
     }
@@ -49,8 +60,17 @@ export default class SurveySubmissionsPane extends RootPaneBase {
             <SurveySubmissionList
                 submissionList={ this.props.submissionList }
                 onItemClick={ this.onItemClick.bind(this) }
+                enablePagination={ true }
+                onLoadPage={ this.onLoadPage.bind(this) }
                 />
         );
+    }
+
+    onLoadPage(page) {
+        const {filters} = this.state;
+        const survey = filters.survey ? filters.survey : null;
+
+        this.props.dispatch(retrieveSurveySubmissions(survey, filters.linked, page));
     }
 
     onItemClick(item, ev) {
@@ -62,10 +82,10 @@ export default class SurveySubmissionsPane extends RootPaneBase {
         this.setState({ filters });
 
         if (filters.survey) {
-            this.props.dispatch(retrieveSurveySubmissions(filters.survey));
+            this.props.dispatch(retrieveSurveySubmissions(filters.survey, filters.linked));
         }
         else {
-            this.props.dispatch(retrieveSurveySubmissions());
+            this.props.dispatch(retrieveSurveySubmissions(null, filters.linked));
         }
     }
 }
