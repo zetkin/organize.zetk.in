@@ -21,31 +21,72 @@ const mapStateToProps = state => {
 export default class AssignedRoutePrint extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            inBrowser: false,
+        };
+    }
+
+    componentDidMount() {
+        this.setState({
+            inBrowser: true,
+        });
     }
 
     render() {
         let stateJson = JSON.stringify(this.props.initialState);
-        let addresses = this.props.routeAddresses.concat().sort((a0, a1) => {
-            let cmp = a0.street.localeCompare(a1.street, 'en');
+        let content = null;
 
-            if (cmp == 0) {
-                cmp = a0.number - a1.number;
-            }
+        if (this.state.inBrowser) {
+            let addresses = this.props.routeAddresses.concat().sort((a0, a1) => {
+                let cmp = a0.street.localeCompare(a1.street, 'en');
 
-            if (cmp == 0 && a0.suffix && a1.suffix) {
-                cmp = a0.suffix.localeCompare(a1.suffix, 'en');
-            }
+                if (cmp == 0) {
+                    cmp = a0.number - a1.number;
+                }
 
-            return cmp;
-        });
+                if (cmp == 0 && a0.suffix && a1.suffix) {
+                    cmp = a0.suffix.localeCompare(a1.suffix, 'en');
+                }
 
-        let pageNumber = 1;
-        let getNextPageNumber = () => pageNumber++;
+                return cmp;
+            });
+
+            let pageNumber = 1;
+            let getNextPageNumber = () => pageNumber++;
+
+            content = (
+                <div className="AssignedRoutePrint-pages">
+                    <SummaryPage
+                        getNextPageNumber={ getNextPageNumber }
+                        ar={ this.props.ar }
+                        route={ this.props.route }
+                        assignee={ this.props.assignee }
+                        assignment={ this.props.assignment }
+                        addresses={ addresses }
+                        />
+                    <InstructionsPage
+                        getNextPageNumber={ getNextPageNumber }
+                        assignment={ this.props.assignment }
+                        addresses={ addresses }
+                        route={ this.props.route }
+                        ar={ this.props.ar }
+                        />
+                    <AddressPages
+                        getNextPageNumber={ getNextPageNumber }
+                        ar={ this.props.ar }
+                        route={ this.props.route }
+                        addresses={ addresses }
+                        />
+                </div>
+            );
+        }
 
         return (
             <html>
                 <head>
                     <Msg tagName="title" id="prints.assignedRoute.title"/>
+                    <meta charSet="UTF-8"/>
                     <script src="/static/main.js"></script>
                     <link rel="stylesheet" type="text/css"
                         href="/static/css/style.css"/>
@@ -55,29 +96,7 @@ export default class AssignedRoutePrint extends React.Component {
                         href="/static/images/favicon.png"/>
                 </head>
                 <body data-component="AssignedRoutePrint" className="AssignedRoutePrint">
-                    <div className="AssignedRoutePrint-pages">
-                        <SummaryPage
-                            getNextPageNumber={ getNextPageNumber }
-                            ar={ this.props.ar }
-                            route={ this.props.route }
-                            assignee={ this.props.assignee }
-                            assignment={ this.props.assignment }
-                            addresses={ addresses }
-                            />
-                        <InstructionsPage
-                            getNextPageNumber={ getNextPageNumber }
-                            assignment={ this.props.assignment }
-                            addresses={ addresses }
-                            route={ this.props.route }
-                            ar={ this.props.ar }
-                            />
-                        <AddressPages
-                            getNextPageNumber={ getNextPageNumber }
-                            ar={ this.props.ar }
-                            route={ this.props.route }
-                            addresses={ addresses }
-                            />
-                    </div>
+                    { content }
                     <script type="text/json"
                         id="App-initialState"
                         dangerouslySetInnerHTML={{ __html: stateJson }}/>
@@ -283,6 +302,8 @@ function AddressSummary(props) {
         let series = [];
         let addresses = addressesByStreet[street];
         let prevNum = null;
+
+        addresses = addresses.concat().sort((a0, a1) => a0.number.localeCompare(a1.number));
 
         addresses.forEach(addr => {
             let number = parseInt(addr.number);
