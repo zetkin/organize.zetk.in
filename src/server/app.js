@@ -68,6 +68,7 @@ export default function initApp(messages) {
                 hostname: req.host,
                 port: process.env.WEBPACK_PORT || 81,
                 pathname: '/static/main.js',
+		protocol: 'http',
             });
 
             res.redirect(303, wpMainJs);
