@@ -33,7 +33,8 @@ export default class TagCloudItem extends React.Component {
         }
 
         return (
-            <li className="TagCloudItem">
+            <li className="TagCloudItem"
+                title={ tag.description }>
                 <span className="TagCloudItem-title"
                     onClick={ this.onSelect.bind(this, tag) }>
                         { tag.title }</span>
