@@ -62,7 +62,9 @@ export default class ActionReminderPane extends PaneBase {
                         id="panes.actionReminder.content.infoAction"/>
                     { editableListItems.map(item => {
                         return (
-                            <li key={ item } onClick={ this.onEditReminderContent.bind(this, item, data.actionItem.data[item].id)}>
+                            <li key={ item }
+                                onClick={ this.onEditReminderContent.bind(this, item, data.actionItem.data[item].id)}
+                                className="ActionReminderPane-editableItem">
                                 { this.props.intl.formatMessage({ id: 'panes.actionReminder.content.li' }, {
                                     content: data.actionItem.data[item].title,
                                 }) }
