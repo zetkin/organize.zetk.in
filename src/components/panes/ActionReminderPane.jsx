@@ -53,7 +53,7 @@ export default class ActionReminderPane extends PaneBase {
             'location'
         ];
 
-        if(data.actionItem && !data.actionItem.isPending) {
+        if (data.actionItem && !data.actionItem.isPending) {
             reminderContent = [
                 <Msg key="h" tagName="p"
                     id="panes.actionReminder.content.h"/>,
