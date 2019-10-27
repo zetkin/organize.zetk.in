@@ -39,10 +39,12 @@ export default class Section extends React.Component {
 
     componentDidMount() {
         this.runPaneManager();
+        window.addEventListener('keydown', this.onKeyDown.bind(this))
     }
 
     componentWillUnmount() {
         PaneManager.stop();
+        window.removeEventListener('keydown', this.onKeyDown.bind(this));
     }
 
     componentDidUpdate(prevProps) {
@@ -204,5 +206,18 @@ export default class Section extends React.Component {
 
     onPushPane(paneType, params) {
         this.props.dispatch(pushPane(paneType, params));
+    }
+
+    onKeyDown(ev) {
+        const paneStackSize = this.props.panes.length;
+
+        if (ev.keyCode === 27 && paneStackSize > 1) {
+            const inputEls = ['INPUT', 'SELECT', 'TEXTAREA'];
+            const inputElHasFocus = inputEls.includes(document.activeElement.tagName);
+
+            if (!inputElHasFocus) {
+                this.onClosePane(paneStackSize - 1);
+            }
+        }
     }
 }
