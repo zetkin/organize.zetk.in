@@ -9,6 +9,10 @@
         cursor: pointer;
     }
 
+    .SelectPersonTagsPane-tagsFilter {
+        margin-top: 1em;
+    }
+
     .SelectPersonTagsPane-saveButton {
         @include inline-button($color:$c-brand-confirm, $icon:$fa-var-floppy-o);
     }
