@@ -200,6 +200,7 @@
             margin: 0.4em 0 0;
             padding: 0em;
             font-size: inherit;
+            max-width: 100%;
 
             &.unlinked {
                 box-shadow: 0 0 0.2em rgba($c-ui-warning, 1);
