@@ -15,11 +15,20 @@ import { addToSelection, removeFromSelection, finishSelection }
 @connect(state => state)
 @injectIntl
 export default class SelectPersonTagsPane extends PaneBase {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            ...this.state,
+            tagsFilter: '',
+        };
+    }
+
     componentDidMount() {
         super.componentDidMount();
 
         this.props.dispatch(retrievePersonTags());
-        this.setState({ ...this.state, tagsFilter: '' });
     }
 
     getRenderData() {
@@ -118,6 +127,6 @@ export default class SelectPersonTagsPane extends PaneBase {
     }
 
     onChangeTagsFilter(name, value) {
-        this.setState({ ...this.state, [name]: value});
+        this.setState({ ...this.state, tagsFilter: value});
     }
 }
