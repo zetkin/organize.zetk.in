@@ -86,7 +86,8 @@ export default class SelectPersonTagsPane extends PaneBase {
                 onClick={ this.onClickCreate.bind(this) }/>,
             <TextInput key="tagsFilter" name="tagsFilter"
                 className="SelectPersonTagsPane-tagsFilter"
-                labelMsg="panes.selectPersonTags.tagsFilter"
+                labelMsg="panes.selectPersonTags.tagsFilter.label"
+                placeholder="panes.selectPersonTags.tagsFilter.placeholder"
                 value={ this.state.tagsFilter }
                 onValueChange={ this.onChangeTagsFilter.bind(this) }/>,
             <TagCloud key="availableTags" tags={ tagsAvailable }
