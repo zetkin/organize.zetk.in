@@ -59,7 +59,12 @@ export default class SelectPersonTagsPane extends PaneBase {
             tagsAvailable = data.tagList.items
                 .map(i => i.data)
                 .filter(d => selection.selectedIds.indexOf(d.id) < 0)
-                .filter(t => t.title.toLowerCase().startsWith(this.state.tagsFilter.toLowerCase()))
+                .filter(t => {
+                    const filter = this.state.tagsFilter.toLowerCase();
+                    const tagTitle = t.title.toLowerCase();
+
+                    return tagTitle.includes(filter);
+                })
                 .sort((t0, t1) => t0.title.localeCompare(t1.title));
         }
 
