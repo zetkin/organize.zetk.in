@@ -211,11 +211,12 @@ export default class Section extends React.Component {
     onKeyDown(ev) {
         const paneStackSize = this.props.panes.length;
 
-        if (ev.keyCode === 27 && paneStackSize > 1) {
+        if (ev.keyCode === 27 && paneStackSize) {
+            const activeEl = document.activeElement;
             const inputEls = ['INPUT', 'SELECT', 'TEXTAREA'];
-            const inputElHasFocus = inputEls.includes(document.activeElement.tagName);
+            const inputElHasFocus = inputEls.includes(activeEl.tagName);
 
-            if (!inputElHasFocus) {
+            if (!inputElHasFocus && !activeEl.getAttribute('contenteditable')) {
                 this.onClosePane(paneStackSize - 1);
             }
         }
