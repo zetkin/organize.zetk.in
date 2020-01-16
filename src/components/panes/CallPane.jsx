@@ -70,8 +70,11 @@ export default class CallPane extends PaneBase {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
+     componentWillReceiveProps(nextProps) {
         let callItem = nextProps.callItem;
+
+        if (callItem === this.props.callItem)
+            return;
 
         // Can't load callAssignment until we know which one to load
         if (!hasData(callItem, ['data']))
