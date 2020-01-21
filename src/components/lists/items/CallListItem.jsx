@@ -1,15 +1,30 @@
+import { connect } from 'react-redux';
 import React from 'react';
 import cx from 'classnames';
 import { FormattedMessage as Msg } from 'react-intl';
+import { retrieveCall } from '../../../actions/call';
 
 import Avatar from '../../misc/Avatar';
 
-
+@connect()
 export default class CallListItem extends React.Component {
     static propTypes = {
         onItemClick: React.PropTypes.func.isRequired,
         data: React.PropTypes.object,
     };
+
+    componentDidUpdate(prevProps) {
+        const call = this.props.data;
+
+        if (this.props.inView && !prevProps.inView) {
+            if (!call || call.message_to_organizer !== undefined) {
+                return;
+            }
+            else if (call.organizer_action_needed) {
+                this.props.dispatch(retrieveCall(call.id))
+            }
+        }
+    }
 
     render() {
         let call = this.props.data;
@@ -66,6 +81,10 @@ export default class CallListItem extends React.Component {
                         </span>
                         <span className="CallListItem-caller">
                             { call.caller.name }</span>
+                        { call.organizer_action_needed && (
+                            <span className="CallListItem-organizerMsg">
+                                { call.message_to_organizer }</span>
+                        )}
                     </div>
                     <div className="CallListItem-callStatuses"/>
                     <div className="CallListItem-organizerStatuses"/>
