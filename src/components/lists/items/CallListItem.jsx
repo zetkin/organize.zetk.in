@@ -65,6 +65,15 @@ export default class CallListItem extends React.Component {
             empty: call.message_to_organizer === null,
         })
 
+        const truncateMessage = msg => {
+            if (msg && msg.length > 180) {
+                return msg.substr(0, 180) + '...';
+            }
+            else {
+                return msg;
+            }
+        };
+
         return (
             <div className="CallListItem"
                 onClick={ this.props.onItemClick.bind(this, call) }>
@@ -93,7 +102,7 @@ export default class CallListItem extends React.Component {
                                 { call.message_to_organizer === null ?
                                     <Msg tagName="span"
                                         id="lists.callList.item.organizerMsg.noMessage"/> :
-                                    call.message_to_organizer
+                                    truncateMessage(call.message_to_organizer)
                                  }</span>
                         )}
                     </div>
