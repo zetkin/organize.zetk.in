@@ -126,6 +126,14 @@
                     content: '.';
                 }
             }
+
+            &.empty {
+                span {
+                    font-size: inherit;
+                    font-style: italic;
+                    color: #666666;
+                }
+            }
         }
     }
 
