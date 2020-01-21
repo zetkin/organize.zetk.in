@@ -56,7 +56,13 @@ export default class CallListItem extends React.Component {
             actionStatus = "needed";
         }
 
-         let actionClassNames  = cx('CallListItem-action', actionStatus );
+        let actionClassNames  = cx('CallListItem-action', actionStatus );
+
+        const messageIsPending = call.organizer_action_needed && call.message_to_organizer === undefined;
+
+        const organizerMsgClassNames = cx('CallListItem-organizerMsg', {
+            loading: messageIsPending,
+        })
 
         return (
             <div className="CallListItem"
@@ -82,7 +88,7 @@ export default class CallListItem extends React.Component {
                         <span className="CallListItem-caller">
                             { call.caller.name }</span>
                         { call.organizer_action_needed && (
-                            <span className="CallListItem-organizerMsg">
+                            <span className={ organizerMsgClassNames }>
                                 { call.message_to_organizer }</span>
                         )}
                     </div>

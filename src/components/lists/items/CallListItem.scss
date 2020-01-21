@@ -118,6 +118,14 @@
                 @include icon($fa-var-sticky-note-o);
                 min-width: 1.6em;
             }
+
+            &.loading {
+                &::after {
+                    display: inline-block;
+                    animation: CallListItem-organizerMsg-loadingAnimation steps(1, end) 1s infinite;
+                    content: '.';
+                }
+            }
         }
     }
 
@@ -196,4 +204,11 @@
             }
         }
     }
+}
+
+@keyframes CallListItem-organizerMsg-loadingAnimation {
+    0%   { content: '.'; }
+    33%  { content: '..'; }
+    66%  { content: '...'; }
+    99%  { content: '.'; }
 }
