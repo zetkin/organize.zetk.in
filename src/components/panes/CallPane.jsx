@@ -70,7 +70,7 @@ export default class CallPane extends PaneBase {
         }
     }
 
-     componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {
         let callItem = nextProps.callItem;
 
         if (callItem === this.props.callItem)
