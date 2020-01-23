@@ -209,15 +209,17 @@ export default class Section extends React.Component {
     }
 
     onKeyDown(ev) {
-        const paneStackSize = this.props.panes.length;
+        if (ev.keyCode === 27 && this.props.panes.length !== 0) {
+            const tagName = ev.target.tagName.toLowerCase();
 
-        if (ev.keyCode === 27 && paneStackSize) {
-            const activeEl = document.activeElement;
-            const inputEls = ['INPUT', 'SELECT', 'TEXTAREA'];
-            const inputElHasFocus = inputEls.includes(activeEl.tagName);
-
-            if (!inputElHasFocus && !activeEl.getAttribute('contenteditable')) {
-                this.onClosePane(paneStackSize - 1);
+            if (tagName === 'input'
+                || tagName === 'textarea'
+                || tagName === 'select'
+                || ev.target.contentEditable === 'true') {
+                return;
+            }
+            else {
+                this.onClosePane(this.props.panes.length - 1);
             }
         }
     }
