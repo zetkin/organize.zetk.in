@@ -57,6 +57,14 @@
         }
     }
 
+    .InfoListItem-copyLink {
+        text-decoration: underline;
+
+        &::before {
+            @include icon($fa-var-copy);
+        }
+    }
+
     .InfoListItem-editLink {
         font-size: 1em;
     }

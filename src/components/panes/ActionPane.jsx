@@ -4,6 +4,8 @@ import React from 'react';
 
 import cx from 'classnames';
 
+import copyToClipboard from '../../utils/copyToClipboard';
+
 import Button from '../misc/Button';
 import ActionBox from '../misc/ActionBox';
 import Link from '../misc/Link';
@@ -229,6 +231,10 @@ export default class ActionPane extends PaneBase {
                         name: 'activity',
                         value: action.activity? action.activity.title : ''
                     }, {
+                        name: 'copyLink',
+                        msgId: 'panes.action.copyLink.label',
+                        onClick: this.onClickCopy.bind(this)
+                    }, {
                         name: 'editLink',
                         msgId: 'panes.action.editLink',
                         onClick: this.onClickEdit.bind(this)
@@ -265,6 +271,57 @@ export default class ActionPane extends PaneBase {
         else {
             return <LoadingIndicator/>;
         }
+    }
+
+    onClickCopy() {
+        const action = this.props.actionItem.data;
+
+        const startDate = this.props.intl.formatDate(
+                new Date(action.start_time), {
+                timeZone: 'UTC',
+                day: '2-digit',
+                month: '2-digit',
+            }
+        );
+
+        const weekday = this.props.intl.formatDate(
+                new Date(action.start_time), {
+                timeZone: 'UTC',
+                weekday: 'long',
+            }
+        );
+
+        const startTime = this.props.intl.formatDate(
+                new Date(action.start_time), {
+                timeZone: 'UTC',
+                hour: '2-digit',
+                minute: '2-digit',
+            }
+        );
+
+        const endTime = this.props.intl.formatDate(
+                new Date(action.end_time), {
+                timeZone: 'UTC',
+                hour: '2-digit',
+                minute: '2-digit',
+            }
+        );
+
+        const copiedText = this.props.intl.formatMessage(
+            { id: 'panes.action.copyLink.copiedText' },
+            {
+                startDate,
+                weekday,
+                startTime,
+                endTime,
+                activity: action.activity.title,
+                location: action.location.title
+            }
+        );
+
+        copyToClipboard(copiedText)
+            .then(() => console.log('copied'))
+            .catch(err => console.log('Error while copying', err));
     }
 
     onClickEdit(ev) {

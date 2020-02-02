@@ -1,6 +1,9 @@
 contact:
     addContact: Drop a person here to assign as contact
     h: Contact person
+copyLink:
+    label: Copy details
+    copiedText: '{ startDate } { weekday }, { startTime } - { endTime } { activity } at { location }'
 editLink: Edit action
 participants:
     addPerson: 'Drop person here or {selectLink}.'

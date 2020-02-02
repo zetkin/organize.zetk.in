@@ -1,6 +1,9 @@
 contact:
     addContact: Släpp en person här för att utse ansvarig
     h: Ansvarig
+copyLink:
+    label: Kopiera detaljer
+    copiedText: '{ startDate } { weekday }, { startTime } - { endTime } { activity } på { location }'
 editLink: Redigera aktion
 participants:
     addPerson: 'Släpp en person här eller { selectLink }.'
