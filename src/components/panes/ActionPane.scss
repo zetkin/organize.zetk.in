@@ -63,6 +63,14 @@
         &::before {
             @include icon($fa-var-copy);
         }
+
+        &.copied {
+            &::after {
+                margin-left: 0.5em;
+                @include icon($fa-var-check);
+                color: $c-brand-success;
+            }
+        }
     }
 
     .InfoListItem-editLink {

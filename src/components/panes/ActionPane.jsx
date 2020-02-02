@@ -46,6 +46,14 @@ const mapStateToProps = (state, props) => {
 @connect(mapStateToProps)
 @injectIntl
 export default class ActionPane extends PaneBase {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            detailsCopied: false,
+        };
+    }
+
     componentDidMount() {
         super.componentDidMount();
 
@@ -209,6 +217,10 @@ export default class ActionPane extends PaneBase {
                 );
             }
 
+            const copyLinkClassNames = cx('copyLink', {
+                copied: this.state.detailsCopied,
+            })
+
             return [
                 <InfoList key="summary-infolist"
                     data={[{
@@ -231,7 +243,7 @@ export default class ActionPane extends PaneBase {
                         name: 'activity',
                         value: action.activity? action.activity.title : ''
                     }, {
-                        name: 'copyLink',
+                        name: copyLinkClassNames,
                         msgId: 'panes.action.copyLink.label',
                         onClick: this.onClickCopy.bind(this)
                     }, {
@@ -320,7 +332,7 @@ export default class ActionPane extends PaneBase {
         );
 
         copyToClipboard(copiedText)
-            .then(() => console.log('copied'))
+            .then(() => this.setState({ ...this.state, detailsCopied: true }))
             .catch(err => console.log('Error while copying', err));
     }
 
