@@ -21,7 +21,7 @@ export default class CallListItem extends React.Component {
                 return;
             }
             else if (call.organizer_action_needed) {
-                this.props.dispatch(retrieveCall(call.id, true))
+                this.props.dispatch(retrieveCall(call.id, true));
             }
         }
     }
