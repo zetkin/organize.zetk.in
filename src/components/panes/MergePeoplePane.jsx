@@ -222,6 +222,7 @@ export default class MergePeoplePane extends PaneBase {
     onOverrideChange(field, ev) {
         this.setState({
             override: {
+                ...this.state.override,
                 [field]: ev.target.value,
             }
         });
