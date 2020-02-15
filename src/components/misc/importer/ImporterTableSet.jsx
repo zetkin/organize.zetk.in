@@ -103,7 +103,53 @@ export default class ImporterTableSet extends React.Component {
         });
     }
 
+    checkDuplicateTypes(columnList) {
+        let typeCount = {};
+
+        let items = columnList.items;
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].data.type == "unknown") {
+                continue;
+            }
+            // Create a reasonable key name
+            let typeName = items[i].data.type + ', '+JSON.stringify(items[i].data.config);
+            if (typeName in typeCount) {
+                typeCount[typeName].push(i)
+            } else {
+                typeCount[typeName]= [i];
+            }
+        }
+
+        // Pick out the types which have duplicates
+        let duplicates = {};
+        for (var typeName in typeCount) {
+            if (typeCount[typeName].length > 1) {
+                duplicates[typeName] = typeCount[typeName];
+            }
+        }
+
+        return duplicates;
+    }
+
     onClickImport() {
+        let duplicates = this.checkDuplicateTypes(this.props.tableSet.tableList.items[0].data.columnList);
+
+        if (Object.keys(duplicates).length > 0) {
+            // TODO: Display in a better way
+            let displayMessage = "You have duplicates: "+JSON.stringify(duplicates);
+            alert(displayMessage);
+            return ;
+        }
+
+        // TODO: Check that columns are chosen: first name, last name. alert box. break
+
+        // TODO: Check column is chosen: external ID (recommended)
+        // TODO: Check columns are good.
+
+        // TODO: Dialod box - proceed - yes/no
+
+
+        // If cool, continute
         this.props.dispatch(executeImport(this.state.selectedTableId));
     }
 
