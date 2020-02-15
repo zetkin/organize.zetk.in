@@ -8,7 +8,15 @@ export default class InputBase extends React.Component {
         name: React.PropTypes.string.isRequired,
         labelMsg: React.PropTypes.string,
         initialValue: React.PropTypes.string,
-        className: React.PropTypes.string
+        className: React.PropTypes.string,
+        constraints: React.PropTypes.shape({
+            min: React.PropTypes.number,
+            minLength: React.PropTypes.number,
+            maxLength: React.PropTypes.number,
+            pattern: React.PropTypes.string,
+            required: React.PropTypes.bool,
+            step: React.PropTypes.number
+        })
     };
 
     constructor(props) {
@@ -25,6 +33,7 @@ export default class InputBase extends React.Component {
                     id={ this.props.labelMsg }/>
             );
         }
+  
         return (
             <div className={ classes }>
                 { label }

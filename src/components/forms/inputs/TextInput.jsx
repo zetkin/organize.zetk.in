@@ -8,13 +8,14 @@ export default class TextInput extends InputBase {
     renderInput() {
         let placeholder;
 
-        if(this.props.placeholder) {
+        if (this.props.placeholder) {
             placeholder = this.props.intl.formatMessage(
                 { id: this.props.placeholder });
         }
 
         return (
             <input type="text" value={ this.props.value }
+                {...this.props.constraints}
                 placeholder={ placeholder }
                 onChange={ this.onChange.bind(this) }/>
         );

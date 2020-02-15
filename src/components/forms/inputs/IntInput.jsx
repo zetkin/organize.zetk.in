@@ -9,8 +9,13 @@ export default class IntInput extends InputBase {
     };
 
     renderInput() {
+        this.props.constraints.min = 0;
+        this.props.constraints.step = 1;
+
         return (
-            <input type="number" step="1" min="0" value={ this.props.value }
+            <input type="number"
+                value={ this.props.value }
+                {...this.props.constraints}
                 onChange={ this.onChange.bind(this) }/>
         );
     }

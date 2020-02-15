@@ -22,16 +22,20 @@ export default class TimeInput extends InputBase {
         if (!this.state.hourFocused) hour = zeroPad(hour);
         if (!this.state.minuteFocused) minute = zeroPad(minute);
 
+        this.props.constraints.pattern = "[0-9]{1,2}";
+
         return (
             <div className="TimeInput">
-                <input type="text" pattern="[0-9]{1,2}"
+                <input type="text"
+                    {...this.props.constraints}
                     ref="hourInput" value={ hour }
                     onFocus={ this.onHourFocus.bind(this) }
                     onBlur={ this.onHourBlur.bind(this) }
                     onKeyDown={ this.onHourKeyDown.bind(this) }
                     onChange={ this.onChangeHour.bind(this) }/>
                 :
-                <input type="text" pattern="[0-9]{1,2}"
+                <input type="text"
+                    {...this.props.constraints}
                     ref="minuteInput" value={ minute }
                     onFocus={ this.onMinuteFocus.bind(this) }
                     onBlur={ this.onMinuteBlur.bind(this) }
