@@ -97,7 +97,7 @@ export default class ImportPane extends RootPaneBase {
     }
 
     onConfirmImport(tableSet) {
-        this.openPane('importerconfirm', tableSet);
+        this.openPane('confirmimport', tableSet);
     }
 
     onDragEnter(ev) {
