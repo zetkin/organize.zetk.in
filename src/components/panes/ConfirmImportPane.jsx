@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import PaneBase from './PaneBase';
 import Button from '../misc/Button';
 import { executeImport } from '../../actions/importer';
+import InfoList from '../misc/InfoList';
 
 
 @connect(state => ({ tableSet: state.importer.tableSet }))
@@ -59,7 +60,7 @@ export default class ConfirmImportPane extends PaneBase {
 
     getPreviewImport(tableSet) {
         let numberRows = tableSet.tableList.items[0].data.columnList.items.length;
-        return "This many rows will be imported: "+numberRows;
+        return this.props.intl.formatMessage({ id: 'panes.confirmImport.numberOfRows' }) + ": " + numberRows;
     }
 
     getRenderData() {
@@ -71,70 +72,70 @@ export default class ConfirmImportPane extends PaneBase {
         let duplicates = this.getDuplicateTypes(typeCount);
 
         if (Object.keys(duplicates).length > 0) {
-            displayMessage = "You have duplicates: "+JSON.stringify(duplicates);
-
             return {
                 valid: false,
-                message: displayMessage
+                messageId: 'panes.confirmImport.duplicatesInfo',
+                additionalInfo: JSON.stringify(duplicates)
             }
         }
 
         if (!("first_name" in typeCount)) {
-            displayMessage = "You need to set a column for first name";
-
             return {
                 valid: false,
-                message: displayMessage
+                messageId: 'panes.confirmImport.missingFirstName',
             }
         }
         if (!("last_name" in typeCount)) {
-            displayMessage = "You need to set a column for last name";
-
             return {
                 valid: false,
-                message: displayMessage
+                messageId: 'panes.confirmImport.missingLastName',
             }
         }
 
         let preview = this.getPreviewImport(tableSet);
 
-        if (!("external" in typeCount)) {
-            displayMessage = 'You have not entered an external id. Are you sure you want to continue?';
-
-            return {
-                valid: true,
-                warning: true,
-                preview: preview,
-                message: displayMessage
-            }
-        }
-
-
-        return {
+        let result = {
             valid: true,
             warning: false,
             preview: preview
         }
+
+        if (!("external" in typeCount)) {
+            result['warning'] = true;
+            result['messageId'] = 'panes.confirmImport.missingExternalIdInfo';
+        }
+
+        return result;
     }
 
     renderPaneContent(data) {
         if (!data.valid) {
+            let infoListData = [
+                { name: 'what', msgId: 'panes.confirmImport.invalidData' },
+                { name: 'error', msgId: data.messageId }
+            ];
+
+            if (data.additionalInfo) {
+                infoListData.push({ name: 'additionalInfo', value: data.additionalInfo });
+            }
 
             return (<div>
-                <h2>Invalid import</h2>
-                <div>{ data.message }</div>
+                <InfoList key="info"
+                    data={ infoListData }
+                />
+            </div>);
+        } else {
+            let infoListData = [];
+            if (data.warning) {
+                infoListData.push({ name: 'warning', msgId: data.messageId });
+            }
+            infoListData.push({ name: 'preview', value: data.preview });
+
+            return (<div>
+                <InfoList key="info" data={ infoListData } />
             </div>);
         }
 
-        let warning = "";
-        if (data.warning) {
-            warning = <div>Warning: { data.message }</div>;
-        }
-
-        return (<div>
-            { warning }
-            <div>{ data.preview }</div>
-        </div>);
     }
 
     renderPaneFooter(data) {
