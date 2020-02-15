@@ -103,16 +103,27 @@ export default class ImporterTableSet extends React.Component {
         });
     }
 
-    checkDuplicateTypes(columnList) {
-        let typeCount = {};
+    getFieldID(item) {
+        if (item.data.type == "id") {
+            return item.data.config.origin;
+        } else if (item.data.type == "person_data") {
+            return item.data.config.field;
+        } else if (item.data.type == "person_tag") {
+            return item.data.type;
+        } else {
+            return "unknown_type";
+        }
+    }
 
+    getTypeCount(columnList) {
+        let typeCount = {};
         let items = columnList.items;
         for (let i = 0; i < items.length; i++) {
             if (items[i].data.type == "unknown") {
                 continue;
             }
             // Create a reasonable key name
-            let typeName = items[i].data.type + ', '+JSON.stringify(items[i].data.config);
+            let typeName = this.getFieldID(items[i]);
             if (typeName in typeCount) {
                 typeCount[typeName].push(i)
             } else {
@@ -120,6 +131,10 @@ export default class ImporterTableSet extends React.Component {
             }
         }
 
+        return typeCount;
+    }
+
+    checkDuplicateTypes(typeCount) {
         // Pick out the types which have duplicates
         let duplicates = {};
         for (var typeName in typeCount) {
@@ -132,7 +147,8 @@ export default class ImporterTableSet extends React.Component {
     }
 
     onClickImport() {
-        let duplicates = this.checkDuplicateTypes(this.props.tableSet.tableList.items[0].data.columnList);
+        let typeCount = this.getTypeCount(this.props.tableSet.tableList.items[0].data.columnList);
+        let duplicates = this.checkDuplicateTypes(typeCount);
 
         if (Object.keys(duplicates).length > 0) {
             // TODO: Display in a better way
@@ -140,6 +156,8 @@ export default class ImporterTableSet extends React.Component {
             alert(displayMessage);
             return ;
         }
+
+
 
         // TODO: Check that columns are chosen: first name, last name. alert box. break
 
