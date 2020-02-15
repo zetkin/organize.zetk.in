@@ -148,7 +148,7 @@ export default class ImporterTableSet extends React.Component {
     }
 
     onClickImport() {
-        let typeCount = this.getTypeCount(this.props.tableSet.tableList.items[0].data.columnList);
+        /*let typeCount = this.getTypeCount(this.props.tableSet.tableList.items[0].data.columnList);
 
         let duplicates = this.checkDuplicateTypes(typeCount);
         let displayMessage;
@@ -174,12 +174,10 @@ export default class ImporterTableSet extends React.Component {
             if (!confirm(displayMessage)) {
                 return;
             }
-        }
+        }*/
 
-        // If cool, continue
         //this.props.dispatch(executeImport(this.state.selectedTableId));
-        this.props.onConfirmImport();
-        //this.openPane('importercolumn', 1, 1);
+        this.props.onConfirmImport(this.props.tableSet);
     }
 
     onClickAbort() {
