@@ -11,6 +11,13 @@ import { createPerson } from '../../actions/person';
 @connect(state => state)
 @injectIntl
 export default class AddPersonPane extends PaneBase {
+    constructor(props) {
+        super(props);
+
+        this.state = this.state || {};
+        this.state.isValid = false;
+    }
+
     getPaneTitle(data) {
         return this.props.intl.formatMessage({ id: 'panes.addPerson.title' });
     }
@@ -24,15 +31,26 @@ export default class AddPersonPane extends PaneBase {
 
         return (
             <PersonForm ref="personForm" person={ initialData }
-                onSubmit={ this.onSubmit.bind(this) }/>
+                onSubmit={ this.onSubmit.bind(this) }
+                onValidityChange={ this.onValidityChange.bind(this) }
+            />
         );
     }
 
     renderPaneFooter(data) {
+        if (!this.state.isValid) {
+            return null;
+        }
+
+        let footerButtonProps = {
+            ref: 'addPersonButton',
+            className: "AddPersonPane-saveButton",
+            labelMsg: "panes.addPerson.saveButton",
+            onClick: this.onSubmit.bind(this)
+        };
+
         return (
-            <Button className="AddPersonPane-saveButton"
-                labelMsg="panes.addPerson.saveButton"
-                onClick={ this.onSubmit.bind(this) }/>
+            <Button {...footerButtonProps} />
         );
     }
 
@@ -42,6 +60,17 @@ export default class AddPersonPane extends PaneBase {
         var form = this.refs.personForm;
         var values = form.getValues();
 
-        this.props.dispatch(createPerson(values, this.props.paneData.id));
+        this.props.dispatch(createPerson(values, this.props.paneData.id));  
+    }
+
+    onValidityChange(newValidity) {
+        console.debug('AddPersonPane onValidityChange', newValidity);
+
+        if (newValidity !== this.state.isValid) {
+            this.setState({
+                isValid: newValidity
+            });
+            this.refs.pane;
+        }
     }
 }

@@ -44,6 +44,7 @@ export default class PaneBase extends React.Component {
     }
 
     render() {
+        console.log("render in paneBase");
         const data = this.getRenderData();
 
         const classes = cx(componentClassNames(this), {

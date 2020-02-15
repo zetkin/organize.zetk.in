@@ -22,7 +22,10 @@ export default class PersonForm extends React.Component {
         return (
             <Form ref="form" {...this.props }>
                 <TextInput labelMsg="forms.person.firstName" name="first_name"
-                    initialValue={ person.first_name }/>
+                    initialValue={ person.first_name }
+                    constraints={ { required: true, maxLength: 20, minLength: 5 } }
+                    onValidityChange={ this.onValidityChange.bind(this) }
+                    />
                 <TextInput labelMsg="forms.person.lastName" name="last_name"
                     initialValue={ person.last_name }/>
                 <SelectInput labelMsg="forms.person.gender" name="gender"
@@ -49,6 +52,14 @@ export default class PersonForm extends React.Component {
                     initialValue={ person.ext_id }/>
             </Form>
         );
+    }
+
+    onValidityChange(newState) {
+        console.log("Personform changed", newState);
+
+        if (this.props.onValidityChange) {
+            this.props.onValidityChange(newState);
+        }
     }
 
     getValues() {
