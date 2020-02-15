@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
 import Button from '../misc/Button';
+import { executeImport } from '../../actions/importer';
 
 
-@connect(() => ({}))
+@connect(state => ({ tableSet: state.importer.tableSet }))
 @injectIntl
-export default class ImporterConfirmPane extends PaneBase {
+export default class ConfirmImportPane extends PaneBase {
     getPaneTitle(data) {
         return this.props.intl.formatMessage({ id: 'panes.confirmImport.title' });
     }
@@ -62,13 +63,9 @@ export default class ImporterConfirmPane extends PaneBase {
     }
 
     getRenderData() {
-        let tableSet = this.getParam(0);
+        let tableSet = this.props.tableSet;
 
         let typeCount = this.getTypeCount(tableSet.tableList.items[0].data.columnList);
-
-
-        console.log("typeCount");
-        console.log(typeCount);
 
         let displayMessage;
         let duplicates = this.getDuplicateTypes(typeCount);
@@ -118,18 +115,9 @@ export default class ImporterConfirmPane extends PaneBase {
             warning: false,
             preview: preview
         }
-
-
-        return {
-            tableSet: tableSet
-        }
     }
 
-
-
     renderPaneContent(data) {
-        console.log("data.tableSet");
-        console.log(data.tableSet);
         if (!data.valid) {
 
             return (<div>
@@ -162,6 +150,10 @@ export default class ImporterConfirmPane extends PaneBase {
     }
 
     onSubmit(ev) {
-        console.log("onSubmit");
+        let tableSet = this.props.tableSet;
+        let selectedTableId = (tableSet && tableSet.tableList.items.length == 1)?
+            tableSet.tableList.items[0].data.id : null;
+
+        this.props.dispatch(executeImport(selectedTableId));
     }
 }
