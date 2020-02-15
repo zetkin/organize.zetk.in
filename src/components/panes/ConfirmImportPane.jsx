@@ -10,10 +10,8 @@ import Button from '../misc/Button';
 @injectIntl
 export default class ImporterConfirmPane extends PaneBase {
     getPaneTitle(data) {
-        //return this.props.intl.formatMessage({ id: 'panes.addSurvey.title' });
-        return "Confirm import";
+        return this.props.intl.formatMessage({ id: 'panes.confirmImport.title' });
     }
-
 
     getFieldID(item) {
         if (item.data.type == "id") {
@@ -59,7 +57,8 @@ export default class ImporterConfirmPane extends PaneBase {
     }
 
     getPreviewImport(tableSet) {
-        return "This many rows will be imported: ?";
+        let numberRows = tableSet.tableList.items[0].data.columnList.items.length;
+        return "This many rows will be imported: "+numberRows;
     }
 
     getRenderData() {
@@ -99,17 +98,20 @@ export default class ImporterConfirmPane extends PaneBase {
                 message: displayMessage
             }
         }
+
+        let preview = this.getPreviewImport(tableSet);
+
         if (!("external" in typeCount)) {
             displayMessage = 'You have not entered an external id. Are you sure you want to continue?';
 
             return {
                 valid: true,
                 warning: true,
+                preview: preview,
                 message: displayMessage
             }
         }
 
-        let preview = this.getPreviewImport(tableSet);
 
         return {
             valid: true,
@@ -148,11 +150,15 @@ export default class ImporterConfirmPane extends PaneBase {
     }
 
     renderPaneFooter(data) {
-        return (
-            <Button className="ImporterConfirmPane-importButton"
-                labelMsg="panes.import.continueImportButton"
-                onClick={ this.onSubmit.bind(this) }/>
-        );
+        if (data.valid) {
+            return (
+                <Button className="ConfirmImportPane-continueImportButton"
+                    labelMsg="panes.confirmImport.continueImportButton"
+                    onClick={ this.onSubmit.bind(this) }/>
+            );
+        } else {
+            return null;
+        }
     }
 
     onSubmit(ev) {
