@@ -13,6 +13,7 @@ export default class ImporterTableSet extends React.Component {
         dispatch: React.PropTypes.func.isRequired,
         maxRows: React.PropTypes.number,
         onEditColumn: React.PropTypes.func,
+        onConfirmImport: React.PropTypes.func,
     };
 
     constructor(props) {
@@ -176,7 +177,9 @@ export default class ImporterTableSet extends React.Component {
         }
 
         // If cool, continue
-        this.props.dispatch(executeImport(this.state.selectedTableId));
+        //this.props.dispatch(executeImport(this.state.selectedTableId));
+        this.props.onConfirmImport();
+        //this.openPane('importercolumn', 1, 1);
     }
 
     onClickAbort() {

@@ -56,6 +56,7 @@ export default class ImportPane extends RootPaneBase {
             return (
                 <ImporterTableSet tableSet={ tableSet }
                     onEditColumn={ this.onEditColumn.bind(this) }
+                    onConfirmImport={ this.onConfirmImport.bind(this) }
                     dispatch={ this.props.dispatch }/>
             );
         }
@@ -93,6 +94,10 @@ export default class ImportPane extends RootPaneBase {
 
     onEditColumn(table, col) {
         this.openPane('importercolumn', table.id, col.id);
+    }
+
+    onConfirmImport(table) {
+        this.openPane('importerconfirm', 1);
     }
 
     onDragEnter(ev) {

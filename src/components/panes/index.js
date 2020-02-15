@@ -49,6 +49,7 @@ import ImportActionsPane from './ImportActionsPane';
 import LocationPane from './LocationPane';
 import MergePeoplePane from './MergePeoplePane';
 import ImporterColumnPane from './ImporterColumnPane';
+import ImporterConfirmPane from './ImporterConfirmPane';
 import MoveParticipantsPane from './MoveParticipantsPane';
 import PersonPane from './PersonPane';
 import PersonTimelinePane from './PersonTimelinePane';
@@ -117,6 +118,7 @@ var _panes = {
     'groupmembers': GroupMembersPane,
     'importactions': ImportActionsPane,
     'importercolumn': ImporterColumnPane,
+    'importerconfirm': ImporterConfirmPane,
     'location': LocationPane,
     'mergepeople': MergePeoplePane,
     'moveparticipants': MoveParticipantsPane,
