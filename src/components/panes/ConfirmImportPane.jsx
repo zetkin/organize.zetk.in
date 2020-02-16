@@ -3,12 +3,13 @@ import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
+import { getListItemById } from '../../utils/store';
 import Button from '../misc/Button';
 import { executeImport } from '../../actions/importer';
 import InfoList from '../misc/InfoList';
 
 
-@connect(state => ({ tableSet: state.importer.tableSet }))
+@connect(state => ({ importer: state.importer }))
 @injectIntl
 export default class ConfirmImportPane extends PaneBase {
     getPaneTitle(data) {
@@ -58,15 +59,24 @@ export default class ConfirmImportPane extends PaneBase {
         return duplicates;
     }
 
-    getPreviewImport(tableSet) {
-        let numberRows = tableSet.tableList.items[0].data.columnList.items.length;
+    getPreviewImport(tableItem) {
+        let numberRows = tableItem.data.columnList.items.length;
         return this.props.intl.formatMessage({ id: 'panes.confirmImport.numberOfRows' }) + ": " + numberRows;
     }
 
     getRenderData() {
-        let tableSet = this.props.tableSet;
+        let tableId = this.getParam(0);
+        if (this.props.importer.tableSet == null) {
+            return {
+                valid: false,
+                msgId: 'panes.confirmImport.noTable'
+            };
+        }
+        let tableList = this.props.importer.tableSet.tableList;
+        let tableItem = getListItemById(tableList, tableId);
+        this.tableItem = tableItem;
 
-        let typeCount = this.getTypeCount(tableSet.tableList.items[0].data.columnList);
+        let typeCount = this.getTypeCount(tableItem.data.columnList);
 
         let displayMessage;
         let duplicates = this.getDuplicateTypes(typeCount);
@@ -92,7 +102,7 @@ export default class ConfirmImportPane extends PaneBase {
             }
         }
 
-        let preview = this.getPreviewImport(tableSet);
+        let preview = this.getPreviewImport(tableItem);
 
         let result = {
             valid: true,
@@ -151,10 +161,8 @@ export default class ConfirmImportPane extends PaneBase {
     }
 
     onSubmit(ev) {
-        let tableSet = this.props.tableSet;
-        let selectedTableId = (tableSet && tableSet.tableList.items.length == 1)?
-            tableSet.tableList.items[0].data.id : null;
-
+        let selectedTableId = this.tableItem.data.id;
         this.props.dispatch(executeImport(selectedTableId));
+        this.closePane();
     }
 }

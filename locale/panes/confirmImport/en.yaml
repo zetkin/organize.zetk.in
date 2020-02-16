@@ -4,5 +4,6 @@ invalidData: Invalid data
 missingExternalIdInfo: CAUTION! You have not entered an external id
 missingFirstName: You need to choose a column for first name
 missingLastName: You need to choose a column for last name
+noTable: There is no table
 numberOfRows: This many rows will be imported
 title: Confirm import
