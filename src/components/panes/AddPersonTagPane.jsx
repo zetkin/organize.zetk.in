@@ -11,6 +11,13 @@ import { createPersonTag } from '../../actions/personTag';
 @connect(state => state)
 @injectIntl
 export default class AddPersonTagPane extends PaneBase {
+    constructor(props) {
+        super(props);
+
+        this.state = this.state || {};
+        this.setState({ isValid: false });
+    }
+
     getPaneTitle(data) {
         const formatMessage = this.props.intl.formatMessage;
         return formatMessage({ id: 'panes.addPersonTag.title' });
@@ -23,11 +30,17 @@ export default class AddPersonTagPane extends PaneBase {
 
         return (
             <PersonTagForm ref="form" tag={ initialData }
-                onSubmit={ this.onSubmit.bind(this) }/>
+                onSubmit={ this.onSubmit.bind(this) }
+                onValidityChange={ this.onValidityChange.bind(this) }
+            />
         );
     }
 
     renderPaneFooter(data) {
+        if (!this.state.isValid) {
+            return null;
+        }
+
         return (
             <Button
                 labelMsg="panes.addPersonTag.saveButton"
@@ -43,5 +56,15 @@ export default class AddPersonTagPane extends PaneBase {
 
         this.props.dispatch(createPersonTag(values));
         this.closePane();
+    }
+
+    onValidityChange(newValidity) {
+        console.debug('AddPersonTagPane onValidityChange', newValidity);
+
+        if (newValidity !== this.state.isValid) {
+            this.setState({
+                isValid: newValidity
+            });
+        }
     }
 }

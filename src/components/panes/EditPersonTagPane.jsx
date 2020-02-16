@@ -15,6 +15,13 @@ import {
 @connect(state => ({ personTags: state.personTags }))
 @injectIntl
 export default class EditPersonTagPane extends PaneBase {
+    constructor(props) {
+        super(props);
+
+        this.state = this.state || {};
+        this.state.isValid = false;
+    }
+
     componentDidMount() {
         super.componentDidMount();
 
@@ -48,7 +55,9 @@ export default class EditPersonTagPane extends PaneBase {
 
             return (
                 <PersonTagForm ref="form" tag= { tag }
-                    onSubmit={ this.onSubmit.bind(this) }/>
+                    onSubmit={ this.onSubmit.bind(this) }
+                    onValidityChange={ this.onValidityChange.bind(this) }
+                />
             );
         }
         else {
@@ -57,6 +66,10 @@ export default class EditPersonTagPane extends PaneBase {
     }
 
     renderPaneFooter(data) {
+        if (!this.state.isValid) {
+            return null;
+        }
+
         return (
             <Button className="EditPersonTagPane-saveButton"
                 labelMsg="panes.editPersonTag.saveButton"
@@ -72,5 +85,15 @@ export default class EditPersonTagPane extends PaneBase {
 
         this.props.dispatch(updatePersonTag(tagId, values));
         this.closePane();
+    }
+
+    onValidityChange(newValidity) {
+        console.debug('EditPersonPane onValidityChange', newValidity);
+
+        if (newValidity !== this.state.isValid) {
+            this.setState({
+                isValid: newValidity
+            });
+        }
     }
 }

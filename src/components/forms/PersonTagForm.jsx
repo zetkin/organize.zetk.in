@@ -26,7 +26,10 @@ export default class PersonTagForm extends React.Component {
         return (
             <Form ref="form" {...this.props }>
                 <TextInput labelMsg="forms.personTag.title" name="title"
-                    initialValue={ tag.title }/>
+                    initialValue={ tag.title }
+                    constraints={ { minLength: 1, required: true } }
+                    onValidityChange={ this.onValidityChange.bind(this) }
+                    />
                 <TextArea labelMsg="forms.personTag.info" name="description"
                     initialValue={ tag.description }/>
                 <SelectInput labelMsg="forms.personTag.visibility.label" name="hidden"
@@ -50,5 +53,13 @@ export default class PersonTagForm extends React.Component {
             values.hidden = (values.hidden == 'hidden');
         }
         return values;
+    }
+
+    onValidityChange(newValidity) {
+        console.log("PersonTagForm changed", newValidity);
+
+        if (this.props.onValidityChange) {
+            this.props.onValidityChange(newValidity);
+        }
     }
 }
