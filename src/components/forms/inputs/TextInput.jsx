@@ -34,7 +34,7 @@ export default class TextInput extends InputBase {
         let v = this.refs.textinputfield.checkValidity();
         if (v !== this.state.isValid) {
             this.onValidityChange(v);
-            this.setState({isValid: v);
+            this.setState({isValid: v});
         }
     }
 
