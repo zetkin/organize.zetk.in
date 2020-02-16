@@ -105,7 +105,7 @@ export default class ImporterTableSet extends React.Component {
     }
 
     onClickImport() {
-        this.props.onConfirmImport(this.props.tableSet);
+        this.props.onConfirmImport(this.state.selectedTableId);
     }
 
     onClickAbort() {

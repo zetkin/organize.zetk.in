@@ -96,8 +96,8 @@ export default class ImportPane extends RootPaneBase {
         this.openPane('importercolumn', table.id, col.id);
     }
 
-    onConfirmImport(tableSet) {
-        this.openPane('confirmimport', tableSet);
+    onConfirmImport(tableId) {
+        this.openPane('confirmimport', tableId);
     }
 
     onDragEnter(ev) {
