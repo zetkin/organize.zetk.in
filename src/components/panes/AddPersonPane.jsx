@@ -70,7 +70,6 @@ export default class AddPersonPane extends PaneBase {
             this.setState({
                 isValid: newValidity
             });
-            this.refs.pane;
         }
     }
 }
