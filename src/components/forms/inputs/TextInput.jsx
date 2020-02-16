@@ -8,7 +8,7 @@ export default class TextInput extends InputBase {
 
     constructor(props) {
         super(props);
-
+        this.onChange = this.onChange.bind(this);
         this.state = { isValid: false };
     }
 
@@ -24,7 +24,7 @@ export default class TextInput extends InputBase {
             <input type="text" ref="textinputfield" value={ this.props.value }
                 {...this.props.constraints}
                 placeholder={ placeholder }
-                onChange={ this.onChange.bind(this) }/>
+                onChange={ this.onChange }/>
         );
     }
 
@@ -34,7 +34,7 @@ export default class TextInput extends InputBase {
         let v = this.refs.textinputfield.checkValidity();
         if (v !== this.state.isValid) {
             this.onValidityChange(v);
-            this.state.isValid = v; // TODO: Can not SET PROPS???
+            this.setState({isValid: v);
         }
     }
 

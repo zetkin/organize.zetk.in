@@ -10,6 +10,7 @@ export default class PaneBase extends React.Component {
     constructor(props) {
         super(props);
 
+        this.onCloseClick = this.onCloseClick.bind(this);
         this.state = {
             scrolled: false,
         };
@@ -58,7 +59,7 @@ export default class PaneBase extends React.Component {
         if (!this.props.isBase) {
             closeButton = (
                 <a className="PaneBase-closelink"
-                    onClick={ this.onCloseClick.bind(this) }/>
+                    onClick={ this.onCloseClick }/>
             );
 
             title = <h2>{ this.getPaneTitle(data) }</h2>;

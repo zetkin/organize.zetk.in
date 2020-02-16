@@ -13,6 +13,12 @@ export default class Button extends React.Component {
         isDisabled: React.PropTypes.string
     };
 
+    constructor(props) {
+        super(props);
+
+        this.onClick = this.onClick.bind(this);
+    }
+
     render() {
         const formatMessage = this.props.intl.formatMessage;
 
@@ -25,7 +31,7 @@ export default class Button extends React.Component {
 
         let buttonProperties = {
             className: classes,
-            onClick: this.onClick.bind(this)
+            onClick: this.onClick
         };
 
         if (this.props.isDisabled)  {
