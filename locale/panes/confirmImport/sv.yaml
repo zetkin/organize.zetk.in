@@ -1,2 +1,8 @@
 continueImportButton: Fortsätt import
-title: Fortsätt import
+duplicatesInfo: Du har dubletter
+invalidData: Invalid data
+missingExternalIdInfo: OBS! Du har inte valt en external id
+missingFirstName: Du måste välja en kolumn för förnamn
+missingLastName: Du måste välja en kolumn för efternamn
+numberOfRows: Så här många rader kommer importeras
+title: Bekräfta import
