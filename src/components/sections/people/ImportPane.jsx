@@ -72,23 +72,33 @@ export default class ImportPane extends RootPaneBase {
                     dispatch={ this.props.dispatch }/>
             );
         }
-        else if (stats) {
+        else if (stats && stats['status'] == "completed") {
             return (
                 <div className="ImportPane-report">
                     <Msg tagName="h1" id="panes.import.report.h"
-                        values={{ count: stats.imported }}/>
+                        values={{ count: stats.report.imported }}/>
                     <ul>
                         <li><Msg id="panes.import.report.numCreated"
-                            values={{ count: stats.created }}/></li>
+                            values={{ count: stats.report.created }}/></li>
                         <li><Msg id="panes.import.report.numUpdated"
-                            values={{ count: stats.updated }}/></li>
+                            values={{ count: stats.report.updated }}/></li>
                         <li><Msg id="panes.import.report.numTagged"
-                            values={{ count: stats.tagged }}/></li>
+                            values={{ count: stats.report.tagged }}/></li>
                     </ul>
                     <Button labelMsg="panes.import.importMoreButton"
                         onClick={ this.onClickReset.bind(this) }/>
                 </div>
             );
+        }
+        else if (stats && stats['status'] == "pending") {
+            return (
+                <div className="ImportPane-report">
+                    <Msg tagName="h1" id="panes.import.pending.h"/>
+                    <Msg tagName="p" id="panes.import.pending.p"/>
+                    <Button labelMsg="panes.import.importMoreButton"
+                        onClick={ this.onClickReset.bind(this) }/>
+                </div>
+            )
         }
         else {
             return [

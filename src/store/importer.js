@@ -16,7 +16,7 @@ export default function importer(state = null, action) {
     else if (action.type == types.EXECUTE_IMPORT + '_FULFILLED') {
         return Object.assign({}, state, {
             importIsPending: false,
-            importStats: action.payload.data.data.report,
+            importStats: action.payload.data.data,
             importError: false,
             tableSet: null,
         });

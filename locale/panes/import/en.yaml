@@ -37,6 +37,9 @@ parseError:
 importButton: Import
 importDropZoneMessage: 'Drag and drop a file here, or click to select a file to import.'
 importMoreButton: Import more
+pending:
+    h: Your import is pending
+    p: Your import has been scheduled. You will recieve an e-mail within a few minutes once it has finished.
 report:
     h: |-
         { count, plural,
