@@ -67,7 +67,7 @@ export default class ConfirmImportPane extends PaneBase {
 
     getPreviewImport(tableItem) {
         let numberRows = tableItem.data.rows.length;
-        return this.props.intl.formatMessage({ id: 'panes.confirmImport.numberOfRows' }) + ": " + numberRows;
+        return this.props.intl.formatMessage(numberOfRows + ' ' + { id: 'panes.confirmImport.numberOfRows' });
     }
 
     validateRows(rows, columns) {
@@ -193,7 +193,7 @@ export default class ConfirmImportPane extends PaneBase {
 
         if (!("external" in typeCount || "zetkin" in typeCount)) {
             result.warning = true;
-            messages.push('panes.confirmImport.missingExternalIdInfo');
+            messages.push('panes.confirmImport.missingIdInfo');
         }
 
         if ("zetkin" in typeCount) {
