@@ -156,7 +156,7 @@ export default class ConfirmImportPane extends PaneBase {
             }
         } 
 
-        if(!(typeCount.external || (typeCount.first_name && typeCount.last_name))) {
+        if(!((typeCount.external || typeCount.zetkin) || (typeCount.first_name && typeCount.last_name))) {
             return {
                 valid: false,
                 messageId: 'panes.confirmImport.missingIdOrName',
@@ -191,7 +191,7 @@ export default class ConfirmImportPane extends PaneBase {
             messages.push('panes.confirmImport.missingLastName');
         }
 
-        if (!("external" in typeCount)) {
+        if (!("external" in typeCount || "zetkin" in typeCount)) {
             result.warning = true;
             messages.push('panes.confirmImport.missingExternalIdInfo');
         }
