@@ -77,8 +77,8 @@ export default class ConfirmImportPane extends PaneBase {
             }
 
             for (let i = 0; i < columns.length; i++) {
-                const column = columns[i];
-                switch(this.getFieldID(column)) {
+                const column = this.getFieldID(columns[i]);
+                switch(column) {
                     case 'email':
                         if(!isEmail(row.values[i]) && row.values[i] != '') {
                             return 'panes.confirmImport.invalidEmail';
