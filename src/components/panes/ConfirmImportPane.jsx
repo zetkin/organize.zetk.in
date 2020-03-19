@@ -1,4 +1,5 @@
 import React from 'react';
+import isEmail from 'validator/lib/isEmail';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
@@ -8,6 +9,7 @@ import Button from '../misc/Button';
 import { executeImport } from '../../actions/importer';
 import InfoList from '../misc/InfoList';
 
+const genderOptions = new Set(['f','m','o','_']);
 
 @connect(state => ({ importer: state.importer }))
 @injectIntl
@@ -68,22 +70,83 @@ export default class ConfirmImportPane extends PaneBase {
         return this.props.intl.formatMessage({ id: 'panes.confirmImport.numberOfRows' }) + ": " + numberRows;
     }
 
+    validateRows(rows, columns) {
+        for (const row of rows) {
+            if(row.values.length != columns.length) {
+                return ['panes.confirmImport.inconsistentRow'];
+            }
+
+            for (let i = 0; i < columns.length; i++) {
+                const column = columns[i];
+                switch(this.getFieldID(column)) {
+                    case 'email':
+                        if(!isEmail(row.values[i]) && row.values[i] != '') {
+                            return 'panes.confirmImport.invalidEmail';
+                        }
+                        break;
+                    case 'gender':
+                        if(!genderOptions.has(row.values[i]) && row.values[i] != '') {
+                            return 'panes.confirmImport.invalidGender';
+                        }
+                        break;
+                    case 'first_name':
+                    case 'last_name':
+                    case 'city':
+                        if(row.values[i].length > 50) {
+                            return 'panes.confirmImport.' + column + 'TooLong';
+                        }
+                        break;
+                    case 'phone':
+                    case 'alt_phone':
+                        if(row.values[i].length > 60) {
+                            return 'panes.confirmImport.' + column + 'TooLong';
+                        }
+                        if(!row.values[i].match(/^[0-9\-\+ ]*$/)) {
+                            return 'panes.confirmImport.' + column + 'Invalid';
+                        }
+                        break;
+                    case 'zip_code':
+                        if(row.values[i].length > 10) {
+                            return 'panes.confirmImport.' + column + 'TooLong';
+                        }
+                        break;
+                    case 'external':
+                        if(row.values[i].length > 12) {
+                            return 'panes.confirmImport.' + column + 'TooLong';
+                        }
+                        break;
+                    case 'zetkin':
+                        if(!row.values[i].match(/^[0-9]*$/)) {
+                            return 'panes.confirmImport.' + column + 'Invalid';
+                        }
+                    case 'co_address':
+                    case 'street_address':
+                        if(row.values[i].length > 120) {
+                            'panes.confirmImport.' + column + 'TooLong';
+                        }
+                        break;
+                }
+            }
+
+        }
+        return null;
+    }
+
     getRenderData() {
-        let tableId = this.getParam(0);
+        const tableId = this.getParam(0);
         if (this.props.importer.tableSet == null) {
             return {
                 valid: false,
                 msgId: 'panes.confirmImport.noTable'
             };
         }
-        let tableList = this.props.importer.tableSet.tableList;
-        let tableItem = getListItemById(tableList, tableId);
+        const tableList = this.props.importer.tableSet.tableList;
+        const tableItem = getListItemById(tableList, tableId);
         this.tableItem = tableItem;
 
-        let typeCount = this.getTypeCount(tableItem.data.columnList);
+        const typeCount = this.getTypeCount(tableItem.data.columnList);
 
-        let displayMessage;
-        let duplicates = this.getDuplicateTypes(typeCount);
+        const duplicates = this.getDuplicateTypes(typeCount);
 
         if (Object.keys(duplicates).length > 0) {
             return {
@@ -91,18 +154,20 @@ export default class ConfirmImportPane extends PaneBase {
                 messageId: 'panes.confirmImport.duplicatesInfo',
                 additionalInfo: JSON.stringify(duplicates)
             }
-        }
+        } 
 
-        if (!("first_name" in typeCount)) {
+        if(!(typeCount.external || (typeCount.first_name && typeCount.last_name))) {
             return {
                 valid: false,
-                messageId: 'panes.confirmImport.missingFirstName',
+                messageId: 'panes.confirmImport.missingIdOrName',
             }
         }
-        if (!("last_name" in typeCount)) {
+
+        const error = this.validateRows(tableItem.data.rows, tableItem.data.columnList.items);
+        if (error) {
             return {
                 valid: false,
-                messageId: 'panes.confirmImport.missingLastName',
+                messageId: error,
             }
         }
 
@@ -114,9 +179,25 @@ export default class ConfirmImportPane extends PaneBase {
             preview: preview
         }
 
+        let messages = [];
+
+        if (!("first_name" in typeCount)) {
+            result.warning = true;
+            messages.push('panes.confirmImport.missingFirstName');
+        }
+
+        if (!("last_name" in typeCount)) {
+            result.warning = true;
+            messages.push('panes.confirmImport.missingLastName');
+        }
+
         if (!("external" in typeCount)) {
-            result['warning'] = true;
-            result['messageId'] = 'panes.confirmImport.missingExternalIdInfo';
+            result.warning = true;
+            messages.push('panes.confirmImport.missingExternalIdInfo');
+        }
+
+        if(result.warning) {
+            result.messages = messages;
         }
 
         return result;
@@ -141,7 +222,9 @@ export default class ConfirmImportPane extends PaneBase {
         } else {
             let infoListData = [];
             if (data.warning) {
-                infoListData.push({ name: 'warning', msgId: data.messageId });
+                for(const message of data.messages) {
+                    infoListData.push({ name: 'warning', msgId: message });
+                }
             }
             infoListData.push({ name: 'preview', value: data.preview });
 

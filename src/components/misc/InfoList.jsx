@@ -13,7 +13,7 @@ export default class InfoList extends React.Component {
         return (
             <ul className="InfoList">
             {
-                this.props.data.map(item => {
+                this.props.data.map((item, idx) => {
                     let className = 'InfoListItem InfoListItem-' + item.name;
                     let value = item.value;
 
@@ -33,7 +33,7 @@ export default class InfoList extends React.Component {
                     }
 
                     return (
-                        <li className={ className } key={item.name}>
+                        <li className={ className } key={idx}>
                             {value}
                         </li>
                     );
