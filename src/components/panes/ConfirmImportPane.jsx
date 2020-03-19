@@ -67,7 +67,7 @@ export default class ConfirmImportPane extends PaneBase {
 
     getPreviewImport(tableItem) {
         let numberRows = tableItem.data.rows.length;
-        return this.props.intl.formatMessage(numberOfRows + ' ' + { id: 'panes.confirmImport.numberOfRows' });
+        return numberRows + ' ' + this.props.intl.formatMessage({ id: 'panes.confirmImport.numberOfRows' });
     }
 
     validateRows(rows, columns) {

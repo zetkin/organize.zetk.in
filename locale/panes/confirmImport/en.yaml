@@ -1,14 +1,14 @@
 continueImportButton: Continue import
-duplicatesInfo: You have selected duplicate columns
+duplicatesInfo: You have selected duplicate columns.
 invalidData: Invalid data
 missingIdInfo: You have not chosen an id column. This may result in difficulty in updating people in Zetkin. This is not recommended.
-missingFirstName: You have not chosen a column for first name
-missingLastName: You need to chosen a column for last name
+missingFirstName: You have not chosen a column for first name.
+missingLastName: You need to chosen a column for last name.
 noTable: There is no table
 numberOfRows: rows will be imported.
 title: Confirm import
 zetkinIdWarning: You have selected a Zetkin ID column. This should only be used if you are importing previously exported people. If not, please use the External ID column instead.
-inconsistentRow: The number of rows in a columns is inconsistent with the number of columns configured.
+inconsistentRow: The number of rows in a column is inconsistent with the number of columns configured.
 invalidEmail: The E-mail column may only contain e-mail addresses.
 invalidGender: Invalid format of the gender column. Accepted values are m for males, f for females, o for others and blank or _ for unknown.
 first_nameTooLong: The First name column may not be longer than 50 characters.

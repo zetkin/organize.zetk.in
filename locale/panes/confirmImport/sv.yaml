@@ -1,9 +1,26 @@
 continueImportButton: Fortsätt import
-duplicatesInfo: Du har dubletter
-invalidData: Invalid data
-missingExternalIdInfo: OBS! Du har inte valt en external id
-missingFirstName: Du måste välja en kolumn för förnamn
-missingLastName: Du måste välja en kolumn för efternamn
-noTable: Det finns ingen tabell
-numberOfRows: Så här många rader kommer importeras
+duplicatesInfo: Du har valt dublettkolumner
+invalidData: Ogiltig data
+missingExternalIdInfo: Du har inte valt en ID-kolumn. Det kan orsaka svårigheter att uppdatera människor i Zetkin. Det är inte rekommenderat.
+missingFirstName: Du har inte valt en kolumn för förnamn.
+missingLastName: Du har inte valt en kolumn för efternamn.
+noTable: Det finns ingen tabell.
+numberOfRows: rader kommer importeras.
 title: Bekräfta import
+zetkinIdWarning: Du har valt en kolumn som Zetkin-ID. Det här bör bara användas vid återimport av exporterade människor från Zetkin. I annat fall, använda externt ID.
+inconsistentRow: Antalet rader i en kolumn stämmer inte överrens med antalet konfigurerade kolumner.
+invalidEmail: E-post-kolumnen får bara innehålla e-postadresser.
+invalidGender: Ogilitigt format för kolumnen kön. Gitliga värden är m för män, f för kvinnor, o för annat, och blanksteg eller _ för okänd.
+first_nameTooLong: Kolumnen förnamn får inte vara längre än 50 tecken.
+last_nameTooLong: Kolumnen efternamn får inte vara längre än 50 tecken.
+cityTooLong: Kolumnen efternamn får inte vara längre än 50 tecken.
+phoneTooLong: Kolumnen telefon får inte vara längre än 60 tecken.
+alt_phoneTooLong: Kolumnen alt. telefonnumer får inte vara längre än 60 tecken.
+phoneInvalid: Kolumnen telefon får bara innehålla telefonnummer.
+alt_phoneInvalid: Kolumnen alt. telefon får bara innehålla telefonnummer.
+zip_codeTooLong: Kolumnen postnummer får inte vara längre än 10 tecken.
+externalTooLong: Kolumnen externt ID får inte vara längre än 12 tecken.
+zetkinInvalid: Kolumnen Zetkin ID får bara innehålla siffror.
+co_addressTooLong: Kolumnen C/O adress får inte vara längre än 120 characters.
+street_addressTooLong: Kolumnen gatuadress får inte vara längre än 120 characters.
+missingIdOrName: Du måste välja antingen en typ av ID eller både föramn och efternamn.
