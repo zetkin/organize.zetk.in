@@ -196,6 +196,11 @@ export default class ConfirmImportPane extends PaneBase {
             messages.push('panes.confirmImport.missingExternalIdInfo');
         }
 
+        if ("zetkin" in typeCount) {
+            result.warning = true;
+            messages.push('panes.confirmImport.zetkinIdWarning');
+        }
+
         if(result.warning) {
             result.messages = messages;
         }
