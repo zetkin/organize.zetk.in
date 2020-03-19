@@ -33,12 +33,13 @@ export default class ImportPane extends RootPaneBase {
         let tableSet = this.props.importer.tableSet;
         let stats = this.props.importer.importStats;
         let isPending = this.props.importer.importIsPending;
-        let error = this.props.importer.importError;
+        let importError = this.props.importer.importError;
+        let parseError = this.props.importer.parseError;
 
         if (isPending) {
             return <LoadingIndicator />;
         }
-        else if (error) {
+        else if (importError) {
             return (
                 <div className="ImportPane-error">
                     <Msg tagName="h1" id="panes.import.error.h"/>
@@ -46,6 +47,17 @@ export default class ImportPane extends RootPaneBase {
                     <Button labelMsg="panes.import.error.backButton"
                         onClick={ this.onErrorBackButtonClick.bind(this) }
                         />
+                    <Button labelMsg="panes.import.error.resetButton"
+                        onClick={ this.onErrorResetButtonClick.bind(this) }
+                        />
+                </div>
+            );
+        }
+        else if (parseError) {
+            return (
+                <div className="ImportPane-error">
+                    <Msg tagName="h1" id="panes.import.parseError.h"/>
+                    <Msg tagName="p" id="panes.import.parseError.p"/>
                     <Button labelMsg="panes.import.error.resetButton"
                         onClick={ this.onErrorResetButtonClick.bind(this) }
                         />

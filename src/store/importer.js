@@ -33,6 +33,11 @@ export default function importer(state = null, action) {
             tableSet: action.payload.tableSet,
         });
     }
+    else if (action.type == types.PARSE_IMPORT_FILE + '_REJECTED') {
+        return Object.assign({}, state, {
+            parseError: action.payload.error,
+        });
+    }
     else if (action.type == types.USE_IMPORT_TABLE_FIRST_AS_HEADER) {
         let value = action.payload.useFirstAsHeader;
         let tableId = action.payload.tableId;
@@ -98,12 +103,14 @@ export default function importer(state = null, action) {
     else if (action.type == types.RESET_IMPORT_ERROR) {
         return Object.assign({}, state, {
             importError: null,
+            parseError: null,
         });
     }
     else if (action.type == types.RESET_IMPORT) {
         return Object.assign({}, state, {
             importIsPending: false,
             importError: null,
+            parseError: null,
             importStats: null,
             tableSet: null,
         });
@@ -112,6 +119,7 @@ export default function importer(state = null, action) {
         return state || {
             importIsPending: false,
             importError: null,
+            parseError: null,
             importStats: null,
             tableSet: null,
         };
