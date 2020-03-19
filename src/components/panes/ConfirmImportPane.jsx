@@ -51,6 +51,10 @@ export default class ConfirmImportPane extends PaneBase {
         // Pick out the types which have duplicates
         let duplicates = {};
         for (var typeName in typeCount) {
+            if(typeName == "person_tag") {
+                // Multiple person_tag columns are allowed
+                continue;
+            }
             if (typeCount[typeName].length > 1) {
                 duplicates[typeName] = typeCount[typeName];
             }
