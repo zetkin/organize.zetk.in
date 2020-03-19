@@ -30,6 +30,10 @@ error:
         imported. You can go back and verify the import settings, or select a
         new file for import
     resetButton: Select another file
+parseError:
+    h: Invalid file
+    p: >-
+        The file you selected could not be loaded. Please convert your file to XLSX format and try again.
 importButton: Import
 importDropZoneMessage: 'Drag and drop a file here, or click to select a file to import.'
 importMoreButton: Import more
