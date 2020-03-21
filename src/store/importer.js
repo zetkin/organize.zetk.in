@@ -115,6 +115,25 @@ export default function importer(state = null, action) {
             tableSet: null,
         });
     }
+    else if (action.type == types.RETRIEVE_IMPORT_LOGS + '_PENDING') {
+        return Object.assign({}, state, {
+            importLogsPending: true,
+        });
+    }
+    else if (action.type == types.RETRIEVE_IMPORT_LOGS + '_FULFILLED') {
+        return Object.assign({}, state, {
+            importLogs: action.payload.data,
+            importLogsPending: false,
+            importLogsError: null,
+        });
+    }
+    else if (action.type == types.RETRIEVE_IMPORT_LOGS + '_REJECTED') {
+        return Object.assign({}, state, {
+            importLogsPending: false,
+            importLogsError: action.payload,
+            importLogs: [],
+        });
+    }
     else {
         return state || {
             importIsPending: false,
@@ -122,6 +141,9 @@ export default function importer(state = null, action) {
             parseError: null,
             importResponse: null,
             tableSet: null,
+            importLogsPending: false,
+            importLogsError: null,
+            importLogs: [],
         };
     }
 }
