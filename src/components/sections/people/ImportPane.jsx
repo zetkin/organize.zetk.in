@@ -11,7 +11,8 @@ import LoadingIndicator from '../../misc/LoadingIndicator';
 import {
     parseImportFile,
     resetImport,
-    resetImportError
+    resetImportError,
+    retrieveImportLogs
 } from '../../../actions/importer';
 
 
@@ -23,6 +24,12 @@ export default class ImportPane extends RootPaneBase {
         this.state = Object.assign({}, this.state, {
             isDragging: false,
         });
+    }
+
+    componentDidMount() {
+        super.componentDidMount();
+
+        this.props.dispatch(retrieveImportLogs());
     }
 
     renderPaneContent(data) {
