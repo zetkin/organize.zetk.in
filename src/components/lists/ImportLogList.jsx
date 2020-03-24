@@ -20,6 +20,9 @@ export default class ImportLogList extends React.Component {
                 'status': 'lists.importLogList.header.status',
                 'accepted': 'lists.importLogList.header.accepted',
                 'completed': 'lists.importLogList.header.completed',
+            },
+            {
+                'imported_by': 'lists.importLogList.header.imported_by',
             }
         ];
 
