@@ -8,6 +8,7 @@ import Button from '../../misc/Button';
 import RootPaneBase from '../RootPaneBase';
 import ImporterTableSet from '../../misc/importer/ImporterTableSet';
 import LoadingIndicator from '../../misc/LoadingIndicator';
+import ImportLogList from '../../lists/ImportLogList'
 import {
     parseImportFile,
     resetImport,
@@ -42,6 +43,7 @@ export default class ImportPane extends RootPaneBase {
         let isPending = this.props.importer.importIsPending;
         let importError = this.props.importer.importError;
         let parseError = this.props.importer.parseError;
+        let importLogList = this.props.importer.importLogList;
 
         if (isPending) {
             return <LoadingIndicator />;
@@ -109,14 +111,17 @@ export default class ImportPane extends RootPaneBase {
         }
         else {
             return [
-                <DropZone key="dropZone" className={ classes }
-                    onDragEnter={ this.onDragEnter.bind(this) }
-                    onDragLeave={ this.onDragLeave.bind(this) }
-                    onDrop={ this.onDrop.bind(this) }>
-                    <div className="ImportPane-dropZoneMessage" >
-                        <Msg tagName="p" id="panes.import.importDropZoneMessage"/>
-                    </div>
-                </DropZone>
+                <div>
+                    <DropZone key="dropZone" className={ classes }
+                        onDragEnter={ this.onDragEnter.bind(this) }
+                        onDragLeave={ this.onDragLeave.bind(this) }
+                        onDrop={ this.onDrop.bind(this) }>
+                        <div className="ImportPane-dropZoneMessage" >
+                            <Msg tagName="p" id="panes.import.importDropZoneMessage"/>
+                        </div>
+                    </DropZone>
+                    <ImportLogList key="importLogList" importLogList={ importLogList } />
+                </div>
             ];
         }
     }
