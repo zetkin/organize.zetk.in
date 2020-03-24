@@ -4,6 +4,7 @@ import {
     createList,
     getListItemById,
     updateOrAddListItem,
+    updateOrAddListItems,
 } from '../utils/store';
 
 
@@ -117,21 +118,24 @@ export default function importer(state = null, action) {
     }
     else if (action.type == types.RETRIEVE_IMPORT_LOGS + '_PENDING') {
         return Object.assign({}, state, {
-            importLogsPending: true,
+            importLogList: Object.assign([], state.importLogList, {
+                isPending: true,
+                error: null,
+            }),
         });
     }
     else if (action.type == types.RETRIEVE_IMPORT_LOGS + '_FULFILLED') {
         return Object.assign({}, state, {
-            importLogs: action.payload.data,
-            importLogsPending: false,
-            importLogsError: null,
+            importLogList: updateOrAddListItems(state.importLogList, action.payload.data.data, { isPending: false, error: null }),
         });
     }
     else if (action.type == types.RETRIEVE_IMPORT_LOGS + '_REJECTED') {
         return Object.assign({}, state, {
-            importLogsPending: false,
-            importLogsError: action.payload,
-            importLogs: [],
+            importLogList: {
+                isPending: false,
+                error: action.payload,
+                items: [],
+            }
         });
     }
     else {
@@ -141,9 +145,11 @@ export default function importer(state = null, action) {
             parseError: null,
             importResponse: null,
             tableSet: null,
-            importLogsPending: false,
-            importLogsError: null,
-            importLogs: [],
+            importLogList: {
+                isPending: false,
+                error: null,
+                items: [],
+            }
         };
     }
 }
