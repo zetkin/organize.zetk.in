@@ -1,0 +1,79 @@
+.ImportLogListItem {
+    position: relative;
+
+    &::after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+
+    span {
+        font-size: 1.4em;
+        line-height: 1.5em;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .Avatar {
+        @include col(2, 12, $first:true);
+
+        @include small-screen {
+            width: 40px;
+            vertical-align: middle;
+            display: inline-block;
+            padding-left: 0;
+            padding-right: 0.5em;
+        }
+
+        @include mini-screen {
+            width: 30px;
+            vertical-align: middle;
+            display: inline-block;
+            padding-left: 0;
+            padding-right: 0.5em;
+        }
+    }
+
+    .ImportLogListItem-col {
+        @include col(4, 12);
+
+        @include small-screen {
+            vertical-align: middle;
+        }
+
+        &:last-child {
+            @include col(6, 12, $last:true);
+
+        }
+    }
+
+    .ImportLogListItem-status,
+    .ImportLogListItem-accepted {
+
+        @include small-screen {
+            display: inline-block;
+            margin-right: 4px;
+            overflow: visible;
+            font-size: 1.4em;
+        }
+
+        @include mini-screen {
+            font-size: 1.2em;
+        }
+    }
+
+    .ImportLogListItem-completed {
+        font-size: 1.0em;
+
+        @include small-screen {
+            display: none;
+        }
+
+        a {
+            &:hover {
+                color: #666;
+            }
+        }
+    }
+}

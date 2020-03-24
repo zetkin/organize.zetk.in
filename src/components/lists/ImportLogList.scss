@@ -1,0 +1,15 @@
+.ImportLogList {
+    font-size: 1.0em;
+    max-width: 420px;
+
+    @include small-screen {
+        max-width: none;
+    }
+
+    .ListHeader {
+
+        @include small-screen {
+            display: none;
+        }
+    }
+}
