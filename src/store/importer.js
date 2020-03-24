@@ -118,7 +118,7 @@ export default function importer(state = null, action) {
     }
     else if (action.type == types.RETRIEVE_IMPORT_LOGS + '_PENDING') {
         return Object.assign({}, state, {
-            importLogList: Object.assign([], state.importLogList, {
+            importLogList: Object.assign({}, state.importLogList, {
                 isPending: true,
                 error: null,
             }),
