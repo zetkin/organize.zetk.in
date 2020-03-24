@@ -14,15 +14,11 @@ export default class ImportLogList extends React.Component {
         }).isRequired,
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return (nextProps.importLogList !== this.props.importLogList);
-    }
-
     render() {
         const columns = [
             {
                 'status': 'lists.importLogList.header.status',
-                'accepted': 'lists.importLogList.header.accpeted',
+                'accepted': 'lists.importLogList.header.accepted',
                 'completed': 'lists.importLogList.header.completed',
             }
         ];
