@@ -15,7 +15,12 @@ const genderOptions = new Set(['f','m','o','_']);
 @injectIntl
 export default class ConfirmImportPane extends PaneBase {
     getPaneTitle(data) {
-        return this.props.intl.formatMessage({ id: 'panes.confirmImport.title' });
+        if(data.valid) {
+            return this.props.intl.formatMessage({ id: 'panes.confirmImport.confirmTitle' });
+        } else {
+            return this.props.intl.formatMessage({ id: 'panes.confirmImport.errorTitle' });
+        }
+        
     }
 
     getFieldID(item) {
@@ -211,7 +216,6 @@ export default class ConfirmImportPane extends PaneBase {
     renderPaneContent(data) {
         if (!data.valid) {
             let infoListData = [
-                { name: 'what', msgId: 'panes.confirmImport.invalidData' },
                 { name: 'error', msgId: data.messageId }
             ];
 
@@ -219,8 +223,8 @@ export default class ConfirmImportPane extends PaneBase {
                 infoListData.push({ name: 'additionalInfo', value: data.additionalInfo });
             }
 
-            return (<div>
-                <InfoList key="info"
+            return (<div key="info" className="ConfirmImportPane-info">
+                <InfoList
                     data={ infoListData }
                 />
             </div>);
@@ -233,8 +237,8 @@ export default class ConfirmImportPane extends PaneBase {
             }
             infoListData.push({ name: 'preview', value: data.preview });
 
-            return (<div>
-                <InfoList key="info" data={ infoListData } />
+            return (<div key="info" className="ConfirmImportPane-info">
+                <InfoList data={ infoListData } />
             </div>);
         }
 

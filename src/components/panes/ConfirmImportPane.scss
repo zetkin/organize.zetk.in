@@ -1,0 +1,26 @@
+.ConfirmImportPane {
+    .ConfirmImportPane-info {
+        .InfoList {
+            .InfoListItem-warning {
+                &:before {
+                    @include icon($fa-var-warning);
+                    color: $c-ui-warning;
+                }
+            }
+
+            .InfoListItem-error {
+                &:before {
+                    @include icon($fa-var-exclamation-circle);
+                    color: $c-brand-delete;
+                }
+            }
+
+            .InfoListItem-preview {
+                &:before {
+                    @include icon($fa-var-info-circle);
+                    color: $c-brand-confirm;
+                }
+            }
+        }
+    }
+}
