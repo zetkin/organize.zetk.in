@@ -1,26 +1,26 @@
 continueImportButton: Continue import
 duplicatesInfo: You have selected duplicate columns.
-invalidData: Invalid data
-missingIdInfo: You have not chosen an id column. This may result in difficulty in updating people in Zetkin. This is not recommended.
+missingIdInfo: You have not chosen an ID column. This may result in difficulty in updating people in Zetkin. This is not recommended.
 missingFirstName: You have not chosen a column for first name.
-missingLastName: You need to chosen a column for last name.
+missingLastName: You have not chosen a column for last name.
 noTable: There is no table
 numberOfRows: rows will be imported.
-title: Confirm import
+confirmTitle: Confirm import
+errorTitle: Invalid data
 zetkinIdWarning: You have selected a Zetkin ID column. This should only be used if you are importing previously exported people. If not, please use the External ID column instead.
 inconsistentRow: The number of rows in a column is inconsistent with the number of columns configured.
-invalidEmail: The E-mail column may only contain e-mail addresses.
+invalidEmail: The e-mail column may only contain e-mail addresses.
 invalidGender: Invalid format of the gender column. Accepted values are m for males, f for females, o for others and blank or _ for unknown.
-first_nameTooLong: The First name column may not be longer than 50 characters.
-last_nameTooLong: The Last name column may not be longer than 50 characters.
-cityTooLong: The City column may not be longer than 50 characters.
-phoneTooLong: The Phone number column may not be longer than 60 characters.
-alt_phoneTooLong: The Alt. phone number column may not be longer than 60 characters.
-phoneInvalid: The Phone number column may only contain phone numbers.
-alt_phoneInvalid: The Alt. phone number column may only contain phone numbers.
-zip_codeTooLong: The Zip code column may not be longer than 10 characters.
-externalTooLong: The External ID column may not be longer than 12 characters.
+first_nameTooLong: The first name column may not be longer than 50 characters.
+last_nameTooLong: The last name column may not be longer than 50 characters.
+cityTooLong: The city column may not be longer than 50 characters.
+phoneTooLong: The phone number column may not be longer than 60 characters.
+alt_phoneTooLong: The alt. phone number column may not be longer than 60 characters.
+phoneInvalid: The phone number column may only contain phone numbers.
+alt_phoneInvalid: The alt. phone number column may only contain phone numbers.
+zip_codeTooLong: The zip code column may not be longer than 10 characters.
+externalTooLong: The external ID column may not be longer than 12 characters.
 zetkinInvalid: The Zetkin ID column may only contain numbers.
 co_addressTooLong: The C/O address column may not be longer than 120 characters.
-street_addressTooLong: The Street address column may not be longer than 120 characters.
+street_addressTooLong: The street address column may not be longer than 120 characters.
 missingIdOrName: You must select at least one type of ID or both First name and Last name.
