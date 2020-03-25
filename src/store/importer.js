@@ -16,7 +16,7 @@ export default function importer(state = null, action) {
     else if (action.type == types.EXECUTE_IMPORT + '_FULFILLED') {
         return Object.assign({}, state, {
             importIsPending: false,
-            importStats: action.payload.data.data,
+            importResponse: action.payload.data.data,
             importError: false,
             tableSet: null,
         });
@@ -24,7 +24,7 @@ export default function importer(state = null, action) {
     else if (action.type == types.EXECUTE_IMPORT + '_REJECTED') {
         return Object.assign({}, state, {
             importIsPending: false,
-            importStats: null,
+            importResponse: null,
             importError: action.payload.data,
         });
     }
@@ -111,7 +111,7 @@ export default function importer(state = null, action) {
             importIsPending: false,
             importError: null,
             parseError: null,
-            importStats: null,
+            importResponse: null,
             tableSet: null,
         });
     }
@@ -120,7 +120,7 @@ export default function importer(state = null, action) {
             importIsPending: false,
             importError: null,
             parseError: null,
-            importStats: null,
+            importResponse: null,
             tableSet: null,
         };
     }

@@ -31,7 +31,7 @@ export default class ImportPane extends RootPaneBase {
         });
 
         let tableSet = this.props.importer.tableSet;
-        let stats = this.props.importer.importStats;
+        let response = this.props.importer.importResponse;
         let isPending = this.props.importer.importIsPending;
         let importError = this.props.importer.importError;
         let parseError = this.props.importer.parseError;
@@ -72,25 +72,25 @@ export default class ImportPane extends RootPaneBase {
                     dispatch={ this.props.dispatch }/>
             );
         }
-        else if (stats && stats['status'] == "completed") {
+        else if (response && response.status == "completed") {
             return (
                 <div className="ImportPane-report">
                     <Msg tagName="h1" id="panes.import.report.h"
-                        values={{ count: stats.report.imported }}/>
+                        values={{ count: response.report.imported }}/>
                     <ul>
                         <li><Msg id="panes.import.report.numCreated"
-                            values={{ count: stats.report.created }}/></li>
+                            values={{ count: response.report.created }}/></li>
                         <li><Msg id="panes.import.report.numUpdated"
-                            values={{ count: stats.report.updated }}/></li>
+                            values={{ count: response.report.updated }}/></li>
                         <li><Msg id="panes.import.report.numTagged"
-                            values={{ count: stats.report.tagged }}/></li>
+                            values={{ count: response.report.tagged }}/></li>
                     </ul>
                     <Button labelMsg="panes.import.importMoreButton"
                         onClick={ this.onClickReset.bind(this) }/>
                 </div>
             );
         }
-        else if (stats && stats['status'] == "pending") {
+        else if (response && response.status == "pending") {
             return (
                 <div className="ImportPane-report">
                     <Msg tagName="h1" id="panes.import.pending.h"/>
