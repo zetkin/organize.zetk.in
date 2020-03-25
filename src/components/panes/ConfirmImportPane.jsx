@@ -157,7 +157,6 @@ export default class ConfirmImportPane extends PaneBase {
             return {
                 valid: false,
                 messageId: 'panes.confirmImport.duplicatesInfo',
-                additionalInfo: JSON.stringify(duplicates)
             }
         } 
 
