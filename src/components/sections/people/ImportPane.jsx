@@ -6,6 +6,7 @@ import { FormattedMessage as Msg } from 'react-intl';
 
 import Button from '../../misc/Button';
 import RootPaneBase from '../RootPaneBase';
+import ViewSwitch from '../../misc/ViewSwitch';
 import ImporterTableSet from '../../misc/importer/ImporterTableSet';
 import LoadingIndicator from '../../misc/LoadingIndicator';
 import ImportLogList from '../../lists/ImportLogList'
@@ -24,13 +25,16 @@ export default class ImportPane extends RootPaneBase {
 
         this.state = Object.assign({}, this.state, {
             isDragging: false,
+            viewMode: 'import',
         });
     }
 
-    componentDidMount() {
-        super.componentDidMount();
-
-        this.props.dispatch(retrieveImportLogs());
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.viewMode != prevState.viewMode) {
+            if (this.state.viewMode == 'logs') {
+                this.props.dispatch(retrieveImportLogs());
+            }
+        }
     }
 
     renderPaneContent(data) {
@@ -45,73 +49,73 @@ export default class ImportPane extends RootPaneBase {
         let parseError = this.props.importer.parseError;
         let importLogList = this.props.importer.importLogList;
 
-        if (isPending) {
-            return <LoadingIndicator />;
-        }
-        else if (importError) {
-            return (
-                <div className="ImportPane-error">
-                    <Msg tagName="h1" id="panes.import.error.h"/>
-                    <Msg tagName="p" id="panes.import.error.p"/>
-                    <Button labelMsg="panes.import.error.backButton"
-                        onClick={ this.onErrorBackButtonClick.bind(this) }
-                        />
-                    <Button labelMsg="panes.import.error.resetButton"
-                        onClick={ this.onErrorResetButtonClick.bind(this) }
-                        />
-                </div>
-            );
-        }
-        else if (parseError) {
-            return (
-                <div className="ImportPane-error">
-                    <Msg tagName="h1" id="panes.import.parseError.h"/>
-                    <Msg tagName="p" id="panes.import.parseError.p"/>
-                    <Button labelMsg="panes.import.error.resetButton"
-                        onClick={ this.onErrorResetButtonClick.bind(this) }
-                        />
-                </div>
-            );
-        }
-        else if (tableSet) {
-            return (
-                <ImporterTableSet tableSet={ tableSet }
-                    onEditColumn={ this.onEditColumn.bind(this) }
-                    onConfirmImport={ this.onConfirmImport.bind(this) }
-                    dispatch={ this.props.dispatch }/>
-            );
-        }
-        else if (response && response.status == "completed") {
-            return (
-                <div className="ImportPane-report">
-                    <Msg tagName="h1" id="panes.import.report.h"
-                        values={{ count: response.report.imported }}/>
-                    <ul>
-                        <li><Msg id="panes.import.report.numCreated"
-                            values={{ count: response.report.created }}/></li>
-                        <li><Msg id="panes.import.report.numUpdated"
-                            values={{ count: response.report.updated }}/></li>
-                        <li><Msg id="panes.import.report.numTagged"
-                            values={{ count: response.report.tagged }}/></li>
-                    </ul>
-                    <Button labelMsg="panes.import.importMoreButton"
-                        onClick={ this.onClickReset.bind(this) }/>
-                </div>
-            );
-        }
-        else if (response && response.status == "pending") {
-            return (
-                <div className="ImportPane-report">
-                    <Msg tagName="h1" id="panes.import.pending.h"/>
-                    <Msg tagName="p" id="panes.import.pending.p"/>
-                    <Button labelMsg="panes.import.importMoreButton"
-                        onClick={ this.onClickReset.bind(this) }/>
-                </div>
-            )
-        }
-        else {
-            return [
-                <div>
+        if(this.state.viewMode == 'import') {
+            if (isPending) {
+                return <LoadingIndicator />;
+            }
+            else if (importError) {
+                return (
+                    <div className="ImportPane-error">
+                        <Msg tagName="h1" id="panes.import.error.h"/>
+                        <Msg tagName="p" id="panes.import.error.p"/>
+                        <Button labelMsg="panes.import.error.backButton"
+                            onClick={ this.onErrorBackButtonClick.bind(this) }
+                            />
+                        <Button labelMsg="panes.import.error.resetButton"
+                            onClick={ this.onErrorResetButtonClick.bind(this) }
+                            />
+                    </div>
+                );
+            }
+            else if (parseError) {
+                return (
+                    <div className="ImportPane-error">
+                        <Msg tagName="h1" id="panes.import.parseError.h"/>
+                        <Msg tagName="p" id="panes.import.parseError.p"/>
+                        <Button labelMsg="panes.import.error.resetButton"
+                            onClick={ this.onErrorResetButtonClick.bind(this) }
+                            />
+                    </div>
+                );
+            }
+            else if (tableSet) {
+                return (
+                    <ImporterTableSet tableSet={ tableSet }
+                        onEditColumn={ this.onEditColumn.bind(this) }
+                        onConfirmImport={ this.onConfirmImport.bind(this) }
+                        dispatch={ this.props.dispatch }/>
+                );
+            }
+            else if (response && response.status == "completed") {
+                return (
+                    <div className="ImportPane-report">
+                        <Msg tagName="h1" id="panes.import.report.h"
+                            values={{ count: response.report.imported }}/>
+                        <ul>
+                            <li><Msg id="panes.import.report.numCreated"
+                                values={{ count: response.report.created }}/></li>
+                            <li><Msg id="panes.import.report.numUpdated"
+                                values={{ count: response.report.updated }}/></li>
+                            <li><Msg id="panes.import.report.numTagged"
+                                values={{ count: response.report.tagged }}/></li>
+                        </ul>
+                        <Button labelMsg="panes.import.importMoreButton"
+                            onClick={ this.onClickReset.bind(this) }/>
+                    </div>
+                );
+            }
+            else if (response && response.status == "pending") {
+                return (
+                    <div className="ImportPane-report">
+                        <Msg tagName="h1" id="panes.import.pending.h"/>
+                        <Msg tagName="p" id="panes.import.pending.p"/>
+                        <Button labelMsg="panes.import.importMoreButton"
+                            onClick={ this.onClickReset.bind(this) }/>
+                    </div>
+                )
+            }
+            else {
+                return [
                     <DropZone key="dropZone" className={ classes }
                         onDragEnter={ this.onDragEnter.bind(this) }
                         onDragLeave={ this.onDragLeave.bind(this) }
@@ -120,9 +124,10 @@ export default class ImportPane extends RootPaneBase {
                             <Msg tagName="p" id="panes.import.importDropZoneMessage"/>
                         </div>
                     </DropZone>
-                    <ImportLogList key="importLogList" importLogList={ importLogList } />
-                </div>
-            ];
+                ];
+            }
+        } else if (this.state.viewMode == 'logs') {
+            return <ImportLogList key="importLogList" importLogList={ importLogList } />
         }
     }
 
@@ -167,5 +172,21 @@ export default class ImportPane extends RootPaneBase {
 
     onErrorResetButtonClick() {
         this.props.dispatch(resetImport());
+    }
+
+    getPaneTools(data) {
+        const viewStates = {
+            'import': 'panes.import.viewMode.import',
+            'logs': 'panes.import.viewMode.logs',
+        };
+
+        let tools = [
+            <ViewSwitch key="viewSwitch"
+                states={ viewStates } selected={ this.state.viewMode }
+                onSwitch={ vs => this.setState({ viewMode: vs }) }
+                />,
+        ];
+
+        return tools;
     }
 }
