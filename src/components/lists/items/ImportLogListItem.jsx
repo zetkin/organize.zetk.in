@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedDate, FormattedTime, FormattedNumber, FormattedMessage as Msg } from 'react-intl';
 
 import Avatar from '../../misc/Avatar';
 
@@ -17,21 +18,17 @@ export default class ImportLogListItem extends React.Component {
     }
 
     render() {
-        let log = this.props.data;
+        const log = this.props.data;
 
         return (
             <div className="ImportLogListItem">
-
                 <div className="ImportLogListItem-col">
-                    <span className="ImportLogListItem-status">
-                        { log.status }</span>
-                    <span className="PersonListItem-accepted">
-                        { log.accepted }</span>
-                    <span className="PersonListItem-email">
-                        { log.completed }</span>
+                    <FormattedDate value={ log.accepted } />
+                    <FormattedTime value={ log.accepted } />
                 </div>
                 <div className="ImportLogListItem-col">
-                    <Avatar person={ log.imported_by }/>
+                    <Msg id={ "lists.importLogList.item.status." + log.status } />
+                    { log.report ? <FormattedNumber value={log.report.imported} /> : null }
                 </div>
             </div>
         );

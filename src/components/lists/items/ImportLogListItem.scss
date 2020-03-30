@@ -15,31 +15,13 @@
         text-overflow: ellipsis;
     }
 
-    .Avatar {
-        @include col(2, 12, $first:true);
-
-        @include small-screen {
-            width: 40px;
-            vertical-align: middle;
-            display: inline-block;
-            padding-left: 0;
-            padding-right: 0.5em;
-        }
-
-        @include mini-screen {
-            width: 30px;
-            vertical-align: middle;
-            display: inline-block;
-            padding-left: 0;
-            padding-right: 0.5em;
-        }
-    }
-
     .ImportLogListItem-col {
-        @include col(4, 12);
-
         @include small-screen {
             vertical-align: middle;
+        }
+
+        &:nth-child(1) {
+            @include col(4, 12);
         }
 
         &:last-child {

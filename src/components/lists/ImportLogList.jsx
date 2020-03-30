@@ -17,13 +17,13 @@ export default class ImportLogList extends React.Component {
     render() {
         const columns = [
             {
-                'status': 'lists.importLogList.header.status',
-                'accepted': 'lists.importLogList.header.accepted',
-                'completed': 'lists.importLogList.header.completed',
+                'date': 'lists.importLogList.header.date',
+                'time': 'lists.importLogList.header.time',
             },
             {
-                'imported_by': 'lists.importLogList.header.imported_by',
-            }
+                'status': 'lists.importLogList.header.status',
+                'imported': 'lists.importLogList.header.imported'
+            },
         ];
 
         return (
