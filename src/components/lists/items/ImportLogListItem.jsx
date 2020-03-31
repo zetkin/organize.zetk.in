@@ -21,7 +21,7 @@ export default class ImportLogListItem extends React.Component {
         const log = this.props.data;
 
         return (
-            <div className="ImportLogListItem">
+            <div onClick={ this.onClick.bind(this) }className="ImportLogListItem">
                 <div className="ImportLogListItem-col">
                     <FormattedDate value={ log.accepted } />
                     <FormattedTime value={ log.accepted } />
@@ -32,6 +32,10 @@ export default class ImportLogListItem extends React.Component {
                 </div>
             </div>
         );
+    }
+
+    onClick() {
+        this.props.onItemClick(this.props.data);
     }
 }
 

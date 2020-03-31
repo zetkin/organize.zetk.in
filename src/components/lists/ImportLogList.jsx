@@ -12,6 +12,7 @@ export default class ImportLogList extends React.Component {
             isPending: React.PropTypes.bool,
             items: React.PropTypes.array,
         }).isRequired,
+        onItemClick: React.PropTypes.func.isRequired
     }
 
     render() {
@@ -32,7 +33,7 @@ export default class ImportLogList extends React.Component {
                 itemComponent={ ImportLogListItem }
                 list={ this.props.importLogList }
                 allowBulkSelection={ false }
-                />
+                onItemClick={ this.props.onItemClick } />
         );
     }
 }

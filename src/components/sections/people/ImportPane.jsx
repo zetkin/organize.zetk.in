@@ -127,7 +127,10 @@ export default class ImportPane extends RootPaneBase {
                 ];
             }
         } else if (this.state.viewMode == 'logs') {
-            return <ImportLogList key="importLogList" importLogList={ importLogList } />
+            return <ImportLogList 
+                        key="importLogList"
+                        importLogList={ importLogList }
+                        onItemClick={ this.onLogItemClick.bind(this) } />
         }
     }
 
@@ -172,6 +175,10 @@ export default class ImportPane extends RootPaneBase {
 
     onErrorResetButtonClick() {
         this.props.dispatch(resetImport());
+    }
+
+    onLogItemClick(item) {
+        this.openPane('importlog', item.data.id);
     }
 
     getPaneTools(data) {
