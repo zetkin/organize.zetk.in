@@ -58,3 +58,5 @@ surveyOutline:
         saveButton: Spara
 tagCloud:
     addButton: Lägg till
+infoList:
+    andMore: ' och { number } fler'

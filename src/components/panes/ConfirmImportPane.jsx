@@ -75,66 +75,76 @@ export default class ConfirmImportPane extends PaneBase {
         return numberRows + ' ' + this.props.intl.formatMessage({ id: 'panes.confirmImport.numberOfRows' });
     }
 
+    addError(column, row, msgSuffix) {
+        if (column in this.errors) {
+            this.errors[column].msgNumbers.rows.push(row);
+        } else {
+            this.errors[column] = {
+                msgId: 'panes.confirmImport.' + column + msgSuffix,
+                msgNumbers: { rows: [ row ] } 
+            }
+        }
+    }
+
     validateRows(rows, columns) {
-        for (const row of rows) {
+        for (let rowidx = 0; rowidx < rows.length; rowidx++) {
+            const row = rows[rowidx];
             if(row.values.length != columns.length) {
-                return ['panes.confirmImport.inconsistentRow'];
+                return { inconsistent: { msgId: 'panes.confirmImport.inconsistentRow' }}
             }
 
-            for (let i = 0; i < columns.length; i++) {
-                const column = this.getFieldID(columns[i]);
+            for (let colidx = 0; colidx < columns.length; colidx++) {
+                const column = this.getFieldID(columns[colidx]);
                 switch(column) {
                     case 'email':
-                        if(!isEmail(row.values[i]) && row.values[i] != '') {
-                            return 'panes.confirmImport.invalidEmail';
+                        if(!isEmail(row.values[colidx]) && row.values[colidx] != '') {
+                            this.addError(column, rowidx+1, 'Invalid');
                         }
                         break;
                     case 'gender':
-                        if(!genderOptions.has(row.values[i]) && row.values[i] != '') {
-                            return 'panes.confirmImport.invalidGender';
+                        if(!genderOptions.has(row.values[colidx]) && row.values[colidx] != '') {
+                            this.addError(column, rowidx+1, 'Invalid');
                         }
                         break;
                     case 'first_name':
                     case 'last_name':
                     case 'city':
-                        if(row.values[i].length > 50) {
-                            return 'panes.confirmImport.' + column + 'TooLong';
+                        if(row.values[colidx].length > 50) {
+                            this.addError(column, rowidx+1, 'TooLong');
                         }
                         break;
                     case 'phone':
                     case 'alt_phone':
-                        if(row.values[i].length > 60) {
-                            return 'panes.confirmImport.' + column + 'TooLong';
+                        if(row.values[colidx].length > 60) {
+                            this.addError(column, rowidx+1, 'TooLong');
                         }
-                        if(!row.values[i].match(/^[0-9\-\+ ]*$/)) {
-                            return 'panes.confirmImport.' + column + 'Invalid';
+                        if(!row.values[colidx].match(/^[0-9\-\+ ]*$/)) {
+                            this.addError(column, rowidx+1, 'Invalid');
                         }
                         break;
                     case 'zip_code':
-                        if(row.values[i].length > 10) {
-                            return 'panes.confirmImport.' + column + 'TooLong';
+                        if(row.values[colidx].length > 10) {
+                            this.addError(column, rowidx+1, 'TooLong');
                         }
                         break;
                     case 'external':
-                        if(row.values[i].length > 12) {
-                            return 'panes.confirmImport.' + column + 'TooLong';
+                        if(row.values[colidx].length > 12) {
+                            this.addError(column, rowidx+1, 'TooLong');
                         }
                         break;
                     case 'zetkin':
-                        if(!row.values[i].match(/^[0-9]*$/)) {
-                            return 'panes.confirmImport.' + column + 'Invalid';
+                        if(!row.values[colidx].match(/^[0-9]*$/)) {
+                            this.addError(column, rowidx+1, 'Invalid');
                         }
                     case 'co_address':
                     case 'street_address':
-                        if(row.values[i].length > 120) {
-                            'panes.confirmImport.' + column + 'TooLong';
+                        if(row.values[colidx].length > 120) {
+                            this.addError(column, rowidx+1, 'TooLong');
                         }
                         break;
                 }
             }
-
         }
-        return null;
     }
 
     getRenderData() {
@@ -142,7 +152,7 @@ export default class ConfirmImportPane extends PaneBase {
         if (this.props.importer.tableSet == null) {
             return {
                 valid: false,
-                msgId: 'panes.confirmImport.noTable'
+                messages: [{ msgId: 'panes.confirmImport.noTable' }]
             };
         }
         const tableList = this.props.importer.tableSet.tableList;
@@ -153,25 +163,23 @@ export default class ConfirmImportPane extends PaneBase {
 
         const duplicates = this.getDuplicateTypes(typeCount);
 
-        if (Object.keys(duplicates).length > 0) {
-            return {
-                valid: false,
-                messageId: 'panes.confirmImport.duplicatesInfo',
-            }
-        } 
+        this.errors = {};
 
-        if(!((typeCount.external || typeCount.zetkin) || (typeCount.first_name && typeCount.last_name))) {
-            return {
-                valid: false,
-                messageId: 'panes.confirmImport.missingIdOrName',
-            }
+        if (Object.keys(duplicates).length > 0) {
+            this.errors.duplicates = { msgId: 'panes.confirmImport.duplicatesInfo' };
         }
 
-        const error = this.validateRows(tableItem.data.rows, tableItem.data.columnList.items);
-        if (error) {
+        if(!((typeCount.external || typeCount.zetkin) || 
+                (typeCount.first_name && typeCount.last_name))) {
+            this.errors.missingIdOrName = { msgId: 'panes.confirmImport.missingIdOrName' };
+        }
+
+        this.validateRows(tableItem.data.rows, tableItem.data.columnList.items);
+
+        if (Object.keys(this.errors).length) {
             return {
                 valid: false,
-                messageId: error,
+                messages: this.errors,
             }
         }
 
@@ -187,22 +195,22 @@ export default class ConfirmImportPane extends PaneBase {
 
         if (!("first_name" in typeCount)) {
             result.warning = true;
-            messages.push('panes.confirmImport.missingFirstName');
+            messages.push({ msgId: 'panes.confirmImport.missingFirstName' });
         }
 
         if (!("last_name" in typeCount)) {
             result.warning = true;
-            messages.push('panes.confirmImport.missingLastName');
+            messages.push({ msgId: 'panes.confirmImport.missingLastName' });
         }
 
         if (!("external" in typeCount || "zetkin" in typeCount)) {
             result.warning = true;
-            messages.push('panes.confirmImport.missingIdInfo');
+            messages.push({ msgId: 'panes.confirmImport.missingIdInfo' });
         }
 
         if ("zetkin" in typeCount) {
             result.warning = true;
-            messages.push('panes.confirmImport.zetkinIdWarning');
+            messages.push({ msgId: 'panes.confirmImport.zetkinIdWarning' });
         }
 
         if(result.warning) {
@@ -214,12 +222,10 @@ export default class ConfirmImportPane extends PaneBase {
 
     renderPaneContent(data) {
         if (!data.valid) {
-            let infoListData = [
-                { name: 'error', msgId: data.messageId }
-            ];
-
-            if (data.additionalInfo) {
-                infoListData.push({ name: 'additionalInfo', value: data.additionalInfo });
+            let infoListData = [];
+            for(const messageKey in data.messages ) {
+                const message = data.messages[messageKey];
+                infoListData.push({ name: 'error', ...message })
             }
 
             return (<div key="info" className="ConfirmImportPane-info">
@@ -231,7 +237,7 @@ export default class ConfirmImportPane extends PaneBase {
             let infoListData = [];
             if (data.warning) {
                 for(const message of data.messages) {
-                    infoListData.push({ name: 'warning', msgId: message });
+                    infoListData.push({ name: 'warning', ...message });
                 }
             }
             infoListData.push({ name: 'preview', value: data.preview });

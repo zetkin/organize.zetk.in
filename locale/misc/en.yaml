@@ -57,3 +57,5 @@ surveyOutline:
         saveBulkButton: Create {numLines, plural, =1 {one option} other {# options}}
 tagCloud:
     addButton: Add tag
+infoList:
+    andMore: ' and { number } more'

@@ -8,18 +8,18 @@ numberOfRows: rader kommer importeras.
 title: Bekräfta import
 zetkinIdWarning: Du har valt en kolumn som Zetkin-ID. Det här bör bara användas vid återimport av exporterade människor från Zetkin. I annat fall, använd externt ID.
 inconsistentRow: Antalet rader i en kolumn stämmer inte överrens med antalet konfigurerade kolumner.
-invalidEmail: E-post-kolumnen får bara innehålla e-postadresser.
-invalidGender: Ogilitigt format för kolumnen kön. Gitliga värden är m för män, f för kvinnor, o för annat, och blanksteg eller _ för okänd.
-first_nameTooLong: Kolumnen förnamn får inte vara längre än 50 tecken.
-last_nameTooLong: Kolumnen efternamn får inte vara längre än 50 tecken.
-cityTooLong: Kolumnen efternamn får inte vara längre än 50 tecken.
-phoneTooLong: Kolumnen telefon får inte vara längre än 60 tecken.
-alt_phoneTooLong: Kolumnen alt. telefonnumer får inte vara längre än 60 tecken.
-phoneInvalid: Kolumnen telefon får bara innehålla telefonnummer.
-alt_phoneInvalid: Kolumnen alt. telefon får bara innehålla telefonnummer.
-zip_codeTooLong: Kolumnen postnummer får inte vara längre än 10 tecken.
-externalTooLong: Kolumnen externt ID får inte vara längre än 12 tecken.
-zetkinInvalid: Kolumnen Zetkin ID får bara innehålla siffror.
-co_addressTooLong: Kolumnen C/O adress får inte vara längre än 120 characters.
-street_addressTooLong: Kolumnen gatuadress får inte vara längre än 120 characters.
+emailInvalid: Ogiltig e-postadress på rad { rows }.
+genderInvalid: Ogilitigt kön på rad { rows }. Gitliga värden är m för män, f för kvinnor, o för annat, och blank eller _ för okänd.
+first_nameTooLong: Förnamn längre än 50 tecken på rad { rows }.
+last_nameTooLong: Efternamn längre än 50 tecken på rad { rows }.
+cityTooLong: Ort längre än 50 tecken på rad { rows }.
+phoneTooLong: Telefon längre än 60 tecken på rad { rows }.
+alt_phoneTooLong: Alt. telefon längre än 60 tecken på rad { rows }.
+phoneInvalid: Telefonnummer ogiltigt på rad { rows }.
+alt_phoneInvalid: Alt. telefonnummer ogiltigt på rad { rows }.
+zip_codeTooLong: Postnummer längre än 10 tecken på rad { rows }.
+externalTooLong: Externt ID längre än 12 tecken på rad { rows }.
+zetkinInvalid: Zetkin ID ogiltigt på rad { rows }. Får bara innehålla siffror.
+co_addressTooLong: C/O-adress längre än 120 tecken på rad { rows }.
+street_addressTooLong: Gatuadress längre än 120 tecken på rad { rows }.
 missingIdOrName: Du måste välja antingen en typ av ID eller både förnamn och efternamn.
