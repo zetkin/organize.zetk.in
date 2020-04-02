@@ -183,8 +183,8 @@ export default class ImportPane extends RootPaneBase {
 
     getPaneTools(data) {
         const viewStates = {
-            'import': 'panes.import.viewMode.import',
-            'logs': 'panes.import.viewMode.logs',
+            'import': 'panes.import.viewSwitch.import',
+            'logs': 'panes.import.viewSwitch.logs',
         };
 
         let tools = [

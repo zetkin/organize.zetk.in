@@ -31,7 +31,7 @@ export default class ImportLogPane extends PaneBase {
         const log = data.data;
         if (!log) {
             const infoListData = [
-                { name: 'error', msgId: 'panes.importLog.noImportLog' }
+                { name: 'error', msgId: 'panes.importLog.error.noImportLog' }
             ];
 
             return (<div key="info" className="ImportLogPane-info">
@@ -41,20 +41,53 @@ export default class ImportLogPane extends PaneBase {
             </div>);
         } else {
             const infoListData = [
-                { name: 'status', msgId: 'panes.importLogList.status.' + log.status },
-                { name: 'accepted' , value: log.accpeted },
-                { name: 'completed' , value: log.completed },
-                { name: 'error' , value: log.error },
-                { name: 'imported' , value: log.report.imported },
-                { name: 'created' , value: log.report.updated },
-                { name: 'updated' , value: log.report.updated },
-                { name: 'tagged' , value: log.report.updated },
-                { name: 'taggings' , value: log.report.updated },
+                {
+                    name: 'status',
+                    msgId: 'lists.importLogList.item.status.' + log.status
+                },
+                {
+                    name: 'accepted',
+                    datetime: log.accepted
+                },
+                {
+                    name: 'completed',
+                    datetime: log.completed
+                },
+                {
+                    name: 'error',
+                    value: log.error
+                },
+                {
+                    name: 'imported',
+                    msgId: 'panes.importLog.report.imported',
+                    msgNumbers: { imported: log.report.imported },
+                },
+                {
+                    name: 'created',
+                    msgId: 'panes.importLog.report.created',
+                    msgNumbers: { created: log.report.created },
+                },
+                {
+                    name: 'updated',
+                    msgId: 'panes.importLog.report.updated',
+                    msgNumbers: { updated: log.report.updated },
+                },
+                {
+                    name: 'tagged',
+                    msgId: 'panes.importLog.report.tagged',
+                    msgNumbers: { tagged: log.report.tagged },
+                },
+                {
+                    name: 'taggings',
+                    msgId: 'panes.importLog.report.taggings',
+                    msgNumbers: { taggings: log.report.taggings },
+                },
             ];
 
             return[
                 <Avatar key="avatar" ref="avatar" person={ log.imported_by }/>,
                 <InfoList
+                key="info"
                 data={ infoListData } />
             ];
         }
