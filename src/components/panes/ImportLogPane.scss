@@ -1,0 +1,53 @@
+.ImportLogPane {
+    .InfoListItem-status {
+        &:before {
+            @include icon($fa-var-question-circle);
+        }
+    }
+
+    .InfoListItem-accepted {
+        &:before {
+        }
+    }
+
+    .InfoListItem-completed {
+        &:before {
+            @include icon($fa-var-check-circle);
+        }
+    }
+
+    .InfoListItem-error {
+        &:before {
+            @include icon($fa-var-exclamation-triangle);
+        }
+    }
+
+    .InfoListItem-imported {
+        &:before {
+            @include icon($fa-var-cloud-upload);
+        }
+    }
+
+    .InfoListItem-created {
+        &:before {
+            @include icon($fa-var-hand-paper-o);
+        }
+    }
+
+    .InfoListItem-updated {
+        &:before {
+            @include icon($fa-var-recycle);
+    }
+
+    .InfoListItem-tagged {
+        &:before {
+            @include icon($fa-var-tag);
+        }
+    }
+
+    .InfoListItem-taggings {
+        &:before {
+            @include icon($fa-var-tags);
+        }
+    }
+}
