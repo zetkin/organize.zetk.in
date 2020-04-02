@@ -107,3 +107,6 @@ tableSelect:
     p: |-
         There are more than one sheet in the file. Select the sheet that
         contains the data you wish to import.
+viewSwitch:
+  import: Import
+  logs: History

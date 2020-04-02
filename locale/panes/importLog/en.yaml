@@ -1,0 +1,9 @@
+report:
+  imported: '{ imported } imported'
+  created: '{ created } created'
+  updated: '{ updated } updated'
+  tagged: '{ tagged } tagged'
+  taggings: '{ taggings } taggings'
+error:
+  noImportLog: No import log available
+title: Import log
