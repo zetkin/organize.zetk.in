@@ -19,7 +19,18 @@ export default class InfoList extends React.Component {
 
                     // use custom value if set, using the msgId as a fallback
                     if (!value && item.msgId) {
-                        value = this.props.intl.formatMessage({ id: item.msgId }, item.msgValues);
+                        let msgValues = item.msgValues ? item.msgValues : {};
+                        if(item.msgNumbers) {
+                            for(const key in item.msgNumbers) {
+                                msgValues[key] = this.props.intl.formatNumber(item.msgNumbers[key]);
+                            }
+                        }
+                        value = this.props.intl.formatMessage({ id: item.msgId }, msgValues);
+                    }
+
+                    if(!value && item.datetime) {
+                        value = this.props.intl.formatDate(item.datetime) + 
+                            " " + this.props.intl.formatTime(item.datetime);
                     }
 
                     if (value && (item.onClick || item.href)) {
