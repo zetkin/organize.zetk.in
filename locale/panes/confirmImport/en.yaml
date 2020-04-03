@@ -1,0 +1,27 @@
+continueImportButton: Continue import
+duplicatesInfo: You have selected duplicate columns.
+missingIdInfo: You have not chosen an ID column. This may result in difficulty in updating people in Zetkin. This is not recommended.
+missingFirstName: You have not chosen a column for first name.
+missingLastName: You have not chosen a column for last name.
+noTable: There is no table
+numberOfRows: rows will be imported.
+confirmTitle: Confirm import
+errorTitle: Invalid data
+zetkinIdWarning: You have selected a Zetkin ID column. This should only be used if you are importing previously exported people. If not, please use the External ID column instead.
+inconsistentRow: The number of rows in a column is inconsistent with the number of columns configured.
+emailInvalid: Invalid E-mail address on rows { rows }.
+genderInvalid: Invalid gender format on rows { rows }. Gender may only contain f for female, m for male, o for other, _ or blank for unknown.
+first_nameTooLong: First name longer than 50 character on rows { rows }.
+last_nameTooLong: Last name longer than 50 characters on rows { rows }.
+cityTooLong: City longer than 50 characters on rows { rows }.
+phoneTooLong: Phone number longer than 60 characters on rows { rows }.
+alt_phoneTooLong: Alt. phone number longer than 60 characters on rows { rows }.
+phoneInvalid: Phone number invalid on rows { rows }.
+alt_phoneInvalid: Alt. phone number invalid on rows { rows }.
+zip_codeTooLong: Zip code longer than 10 characters on rows { rows }.
+externalTooLong: External ID longer thant 12 characters on rows { rows }.
+zetkinInvalid: Zetkin ID invalid on rows { rows }. May only contain numbers.
+co_addressTooLong: C/O address longer than 120 characters on rows { rows }.
+street_addressTooLong: Street address longer than 120 characters on rows { rows }.
+missingIdOrName: You must select at least one type of ID or both First name and Last name.
+rowInvalid: ID or first name and last name missing on row { rows }.
