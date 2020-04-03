@@ -14,14 +14,6 @@ const genderOptions = new Set(['f','m','o','_']);
 @connect(state => ({ importer: state.importer }))
 @injectIntl
 export default class ConfirmImportPane extends PaneBase {
-    shouldComponentUpdate(nextProps, nextState) {
-        if(nextProps.importer.tableSet == null) {
-            this.closePane();
-            return false;
-        }
-        return true;
-    }
-
     getPaneTitle(data) {
         if(data.valid) {
             return this.props.intl.formatMessage({ id: 'panes.confirmImport.confirmTitle' });
