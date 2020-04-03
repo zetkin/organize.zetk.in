@@ -42,11 +42,6 @@ export default class InfoList extends React.Component {
                         value = this.props.intl.formatMessage({ id: item.msgId }, msgValues);
                     }
 
-                    if(!value && item.datetime) {
-                        value = this.props.intl.formatDate(item.datetime) + 
-                            " " + this.props.intl.formatTime(item.datetime);
-                    }
-
                     if (value && (item.onClick || item.href)) {
                         value = <Link onClick={item.onClick} href={item.href} target={item.target}>
                             {value}
