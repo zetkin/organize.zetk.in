@@ -33,7 +33,7 @@ error:
 parseError:
     h: Ogiltig fil
     p: >-
-        Filen du valde kan inte laddas. Konvertera din fil till XLSX-format och försök igen.
+        Filen du valde kan inte laddas. Konvertera din fil till CSV- eller XLSX-format och försök igen.
 importButton: Importera
 importDropZoneMessage: 'Dra och släpp en fil här, eller klicka och välj en för att importera.'
 importMoreButton: Importera mer
