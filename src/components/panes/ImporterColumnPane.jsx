@@ -13,7 +13,15 @@ import { resolveSettingsComponent } from '../misc/importer/settings';
 @connect(state => ({ importer: state.importer }))
 @injectIntl
 export default class ImporterColumnPane extends PaneBase {
-    getRenderData() {
+    shouldComponentUpdate(nextProps, nextState) {
+        if(nextProps.importer.tableSet == null) {
+            this.closePane();
+            return false;
+        }
+        return true;
+    }
+
+    getRenderData() { 
         let tableId = this.getParam(0);
         let tableList = this.props.importer.tableSet.tableList;
         let tableItem = getListItemById(tableList, tableId);
