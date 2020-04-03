@@ -53,6 +53,7 @@
     "negotiator": "^0.6.1",
     "node-yaml": "^3.0.3",
     "object-subset": "0.0.4",
+    "papaparse": "^5.2.0",
     "raven": "^1.2.1",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.0.1",

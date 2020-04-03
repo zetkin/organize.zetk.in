@@ -1,8 +1,70 @@
 import xlsx from 'xlsx';
+import papa from 'papaparse';
 
 import makeRandomString from './makeRandomString';
 import { createList, createListItem } from './store';
 
+
+export function parseCSV(file) {
+    return new Promise((resolve, reject) => {
+        let table = {
+            id: '$' + makeRandomString(6),
+            name: 'CSV',
+            numEmptyColumnsRemoved: 0,
+            useFirstRowAsHeader: false,
+            columnList: createList(),
+            rows: [],
+        };
+
+        papa.parse(file, {
+            complete: parsed => {
+                if (parsed.errors && parsed.errors.length) {
+                    reject({ error: parsed.errors });
+                }
+                else if (parsed.data && parsed.data.length) {
+                    // If cell count varies by row, use maximum number as column count
+                    const colCount = Math.max.apply(null, parsed.data.map(row => row.length));
+
+                    while (table.columnList.items.length < colCount) {
+                        table.columnList.items.push(createListItem({
+                            id: '$' + makeRandomString(6),
+                            name: '',
+                            included: true,
+                            type: 'unknown',
+                        }));
+                    }
+
+                    // Ignore empty rows, and unify number of cells per row
+                    table.rows = parsed.data
+                        .filter(row => row.join('') != '')
+                        .map(row => {
+                            let values = row.concat();
+
+                            // Add empty cells until column count is correct
+                            while (values.length < colCount) {
+                                values.push('');
+                            }
+
+                            return {
+                                included: true,
+                                values,
+                            }
+                        });
+                }
+
+                // Table set always contains just a single table
+                resolve({
+                    tableSet: {
+                        tableList: createList([table]),
+                    }
+                });
+            },
+            error: err => {
+                reject(err);
+            },
+        });
+    });
+}
 
 export function parseWorkbook(data) {
     let wb = xlsx.read(data, { type: 'binary', cellStyles: true });
@@ -119,7 +181,7 @@ export function parseWorkbook(data) {
         }
     });
 
-    return tableSet;
+    return Promise.resolve({ tableSet });
 }
 
 function guessColumnConfigFromName(name) {
