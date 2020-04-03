@@ -107,73 +107,73 @@ export default class ConfirmImportPane extends PaneBase {
 
             for (let colidx = 0; colidx < columns.length; colidx++) {
                 const column = this.getFieldID(columns[colidx]);
-                if(row.values[colidx] == null) {
-                    row.values[colidx] = '';
-                }
-                switch(column) {
-                    case 'email':
-                        if(!isEmail(row.values[colidx].trim()) && row.values[colidx] != '') {
-                            this.addError(column, rowidx+1, 'Invalid');
-                        }
-                        break;
-                    case 'gender':
-                        if(!genderOptions.has(row.values[colidx]) && row.values[colidx] != '') {
-                            this.addError(column, rowidx+1, 'Invalid');
-                        }
-                        break;
-                    case 'first_name':
-                        if(row.values[colidx].trim().length > 0) {
-                            first_name = true;
-                        }
-                        if(row.values[colidx].length > 50) {
-                            this.addError(column, rowidx+1, 'TooLong');
-                        }
-                        break;
-                    case 'last_name':
-                        if(row.values[colidx].trim().length > 0) {
-                            last_name = true;
-                        }
-                    case 'city':
-                        if(row.values[colidx].length > 50) {
-                            this.addError(column, rowidx+1, 'TooLong');
-                        }
-                        break;
-                    case 'phone':
-                    case 'alt_phone':
-                        if(row.values[colidx].length > 60) {
-                            this.addError(column, rowidx+1, 'TooLong');
-                        }
-                        if(!row.values[colidx].match(/^[0-9\-\+ ]*$/)) {
-                            this.addError(column, rowidx+1, 'Invalid');
-                        }
-                        break;
-                    case 'zip_code':
-                        if(row.values[colidx].length > 10) {
-                            this.addError(column, rowidx+1, 'TooLong');
-                        }
-                        break;
-                    case 'external':
-                        if(row.values[colidx].trim().length > 12) {
-                            this.addError(column, rowidx+1, 'TooLong');
-                        }
-                        if(row.values[colidx].trim().length > 0) {
-                            id = true;
-                        }
-                        break;
-                    case 'zetkin':
-                        if(!row.values[colidx].trim().match(/^[0-9]*$/)) {
-                            this.addError(column, rowidx+1, 'Invalid');
-                        }
-                        if(row.values[colidx].trim().length > 0) {
-                            id = true;
-                        }
-                        break;
-                    case 'co_address':
-                    case 'street_address':
-                        if(row.values[colidx].length > 120) {
-                            this.addError(column, rowidx+1, 'TooLong');
-                        }
-                        break;
+                if(row.values[colidx]) {
+                    switch(column) {
+                        case 'email':
+                            if(!isEmail(row.values[colidx].trim()) && row.values[colidx] != '') {
+                                this.addError(column, rowidx+1, 'Invalid');
+                            }
+                            break;
+                        case 'gender':
+                            if(!genderOptions.has(row.values[colidx]) && row.values[colidx] != '') {
+                                this.addError(column, rowidx+1, 'Invalid');
+                            }
+                            break;
+                        case 'first_name':
+                            if(row.values[colidx].trim().length > 0) {
+                                first_name = true;
+                            }
+                            if(row.values[colidx].length > 50) {
+                                this.addError(column, rowidx+1, 'TooLong');
+                            }
+                            break;
+                        case 'last_name':
+                            if(row.values[colidx].trim().length > 0) {
+                                last_name = true;
+                            }
+                        case 'city':
+                            if(row.values[colidx].length > 50) {
+                                this.addError(column, rowidx+1, 'TooLong');
+                            }
+                            break;
+                        case 'phone':
+                        case 'alt_phone':
+                            if(row.values[colidx].length > 60) {
+                                this.addError(column, rowidx+1, 'TooLong');
+                            }
+                            const value = row.values[colidx].replace(/[^\x00-\x7FåÅäÄöÖéÉèÈØøÆæ]/g, '');
+                            if(!value.match(/^[0-9\-\−\–\—\+\s\(\)]*$/)) {
+                                this.addError(column, rowidx+1, 'Invalid');
+                            }
+                            break;
+                        case 'zip_code':
+                            if(row.values[colidx].length > 10) {
+                                this.addError(column, rowidx+1, 'TooLong');
+                            }
+                            break;
+                        case 'external':
+                            if(row.values[colidx].trim().length > 12) {
+                                this.addError(column, rowidx+1, 'TooLong');
+                            }
+                            if(row.values[colidx].trim().length > 0) {
+                                id = true;
+                            }
+                            break;
+                        case 'zetkin':
+                            if(!row.values[colidx].trim().match(/^[0-9]*$/)) {
+                                this.addError(column, rowidx+1, 'Invalid');
+                            }
+                            if(row.values[colidx].trim().length > 0) {
+                                id = true;
+                            }
+                            break;
+                        case 'co_address':
+                        case 'street_address':
+                            if(row.values[colidx].length > 120) {
+                                this.addError(column, rowidx+1, 'TooLong');
+                            }
+                            break;
+                    }
                 }
             }
             if(!(id || (first_name && last_name)) && !('missingIdOrName' in this.errors)) {
