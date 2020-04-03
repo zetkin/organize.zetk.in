@@ -21,6 +21,8 @@ campaignSelect:
     nullLabel: All campaigns
 deleteButton:
     label: Delete
+infoList:
+    andMore: ' and { number } more'
 inviteBox:
     h: Send invite
     instructions: Fill out the e-mail address of the person you wish to invite.
@@ -57,5 +59,3 @@ surveyOutline:
         saveBulkButton: Create {numLines, plural, =1 {one option} other {# options}}
 tagCloud:
     addButton: Add tag
-infoList:
-    andMore: ' and { number } more'
