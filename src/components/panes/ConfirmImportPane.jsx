@@ -93,6 +93,10 @@ export default class ConfirmImportPane extends PaneBase {
                 return { inconsistent: { msgId: 'panes.confirmImport.inconsistentRow' }}
             }
 
+            let id = false;
+            let first_name = false;
+            let last_name = false;
+
             for (let colidx = 0; colidx < columns.length; colidx++) {
                 const column = this.getFieldID(columns[colidx]);
                 if(row.values[colidx] == null) {
@@ -110,7 +114,17 @@ export default class ConfirmImportPane extends PaneBase {
                         }
                         break;
                     case 'first_name':
+                        if(row.values[colidx].trim().length > 0) {
+                            first_name = true;
+                        }
+                        if(row.values[colidx].length > 50) {
+                            this.addError(column, rowidx+1, 'TooLong');
+                        }
+                        break;
                     case 'last_name':
+                        if(row.values[colidx].trim().length > 0) {
+                            last_name = true;
+                        }
                     case 'city':
                         if(row.values[colidx].length > 50) {
                             this.addError(column, rowidx+1, 'TooLong');
@@ -131,14 +145,21 @@ export default class ConfirmImportPane extends PaneBase {
                         }
                         break;
                     case 'external':
-                        if(row.values[colidx].length > 12) {
+                        if(row.values[colidx].trim().length > 12) {
                             this.addError(column, rowidx+1, 'TooLong');
+                        }
+                        if(row.values[colidx].trim().length > 0) {
+                            id = true;
                         }
                         break;
                     case 'zetkin':
-                        if(!row.values[colidx].match(/^[0-9]*$/)) {
+                        if(!row.values[colidx].trim().match(/^[0-9]*$/)) {
                             this.addError(column, rowidx+1, 'Invalid');
                         }
+                        if(row.values[colidx].trim().length > 0) {
+                            id = true;
+                        }
+                        break;
                     case 'co_address':
                     case 'street_address':
                         if(row.values[colidx].length > 120) {
@@ -146,6 +167,9 @@ export default class ConfirmImportPane extends PaneBase {
                         }
                         break;
                 }
+            }
+            if(!(id || (first_name && last_name)) && !('missingIdOrName' in this.errors)) {
+                this.addError('row', rowidx+1, 'Invalid');
             }
         }
     }

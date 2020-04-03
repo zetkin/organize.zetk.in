@@ -23,3 +23,4 @@ zetkinInvalid: Zetkin ID ogiltigt på rad { rows }. Får bara innehålla siffror
 co_addressTooLong: C/O-adress längre än 120 tecken på rad { rows }.
 street_addressTooLong: Gatuadress längre än 120 tecken på rad { rows }.
 missingIdOrName: Du måste välja antingen en typ av ID eller både förnamn och efternamn.
+rowInvalid: ID eller förnamn och efternamn saknas på rad { rows }.

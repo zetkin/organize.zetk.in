@@ -24,3 +24,4 @@ zetkinInvalid: Zetkin ID invalid on rows { rows }. May only contain numbers.
 co_addressTooLong: C/O address longer than 120 characters on rows { rows }.
 street_addressTooLong: Street address longer than 120 characters on rows { rows }.
 missingIdOrName: You must select at least one type of ID or both First name and Last name.
+rowInvalid: ID or first name and last name missing on row { rows }.
