@@ -4,7 +4,6 @@ import Raven from 'raven';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import express from 'express';
-import expressWs from 'express-ws';
 import helmet from 'helmet';
 import http from 'http';
 import url from 'url';
@@ -101,8 +100,6 @@ export default function initApp(messages) {
     app.use('/widgets', widgets);
 
     app.use('/prints', prints);
-
-    expressWs(app);
 
     app.get('/activist', function(req, res, next) {
         if (req.store.getState().user.memberships.length) {
