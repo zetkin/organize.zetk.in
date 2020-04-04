@@ -87,4 +87,16 @@
     .ImporterTable-settings {
         z-index: 3;
     }
+
+    .ViewSwitch-state-import {
+        &:before {
+            @include icon($fa-var-cloud-upload);
+        }
+    }
+
+    .ViewSwitch-state-logs {
+        &:before {
+            @include icon($fa-var-history);
+        }
+    }
 }

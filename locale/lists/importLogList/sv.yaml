@@ -4,6 +4,7 @@ header:
     status: Status
     time: Tid
 item:
+    rows: '{ rows, number } rader'
     status:
         completed: Klar
         error: Fel

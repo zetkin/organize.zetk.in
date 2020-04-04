@@ -1,9 +1,10 @@
 import React from 'react';
-import { FormattedDate, FormattedTime, FormattedNumber, FormattedMessage as Msg } from 'react-intl';
+import { injectIntl, FormattedDate, FormattedTime, FormattedNumber, FormattedMessage as Msg } from 'react-intl';
 
 import Avatar from '../../misc/Avatar';
 
 
+@injectIntl
 export default class ImportLogListItem extends React.Component {
     static propTypes = {
         data: React.PropTypes.shape({
@@ -28,7 +29,11 @@ export default class ImportLogListItem extends React.Component {
                 </div>
                 <div className="ImportLogListItem-col">
                     <Msg id={ "lists.importLogList.item.status." + log.status } />
-                    { log.report ? <FormattedNumber value={log.report.imported} /> : null }
+                    { log.report ?
+                        <Msg id="lists.importLogList.item.rows"
+                            values={ { rows: log.report.imported } } />
+                    : null }
+                    
                 </div>
             </div>
         );

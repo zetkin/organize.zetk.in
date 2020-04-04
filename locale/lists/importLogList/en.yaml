@@ -4,6 +4,7 @@ header:
     status: Status
     time: Time
 item:
+    rows: '{rows, number} rows'
     status:
         completed: Completed
         error: Error
