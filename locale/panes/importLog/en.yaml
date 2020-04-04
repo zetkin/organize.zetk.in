@@ -6,4 +6,8 @@ report:
   taggings: '{ taggings } taggings'
 error:
   noImportLog: No import log available
+accepted: 'Accepted at { accepted }'
+completed: 'Completed at { completed }'
 title: Import log
+noperson: Imported by superuser or deleted user.
+imported_by: Imported by

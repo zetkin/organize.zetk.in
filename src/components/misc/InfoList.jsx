@@ -39,6 +39,12 @@ export default class InfoList extends React.Component {
                                 }
                             }
                         }
+                        if(item.msgDatetimes) {
+                            for(const key in item.msgDatetimes) {
+                                const datetime = item.msgDatetimes[key];
+                                msgValues[key] = this.props.intl.formatDate(datetime) + ' ' + this.props.intl.formatTime(datetime);
+                            }
+                        }
                         value = this.props.intl.formatMessage({ id: item.msgId }, msgValues);
                     }
 

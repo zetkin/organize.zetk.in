@@ -1,6 +1,6 @@
 import React from 'react';
 import isEmail from 'validator/lib/isEmail';
-import { injectIntl } from 'react-intl';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
@@ -40,55 +40,95 @@ export default class ImportLogPane extends PaneBase {
                 />
             </div>);
         } else {
-            const infoListData = [
+            let infoListData = [
                 {
                     name: 'status',
                     msgId: 'lists.importLogList.item.status.' + log.status
                 },
                 {
                     name: 'accepted',
-                    datetime: log.accepted
-                },
-                {
-                    name: 'completed',
-                    datetime: log.completed
-                },
-                {
-                    name: 'error',
-                    value: log.error
-                },
-                {
-                    name: 'imported',
-                    msgId: 'panes.importLog.report.imported',
-                    msgNumbers: { imported: log.report.imported },
-                },
-                {
-                    name: 'created',
-                    msgId: 'panes.importLog.report.created',
-                    msgNumbers: { created: log.report.created },
-                },
-                {
-                    name: 'updated',
-                    msgId: 'panes.importLog.report.updated',
-                    msgNumbers: { updated: log.report.updated },
-                },
-                {
-                    name: 'tagged',
-                    msgId: 'panes.importLog.report.tagged',
-                    msgNumbers: { tagged: log.report.tagged },
-                },
-                {
-                    name: 'taggings',
-                    msgId: 'panes.importLog.report.taggings',
-                    msgNumbers: { taggings: log.report.taggings },
-                },
+                    msgId: 'panes.importLog.accepted',
+                    msgDatetimes: { accepted: log.accepted },
+                }, 
             ];
 
+            if(log.status == 'completed') {
+                let completedData = [
+                    {
+                        name: 'completed',
+                        msgId: 'panes.importLog.completed',
+                        msgDatetimes: { completed: log.completed }
+                    },
+                    {
+                        name: 'imported',
+                        msgId: 'panes.importLog.report.imported',
+                        msgNumbers: { imported: [log.report.imported] },
+                    },
+                    {
+                        name: 'created',
+                        msgId: 'panes.importLog.report.created',
+                        msgNumbers: { created: [log.report.created] },
+                    },
+                    {
+                        name: 'updated',
+                        msgId: 'panes.importLog.report.updated',
+                        msgNumbers: { updated: [log.report.updated] },
+                    },
+                    {
+                        name: 'tagged',
+                        msgId: 'panes.importLog.report.tagged',
+                        msgNumbers: { tagged: [log.report.tagged] },
+                    },
+                    {
+                        name: 'taggings',
+                        msgId: 'panes.importLog.report.taggings',
+                        msgNumbers: { taggings: [log.report.taggings] },
+                    },
+                ];
+                infoListData = infoListData.concat(completedData);
+            } else if(log.status == 'error') {
+                infoListData.push(
+                    {
+                        name: 'error',
+                        msgId: 'panes.importLog.error',
+                        value: log.error
+                    },
+                );
+            }
+
+            /*
+            const avatar = log.imported_by ? (
+                <div className="ImportLogPane-imported_by">
+                    <Avatar key="avatar" ref="avatar" person={ log.imported_by } />
+                    <div className="ImportLogPane-imported_by-info"
+                        { log.imported_by.first_name + ' ' + log.imported_by.last_name }
+                    </div>
+                </div>)
+                : <Msg tagName="p" id="panes.importLog.noPerson" />;
+                */
+            let importedby;
+            if(log.imported_by) {
+                const name = log.imported_by.first_name + ') ' + log.imported_by.last_name;
+                const email = log.imported_by.email;
+                importedby = <div key="importedby" className="ImportLogPane-importedby">
+                        <Msg tagName="h3" id="panes.importLog.imported_by" />
+                        <Avatar ref="avatar" person={ log.imported_by } />
+                        <div className="ImportLogPane-personInfo">
+                            <span className="ImportLogPane-name">
+                                { name }
+                            </span>
+                            <span className="ImportLogPane-email">
+                                { email }
+                            </span>
+                        </div>
+                    </div>;
+            } else {
+                importedby = <FormattedMessage tag="p" id="panes.importlog.noperson" />
+            }
+
             return[
-                <Avatar key="avatar" ref="avatar" person={ log.imported_by }/>,
-                <InfoList
-                key="info"
-                data={ infoListData } />
+                <InfoList key="info" data={ infoListData } />,
+                importedby
             ];
         }
     }
