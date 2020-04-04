@@ -9,6 +9,8 @@ import { getListItemById } from '../../utils/store';
 import Button from '../misc/Button';
 import { executeImport } from '../../actions/importer';
 import InfoList from '../misc/InfoList';
+import PersonCollectionItem from '../misc/personcollection/PersonCollectionItem';
+import { PCDuplicateItem as ItemComponent } from '../misc/personcollection/items'
 
 const genderOptions = new Set(['f','m','o','_']);
 
@@ -25,6 +27,10 @@ export default class ImportLogPane extends PaneBase {
 
     getRenderData() {
         return this.props.importLog;
+    }
+
+    onPersonClick(person) {
+        this.openPane('person', person.id)
     }
 
     renderPaneContent(data) {
@@ -90,26 +96,18 @@ export default class ImportLogPane extends PaneBase {
 
             let importedby;
             if(log.imported_by) {
-                const name = log.imported_by.first_name + ' ' + log.imported_by.last_name;
-                const email = log.imported_by.email;
-                importedby = <div key="importedby" className="ImportLogPane-importedby">
-                        <Msg tagName="h3" id="panes.importLog.imported_by" />
-                        <Avatar ref="avatar" person={ log.imported_by } />
-                        <div className="ImportLogPane-personInfo">
-                            <span className="ImportLogPane-name">
-                                { name }
-                            </span>
-                            <span className="ImportLogPane-email">
-                                { email }
-                            </span>
-                        </div>
-                    </div>;
+                importedby = <PersonCollectionItem
+                                item={ log.imported_by }
+                                onSelect={ () => this.onPersonClick(log.imported_by) }
+                                itemComponent={ ItemComponent }
+                                draggableAvatar={ false } />;
             } else {
                 importedby = <FormattedMessage tag="p" id="panes.importlog.noperson" />
             }
 
             return[
                 <InfoList key="info" data={ infoListData } />,
+                <Msg tagName="h3" id="panes.importLog.imported_by" />,
                 importedby
             ];
         }

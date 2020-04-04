@@ -97,4 +97,10 @@
         }
 
     }
+    
+    .PersonCollectionItem {
+        &:hover {
+            cursor: pointer;
+        }
+    }
 }
