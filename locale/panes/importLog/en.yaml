@@ -5,9 +5,9 @@ error:
 imported_by: Imported by
 noperson: Imported by superuser or deleted user.
 report:
-  imported: '{ imported } imported'
-  created: '{ created } created'
-  updated: '{ updated } updated'
-  tagged: '{ tagged } tagged'
+  imported: '{ imported } rows imported'
+  created: '{ created } people created'
+  updated: '{ updated } people updated'
+  tagged: '{ tagged } people tagged'
   taggings: '{ taggings } taggings'
 title: Import log

@@ -1,13 +1,25 @@
 .ImportLogPane {
-    .InfoListItem-status {
+    .InfoListItem-status-completed {
         &:before {
-            @include icon($fa-var-question-circle);
+            @include icon($fa-var-check);
+        }
+    }
+
+    .InfoListItem-status-pending, .InfoListItem-status-in_progress {
+        &:before {
+            @include icon($fa-var-hourglass-half);
+        }
+    }
+
+    .InfoListItem-status-error {
+        &:before {
+            @include icon($fa-var-exclamation);
         }
     }
 
     .InfoListItem-accepted {
         &:before {
-            @include icon($fa-var-question-circle);
+            @include icon($fa-var-upload);
         }
     }
 
@@ -25,19 +37,19 @@
 
     .InfoListItem-imported {
         &:before {
-            @include icon($fa-var-cloud-upload);
+            @include icon($fa-var-list);
         }
     }
 
     .InfoListItem-created {
         &:before {
-            @include icon($fa-var-hand-paper-o);
+            @include icon($fa-var-plus);
         }
     }
 
     .InfoListItem-updated {
         &:before {
-            @include icon($fa-var-recycle);
+            @include icon($fa-var-pencil);
         }
     }
 

@@ -42,7 +42,7 @@ export default class ImportLogPane extends PaneBase {
         } else {
             let infoListData = [
                 {
-                    name: 'status',
+                    name: 'status-' + log.status,
                     msgId: 'lists.importLogList.item.status.' + log.status
                 },
                 {
@@ -86,26 +86,8 @@ export default class ImportLogPane extends PaneBase {
                     },
                 ];
                 infoListData = infoListData.concat(completedData);
-            } else if(log.status == 'error') {
-                infoListData.push(
-                    {
-                        name: 'error',
-                        msgId: 'panes.importLog.error',
-                        value: log.error
-                    },
-                );
             }
 
-            /*
-            const avatar = log.imported_by ? (
-                <div className="ImportLogPane-imported_by">
-                    <Avatar key="avatar" ref="avatar" person={ log.imported_by } />
-                    <div className="ImportLogPane-imported_by-info"
-                        { log.imported_by.first_name + ' ' + log.imported_by.last_name }
-                    </div>
-                </div>)
-                : <Msg tagName="p" id="panes.importLog.noPerson" />;
-                */
             let importedby;
             if(log.imported_by) {
                 const name = log.imported_by.first_name + ' ' + log.imported_by.last_name;

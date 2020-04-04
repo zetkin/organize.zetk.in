@@ -5,9 +5,9 @@ error:
 imported_by: Importerad av
 noperson: Importerad av superanvändare eller borttagen användare.
 report:
-  imported: '{ imported } importerade'
-  created: '{ created } skapade'
-  updated: '{ updated } uppdaterade'
-  tagged: '{ tagged } taggade'
+  imported: '{ imported } rader importerade'
+  created: '{ created } människor skapade'
+  updated: '{ updated } människor uppdaterade'
+  tagged: '{ tagged } människor taggade'
   taggings: '{ taggings } taggningar'
 title: Importlogg
