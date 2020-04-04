@@ -33,7 +33,7 @@ error:
 parseError:
     h: Invalid file
     p: >-
-        The file you selected could not be loaded. Please convert your file to XLSX format and try again.
+        The file you selected could not be loaded. Please convert your file to CSV or XLSX format and try again.
 importButton: Import
 importDropZoneMessage: 'Drag and drop a file here, or click to select a file to import.'
 importMoreButton: Import more
