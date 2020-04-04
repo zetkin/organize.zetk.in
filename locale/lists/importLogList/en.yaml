@@ -1,11 +1,11 @@
 header:
     date: Date
-    time: Time
-    status: Status
     imported: Imported
+    status: Status
+    time: Time
 item:
     status:
-        pending: Pending
-        in_progress: In progress
         completed: Completed
         error: Error
+        in_progress: In progress
+        pending: Pending

@@ -1,13 +1,13 @@
+accepted: 'Accepted at { accepted }'
+completed: 'Completed at { completed }'
+error:
+  noImportLog: No import log available
+imported_by: Imported by
+noperson: Imported by superuser or deleted user.
 report:
   imported: '{ imported } imported'
   created: '{ created } created'
   updated: '{ updated } updated'
   tagged: '{ tagged } tagged'
   taggings: '{ taggings } taggings'
-error:
-  noImportLog: No import log available
-accepted: 'Accepted at { accepted }'
-completed: 'Completed at { completed }'
 title: Import log
-noperson: Imported by superuser or deleted user.
-imported_by: Imported by

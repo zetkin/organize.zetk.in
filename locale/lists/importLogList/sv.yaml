@@ -1,11 +1,11 @@
 header:
     date: Datum
-    time: Tid
-    status: Status
     imported: Importerade
+    status: Status
+    time: Tid
 item:
     status:
-        pending: Väntar
-        in_progress: Pågående
         completed: Klar
         error: Fel
+        in_progress: Pågående
+        pending: Väntar

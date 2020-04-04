@@ -1,0 +1,13 @@
+accepted: 'Accepterad { accepted }'
+completed: 'Klar { completed }'
+error:
+  noImportLog: Ingen importlogg tillgänglig
+imported_by: Importerad av
+noperson: Importerad av superanvändare eller borttagen användare.
+report:
+  imported: '{ imported } importerade'
+  created: '{ created } skapade'
+  updated: '{ updated } uppdaterade'
+  tagged: '{ tagged } taggade'
+  taggings: '{ taggings } taggningar'
+title: Importlogg
