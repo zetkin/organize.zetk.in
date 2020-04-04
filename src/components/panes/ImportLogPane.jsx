@@ -108,7 +108,7 @@ export default class ImportLogPane extends PaneBase {
                 */
             let importedby;
             if(log.imported_by) {
-                const name = log.imported_by.first_name + ') ' + log.imported_by.last_name;
+                const name = log.imported_by.first_name + ' ' + log.imported_by.last_name;
                 const email = log.imported_by.email;
                 importedby = <div key="importedby" className="ImportLogPane-importedby">
                         <Msg tagName="h3" id="panes.importLog.imported_by" />
