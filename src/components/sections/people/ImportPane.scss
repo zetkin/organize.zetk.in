@@ -75,4 +75,28 @@
             margin: 0;
         }
     }
+
+    .ImportLogList {
+        margin-top: 4em;
+    }
+
+    .ImportPane-dropzone {
+        margin-top: 7em;
+    }
+
+    .ImporterTable-settings {
+        z-index: 3;
+    }
+
+    .ViewSwitch-state-import {
+        &:before {
+            @include icon($fa-var-cloud-upload);
+        }
+    }
+
+    .ViewSwitch-state-logs {
+        &:before {
+            @include icon($fa-var-history);
+        }
+    }
 }

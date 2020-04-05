@@ -4,6 +4,7 @@ import {
     createList,
     getListItemById,
     updateOrAddListItem,
+    updateOrAddListItems,
 } from '../utils/store';
 
 
@@ -115,6 +116,28 @@ export default function importer(state = null, action) {
             tableSet: null,
         });
     }
+    else if (action.type == types.RETRIEVE_IMPORT_LOGS + '_PENDING') {
+        return Object.assign({}, state, {
+            importLogList: Object.assign({}, state.importLogList, {
+                isPending: true,
+                error: null,
+            }),
+        });
+    }
+    else if (action.type == types.RETRIEVE_IMPORT_LOGS + '_FULFILLED') {
+        return Object.assign({}, state, {
+            importLogList: updateOrAddListItems(state.importLogList, action.payload.data.data, { isPending: false, error: null }),
+        });
+    }
+    else if (action.type == types.RETRIEVE_IMPORT_LOGS + '_REJECTED') {
+        return Object.assign({}, state, {
+            importLogList: {
+                isPending: false,
+                error: action.payload,
+                items: [],
+            }
+        });
+    }
     else {
         return state || {
             importIsPending: false,
@@ -122,6 +145,11 @@ export default function importer(state = null, action) {
             parseError: null,
             importResponse: null,
             tableSet: null,
+            importLogList: {
+                isPending: false,
+                error: null,
+                items: [],
+            }
         };
     }
 }

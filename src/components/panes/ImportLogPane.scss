@@ -1,0 +1,106 @@
+.ImportLogPane {
+    .InfoListItem-status-completed {
+        &:before {
+            @include icon($fa-var-check);
+        }
+    }
+
+    .InfoListItem-status-pending, .InfoListItem-status-in_progress {
+        &:before {
+            @include icon($fa-var-hourglass-half);
+        }
+    }
+
+    .InfoListItem-status-error {
+        &:before {
+            @include icon($fa-var-exclamation);
+        }
+    }
+
+    .InfoListItem-accepted {
+        &:before {
+            @include icon($fa-var-upload);
+        }
+    }
+
+    .InfoListItem-completed {
+        &:before {
+            @include icon($fa-var-check-circle);
+        }
+    }
+
+    .InfoListItem-error {
+        &:before {
+            @include icon($fa-var-exclamation-triangle);
+        }
+    }
+
+    .InfoListItem-imported {
+        &:before {
+            @include icon($fa-var-list);
+        }
+    }
+
+    .InfoListItem-created {
+        &:before {
+            @include icon($fa-var-plus);
+        }
+    }
+
+    .InfoListItem-updated {
+        &:before {
+            @include icon($fa-var-pencil);
+        }
+    }
+
+    .InfoListItem-tagged {
+        &:before {
+            @include icon($fa-var-tag);
+        }
+    }
+
+    .InfoListItem-taggings {
+        &:before {
+            @include icon($fa-var-tags);
+        }
+    }
+    
+    .ImportLogPane-importedby {
+        position: relative;
+
+        .Avatar {
+            @include col(3,12, $align:middle, $first:true);
+            max-height: 70px; // Keep ratio if image is broken
+        }
+
+        .ImportLogPane-personInfo {
+            @include col(7,12, $align:middle);
+        }
+
+        .ImportLogPane-name {
+            @include col(12,12, $first:true, $last:true);
+            font-size: 1.8em;
+            color: lighten($c-text, 30);
+            margin-bottom: 0.2em;
+        }
+
+        .ImortLogPane-email {
+            @include col(12,12, $first:true, $last:true);
+            font-size: 1.3em;
+            color: lighten($c-text, 50);
+        }
+
+        &:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+    }
+    
+    .PersonCollectionItem {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

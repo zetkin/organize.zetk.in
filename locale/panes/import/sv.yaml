@@ -106,3 +106,6 @@ tableSelect:
     p: |-
         Filen innehåller mer än ett ark. Välj vilket ark som innehåller
         den data du vill importera.
+viewSwitch:
+  import: Importera
+  logs: Historik

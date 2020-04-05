@@ -139,3 +139,15 @@ export function resetImportError() {
         type: types.RESET_IMPORT_ERROR,
     }
 }
+
+export function retrieveImportLogs() {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_IMPORT_LOGS,
+            payload: {
+                promise: z.resource('orgs', orgId, 'imports').get()
+            }
+        });
+    };
+}

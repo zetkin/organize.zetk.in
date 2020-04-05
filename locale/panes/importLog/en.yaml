@@ -1,0 +1,13 @@
+accepted: 'Accepted at { accepted }'
+completed: 'Completed at { completed }'
+error:
+  noImportLog: No import log available
+imported_by: Imported by
+noperson: Imported by superuser or deleted user.
+report:
+  imported: '{ imported } rows imported'
+  created: '{ created } people created'
+  updated: '{ updated } people updated'
+  tagged: '{ tagged } people tagged'
+  taggings: '{ taggings } taggings'
+title: Import log
