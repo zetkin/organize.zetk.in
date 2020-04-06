@@ -1,6 +1,7 @@
 import React from 'react';
 
 import DraggableAvatar from '../DraggableAvatar';
+import Avatar from '../Avatar';
 
 
 export default class PersonCollectionItem extends React.Component {
@@ -10,12 +11,14 @@ export default class PersonCollectionItem extends React.Component {
         showEditButton: React.PropTypes.bool,
         showRemoveButton: React.PropTypes.bool,
         onRemove: React.PropTypes.func,
+        draggableAvatar: React.PropTypes.bool,
     };
 
     render() {
         let item = this.props.item;
         let ItemComponent = this.props.itemComponent;
         let editButton, removeButton;
+        const draggable = 'draggableAvatar' in this.props ? this.props.draggableAvatar : true;
 
         if (this.props.showEditButton) {
             editButton = (
@@ -36,7 +39,10 @@ export default class PersonCollectionItem extends React.Component {
             <div className="PersonCollectionItem"
                 onClick={ this.props.onSelect.bind(this, item) }>
 
-                <DraggableAvatar person={ item }/>
+                { draggable ?
+                    <DraggableAvatar person={ item }/>
+                    : <Avatar person={ item } />
+                }
                 <ItemComponent item={ item }/>
 
                 { removeButton }

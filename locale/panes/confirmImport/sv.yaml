@@ -1,0 +1,26 @@
+continueImportButton: Fortsätt import
+duplicatesInfo: Du har valt dublettkolumner
+missingIdInfo: Du har inte valt en ID-kolumn. Det kan orsaka svårigheter att uppdatera människor i Zetkin. Det är inte rekommenderat.
+missingFirstName: Du har inte valt en kolumn för förnamn.
+missingLastName: Du har inte valt en kolumn för efternamn.
+noTable: Det finns ingen tabell.
+numberOfRows: rader kommer importeras.
+title: Bekräfta import
+zetkinIdWarning: Du har valt en kolumn som Zetkin-ID. Det här bör bara användas vid återimport av exporterade människor från Zetkin. I annat fall, använd externt ID.
+inconsistentRow: Antalet rader i en kolumn stämmer inte överrens med antalet konfigurerade kolumner.
+emailInvalid: Ogiltig e-postadress på rad { rows }.
+genderInvalid: Ogilitigt kön på rad { rows }. Gitliga värden är m för män, f för kvinnor, o för annat, och blank eller _ för okänd.
+first_nameTooLong: Förnamn längre än 50 tecken på rad { rows }.
+last_nameTooLong: Efternamn längre än 50 tecken på rad { rows }.
+cityTooLong: Ort längre än 50 tecken på rad { rows }.
+phoneTooLong: Telefon längre än 60 tecken på rad { rows }.
+alt_phoneTooLong: Alt. telefon längre än 60 tecken på rad { rows }.
+phoneInvalid: Telefonnummer ogiltigt på rad { rows }.
+alt_phoneInvalid: Alt. telefonnummer ogiltigt på rad { rows }.
+zip_codeTooLong: Postnummer längre än 10 tecken på rad { rows }.
+externalTooLong: Externt ID längre än 12 tecken på rad { rows }.
+zetkinInvalid: Zetkin ID ogiltigt på rad { rows }. Får bara innehålla siffror.
+co_addressTooLong: C/O-adress längre än 120 tecken på rad { rows }.
+street_addressTooLong: Gatuadress längre än 120 tecken på rad { rows }.
+missingIdOrName: Du måste välja antingen en typ av ID eller både förnamn och efternamn.
+rowInvalid: ID eller förnamn och efternamn saknas på rad { rows }.

@@ -30,6 +30,10 @@ error:
         kan gå tillbaka och kontrollera importinställningarna eller välja en ny
         fil att importera.
     resetButton: Välj en annan fil
+parseError:
+    h: Ogiltig fil
+    p: >-
+        Filen du valde kan inte laddas. Konvertera din fil till CSV- eller XLSX-format och försök igen.
 importButton: Importera
 importDropZoneMessage: 'Dra och släpp en fil här, eller klicka och välj en för att importera.'
 importMoreButton: Importera mer
@@ -102,3 +106,6 @@ tableSelect:
     p: |-
         Filen innehåller mer än ett ark. Välj vilket ark som innehåller
         den data du vill importera.
+viewSwitch:
+  import: Importera
+  logs: Historik

@@ -30,9 +30,16 @@ error:
         imported. You can go back and verify the import settings, or select a
         new file for import
     resetButton: Select another file
+parseError:
+    h: Invalid file
+    p: >-
+        The file you selected could not be loaded. Please convert your file to CSV or XLSX format and try again.
 importButton: Import
 importDropZoneMessage: 'Drag and drop a file here, or click to select a file to import.'
 importMoreButton: Import more
+pending:
+    h: Your import is pending
+    p: Your import has been scheduled. You will recieve an e-mail within a few minutes once it has finished.
 report:
     h: |-
         { count, plural,
@@ -100,3 +107,6 @@ tableSelect:
     p: |-
         There are more than one sheet in the file. Select the sheet that
         contains the data you wish to import.
+viewSwitch:
+  import: Import
+  logs: History

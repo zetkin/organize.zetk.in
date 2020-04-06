@@ -1,0 +1,12 @@
+header:
+    date: Date
+    imported: Imported
+    status: Status
+    time: Time
+item:
+    rows: '{rows, number} rows'
+    status:
+        completed: Completed
+        error: Error
+        in_progress: In progress
+        pending: Pending

@@ -21,6 +21,8 @@ campaignSelect:
     nullLabel: All campaigns
 deleteButton:
     label: Delete
+infoList:
+    andMore: ' and { number } more'
 inviteBox:
     h: Send invite
     instructions: Fill out the e-mail address of the person you wish to invite.

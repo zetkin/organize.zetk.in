@@ -4,6 +4,9 @@ availableHeader: |-
         other {Select more tags}
     }
 createButton: Create new tag
+tagsFilter:
+    label: Filter
+    placeholder: Start typing to filter tags
 okButton: |-
     { numSelected, plural,
         =0 {Close without selecting}

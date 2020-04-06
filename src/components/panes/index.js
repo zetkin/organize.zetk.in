@@ -25,6 +25,7 @@ import CallAssignmentPane from './CallAssignmentPane';
 import CallAssignmentTargetsPane from './CallAssignmentTargetsPane';
 import CampaignPane from './CampaignPane';
 import CanvassAssignmentPane from './CanvassAssignmentPane';
+import ConfirmImportPane from './ConfirmImportPane';
 import LinkSubmissionPane from './LinkSubmissionPane';
 import EditActionPane from './EditActionPane';
 import EditActivityPane from './EditActivityPane';
@@ -46,6 +47,7 @@ import EditTextPane from './EditTextPane';
 import GroupPane from './GroupPane';
 import GroupMembersPane from './GroupMembersPane';
 import ImportActionsPane from './ImportActionsPane';
+import ImportLogPane from './ImportLogPane';
 import LocationPane from './LocationPane';
 import MergePeoplePane from './MergePeoplePane';
 import ImporterColumnPane from './ImporterColumnPane';
@@ -117,6 +119,8 @@ var _panes = {
     'groupmembers': GroupMembersPane,
     'importactions': ImportActionsPane,
     'importercolumn': ImporterColumnPane,
+    'importlog': ImportLogPane,
+    'confirmimport': ConfirmImportPane,
     'location': LocationPane,
     'mergepeople': MergePeoplePane,
     'moveparticipants': MoveParticipantsPane,

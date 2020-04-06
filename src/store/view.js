@@ -300,6 +300,11 @@ export default function viewState(state = null, action) {
                 paneData.id != action.meta.paneId),
         });
     }
+    else if (action.type == types.RESET_IMPORT) {
+        return Object.assign({}, state, {
+            panes: state.panes.filter(paneData => paneData.type == 'import'),
+        });
+    }
     else {
         return state || {
             section: '',

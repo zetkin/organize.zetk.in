@@ -1,0 +1,12 @@
+header:
+    date: Datum
+    imported: Importerade
+    status: Status
+    time: Tid
+item:
+    rows: '{ rows, number } rader'
+    status:
+        completed: Klar
+        error: Fel
+        in_progress: Pågående
+        pending: Väntar

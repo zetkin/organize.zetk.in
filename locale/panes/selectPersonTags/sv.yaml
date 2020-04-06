@@ -4,6 +4,9 @@ availableHeader: |-
         other {Välj fler etiketter}
     }
 createButton: Skapa ny etikett
+tagsFilter:
+    label: Filter
+    placeholder: Börja skriva för att filtrera etiketter
 okButton: |-
     { numSelected, plural,
         =0 {Stäng utan att välja}

@@ -1,20 +1,37 @@
 import * as types from '.';
 
-import { parseWorkbook } from '../utils/import';
+import { parseCSV, parseWorkbook } from '../utils/import';
 import { getListItemById } from '../utils/store';
+
+const XLS_SUFFIXES = ['xlsx', 'xls'];
+const CSV_SUFFIXES = ['csv'];
+
+const hasSuffix = (name, suffixes) => {
+    return !!suffixes.find(suffix => name.endsWith(suffix));
+}
 
 
 export function parseImportFile(file) {
     let promise = new Promise((resolve, reject) => {
-        let reader = new FileReader();
+        if (hasSuffix(file.name, XLS_SUFFIXES)) {
+            let reader = new FileReader();
 
-        reader.onload = e => {
-            // TODO: Check type and support CSV as well
-            let tableSet = parseWorkbook(e.target.result);
-            resolve({ tableSet });
-        };
+            reader.onload = e => {
+                try {
+                    resolve(parseWorkbook(e.target.result));
+                } catch(error) {
+                    reject({ error });
+                }
+            };
 
-        reader.readAsBinaryString(file);
+            reader.readAsBinaryString(file);
+        }
+        else if (hasSuffix(file.name, CSV_SUFFIXES)) {
+            resolve(parseCSV(file));
+        }
+        else {
+            reject({ error: 'Unknown file type' });
+        }
     });
 
     return {
@@ -121,4 +138,16 @@ export function resetImportError() {
     return {
         type: types.RESET_IMPORT_ERROR,
     }
+}
+
+export function retrieveImportLogs() {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_IMPORT_LOGS,
+            payload: {
+                promise: z.resource('orgs', orgId, 'imports').get()
+            }
+        });
+    };
 }

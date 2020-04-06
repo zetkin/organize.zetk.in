@@ -18,5 +18,5 @@ override:
     h: Object after merge
     instructions: |
         This field varies across duplicates. Select one of the values to be
-        kept for the reamining person after merging.
+        kept for the remaining person after merging.
 title: 'Merge from set of {count} objects'

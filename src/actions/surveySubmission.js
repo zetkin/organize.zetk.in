@@ -8,8 +8,8 @@ export function retrieveSurveySubmissions(surveyId = null, linked = null, page =
         let promise;
 
         if (linked !== null) {
-            linked = linked? ((filters.linked == 'linked')? 1 : 0) : null;
-            filters.push(['linked', '==', linked? 1 : 0]);
+            linked = linked ? ((linked == 'linked') ? 1 : 0) : null;
+            filters.push(['linked', '==', linked ? 1 : 0]);
         }
 
         if (surveyId) {

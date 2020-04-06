@@ -25,6 +25,8 @@ campaignSelect:
     nullLabel: Alla kampanjer
 deleteButton:
     label: Radera
+infoList:
+    andMore: ' och { number } fler'
 inviteBox:
     h: Skicka inbjudan
     instructions: Fyll i e-postadress till den person du vill bjuda in.

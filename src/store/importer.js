@@ -4,6 +4,7 @@ import {
     createList,
     getListItemById,
     updateOrAddListItem,
+    updateOrAddListItems,
 } from '../utils/store';
 
 
@@ -16,7 +17,7 @@ export default function importer(state = null, action) {
     else if (action.type == types.EXECUTE_IMPORT + '_FULFILLED') {
         return Object.assign({}, state, {
             importIsPending: false,
-            importStats: action.payload.data.data.report,
+            importResponse: action.payload.data.data,
             importError: false,
             tableSet: null,
         });
@@ -24,13 +25,18 @@ export default function importer(state = null, action) {
     else if (action.type == types.EXECUTE_IMPORT + '_REJECTED') {
         return Object.assign({}, state, {
             importIsPending: false,
-            importStats: null,
+            importResponse: null,
             importError: action.payload.data,
         });
     }
     else if (action.type == types.PARSE_IMPORT_FILE + '_FULFILLED') {
         return Object.assign({}, state, {
             tableSet: action.payload.tableSet,
+        });
+    }
+    else if (action.type == types.PARSE_IMPORT_FILE + '_REJECTED') {
+        return Object.assign({}, state, {
+            parseError: action.payload.error,
         });
     }
     else if (action.type == types.USE_IMPORT_TABLE_FIRST_AS_HEADER) {
@@ -98,22 +104,52 @@ export default function importer(state = null, action) {
     else if (action.type == types.RESET_IMPORT_ERROR) {
         return Object.assign({}, state, {
             importError: null,
+            parseError: null,
         });
     }
     else if (action.type == types.RESET_IMPORT) {
         return Object.assign({}, state, {
             importIsPending: false,
             importError: null,
-            importStats: null,
+            parseError: null,
+            importResponse: null,
             tableSet: null,
+        });
+    }
+    else if (action.type == types.RETRIEVE_IMPORT_LOGS + '_PENDING') {
+        return Object.assign({}, state, {
+            importLogList: Object.assign({}, state.importLogList, {
+                isPending: true,
+                error: null,
+            }),
+        });
+    }
+    else if (action.type == types.RETRIEVE_IMPORT_LOGS + '_FULFILLED') {
+        return Object.assign({}, state, {
+            importLogList: updateOrAddListItems(state.importLogList, action.payload.data.data, { isPending: false, error: null }),
+        });
+    }
+    else if (action.type == types.RETRIEVE_IMPORT_LOGS + '_REJECTED') {
+        return Object.assign({}, state, {
+            importLogList: {
+                isPending: false,
+                error: action.payload,
+                items: [],
+            }
         });
     }
     else {
         return state || {
             importIsPending: false,
             importError: null,
-            importStats: null,
+            parseError: null,
+            importResponse: null,
             tableSet: null,
+            importLogList: {
+                isPending: false,
+                error: null,
+                items: [],
+            }
         };
     }
 }

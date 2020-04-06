@@ -4,7 +4,7 @@ import { FormattedMessage as Msg } from 'react-intl';
 import Button from '../Button';
 import ImporterTable from './ImporterTable';
 import { getListItemById } from '../../../utils/store';
-import { executeImport, resetImport } from '../../../actions/importer';
+import { resetImport } from '../../../actions/importer';
 
 
 export default class ImporterTableSet extends React.Component {
@@ -13,6 +13,7 @@ export default class ImporterTableSet extends React.Component {
         dispatch: React.PropTypes.func.isRequired,
         maxRows: React.PropTypes.number,
         onEditColumn: React.PropTypes.func,
+        onConfirmImport: React.PropTypes.func,
     };
 
     constructor(props) {
@@ -104,7 +105,7 @@ export default class ImporterTableSet extends React.Component {
     }
 
     onClickImport() {
-        this.props.dispatch(executeImport(this.state.selectedTableId));
+        this.props.onConfirmImport(this.state.selectedTableId);
     }
 
     onClickAbort() {
