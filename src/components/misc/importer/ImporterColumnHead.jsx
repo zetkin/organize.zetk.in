@@ -45,6 +45,8 @@ export default class ImporterColumnHead extends React.Component {
             // Use "person.<field_name>" as the type, which is how it's defined
             // in the PERSON_OPTIONS dictionary.
             type = 'person.' + column.config.field;
+        } else if(type == 'person_gender') {
+            type = 'person.gender';
         }
 
         // Show column name, or if none exists, the name of the selected field,
@@ -131,6 +133,9 @@ export default class ImporterColumnHead extends React.Component {
                 props.config = {
                     origin: value.substr(3),
                 };
+            }
+            else if (value.indexOf('person.gender') === 0) {
+                props.type = 'person_gender';
             }
             else if (value.indexOf('person.') === 0) {
                 // This is a short hand for a person_data column with a known

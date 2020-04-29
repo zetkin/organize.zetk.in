@@ -85,6 +85,26 @@ export function updateImportColumn(tableId, columnId, props) {
 
                 props.config = { mappings };
             }
+            else if (props.type == 'person_gender') {
+                let colIndex = table.columnList.items.indexOf(columnItem);
+                let genderList = ['f','m','o','_'];
+                let mappings = [];
+
+                for (let r = 0; r < table.rows.length; r++) {
+                    let value = table.rows[r].values[colIndex];
+
+                    if(!mappings.find(m => m.value === value)) {
+                        let lcValue = value? value.toString().toLowerCase() : value;
+                        let genderItem = genderList.find(i =>
+                            (i === lcValue));
+
+                        let gender = genderItem ? genderItem : null;
+                        mappings.push({ value, gender })
+                    }
+                }
+
+                props.config = { mappings };
+            }
         }
 
         dispatch({
@@ -116,6 +136,27 @@ export function executeImport(tableId) {
             .map(r => r.values
                 .filter((c, idx) => table.columnList.items[idx].data.included)
             );
+
+        // Find the gender field if it exists
+        let genderIdx = columns.findIndex(i => i.type == 'person_gender');
+
+        // Map gender column
+        if(genderIdx > -1) {
+            let mappings = columns[genderIdx].config.mappings;
+            rows = rows.map(r => {
+                let value = r[genderIdx];
+                let new_value = mappings.find(m => {
+                    if(m.value === value) {
+                        return true;
+                    }
+                });
+                r[genderIdx] = new_value && new_value.gender ? new_value.gender : '_';
+                return r;
+            });
+
+            columns[genderIdx].type = 'person_data';
+            columns[genderIdx].config = { field: 'gender' }
+        }
 
         let data = { columns, rows };
 

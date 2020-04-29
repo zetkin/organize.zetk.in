@@ -83,6 +83,13 @@ settings:
     personTag:
         emptyLabel: Tags for empty rows
         valueLabel: 'Tags for rows with value: {value}'
+    personGender:
+        emptyLabel: Gender for empty rows
+        female: Female
+        male: Male
+        other: Other
+        unknown: Unknown
+        valueLabel: 'Gender for rows with value: {value}'
 summary:
     personTag:
         summary: |-
