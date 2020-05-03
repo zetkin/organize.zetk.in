@@ -270,7 +270,7 @@ export default class ActionListItem extends React.Component {
                 </div>
                 <div className="ActionListItem-info">
                     <h3 className="activity">
-                        { action.activity.title }</h3>
+                        { action.title ? action.title : action.activity.title }</h3>
                     <span className="location">
                         { action.location.title }</span>
                 </div>
