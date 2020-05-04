@@ -87,7 +87,7 @@ export function updateImportColumn(tableId, columnId, props) {
             }
             else if (props.type == 'person_gender') {
                 let colIndex = table.columnList.items.indexOf(columnItem);
-                let genderList = ['f','m','o','_'];
+                let genderList = ['f','m','o'];
                 let mappings = [];
 
                 for (let r = 0; r < table.rows.length; r++) {
@@ -150,7 +150,7 @@ export function executeImport(tableId) {
                         return true;
                     }
                 });
-                r[genderIdx] = new_value && new_value.gender ? new_value.gender : '_';
+                r[genderIdx] = new_value && new_value.gender ? new_value.gender : null;
                 return r;
             });
 
