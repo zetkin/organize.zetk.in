@@ -80,6 +80,13 @@ settings:
     personTag:
         emptyLabel: Etiketter för tomma rader
         valueLabel: 'Etiketter för rader med värde: { value }'
+    personGender:
+        emptyLabel: Kön för tomma rader
+        female: Kvinna
+        male: Man
+        other: Annat
+        unknown: Okänd
+        valueLabel: 'Kön för rader med värde: {value}'
 summary:
     personTag:
         summary: |-
