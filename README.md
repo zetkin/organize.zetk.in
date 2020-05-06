@@ -43,7 +43,7 @@ The development version contains build scripts, component hot loading and
 other features to ease development.
 
 Edit your hosts file (e.g. `/etc/hosts`) to contain a line that maps
-www.dev.zetkin.org to your localhost.
+organize.dev.zetkin.org to your localhost.
 
 ```
 127.0.0.1       organize.dev.zetkin.org

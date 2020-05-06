@@ -4,6 +4,7 @@ import Form from './Form';
 import IntInput from './inputs/IntInput';
 import DateInput from './inputs/DateInput';
 import TextArea from './inputs/TextArea';
+import TextInput from './inputs/TextInput';
 import TimeInput from './inputs/TimeInput';
 import RelSelectInput from './inputs/RelSelectInput';
 import { retrieveLocations } from '../../actions/location';
@@ -66,6 +67,8 @@ export default class ActionForm extends React.Component {
                     onCreate={ this.props.onCreateActivity }
                     onEdit={ this.props.onEditActivity }
                     initialValue={ action.activity.id }/>
+                <TextInput labelMsg="forms.action.title" name="title"
+                    initialValue={ action.title }/>
                 <TextArea labelMsg="forms.action.info" name="info_text"
                     initialValue={ action.info_text }/>
 

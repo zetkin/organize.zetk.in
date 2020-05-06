@@ -49,7 +49,7 @@ export default class ActionItem extends React.Component {
                 <span className="time">
                     { timeLabel }</span>
                 <span className="activity">
-                    { action.activity.title }</span>
+                    { action.title ? action.title : action.activity.title }</span>
             </li>
         );
     }
