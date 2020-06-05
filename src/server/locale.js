@@ -12,7 +12,7 @@ export function getMessageSubset(messages, scope, locale) {
         scope = [ scope ];
     }
 
-    let localized = messages[locale];
+    let localized = messages[locale] || {};
     let scoped = subset(scope, localized);
     let flat = flatten(scoped);
 
