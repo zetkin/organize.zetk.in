@@ -9,6 +9,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import svLocaleData from 'react-intl/locale-data/sv';
 import daLocaleData from 'react-intl/locale-data/da';
+import nnLocaleData from 'react-intl/locale-data/nn';
 import Z from 'zetkin';
 
 import polyfills from '../utils/polyfills';
@@ -33,6 +34,7 @@ window.onload = function() {
     addLocaleData([
         ...svLocaleData,
         ...daLocaleData,
+        ...nnLocaleData,
     ]);
 
     let token = cookie.get('apiAccessToken');
