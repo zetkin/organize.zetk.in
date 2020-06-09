@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.19
+FROM phusion/baseimage:0.11
 MAINTAINER Richard Olsson <r@richardolsson.se>
 
 ARG NODE_ENV=production
@@ -8,7 +8,7 @@ ARG ZETKIN_USE_TLS=1
 # Install node
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 RUN \
 	apt-get update && \
 	apt-get install -q -y --allow-downgrades --allow-remove-essential \

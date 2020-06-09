@@ -4,3 +4,4 @@ node_modules
 build
 dummy-addresses.json
 .idea
+.env

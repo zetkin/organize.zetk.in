@@ -12,7 +12,7 @@ export function getMessageSubset(messages, scope, locale) {
         scope = [ scope ];
     }
 
-    let localized = messages[locale];
+    let localized = messages[locale] || {};
     let scoped = subset(scope, localized);
     let flat = flatten(scoped);
 
@@ -35,7 +35,7 @@ export function createLocalizeHandler(messages) {
         let state = req.store.getState();
         let negotiator = new Negotiator(req);
 
-        let browserLocale = negotiator.language(['en', 'sv', 'da']) || 'en';
+        let browserLocale = negotiator.language(['en', 'sv', 'da', 'nn']) || 'en';
         let locale = state.user.user.lang || browserLocale;
 
         req.store.dispatch(setIntlData({
