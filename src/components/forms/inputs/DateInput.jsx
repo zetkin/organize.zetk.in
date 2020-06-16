@@ -10,6 +10,7 @@ export default class DateInput extends InputBase {
         return (
             <div className="DateInput">
                 <input type="date" value={ value }
+                    {...this.props.constraints}
                     onChange={ this.onChange.bind(this) }/>
             </div>
         );

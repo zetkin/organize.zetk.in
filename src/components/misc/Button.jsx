@@ -10,7 +10,14 @@ export default class Button extends React.Component {
         labelValues: React.PropTypes.object,
         onClick: React.PropTypes.func,
         className: React.PropTypes.string,
+        isDisabled: React.PropTypes.string
     };
+
+    constructor(props) {
+        super(props);
+
+        this.onClick = this.onClick.bind(this);
+    }
 
     render() {
         const formatMessage = this.props.intl.formatMessage;
@@ -22,9 +29,17 @@ export default class Button extends React.Component {
         let label = formatMessage({ id: this.props.labelMsg },
             this.props.labelValues);
 
+        let buttonProperties = {
+            className: classes,
+            onClick: this.onClick
+        };
+
+        if (this.props.isDisabled)  {
+            buttonProperties.disabled = 'disabled';
+        }
+
         return (
-            <button className={ classes }
-                onClick={ this.onClick.bind(this) }>
+            <button {...buttonProperties}>
                 { label }
             </button>
         );
