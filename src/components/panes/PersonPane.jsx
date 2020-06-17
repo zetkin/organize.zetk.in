@@ -115,12 +115,23 @@ export default class PersonPane extends PaneBase {
                     if (fields.length) {
                         fieldsContent = (
                             <ul>
-                            {fields.map(item => (
-                                <li key={ item.data.field.id }>
-                                    <span className="PersonPane-fieldLabel">{ item.data.field.title }</span>
-                                    <span className="PersonPane-fieldValue">{ JSON.stringify(item.data.value) }</span>
-                                </li>
-                            ))}
+                            {fields.map(item => {
+                                let value = item.data.value;
+
+                                if (item.data.field.type == 'json') {
+                                    value = <Msg id="panes.person.fields.json"/>;
+                                }
+                                else if (item.data.field.type == 'url') {
+                                    value = <a href={ item.data.value } target="_blank">{ item.data.value }</a>;
+                                }
+
+                                return (
+                                    <li key={ item.data.field.id }>
+                                        <span className="PersonPane-fieldLabel">{ item.data.field.title }</span>
+                                        <span className="PersonPane-fieldValue">{ value } </span>
+                                    </li>
+                                );
+                            })}
                             </ul>
                         );
                     }
