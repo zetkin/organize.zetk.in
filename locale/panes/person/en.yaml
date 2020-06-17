@@ -1,4 +1,7 @@
 editLink: Edit personal data
+fields:
+    h: Custom fields
+    empty: No fields for this person.
 tagHeader: Tags
 timelineLink: View activity timeline
 user:
