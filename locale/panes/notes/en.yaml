@@ -1,2 +1,3 @@
 meta: '{ date }, { time } by { author }'
+saveButton: Save note
 title: 'Organizer Notes: { context }'

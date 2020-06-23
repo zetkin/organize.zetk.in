@@ -2,11 +2,12 @@ import React from 'react';
 import { injectIntl, FormattedMessage as Msg, FormattedDate, FormattedTime } from 'react-intl';
 import { connect } from 'react-redux';
 
+import Button from '../misc/Button';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import { getListItemById } from '../../utils/store';
 import { retrievePerson } from '../../actions/person';
-import { retrieveNotes } from '../../actions/note';
+import { createNote, retrieveNotes } from '../../actions/note';
 
 let RichTextEditor = null;
 if (typeof window != 'undefined') {
@@ -98,6 +99,8 @@ export default class NotesPane extends PaneBase {
                                 value={ this.state.value }
                                 toolbarConfig={ toolbarConfig }
                                 onChange={ this.onChange.bind(this) }/>
+                            <Button labelMsg="panes.notes.saveButton"
+                                onClick={ this.onClickSave.bind(this) } />
                         </div>
                     );
                 }
@@ -138,5 +141,13 @@ export default class NotesPane extends PaneBase {
 
     onChange(value) {
         this.setState({ value });
+    }
+
+    onClickSave() {
+        const html = this.state.value.toString('html');
+        this.props.dispatch(createNote(this.getParam(0), this.getParam(1), html));
+        this.setState({
+            value: RichTextEditor.createValueFromString('', 'html'),
+        });
     }
 }

@@ -1,6 +1,6 @@
 import * as types from '../actions';
 
-import { createList } from '../utils/store';
+import { createList, updateOrAddListItem } from '../utils/store';
 
 
 export default function notes(state = null, action) {
@@ -25,6 +25,14 @@ export default function notes(state = null, action) {
         return Object.assign({}, state, {
             byPerson: Object.assign({}, state.byPerson, {
                 [action.meta.id]: createList(action.payload.data.data),
+            }),
+        });
+    }
+    else if (action.type == types.CREATE_PERSON_NOTE + '_FULFILLED') {
+        return Object.assign({}, state, {
+            byPerson: Object.assign({}, state.byPerson, {
+                [action.meta.id]: updateOrAddListItem(state.byPerson[action.meta.id],
+                    action.payload.data.data.id, action.payload.data.data),
             }),
         });
     }
