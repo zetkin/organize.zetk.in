@@ -76,6 +76,12 @@
             }
         }
 
+        .InfoListItem-notes {
+            &::before {
+                @include icon($fa-var-comment-o);
+            }
+        }
+
         .InfoListItem-address {
             &:before {
                 @include icon($fa-var-home);

@@ -22,6 +22,7 @@ import intl from './intl';
 import invites from './invites';
 import locations from './locations';
 import locationTags from './locationTags';
+import notes from './notes';
 import officials from './officials';
 import org from './org';
 import participants from './participants';
@@ -62,6 +63,7 @@ const appReducer = combineReducers({
     invites,
     intl,
     locations,
+    notes,
     officials,
     org,
     participants,
