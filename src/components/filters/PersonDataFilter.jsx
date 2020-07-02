@@ -30,6 +30,7 @@ export default class PersonDataFilter extends FilterBase {
             'street_address': 'filters.personData.fields.street_address',
             'zip': 'filters.personData.fields.zip',
             'city': 'filters.personData.fields.city',
+            'country': 'filters.personData.fields.country',
         };
 
         let fields = config.fields || {};

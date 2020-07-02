@@ -1,6 +1,7 @@
 fields:
     city: Stad
     co_address: C/O-address
+    country: Land
     email: E-postadress
     first_name: Förnamn
     last_name: Efternamn

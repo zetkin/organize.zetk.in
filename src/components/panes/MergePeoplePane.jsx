@@ -39,6 +39,7 @@ const OVERRIDE_FIELDS = [
     'street_address',
     'zip',
     'city',
+    'country',
 ];
 
 const stateFromProps = props => {

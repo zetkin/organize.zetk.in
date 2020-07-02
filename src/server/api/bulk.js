@@ -189,6 +189,7 @@ let operations = {
             street_address: 'Street address',
             zip_code: 'Zip code',
             city: 'City',
+            country: 'Country',
         };
 
         return req.z.resource('orgs', orgId, 'people').get()

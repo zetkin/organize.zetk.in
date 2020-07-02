@@ -8,6 +8,7 @@ override:
     fields:
         city: City
         co_address: C/O address
+        country: Country
         email: E-mail
         ext_id: External ID
         first_name: First name

@@ -10,6 +10,7 @@ column:
             altPhone: Alt. telefonnummer
             city: Ort
             coAddress: C/O-adress
+            country: Land
             email: E-post
             firstName: Förnamn
             gender: Kön
@@ -67,6 +68,7 @@ settings:
         fields:
             city: Ort
             coAddress: C/O-adress
+            country: Country
             email: E-post
             firstName: Förnamn
             gender: Kön
