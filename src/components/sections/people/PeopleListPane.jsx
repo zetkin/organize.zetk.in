@@ -8,6 +8,7 @@ import Button from '../../misc/Button';
 import PersonList from '../../lists/PersonList';
 import RelSelectInput from '../../forms/inputs/RelSelectInput';
 import { retrievePeople } from '../../../actions/person';
+import { retrieveFieldTypesForOrganization } from '../../../actions/personField';
 import { getListItemById } from '../../../utils/store';
 import {
     createSelection,
@@ -65,6 +66,7 @@ export default class PeopleListPane extends RootPaneBase {
         // TODO: Do this only if data is old or does not exist
         this.props.dispatch(retrievePeople());
         this.props.dispatch(retrieveQueries());
+        this.props.dispatch(retrieveFieldTypesForOrganization());
     }
 
     getRenderData() {

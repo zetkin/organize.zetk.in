@@ -24,6 +24,7 @@ const ADDR_FIELDS = [ 'co_address', 'street_address', 'zip_code', 'city' ];
 const mapStateToProps = (state, props) => ({
     personTags: state.personTags,
     personFields: state.personFields.valuesByPerson[props.paneData.params[0]],
+    personFieldTypes: state.personFields.fieldTypes,
     personItem: getListItemById(state.people.personList,
         props.paneData.params[0]),
 });
@@ -155,10 +156,11 @@ export default class PersonPane extends PaneBase {
                         { name: 'editLink', msgId: 'panes.person.editLink', onClick: this.onClickEdit.bind(this) }
                     ]}
                 />,
-                <div key="fields" className="PersonPane-fields">
-                    <Msg id="panes.person.fields.h" tagName="h3"/>
-                    { fieldsContent }
-                </div>,
+                this.props.personFieldTypes && this.props.personFieldTypes.items.length > 0 ?
+                    <div key="fields" className="PersonPane-fields">
+                        <Msg id="panes.person.fields.h" tagName="h3"/>
+                        { fieldsContent }
+                    </div> : null,
                 <div key="tags" className="PersonPane-tags">
                     <Msg tagName="h3" id="panes.person.tagHeader"/>
                     { tagCloud }
