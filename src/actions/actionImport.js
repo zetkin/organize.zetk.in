@@ -10,8 +10,9 @@ export function parseActionImportFile(file) {
 
         reader.onload = e => {
             // TODO: Check type and support CSV as well
-            let tableSet = parseWorkbook(e.target.result);
-            resolve({ tableSet });
+            parseWorkbook(e.target.result)
+                .then(tableSet => resolve({ tableSet }))
+                .catch(error => reject(error));
         };
 
         reader.readAsBinaryString(file);

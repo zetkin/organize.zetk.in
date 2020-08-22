@@ -5,7 +5,7 @@ import makeRandomString from '../utils/makeRandomString';
 
 export default function actionImport(state = null, action) {
     if (action.type == types.PARSE_ACTION_IMPORT_FILE + '_FULFILLED') {
-        let tableSet = action.payload.tableSet;
+        let tableSet = action.payload.tableSet.tableSet;
         let dataRows = tableSet.tableList.items[0].data.rows.map(row => ({
             id: '$' + makeRandomString(),
             selected: true,
