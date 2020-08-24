@@ -11,7 +11,7 @@ export function parseActionImportFile(file) {
         reader.onload = e => {
             // TODO: Check type and support CSV as well
             parseWorkbook(e.target.result)
-                .then(tableSet => resolve({ tableSet }))
+                .then(tableSet => resolve(tableSet))
                 .catch(error => reject(error));
         };
 
