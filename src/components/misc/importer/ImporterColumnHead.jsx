@@ -29,6 +29,7 @@ export default class ImporterColumnHead extends React.Component {
             'person.zip_code': col('colOptions.person.zip'),
             'person.city': col('colOptions.person.city'),
             'person.gender': col('colOptions.person.gender'),
+            'person.country': col('colOptions.person.country'),
         };
 
         const COMPLEX_OPTIONS = {

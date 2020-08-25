@@ -19,7 +19,7 @@ import {
 import InfoList from '../misc/InfoList';
 
 
-const ADDR_FIELDS = [ 'co_address', 'street_address', 'zip_code', 'city' ];
+const ADDR_FIELDS = [ 'co_address', 'street_address', 'zip_code', 'city', 'country' ];
 
 const mapStateToProps = (state, props) => ({
     personTags: state.personTags,

@@ -32,6 +32,7 @@ export default class PersonDataColumnSettings extends React.Component {
             'zip_code': col('zip'),
             'city': col('city'),
             'gender': col('gender'),
+            'country': col('country'),
         };
 
 
