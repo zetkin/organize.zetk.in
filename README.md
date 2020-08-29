@@ -11,11 +11,11 @@ at [the Zetkin Foundation website](http://www.zetkin.org) or
 To get started with development you need [Docker](https://www.docker.com).
 Install Docker for your platform before proceeding.
 
-First clone the repository. Make sure that you include the git submodules by
-including the `--recursive` flag.
+First clone the repository using SSH. Make sure that you include the git submodules by
+including the `--recursive` flag. Also ensure to keep LF line endings.
 
 ```bash
-$ git clone --recursive https://github.com/zetkin/organize.zetk.in.git
+$ git clone --recursive git@github.com:zetkin/organize.zetk.in.git
 ```
 
 If you have already cloned the repository without `--recursive`, you can achieve
