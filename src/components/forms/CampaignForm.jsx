@@ -7,6 +7,14 @@ import TextInput from './inputs/TextInput';
 
 
 export default class CampaignForm extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            published: props.campaign.published ? 'published' : 'draft',
+        };
+    }
+
     render() {
         const campaign = this.props.campaign || {
             visibility: 'hidden',
@@ -33,7 +41,7 @@ export default class CampaignForm extends React.Component {
                 />,
         ];
 
-        if (campaign.published) {
+        if (this.state.published == 'published') {
             content.push(
                 <SelectInput key="visibility"
                     labelMsg="forms.campaign.visibility.label" name="visibility"
@@ -50,7 +58,9 @@ export default class CampaignForm extends React.Component {
         );
 
         return (
-            <Form ref="form" {...this.props }>
+            <Form ref="form" {...this.props }
+                onValueChange={ (name, value) => this.setState({ [name]: value }) }
+                >
                 { content }
             </Form>
         );
