@@ -1,13 +1,13 @@
 import React from 'react';
-import { injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
+import {injectIntl} from 'react-intl';
+import {connect} from 'react-redux';
 
 import PaneBase from './PaneBase';
 import CampaignForm from '../forms/CampaignForm';
 import Button from '../misc/Button';
 import LoadingIndicator from '../misc/LoadingIndicator';
-import { getListItemById } from '../../utils/store';
-import { retrieveCampaign, updateCampaign, deleteCampaign }
+import {getListItemById} from '../../utils/store';
+import {retrieveCampaign, updateCampaign, deleteCampaign}
     from '../../actions/campaign';
 
 const mapStateToProps = (state, props) => ({
@@ -34,21 +34,19 @@ export default class EditCampaignPane extends PaneBase {
     getPaneTitle(data) {
         if (this.props.campaignItem && !this.props.campaignItem.isPending) {
             return this.props.intl.formatMessage(
-                { id: 'panes.editCampaign.title' },
-                { campaign: this.props.campaignItem.data.title });
-        }
-        else {
+                {id: 'panes.editCampaign.title'},
+                {campaign: this.props.campaignItem.data.title});
+        } else {
             return null;
         }
     }
 
     getPaneSubTitle(data) {
         if (this.props.campaignItem && !this.props.campaignItem.isPending) {
-            const link= 'https://zetk.in/o/'+this.props.activeOrg.id+'/campains/'+this.props.campaignItem.data.id;
+            const link = '//www.' + process.env.ZETKIN_DOMAIN + '/o/' + this.props.activeOrg.id + '/campains/' + this.props.campaignItem.data.id;
 
-            return <a href={link} target="_blank"> {link}</a>;
-      }
-        else {
+            return <a href={link} target="_blank">{link}</a>;
+        } else {
             return null;
         }
     }
@@ -57,25 +55,24 @@ export default class EditCampaignPane extends PaneBase {
         if (this.props.campaignItem) {
             return [
                 <CampaignForm key="form" ref="form"
-                    campaign={ this.props.campaignItem.data }
-                    onSubmit={ this.onSubmit.bind(this) }/>,
+                              campaign={this.props.campaignItem.data}
+                              onSubmit={this.onSubmit.bind(this)}/>,
 
                 <Button key="deleteButton"
-                    labelMsg="panes.editCampaign.deleteButton"
-                    onClick={ this.onDeleteClick.bind(this) }
-                    className="EditCampaignPane-deleteButton"/>
+                        labelMsg="panes.editCampaign.deleteButton"
+                        onClick={this.onDeleteClick.bind(this)}
+                        className="EditCampaignPane-deleteButton"/>
             ];
-        }
-        else {
-            return <LoadingIndicator />;
+        } else {
+            return <LoadingIndicator/>;
         }
     }
 
     renderPaneFooter(data) {
         return (
             <Button className="EditCampaignPane-saveButton"
-                labelMsg="panes.editCampaign.saveButton"
-                onClick={ this.onSubmit.bind(this) }/>
+                    labelMsg="panes.editCampaign.saveButton"
+                    onClick={this.onSubmit.bind(this)}/>
         );
     }
 
