@@ -6,7 +6,7 @@ import TextArea from './inputs/TextArea';
 import TextInput from './inputs/TextInput';
 
 
-export default class ActivityForm extends React.Component {
+export default class CampaignForm extends React.Component {
     render() {
         const campaign = this.props.campaign || {
             visibility: 'hidden',
