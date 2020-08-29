@@ -13,8 +13,8 @@ export default function viewState(state = null, action) {
         }
 
         // Remove trailing slash
-        if (path[path.length-1] === '/') {
-            path = path.substr(0, path.length-1);
+        if (path[path.length - 1] === '/') {
+            path = path.substr(0, path.length - 1);
         }
 
         let segments = path.split('/');
@@ -29,44 +29,54 @@ export default function viewState(state = null, action) {
         if (segments.length == 0) {
             section = '';
             panes = [];
-        }
-        else {
+        } else {
             section = segments[0];
             panes = segments.slice(1).map(segment => {
                 let fields = segment.split(':');
                 let id = '$' + makeRandomString(6);
                 let type = fields[0];
-                let params = (fields.length > 1)? fields[1].split(',') : [];
+                let params = (fields.length > 1) ? fields[1].split(',') : [];
 
-                return { id, type, params };
+                return {id, type, params};
             });
         }
 
         return Object.assign({}, state, {
             section, panes,
         });
-    }
-    else if (action.type == types.OPEN_PANE) {
+    } else if (action.type == types.OPEN_PANE) {
         let panes = state.panes.concat();
-        panes.splice(action.payload.index + 1, 0, {
+
+        const pane = {
             id: '$' + makeRandomString(6),
             type: action.payload.paneType,
             params: action.payload.params || [],
-        });
+        };
+
+        var unique = true;
+
+        for (var i = 0; i < state.panes.length; i++) {
+            if (pane.type == state.panes[i].type && pane.params.join('') == state.panes[i].params.join('')) {
+                unique = false;
+                break;
+            }
+        }
+        if (unique) {
+            panes.splice(action.payload.index + 1, 0, pane);
+        }
 
         return Object.assign({}, state, {
             panes
         });
-    }
-    else if (action.type == types.CLOSE_PANE) {
+
+    } else if (action.type == types.CLOSE_PANE) {
         let panes = state.panes.concat();
         panes.splice(action.payload.index, 1);
 
         return Object.assign({}, state, {
             panes
         });
-    }
-    else if (action.type == types.REPLACE_PANE) {
+    } else if (action.type == types.REPLACE_PANE) {
         let panes = state.panes.concat();
         panes[action.payload.index] = {
             id: '$' + makeRandomString(6),
@@ -77,8 +87,7 @@ export default function viewState(state = null, action) {
         return Object.assign({}, state, {
             panes
         });
-    }
-    else if (action.type == types.PUSH_PANE) {
+    } else if (action.type == types.PUSH_PANE) {
         let panes = state.panes.concat([{
             id: '$' + makeRandomString(6),
             type: action.payload.paneType,
@@ -88,8 +97,7 @@ export default function viewState(state = null, action) {
         return Object.assign({}, state, {
             panes
         });
-    }
-    else if (action.type == types.GOTO_SECTION) {
+    } else if (action.type == types.GOTO_SECTION) {
         let section = action.payload.section || '';
         let panes = state.panes;
 
@@ -99,16 +107,14 @@ export default function viewState(state = null, action) {
                 type: action.payload.subSection,
                 params: [],
             }];
-        }
-        else {
+        } else {
             panes = [];
         }
 
         return Object.assign({}, state, {
             section, panes
         });
-    }
-    else if (action.type == types.CREATE_GROUP + '_FULFILLED') {
+    } else if (action.type == types.CREATE_GROUP + '_FULFILLED') {
         // Replace the relevant AddGroupPane with a GroupPane showing the newly
         // created group
         return Object.assign({}, state, {
@@ -117,16 +123,14 @@ export default function viewState(state = null, action) {
                     return {
                         id: '$' + makeRandomString(6),
                         type: 'group',
-                        params: [ action.payload.data.data.id ]
+                        params: [action.payload.data.data.id]
                     };
-                }
-                else {
+                } else {
                     return paneData;
                 }
             }),
         });
-    }
-    else if (action.type == types.CREATE_CALL_ASSIGNMENT + '_FULFILLED') {
+    } else if (action.type == types.CREATE_CALL_ASSIGNMENT + '_FULFILLED') {
         // Replace the relevant AddCallAssignmentPane with a CallAssignmentPane
         // showing the newly created assignment.
         return Object.assign({}, state, {
@@ -135,16 +139,14 @@ export default function viewState(state = null, action) {
                     return {
                         id: '$' + makeRandomString(6),
                         type: 'callassignment',
-                        params: [ action.payload.data.data.id ]
+                        params: [action.payload.data.data.id]
                     };
-                }
-                else {
+                } else {
                     return paneData;
                 }
             }),
         });
-    }
-    else if (action.type == types.CREATE_QUERY + '_FULFILLED') {
+    } else if (action.type == types.CREATE_QUERY + '_FULFILLED') {
         // Replace the relevant AddQueryPane with an EditQueryPane
         // showing the newly created query.
         return Object.assign({}, state, {
@@ -153,16 +155,14 @@ export default function viewState(state = null, action) {
                     return {
                         id: '$' + makeRandomString(6),
                         type: 'editquery',
-                        params: [ action.payload.data.data.id ]
+                        params: [action.payload.data.data.id]
                     };
-                }
-                else {
+                } else {
                     return paneData;
                 }
             }),
         });
-    }
-    else if (action.type == types.CREATE_SURVEY + '_FULFILLED') {
+    } else if (action.type == types.CREATE_SURVEY + '_FULFILLED') {
         // Replace the relevant AddSurveyPane with a SurveyPane
         // showing the newly created survey.
         return Object.assign({}, state, {
@@ -171,16 +171,14 @@ export default function viewState(state = null, action) {
                     return {
                         id: '$' + makeRandomString(6),
                         type: 'survey',
-                        params: [ action.payload.data.data.id ]
+                        params: [action.payload.data.data.id]
                     };
-                }
-                else {
+                } else {
                     return paneData;
                 }
             }),
         });
-    }
-    else if (action.type == types.CREATE_SURVEY_ELEMENT + '_FULFILLED' && action.meta.paneId) {
+    } else if (action.type == types.CREATE_SURVEY_ELEMENT + '_FULFILLED' && action.meta.paneId) {
         // Replace the relevant AddSurveyPane with a SurveyPane
         // showing the newly created survey.
         return Object.assign({}, state, {
@@ -194,14 +192,12 @@ export default function viewState(state = null, action) {
                             action.payload.data.data.id
                         ],
                     };
-                }
-                else {
+                } else {
                     return paneData;
                 }
             }),
         });
-    }
-    else if (action.type == types.CREATE_ROUTE + '_FULFILLED') {
+    } else if (action.type == types.CREATE_ROUTE + '_FULFILLED') {
         // Replace the relevant pane with a RoutePane showing the
         // newly created route.
         return Object.assign({}, state, {
@@ -210,64 +206,56 @@ export default function viewState(state = null, action) {
                     return {
                         id: '$' + makeRandomString(6),
                         type: 'route',
-                        params: [ action.payload.data.data.id ],
+                        params: [action.payload.data.data.id],
                     };
-                }
-                else {
+                } else {
                     return paneData;
                 }
             }),
         });
-    }
-    else if (action.type == types.CREATE_CANVASS_ASSIGNMENT + '_FULFILLED') {
+    } else if (action.type == types.CREATE_CANVASS_ASSIGNMENT + '_FULFILLED') {
         return Object.assign({}, state, {
             panes: state.panes.map(paneData => {
                 if (paneData.id == action.meta.paneId) {
                     return {
                         id: '$' + makeRandomString(6),
                         type: 'canvassassignment',
-                        params: [ action.payload.data.data.id ],
+                        params: [action.payload.data.data.id],
                     };
-                }
-                else {
+                } else {
                     return paneData;
                 }
             }),
         });
-    }
-    else if (action.type == types.CREATE_ASSIGNED_ROUTE + '_FULFILLED') {
+    } else if (action.type == types.CREATE_ASSIGNED_ROUTE + '_FULFILLED') {
         return Object.assign({}, state, {
             panes: state.panes.map(paneData => {
                 if (paneData.id == action.meta.paneId) {
                     return {
                         id: '$' + makeRandomString(6),
                         type: 'assignedroute',
-                        params: [ action.payload.data.data.id ],
+                        params: [action.payload.data.data.id],
                     };
-                }
-                else {
+                } else {
                     return paneData;
                 }
             }),
         });
-    }
-    else if (action.type == types.CREATE_PERSON + '_FULFILLED') {
+    } else if (action.type == types.CREATE_PERSON + '_FULFILLED') {
         return Object.assign({}, state, {
             panes: state.panes.map(paneData => {
                 if (action.meta && paneData.id == action.meta.paneId) {
                     return {
                         id: '$' + makeRandomString(6),
                         type: 'person',
-                        params: [ action.payload.data.data.id ],
+                        params: [action.payload.data.data.id],
                     };
-                }
-                else {
+                } else {
                     return paneData;
                 }
             }),
         });
-    }
-    else if (action.type == types.MERGE_PERSON_DUPLICATES + '_FULFILLED') {
+    } else if (action.type == types.MERGE_PERSON_DUPLICATES + '_FULFILLED') {
         // Close the relevant pane
         let openPanes = state.panes.filter(paneData => paneData.id != action.meta.paneId);
         // Open the "master" person pane
@@ -278,8 +266,7 @@ export default function viewState(state = null, action) {
                 params: [action.payload.data.data.id]
             }])
         });
-    }
-    else if (action.type == types.MOVE_ACTION_PARTICIPANT) {
+    } else if (action.type == types.MOVE_ACTION_PARTICIPANT) {
         if (!state.panes.find(p => p.type == 'moveparticipants')) {
             return Object.assign({}, state, {
                 panes: state.panes.concat([{
@@ -288,24 +275,20 @@ export default function viewState(state = null, action) {
                     params: []
                 }])
             });
-        }
-        else {
+        } else {
             return state;
         }
-    }
-    else if (action.meta && action.meta.paneId && action.type.slice(-10) == '_FULFILLED') {
+    } else if (action.meta && action.meta.paneId && action.type.slice(-10) == '_FULFILLED') {
         // Generically close pane after successful async action
         return Object.assign({}, state, {
             panes: state.panes.filter(paneData =>
                 paneData.id != action.meta.paneId),
         });
-    }
-    else if (action.type == types.RESET_IMPORT) {
+    } else if (action.type == types.RESET_IMPORT) {
         return Object.assign({}, state, {
             panes: state.panes.filter(paneData => paneData.type == 'import'),
         });
-    }
-    else {
+    } else {
         return state || {
             section: '',
             panes: [],
