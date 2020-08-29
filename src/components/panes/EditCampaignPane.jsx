@@ -11,6 +11,7 @@ import { retrieveCampaign, updateCampaign, deleteCampaign }
     from '../../actions/campaign';
 
 const mapStateToProps = (state, props) => ({
+    activeOrg: state.user.activeMembership.organization,
     campaignItem: getListItemById(
         state.campaigns.campaignList,
         props.paneData.params[0]),
@@ -36,6 +37,17 @@ export default class EditCampaignPane extends PaneBase {
                 { id: 'panes.editCampaign.title' },
                 { campaign: this.props.campaignItem.data.title });
         }
+        else {
+            return null;
+        }
+    }
+
+    getPaneSubTitle(data) {
+        if (this.props.campaignItem && !this.props.campaignItem.isPending) {
+            const link= 'https://zetk.in/o/'+this.props.activeOrg.id+'/campains/'+this.props.campaignItem.data.id;
+
+            return <a href={link} target="_blank"> {link}</a>;
+      }
         else {
             return null;
         }
