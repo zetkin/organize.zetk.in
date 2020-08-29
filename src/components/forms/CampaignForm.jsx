@@ -23,22 +23,35 @@ export default class ActivityForm extends React.Component {
             open: 'forms.campaign.visibility.open',
         };
 
-        return (
-            <Form ref="form" {...this.props }>
-                <TextInput labelMsg="forms.campaign.title" name="title"
-                    initialValue={ campaign.title }/>
-                <SelectInput labelMsg="forms.campaign.published.label" name="published"
-                    initialValue={ published }
-                    options={ publishedOptions }
-                    optionLabelsAreMessages={ true }
-                    />
-                <SelectInput labelMsg="forms.campaign.visibility.label" name="visibility"
+        let content = [
+            <TextInput key="title" labelMsg="forms.campaign.title" name="title"
+                initialValue={ campaign.title }/>,
+            <SelectInput key="label" labelMsg="forms.campaign.published.label" name="published"
+                initialValue={ published }
+                options={ publishedOptions }
+                optionLabelsAreMessages={ true }
+                />,
+        ];
+
+        if (campaign.published) {
+            content.push(
+                <SelectInput key="visibility"
+                    labelMsg="forms.campaign.visibility.label" name="visibility"
                     initialValue={ campaign.visibility }
                     options={ visibilityOptions }
                     optionLabelsAreMessages={ true }
                     />
-                <TextArea labelMsg="forms.campaign.description" name="info_text"
-                    initialValue={ campaign.info_text }/>
+            );
+        }
+
+        content.push(
+            <TextArea key="info_text" labelMsg="forms.campaign.description" name="info_text"
+                initialValue={ campaign.info_text }/>
+        );
+
+        return (
+            <Form ref="form" {...this.props }>
+                { content }
             </Form>
         );
     }
