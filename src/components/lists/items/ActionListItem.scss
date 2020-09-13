@@ -147,6 +147,10 @@
             background-color: $c-brand-success;
         }
 
+        &.double {
+            background-color: darken($c-brand-success, 35%);
+        }
+
         &.low {
             background-color: $c-ui-focus;
         }
