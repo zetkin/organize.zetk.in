@@ -43,9 +43,9 @@ export default class EditCampaignPane extends PaneBase {
 
     getPaneSubTitle(data) {
         if (this.props.campaignItem && !this.props.campaignItem.isPending) {
-            const link = '//www.' + process.env.ZETKIN_DOMAIN + '/o/' + this.props.activeOrg.id + '/campains/' + this.props.campaignItem.data.id;
+            const link = 'www.' + process.env.ZETKIN_DOMAIN + '/o/' + this.props.activeOrg.id + '/campaigns/' + this.props.campaignItem.data.id;
 
-            return <a href={link} target="_blank">{link}</a>;
+            return <a href={ '//' + link } target="_blank">{link}</a>;
         } else {
             return null;
         }
