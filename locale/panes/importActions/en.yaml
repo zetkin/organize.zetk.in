@@ -2,6 +2,7 @@ action:
     clickToOpen: Click to view imported action
     labels:
         activity: Activity
+        title: Action title
         dateTime: Date & time
         location: Location
         info: Activists & info

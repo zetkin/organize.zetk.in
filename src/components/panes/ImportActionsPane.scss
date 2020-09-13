@@ -163,7 +163,8 @@
     .ImportActionsPane-actionItemDate,
     .ImportActionsPane-actionItemLocation,
     .ImportActionsPane-actionItemActivity,
-    .ImportActionsPane-actionItemInfo {
+    .ImportActionsPane-actionItemInfo,
+    .ImportActionsPane-actionItemTitle {
         font-size: inherit;
         padding: 0.8em 0.7em;
 
@@ -218,15 +219,19 @@
     }
 
     .ImportActionsPane-actionItemLocation {
-        width: 26%;
+        width: 19.5%;
     }
 
     .ImportActionsPane-actionItemActivity {
-        width: 26%;
+        width: 19.5%;
     }
 
     .ImportActionsPane-actionItemInfo {
-        width: 26%;
+        width: 19.5%;
+    }
+
+    .ImportActionsPane-actionItemTitle {
+        width: 19.5%;
     }
 
     .ImportActionsPane-errorRow {
