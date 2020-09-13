@@ -137,6 +137,7 @@ export default class ImportActionsPane extends PaneBase {
                                 <Msg tagName="li" id="panes.importActions.dropZone.columns.activity"/>
                                 <Msg tagName="li" id="panes.importActions.dropZone.columns.participants"/>
                                 <Msg tagName="li" id="panes.importActions.dropZone.columns.info"/>
+                                <Msg tagName="li" id="panes.importActions.dropZone.columns.title"/>
                             </ul>
                         </div>
                     </DropZone>
