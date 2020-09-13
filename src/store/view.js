@@ -48,11 +48,24 @@ export default function viewState(state = null, action) {
     }
     else if (action.type == types.OPEN_PANE) {
         let panes = state.panes.concat();
-        panes.splice(action.payload.index + 1, 0, {
+
+        const pane = {
             id: '$' + makeRandomString(6),
             type: action.payload.paneType,
             params: action.payload.params || [],
-        });
+        };
+
+        var unique = true;
+
+        for (var i = 0; i < state.panes.length; i++) {
+            if (pane.type == state.panes[i].type && pane.params.join('') == state.panes[i].params.join('')) {
+                unique = false;
+                break;
+            }
+        }
+        if (unique) {
+            panes.splice(action.payload.index + 1, 0, pane);
+        }
 
         return Object.assign({}, state, {
             panes
