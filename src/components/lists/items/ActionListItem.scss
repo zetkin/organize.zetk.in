@@ -143,6 +143,10 @@
             font-size: 0.85em;
         }
 
+        &.safe-and-splitable {
+            background-color: $c-ui-focus-splitable;
+        }
+
         &.safe {
             background-color: $c-brand-success;
         }
