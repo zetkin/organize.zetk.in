@@ -95,6 +95,7 @@ export function executeActionImport(campaignId) {
                         activity_id: row.parsed.activityLink.id || row.parsed.activityLink,
                         num_participants_required: row.parsed.participants,
                         info_text: row.parsed.info,
+                        title: row.parsed.title,
                     };
 
                     const actionPromise = z.resource('orgs', orgId,
