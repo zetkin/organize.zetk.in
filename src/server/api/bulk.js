@@ -161,7 +161,7 @@ let operations = {
             .get()
             .then(result => {
                 const userPersonId = result.data.data
-                    .find(m => m.organization.id === orgId)
+                    .find(m => m.organization.id == orgId)
                     .profile.id;
 
                 const promises = req.body.objects
