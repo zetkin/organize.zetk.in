@@ -28,7 +28,7 @@ export default class PersonDataFilter extends FilterBase {
             'phone': 'filters.personData.fields.phone',
             'co_address': 'filters.personData.fields.co_address',
             'street_address': 'filters.personData.fields.street_address',
-            'zip': 'filters.personData.fields.zip',
+            'zip_code': 'filters.personData.fields.zip',
             'city': 'filters.personData.fields.city',
             'country': 'filters.personData.fields.country',
         };
