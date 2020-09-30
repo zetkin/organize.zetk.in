@@ -2,6 +2,7 @@ action:
     clickToOpen: Click to view imported action
     labels:
         activity: Activity
+        title: Action title
         dateTime: Date & time
         location: Location
         info: Activists & info
@@ -30,6 +31,7 @@ dropZone:
         location: Name of location
         participants: Minimum participant count (a single number, e.g. 2 or 11)
         startTime: Start time (24 hour format with or without minutes, e.g. 7:00, 13.00 or 16)
+        title: Title of this specific action
     h: Drop file here
     p: |-
         Click here or drag and drop an Excel file containing the

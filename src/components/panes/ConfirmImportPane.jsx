@@ -143,6 +143,11 @@ export default class ConfirmImportPane extends PaneBase {
                                 this.addError(column, rowidx+1, 'TooLong');
                             }
                             break;
+                        case 'country':
+                            if(row.values[colidx].length > 60) {
+                                this.addError(column, rowidx+1, 'TooLong');
+                            }
+                            break;
                         case 'external':
                             if(row.values[colidx].trim().length > 12) {
                                 this.addError(column, rowidx+1, 'TooLong');

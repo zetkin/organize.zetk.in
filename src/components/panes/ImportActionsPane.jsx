@@ -137,6 +137,7 @@ export default class ImportActionsPane extends PaneBase {
                                 <Msg tagName="li" id="panes.importActions.dropZone.columns.activity"/>
                                 <Msg tagName="li" id="panes.importActions.dropZone.columns.participants"/>
                                 <Msg tagName="li" id="panes.importActions.dropZone.columns.info"/>
+                                <Msg tagName="li" id="panes.importActions.dropZone.columns.title"/>
                             </ul>
                         </div>
                     </DropZone>
@@ -462,6 +463,7 @@ class ActionItem extends React.Component {
 
             const participantCount = row.parsed.participants;
             const infoString = row.parsed.info;
+            const titleString = row.parsed.title;
 
             content = [
                 <div key="meta" className="ImportActionsPane-actionItemMeta">
@@ -491,6 +493,12 @@ class ActionItem extends React.Component {
                         />
                     <span>{ infoString }</span>
                 </div>,
+                <div key="title" className="ImportActionsPane-actionItemTitle">
+                    <Msg tagName="h4"
+                        id="panes.importActions.action.labels.title"/>
+                    <span>{ titleString }</span>
+                </div>,
+
             ];
         }
 

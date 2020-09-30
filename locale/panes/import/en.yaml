@@ -10,6 +10,7 @@ column:
             altPhone: Alt. phone number
             city: City
             coAddress: C/O address
+            country: Country
             email: E-mail address
             firstName: First name
             gender: Gender
@@ -70,6 +71,7 @@ settings:
         fields:
             city: City
             coAddress: C/O address
+            country: Country
             email: E-mail address
             firstName: First name
             gender: Gender

@@ -190,6 +190,8 @@ export default class ActionListItem extends React.Component {
             indicator = 'danger';
         else if (bookingDiff >= 1)
             indicator = 'low';
+        else if (action.num_participants_required * 2 <= participants.length)
+            indicator = 'double';
         else if (bookingDiff <= 0)
             indicator = 'safe';
 

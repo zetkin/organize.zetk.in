@@ -22,11 +22,13 @@ import intl from './intl';
 import invites from './invites';
 import locations from './locations';
 import locationTags from './locationTags';
+import notes from './notes';
 import officials from './officials';
 import org from './org';
 import participants from './participants';
 import people from './people';
 import importer from './importer';
+import personFields from './personFields';
 import personTags from './personTags';
 import prints from './prints';
 import queries from './queries';
@@ -61,11 +63,13 @@ const appReducer = combineReducers({
     invites,
     intl,
     locations,
+    notes,
     officials,
     org,
     participants,
     people,
     importer,
+    personFields,
     personTags,
     locationTags,
     prints,

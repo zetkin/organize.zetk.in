@@ -161,7 +161,7 @@ let operations = {
             .get()
             .then(result => {
                 const userPersonId = result.data.data
-                    .find(m => m.organization.id === orgId)
+                    .find(m => m.organization.id == orgId)
                     .profile.id;
 
                 const promises = req.body.objects
@@ -189,6 +189,7 @@ let operations = {
             street_address: 'Street address',
             zip_code: 'Zip code',
             city: 'City',
+            country: 'Country',
         };
 
         return req.z.resource('orgs', orgId, 'people').get()

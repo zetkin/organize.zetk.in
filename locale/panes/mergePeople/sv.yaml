@@ -8,6 +8,7 @@ override:
     fields:
         city: Ort
         co_address: C/O-adress
+        country: Land
         email: E-post
         ext_id: Externt ID
         first_name: Förnamn

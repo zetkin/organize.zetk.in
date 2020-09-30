@@ -293,6 +293,11 @@ function processDataRows(dataRows, mappings) {
             newParsed = Object.assign(newParsed || {}, { info });
         }
 
+        const title = data[7] || '';
+        if (title != prevParsed.title) {
+            newParsed = Object.assign(newParsed || {}, { title });
+        }
+
         if (!newParsed) {
             // Nothing changed, return original
             return row;

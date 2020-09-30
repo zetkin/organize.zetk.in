@@ -10,6 +10,7 @@ import TagCloud from '../misc/tagcloud/TagCloud';
 import { getListItemById } from '../../utils/store';
 import { retrievePerson } from '../../actions/person';
 import { createSelection } from '../../actions/selection';
+import { retrieveFieldsForPerson } from '../../actions/personField';
 import {
     addTagsToPerson,
     removeTagFromPerson,
@@ -18,10 +19,12 @@ import {
 import InfoList from '../misc/InfoList';
 
 
-const ADDR_FIELDS = [ 'co_address', 'street_address', 'zip_code', 'city' ];
+const ADDR_FIELDS = [ 'co_address', 'street_address', 'zip_code', 'city', 'country' ];
 
 const mapStateToProps = (state, props) => ({
     personTags: state.personTags,
+    personFields: state.personFields.valuesByPerson[props.paneData.params[0]],
+    personFieldTypes: state.personFields.fieldTypes,
     personItem: getListItemById(state.people.personList,
         props.paneData.params[0]),
 });
@@ -35,6 +38,7 @@ export default class PersonPane extends PaneBase {
         let personId = this.getParam(0);
         this.props.dispatch(retrievePerson(personId));
         this.props.dispatch(retrieveTagsForPerson(personId));
+        this.props.dispatch(retrieveFieldsForPerson(personId));
     }
 
     getRenderData() {
@@ -102,6 +106,42 @@ export default class PersonPane extends PaneBase {
             const formatMessage = this.props.intl.formatMessage;
             const phoneNumbers = [ person.phone, person.alt_phone ].filter(pn => !!pn);
 
+            let fieldsContent = null;
+            if (this.props.personFields) {
+                if (this.props.personFields.isPending) {
+                    fieldsContent = <LoadingIndicator/>;
+                }
+                else if (!this.props.personFields.error) {
+                    const fields = this.props.personFields.items;
+                    if (fields.length) {
+                        fieldsContent = (
+                            <ul>
+                            {fields.map(item => {
+                                let value = item.data.value;
+
+                                if (item.data.field.type == 'json') {
+                                    value = <Msg id="panes.person.fields.json"/>;
+                                }
+                                else if (item.data.field.type == 'url') {
+                                    value = <a href={ item.data.value } target="_blank">{ item.data.value }</a>;
+                                }
+
+                                return (
+                                    <li key={ item.data.field.id }>
+                                        <span className="PersonPane-fieldLabel">{ item.data.field.title }</span>
+                                        <span className="PersonPane-fieldValue">{ value } </span>
+                                    </li>
+                                );
+                            })}
+                            </ul>
+                        );
+                    }
+                    else {
+                        fieldsContent = <Msg id="panes.person.fields.empty" tagName="p"/>;
+                    }
+                }
+            }
+
             return [
                 <DraggableAvatar key="avatar" ref="avatar" person={ person }/>,
                 <InfoList key="info"
@@ -111,10 +151,16 @@ export default class PersonPane extends PaneBase {
                         { name: 'email', value: person.email },
                         { name: 'phone', value: phoneNumbers.join(', ') },
                         { name: 'address', value: addrFields.length? addrFields : null },
+                        { name: 'notes', msgId: 'panes.person.notesLink', onClick: this.onClickNotes.bind(this) },
                         { name: 'timeline', msgId: 'panes.person.timelineLink', onClick: this.onClickTimeline.bind(this) },
                         { name: 'editLink', msgId: 'panes.person.editLink', onClick: this.onClickEdit.bind(this) }
                     ]}
                 />,
+                this.props.personFieldTypes.items && this.props.personFieldTypes.items.length > 0 ?
+                    <div key="fields" className="PersonPane-fields">
+                        <Msg id="panes.person.fields.h" tagName="h3"/>
+                        { fieldsContent }
+                    </div> : null,
                 <div key="tags" className="PersonPane-tags">
                     <Msg tagName="h3" id="panes.person.tagHeader"/>
                     { tagCloud }
@@ -150,5 +196,10 @@ export default class PersonPane extends PaneBase {
     onClickTimeline(ev) {
         const personId = this.getParam(0);
         this.openPane('timeline', personId);
+    }
+
+    onClickNotes(ev) {
+        const personId = this.getParam(0);
+        this.openPane('notes', 'person', personId);
     }
 }

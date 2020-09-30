@@ -1,0 +1,29 @@
+.NotesPane-form {
+    margin: 0 0 3em;
+
+    .Button {
+        margin: 0.5em 0 0;
+    }
+}
+
+.NotesPane-editor {
+    .public-DraftEditor-content {
+        min-height: 6em;
+    }
+}
+
+.NotesPane-note {
+    @include card;
+    margin: 1em 0;
+    padding: 1em;
+
+    p {
+        font-size: inherit !important;
+        line-height: inherit !important;
+    }
+}
+
+.NotesPane-noteContent {
+    margin: 0.5em 0 0;
+    font-size: 1rem;
+}
