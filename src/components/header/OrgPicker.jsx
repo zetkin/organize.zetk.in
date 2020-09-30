@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage as Msg } from 'react-intl';
 
-import { setActiveMembership } from '../../actions/user';
-
 
 @connect(state => state)
 export default class OrgPicker extends React.Component {
@@ -41,9 +39,5 @@ export default class OrgPicker extends React.Component {
             return null;
         }
 
-    }
-
-    onOrgClick(membership) {
-        this.props.dispatch(setActiveMembership(membership));
     }
 }
