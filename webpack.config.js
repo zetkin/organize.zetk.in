@@ -11,11 +11,6 @@ const WEBPACK_HOST = process.env.WEBPACK_HOST || 'organize.dev.zetkin.org';
 const WEBPACK_PORT = parseInt(process.env.WEBPACK_PORT) || 81;
 
 const config = {
-    watch: true,
-    watchOptions: {
-        aggregateTimeout: 200,
-        poll: 500,
-    },
     entry: [
         path.join(__dirname, 'src/client/main'),
     ],
