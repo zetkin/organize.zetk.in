@@ -32,9 +32,31 @@ export default function personFields(state = null, action) {
             }),
         });
     }
+    else if (action.type == types.RETRIEVE_FIELDS_FOR_ORGANIZATION + '_PENDING') {
+        return Object.assign({}, state, {
+            fieldTypes: Object.assign({}, state.valuesByPerson,
+                createList(null, { isPending: true }),
+            ),
+        });
+    }
+    else if (action.type == types.RETRIEVE_FIELDS_FOR_ORGANIZATION + '_REJECTED') {
+        return Object.assign({}, state, {
+            fieldTypes: Object.assign({}, state.fieldTypes,
+                createList(null, { error: action.payload.data }),
+            ),
+        });
+    }
+    else if (action.type == types.RETRIEVE_FIELDS_FOR_ORGANIZATION + '_FULFILLED') {
+        return Object.assign({}, state, {
+            fieldTypes: Object.assign({}, state.fieldTypes, 
+                createList(action.payload.data.data),
+            ),
+        });
+    }
     else {
         return state || {
             valuesByPerson: {},
+            fieldTypes: []
         };
     }
 }

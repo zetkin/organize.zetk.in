@@ -12,3 +12,15 @@ export function retrieveFieldsForPerson(id) {
         });
     };
 }
+
+export function retrieveFieldTypesForOrganization() {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_FIELDS_FOR_ORGANIZATION,
+            payload: {
+                promise: z.resource('orgs', orgId, 'people', 'fields').get()
+            }
+        });
+    };
+}
