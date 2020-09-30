@@ -34,7 +34,7 @@ export default function personFields(state = null, action) {
     }
     else if (action.type == types.RETRIEVE_FIELDS_FOR_ORGANIZATION + '_PENDING') {
         return Object.assign({}, state, {
-            fieldTypes: Object.assign({}, state.valuesByPerson,
+            fieldTypes: Object.assign({}, state.fieldTypes,
                 createList(null, { isPending: true }),
             ),
         });
@@ -56,7 +56,7 @@ export default function personFields(state = null, action) {
     else {
         return state || {
             valuesByPerson: {},
-            fieldTypes: []
+            fieldTypes: createList(),
         };
     }
 }

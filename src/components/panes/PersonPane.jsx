@@ -156,7 +156,7 @@ export default class PersonPane extends PaneBase {
                         { name: 'editLink', msgId: 'panes.person.editLink', onClick: this.onClickEdit.bind(this) }
                     ]}
                 />,
-                this.props.personFieldTypes && this.props.personFieldTypes.items.length > 0 ?
+                this.props.personFieldTypes.items && this.props.personFieldTypes.items.length > 0 ?
                     <div key="fields" className="PersonPane-fields">
                         <Msg id="panes.person.fields.h" tagName="h3"/>
                         { fieldsContent }
