@@ -1,0 +1,42 @@
+.PersonViewsPane-viewList {
+}
+
+.PersonViewsPane-viewIcon {
+    position: relative;
+    display: inline-block;
+    margin: 0 3em 4em;
+    cursor: pointer;
+
+    width: 10em;
+    padding-top: 10em;
+
+    &:before {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        content: "";
+        display: block;
+        background-color: white;
+        width: 10em;
+        height: 10em;
+        border-radius: 10em;
+
+        transition: top 0.2s, left 0.2s, width 0.2s, height 0.2s;
+    }
+
+    &:hover {
+        &:before {
+            top: 1em;
+            left: 1em;
+            width: 8em;
+            height: 8em;
+        }
+    }
+}
+
+.PersonViewsPane-viewIconTitle {
+    display: block;
+    font-size: 1.4em;
+    text-align: center;
+}

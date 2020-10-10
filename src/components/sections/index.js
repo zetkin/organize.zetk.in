@@ -15,6 +15,7 @@ import ManagePeoplePane from './people/ManagePeoplePane';
 import MapOverviewPane from './maps/MapOverviewPane';
 import OfficialsPane from './settings/OfficialsPane';
 import PeopleListPane from './people/PeopleListPane';
+import PersonViewsPane from './people/PersonViewsPane';
 import SurveyListPane from './survey/SurveyListPane';
 import SurveySubmissionsPane from './survey/SurveySubmissionsPane';
 
@@ -24,6 +25,8 @@ export const SECTIONS = {
         subSections: [
             { path: 'list',
                 startPane: PeopleListPane },
+            { path: 'views',
+                startPane: PersonViewsPane },
             { path: 'import',
                 startPane: ImportPane },
             { path: 'groups',
