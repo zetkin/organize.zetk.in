@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Avatar from '../Avatar';
 import LoadingIndicator from '../LoadingIndicator';
 import PersonSelectWidget from '../PersonSelectWidget';
+import PersonViewTableRow from './PersonViewTableRow';
 
 
 export default class PersonViewTable extends React.Component {
@@ -33,23 +33,12 @@ export default class PersonViewTable extends React.Component {
                 else if (rowList.items) {
                     tableBody = (
                         <tbody>
-                        {rowList.items.map(rowItem => {
-                            const cells = rowItem.data.content.map((cellData, index) => (
-                                <td key={ index }>{ JSON.stringify(cellData) }</td>
-                            ));
-
-                            return (
-                                <tr>
-                                    <td>
-                                        <Avatar
-                                            person={{ id: rowItem.data.id }}
-                                            onClick={ () => this.props.openPane('person', rowItem.data.id ) }
-                                            />
-                                    </td>
-                                    { cells }
-                                </tr>
-                            );
-                        })}
+                        {rowList.items.map(rowItem => (
+                            <PersonViewTableRow key={ rowItem.data.id }
+                                rowData={ rowItem.data }
+                                openPane={ this.props.openPane }
+                                />
+                        ))}
                         </tbody>
                     );
                 }
