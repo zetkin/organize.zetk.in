@@ -1,14 +1,23 @@
 .PersonViewTable {
+    table {
+        display: block;
+        overflow-x: scroll;
+    }
+
     .person_tag {
-        width: 8em;
+        max-width: 8em;
+        min-width: 8em;
         text-align: center;
     }
 
     .person_field {
         width: 14rem;
         max-width: 10rem;
+        min-width: 10rem;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+
+    padding-bottom: 10rem;
 }

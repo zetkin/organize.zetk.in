@@ -8,7 +8,8 @@
     }
 
     .PersonViewTableHead-newColumn {
-        width: 14em;
+        min-width: 14em;
+        max-width: 14em;
         text-align: center;
         padding-left: 1em;
         padding-right: 1em;
