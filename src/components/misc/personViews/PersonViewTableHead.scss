@@ -1,13 +1,13 @@
-.PersonViewTableHead-avatarColumn {
-    width: 3em;
-    background-color: white;
+.PersonViewTableHead {
+    th {
+        padding: 0.5em;
+
+        font-size: 0.8em;
+        font-weight: normal;
+        text-align: left;
+    }
 }
 
 .PersonViewTableHead-column {
     background-color: white;
-    padding: 0.5em;
-
-    font-size: 0.8em;
-    font-weight: normal;
-    text-align: left;
 }

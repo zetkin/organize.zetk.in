@@ -1,14 +1,14 @@
 .PersonViewTable {
-    table {
-        width: 100%;
+    .person_tag {
+        width: 8em;
+        text-align: center;
     }
 
-    th {
-        text-align: left;
-    }
-
-    .Avatar {
-        width: 2.5em;
-        cursor: pointer;
+    .person_field {
+        width: 14rem;
+        max-width: 10rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 }

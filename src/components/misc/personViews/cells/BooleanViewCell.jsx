@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function PlainTextViewCell(props) {
     // TODO: Add interactivity
-    const classes = cx('BooleanViewCell', {
+    const classes = cx('BooleanViewCell', props.column.type, {
         'true': props.content,
         'false': !props.content,
     });

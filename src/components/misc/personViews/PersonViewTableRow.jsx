@@ -28,7 +28,7 @@ export default function PersonViewTableRow(props) {
 
     return (
         <tr className="PersonViewTableRow">
-            <td>
+            <td className="PersonViewTableRow-avatar">
                 <Avatar
                     person={{ id: rowData.id }}
                     onClick={ () => props.openPane('person', rowData.id ) }
