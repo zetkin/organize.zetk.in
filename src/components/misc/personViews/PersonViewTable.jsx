@@ -2,6 +2,7 @@ import React from 'react';
 
 import Avatar from '../Avatar';
 import LoadingIndicator from '../LoadingIndicator';
+import PersonSelectWidget from '../PersonSelectWidget';
 
 
 export default class PersonViewTable extends React.Component {
@@ -62,6 +63,11 @@ export default class PersonViewTable extends React.Component {
                     { tableBody }
                 </table>
                 { loadingIndicator }
+                <div className="PersonViewTable-addPerson">
+                    <PersonSelectWidget
+                        isPending={ this.props.rowList.addIsPending }
+                        onSelect={ this.props.onPersonAdd }/>
+                </div>
             </div>
         );
     }

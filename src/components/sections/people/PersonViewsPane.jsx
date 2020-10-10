@@ -6,6 +6,7 @@ import LoadingIndicator from '../../misc/LoadingIndicator';
 import PersonViewTable from '../../misc/personViews/PersonViewTable';
 import RootPaneBase from '../RootPaneBase';
 import {
+    addPersonViewRow,
     retrievePersonView,
     retrievePersonViewColumns,
     retrievePersonViewRows,
@@ -72,6 +73,7 @@ export default class PersonViewsPane extends RootPaneBase {
                             openPane={ this.openPane.bind(this) }
                             columnList={ this.props.views.columnsByView[viewId] }
                             rowList={ this.props.views.rowsByView[viewId] }
+                            onPersonAdd={ person => this.props.dispatch(addPersonViewRow(viewId, person.id)) }
                             />
                     </div>
                 ];
