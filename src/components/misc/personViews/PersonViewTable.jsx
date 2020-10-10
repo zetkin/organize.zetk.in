@@ -2,6 +2,7 @@ import React from 'react';
 
 import LoadingIndicator from '../LoadingIndicator';
 import PersonSelectWidget from '../PersonSelectWidget';
+import PersonViewTableHead from './PersonViewTableHead';
 import PersonViewTableRow from './PersonViewTableRow';
 
 
@@ -16,14 +17,9 @@ export default class PersonViewTable extends React.Component {
 
         if (colList && colList.items) {
             tableHead = (
-                <thead>
-                    <tr>
-                        <th></th>
-                    {colList.items.map(colItem => (
-                        <th>{ colItem.data.title }</th>
-                    ))}
-                    </tr>
-                </thead>
+                <PersonViewTableHead
+                    columnList={ colList }
+                    />
             );
 
             if (rowList) {
