@@ -8,6 +8,7 @@ import PersonViewTableRow from './PersonViewTableRow';
 
 export default class PersonViewTable extends React.Component {
     render() {
+        const viewId = this.props.viewId;
         const colList = this.props.columnList;
         const rowList = this.props.rowList;
 
@@ -18,7 +19,9 @@ export default class PersonViewTable extends React.Component {
         if (colList && colList.items) {
             tableHead = (
                 <PersonViewTableHead
+                    viewId={ viewId }
                     columnList={ colList }
+                    openPane={ this.props.openPane }
                     />
             );
 
@@ -51,7 +54,7 @@ export default class PersonViewTable extends React.Component {
                 { loadingIndicator }
                 <div className="PersonViewTable-addPerson">
                     <PersonSelectWidget
-                        isPending={ this.props.rowList.addIsPending }
+                        isPending={ this.props.rowList && this.props.rowList.addIsPending }
                         onSelect={ this.props.onPersonAdd }/>
                 </div>
             </div>

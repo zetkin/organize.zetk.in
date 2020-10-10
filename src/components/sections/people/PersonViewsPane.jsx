@@ -70,6 +70,7 @@ export default class PersonViewsPane extends RootPaneBase {
                     <p key="description">{ viewItem.data.description }</p>,
                     <div key="view">
                         <PersonViewTable
+                            viewId={ viewId }
                             openPane={ this.openPane.bind(this) }
                             columnList={ this.props.views.columnsByView[viewId] }
                             rowList={ this.props.views.rowsByView[viewId] }

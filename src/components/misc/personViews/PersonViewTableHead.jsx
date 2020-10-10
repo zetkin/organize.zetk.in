@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import React from 'react';
+import { FormattedMessage as Msg } from 'react-intl';
 
 
 export default function PersonViewTableHead(props) {
@@ -18,6 +19,10 @@ export default function PersonViewTableHead(props) {
             <tr>
                 <th className="PersonViewTableHead-avatarColumn"></th>
                 { cols }
+                <th className="PersonViewTableHead-newColumn"
+                    onClick={ () => props.openPane('addviewcolumn', props.viewId) }>
+                    <Msg id="panes.personViews.view.addColumn"/>
+                </th>
             </tr>
         </thead>
     );

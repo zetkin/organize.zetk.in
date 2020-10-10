@@ -6,6 +6,36 @@
         font-weight: normal;
         text-align: left;
     }
+
+    .PersonViewTableHead-newColumn {
+        width: 14em;
+        text-align: center;
+        padding-left: 1em;
+        padding-right: 1em;
+        border: 2px dashed rgba(0,0,0, 0.2);
+        color: $c-ui-dark;
+
+        cursor: pointer;
+
+        transition: color 0.2s, border-color 0.2s;
+
+        &:hover {
+            color: $c-ui-darker;
+            border-color: rgba(0,0,0, 0.3);
+
+            position: relative;
+            &:after {
+                content: "";
+                display: block;
+                position: absolute;
+                top: 110%;
+                left: 0;
+                right: 0;
+                height: 8em;
+                background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0));
+            }
+        }
+    }
 }
 
 .PersonViewTableHead-column {
