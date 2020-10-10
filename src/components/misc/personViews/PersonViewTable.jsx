@@ -35,6 +35,7 @@ export default class PersonViewTable extends React.Component {
                         <tbody>
                         {rowList.items.map(rowItem => (
                             <PersonViewTableRow key={ rowItem.data.id }
+                                columnList={ colList }
                                 rowData={ rowItem.data }
                                 openPane={ this.props.openPane }
                                 />
