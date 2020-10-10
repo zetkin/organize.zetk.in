@@ -52,6 +52,9 @@ export const UPDATE_PERSON_TAG = 'UPDATE_PERSON_TAG';
 export const ADD_TAGS_TO_PERSON = 'ADD_TAGS_TO_PERSON';
 export const REMOVE_TAG_FROM_PERSON = 'REMOVE_TAG_FROM_PERSON';
 
+// Actions related to person views
+export const RETRIEVE_PERSON_VIEWS = 'RETRIEVE_PERSON_VIEWS';
+
 // Redux actions related to locations
 export const CREATE_LOCATION = 'CREATE_LOCATION';
 export const RETRIEVE_LOCATIONS = 'RETRIEVE_LOCATIONS';
