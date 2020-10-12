@@ -15,6 +15,32 @@ export function addPersonViewRow(viewId, personId) {
     };
 }
 
+export function createPersonView(data, defaultColumns=[]) {
+    return ({ dispatch, getState, z }) => {
+        const orgId = getState().org.activeId;
+
+        let viewRes = null;
+
+        dispatch({
+            type: types.CREATE_PERSON_VIEW,
+            payload: {
+                promise: z.resource('orgs', orgId, 'people', 'views')
+                    .post(data)
+                    .then(res => {
+                        viewRes = res;
+
+                        // Add default columns
+                        if (defaultColumns && defaultColumns.length) {
+                            return Promise.all(defaultColumns.map(colData =>
+                                z.resource('orgs', orgId, 'people', 'views', viewRes.data.data.id, 'columns').post(colData)));
+                        }
+                    })
+                    .then(() => viewRes),
+            }
+        });
+    };
+}
+
 export function createPersonViewColumn(viewId, data) {
     return ({ dispatch, getState, z }) => {
         const orgId = getState().org.activeId;
