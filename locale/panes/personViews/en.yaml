@@ -1,3 +1,6 @@
+placeholders:
+    title: 'Click to edit title'
+    description: 'Click to add a description'
 view:
     addColumn: Add column
     backLink: All views

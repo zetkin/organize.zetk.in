@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
-import { FormattedMessage as Msg } from 'react-intl';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import React from 'react';
 
+import EditableText from '../../misc/EditableText';
 import LoadingIndicator from '../../misc/LoadingIndicator';
 import PersonViewTable from '../../misc/personViews/PersonViewTable';
 import RootPaneBase from '../RootPaneBase';
@@ -11,6 +12,7 @@ import {
     retrievePersonViewColumns,
     retrievePersonViewRows,
     retrievePersonViews,
+    updatePersonView,
 } from '../../../actions/personView';
 import { getListItemById } from '../../../utils/store';
 
@@ -21,6 +23,7 @@ const mapStateToProps = state => ({
 
 
 @connect(mapStateToProps)
+@injectIntl
 export default class PersonViewsPane extends RootPaneBase {
     constructor(props) {
         super(props);
@@ -66,8 +69,16 @@ export default class PersonViewsPane extends RootPaneBase {
                         >
                         <Msg id="panes.personViews.view.backLink"/>
                     </a>,
-                    <h1 key="title">{ viewItem.data.title }</h1>,
-                    <p key="description">{ viewItem.data.description }</p>,
+                    <EditableText tagName="h1" key="title"
+                        content={ viewItem.data.title }
+                        onChange={ this.onChange.bind(this, 'title') }
+                        placeholder={ this.props.intl.formatMessage({ id: 'panes.personViews.placeholders.title' }) }
+                        />,
+                    <EditableText tagName="p" key="description"
+                        content={ viewItem.data.description }
+                        onChange={ this.onChange.bind(this, 'description') }
+                        placeholder={ this.props.intl.formatMessage({ id: 'panes.personViews.placeholders.description' }) }
+                        />,
                     <div key="view">
                         <PersonViewTable
                             viewId={ viewId }
@@ -101,5 +112,14 @@ export default class PersonViewsPane extends RootPaneBase {
         else if (this.props.views.viewList.isPending) {
             return <LoadingIndicator/>;
         }
+    }
+
+    onChange(attr, value) {
+        const viewId = this.getParam(0);
+        const data = {
+            [attr]: value,
+        };
+
+        this.props.dispatch(updatePersonView(viewId, data));
     }
 }
