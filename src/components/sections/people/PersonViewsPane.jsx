@@ -91,13 +91,17 @@ export default class PersonViewsPane extends RootPaneBase {
     }
 
     renderPaneTop() {
-        return (
-            <div key="backLink" className="PersonViewsPane-backLink">
-                <a onClick={ () => this.gotoPane('views') }>
-                    <Msg id="panes.personViews.view.backLink"/>
-                </a>
-            </div>
-        );
+        const viewId = this.getParam(0);
+
+        if (viewId) {
+            return (
+                <div key="backLink" className="PersonViewsPane-backLink">
+                    <a onClick={ () => this.gotoPane('views') }>
+                        <Msg id="panes.personViews.view.backLink"/>
+                    </a>
+                </div>
+            );
+        }
     }
 
     renderPaneContent(data) {
