@@ -12,17 +12,22 @@ export default function PersonViewTableRow(props) {
 
     const cells = rowData.content.map((cellData, index) => {
         const col = columns[index];
-        const cellProps = {
-            key: index,
-            content: cellData,
-            column: col,
-        };
+        if (col) {
+            const cellProps = {
+                key: index,
+                content: cellData,
+                column: col,
+            };
 
-        if (col.type == 'person_tag') {
-            return <BooleanViewCell { ...cellProps }/>;
+            if (col.type == 'person_tag') {
+                return <BooleanViewCell { ...cellProps }/>;
+            }
+            else {
+                return <PlainTextViewCell { ...cellProps }/>;
+            }
         }
         else {
-            return <PlainTextViewCell { ...cellProps }/>;
+            return null;
         }
     });
 

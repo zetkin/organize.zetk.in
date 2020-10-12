@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage as Msg } from 'react-intl';
 
 import LoadingIndicator from '../LoadingIndicator';
 import PersonSelectWidget from '../PersonSelectWidget';
@@ -12,6 +13,7 @@ export default class PersonViewTable extends React.Component {
         const colList = this.props.columnList;
         const rowList = this.props.rowList;
 
+        let placeholder;
         let tableHead;
         let tableBody;
         let loadingIndicator;
@@ -27,9 +29,9 @@ export default class PersonViewTable extends React.Component {
 
             if (rowList) {
                 if (rowList.isPending) {
-                    loadingIndicator = <LoadingIndicator/>;
+                    placeholder = <LoadingIndicator/>;
                 }
-                else if (rowList.items) {
+                else if (rowList.items && rowList.items.length) {
                     tableBody = (
                         <tbody>
                         {rowList.items.map(rowItem => (
@@ -42,8 +44,30 @@ export default class PersonViewTable extends React.Component {
                         </tbody>
                     );
                 }
+                else {
+                    placeholder = this.props.placeholder;
+                }
+            }
+            else {
+                placeholder = this.props.placeholder;
             }
         }
+
+        if (placeholder) {
+            placeholder = (
+                <div className="PersonViewTable-placeholder">
+                    { placeholder }
+                </div>
+            );
+        }
+
+        const addSection = this.props.showAddSection? (
+            <div className="PersonViewTable-addPerson">
+                <PersonSelectWidget
+                    isPending={ this.props.rowList && this.props.rowList.addIsPending }
+                    onSelect={ this.props.onPersonAdd }/>
+            </div>
+        ) : null;
 
         return (
             <div className="PersonViewTable">
@@ -51,12 +75,8 @@ export default class PersonViewTable extends React.Component {
                     { tableHead }
                     { tableBody }
                 </table>
-                { loadingIndicator }
-                <div className="PersonViewTable-addPerson">
-                    <PersonSelectWidget
-                        isPending={ this.props.rowList && this.props.rowList.addIsPending }
-                        onSelect={ this.props.onPersonAdd }/>
-                </div>
+                { placeholder }
+                { addSection }
             </div>
         );
     }

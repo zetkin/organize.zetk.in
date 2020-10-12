@@ -49,15 +49,7 @@ export function createPersonViewColumn(viewId, data) {
             type: types.CREATE_PERSON_VIEW_COLUMN,
             meta: { viewId },
             payload: {
-                promise: z.resource('orgs', orgId, 'people', 'views', viewId, 'columns')
-                    .post(data)
-                    .then(res => {
-                        // As a side effect, this action will need to trigger the
-                        // view content to be retrieved anew
-                        dispatch(retrievePersonViewRows(viewId));
-
-                        return res;
-                    }),
+                promise: z.resource('orgs', orgId, 'people', 'views', viewId, 'columns').post(data),
             }
         });
     };

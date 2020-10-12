@@ -21,3 +21,26 @@
 
     padding-bottom: 10rem;
 }
+
+.PersonViewTable-placeholder {
+    background-color: darken($c-ui-bg, 4);
+    padding: 2rem;
+    text-align: center;
+
+    @include large-screen {
+        padding: 4rem 25%;
+    }
+
+    color: $c-ui-darker;
+
+    transition: background-color 0.2s;
+}
+
+.PersonViewTable-placeholder {
+    padding: 2rem;
+    text-align: center;
+
+    @include large-screen {
+        padding: 4rem 25%;
+    }
+}

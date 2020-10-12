@@ -10,3 +10,8 @@ placeholders:
 view:
     addColumn: Add column
     backLink: All views
+    empty: This view is empty. Add a person below, or pick a Smart Search query above to populate the view.
+    missingQuery: Select a Smart Search query above.
+    modes:
+        saved: Saved
+        query: Smart Search
