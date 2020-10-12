@@ -31,8 +31,18 @@ export function createPersonView(data, defaultColumns=[]) {
 
                         // Add default columns
                         if (defaultColumns && defaultColumns.length) {
-                            return Promise.all(defaultColumns.map(colData =>
-                                z.resource('orgs', orgId, 'people', 'views', viewRes.data.data.id, 'columns').post(colData)));
+                            let promise = Promise.resolve();
+
+                            // Create columns sequentially to guarantee order
+                            defaultColumns.forEach(colData => {
+                                promise = promise.then(() =>
+                                    z.resource('orgs', orgId, 'people', 'views', viewRes.data.data.id, 'columns').post(colData));
+                            });
+
+                            return promise
+                                .catch(err => {
+                                    // Ignore errors for default columns
+                                });
                         }
                     })
                     .then(() => viewRes),
