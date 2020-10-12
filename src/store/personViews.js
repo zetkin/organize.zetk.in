@@ -7,6 +7,42 @@ import {
 } from '../utils/store';
 
 
+/*
+ * If there exists both a list of query matches, and a list of view rows
+ * (i.e. people that have been statically saved in the view), this function can
+ * be used to flag any rows in the list of query matches as saved if they also
+ * exist in the static list.
+*/
+function flagListItemsIfSaved(matchList, savedList) {
+    let changed = false;
+
+    if (savedList && savedList.items) {
+        const outList = Object.assign({}, matchList, {
+            items: matchList.items.map(matchItem => {
+                if (!!savedList.items.find(savedItem => savedItem.data.id == matchItem.data.id)) {
+                    if (!matchItem.data.saved) {
+                        changed = true;
+                        return Object.assign({}, matchItem, {
+                            data: Object.assign({}, matchItem.data, { saved: true }),
+                        });
+                    }
+                }
+
+                // Return unchanged if reached
+                return matchItem;
+            }),
+        });
+
+        // Return copy if changed or original if unchanged
+        return changed? outList : matchList;
+    }
+    else {
+        // No saved list exists, return unchanged
+        return matchList;
+    }
+}
+
+
 export default function personViews(state = null, action) {
     if (action.type == types.RETRIEVE_PERSON_VIEWS + '_FULFILLED') {
         return Object.assign({}, state, {
@@ -48,9 +84,12 @@ export default function personViews(state = null, action) {
         });
     }
     else if (action.type == types.RETRIEVE_PERSON_VIEW_ROWS + '_FULFILLED') {
+        const rows = action.payload.data.data
+            .map(row => Object.assign(row, { saved: true }));
+
         return Object.assign({}, state, {
             rowsByView: Object.assign({}, state.rowsByView, {
-                [action.meta.viewId]: createList(action.payload.data.data),
+                [action.meta.viewId]: createList(rows),
             })
         });
     }
@@ -65,13 +104,18 @@ export default function personViews(state = null, action) {
         const queryId = action.meta.queryId;
         const viewId = action.meta.viewId;
 
-        return Object.assign({}, state, {
+        const newState = Object.assign({}, state, {
             matchesByViewAndQuery: Object.assign({}, state.matchesByViewAndQuery, {
                 [viewId]: Object.assign({}, state.matchesByViewAndQuery[viewId], {
                     [queryId]: createList(action.payload.data.data),
                 }),
             }),
         });
+
+        newState.matchesByViewAndQuery[viewId][queryId] =
+            flagListItemsIfSaved(newState.matchesByViewAndQuery[viewId][queryId], state.rowsByView[viewId]);
+
+        return newState;
     }
     else if (action.type == types.RETRIEVE_PERSON_VIEW_QUERY + '_PENDING') {
         const queryId = action.meta.queryId;
@@ -87,8 +131,12 @@ export default function personViews(state = null, action) {
     }
     else if (action.type == types.ADD_PERSON_VIEW_ROW + '_FULFILLED') {
         const viewId = action.meta.viewId;
+
+        // Flag row as saved
         const row = action.payload.data.data;
-        return Object.assign({}, state, {
+        row.saved = true;
+
+        const newState = Object.assign({}, state, {
             rowsByView: Object.assign({}, state.rowsByView, {
                 [viewId]: Object.assign({},
                     updateOrAddListItem(state.rowsByView[viewId], row.id, row),
@@ -96,6 +144,19 @@ export default function personViews(state = null, action) {
                 ),
             })
         });
+
+        // If query matches have been retrieved for this view, go over and
+        // flag them anew, to reflect that a new person has been "saved"
+        if (state.matchesByViewAndQuery[viewId]) {
+            newState.matchesByViewAndQuery[viewId] = Object.assign({}, state.matchesByViewAndQuery[viewId]);
+
+            Object.keys(newState.matchesByViewAndQuery[viewId]).forEach(queryId => {
+                newState.matchesByViewAndQuery[viewId][queryId] =
+                    flagListItemsIfSaved(newState.matchesByViewAndQuery[viewId][queryId], newState.rowsByView[viewId]);
+            });
+        }
+
+        return newState;
     }
     else if (action.type == types.ADD_PERSON_VIEW_ROW + '_PENDING') {
         const viewId = action.meta.viewId;
