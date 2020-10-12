@@ -15,13 +15,16 @@ export default function personViews(state = null, action) {
     }
     else if (action.type == types.RETRIEVE_PERSON_VIEWS + '_PENDING') {
         return Object.assign({}, state, {
-            viewList: Object.assign(state.viewList, { isPending: true }),
+            viewList: Object.assign({}, state.viewList, { isPending: true }),
         });
     }
     else if (action.type == types.RETRIEVE_PERSON_VIEW + '_FULFILLED') {
         const view = action.payload.data.data;
         return Object.assign({}, state, {
             viewList: updateOrAddListItem(state.viewList, view.id, view),
+            matchesByViewAndQuery: Object.assign({}, state.matchesByViewAndQuery, {
+                [view.id]: {},
+            }),
         });
     }
     else if (action.type == types.UPDATE_PERSON_VIEW + '_FULFILLED') {
@@ -56,6 +59,30 @@ export default function personViews(state = null, action) {
             rowsByView: Object.assign({}, state.rowsByView, {
                 [action.meta.viewId]: createList(null, { isPending: true }),
             })
+        });
+    }
+    else if (action.type == types.RETRIEVE_PERSON_VIEW_QUERY + '_FULFILLED') {
+        const queryId = action.meta.queryId;
+        const viewId = action.meta.viewId;
+
+        return Object.assign({}, state, {
+            matchesByViewAndQuery: Object.assign({}, state.matchesByViewAndQuery, {
+                [viewId]: Object.assign({}, state.matchesByViewAndQuery[viewId], {
+                    [queryId]: createList(action.payload.data.data),
+                }),
+            }),
+        });
+    }
+    else if (action.type == types.RETRIEVE_PERSON_VIEW_QUERY + '_PENDING') {
+        const queryId = action.meta.queryId;
+        const viewId = action.meta.viewId;
+
+        return Object.assign({}, state, {
+            matchesByViewAndQuery: Object.assign({}, state.matchesByViewAndQuery, {
+                [viewId]: Object.assign({}, state.matchesByViewAndQuery[viewId], {
+                    [queryId]: createList(null, { isPending: true }),
+                }),
+            }),
         });
     }
     else if (action.type == types.ADD_PERSON_VIEW_ROW + '_FULFILLED') {
@@ -93,6 +120,7 @@ export default function personViews(state = null, action) {
         return state || {
             viewList: createList(),
             columnsByView: {},
+            matchesByViewAndQuery: {},
             rowsByView: {},
         };
     }
