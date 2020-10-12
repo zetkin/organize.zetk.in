@@ -1,5 +1,5 @@
 .EditableText {
-    border: 1px solid transparent;
+    border: 1px dashed transparent;
     padding-right: 1px;
 
     position: relative;
@@ -11,17 +11,47 @@
 
     transition: background-color 0.2s, border-color 0.2s;
 
+    &.flashing {
+        animation: EditableText-enter 2s;
+    }
+
     &:hover {
         border: 1px dashed rgba(0,0,0, 0.2);
     }
 
+    &.empty {
+        font-style: italic;
+        color: $c-ui-dark;
+    }
+
     &.editing {
+        font-style: inherit;
+        color: inherit;
+
         background-color: rgba(white, 1);
         outline: none;
         border: 1px dashed rgba(0,0,0, 0.1);
     }
+}
 
-    &.empty {
-        font-style: italic;
+@keyframes EditableText-enter {
+    0% {
+        border-color: rgba(0,0,0, 0.0);
+    }
+
+    25% {
+        border-color: rgba(0,0,0, 0.2);
+    }
+
+    50% {
+        border-color: rgba(0,0,0, 0.0);
+    }
+
+    75% {
+        border-color: rgba(0,0,0, 0.2);
+    }
+
+    100% {
+        border-color: rgba(0,0,0, 0.0);
     }
 }

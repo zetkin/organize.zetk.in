@@ -150,6 +150,7 @@ export default class PersonViewsPane extends RootPaneBase {
                 return [
                     <div key="header" className="PersonViewsPane-singleViewHeader">
                         <EditableText tagName="h1" key="title"
+                            flash={ true }
                             content={ viewItem.data.title }
                             onChange={ this.onChange.bind(this, 'title') }
                             placeholder={ this.props.intl.formatMessage({ id: 'panes.personViews.placeholders.title' }) }

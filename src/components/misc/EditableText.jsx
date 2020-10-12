@@ -17,6 +17,7 @@ export default class EditableText extends React.Component {
             className: cx('EditableText', this.props.className, {
                 editing: this.state.editing,
                 empty: !this.props.content,
+                flashing: this.props.flash,
             }),
             contentEditable: true,
             onFocus: ev => {
