@@ -1,12 +1,17 @@
 import React from 'react';
 import { FormattedMessage as Msg } from 'react-intl';
+import { connect } from 'react-redux';
 
 import LoadingIndicator from '../LoadingIndicator';
 import PersonSelectWidget from '../PersonSelectWidget';
 import PersonViewTableHead from './PersonViewTableHead';
 import PersonViewTableRow from './PersonViewTableRow';
+import {
+    addPersonViewRow,
+} from '../../../actions/personView';
 
 
+@connect()
 export default class PersonViewTable extends React.Component {
     render() {
         const viewId = this.props.viewId;
@@ -39,6 +44,8 @@ export default class PersonViewTable extends React.Component {
                                 columnList={ colList }
                                 rowData={ rowItem.data }
                                 openPane={ this.props.openPane }
+                                onAdd={ row => this.props.dispatch(addPersonViewRow(viewId, row.id)) }
+                                onRemove={ row => console.log('remove', row.id) }
                                 />
                         ))}
                         </tbody>

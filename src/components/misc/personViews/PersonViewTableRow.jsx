@@ -44,8 +44,9 @@ export default function PersonViewTableRow(props) {
                     onClick={ () => props.openPane('person', rowData.id ) }
                     />
             </td>
-            <td className="PersonViewTableRow-saved">
-            </td>
+            <td className="PersonViewTableRow-saved"
+                onClick={ () => rowData.saved? props.onRemove(rowData) : props.onAdd(rowData) }
+                />
             { cells }
         </tr>
     );
