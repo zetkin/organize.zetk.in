@@ -1,41 +1,104 @@
 .PersonViewsPane-viewList {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.PersonViewsPane-viewIcon {
-    position: relative;
-    display: inline-block;
+.PersonViewsPane-viewItem {
+    $diameter: 6rem;
+
     margin: 0 3em 4em;
     cursor: pointer;
 
-    width: 10em;
-    padding-top: 10em;
+    width: 1.7*$diameter;
 
-    &:before {
-        position: absolute;
-        top: 0;
-        left: 0;
+    .PersonViewsPane-viewItemIcon {
+        position: relative;
+        width: $diameter;
+        height: $diameter;
+        margin: 0 auto 1em;
 
-        content: "";
-        display: block;
-        background-color: white;
-        width: 10em;
-        height: 10em;
-        border-radius: 10em;
+        &:before {
+            position: absolute;
+            top: 0;
+            left: 0;
 
-        transition: top 0.2s, left 0.2s, width 0.2s, height 0.2s;
+            content: "";
+            display: block;
+            background-color: white;
+            width: $diameter;
+            height: $diameter;
+            border-radius: $diameter;
+
+            transition: top 0.2s, left 0.2s, width 0.2s, height 0.2s;
+        }
+
+        &:after {
+            @include icon($fa-var-table);
+
+            font-size: 5em;
+            color: $c-ui-dark;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+
+            position: absolute;
+            top: 0.5*$diameter;
+            left: 0.5*$diameter;
+
+            transform: translate(-50%, -50%);
+            transition: transform 0.2s color 0.1s;
+                color: $c-brand-comp-light;
+        }
     }
 
     &:hover {
-        &:before {
-            top: 1em;
-            left: 1em;
-            width: 8em;
-            height: 8em;
+        .PersonViewsPane-viewItemIcon {
+            &:before {
+                top: 0.05*$diameter;
+                left: 0.05*$diameter;
+                width: 0.9*$diameter;
+                height: 0.9*$diameter;
+            }
+
+            &:after {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+    }
+
+    &.PersonViewsPane-new {
+        font-style: italic;
+
+        .PersonViewsPane-viewItemIcon {
+            &:after {
+                @include icon($fa-var-file-o);
+                font-size: 5em;
+            }
         }
     }
 }
 
-.PersonViewsPane-viewIconTitle {
+.PersonViewsPane-backLink {
+    font-size: 1rem;
+    color: $c-ui-darker;
+
+    &:before {
+        @include icon($fa-var-chevron-left);
+
+        position: relative;
+        left: 0;
+
+        transition: left 0.2s;
+    }
+
+    &:hover {
+        &:before {
+            left: -0.1em;
+        }
+    }
+}
+
+.PersonViewsPane-viewItemTitle {
     display: block;
     font-size: 1.4em;
     text-align: center;

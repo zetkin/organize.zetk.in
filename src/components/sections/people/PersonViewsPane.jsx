@@ -188,19 +188,21 @@ export default class PersonViewsPane extends RootPaneBase {
             return (
                 <ul className="PersonViewsPane-viewList">
                     <li
-                        className="PersonViewsPane-viewIcon PersonViewsPane-new"
+                        className="PersonViewsPane-viewItem PersonViewsPane-new"
                         onClick={ this.onClickNew.bind(this) }
                         >
-                        <span className="PersonViewsPane-viewIconTitle">
+                        <div className="PersonViewsPane-viewItemIcon"/>
+                        <span className="PersonViewsPane-viewItemTitle">
                             <Msg id="panes.personViews.newBlankButton"/>
                         </span>
                     </li>
                 {this.props.views.viewList.items.map(viewItem => (
                     <li key={ viewItem.data.id }
-                        className="PersonViewsPane-viewIcon"
+                        className="PersonViewsPane-viewItem"
                         onClick={ () => this.gotoPane('views', viewItem.data.id) }
                         >
-                        <span className="PersonViewsPane-viewIconTitle">{ viewItem.data.title }</span>
+                        <div className="PersonViewsPane-viewItemIcon"/>
+                        <span className="PersonViewsPane-viewItemTitle">{ viewItem.data.title }</span>
                     </li>
                 ))}
                 </ul>
