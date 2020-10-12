@@ -8,6 +8,7 @@ import PersonViewTableHead from './PersonViewTableHead';
 import PersonViewTableRow from './PersonViewTableRow';
 import {
     addPersonViewRow,
+    removePersonViewRow,
 } from '../../../actions/personView';
 
 
@@ -45,7 +46,7 @@ export default class PersonViewTable extends React.Component {
                                 rowData={ rowItem.data }
                                 openPane={ this.props.openPane }
                                 onAdd={ row => this.props.dispatch(addPersonViewRow(viewId, row.id)) }
-                                onRemove={ row => console.log('remove', row.id) }
+                                onRemove={ row => this.props.dispatch(removePersonViewRow(viewId, row.id)) }
                                 />
                         ))}
                         </tbody>
