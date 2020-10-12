@@ -24,6 +24,12 @@ export default function personViews(state = null, action) {
             viewList: updateOrAddListItem(state.viewList, view.id, view),
         });
     }
+    else if (action.type == types.UPDATE_PERSON_VIEW + '_FULFILLED') {
+        const view = action.payload.data.data;
+        return Object.assign({}, state, {
+            viewList: updateOrAddListItem(state.viewList, view.id, view),
+        });
+    }
     else if (action.type == types.RETRIEVE_PERSON_VIEW_COLUMNS + '_FULFILLED') {
         return Object.assign({}, state, {
             columnsByView: Object.assign({}, state.columnsByView, {

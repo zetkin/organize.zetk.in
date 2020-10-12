@@ -91,3 +91,17 @@ export function retrievePersonViewRows(viewId) {
         });
     };
 }
+
+export function updatePersonView(viewId, data) {
+    return ({ dispatch, getState, z }) => {
+        const orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.UPDATE_PERSON_VIEW,
+            meta: { viewId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'people', 'views', viewId).patch(data),
+            }
+        });
+    };
+}
