@@ -209,10 +209,31 @@ export default class PersonViewsPane extends RootPaneBase {
 
     onClickNew() {
         const msg = id => this.props.intl.formatMessage({ id });
+        const defaultTitle = msg('panes.personViews.newView.defaultTitle');
 
-        const viewData = {
-            title: msg('panes.personViews.newView.defaultTitle'),
-        };
+        let title = defaultTitle;
+
+        // If there are other views named exactly like defaultTitle, find the
+        // next numeric suffix and append it
+        if (this.props.views.viewList && this.props.views.viewList.items) {
+            const titles = this.props.views.viewList.items.map(item => item.data.title);
+
+            // Find all unnamed views and extract suffixes,
+            // using zero to represent no suffix
+            const suffixes = titles
+                .filter(title => title.indexOf(defaultTitle) === 0)
+                .map(title => title.substr(defaultTitle.length + 1).trim())
+                .map(suffix => suffix == ''? 0 : parseInt(suffix))
+                .filter(suffix => !isNaN(suffix));
+
+            if (suffixes.length) {
+                const max = Math.max.apply(null, suffixes);
+                const suffix = max + 1;
+                title = `${defaultTitle} ${suffix}`;
+            }
+        }
+
+        const viewData = { title };
 
         const defaultColumns = [
             {
