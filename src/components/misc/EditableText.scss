@@ -1,0 +1,27 @@
+.EditableText {
+    border: 1px solid transparent;
+    padding-right: 1px;
+
+    position: relative;
+    top: -1px;
+    left: -6px;
+    padding: 1px 6px 0;
+
+    background-color: rgba(white, 0);
+
+    transition: background-color 0.2s, border-color 0.2s;
+
+    &:hover {
+        border: 1px dashed rgba(0,0,0, 0.2);
+    }
+
+    &.editing {
+        background-color: rgba(white, 1);
+        outline: none;
+        border: 1px dashed rgba(0,0,0, 0.1);
+    }
+
+    &.empty {
+        font-style: italic;
+    }
+}
