@@ -8,6 +8,7 @@ import PersonViewTable from '../../misc/personViews/PersonViewTable';
 import RootPaneBase from '../RootPaneBase';
 import {
     addPersonViewRow,
+    createPersonView,
     retrievePersonView,
     retrievePersonViewColumns,
     retrievePersonViewRows,
@@ -46,7 +47,7 @@ export default class PersonViewsPane extends RootPaneBase {
     componentDidUpdate(prevProps) {
         if (prevProps.paneData != this.props.paneData) {
             const viewId = this.getParam(0);
-            if (viewId) {
+            if (viewId && viewId != 'news') {
                 this.props.dispatch(retrievePersonView(viewId));
                 this.props.dispatch(retrievePersonViewColumns(viewId));
                 this.props.dispatch(retrievePersonViewRows(viewId));
@@ -60,7 +61,10 @@ export default class PersonViewsPane extends RootPaneBase {
     renderPaneContent(data) {
         const viewId = this.getParam(0);
 
-        if (viewId) {
+        if (viewId == 'new') {
+            return <LoadingIndicator/>;
+        }
+        else if (viewId) {
             const viewItem = getListItemById(this.props.views.viewList, viewId);
             if (viewItem) {
                 return [
@@ -98,6 +102,14 @@ export default class PersonViewsPane extends RootPaneBase {
         else if (this.props.views.viewList.items) {
             return (
                 <ul className="PersonViewsPane-viewList">
+                    <li
+                        className="PersonViewsPane-viewIcon PersonViewsPane-new"
+                        onClick={ this.onClickNew.bind(this) }
+                        >
+                        <span className="PersonViewsPane-viewIconTitle">
+                            <Msg id="panes.personViews.newBlankButton"/>
+                        </span>
+                    </li>
                 {this.props.views.viewList.items.map(viewItem => (
                     <li key={ viewItem.data.id }
                         className="PersonViewsPane-viewIcon"
@@ -112,6 +124,30 @@ export default class PersonViewsPane extends RootPaneBase {
         else if (this.props.views.viewList.isPending) {
             return <LoadingIndicator/>;
         }
+    }
+
+    onClickNew() {
+        const msg = id => this.props.intl.formatMessage({ id });
+
+        const viewData = {
+            title: msg('panes.personViews.newView.defaultTitle'),
+        };
+
+        const defaultColumns = [
+            {
+                'title': msg('panes.personViews.newView.defaultColumns.firstName'),
+                'type': 'person_field',
+                'config': { 'field': 'first_name' },
+            },
+            {
+                'title': msg('panes.personViews.newView.defaultColumns.lastName'),
+                'type': 'person_field',
+                'config': { 'field': 'last_name' },
+            },
+        ];
+
+        this.props.dispatch(createPersonView(viewData, defaultColumns));
+        this.gotoPane('views', 'new');
     }
 
     onChange(attr, value) {

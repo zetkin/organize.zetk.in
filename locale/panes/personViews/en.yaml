@@ -1,3 +1,9 @@
+newBlankButton: 'Create blank view'
+newView:
+    defaultColumns:
+        firstName: 'First name'
+        lastName: 'Last name'
+    defaultTitle: 'Unnamed view'
 placeholders:
     title: 'Click to edit title'
     description: 'Click to add a description'
