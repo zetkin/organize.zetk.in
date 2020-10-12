@@ -18,6 +18,7 @@ export default function PersonViewTableHead(props) {
         <thead className="PersonViewTableHead">
             <tr>
                 <th className="PersonViewTableHead-avatarColumn"></th>
+                <th className="PersonViewTableHead-savedColumn"></th>
                 { cols }
                 <th className="PersonViewTableHead-newColumn"
                     onClick={ () => props.openPane('addviewcolumn', props.viewId) }>

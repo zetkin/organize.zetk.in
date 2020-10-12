@@ -39,6 +39,25 @@
     }
 }
 
+.PersonViewTableHead-avatarColumn,
+.PersonViewTableHead-savedColumn {
+    $w: 2.2rem;
+
+    width: $w;
+    min-width: $w;
+    max-width: $w;
+    background-color: white;
+}
+
+.PersonViewTableHead-savedColumn {
+    text-align: center;
+    &:before {
+        @include icon($fa-var-star-o);
+        color: $c-ui-darker;
+    }
+}
+
 .PersonViewTableHead-column {
     background-color: white;
+    color: $c-ui-darker;
 }

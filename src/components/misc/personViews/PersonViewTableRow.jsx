@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 
 import Avatar from '../Avatar';
 
@@ -31,13 +32,19 @@ export default function PersonViewTableRow(props) {
         }
     });
 
+    const classNames = cx('PersonViewTableRow', {
+        saved: rowData.saved,
+    });
+
     return (
-        <tr className="PersonViewTableRow">
+        <tr className={ classNames }>
             <td className="PersonViewTableRow-avatar">
                 <Avatar
                     person={{ id: rowData.id }}
                     onClick={ () => props.openPane('person', rowData.id ) }
                     />
+            </td>
+            <td className="PersonViewTableRow-saved">
             </td>
             { cells }
         </tr>
