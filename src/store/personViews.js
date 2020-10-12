@@ -2,6 +2,7 @@ import * as types from '../actions';
 
 import {
     createList,
+    removeListItem,
     updateOrAddListItem,
     updateOrAddListItems,
 } from '../utils/store';
@@ -26,6 +27,13 @@ function flagListItemsIfSaved(matchList, savedList) {
                             data: Object.assign({}, matchItem.data, { saved: true }),
                         });
                     }
+                }
+                else if (matchItem.data.saved) {
+                    // Was saved, is not anymore
+                    changed = true;
+                    return Object.assign({}, matchItem, {
+                        data: Object.assign({}, matchItem.data, { saved: false }),
+                    });
                 }
 
                 // Return unchanged if reached
@@ -167,6 +175,29 @@ export default function personViews(state = null, action) {
                 }),
             })
         });
+    }
+    else if (action.type == types.REMOVE_PERSON_VIEW_ROW + '_FULFILLED') {
+        const viewId = action.meta.viewId;
+        const personId = action.meta.personId;
+
+        const newState = Object.assign({}, state, {
+            rowsByView: Object.assign({}, state.rowsByView, {
+                [viewId]: removeListItem(state.rowsByView[viewId], personId),
+            })
+        });
+
+        // If query matches have been retrieved for this view, go over and
+        // flag them anew, to reflect that a new person has been "saved"
+        if (state.matchesByViewAndQuery[viewId]) {
+            newState.matchesByViewAndQuery[viewId] = Object.assign({}, state.matchesByViewAndQuery[viewId]);
+
+            Object.keys(newState.matchesByViewAndQuery[viewId]).forEach(queryId => {
+                newState.matchesByViewAndQuery[viewId][queryId] =
+                    flagListItemsIfSaved(newState.matchesByViewAndQuery[viewId][queryId], newState.rowsByView[viewId]);
+            });
+        }
+
+        return newState;
     }
     else if (action.type == types.CREATE_PERSON_VIEW_COLUMN + '_FULFILLED') {
         const viewId = action.meta.viewId;
