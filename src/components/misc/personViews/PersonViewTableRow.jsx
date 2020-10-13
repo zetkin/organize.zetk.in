@@ -5,6 +5,7 @@ import Avatar from '../Avatar';
 
 import BooleanViewCell from './cells/BooleanViewCell';
 import PlainTextViewCell from './cells/PlainTextViewCell';
+import SurveyResponseCell from './cells/SurveyResponseCell';
 
 
 export default function PersonViewTableRow(props) {
@@ -20,8 +21,12 @@ export default function PersonViewTableRow(props) {
                 column: col,
             };
 
-            if (col.type == 'person_tag') {
+            if (col.type == 'person_tag' || col.type == 'person_query') {
                 return <BooleanViewCell { ...cellProps }/>;
+            }
+            else if (col.type == 'survey_response') {
+                return <SurveyResponseCell { ...cellProps }
+                    openPane={ props.openPane }/>;
             }
             else {
                 return <PlainTextViewCell { ...cellProps }/>;

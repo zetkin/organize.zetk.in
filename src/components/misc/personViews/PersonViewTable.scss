@@ -4,19 +4,25 @@
         overflow-x: scroll;
     }
 
+    .person_query,
     .person_tag {
-        max-width: 8em;
-        min-width: 8em;
+        max-width: 6em;
+        min-width: 6em;
         text-align: center;
     }
 
     .person_field {
-        width: 14rem;
         max-width: 10rem;
         min-width: 10rem;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+
+    .survey_response {
+        width: auto;
+        max-width: 20rem;
+        min-width: 14rem;
     }
 
     padding-bottom: 10rem;
