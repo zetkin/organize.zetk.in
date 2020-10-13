@@ -13,6 +13,8 @@ config:
             phone: Phone number
             street_address: Street address
             zip_code: Zip code
+    personQuery:
+        query: Smart Search to match with
     personTag:
         tag: Tag
 saveButton: Add column
@@ -20,6 +22,9 @@ templates:
     person_field:
         instructions: Shows basic personal information, like name or e-mail.
         title: Person field
+    person_query:
+        instructions: Compare people against a Smart Search query and indicate in view which ones match.
+        title: Smart Search matching
     person_tag:
         instructions: Indicate in view who has a tag and who doesn't.
         title: Tag

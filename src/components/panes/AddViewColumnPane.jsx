@@ -9,11 +9,15 @@ import PersonViewColumnForm from '../forms/PersonViewColumnForm';
 import SelectInput from '../forms/inputs/SelectInput';
 import { createPersonViewColumn } from '../../actions/personView';
 import { retrievePersonTags } from '../../actions/personTag';
+import { retrieveQueries } from '../../actions/query';
 
 
 const DEFAULT_CONFIGS = {
     person_field: {
         field: 'email',
+    },
+    person_query: {
+        query_id: null,
     },
     person_tag: {
         tag_id: null,
@@ -22,6 +26,7 @@ const DEFAULT_CONFIGS = {
 
 
 @connect(state => ({
+    queryList: state.queries.queryList,
     tagList: state.personTags.tagList,
 }))
 @injectIntl
@@ -37,6 +42,7 @@ export default class AddPersonTagPane extends PaneBase {
 
     componentDidMount() {
         this.props.dispatch(retrievePersonTags());
+        this.props.dispatch(retrieveQueries());
     }
 
     getPaneTitle(data) {
@@ -55,6 +61,12 @@ export default class AddPersonTagPane extends PaneBase {
                 tagList={ this.props.tagList }
                 config={ this.state.config }
                 selected={ this.state.type == 'person_tag' }
+                onChange={ column => this.setState(column) }
+                onSelect={ this.onTypeSelect.bind(this) }/>,
+            <PersonQueryColumnTemplate key="person_query"
+                queryList={ this.props.queryList }
+                config={ this.state.config }
+                selected={ this.state.type == 'person_query' }
                 onChange={ column => this.setState(column) }
                 onSelect={ this.onTypeSelect.bind(this) }/>,
         ];
@@ -151,6 +163,66 @@ class PersonFieldColumnTemplate extends React.Component {
         const field = column.config.field;
         column.title = this.props.intl.formatMessage(
             { id: `panes.addViewColumn.config.personField.fieldOptions.${field}` });
+
+        this.props.onChange(column);
+    }
+}
+
+class PersonQueryColumnTemplate extends React.Component {
+    componentDidUpdate(prevProps) {
+        // When selected, pick the first query and propagate config
+        if (this.props.selected && !prevProps.selected) {
+            const { queryList } = this.props;
+
+            if (queryList && queryList.items && queryList.items.length) {
+                this.onConfigChange('query_id', queryList.items[0].data.id);
+            }
+        }
+    }
+
+    render() {
+        const props = this.props;
+
+        let queryOptions = [];
+
+        if (props.queryList && props.queryList.items) {
+            queryOptions = props.queryList.items.reduce((options, item) => {
+                // Exclude queries without title, e.g. call assignment queries
+                if (item.data.title) {
+                    options[item.data.id] = item.data.title;
+                }
+
+                return options;
+            }, {});
+        }
+
+        return (
+            <AssignmentTemplate type="person_query"
+                messagePath="panes.addViewColumn.templates"
+                selected={ props.selected }
+                onSelect={ props.onSelect }
+                >
+                <SelectInput name="query_id"
+                    labelMsg="panes.addViewColumn.config.personQuery.query"
+                    options={ queryOptions }
+                    value={ props.config.query_id }
+                    onValueChange={ this.onConfigChange.bind(this) }
+                    />
+            </AssignmentTemplate>
+        );
+    }
+
+    onConfigChange(attr, val) {
+        const column = {
+            config: Object.assign({}, this.props.config, {
+                [attr]: val,
+            })
+        };
+
+        const selectedQueryItem = this.props.queryList.items
+            .find(item => item.data.id == column.config.query_id);
+
+        column.title = selectedQueryItem.data.title;
 
         this.props.onChange(column);
     }
