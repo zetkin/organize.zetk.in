@@ -13,15 +13,14 @@
     text-align: center;
     cursor: pointer;
 
-    &:hover {
-        &:before {
-            @include icon($fa-var-star);
-            color: $c-ui-dark;
-        }
-    }
-
     &:before {
         @include icon($fa-var-star-o);
+    }
+
+    &:hover {
+        &:before {
+            color: $c-brand-comp-dark;
+        }
     }
 }
 
@@ -30,11 +29,12 @@
         .PersonViewTableRow-saved {
             &:before {
                 @include icon($fa-var-star);
+                color: $c-brand-comp-dark;
             }
 
             &:hover {
                 &:before {
-                    @include icon($fa-var-star-o);
+                    color: $c-ui-dark;
                 }
             }
         }
