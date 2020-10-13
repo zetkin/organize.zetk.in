@@ -17,6 +17,11 @@ config:
         query: Smart Search to match with
     personTag:
         tag: Tag
+    surveyResponse:
+        question: Question
+        questionNullOption: (Pick a question)
+        survey: Survey
+        surveyNullOption: (Pick a survey)
 saveButton: Add column
 templates:
     person_field:
@@ -28,4 +33,7 @@ templates:
     person_tag:
         instructions: Indicate in view who has a tag and who doesn't.
         title: Tag
+    survey_response:
+        instructions: Print out people's responses to a given survey question.
+        title: Survey response
 title: New column
