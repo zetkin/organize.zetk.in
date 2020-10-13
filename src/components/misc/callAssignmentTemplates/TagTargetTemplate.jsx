@@ -19,6 +19,7 @@ export default class TagTargetTemplate extends React.Component {
     render() {
         return (
             <AssignmentTemplate type="tagTarget"
+                messagePath="panes.addCallAssignment.templates"
                 selected={ this.props.selected }
                 onSelect={ this.props.onSelect }>
 

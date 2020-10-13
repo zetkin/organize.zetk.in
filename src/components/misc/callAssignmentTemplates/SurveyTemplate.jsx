@@ -21,6 +21,7 @@ export default class SurveyTemplate extends React.Component {
 
         return (
             <AssignmentTemplate type="survey"
+                messagePath="panes.addCallAssignment.templates"
                 selected={ this.props.selected }
                 onSelect={ this.props.onSelect }>
                 <select name="survey" value={ config.surveyId }

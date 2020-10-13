@@ -21,6 +21,7 @@ export default class MobilizeTemplate extends React.Component {
 
         return (
             <AssignmentTemplate type="mobilize"
+                messagePath="panes.addCallAssignment.templates"
                 selected={ this.props.selected }
                 onSelect={ this.props.onSelect }>
                 <select name="campaign" value={ config.campaignId }
