@@ -79,9 +79,29 @@ export default class PersonViewsPane extends RootPaneBase {
         }
 
         if (prevProps.views.columnsByView[viewId] != this.props.views.columnsByView[viewId]) {
-            this.props.dispatch(retrievePersonViewRows(viewId));
-            if (this.state.query) {
-                this.props.dispatch(retrievePersonViewQuery(viewId, this.state.query));
+            // Check what changed. If it was just something like a column title,
+            // i.e. not the order or number of columns, we can keep the rows.
+            const oldList = prevProps.views.columnsByView[viewId];
+            const newList = this.props.views.columnsByView[viewId];
+
+            const didChange = () => {
+                if (!oldList || !oldList.items) {
+                    return true;
+                }
+
+                if (oldList.items.length != newList.items.length) {
+                    return true;
+                }
+
+                // Check if there is any case of ID mismatch, i.e. order changed.
+                return oldList.items.some((item, index) => item.data.id != newList.items[index].data.id);
+            };
+
+            if (didChange()) {
+                this.props.dispatch(retrievePersonViewRows(viewId));
+                if (this.state.query) {
+                    this.props.dispatch(retrievePersonViewQuery(viewId, this.state.query));
+                }
             }
         }
 
