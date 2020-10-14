@@ -9,11 +9,25 @@ import PersonViewTableRow from './PersonViewTableRow';
 import {
     addPersonViewRow,
     removePersonViewRow,
+    retrievePersonViewRow,
 } from '../../../actions/personView';
 
 
 @connect()
 export default class PersonViewTable extends React.Component {
+    componentDidUpdate() {
+        const { columnList, rowList, viewId } = this.props;
+
+        if (rowList && rowList.items) {
+            // Find dirty rows and retrieve their data anew
+            rowList.items.forEach(rowItem => {
+                if (rowItem.data && rowItem.data.dirty) {
+                    this.props.dispatch(retrievePersonViewRow(viewId, rowItem.data.id));
+                }
+            });
+        }
+    }
+
     render() {
         const viewId = this.props.viewId;
         const colList = this.props.columnList;
