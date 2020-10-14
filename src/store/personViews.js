@@ -217,6 +217,14 @@ export default function personViews(state = null, action) {
             })
         });
     }
+    else if (action.type == types.REMOVE_PERSON_VIEW_COLUMN + '_FULFILLED') {
+        const { viewId, columnId } = action.meta;
+        return Object.assign({}, state, {
+            columnsByView: Object.assign({}, state.columnsByView, {
+                [viewId]: removeListItem(state.columnsByView[viewId], columnId),
+            })
+        });
+    }
     else {
         return state || {
             viewList: createList(),
