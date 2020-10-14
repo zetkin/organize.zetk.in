@@ -4,6 +4,7 @@ import {
     createList,
     removeListItem,
     updateOrAddListItem,
+    updateOrIgnoreListItem,
     updateOrAddListItems,
 } from '../utils/store';
 
@@ -226,11 +227,89 @@ export default function personViews(state = null, action) {
         });
     }
     else {
-        return state || {
-            viewList: createList(),
-            columnsByView: {},
-            matchesByViewAndQuery: {},
-            rowsByView: {},
-        };
+        // Not a view related action, but it could still be an action that
+        // affects data in a view, and should flag a row as dirty. Check
+        // for action types which should have this affect, and create a list
+        // of dirtyPersonIds in dirty views.
+        const dirtyPersonIds = [];
+        const affectedViewIds = [];
+
+        if (action.type == types.ADD_TAGS_TO_PERSON + '_FULFILLED') {
+            dirtyPersonIds.push(action.meta.id);
+
+            Object.keys(state.columnsByView)
+                .filter(viewId => {
+                    const columnList = state.columnsByView[viewId];
+                    if (columnList.items) {
+                        return columnList.items.some(item => {
+                            if (item.data && item.data.type == 'person_query') {
+                                // Always return true for query columns, becuse there
+                                // is little way of knowing what might affect it
+                                return true;
+                            }
+
+                            if (item.data && item.data.type == 'person_tag') {
+                                // Return true if the tag_id for this column is one
+                                // of the tags that were added by the action
+                                return action.meta.tagIds.includes(item.data.config.tag_id);
+                            }
+                        });
+                    }
+
+                    return false;
+                })
+                .forEach(viewId => {
+                    // Add any affected views to list
+                    affectedViewIds.push(viewId)
+                });
+        }
+
+        // Were any people in any views affected? Then and only then should
+        // we copy the state (immutable) and start flagging.
+        if (dirtyPersonIds.length && affectedViewIds.length) {
+            const newState = Object.assign({}, state, {
+                rowsByView: Object.assign({}, state.rowsByView),
+            });
+
+            affectedViewIds.forEach(viewId => {
+                dirtyPersonIds.forEach(personId => {
+                    // Flag row as dirty if it exists
+                    newState.rowsByView[viewId] = updateOrIgnoreListItem(newState.rowsByView[viewId], personId, { dirty: true });
+
+                    // Have any queries been retrieved through this view?
+                    if (newState.matchesByViewAndQuery[viewId]) {
+                        const flaggedQueries = {};
+
+                        // Look for view-query rows that were affected and flag them, while
+                        // keeping track of which queries were affected.
+                        Object.keys(newState.matchesByViewAndQuery[viewId]).forEach(queryId => {
+                            const oldList = newState.matchesByViewAndQuery[viewId][queryId];
+                            const newList = updateOrIgnoreListItem(oldList, personId, { dirty: true });
+
+                            if (oldList != newList) {
+                                flaggedQueries[queryId] = newList;
+                            }
+                        });
+
+                        // Only copy matchesByViewAndQuery if there were actually any updates
+                        if (Object.keys(flaggedQueries).length) {
+                            newState.matchesByViewAndQuery = Object.assign({}, newState.matchesByViewAndQuery, {
+                                [viewId]: Object.assign({}, newState.matchesByViewAndQuery[viewId], flaggedQueries),
+                            });
+                        }
+                    }
+                });
+            });
+
+            return newState;
+        }
+        else {
+            return state || {
+                viewList: createList(),
+                columnsByView: {},
+                matchesByViewAndQuery: {},
+                rowsByView: {},
+            };
+        }
     }
 }

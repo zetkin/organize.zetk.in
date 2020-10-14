@@ -44,6 +44,32 @@ export function updateOrAddListItem(list, id, newData, meta) {
     return Object.assign({}, list, { items });
 }
 
+export function updateOrIgnoreListItem(list, id, newData, meta) {
+    list = list || createList();
+
+    let updated = false;
+    let items = list.items? list.items.concat() : [];
+
+    for (let i = 0; i < items.length; i++) {
+        if (items[i].data && items[i].data.id == id) {
+            let item = items[i];
+            items[i] = Object.assign({}, item, {
+                data: Object.assign({}, item.data, newData),
+                ...meta
+            });
+            updated = true;
+            break;
+        }
+    }
+
+    if (updated) {
+        return Object.assign({}, list, { items });
+    }
+    else {
+        return list;
+    }
+}
+
 export function updateOrAddListItems(list, newItems, meta) {
     // TODO: This can be more efficient
     let newList = list;
