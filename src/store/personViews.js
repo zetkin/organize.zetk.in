@@ -208,6 +208,15 @@ export default function personViews(state = null, action) {
             })
         });
     }
+    else if (action.type == types.UPDATE_PERSON_VIEW_COLUMN + '_FULFILLED') {
+        const viewId = action.meta.viewId;
+        const column = action.payload.data.data;
+        return Object.assign({}, state, {
+            columnsByView: Object.assign({}, state.columnsByView, {
+                [viewId]: updateOrAddListItem(state.columnsByView[viewId], column.id, column),
+            })
+        });
+    }
     else {
         return state || {
             viewList: createList(),

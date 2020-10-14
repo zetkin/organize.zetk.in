@@ -161,3 +161,17 @@ export function updatePersonView(viewId, data) {
         });
     };
 }
+
+export function updatePersonViewColumn(viewId, columnId, data) {
+    return ({ dispatch, getState, z }) => {
+        const orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.UPDATE_PERSON_VIEW_COLUMN,
+            meta: { viewId, columnId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'people', 'views', viewId, 'columns', columnId).patch(data),
+            }
+        });
+    };
+}
