@@ -9,6 +9,27 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        cursor: pointer;
+
+    }
+
+    .PersonViewTableHead-column {
+        &:before {
+            content: "";
+            display: inline-block;
+            width: 0;
+            opacity: 0;
+
+            transition: width 0.1s, opacity 0.1s 0.05s;
+        }
+
+        &:hover {
+            &:before {
+                @include icon($fa-var-pencil);
+                opacity: 1;
+            }
+        }
     }
 
     .PersonViewTableHead-newColumn {

@@ -8,7 +8,8 @@ export default function PersonViewTableHead(props) {
         const classes = cx('PersonViewTableHead-column', colItem.data.type);
 
         return (
-            <th key={ index } className={ classes }>
+            <th key={ colItem.data.id } className={ classes }
+                onClick={ () => props.openPane('editviewcolumn', props.viewId, colItem.data.id) }>
                 { colItem.data.title }
             </th>
         );
