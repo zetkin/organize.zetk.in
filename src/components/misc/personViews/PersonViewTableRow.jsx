@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import cx from 'classnames';
 
 import Avatar from '../Avatar';
@@ -7,8 +8,13 @@ import BooleanViewCell from './cells/BooleanViewCell';
 import PlainTextViewCell from './cells/PlainTextViewCell';
 import SurveyResponseCell from './cells/SurveyResponseCell';
 
+import {
+    addTagsToPerson,
+    removeTagFromPerson,
+} from '../../../actions/personTag';
 
-export default function PersonViewTableRow(props) {
+
+export default connect()(function PersonViewTableRow(props) {
     const rowData = props.rowData;
     const columns = props.columnList.items.map(i => i.data);
 
@@ -21,7 +27,24 @@ export default function PersonViewTableRow(props) {
                 column: col,
             };
 
-            if (col.type == 'person_tag' || col.type == 'person_query') {
+            if (col.type == 'person_tag') {
+                const onToggle = toggle => {
+                    const tagId = col.config.tag_id;
+
+                    if (toggle) {
+                        props.dispatch(addTagsToPerson(rowData.id, [tagId]));
+                    }
+                    else {
+                        props.dispatch(removeTagFromPerson(rowData.id, tagId));
+                    }
+                };
+
+                return <BooleanViewCell { ...cellProps }
+                    allowToggle={ true }
+                    onToggle={ onToggle }
+                    />;
+            }
+            else if (col.type == 'person_query') {
                 return <BooleanViewCell { ...cellProps }/>;
             }
             else if (col.type == 'survey_response') {
@@ -55,4 +78,4 @@ export default function PersonViewTableRow(props) {
             { cells }
         </tr>
     );
-}
+});

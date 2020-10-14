@@ -11,7 +11,11 @@ export default function BooleanViewCell(props) {
 
     return (
         <td className={ classes }>
-            <input type="checkbox" checked={ props.content } disabled={ true }/>
+            <input type="checkbox"
+                checked={ props.content }
+                disabled={ !props.allowToggle }
+                onChange={ ev => props.onToggle(ev.target.checked) }
+                />
         </td>
     );
 }
