@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 import PaneBase from './PaneBase';
 import PersonViewColumnForm from '../forms/PersonViewColumnForm';
 import Button from '../misc/Button';
+import DeleteButton from '../misc/DeleteButton';
 import { getListItemById } from '../../utils/store';
 import {
+    removePersonViewColumn,
     retrievePersonViewColumns,
     updatePersonViewColumn,
 } from '../../actions/personView';
@@ -52,6 +54,8 @@ export default class EditViewColumnPane extends PaneBase {
                 <PersonViewColumnForm key="form"
                     ref="form" column={ column }
                     onSubmit={ this.onSubmit.bind(this) }/>,
+                <DeleteButton key="deleteButton"
+                    onClick={ this.onDeleteClick.bind(this) }/>
             ];
         }
         else {
@@ -75,6 +79,13 @@ export default class EditViewColumnPane extends PaneBase {
         const values = this.refs.form.getValues();
 
         this.props.dispatch(updatePersonViewColumn(viewId, columnId, values));
+        this.closePane();
+    }
+
+    onDeleteClick() {
+        const viewId = this.getParam(0);
+        const columnId = this.getParam(1);
+        this.props.dispatch(removePersonViewColumn(viewId, columnId));
         this.closePane();
     }
 }
