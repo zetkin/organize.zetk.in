@@ -109,6 +109,68 @@ export default function personViews(state = null, action) {
             })
         });
     }
+    else if (action.type == types.RETRIEVE_PERSON_VIEW_ROW + '_FULFILLED') {
+        const viewId = action.meta.viewId;
+        const row = action.payload.data.data
+
+        const newState = Object.assign({}, state, {
+            rowsByView: Object.assign({}, state.rowsByView, {
+                [viewId]: updateOrIgnoreListItem(state.rowsByView[viewId], row.id, row),
+            })
+        });
+
+        // Also update any occurances of row in view-queries
+        if (state.matchesByViewAndQuery[viewId]) {
+            const affectedQueries = {};
+            Object.keys(state.matchesByViewAndQuery[viewId]).forEach(queryId => {
+                const oldList = state.matchesByViewAndQuery[viewId][queryId];
+                const newList = updateOrIgnoreListItem(oldList, row.id, row);
+
+                if (newList != oldList) {
+                    affectedQueries[queryId] = newList;
+                }
+            });
+
+            if (Object.keys(affectedQueries).length) {
+                newState.matchesByViewAndQuery = Object.assign({}, state.matchesByViewAndQuery, {
+                    [viewId]: Object.assign({}, state.matchesByViewAndQuery[viewId], affectedQueries),
+                });
+            }
+        }
+
+        return newState;
+    }
+    else if (action.type == types.RETRIEVE_PERSON_VIEW_ROW + '_PENDING') {
+        const viewId = action.meta.viewId;
+        const personId = action.meta.personId;
+
+        const newState = Object.assign({}, state, {
+            rowsByView: Object.assign({}, state.rowsByView, {
+                [viewId]: updateOrIgnoreListItem(state.rowsByView[viewId], personId, { dirty: false }),
+            })
+        });
+
+        // Also remove dirty flag from any rows in view query matches
+        if (state.matchesByViewAndQuery[viewId]) {
+            const affectedQueries = {};
+            Object.keys(state.matchesByViewAndQuery[viewId]).forEach(queryId => {
+                const oldList = state.matchesByViewAndQuery[viewId][queryId];
+                const newList = updateOrIgnoreListItem(oldList, personId, { dirty: false });
+
+                if (newList != oldList) {
+                    affectedQueries[queryId] = newList;
+                }
+            });
+
+            if (Object.keys(affectedQueries).length) {
+                newState.matchesByViewAndQuery = Object.assign({}, state.matchesByViewAndQuery, {
+                    [viewId]: Object.assign({}, state.matchesByViewAndQuery[viewId], affectedQueries),
+                });
+            }
+        }
+
+        return newState;
+    }
     else if (action.type == types.RETRIEVE_PERSON_VIEW_QUERY + '_FULFILLED') {
         const queryId = action.meta.queryId;
         const viewId = action.meta.viewId;
