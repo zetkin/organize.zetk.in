@@ -325,6 +325,35 @@ export default function personViews(state = null, action) {
                     affectedViewIds.push(viewId)
                 });
         }
+        else if (action.type == types.REMOVE_TAG_FROM_PERSON + '_FULFILLED') {
+            dirtyPersonIds.push(action.meta.id);
+
+            Object.keys(state.columnsByView)
+                .filter(viewId => {
+                    const columnList = state.columnsByView[viewId];
+                    if (columnList.items) {
+                        return columnList.items.some(item => {
+                            if (item.data && item.data.type == 'person_query') {
+                                // Always return true for query columns, becuse there
+                                // is little way of knowing what might affect it
+                                return true;
+                            }
+
+                            if (item.data && item.data.type == 'person_tag') {
+                                // Return true if the tag_id for this column is one
+                                // of the tags that were added by the action
+                                return action.meta.tagId == item.data.config.tag_id;
+                            }
+                        });
+                    }
+
+                    return false;
+                })
+                .forEach(viewId => {
+                    // Add any affected views to list
+                    affectedViewIds.push(viewId)
+                });
+        }
 
         // Were any people in any views affected? Then and only then should
         // we copy the state (immutable) and start flagging.
