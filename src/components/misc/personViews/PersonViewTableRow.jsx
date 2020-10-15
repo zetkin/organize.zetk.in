@@ -40,7 +40,7 @@ export default connect()(function PersonViewTableRow(props) {
                 };
 
                 return <BooleanViewCell { ...cellProps }
-                    allowToggle={ true }
+                    interactive={ true }
                     onToggle={ onToggle }
                     />;
             }

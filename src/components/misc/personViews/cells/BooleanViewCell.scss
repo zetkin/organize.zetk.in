@@ -1,6 +1,42 @@
 .BooleanViewCell {
     text-align: center;
+    background-color: transparent;
+    color: $c-ui-darker;
+
+    &.interactive {
+        cursor: pointer;
+    }
+
+    transition: background-color 0.2s;
+
     &.true {
-        background-color: $c-brand-success;
+        background-color: $c-ui-dark;
+
+        &:before {
+            @include icon($fa-var-check);
+        }
+
+        &.interactive {
+            background-color: $c-brand-comp-light;
+            color: white;
+
+            &:hover {
+                background-color: lighten($c-brand-comp-light, 10);
+
+                &:before {
+                    @include icon($fa-var-times);
+                }
+            }
+        }
+    }
+
+    &.false {
+        color: $c-ui-dark;
+
+        &.interactive:hover {
+            &:before {
+                @include icon($fa-var-check);
+            }
+        }
     }
 }

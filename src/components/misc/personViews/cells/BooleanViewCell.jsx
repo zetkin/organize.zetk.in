@@ -7,15 +7,18 @@ export default function BooleanViewCell(props) {
     const classes = cx('BooleanViewCell', props.column.type, {
         'true': props.content,
         'false': !props.content,
+        'interactive': props.interactive,
     });
 
+    const onClick = () => {
+        if (props.interactive) {
+            props.onToggle(!props.content);
+        }
+    };
+
     return (
-        <td className={ classes }>
-            <input type="checkbox"
-                checked={ props.content }
-                disabled={ !props.allowToggle }
-                onChange={ ev => props.onToggle(ev.target.checked) }
-                />
-        </td>
+        <td className={ classes }
+            onClick={ onClick }
+            />
     );
 }
