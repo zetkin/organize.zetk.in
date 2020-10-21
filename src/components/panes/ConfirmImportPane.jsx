@@ -1,5 +1,6 @@
 import React from 'react';
 import isEmail from 'validator/lib/isEmail';
+import isURL from 'validator/lib/isURL';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
@@ -30,6 +31,8 @@ export default class ConfirmImportPane extends PaneBase {
             return item.data.config.field;
         } else if (item.data.type == "person_tag") {
             return item.data.type;
+        } else if (item.data.type == "person_field") {
+            return item.data.config.field_type;
         } else {
             return "unknown_type";
         }
@@ -169,6 +172,26 @@ export default class ConfirmImportPane extends PaneBase {
                             if(row.values[colidx].length > 120) {
                                 this.addError(column, rowidx+1, 'TooLong');
                             }
+                            break;
+                        case 'json':
+                            try {
+                                JSON.parse(row.values[colidx])
+                            } catch(err) {
+                                this.addError(column, rowidx+1, 'Invalid')
+                            }
+                            break;
+                        case 'date':
+                            if(isNaN(Date.parse(row.values[colidx]))) {
+                                this.addError(column, rowidx+1, 'Invalid')
+                            }
+                            break;
+                        case 'url':
+                            if(!isURL(row.values[colidx]), { require_protocol: true }) {
+                                this.addError(column, rowidx+1, 'Invalid')
+                            }
+                            break;
+                        case 'text':
+                            // Anything goes
                             break;
                     }
                 }

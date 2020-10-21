@@ -43,6 +43,7 @@ export default class ImporterColumnPane extends PaneBase {
             'unknown': msg('panes.importerColumn.typeOptions.unknown'),
             'person_data': msg('panes.importerColumn.typeOptions.personData'),
             'person_tag': msg('panes.importerColumn.typeOptions.personTag'),
+            'person_field': msg('panes.importerColumn.typeOptions.personField'),
         };
 
         if (SettingsComponent) {
