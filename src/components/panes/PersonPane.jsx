@@ -10,7 +10,10 @@ import TagCloud from '../misc/tagcloud/TagCloud';
 import { getListItemById } from '../../utils/store';
 import { retrievePerson } from '../../actions/person';
 import { createSelection } from '../../actions/selection';
-import { retrieveFieldsForPerson } from '../../actions/personField';
+import {
+    retrieveFieldsForPerson,
+    retrieveFieldTypesForOrganization
+} from '../../actions/personField';
 import {
     addTagsToPerson,
     removeTagFromPerson,
@@ -39,6 +42,7 @@ export default class PersonPane extends PaneBase {
         this.props.dispatch(retrievePerson(personId));
         this.props.dispatch(retrieveTagsForPerson(personId));
         this.props.dispatch(retrieveFieldsForPerson(personId));
+        this.props.dispatch(retrieveFieldTypesForOrganization());
     }
 
     getRenderData() {
