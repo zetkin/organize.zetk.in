@@ -5,6 +5,7 @@ co_addressTooLong: C/O address longer than 120 characters on rows { rows }.
 confirmTitle: Confirm import
 continueImportButton: Continue import
 countryTooLong: Country longer than 60 characters on rows { rows }.
+dateInvalid: Date invalid on rows { rows }.
 duplicatesInfo: You have selected duplicate columns.
 emailInvalid: Invalid E-mail address on rows { rows }.
 errorTitle: Invalid data
@@ -12,6 +13,7 @@ externalTooLong: External ID longer thant 12 characters on rows { rows }.
 first_nameTooLong: First name longer than 50 character on rows { rows }.
 genderInvalid: Invalid gender format on rows { rows }. Gender may only contain f for female, m for male, o for other, _ or blank for unknown.
 inconsistentRow: The number of rows in a column is inconsistent with the number of columns configured.
+jsonInvalid: JSON invalid on rows { rows }.
 last_nameTooLong: Last name longer than 50 characters on rows { rows }.
 missingFirstName: You have not chosen a column for first name.
 missingIdInfo: You have not chosen an ID column. This may result in difficulty in updating people in Zetkin. This is not recommended.
@@ -23,6 +25,7 @@ phoneInvalid: Phone number invalid on rows { rows }.
 phoneTooLong: Phone number longer than 60 characters on rows { rows }.
 rowInvalid: ID or first name and last name missing on row { rows }.
 street_addressTooLong: Street address longer than 120 characters on rows { rows }.
+urlInvalid: URL invalid on rows { rows }.
 zetkinIdWarning: You have selected a Zetkin ID column. This should only be used if you are importing previously exported people. If not, please use the External ID column instead.
 zetkinInvalid: Zetkin ID invalid on rows { rows }. May only contain numbers.
 zip_codeTooLong: Zip code longer than 10 characters on rows { rows }.
