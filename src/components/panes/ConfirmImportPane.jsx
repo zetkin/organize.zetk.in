@@ -1,6 +1,5 @@
 import React from 'react';
 import isEmail from 'validator/lib/isEmail';
-import isURL from 'validator/lib/isURL';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
@@ -186,7 +185,9 @@ export default class ConfirmImportPane extends PaneBase {
                             }
                             break;
                         case 'url':
-                            if(!isURL(row.values[colidx]), { require_protocol: true }) {
+                            try {
+                                new URL(row.values[colidx])
+                            } catch(err) {
                                 this.addError(column, rowidx+1, 'Invalid')
                             }
                             break;
