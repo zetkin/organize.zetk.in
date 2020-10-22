@@ -13,3 +13,18 @@ export function retrieveJoinSubmissions() {
         });
     };
 }
+
+
+export function retrieveJoinSubmission(submissionId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_JOIN_SUBMISSION,
+            meta: { submissionId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'join_submissions', submissionId).get(),
+            }
+        });
+    };
+}
