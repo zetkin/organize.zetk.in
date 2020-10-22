@@ -134,6 +134,20 @@ export function retrievePersonViewRows(viewId) {
     };
 }
 
+export function retrievePersonViewRow(viewId, personId) {
+    return ({ dispatch, getState, z }) => {
+        const orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_PERSON_VIEW_ROW,
+            meta: { viewId, personId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'people', 'views', viewId, 'rows', personId).get(),
+            }
+        });
+    };
+}
+
 export function retrievePersonViewQuery(viewId, queryId) {
     return ({ dispatch, getState, z }) => {
         const orgId = getState().org.activeId;
