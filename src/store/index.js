@@ -20,6 +20,7 @@ import documents from './documents';
 import groups from './groups';
 import intl from './intl';
 import invites from './invites';
+import joinForms from './joinForms';
 import locations from './locations';
 import locationTags from './locationTags';
 import notes from './notes';
@@ -63,6 +64,7 @@ const appReducer = combineReducers({
     groups,
     invites,
     intl,
+    joinForms,
     locations,
     notes,
     officials,
