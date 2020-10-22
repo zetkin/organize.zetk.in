@@ -57,6 +57,8 @@ export default class ImporterColumnHead extends React.Component {
             type = 'person.' + column.config.field;
         } else if(type == 'person_gender') {
             type = 'person.gender';
+        } else if(type == 'person_field') {
+            type = 'person_field.' + column.config.field_id;
         }
 
         // Show column name, or if none exists, the name of the selected field,
