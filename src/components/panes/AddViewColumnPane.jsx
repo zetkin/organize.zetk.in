@@ -37,7 +37,7 @@ const DEFAULT_CONFIGS = {
     tagList: state.personTags.tagList,
 }))
 @injectIntl
-export default class AddPersonTagPane extends PaneBase {
+export default class AddViewColumnPane extends PaneBase {
     constructor(props) {
         super(props);
 
