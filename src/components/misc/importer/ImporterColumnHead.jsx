@@ -39,7 +39,9 @@ export default class ImporterColumnHead extends React.Component {
         };
 
         const FIELD_OPTIONS = this.props.fieldTypes.items.reduce((obj, field) => {
-            obj['person_field.' + field.data.id + '.' + field.data.type] = field.data.title;
+            if(field.data.type !== 'json') {
+                obj['person_field.' + field.data.id] = field.data.title;
+            }
             return obj;
         }, {});
 
@@ -166,12 +168,10 @@ export default class ImporterColumnHead extends React.Component {
                     field: value.substr(7),
                 };
             } else if (value.indexOf('person_field.') === 0) {
-                // If value is 'person_field.1.json', m[1] will be 1, m[2] will be json
                 props.type = 'person_field';
-                const m = value.match(/^person_field\.(\d+)\.(.+)$/);
+                const field_id = value.substr(13);
                 props.config = {
-                    field_id: m[1],
-                    field_type: m[2],
+                    field_id: field_id,
                 }
             }
 

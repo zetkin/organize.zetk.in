@@ -104,11 +104,6 @@ export function updateImportColumn(tableId, columnId, props) {
                 }
 
                 props.config = { mappings };
-            } else if (props.type == 'person_field') {
-                props.config = {
-                    field_id: props.config.field_id,
-                    field_type: props.config.field_type,
-                }
             }
         }
 
@@ -144,39 +139,23 @@ export function executeImport(tableId) {
 
         // Find the gender field if it exists
         let genderIdx = columns.findIndex(i => i.type == 'person_gender');
-        // Find any json custom fields
-        let jsonFieldIdxs = columns.reduce((arr, col, idx) => {
-            if(col.type == 'person_field' && col.config.field_type == 'json') {
-                arr.push(idx);
-            }
-            return arr;
-        }, []);
 
-        if(genderIdx > -1 || jsonFieldIdxs.length) {
-            let genderMapping = genderIdx > -1 ? columns[genderIdx].config.mappings : null;
+        // Map gender column
+        if(genderIdx > -1) {
+            let mappings = columns[genderIdx].config.mappings;
             rows = rows.map(r => {
-                // Map gender column
-                if(genderIdx > -1) {
-                    let value = r[genderIdx];
-                    let new_value = genderMapping.find(m => {
-                        if(m.value === value) {
-                            return true;
-                        }
-                    });
-                    r[genderIdx] = new_value && new_value.gender ? new_value.gender : null;
-                }
-                // Parse JSON column from text to structured JSON
-                for(const jsonIdx of jsonFieldIdxs) {
-                    let value = r[jsonIdx];
-                    r[jsonIdx] = JSON.parse(value);
-                }
+                let value = r[genderIdx];
+                let new_value = mappings.find(m => {
+                    if(m.value === value) {
+                        return true;
+                    }
+                });
+                r[genderIdx] = new_value && new_value.gender ? new_value.gender : null;
                 return r;
             });
 
-            if(genderIdx > -1) {
-                columns[genderIdx].type = 'person_data';
-                columns[genderIdx].config = { field: 'gender' }
-            }
+            columns[genderIdx].type = 'person_data';
+            columns[genderIdx].config = { field: 'gender' }
         }
 
         let data = { columns, rows };
