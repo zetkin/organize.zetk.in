@@ -11,7 +11,8 @@ import InfoList from '../misc/InfoList';
 
 const genderOptions = new Set(['f','m','o','_']);
 
-@connect(state => ({ importer: state.importer }))
+@connect(state => ({ importer: state.importer, 
+                     fieldTypes: state.personFields.fieldTypes }))
 @injectIntl
 export default class ConfirmImportPane extends PaneBase {
     getPaneTitle(data) {
@@ -20,7 +21,6 @@ export default class ConfirmImportPane extends PaneBase {
         } else {
             return this.props.intl.formatMessage({ id: 'panes.confirmImport.errorTitle' });
         }
-        
     }
 
     getFieldID(item) {
@@ -30,6 +30,10 @@ export default class ConfirmImportPane extends PaneBase {
             return item.data.config.field;
         } else if (item.data.type == "person_tag") {
             return item.data.type;
+        } else if (item.data.type == "person_field") {
+            const field = this.props.fieldTypes.items.find((f) => 
+                f.data.id == item.data.config.field_id);
+            return field.data.type;
         } else {
             return "unknown_type";
         }
@@ -169,6 +173,21 @@ export default class ConfirmImportPane extends PaneBase {
                             if(row.values[colidx].length > 120) {
                                 this.addError(column, rowidx+1, 'TooLong');
                             }
+                            break;
+                        case 'date':
+                            if(isNaN(Date.parse(row.values[colidx]))) {
+                                this.addError(column, rowidx+1, 'Invalid')
+                            }
+                            break;
+                        case 'url':
+                            try {
+                                new URL(row.values[colidx])
+                            } catch(err) {
+                                this.addError(column, rowidx+1, 'Invalid')
+                            }
+                            break;
+                        case 'text':
+                            // Anything goes
                             break;
                     }
                 }

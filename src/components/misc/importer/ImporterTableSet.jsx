@@ -5,6 +5,7 @@ import Button from '../Button';
 import ImporterTable from './ImporterTable';
 import { getListItemById } from '../../../utils/store';
 import { resetImport } from '../../../actions/importer';
+import { retrieveFieldTypesForOrganization } from '../../../actions/personField'
 
 
 export default class ImporterTableSet extends React.Component {
@@ -24,6 +25,10 @@ export default class ImporterTableSet extends React.Component {
             selectedTableId: (tableSet && tableSet.tableList.items.length == 1)?
                 tableSet.tableList.items[0].data.id : null,
         };
+    }
+
+    componentDidMount() {
+        this.props.dispatch(retrieveFieldTypesForOrganization());
     }
 
     render() {
