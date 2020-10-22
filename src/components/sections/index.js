@@ -9,6 +9,7 @@ import CallLogPane from './dialog/CallLogPane';
 import CampaignPlaybackPane from './campaign/CampaignPlaybackPane';
 import GroupListPane from './people/GroupListPane';
 import InvitePane from './people/InvitePane';
+import JoiningPane from './people/JoiningPane';
 import ImportPane from './people/ImportPane';
 import LocationsPane from './maps/LocationsPane';
 import ManagePeoplePane from './people/ManagePeoplePane';
@@ -27,6 +28,8 @@ export const SECTIONS = {
                 startPane: PeopleListPane },
             { path: 'views',
                 startPane: PersonViewsPane },
+            { path: 'joining',
+                startPane: JoiningPane },
             { path: 'import',
                 startPane: ImportPane },
             { path: 'groups',
