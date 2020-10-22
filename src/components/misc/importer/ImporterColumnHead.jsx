@@ -110,12 +110,6 @@ export default class ImporterColumnHead extends React.Component {
                             { PERSON_OPTIONS[value] }</option>
                     )) }
                     </optgroup>
-                    <optgroup label={ otherFieldsLabel }>
-                    { Object.keys(COMPLEX_OPTIONS).map(value => (
-                        <option key={ value } value={ value }>
-                            { COMPLEX_OPTIONS[value] }</option>
-                    )) }
-                    </optgroup>
                     { Object.keys(FIELD_OPTIONS).length ?
                         <optgroup label={ customFieldsLabel }>
                         { Object.keys(FIELD_OPTIONS).map(value => (
@@ -125,6 +119,12 @@ export default class ImporterColumnHead extends React.Component {
                         </optgroup>
                         : null
                     }
+                    <optgroup label={ otherFieldsLabel }>
+                    { Object.keys(COMPLEX_OPTIONS).map(value => (
+                        <option key={ value } value={ value }>
+                            { COMPLEX_OPTIONS[value] }</option>
+                    )) }
+                    </optgroup> 
                 </select>
                 <div className="ImporterColumnHead-summary">
                     { summary }
