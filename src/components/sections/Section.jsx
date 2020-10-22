@@ -63,7 +63,9 @@ export default class Section extends React.Component {
             panes.push(
                 <Pane ref="pane0" key={ subSections[0].path }
                     onOpenPane={ this.onOpenPane.bind(this, 0) }
-                    onPushPane={ this.onPushPane.bind(this) }/>
+                    onPushPane={ this.onPushPane.bind(this) }
+                    onReplace={ this.onReplacePane.bind(this, 0) }
+                    />
             );
         }
         else {
@@ -79,7 +81,10 @@ export default class Section extends React.Component {
                     panes.push(
                         <Pane ref="pane0" key={ sub.path }
                             onOpenPane={ this.onOpenPane.bind(this, 0) }
-                            onPushPane={ this.onPushPane.bind(this) }/>
+                            onPushPane={ this.onPushPane.bind(this) }
+                            onReplace={ this.onReplacePane.bind(this, 0) }
+                            paneData={ this.props.panes[0] }
+                            />
                     );
                     break;
                 }

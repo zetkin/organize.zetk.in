@@ -36,6 +36,7 @@ subSections:
         invite: Invite
         list: People
         manage: Manage
+        views: Views
     settings:
         officials: Officials
     survey:

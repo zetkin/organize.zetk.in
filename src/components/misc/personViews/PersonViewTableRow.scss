@@ -1,0 +1,42 @@
+.PersonViewTableRow-avatar {
+    height: 2.2rem;
+    min-height: 2.2rem;
+    text-align: center;
+
+    .Avatar {
+        width: 2.2rem;
+        cursor: pointer;
+    }
+}
+
+.PersonViewTableRow-saved {
+    text-align: center;
+    cursor: pointer;
+
+    &:before {
+        @include icon($fa-var-star-o);
+    }
+
+    &:hover {
+        &:before {
+            color: $c-brand-comp-dark;
+        }
+    }
+}
+
+.PersonViewTableRow {
+    &.saved {
+        .PersonViewTableRow-saved {
+            &:before {
+                @include icon($fa-var-star);
+                color: $c-brand-comp-dark;
+            }
+
+            &:hover {
+                &:before {
+                    color: $c-ui-dark;
+                }
+            }
+        }
+    }
+}

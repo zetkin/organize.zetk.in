@@ -30,6 +30,7 @@ import people from './people';
 import importer from './importer';
 import personFields from './personFields';
 import personTags from './personTags';
+import personViews from './personViews';
 import prints from './prints';
 import queries from './queries';
 import routes from './routes';
@@ -71,6 +72,7 @@ const appReducer = combineReducers({
     importer,
     personFields,
     personTags,
+    personViews,
     locationTags,
     prints,
     queries,

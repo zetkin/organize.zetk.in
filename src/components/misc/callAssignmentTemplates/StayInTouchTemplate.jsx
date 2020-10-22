@@ -27,6 +27,7 @@ export default class StayInTouchTemplate extends React.Component {
 
         return (
             <AssignmentTemplate type="stayintouch"
+                messagePath="panes.addCallAssignment.templates"
                 selected={ this.props.selected }
                 onSelect={ this.props.onSelect }>
                 <select name="interval" value={ this.props.config.interval }

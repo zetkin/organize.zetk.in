@@ -7,15 +7,15 @@ import Button from '../Button';
 
 export default class AssignmentTemplate extends React.Component {
     static propTypes = {
+        messagePath: React.PropTypes.string,
         type: React.PropTypes.string.isRequired,
         selected: React.PropTypes.bool.isRequired,
         onSelect: React.PropTypes.func,
     };
 
     render() {
-        let type = this.props.type;
-
-        const msgBase = 'panes.addCallAssignment.templates.' + type;
+        const type = this.props.type;
+        const msgBase = (this.props.messagePath || 'assignmentTemplates') + '.' + type;
 
         let titleMsg = msgBase + '.title';
         let instructionsMsg = msgBase + '.instructions';

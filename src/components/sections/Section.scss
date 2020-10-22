@@ -273,6 +273,14 @@
             }
         }
 
+        .Section-navItem-views a:before {
+            background-image: url(/static/images/section-nav/people-views.png);
+
+            @include small-screen {
+                display: none;
+            }
+        }
+
         .Section-navItem-groups a:before {
             background-image: url(/static/images/section-nav/people-groups.png);
 

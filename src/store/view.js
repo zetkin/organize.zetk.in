@@ -313,6 +313,20 @@ export default function viewState(state = null, action) {
                 paneData.id != action.meta.paneId),
         });
     }
+    else if (action.type == types.CREATE_PERSON_VIEW + '_FULFILLED') {
+        return Object.assign({}, state, {
+            panes: state.panes.map(paneData => {
+                if (paneData.type == 'views' && paneData.params[0] == 'new') {
+                    return Object.assign({}, paneData, {
+                        params: [action.payload.data.data.id],
+                    });
+                }
+                else {
+                    return paneData;
+                }
+            }),
+        });
+    }
     else if (action.type == types.RESET_IMPORT) {
         return Object.assign({}, state, {
             panes: state.panes.filter(paneData => paneData.type == 'import'),

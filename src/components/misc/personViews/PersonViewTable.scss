@@ -1,0 +1,52 @@
+.PersonViewTable {
+    table {
+        display: block;
+        overflow-x: scroll;
+    }
+
+    .person_query,
+    .person_tag {
+        max-width: 6em;
+        min-width: 6em;
+        text-align: center;
+    }
+
+    .person_field {
+        max-width: 10rem;
+        min-width: 10rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .survey_response {
+        width: auto;
+        max-width: 20rem;
+        min-width: 14rem;
+    }
+
+    padding-bottom: 10rem;
+}
+
+.PersonViewTable-placeholder {
+    background-color: darken($c-ui-bg, 4);
+    padding: 2rem;
+    text-align: center;
+
+    @include large-screen {
+        padding: 4rem 25%;
+    }
+
+    color: $c-ui-darker;
+
+    transition: background-color 0.2s;
+}
+
+.PersonViewTable-placeholder {
+    padding: 2rem;
+    text-align: center;
+
+    @include large-screen {
+        padding: 4rem 25%;
+    }
+}

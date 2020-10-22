@@ -1,0 +1,6 @@
+.BooleanViewCell {
+    text-align: center;
+    &.true {
+        background-color: $c-brand-success;
+    }
+}
