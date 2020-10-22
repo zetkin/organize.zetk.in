@@ -1,0 +1,5 @@
+meta:
+    h: Meta-data
+    state:
+        accepted: Accepted
+        pending: Request pending

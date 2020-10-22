@@ -39,11 +39,16 @@ export default class JoiningPane extends RootPaneBase {
         return (
             <JoinSubmissionList
                 submissionList={ this.props.submissionList }
+                onItemClick={ this.onItemClick.bind(this) }
                 />
         );
     }
 
     getPaneTools(data) {
         return null;
+    }
+
+    onItemClick(item) {
+        this.openPane('joinsubmission', item.data.id);
     }
 }
