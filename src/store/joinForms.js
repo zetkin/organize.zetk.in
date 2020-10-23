@@ -8,7 +8,12 @@ import {
 
 
 export default function joinForms(state = null, action) {
-    if (action.type == types.RETRIEVE_JOIN_SUBMISSIONS + '_FULFILLED') {
+    if (action.type == types.RETRIEVE_JOIN_FORMS + '_FULFILLED') {
+        return Object.assign({}, state, {
+            formList: createList(action.payload.data.data),
+        });
+    }
+    else if (action.type == types.RETRIEVE_JOIN_SUBMISSIONS + '_FULFILLED') {
         return Object.assign({}, state, {
             submissionList: createList(action.payload.data.data),
         });

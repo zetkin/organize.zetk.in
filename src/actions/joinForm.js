@@ -15,6 +15,19 @@ export function acceptJoinSubmission(submissionId) {
     };
 }
 
+export function retrieveJoinForms() {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_JOIN_FORMS,
+            payload: {
+                promise: z.resource('orgs', orgId, 'join_forms').get(),
+            }
+        });
+    };
+}
+
 export function retrieveJoinSubmissions() {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
