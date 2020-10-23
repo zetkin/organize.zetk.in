@@ -6,10 +6,14 @@ import {
 } from 'react-intl';
 import { connect } from 'react-redux';
 
+import ActionBox from '../misc/ActionBox';
+import Avatar from '../misc/Avatar';
+import Button from '../misc/Button';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import { getListItemById } from '../../utils/store';
 import {
+    acceptJoinSubmission,
     retrieveJoinSubmission,
 } from '../../actions/joinForm';
 import InfoList from '../misc/InfoList';
@@ -51,6 +55,7 @@ export default class JoinSubmissionPane extends PaneBase {
         const { subItem } = this.props;
 
         if (subItem) {
+            const state = subItem.data.state;
             const person = subItem.data.person_data;
 
             let addrFields = ADDR_FIELDS.filter(f => person[f]).map(field => (
@@ -60,6 +65,40 @@ export default class JoinSubmissionPane extends PaneBase {
             ));
 
             const phoneNumbers = [ person.phone, person.alt_phone ].filter(pn => !!pn);
+
+            let actionContent = null;
+            let actionButton = null;
+            if (state == 'accepted') {
+                actionContent = [
+                    <Msg key="p" tagName="p"
+                        id="panes.joinSubmission.action.accepted.p"
+                        values={{ person: person.first_name }}
+                        />,
+                    <div key="person" className="JoinSubmissionPane-person"
+                        onClick={ () => this.openPane('person', person.id) }
+                        >
+                        <Avatar person={ person }/>
+                        <span className="JoinSubmissionPane-personName">
+                            { `${person.first_name} ${person.last_name}` }
+                        </span>
+                    </div>
+                ];
+            }
+            else {
+                actionContent = (
+                    <Msg tagName="p"
+                        id="panes.joinSubmission.action.pending.p"
+                        values={{ person: person.first_name }}
+                        />
+                );
+
+                actionButton = (
+                    <Button
+                        labelMsg="panes.joinSubmission.action.pending.acceptButton"
+                        onClick={ this.onClickAccept.bind(this) }
+                        />
+                );
+            }
 
             return [
                 <InfoList key="info"
@@ -78,14 +117,24 @@ export default class JoinSubmissionPane extends PaneBase {
                                 year="numeric" month="short" day="numeric"
                                 hour="2-digit" minute="2-digit"
                                 /> },
-                            { name: 'state', msgId: `panes.joinSubmission.meta.state.${subItem.data.state}` },
+                            { name: 'state', msgId: `panes.joinSubmission.meta.state.${state}` },
                         ]}
                     />
                 </div>,
+                <ActionBox key="action"
+                    status={ state == 'accepted'? 'done' : 'warning' }
+                    headerMsg={ `panes.joinSubmission.action.${state}.h` }
+                    content={ actionContent }
+                    footer={ actionButton } />
             ];
         }
         else {
             return <LoadingIndicator />;
         }
+    }
+
+    onClickAccept() {
+        const subId = this.getParam(0);
+        this.props.dispatch(acceptJoinSubmission(subId));
     }
 }

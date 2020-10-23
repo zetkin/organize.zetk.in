@@ -1,3 +1,11 @@
+action:
+    accepted:
+        h: Added to database
+        p: You can now start organizing {person}.
+    pending:
+        acceptButton: Accept
+        h: Request pending
+        p: Click Accept to add {person} to your database.
 meta:
     h: Meta-data
     state:
