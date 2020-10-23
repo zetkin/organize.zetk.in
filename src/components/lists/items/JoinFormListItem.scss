@@ -1,0 +1,27 @@
+.JoinFormListItem {
+    .JoinFormListItem-title {
+        @include col(12,12, $first:true, $last:true);
+        font-size: 1.5em;
+        margin-bottom: 0.5em;
+
+        &:before {
+            @include icon($fa-var-list-ul);
+        }
+    }
+
+    .JoinFormListItem-renderable {
+        @include col(4,12, $first:true);
+
+        &:before {
+            @include icon($fa-var-eye);
+        }
+    }
+
+    .JoinFormListItem-embeddable {
+        @include col(4,12);
+
+        &:before {
+            @include icon($fa-var-code);
+        }
+    }
+}

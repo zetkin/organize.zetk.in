@@ -4,14 +4,18 @@ import React from 'react';
 
 import RootPaneBase from '../RootPaneBase';
 import Button from '../../misc/Button';
+import JoinFormList from '../../lists/JoinFormList';
 import JoinSubmissionList from '../../lists/JoinSubmissionList';
+import ViewSwitch from '../../misc/ViewSwitch';
 import { getListItemById } from '../../../utils/store';
 import {
+    retrieveJoinForms,
     retrieveJoinSubmissions,
 } from '../../../actions/joinForm';
 
 
 const mapStateToProps = state => ({
+    formList: state.joinForms.formList,
     submissionList: state.joinForms.submissionList,
 });
 
@@ -30,22 +34,41 @@ export default class JoiningPane extends RootPaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        if (this.state.viewMode == 'submissions') {
-            this.props.dispatch(retrieveJoinSubmissions());
-        }
+        this.props.dispatch(retrieveJoinForms());
+        this.props.dispatch(retrieveJoinSubmissions());
     }
 
     renderPaneContent(data) {
-        return (
-            <JoinSubmissionList
-                submissionList={ this.props.submissionList }
-                onItemClick={ this.onItemClick.bind(this) }
-                />
-        );
+        if (this.state.viewMode == 'submissions') {
+            return (
+                <JoinSubmissionList
+                    submissionList={ this.props.submissionList }
+                    onItemClick={ this.onItemClick.bind(this) }
+                    />
+            );
+        }
+        else {
+            return (
+                <JoinFormList
+                    formList={ this.props.formList }
+                    />
+            );
+        }
     }
 
     getPaneTools(data) {
-        return null;
+        const viewStates = {
+            'submissions': 'panes.joining.viewModes.submissions',
+            'forms': 'panes.joining.viewModes.forms',
+        };
+
+        return (
+            <ViewSwitch
+                states={ viewStates }
+                selected={ this.state.viewMode }
+                onSwitch={ viewMode => this.setState({ viewMode }) }
+                />
+        );
     }
 
     onItemClick(item) {
