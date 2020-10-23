@@ -19,14 +19,13 @@ export default class JoinSubmissionListItem extends React.Component {
 
         let respondentAvatar = null;
         let respondentName = null;
-        let actionStatus = null;
 
         let formTitle = null;
         if (sub.form) {
             formTitle = sub.form.title;
         }
 
-        let actionClassNames  = cx('JoinSubmissionListItem-action', actionStatus);
+        let stateClassNames  = cx('JoinSubmissionListItem-state', sub.state);
 
         return (
             <div className="JoinSubmissionListItem"
@@ -44,9 +43,8 @@ export default class JoinSubmissionListItem extends React.Component {
                     <div className="JoinSubmissionListItem-person">
                         { `${sub.person_data.first_name} ${sub.person_data.last_name}` }
                     </div>
-                    <div className="JoinSubmissionListItem-progress"/>
                 </div>
-                <div className={ actionClassNames }/>
+                <div className={ stateClassNames }/>
             </div>
         );
     }
