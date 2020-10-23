@@ -1,13 +1,19 @@
 .Avatar {
+    position: relative;
     display: inline-block;
     width: 100%;
-    height: auto;
+    padding-top: 100%;
 
     img {
         width: 100%;
         height: auto;
         opacity: 1;
         transition: opacity 0.5s;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
     }
 
     &.pending {
