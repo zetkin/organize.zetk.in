@@ -1,6 +1,20 @@
 import * as types from '.';
 
 
+export function acceptJoinSubmission(submissionId) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.ACCEPT_JOIN_SUBMISSION,
+            meta: { submissionId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'join_submissions', submissionId).patch({ state: 'accepted' }),
+            }
+        });
+    };
+}
+
 export function retrieveJoinSubmissions() {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;

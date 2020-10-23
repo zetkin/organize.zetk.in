@@ -13,7 +13,9 @@ export default function joinForms(state = null, action) {
             submissionList: createList(action.payload.data.data),
         });
     }
-    else if (action.type == types.RETRIEVE_JOIN_SUBMISSION + '_FULFILLED') {
+    else if (action.type == types.RETRIEVE_JOIN_SUBMISSION + '_FULFILLED'
+        || action.type == types.ACCEPT_JOIN_SUBMISSION + '_FULFILLED') {
+
         const sub = action.payload.data.data;
         return Object.assign({}, state, {
             submissionList: updateOrAddListItem(state.submissionList, sub.id, sub),
