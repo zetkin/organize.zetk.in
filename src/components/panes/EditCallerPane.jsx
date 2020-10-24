@@ -74,10 +74,9 @@ export default class EditCallerPane extends PaneBase {
                 onAdd={ this.onAddTag.bind(this, 'ex') }
                 onRemove={ this.onRemoveExTag.bind(this) }/>
         }
-        
         return [
             <h3 key="prioHeader">
-                <i className="fa fa-star" style = {{padding : "10px"}}/>
+                <i className="fa fa-star"/>
                 <Msg id="panes.editCaller.prio.h"/>
             </h3>,
             <Msg tagName="p" key="prioInstructions"
@@ -85,7 +84,7 @@ export default class EditCallerPane extends PaneBase {
                 values={{ firstName }}/>,
             prioTags,
             <h3 key="exHeader">
-                <i className="fa fa-ban" style = {{padding : "10px"}}/>
+                <i className="fa fa-ban"/>
                 <Msg id="panes.editCaller.ex.h"/>
             </h3>,
             <Msg tagName="p" key="exInstructions"
