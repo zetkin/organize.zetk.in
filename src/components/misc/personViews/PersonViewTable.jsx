@@ -61,11 +61,11 @@ export default class PersonViewTable extends React.Component {
                         <tbody>
                         {rowList.items.map(rowItem => (
                             <PersonViewTableRow key={rowItem.data.id}
-                                                columnList={colList}
-                                                rowData={rowItem.data}
-                                                openPane={this.props.openPane}
-                                                onAdd={row => this.props.dispatch(addPersonViewRow(viewId, row.id))}
-                                                onRemove={row => this.props.dispatch(removePersonViewRow(viewId, row.id))}
+                                columnList={colList}
+                                rowData={rowItem.data}
+                                openPane={this.props.openPane}
+                                onAdd={row => this.props.dispatch(addPersonViewRow(viewId, row.id))}
+                                onRemove={row => this.props.dispatch(removePersonViewRow(viewId, row.id))}
                             />
                         ))}
                         </tbody>
@@ -100,7 +100,8 @@ export default class PersonViewTable extends React.Component {
             pageSelect = (
                 <div className='PageSelect'>
                     <PageSelect pageCount={this.totalPages = Math.ceil(rowList.items.length / pageLimit)}
-                                pageLimit={pageLimit}/>
+                                pageLimit={pageLimit}
+                                onChange={this.onChangeHandler}/>
                 </div>
             );
         }
