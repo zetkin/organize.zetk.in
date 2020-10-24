@@ -59,7 +59,7 @@ export default class EditPersonTagPane extends PaneBase {
 
             return (
                 <PersonTagForm ref="form" tag= { tag }
-                onValueChange={ this.onValueChange.bind(this) }
+                    onValueChange={ this.onValueChange.bind(this) }
                     onSubmit={ this.onSubmit.bind(this) }/>
             );
         }
@@ -70,13 +70,13 @@ export default class EditPersonTagPane extends PaneBase {
 
     renderPaneFooter(data) {
         if (this.state.shouldShowButton) {
-        return (
-            <Button className="EditPersonTagPane-saveButton"
-                labelMsg="panes.editPersonTag.saveButton"
-                onClick={ this.onSubmit.bind(this) }/>
+            return (
+                <Button className="EditPersonTagPane-saveButton"
+                    labelMsg="panes.editPersonTag.saveButton"
+                    onClick={ this.onSubmit.bind(this) }/>
         );
         } else {
-    return null;
+            return null;
         }
     }
 
