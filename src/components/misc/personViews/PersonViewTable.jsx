@@ -49,30 +49,33 @@ export default class PersonViewTable extends React.Component {
                     viewId={ viewId }
                     columnList={ colList }
                     openPane={ this.props.openPane }
-                />
+                    />
             );
 
             if (rowList) {
                 if (rowList.isPending) {
                     placeholder = <LoadingIndicator/>;
-                } else if (rowList.items && rowList.items.length) {
+                }
+                else if (rowList.items && rowList.items.length) {
                     tableBody = (
                         <tbody>
                         {rowList.items.map(rowItem => (
                             <PersonViewTableRow key={ rowItem.data.id }
-                                columnList={colList}
+                                columnList={ colList }
                                 rowData={ rowItem.data }
                                 openPane={ this.props.openPane }
                                 onAdd={ row => this.props.dispatch(addPersonViewRow(viewId, row.id)) }
                                 onRemove={ row => this.props.dispatch(removePersonViewRow(viewId, row.id)) }
-                            />
+                                />
                         ))}
                         </tbody>
                     );
-                } else {
+                }
+                else {
                     placeholder = this.props.placeholder;
                 }
-            } else {
+            }
+            else {
                 placeholder = this.props.placeholder;
             }
         }
@@ -85,7 +88,7 @@ export default class PersonViewTable extends React.Component {
             );
         }
 
-        const addSection = this.props.showAddSection ? (
+        const addSection = this.props.showAddSection? (
             <div className="PersonViewTable-addPerson">
                 <PersonSelectWidget
                     isPending={ this.props.rowList && this.props.rowList.addIsPending }
