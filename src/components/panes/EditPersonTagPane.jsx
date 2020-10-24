@@ -92,7 +92,7 @@ export default class EditPersonTagPane extends PaneBase {
 
     onValueChange(name, value) {
         if (name === "title") {
-            this.setState({ shouldShowButton: Boolean(value) })
+            this.setState({ shouldShowButton: !!value})
         }
     }
 }
