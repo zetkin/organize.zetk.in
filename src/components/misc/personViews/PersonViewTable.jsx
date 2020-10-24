@@ -12,12 +12,11 @@ import {
     retrievePersonViewRow,
 } from '../../../actions/personView';
 import PageSelect from "../PageSelect";
-import Pagination from "../Pagination";
 
 @connect()
 export default class PersonViewTable extends React.Component {
     componentDidUpdate() {
-        const {columnList, rowList, viewId} = this.props;
+        const { columnList, rowList, viewId } = this.props;
 
         if (rowList && rowList.items) {
             // Find dirty rows and retrieve their data anew
@@ -47,9 +46,9 @@ export default class PersonViewTable extends React.Component {
         if (colList && colList.items) {
             tableHead = (
                 <PersonViewTableHead
-                    viewId={viewId}
-                    columnList={colList}
-                    openPane={this.props.openPane}
+                    viewId={ viewId }
+                    columnList={ colList }
+                    openPane={ this.props.openPane }
                 />
             );
 
@@ -60,12 +59,12 @@ export default class PersonViewTable extends React.Component {
                     tableBody = (
                         <tbody>
                         {rowList.items.map(rowItem => (
-                            <PersonViewTableRow key={rowItem.data.id}
+                            <PersonViewTableRow key={ rowItem.data.id }
                                 columnList={colList}
-                                rowData={rowItem.data}
-                                openPane={this.props.openPane}
-                                onAdd={row => this.props.dispatch(addPersonViewRow(viewId, row.id))}
-                                onRemove={row => this.props.dispatch(removePersonViewRow(viewId, row.id))}
+                                rowData={ rowItem.data }
+                                openPane={ this.props.openPane }
+                                onAdd={ row => this.props.dispatch(addPersonViewRow(viewId, row.id)) }
+                                onRemove={ row => this.props.dispatch(removePersonViewRow(viewId, row.id)) }
                             />
                         ))}
                         </tbody>
@@ -81,7 +80,7 @@ export default class PersonViewTable extends React.Component {
         if (placeholder) {
             placeholder = (
                 <div className="PersonViewTable-placeholder">
-                    {placeholder}
+                    { placeholder }
                 </div>
             );
         }
@@ -89,8 +88,8 @@ export default class PersonViewTable extends React.Component {
         const addSection = this.props.showAddSection ? (
             <div className="PersonViewTable-addPerson">
                 <PersonSelectWidget
-                    isPending={this.props.rowList && this.props.rowList.addIsPending}
-                    onSelect={this.props.onPersonAdd}/>
+                    isPending={ this.props.rowList && this.props.rowList.addIsPending }
+                    onSelect={ this.props.onPersonAdd }/>
             </div>
         ) : null;
 
@@ -99,22 +98,22 @@ export default class PersonViewTable extends React.Component {
         if (rowList && rowList.items.length > pageLimit) {
             pageSelect = (
                 <div className='PageSelect'>
-                    <PageSelect pageCount={this.totalPages = Math.ceil(rowList.items.length / pageLimit)}
-                                pageLimit={pageLimit}
-                                onChange={this.onChangeHandler}/>
+                    <PageSelect pageCount={ this.totalPages = Math.ceil(rowList.items.length / pageLimit) }
+                                pageLimit={ pageLimit }
+                                onChange={ this.onChangeHandler }/>
                 </div>
             );
         }
 
         return (
             <div className="PersonViewTable">
-                {pageSelect}
+                { pageSelect }
                 <table>
-                    {tableHead}
-                    {tableBody}
+                    { tableHead }
+                    { tableBody }
                 </table>
-                {placeholder}
-                {addSection}
+                { placeholder }
+                { addSection }
             </div>
         );
     }
