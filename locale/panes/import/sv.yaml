@@ -64,6 +64,8 @@ report:
             other {# befintliga personer uppdaterades}
         }
 settings:
+    date:
+        invalid: Datum ogiltigt
     personData:
         fields:
             city: Ort
