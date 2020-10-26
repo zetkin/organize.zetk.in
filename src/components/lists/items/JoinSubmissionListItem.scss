@@ -1,0 +1,64 @@
+.JoinSubmissionListItem {
+    position: relative;
+    display: flex;
+
+    .ListItem-date {
+        padding: 1em;
+    }
+
+    .JoinSubmissionListItem-content {
+        @include col(11,12);
+        padding: 1em;
+
+        .JoinSubmissionListItem-form {
+            @include col(12,12);
+            text-align: right;
+            color: lighten($c-text, 60);
+
+            &:before {
+                @include icon($fa-var-list-ul);
+            }
+        }
+
+        .JoinSubmissionListItem-person {
+            @include col(10.5,12, $align:middle);
+            font-size: 1.5em;
+        }
+
+        .JoinSubmissionListItem-progress {
+            @include col(12,12);
+            text-align: left;
+        }
+    }
+
+    .JoinSubmissionListItem-state {
+        @include col(1,12, $first:true, $last:true);
+        background-color: darken(white, 5);
+        color: white;
+        text-align: center;
+
+
+        &.pending {
+            background-color: $c-ui-warning;
+            &:before {
+                @include icon($fa-var-bell-o);
+            }
+        }
+
+        &.accepted {
+            color: $c-ui-darker;
+            &:before {
+                @include icon($fa-var-check);
+            }
+        }
+
+        &::before {
+            margin-top: 2em;
+            margin-right:0!important;
+        }
+
+        &::after {
+            margin-right:0!important;
+        }
+    }
+}

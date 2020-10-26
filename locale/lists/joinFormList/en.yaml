@@ -1,0 +1,11 @@
+header:
+    embeddable: Embeddable
+    renderable: Web access
+    title: Title
+item:
+    embeddable:
+        true: Can be embedded
+        false: Cannot be embedded
+    renderable:
+        true: Available as web form
+        false: API only

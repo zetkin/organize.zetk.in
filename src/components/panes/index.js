@@ -7,6 +7,7 @@ import AddCallAssignmentPane from './AddCallAssignmentPane';
 import AddCampaignPane from './AddCampaignPane';
 import AddCanvassAssignmentPane from './AddCanvassAssignmentPane';
 import AddGroupPane from './AddGroupPane';
+import AddJoinFormPane from './AddJoinFormPane';
 import AddPersonPane from './AddPersonPane';
 import AddPersonTagPane from './AddPersonTagPane';
 import AddLocationPane from './AddLocationPane';
@@ -35,6 +36,7 @@ import EditCallerPane from './EditCallerPane';
 import EditCampaignPane from './EditCampaignPane';
 import EditCanvassAssignmentPane from './EditCanvassAssignmentPane';
 import EditGroupPane from './EditGroupPane';
+import EditJoinFormPane from './EditJoinFormPane';
 import EditLocationPane from './EditLocationPane';
 import EditLocationTagPane from './EditLocationTagPane';
 import EditPersonPane from './EditPersonPane';
@@ -50,6 +52,8 @@ import GroupPane from './GroupPane';
 import GroupMembersPane from './GroupMembersPane';
 import ImportActionsPane from './ImportActionsPane';
 import ImportLogPane from './ImportLogPane';
+import JoinFormPane from './JoinFormPane';
+import JoinSubmissionPane from './JoinSubmissionPane';
 import LocationPane from './LocationPane';
 import MergePeoplePane from './MergePeoplePane';
 import ImporterColumnPane from './ImporterColumnPane';
@@ -84,6 +88,7 @@ var _panes = {
     'addgroup': AddGroupPane,
     'addlocation': AddLocationPane,
     'addlocationtag': AddLocationTagPane,
+    'addjoinform': AddJoinFormPane,
     'addperson': AddPersonPane,
     'addpersontag': AddPersonTagPane,
     'addsurvey': AddSurveyPane,
@@ -109,6 +114,7 @@ var _panes = {
     'editcampaign': EditCampaignPane,
     'editcanvassassignment': EditCanvassAssignmentPane,
     'editgroup': EditGroupPane,
+    'editjoinform': EditJoinFormPane,
     'editlocation': EditLocationPane,
     'editlocationtag': EditLocationTagPane,
     'editperson': EditPersonPane,
@@ -125,6 +131,8 @@ var _panes = {
     'importactions': ImportActionsPane,
     'importercolumn': ImporterColumnPane,
     'importlog': ImportLogPane,
+    'joinform': JoinFormPane,
+    'joinsubmission': JoinSubmissionPane,
     'confirmimport': ConfirmImportPane,
     'location': LocationPane,
     'mergepeople': MergePeoplePane,
