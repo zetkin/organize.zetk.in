@@ -1,3 +1,17 @@
+fields:
+    h: Form fields
+    labels:
+        alt_phone: Alt. phone number
+        city: City
+        co_address: C/O address
+        country: Country
+        email: E-mail
+        first_name: First name
+        gender: Gender
+        last_name: Last name
+        phone: Phone number
+        street_address: Street address
+        zip_code: Zip code
 summary:
     access:
         api: API only (no browser access)

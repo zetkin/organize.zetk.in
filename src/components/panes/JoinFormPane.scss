@@ -30,4 +30,25 @@
     .InfoListItem-editLink {
         font-size: 1em;
     }
+
+    .ReorderableItem {
+        cursor: grab;
+
+        .JoinFormPane-field {
+            @include card();
+            padding: 1em;
+            font-size: 1.1em;
+            margin: 0.5em 0;
+
+            &:before {
+                @include icon($fa-var-user);
+            }
+
+            &.custom {
+                &:before {
+                    @include icon($fa-var-puzzle-piece);
+                }
+            }
+        }
+    }
 }
