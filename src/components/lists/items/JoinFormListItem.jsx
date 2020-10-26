@@ -26,10 +26,12 @@ export default class JoinFormListItem extends React.Component {
                 <div className="JoinFormListItem-content">
                     <span className="JoinFormListItem-title">
                         { form.title }</span>
+                    {/*
                     <span className="JoinFormListItem-renderable">
                         <Msg id={ `lists.joinFormList.item.renderable.${form.renderable}` }/>
                     </span>
                     { embeddable }
+                    */}
                 </div>
             </div>
         );

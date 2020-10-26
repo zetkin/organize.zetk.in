@@ -43,9 +43,11 @@ export default class JoinFormForm extends React.Component {
                     initialValue={ form.title }/>
                 <TextArea labelMsg="forms.joinForm.description" name="description"
                     initialValue={ form.description }/>
+                {/*
                 <SelectInput labelMsg="forms.joinForm.access" name="access"
                     initialValue={ form.access }
                     options={ accessOptions } optionLabelsAreMessages={ true }/>
+                    */}
             </Form>
         );
     }
