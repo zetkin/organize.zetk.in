@@ -63,12 +63,22 @@ export default class JoiningPane extends RootPaneBase {
             'forms': 'panes.joining.viewModes.forms',
         };
 
-        return (
-            <ViewSwitch
+        const tools = [
+            <ViewSwitch key="viewSwitch"
                 states={ viewStates }
                 selected={ this.state.viewMode }
                 onSwitch={ viewMode => this.setState({ viewMode }) }
-                />
-        );
+                />,
+        ];
+        if (this.state.viewMode == 'forms') {
+            tools.push(
+                <Button key="addButton"
+                    className="JoiningPane-addButton"
+                    labelMsg="panes.joining.addButton"
+                    onClick={ () => this.openPane('addjoinform') }/>
+            );
+        }
+
+        return tools;
     }
 }
