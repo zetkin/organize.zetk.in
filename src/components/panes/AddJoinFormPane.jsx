@@ -37,7 +37,6 @@ export default class AddJoinFormPane extends PaneBase {
         const formId = this.getParam(0);
         const values = this.refs.form.getValues();
 
-        this.props.dispatch(createJoinForm(values));
-        this.closePane();
+        this.props.dispatch(createJoinForm(values, this.props.paneData.id));
     }
 }

@@ -15,7 +15,7 @@ export function acceptJoinSubmission(submissionId) {
     };
 }
 
-export function createJoinForm(data) {
+export function createJoinForm(data, paneId) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
 
@@ -31,6 +31,7 @@ export function createJoinForm(data) {
 
         dispatch({
             type: types.CREATE_JOIN_FORM,
+            meta: { paneId },
             payload: {
                 promise: z.resource('orgs', orgId, 'join_forms').post(data),
             }
