@@ -3,4 +3,12 @@
         @include inline-button($icon: $fa-var-plus);
         float: right;
     }
+
+    .ViewSwitch-state-submissions:before {
+        @include icon($fa-var-inbox);
+    }
+
+    .ViewSwitch-state-forms:before {
+        @include icon($fa-var-cog);
+    }
 }
