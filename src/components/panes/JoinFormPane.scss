@@ -27,6 +27,14 @@
         }
     }
 
+    .InfoListItem-token {
+        white-space: nowrap;
+
+        &::before {
+            @include icon($fa-var-unlock-alt);
+        }
+    }
+
     .InfoListItem-editLink {
         font-size: 1em;
     }

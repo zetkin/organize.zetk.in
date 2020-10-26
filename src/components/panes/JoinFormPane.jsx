@@ -188,6 +188,7 @@ export default class JoinFormPane extends PaneBase {
                     data={[
                         { name: 'desc', value: form.description },
                         { name: 'access', msgId: accessLabelMsgId },
+                        { name: 'token', value: <code>{ form.submit_token }</code> },
                         { name: 'editLink', onClick: this.onEditSummaryClick.bind(this), msgId: 'panes.joinForm.summary.editLink' }
                     ]}
                 />,
