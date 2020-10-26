@@ -15,6 +15,29 @@ export function acceptJoinSubmission(submissionId) {
     };
 }
 
+export function createJoinForm(data) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        if (!data.hasOwnProperty('fields')) {
+            data = Object.assign({}, data, {
+                fields: [
+                    // By default include first_name and last_name
+                    'first_name',
+                    'last_name',
+                ],
+            });
+        }
+
+        dispatch({
+            type: types.CREATE_JOIN_FORM,
+            payload: {
+                promise: z.resource('orgs', orgId, 'join_forms').post(data),
+            }
+        });
+    };
+}
+
 export function deleteJoinForm(formId) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;

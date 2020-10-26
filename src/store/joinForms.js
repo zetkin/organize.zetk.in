@@ -14,7 +14,8 @@ export default function joinForms(state = null, action) {
             formList: removeListItem(state.formList, action.meta.formId),
         });
     }
-    else if (action.type == types.RETRIEVE_JOIN_FORM + '_FULFILLED'
+    else if (action.type == types.CREATE_JOIN_FORM + '_FULFILLED'
+        || action.type == types.RETRIEVE_JOIN_FORM + '_FULFILLED'
         || action.type == types.UPDATE_JOIN_FORM + '_FULFILLED') {
         const form = action.payload.data.data;
         return Object.assign({}, state, {
