@@ -27,14 +27,6 @@
         }
     }
 
-    .InfoListItem-token {
-        white-space: nowrap;
-
-        &::before {
-            @include icon($fa-var-unlock-alt);
-        }
-    }
-
     .InfoListItem-editLink {
         font-size: 1em;
     }
@@ -85,5 +77,15 @@
         border: 2px dashed $c-ui-dark;
         padding: 1em;
         margin: 1em 0;
+    }
+
+    .ActionBox {
+        code {
+            display: block;
+            font-size: 1.4em;
+            margin: 0.5em 0 0;
+            padding: 0.2em 0.1em;
+            background-color: rgba(#fff,0.05);
+        }
     }
 }

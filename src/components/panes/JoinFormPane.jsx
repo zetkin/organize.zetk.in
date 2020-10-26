@@ -3,6 +3,7 @@ import React from 'react';
 import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
+import ActionBox from '../misc/ActionBox';
 import Link from '../misc/Link';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
@@ -188,7 +189,6 @@ export default class JoinFormPane extends PaneBase {
                     data={[
                         { name: 'desc', value: form.description },
                         //{ name: 'access', msgId: accessLabelMsgId },
-                        { name: 'token', value: <code>{ form.submit_token }</code> },
                         { name: 'editLink', onClick: this.onEditSummaryClick.bind(this), msgId: 'panes.joinForm.summary.editLink' }
                     ]}
                 />,
@@ -198,7 +198,15 @@ export default class JoinFormPane extends PaneBase {
                         { fieldElements }
                     </Reorderable>
                     { addSection }
-                </div>
+                </div>,
+                <ActionBox key="token"
+                    status="info"
+                    headerMsg="panes.joinForm.token.h"
+                    content={[
+                        <Msg key="p" tagName="p" id="panes.joinForm.token.p"/>,
+                        <code key="token">{ form.submit_token }</code>
+                    ]}
+                    />
             ];
         }
         else {

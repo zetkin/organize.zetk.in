@@ -23,3 +23,8 @@ summary:
         embed: Can be embedded in other web pages
         render: Can be accessed over the web
     editLink: Edit settings
+token:
+    h: Secret API token
+    p: |-
+        This secret token can be used to integrate with a custom form on your website.
+        Keep it safe and only share it with your website developers!
