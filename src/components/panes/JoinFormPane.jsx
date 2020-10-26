@@ -92,14 +92,14 @@ export default class JoinFormPane extends PaneBase {
 
             const fieldElements = form.fields.map(fieldName => {
                 let type;
-                let label;
+                let label = fieldName;
 
                 if (fieldName in fieldTypesBySlug) {
                     const fieldData = fieldTypesBySlug[fieldName];
                     label = fieldData.title;
                     type = fieldData.type;
                 }
-                else {
+                else if (PERSON_FIELDS.includes(fieldName)) {
                     type = 'person';
                     label = (
                         <Msg id={ `panes.joinForm.fields.labels.${fieldName}` }/>
