@@ -3,8 +3,9 @@ import React from 'react';
 import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
-import PaneBase from './PaneBase';
+import Link from '../misc/Link';
 import LoadingIndicator from '../misc/LoadingIndicator';
+import PaneBase from './PaneBase';
 import { getListItemById } from '../../utils/store';
 import { retrieveFieldTypesForOrganization } from '../../actions/personField';
 import {
@@ -109,9 +110,23 @@ export default class JoinFormPane extends PaneBase {
                     custom: (fieldName in fieldTypesBySlug),
                 });
 
+                let deleteButton = null;
+                if (fieldName != 'first_name' && fieldName != 'last_name') {
+                    // Delete exists for all fields except first_name and last_name,
+                    // which are required.
+                    deleteButton = (
+                        <Link
+                            className="JoinFormPane-deleteFieldButton"
+                            msgId="panes.joinForm.fields.deleteButton"
+                            onClick={ this.onDeleteField.bind(this, fieldName) }
+                            />
+                    );
+                }
+
                 return (
                     <div key={ fieldName } className={ classes }>
-                        { label }
+                        <span>{ label }</span>
+                        { deleteButton }
                     </div>
                 );
             });
@@ -195,6 +210,16 @@ export default class JoinFormPane extends PaneBase {
         if (formItem && !formItem.isPending) {
             const form = formItem.data;
             const fields = form.fields.concat([ ev.target.value ]);
+            this.props.dispatch(updateJoinForm(form.id, { fields }));
+        }
+    }
+
+    onDeleteField(fieldName, ev) {
+        ev.preventDefault();
+        const formItem = this.props.formItem;
+        if (formItem && !formItem.isPending) {
+            const form = formItem.data;
+            const fields = form.fields.filter(fn => fn != fieldName);
             this.props.dispatch(updateJoinForm(form.id, { fields }));
         }
     }

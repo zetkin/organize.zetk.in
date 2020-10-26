@@ -52,6 +52,26 @@
         }
     }
 
+    .JoinFormPane-deleteFieldButton {
+        float: right;
+        color: $c-brand-delete;
+        max-width: 1.5em;
+        height: 1.5em;
+        overflow: hidden;
+        white-space: nowrap;
+
+        transition: max-width 0.4s;
+
+        &:before {
+            @include icon($fa-var-trash);
+        }
+
+        &:hover {
+            color: darken($c-brand-delete, 10);
+            max-width: 10em;
+        }
+    }
+
     .JoinFormPane-addField {
         text-align: center;
         border: 2px dashed $c-ui-dark;

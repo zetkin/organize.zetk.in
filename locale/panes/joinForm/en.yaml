@@ -1,4 +1,5 @@
 fields:
+    deleteButton: Delete
     groups:
         custom: Custom fields
         person: Person fields
