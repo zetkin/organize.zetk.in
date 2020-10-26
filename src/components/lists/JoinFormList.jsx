@@ -20,8 +20,6 @@ export default class SurveyList extends React.Component {
             {
                 'title':
                     'lists.joinFormList.header.title',
-            },
-            {
                 'renderable':
                     'lists.joinFormList.header.renderable',
             },

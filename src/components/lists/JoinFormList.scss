@@ -1,0 +1,17 @@
+.JoinFormList {
+    .ListHeader {
+        li:nth-child(1) {
+            @include col(4,12);
+        }
+
+        li:nth-child(3) {
+            @include col(4,12);
+        }
+    }
+
+    @include medium-screen {
+        &.List {
+            max-width: 560px;
+        }
+    }
+}
