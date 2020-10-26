@@ -43,7 +43,7 @@ export default class JoiningPane extends RootPaneBase {
             return (
                 <JoinSubmissionList
                     submissionList={ this.props.submissionList }
-                    onItemClick={ this.onItemClick.bind(this) }
+                    onItemClick={ item => this.openPane('joinsubmission', item.data.id) }
                     />
             );
         }
@@ -51,6 +51,7 @@ export default class JoiningPane extends RootPaneBase {
             return (
                 <JoinFormList
                     formList={ this.props.formList }
+                    onItemClick={ item => this.openPane('editjoinform', item.data.id) }
                     />
             );
         }
@@ -69,9 +70,5 @@ export default class JoiningPane extends RootPaneBase {
                 onSwitch={ viewMode => this.setState({ viewMode }) }
                 />
         );
-    }
-
-    onItemClick(item) {
-        this.openPane('joinsubmission', item.data.id);
     }
 }
