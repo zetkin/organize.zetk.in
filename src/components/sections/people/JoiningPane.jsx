@@ -51,7 +51,7 @@ export default class JoiningPane extends RootPaneBase {
             return (
                 <JoinFormList
                     formList={ this.props.formList }
-                    onItemClick={ item => this.openPane('editjoinform', item.data.id) }
+                    onItemClick={ item => this.openPane('joinform', item.data.id) }
                     />
             );
         }

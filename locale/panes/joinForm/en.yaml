@@ -1,0 +1,6 @@
+summary:
+    access:
+        api: API only (no browser access)
+        embed: Can be embedded in other web pages
+        render: Can be accessed over the web
+    editLink: Edit settings

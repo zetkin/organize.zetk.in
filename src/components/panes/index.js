@@ -52,6 +52,7 @@ import GroupPane from './GroupPane';
 import GroupMembersPane from './GroupMembersPane';
 import ImportActionsPane from './ImportActionsPane';
 import ImportLogPane from './ImportLogPane';
+import JoinFormPane from './JoinFormPane';
 import JoinSubmissionPane from './JoinSubmissionPane';
 import LocationPane from './LocationPane';
 import MergePeoplePane from './MergePeoplePane';
@@ -130,6 +131,7 @@ var _panes = {
     'importactions': ImportActionsPane,
     'importercolumn': ImporterColumnPane,
     'importlog': ImportLogPane,
+    'joinform': JoinFormPane,
     'joinsubmission': JoinSubmissionPane,
     'confirmimport': ConfirmImportPane,
     'location': LocationPane,
