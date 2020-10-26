@@ -50,6 +50,14 @@ export default class Avatar extends React.Component {
         if (this.refs.image.complete) {
             this.onLoad();
         }
+        else {
+            // Ideally we'd like to set loading="lazy" in the JSX inside
+            // render(), but it does not work with our version of react-dom.
+            // Instead we have to do it "at runtime" in the browser using
+            // the regular DOM API.
+            // TODO: After upgrading react-dom to 16+, move to JSX
+            this.refs.image.setAttribute('loading', 'lazy');
+        }
     }
 
     onLoad() {
