@@ -51,4 +51,11 @@
             }
         }
     }
+
+    .JoinFormPane-addField {
+        text-align: center;
+        border: 2px dashed $c-ui-dark;
+        padding: 1em;
+        margin: 1em 0;
+    }
 }

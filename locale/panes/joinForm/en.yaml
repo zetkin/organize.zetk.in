@@ -1,4 +1,7 @@
 fields:
+    groups:
+        custom: Custom fields
+        person: Person fields
     h: Form fields
     labels:
         alt_phone: Alt. phone number
@@ -12,6 +15,7 @@ fields:
         phone: Phone number
         street_address: Street address
         zip_code: Zip code
+    selectLabel: Pick a field to add
 summary:
     access:
         api: API only (no browser access)
