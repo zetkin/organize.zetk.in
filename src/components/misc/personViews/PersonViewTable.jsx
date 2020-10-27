@@ -1,8 +1,11 @@
+import { csvFormatRows } from 'd3-dsv';
 import React from 'react';
-import { FormattedMessage as Msg } from 'react-intl';
+import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
+import Button from '../Button';
 import LoadingIndicator from '../LoadingIndicator';
+import PageSelect from '../PageSelect';
 import PersonSelectWidget from '../PersonSelectWidget';
 import PersonViewTableHead from './PersonViewTableHead';
 import PersonViewTableRow from './PersonViewTableRow';
@@ -13,8 +16,20 @@ import {
 } from '../../../actions/personView';
 
 
+const MAX_PAGE_SIZE = 500;
+
 @connect()
+@injectIntl
 export default class PersonViewTable extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            page: 0,
+            searchStr: '',
+        };
+    }
+
     componentDidUpdate() {
         const { columnList, rowList, viewId } = this.props;
 
@@ -37,6 +52,10 @@ export default class PersonViewTable extends React.Component {
         let tableHead;
         let tableBody;
         let loadingIndicator;
+        let pageSelect = null;
+        let numMatches;
+        let numTotal;
+        let numVisible;
 
         if (colList && colList.items) {
             tableHead = (
@@ -52,9 +71,53 @@ export default class PersonViewTable extends React.Component {
                     placeholder = <LoadingIndicator/>;
                 }
                 else if (rowList.items && rowList.items.length) {
+                    let visibleRows = rowList.items;
+
+                    // Store total length for label
+                    numTotal = visibleRows.length;
+
+                    if (this.state.searchStr && this.state.searchStr.length > 1) {
+                        const searchStr = this.state.searchStr.toLowerCase();
+
+                        visibleRows = visibleRows.filter(item => {
+                            return item.data.content.some(cell => {
+                                if (cell && cell.toLowerCase) {
+                                    return cell.toLowerCase().indexOf(searchStr) >= 0;
+                                }
+                                else {
+                                    return false;
+                                }
+                            });
+                        });
+                    }
+
+                    // Store match count for label
+                    numMatches = visibleRows.length;
+
+                    if (visibleRows.length > MAX_PAGE_SIZE) {
+                        const pageCount = Math.ceil(visibleRows.length / MAX_PAGE_SIZE);
+
+                        pageSelect = (
+                            <div className="PersonViewTable-pages">
+                                <PageSelect
+                                    page={ this.state.page }
+                                    pageCount={ pageCount }
+                                    onChange={ page => this.setState({ page }) }
+                                    />
+                            </div>
+                        );
+
+                        const startIndex = this.state.page * MAX_PAGE_SIZE;
+                        const endIndex = (this.state.page + 1) * MAX_PAGE_SIZE;
+                        visibleRows = visibleRows.slice(startIndex, endIndex);
+                    }
+
+                    // Store final count of visible rows for label
+                    numVisible = visibleRows.length;
+
                     tableBody = (
                         <tbody>
-                        {rowList.items.map(rowItem => (
+                        {visibleRows.map(rowItem => (
                             <PersonViewTableRow key={ rowItem.data.id }
                                 columnList={ colList }
                                 rowData={ rowItem.data }
@@ -91,8 +154,44 @@ export default class PersonViewTable extends React.Component {
             </div>
         ) : null;
 
+        let countMsgId = 'misc.personViewTable.tools.count.default';
+        if (this.state.searchStr && pageSelect) {
+            countMsgId = 'misc.personViewTable.tools.count.filteredPaginated';
+        }
+        else if (this.state.searchStr) {
+            countMsgId = 'misc.personViewTable.tools.count.filtered';
+        }
+        else if (pageSelect) {
+            countMsgId = 'misc.personViewTable.tools.count.paginated';
+        }
+
         return (
             <div className="PersonViewTable">
+                <div className="PersonViewTable-tools">
+                    <div className="PersonViewTable-downloadButton">
+                        <Button
+                            labelMsg="misc.personViewTable.tools.downloadButton"
+                            onClick={ this.onClickDownload.bind(this) }
+                            />
+                    </div>
+                    <div className="PersonViewTable-searchInput">
+                        <input type="text"
+                            placeholder={ this.props.intl.formatMessage({ id: 'misc.personViewTable.tools.search.placeholder' }) }
+                            value={ this.state.searchStr }
+                            onChange={ ev => this.setState({ searchStr: ev.target.value, page: 0 }) }
+                            />
+                    </div>
+                    { pageSelect }
+                    <div className="PersonViewTable-count">
+                        { numVisible?
+                        <Msg id={ countMsgId }
+                            values={{
+                                visible: numVisible,
+                                matches: numMatches,
+                                total: numTotal,
+                            }}/> : null }
+                    </div>
+                </div>
                 <table>
                     { tableHead }
                     { tableBody }
@@ -101,5 +200,39 @@ export default class PersonViewTable extends React.Component {
                 { addSection }
             </div>
         );
+    }
+
+    onClickDownload() {
+        const { columnList, rowList, viewId } = this.props;
+
+        const rows = [];
+
+        if (columnList && columnList.items && rowList && rowList.items) {
+            // Start with the header
+            rows.push(['Zetkin ID'].concat(columnList.items.map(colItem => colItem.data.title)));
+
+            // Find dirty rows and retrieve their data anew
+            rowList.items.forEach(rowItem => {
+                const data = rowItem.data;
+                rows.push([data.id].concat(data.content));
+            });
+        }
+
+        // Download CSV
+        const csvStr = csvFormatRows(rows);
+        const blob = new Blob([ csvStr ], { type: 'text/csv' });
+        const now = new Date();
+        const dateStr = now.format('%Y%m%d');
+        const timeStr = now.format('%H%m%S');
+        const a = document.createElement('a');
+        a.setAttribute('href', URL.createObjectURL(blob));
+        a.setAttribute('download', `${dateStr}_${timeStr}.csv`);
+        a.style.display = 'none';
+
+        document.body.appendChild(a);
+
+        a.click();
+
+        document.body.removeChild(a);
     }
 }

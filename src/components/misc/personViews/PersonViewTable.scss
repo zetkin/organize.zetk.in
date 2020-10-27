@@ -28,6 +28,58 @@
     padding-bottom: 10rem;
 }
 
+.PersonViewTable-tools {
+    display: flex;
+    justify-content: flex-start;
+
+    margin: 0 0 0.5em;
+
+    .PersonViewTable-downloadButton {
+        margin-right: 1em;
+        padding-right: 1em;
+        border-right: 1px solid $c-ui-dark;
+
+        .Button {
+            &:before {
+                @include icon($fa-var-cloud-download);
+            }
+        }
+    }
+
+    .PersonViewTable-searchInput {
+        position: relative;
+        margin-right: 1em;
+
+        &:before {
+            @include icon($fa-var-search);
+            position: absolute;
+            font-size: 1.3em;
+            top: 0.4em;
+            left: 0.4em;
+        }
+
+        input {
+            @include input-base;
+            padding: 0.7em 0.5em 0.7em 2em;
+            margin-bottom: 0;
+        }
+    }
+
+    .PersonViewTable-pages {
+        margin-right: 1em;
+    }
+
+    .PersonViewTable-count {
+        span {
+            margin-right: 1em;
+        }
+
+        align-self: center;
+        color: $c-ui-dark;
+        font-style: italic;
+    }
+}
+
 .PersonViewTable-placeholder {
     background-color: darken($c-ui-bg, 4);
     padding: 2rem;
