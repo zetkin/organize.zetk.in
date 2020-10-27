@@ -221,9 +221,12 @@ export default class PersonViewTable extends React.Component {
         // Download CSV
         const csvStr = csvFormatRows(rows);
         const blob = new Blob([ csvStr ], { type: 'text/csv' });
+        const now = new Date();
+        const dateStr = now.format('%Y%m%d');
+        const timeStr = now.format('%H%m%S');
         const a = document.createElement('a');
         a.setAttribute('href', URL.createObjectURL(blob));
-        a.setAttribute('download', 'view.csv');
+        a.setAttribute('download', `${dateStr}_${timeStr}.csv`);
         a.style.display = 'none';
 
         document.body.appendChild(a);
