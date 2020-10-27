@@ -11,8 +11,8 @@ export default function DateColumnValue(props) {
             );
         }
         return (
-            <span><Msg id={ 'panes.import.settings.date.invalid' } /></span>
+            <Msg id="panes.import.settings.date.invalid" />
         );
     }
-    return <span></span>;
+    return null;
 }
