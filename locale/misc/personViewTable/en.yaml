@@ -1,2 +1,4 @@
 tools:
     downloadButton: Download .csv
+    search:
+        placeholder: Type to filter rows

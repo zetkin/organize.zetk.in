@@ -1,6 +1,6 @@
 import { csvFormatRows } from 'd3-dsv';
 import React from 'react';
-import { FormattedMessage as Msg } from 'react-intl';
+import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import Button from '../Button';
@@ -16,7 +16,16 @@ import {
 
 
 @connect()
+@injectIntl
 export default class PersonViewTable extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            searchStr: '',
+        };
+    }
+
     componentDidUpdate() {
         const { columnList, rowList, viewId } = this.props;
 
@@ -54,9 +63,26 @@ export default class PersonViewTable extends React.Component {
                     placeholder = <LoadingIndicator/>;
                 }
                 else if (rowList.items && rowList.items.length) {
+                    let visibleRows = rowList.items;
+
+                    if (this.state.searchStr && this.state.searchStr.length > 1) {
+                        const searchStr = this.state.searchStr.toLowerCase();
+
+                        visibleRows = visibleRows.filter(item => {
+                            return item.data.content.some(cell => {
+                                if (cell && cell.toLowerCase) {
+                                    return cell.toLowerCase().indexOf(searchStr) >= 0;
+                                }
+                                else {
+                                    return false;
+                                }
+                            });
+                        });
+                    }
+
                     tableBody = (
                         <tbody>
-                        {rowList.items.map(rowItem => (
+                        {visibleRows.map(rowItem => (
                             <PersonViewTableRow key={ rowItem.data.id }
                                 columnList={ colList }
                                 rowData={ rowItem.data }
@@ -96,11 +122,19 @@ export default class PersonViewTable extends React.Component {
         return (
             <div className="PersonViewTable">
                 <div className="PersonViewTable-tools">
-                    <Button
-                        className="PersonViewTable-downloadButton"
-                        labelMsg="misc.personViewTable.tools.downloadButton"
-                        onClick={ this.onClickDownload.bind(this) }
-                        />
+                    <div className="PersonViewTable-downloadButton">
+                        <Button
+                            labelMsg="misc.personViewTable.tools.downloadButton"
+                            onClick={ this.onClickDownload.bind(this) }
+                            />
+                    </div>
+                    <div className="PersonViewTable-searchInput">
+                        <input type="text"
+                            placeholder={ this.props.intl.formatMessage({ id: 'misc.personViewTable.tools.search.placeholder' }) }
+                            value={ this.state.searchStr }
+                            onChange={ ev => this.setState({ searchStr: ev.target.value }) }
+                            />
+                    </div>
                 </div>
                 <table>
                     { tableHead }

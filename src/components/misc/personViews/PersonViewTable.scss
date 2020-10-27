@@ -29,11 +29,36 @@
 }
 
 .PersonViewTable-tools {
+    display: flex;
+    justify-content: flex-start;
+
     margin: 0 0 0.5em;
 
     .PersonViewTable-downloadButton {
+        margin-right: 1em;
+
+        .Button {
+            &:before {
+                @include icon($fa-var-cloud-download);
+            }
+        }
+    }
+
+    .PersonViewTable-searchInput {
+        position: relative;
+        margin-right: 1em;
+
         &:before {
-            @include icon($fa-var-cloud-download);
+            @include icon($fa-var-search);
+            position: absolute;
+            font-size: 1.3em;
+            top: 0.4em;
+            left: 0.4em;
+        }
+
+        input {
+            @include input-base;
+            padding: 0.7em 0.5em 0.7em 2em;
         }
     }
 }
