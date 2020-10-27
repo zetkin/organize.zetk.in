@@ -68,6 +68,8 @@ report:
             other {# existing people updated}
         }
 settings:
+    date:
+        invalid: Date invalid
     personData:
         fields:
             city: City

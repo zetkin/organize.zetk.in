@@ -172,8 +172,11 @@ export default class ImporterColumnHead extends React.Component {
             } else if (value.indexOf('person_field.') === 0) {
                 props.type = 'person_field';
                 const field_id = value.substr(13);
+                const field = this.props.fieldTypes.items.
+                        find(f => f.data.id == field_id);
                 props.config = {
                     field_id: field_id,
+                    field_type: field.data.type,
                 }
             }
 
