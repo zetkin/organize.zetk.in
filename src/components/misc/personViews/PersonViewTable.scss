@@ -28,6 +28,16 @@
     padding-bottom: 10rem;
 }
 
+.PersonViewTable-tools {
+    margin: 0 0 0.5em;
+
+    .PersonViewTable-downloadButton {
+        &:before {
+            @include icon($fa-var-cloud-download);
+        }
+    }
+}
+
 .PersonViewTable-placeholder {
     background-color: darken($c-ui-bg, 4);
     padding: 2rem;

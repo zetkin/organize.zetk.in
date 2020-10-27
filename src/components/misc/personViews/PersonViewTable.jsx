@@ -1,7 +1,9 @@
+import { csvFormatRows } from 'd3-dsv';
 import React from 'react';
 import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
+import Button from '../Button';
 import LoadingIndicator from '../LoadingIndicator';
 import PersonSelectWidget from '../PersonSelectWidget';
 import PersonViewTableHead from './PersonViewTableHead';
@@ -93,6 +95,13 @@ export default class PersonViewTable extends React.Component {
 
         return (
             <div className="PersonViewTable">
+                <div className="PersonViewTable-tools">
+                    <Button
+                        className="PersonViewTable-downloadButton"
+                        labelMsg="misc.personViewTable.tools.downloadButton"
+                        onClick={ this.onClickDownload.bind(this) }
+                        />
+                </div>
                 <table>
                     { tableHead }
                     { tableBody }
@@ -101,5 +110,36 @@ export default class PersonViewTable extends React.Component {
                 { addSection }
             </div>
         );
+    }
+
+    onClickDownload() {
+        const { columnList, rowList, viewId } = this.props;
+
+        const rows = [];
+
+        if (columnList && columnList.items && rowList && rowList.items) {
+            // Start with the header
+            rows.push(['Zetkin ID'].concat(columnList.items.map(colItem => colItem.data.title)));
+
+            // Find dirty rows and retrieve their data anew
+            rowList.items.forEach(rowItem => {
+                const data = rowItem.data;
+                rows.push([data.id].concat(data.content));
+            });
+        }
+
+        // Download CSV
+        const csvStr = csvFormatRows(rows);
+        const blob = new Blob([ csvStr ], { type: 'text/csv' });
+        const a = document.createElement('a');
+        a.setAttribute('href', URL.createObjectURL(blob));
+        a.setAttribute('download', 'view.csv');
+        a.style.display = 'none';
+
+        document.body.appendChild(a);
+
+        a.click();
+
+        document.body.removeChild(a);
     }
 }
