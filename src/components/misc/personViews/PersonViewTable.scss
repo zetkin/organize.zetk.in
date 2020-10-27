@@ -36,6 +36,8 @@
 
     .PersonViewTable-downloadButton {
         margin-right: 1em;
+        padding-right: 1em;
+        border-right: 1px solid $c-ui-dark;
 
         .Button {
             &:before {
