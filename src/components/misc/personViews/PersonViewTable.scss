@@ -59,7 +59,22 @@
         input {
             @include input-base;
             padding: 0.7em 0.5em 0.7em 2em;
+            margin-bottom: 0;
         }
+    }
+
+    .PersonViewTable-pages {
+        margin-right: 1em;
+    }
+
+    .PersonViewTable-count {
+        span {
+            margin-right: 1em;
+        }
+
+        align-self: center;
+        color: $c-ui-dark;
+        font-style: italic;
     }
 }
 

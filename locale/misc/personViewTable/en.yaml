@@ -1,4 +1,9 @@
 tools:
+    count:
+        default: Showing {visible} rows
+        filtered: Showing {visible} rows ({total} total)
+        filteredPaginated: Showing {visible} of {matches} rows ({total} total)
+        paginated: Showing {visible} of {total} rows
     downloadButton: Download .csv
     search:
         placeholder: Type to filter rows

@@ -53,6 +53,9 @@ export default class PersonViewTable extends React.Component {
         let tableBody;
         let loadingIndicator;
         let pageSelect = null;
+        let numMatches;
+        let numTotal;
+        let numVisible;
 
         if (colList && colList.items) {
             tableHead = (
@@ -70,6 +73,9 @@ export default class PersonViewTable extends React.Component {
                 else if (rowList.items && rowList.items.length) {
                     let visibleRows = rowList.items;
 
+                    // Store total length for label
+                    numTotal = visibleRows.length;
+
                     if (this.state.searchStr && this.state.searchStr.length > 1) {
                         const searchStr = this.state.searchStr.toLowerCase();
 
@@ -84,6 +90,9 @@ export default class PersonViewTable extends React.Component {
                             });
                         });
                     }
+
+                    // Store match count for label
+                    numMatches = visibleRows.length;
 
                     if (visibleRows.length > MAX_PAGE_SIZE) {
                         const pageCount = Math.ceil(visibleRows.length / MAX_PAGE_SIZE);
@@ -102,6 +111,9 @@ export default class PersonViewTable extends React.Component {
                         const endIndex = (this.state.page + 1) * MAX_PAGE_SIZE;
                         visibleRows = visibleRows.slice(startIndex, endIndex);
                     }
+
+                    // Store final count of visible rows for label
+                    numVisible = visibleRows.length;
 
                     tableBody = (
                         <tbody>
@@ -142,6 +154,17 @@ export default class PersonViewTable extends React.Component {
             </div>
         ) : null;
 
+        let countMsgId = 'misc.personViewTable.tools.count.default';
+        if (this.state.searchStr && pageSelect) {
+            countMsgId = 'misc.personViewTable.tools.count.filteredPaginated';
+        }
+        else if (this.state.searchStr) {
+            countMsgId = 'misc.personViewTable.tools.count.filtered';
+        }
+        else if (pageSelect) {
+            countMsgId = 'misc.personViewTable.tools.count.paginated';
+        }
+
         return (
             <div className="PersonViewTable">
                 <div className="PersonViewTable-tools">
@@ -159,6 +182,15 @@ export default class PersonViewTable extends React.Component {
                             />
                     </div>
                     { pageSelect }
+                    <div className="PersonViewTable-count">
+                        { numVisible?
+                        <Msg id={ countMsgId }
+                            values={{
+                                visible: numVisible,
+                                matches: numMatches,
+                                total: numTotal,
+                            }}/> : null }
+                    </div>
                 </div>
                 <table>
                     { tableHead }
