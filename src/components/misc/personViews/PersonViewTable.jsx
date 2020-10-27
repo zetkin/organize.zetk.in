@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import Button from '../Button';
 import LoadingIndicator from '../LoadingIndicator';
+import PageSelect from '../PageSelect';
 import PersonSelectWidget from '../PersonSelectWidget';
 import PersonViewTableHead from './PersonViewTableHead';
 import PersonViewTableRow from './PersonViewTableRow';
@@ -15,6 +16,8 @@ import {
 } from '../../../actions/personView';
 
 
+const MAX_PAGE_SIZE = 500;
+
 @connect()
 @injectIntl
 export default class PersonViewTable extends React.Component {
@@ -22,6 +25,7 @@ export default class PersonViewTable extends React.Component {
         super(props);
 
         this.state = {
+            page: 0,
             searchStr: '',
         };
     }
@@ -48,6 +52,7 @@ export default class PersonViewTable extends React.Component {
         let tableHead;
         let tableBody;
         let loadingIndicator;
+        let pageSelect = null;
 
         if (colList && colList.items) {
             tableHead = (
@@ -78,6 +83,24 @@ export default class PersonViewTable extends React.Component {
                                 }
                             });
                         });
+                    }
+
+                    if (visibleRows.length > MAX_PAGE_SIZE) {
+                        const pageCount = Math.ceil(visibleRows.length / MAX_PAGE_SIZE);
+
+                        pageSelect = (
+                            <div className="PersonViewTable-pages">
+                                <PageSelect
+                                    page={ this.state.page }
+                                    pageCount={ pageCount }
+                                    onChange={ page => this.setState({ page }) }
+                                    />
+                            </div>
+                        );
+
+                        const startIndex = this.state.page * MAX_PAGE_SIZE;
+                        const endIndex = (this.state.page + 1) * MAX_PAGE_SIZE;
+                        visibleRows = visibleRows.slice(startIndex, endIndex);
                     }
 
                     tableBody = (
@@ -132,9 +155,10 @@ export default class PersonViewTable extends React.Component {
                         <input type="text"
                             placeholder={ this.props.intl.formatMessage({ id: 'misc.personViewTable.tools.search.placeholder' }) }
                             value={ this.state.searchStr }
-                            onChange={ ev => this.setState({ searchStr: ev.target.value }) }
+                            onChange={ ev => this.setState({ searchStr: ev.target.value, page: 0 }) }
                             />
                     </div>
+                    { pageSelect }
                 </div>
                 <table>
                     { tableHead }
