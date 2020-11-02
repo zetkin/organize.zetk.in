@@ -328,17 +328,6 @@ class PersonTagColumnTemplate extends React.Component {
 }))
 class SurveyResponseColumnTemplate extends React.Component {
     componentDidUpdate(prevProps) {
-        // When selected, pick the first tag and propagate config
-        /*
-        if (this.props.selected && !prevProps.selected) {
-            const { tagList } = this.props;
-
-            if (tagList && tagList.items && tagList.items.length) {
-                this.onConfigChange('tag_id', tagList.items[0].data.id);
-            }
-        }
-        */
-
         const surveyId = this.props.config.survey_id;
         if (surveyId != prevProps.config.survey_id) {
             this.props.dispatch(retrieveSurvey(surveyId));
