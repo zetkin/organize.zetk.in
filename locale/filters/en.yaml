@@ -7,6 +7,7 @@ types:
     joinDate: Join date
     mostActive: Most active campaigners
     personData: Personal data
+    personField: Custom field
     personTags: Tags
     random: Random selection
     subQuery: Linked Smart Search query
