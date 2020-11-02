@@ -239,6 +239,16 @@ export default function personViews(state = null, action) {
             })
         });
     }
+    else if (action.type == types.ADD_PERSON_VIEW_ROW + '_REJECTED') {
+        const viewId = action.meta.viewId;
+        return Object.assign({}, state, {
+            rowsByView: Object.assign({}, state.rowsByView, {
+                [viewId]: Object.assign({}, state.rowsByView[viewId], {
+                    addIsPending: false,
+                }),
+            })
+        });
+    }
     else if (action.type == types.REMOVE_PERSON_VIEW_ROW + '_FULFILLED') {
         const viewId = action.meta.viewId;
         const personId = action.meta.personId;
