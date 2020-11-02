@@ -176,6 +176,7 @@ class PersonFieldColumnTemplate extends React.Component {
                     labelMsg="panes.addViewColumn.config.personField.field"
                     options={ fieldOptions }
                     value={ props.config.field }
+                    orderAlphabetically={ true }
                     onValueChange={ this.onConfigChange.bind(this) }
                     />
             </AssignmentTemplate>
