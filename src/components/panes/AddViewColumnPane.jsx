@@ -12,6 +12,7 @@ import { createPersonViewColumn } from '../../actions/personView';
 import { retrievePersonTags } from '../../actions/personTag';
 import { retrieveQueries } from '../../actions/query';
 import { retrieveSurveys, retrieveSurvey } from '../../actions/survey';
+import { retrieveFieldTypesForOrganization } from '../../actions/personField';
 
 
 const DEFAULT_CONFIGS = {
@@ -51,6 +52,7 @@ export default class AddViewColumnPane extends PaneBase {
         this.props.dispatch(retrievePersonTags());
         this.props.dispatch(retrieveQueries());
         this.props.dispatch(retrieveSurveys());
+        this.props.dispatch(retrieveFieldTypesForOrganization());
     }
 
     getPaneTitle(data) {
@@ -116,6 +118,9 @@ export default class AddViewColumnPane extends PaneBase {
 }
 
 
+@connect(state => ({
+    fieldTypes: state.personFields.fieldTypes,
+}))
 @injectIntl
 class PersonFieldColumnTemplate extends React.Component {
     componentDidMount() {
@@ -131,7 +136,7 @@ class PersonFieldColumnTemplate extends React.Component {
     render() {
         const props = this.props;
 
-        const FIELDS = [
+        const NATIVE_FIELDS = [
             'ext_id',
             'first_name',
             'last_name',
@@ -145,11 +150,21 @@ class PersonFieldColumnTemplate extends React.Component {
             'country',
         ];
 
-        const fieldOptions = FIELDS.reduce((options, field) => {
+        // Native fields
+        const fieldOptions = NATIVE_FIELDS.reduce((options, field) => {
             options[field] = props.intl.formatMessage(
                 { id: `panes.addViewColumn.config.personField.fieldOptions.${field}` });
             return options;
         }, {});
+
+        // Custom fields
+        if (this.props.fieldTypes && this.props.fieldTypes.items) {
+            this.props.fieldTypes.items
+                .filter(item => item.data.type != 'json')
+                .forEach(item => {
+                    fieldOptions[item.data.slug] = item.data.title;
+                });
+        }
 
         return (
             <AssignmentTemplate type="person_field"
@@ -161,6 +176,7 @@ class PersonFieldColumnTemplate extends React.Component {
                     labelMsg="panes.addViewColumn.config.personField.field"
                     options={ fieldOptions }
                     value={ props.config.field }
+                    orderAlphabetically={ true }
                     onValueChange={ this.onConfigChange.bind(this) }
                     />
             </AssignmentTemplate>
@@ -168,15 +184,23 @@ class PersonFieldColumnTemplate extends React.Component {
     }
 
     onConfigChange(attr, val) {
+        const { fieldTypes } = this.props;
+
         const column = {
             config: Object.assign({}, this.props.config, {
                 [attr]: val,
             })
         };
 
-        const field = column.config.field;
-        column.title = this.props.intl.formatMessage(
-            { id: `panes.addViewColumn.config.personField.fieldOptions.${field}` });
+        const slug = column.config.field;
+        const fieldItem = fieldTypes && fieldTypes.items && fieldTypes.items.find(item => item.data.slug == slug);
+        if (fieldItem) {
+            column.title = fieldItem.data.title;
+        }
+        else {
+            column.title = this.props.intl.formatMessage(
+                { id: `panes.addViewColumn.config.personField.fieldOptions.${slug}` });
+        }
 
         this.props.onChange(column);
     }
@@ -304,17 +328,6 @@ class PersonTagColumnTemplate extends React.Component {
 }))
 class SurveyResponseColumnTemplate extends React.Component {
     componentDidUpdate(prevProps) {
-        // When selected, pick the first tag and propagate config
-        /*
-        if (this.props.selected && !prevProps.selected) {
-            const { tagList } = this.props;
-
-            if (tagList && tagList.items && tagList.items.length) {
-                this.onConfigChange('tag_id', tagList.items[0].data.id);
-            }
-        }
-        */
-
         const surveyId = this.props.config.survey_id;
         if (surveyId != prevProps.config.survey_id) {
             this.props.dispatch(retrieveSurvey(surveyId));
