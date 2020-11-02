@@ -12,6 +12,7 @@ import { createPersonViewColumn } from '../../actions/personView';
 import { retrievePersonTags } from '../../actions/personTag';
 import { retrieveQueries } from '../../actions/query';
 import { retrieveSurveys, retrieveSurvey } from '../../actions/survey';
+import { retrieveFieldTypesForOrganization } from '../../actions/personField';
 
 
 const DEFAULT_CONFIGS = {
@@ -51,6 +52,7 @@ export default class AddViewColumnPane extends PaneBase {
         this.props.dispatch(retrievePersonTags());
         this.props.dispatch(retrieveQueries());
         this.props.dispatch(retrieveSurveys());
+        this.props.dispatch(retrieveFieldTypesForOrganization());
     }
 
     getPaneTitle(data) {
@@ -116,6 +118,9 @@ export default class AddViewColumnPane extends PaneBase {
 }
 
 
+@connect(state => ({
+    fieldTypes: state.personFields.fieldTypes,
+}))
 @injectIntl
 class PersonFieldColumnTemplate extends React.Component {
     componentDidMount() {
@@ -131,7 +136,7 @@ class PersonFieldColumnTemplate extends React.Component {
     render() {
         const props = this.props;
 
-        const FIELDS = [
+        const NATIVE_FIELDS = [
             'ext_id',
             'first_name',
             'last_name',
@@ -145,11 +150,21 @@ class PersonFieldColumnTemplate extends React.Component {
             'country',
         ];
 
-        const fieldOptions = FIELDS.reduce((options, field) => {
+        // Native fields
+        const fieldOptions = NATIVE_FIELDS.reduce((options, field) => {
             options[field] = props.intl.formatMessage(
                 { id: `panes.addViewColumn.config.personField.fieldOptions.${field}` });
             return options;
         }, {});
+
+        // Custom fields
+        if (this.props.fieldTypes && this.props.fieldTypes.items) {
+            this.props.fieldTypes.items
+                .filter(item => item.data.type != 'json')
+                .forEach(item => {
+                    fieldOptions[item.data.slug] = item.data.title;
+                });
+        }
 
         return (
             <AssignmentTemplate type="person_field"
@@ -168,15 +183,23 @@ class PersonFieldColumnTemplate extends React.Component {
     }
 
     onConfigChange(attr, val) {
+        const { fieldTypes } = this.props;
+
         const column = {
             config: Object.assign({}, this.props.config, {
                 [attr]: val,
             })
         };
 
-        const field = column.config.field;
-        column.title = this.props.intl.formatMessage(
-            { id: `panes.addViewColumn.config.personField.fieldOptions.${field}` });
+        const slug = column.config.field;
+        const fieldItem = fieldTypes && fieldTypes.items && fieldTypes.items.find(item => item.data.slug == slug);
+        if (fieldItem) {
+            column.title = fieldItem.data.title;
+        }
+        else {
+            column.title = this.props.intl.formatMessage(
+                { id: `panes.addViewColumn.config.personField.fieldOptions.${slug}` });
+        }
 
         this.props.onChange(column);
     }
