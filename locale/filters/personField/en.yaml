@@ -1,0 +1,13 @@
+labels:
+    days: days
+selectField: Choose a field to filter on
+timeframe:
+    label: Timeframe
+    options:
+        after: After a certain date
+        any: At any point in time
+        before: Before a certain date
+        between: Between certain dates
+        future: In the future
+        inlast: During the last few days
+        past: Before today
