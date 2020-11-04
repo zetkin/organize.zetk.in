@@ -238,7 +238,7 @@ export default class PersonViewsPane extends RootPaneBase {
 
     onClickDownload() {
         const viewId = this.getParam(0);
-        this.props.dispatch(exportPersonView(viewId));
+        this.props.dispatch(exportPersonView(viewId, this.state.query));
     }
 
     onClickNew() {

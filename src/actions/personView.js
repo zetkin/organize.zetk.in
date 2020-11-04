@@ -67,11 +67,15 @@ export function createPersonViewColumn(viewId, data) {
     };
 }
 
-export function exportPersonView(viewId) {
+export function exportPersonView(viewId, queryId) {
     return ({ getState }) => {
         const personViews = getState().personViews;
         const columnList = personViews.columnsByView[viewId];
-        const rowList = personViews.rowsByView[viewId];
+        let rowList = personViews.rowsByView[viewId];
+
+        if (queryId) {
+            rowList = personViews.matchesByViewAndQuery[viewId][queryId];
+        }
 
         const rows = [];
 
