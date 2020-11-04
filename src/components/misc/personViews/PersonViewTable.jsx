@@ -1,4 +1,3 @@
-import { csvFormatRows } from 'd3-dsv';
 import React from 'react';
 import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -203,36 +202,8 @@ export default class PersonViewTable extends React.Component {
     }
 
     onClickDownload() {
-        const { columnList, rowList, viewId } = this.props;
-
-        const rows = [];
-
-        if (columnList && columnList.items && rowList && rowList.items) {
-            // Start with the header
-            rows.push(['Zetkin ID'].concat(columnList.items.map(colItem => colItem.data.title)));
-
-            // Find dirty rows and retrieve their data anew
-            rowList.items.forEach(rowItem => {
-                const data = rowItem.data;
-                rows.push([data.id].concat(data.content));
-            });
+        if (this.props.onDownload) {
+            this.props.onDownload();
         }
-
-        // Download CSV
-        const csvStr = csvFormatRows(rows);
-        const blob = new Blob([ csvStr ], { type: 'text/csv' });
-        const now = new Date();
-        const dateStr = now.format('%Y%m%d');
-        const timeStr = now.format('%H%m%S');
-        const a = document.createElement('a');
-        a.setAttribute('href', URL.createObjectURL(blob));
-        a.setAttribute('download', `${dateStr}_${timeStr}.csv`);
-        a.style.display = 'none';
-
-        document.body.appendChild(a);
-
-        a.click();
-
-        document.body.removeChild(a);
     }
 }

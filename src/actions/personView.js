@@ -1,3 +1,5 @@
+import { csvFormatRows } from 'd3-dsv';
+
 import * as types from '.';
 
 
@@ -62,6 +64,44 @@ export function createPersonViewColumn(viewId, data) {
                 promise: z.resource('orgs', orgId, 'people', 'views', viewId, 'columns').post(data),
             }
         });
+    };
+}
+
+export function exportPersonView(viewId) {
+    return ({ getState }) => {
+        const personViews = getState().personViews;
+        const columnList = personViews.columnsByView[viewId];
+        const rowList = personViews.rowsByView[viewId];
+
+        const rows = [];
+
+        if (columnList && columnList.items && rowList && rowList.items) {
+            // Start with the header
+            rows.push(['Zetkin ID'].concat(columnList.items.map(colItem => colItem.data.title)));
+
+            // Add all rows
+            rowList.items.forEach(rowItem => {
+                const data = rowItem.data;
+                rows.push([data.id].concat(data.content));
+            });
+        }
+
+        // Download CSV
+        const csvStr = csvFormatRows(rows);
+        const blob = new Blob([ csvStr ], { type: 'text/csv' });
+        const now = new Date();
+        const dateStr = now.format('%Y%m%d');
+        const timeStr = now.format('%H%m%S');
+        const a = document.createElement('a');
+        a.setAttribute('href', URL.createObjectURL(blob));
+        a.setAttribute('download', `${dateStr}_${timeStr}.csv`);
+        a.style.display = 'none';
+
+        document.body.appendChild(a);
+
+        a.click();
+
+        document.body.removeChild(a);
     };
 }
 
