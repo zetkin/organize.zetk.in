@@ -7,4 +7,5 @@ timeframe:
         before: Before a certain date
         between: Between certain dates
         future: In the future
+        inlast: During the last few days
         past: Before today

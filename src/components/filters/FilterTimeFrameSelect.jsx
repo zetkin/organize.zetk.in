@@ -10,7 +10,7 @@ import IntInput from '../forms/inputs/IntInput';
 export default class FilterTimeFrameSelect extends React.Component {
     static defaultProps = {
         future: true,
-        inlast: false,
+        inlast: true,
     }
 
     constructor(props) {
