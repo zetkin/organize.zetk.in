@@ -12,7 +12,6 @@ import { retrieveQueries } from '../../../actions/query';
 import {
     addPersonViewRow,
     createPersonView,
-    exportPersonView,
     retrievePersonView,
     retrievePersonViewColumns,
     retrievePersonViewQuery,
@@ -238,7 +237,7 @@ export default class PersonViewsPane extends RootPaneBase {
 
     onClickDownload() {
         const viewId = this.getParam(0);
-        this.props.dispatch(exportPersonView(viewId, this.state.query));
+        this.openPane('confirmexport', viewId, this.state.query);
     }
 
     onClickNew() {

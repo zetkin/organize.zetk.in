@@ -28,6 +28,7 @@ import CallAssignmentTargetsPane from './CallAssignmentTargetsPane';
 import CampaignPane from './CampaignPane';
 import CanvassAssignmentPane from './CanvassAssignmentPane';
 import ConfirmImportPane from './ConfirmImportPane';
+import ConfirmExportPane from './ConfirmExportPane';
 import LinkSubmissionPane from './LinkSubmissionPane';
 import EditActionPane from './EditActionPane';
 import EditActivityPane from './EditActivityPane';
@@ -134,6 +135,7 @@ var _panes = {
     'joinform': JoinFormPane,
     'joinsubmission': JoinSubmissionPane,
     'confirmimport': ConfirmImportPane,
+    'confirmexport': ConfirmExportPane,
     'location': LocationPane,
     'mergepeople': MergePeoplePane,
     'moveparticipants': MoveParticipantsPane,

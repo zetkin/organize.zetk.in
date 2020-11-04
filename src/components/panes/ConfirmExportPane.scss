@@ -1,0 +1,13 @@
+.ConfirmExportPane {
+    h2 {
+        &:before {
+            @include icon($fa-var-warning);
+        }
+    }
+
+    .Button {
+        &:before {
+            @include icon($fa-var-cloud-download);
+        }
+    }
+}
