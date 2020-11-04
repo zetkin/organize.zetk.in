@@ -195,6 +195,7 @@ export default class PersonViewsPane extends RootPaneBase {
                             rowList={ rowList }
                             placeholder={ placeholder }
                             showAddSection={ this.state.viewMode == 'saved' }
+                            onDownload={ this.onClickDownload.bind(this) }
                             onPersonAdd={ person => this.props.dispatch(addPersonViewRow(viewId, person.id)) }
                             />
                     </div>
@@ -232,6 +233,11 @@ export default class PersonViewsPane extends RootPaneBase {
         else if (this.props.views.viewList.isPending) {
             return <LoadingIndicator/>;
         }
+    }
+
+    onClickDownload() {
+        const viewId = this.getParam(0);
+        this.openPane('confirmexport', viewId, this.state.query);
     }
 
     onClickNew() {
