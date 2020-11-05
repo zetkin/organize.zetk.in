@@ -1,0 +1,30 @@
+fields:
+    deleteButton: Delete
+    groups:
+        custom: Custom fields
+        person: Person fields
+    h: Form fields
+    labels:
+        alt_phone: Alt. phone number
+        city: City
+        co_address: C/O address
+        country: Country
+        email: E-mail
+        first_name: First name
+        gender: Gender
+        last_name: Last name
+        phone: Phone number
+        street_address: Street address
+        zip_code: Zip code
+    selectLabel: Pick a field to add
+summary:
+    access:
+        api: API only (no browser access)
+        embed: Can be embedded in other web pages
+        render: Can be accessed over the web
+    editLink: Edit settings
+token:
+    h: Secret API token
+    p: |-
+        This secret token can be used to integrate with a custom form on your website.
+        Keep it safe and only share it with your website developers!

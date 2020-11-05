@@ -7,6 +7,7 @@ import AddCallAssignmentPane from './AddCallAssignmentPane';
 import AddCampaignPane from './AddCampaignPane';
 import AddCanvassAssignmentPane from './AddCanvassAssignmentPane';
 import AddGroupPane from './AddGroupPane';
+import AddJoinFormPane from './AddJoinFormPane';
 import AddPersonPane from './AddPersonPane';
 import AddPersonTagPane from './AddPersonTagPane';
 import AddLocationPane from './AddLocationPane';
@@ -15,6 +16,7 @@ import AddSurveyPane from './AddSurveyPane';
 import AddSurveyQuestionPane from './AddSurveyQuestionPane';
 import AddSurveyTextBlockPane from './AddSurveyTextBlockPane';
 import AddQueryPane from './AddQueryPane';
+import AddViewColumnPane from './AddViewColumnPane';
 import AddressPane from './AddressPane';
 import AssignRoutePane from './AssignRoutePane';
 import AssignedRoutePane from './AssignedRoutePane';
@@ -26,6 +28,7 @@ import CallAssignmentTargetsPane from './CallAssignmentTargetsPane';
 import CampaignPane from './CampaignPane';
 import CanvassAssignmentPane from './CanvassAssignmentPane';
 import ConfirmImportPane from './ConfirmImportPane';
+import ConfirmExportPane from './ConfirmExportPane';
 import LinkSubmissionPane from './LinkSubmissionPane';
 import EditActionPane from './EditActionPane';
 import EditActivityPane from './EditActivityPane';
@@ -34,6 +37,7 @@ import EditCallerPane from './EditCallerPane';
 import EditCampaignPane from './EditCampaignPane';
 import EditCanvassAssignmentPane from './EditCanvassAssignmentPane';
 import EditGroupPane from './EditGroupPane';
+import EditJoinFormPane from './EditJoinFormPane';
 import EditLocationPane from './EditLocationPane';
 import EditLocationTagPane from './EditLocationTagPane';
 import EditPersonPane from './EditPersonPane';
@@ -44,10 +48,13 @@ import EditSurveyPane from './EditSurveyPane';
 import EditSurveyQuestionPane from './EditSurveyQuestionPane';
 import EditSurveyTextBlockPane from './EditSurveyTextBlockPane';
 import EditTextPane from './EditTextPane';
+import EditViewColumnPane from './EditViewColumnPane';
 import GroupPane from './GroupPane';
 import GroupMembersPane from './GroupMembersPane';
 import ImportActionsPane from './ImportActionsPane';
 import ImportLogPane from './ImportLogPane';
+import JoinFormPane from './JoinFormPane';
+import JoinSubmissionPane from './JoinSubmissionPane';
 import LocationPane from './LocationPane';
 import MergePeoplePane from './MergePeoplePane';
 import ImporterColumnPane from './ImporterColumnPane';
@@ -82,6 +89,7 @@ var _panes = {
     'addgroup': AddGroupPane,
     'addlocation': AddLocationPane,
     'addlocationtag': AddLocationTagPane,
+    'addjoinform': AddJoinFormPane,
     'addperson': AddPersonPane,
     'addpersontag': AddPersonTagPane,
     'addsurvey': AddSurveyPane,
@@ -89,6 +97,7 @@ var _panes = {
     'addsurveytextblock': AddSurveyTextBlockPane,
     'addquery': AddQueryPane,
     'address': AddressPane,
+    'addviewcolumn': AddViewColumnPane,
     'assignroute': AssignRoutePane,
     'assignedroute': AssignedRoutePane,
     'assignedroutevisits': AssignedRouteVisitsPane,
@@ -106,6 +115,7 @@ var _panes = {
     'editcampaign': EditCampaignPane,
     'editcanvassassignment': EditCanvassAssignmentPane,
     'editgroup': EditGroupPane,
+    'editjoinform': EditJoinFormPane,
     'editlocation': EditLocationPane,
     'editlocationtag': EditLocationTagPane,
     'editperson': EditPersonPane,
@@ -116,12 +126,16 @@ var _panes = {
     'editsurveyquestion': EditSurveyQuestionPane,
     'editsurveytextblock': EditSurveyTextBlockPane,
     'edittext': EditTextPane,
+    'editviewcolumn': EditViewColumnPane,
     'group': GroupPane,
     'groupmembers': GroupMembersPane,
     'importactions': ImportActionsPane,
     'importercolumn': ImporterColumnPane,
     'importlog': ImportLogPane,
+    'joinform': JoinFormPane,
+    'joinsubmission': JoinSubmissionPane,
     'confirmimport': ConfirmImportPane,
+    'confirmexport': ConfirmExportPane,
     'location': LocationPane,
     'mergepeople': MergePeoplePane,
     'moveparticipants': MoveParticipantsPane,

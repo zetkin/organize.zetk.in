@@ -15,6 +15,17 @@ import {
 @connect(state => ({ personTags: state.personTags }))
 @injectIntl
 export default class EditPersonTagPane extends PaneBase {
+
+    constructor(props) {
+        super(props);
+
+        const item = this.getRenderData().tagItem.data.title;
+        const shouldShowButton = Boolean(item);
+
+        this.state = {
+            shouldShowButton: shouldShowButton,
+        };
+    }
     componentDidMount() {
         super.componentDidMount();
 
@@ -48,6 +59,7 @@ export default class EditPersonTagPane extends PaneBase {
 
             return (
                 <PersonTagForm ref="form" tag= { tag }
+                    onValueChange={ this.onValueChange.bind(this) }
                     onSubmit={ this.onSubmit.bind(this) }/>
             );
         }
@@ -57,11 +69,15 @@ export default class EditPersonTagPane extends PaneBase {
     }
 
     renderPaneFooter(data) {
-        return (
-            <Button className="EditPersonTagPane-saveButton"
-                labelMsg="panes.editPersonTag.saveButton"
-                onClick={ this.onSubmit.bind(this) }/>
+        if (this.state.shouldShowButton) {
+            return (
+                <Button className="EditPersonTagPane-saveButton"
+                    labelMsg="panes.editPersonTag.saveButton"
+                    onClick={ this.onSubmit.bind(this) }/>
         );
+        } else {
+            return null;
+        }
     }
 
     onSubmit(ev) {
@@ -72,5 +88,11 @@ export default class EditPersonTagPane extends PaneBase {
 
         this.props.dispatch(updatePersonTag(tagId, values));
         this.closePane();
+    }
+
+    onValueChange(name, value) {
+        if (name === "title") {
+            this.setState({ shouldShowButton: !!value})
+        }
     }
 }

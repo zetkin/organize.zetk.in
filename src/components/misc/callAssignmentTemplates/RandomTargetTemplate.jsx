@@ -16,6 +16,7 @@ export default class RandomTargetTemplate extends React.Component {
     render() {
         return (
             <AssignmentTemplate type="randomTarget"
+                messagePath="panes.addCallAssignment.templates"
                 selected={ this.props.selected }
                 onSelect={ this.props.onSelect }>
 

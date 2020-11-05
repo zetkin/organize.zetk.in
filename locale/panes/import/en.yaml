@@ -18,6 +18,7 @@ column:
             phone: Phone number
             streetAddress: Street address
             zip: Zip code
+    customFields: Custom fields
     editSettingsLink: Edit column settings
     idFields: ID for merging
     otherFields: Other data
@@ -67,6 +68,8 @@ report:
             other {# existing people updated}
         }
 settings:
+    date:
+        invalid: Date invalid
     personData:
         fields:
             city: City
@@ -82,9 +85,9 @@ settings:
             zip: Zip code
         h: Select field
         instructions: What personal data is in this column?
-    personTag:
-        emptyLabel: Tags for empty rows
-        valueLabel: 'Tags for rows with value: {value}'
+    personField:
+      h: Select field
+      instructions: Which custom field is in this column?
     personGender:
         emptyLabel: Gender for empty rows
         female: Female
@@ -92,6 +95,10 @@ settings:
         other: Other
         unknown: Unknown
         valueLabel: 'Gender for rows with value: {value}'
+
+    personTag:
+        emptyLabel: Tags for empty rows
+        valueLabel: 'Tags for rows with value: {value}'
 summary:
     personTag:
         summary: |-

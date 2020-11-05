@@ -6,6 +6,7 @@ import cx from 'classnames';
 export default class InputBase extends React.Component {
     static propTypes = {
         name: React.PropTypes.string.isRequired,
+        label: React.PropTypes.string,
         labelMsg: React.PropTypes.string,
         initialValue: React.PropTypes.string,
         className: React.PropTypes.string
@@ -25,6 +26,10 @@ export default class InputBase extends React.Component {
                     id={ this.props.labelMsg }/>
             );
         }
+        else if (this.props.label) {
+            label = <label>{ this.props.label }</label>;
+        }
+
         return (
             <div className={ classes }>
                 { label }

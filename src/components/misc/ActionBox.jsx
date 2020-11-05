@@ -7,7 +7,7 @@ export default class ActionBox extends React.Component {
     static propTypes = {
         status: React.PropTypes.string,
         headerMsg: React.PropTypes.string,
-        content: React.PropTypes.object,
+        content: React.PropTypes.any,
         footer: React.PropTypes.object,
     };
 

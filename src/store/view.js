@@ -280,6 +280,22 @@ export default function viewState(state = null, action) {
             }),
         });
     }
+    else if (action.type == types.CREATE_JOIN_FORM + '_FULFILLED') {
+        return Object.assign({}, state, {
+            panes: state.panes.map(paneData => {
+                if (action.meta && paneData.id == action.meta.paneId) {
+                    return {
+                        id: '$' + makeRandomString(6),
+                        type: 'joinform',
+                        params: [ action.payload.data.data.id ],
+                    };
+                }
+                else {
+                    return paneData;
+                }
+            }),
+        });
+    }
     else if (action.type == types.MERGE_PERSON_DUPLICATES + '_FULFILLED') {
         // Close the relevant pane
         let openPanes = state.panes.filter(paneData => paneData.id != action.meta.paneId);
@@ -311,6 +327,20 @@ export default function viewState(state = null, action) {
         return Object.assign({}, state, {
             panes: state.panes.filter(paneData =>
                 paneData.id != action.meta.paneId),
+        });
+    }
+    else if (action.type == types.CREATE_PERSON_VIEW + '_FULFILLED') {
+        return Object.assign({}, state, {
+            panes: state.panes.map(paneData => {
+                if (paneData.type == 'views' && paneData.params[0] == 'new') {
+                    return Object.assign({}, paneData, {
+                        params: [action.payload.data.data.id],
+                    });
+                }
+                else {
+                    return paneData;
+                }
+            }),
         });
     }
     else if (action.type == types.RESET_IMPORT) {

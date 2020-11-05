@@ -1,0 +1,7 @@
+access: Availability
+accessOptions:
+    api: API only (no web access)
+    embed: Can be embedded in other web pages
+    render: Basic web access through Zetkin
+description: Description
+title: Title

@@ -1,12 +1,14 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import cx from 'classnames';
+import { connect } from 'react-redux';
 
 import Link from '../Link';
 import { resolveSummaryComponent } from './summary';
 
 
 @injectIntl
+@connect(state => ({ fieldTypes: state.personFields.fieldTypes }))
 export default class ImporterColumnHead extends React.Component {
     static propTypes = {
         column: React.PropTypes.object.isRequired,
@@ -36,6 +38,13 @@ export default class ImporterColumnHead extends React.Component {
             'person_tag': col('colOptions.complex.tag'),
         };
 
+        const FIELD_OPTIONS = this.props.fieldTypes.items.reduce((obj, field) => {
+            if(field.data.type !== 'json') {
+                obj['person_field.' + field.data.id] = field.data.title;
+            }
+            return obj;
+        }, {});
+
         let column = this.props.column;
         let type = column.type;
 
@@ -48,6 +57,8 @@ export default class ImporterColumnHead extends React.Component {
             type = 'person.' + column.config.field;
         } else if(type == 'person_gender') {
             type = 'person.gender';
+        } else if(type == 'person_field') {
+            type = 'person_field.' + column.config.field_id;
         }
 
         // Show column name, or if none exists, the name of the selected field,
@@ -55,6 +66,7 @@ export default class ImporterColumnHead extends React.Component {
         let name = column.name
             || PERSON_OPTIONS[type]
             || COMPLEX_OPTIONS[type]
+            || FIELD_OPTIONS[type]
             || 'n/a';
 
         let summary = null;
@@ -73,6 +85,8 @@ export default class ImporterColumnHead extends React.Component {
 
         let otherFieldsLabel = formatMessage(
             { id: 'panes.import.column.otherFields' });
+        let customFieldsLabel = formatMessage(
+            { id: 'panes.import.column.customFields' });
 
         let isUnknown = (type == "unknown" ? "unknown" : "");
 
@@ -98,12 +112,21 @@ export default class ImporterColumnHead extends React.Component {
                             { PERSON_OPTIONS[value] }</option>
                     )) }
                     </optgroup>
+                    { Object.keys(FIELD_OPTIONS).length ?
+                        <optgroup label={ customFieldsLabel }>
+                        { Object.keys(FIELD_OPTIONS).map(value => (
+                            <option key={ value } value={ value }>
+                                { FIELD_OPTIONS[value] }</option>
+                        )) }
+                        </optgroup>
+                        : null
+                    }
                     <optgroup label={ otherFieldsLabel }>
                     { Object.keys(COMPLEX_OPTIONS).map(value => (
                         <option key={ value } value={ value }>
                             { COMPLEX_OPTIONS[value] }</option>
                     )) }
-                    </optgroup>
+                    </optgroup> 
                 </select>
                 <div className="ImporterColumnHead-summary">
                     { summary }
@@ -146,6 +169,15 @@ export default class ImporterColumnHead extends React.Component {
                     // Field is whatever comes after the dot
                     field: value.substr(7),
                 };
+            } else if (value.indexOf('person_field.') === 0) {
+                props.type = 'person_field';
+                const field_id = value.substr(13);
+                const field = this.props.fieldTypes.items.
+                        find(f => f.data.id == field_id);
+                props.config = {
+                    field_id: field_id,
+                    field_type: field.data.type,
+                }
             }
 
             this.props.onChangeColumn(columnId, props);

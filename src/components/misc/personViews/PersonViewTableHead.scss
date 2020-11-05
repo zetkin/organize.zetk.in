@@ -1,0 +1,88 @@
+.PersonViewTableHead {
+    th {
+        padding: 0.5em;
+
+        font-size: 0.8em;
+        font-weight: normal;
+        text-align: left;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        cursor: pointer;
+
+    }
+
+    .PersonViewTableHead-column {
+        &:before {
+            content: "";
+            display: inline-block;
+            width: 0;
+            opacity: 0;
+
+            transition: width 0.1s, opacity 0.1s 0.05s;
+        }
+
+        &:hover {
+            &:before {
+                @include icon($fa-var-pencil);
+                opacity: 1;
+            }
+        }
+    }
+
+    .PersonViewTableHead-newColumn {
+        min-width: 14em;
+        max-width: 14em;
+        text-align: center;
+        padding-left: 1em;
+        padding-right: 1em;
+        border: 2px dashed rgba(0,0,0, 0.2);
+        color: $c-ui-dark;
+
+        cursor: pointer;
+
+        transition: color 0.2s, border-color 0.2s;
+
+        &:hover {
+            color: $c-ui-darker;
+            border-color: rgba(0,0,0, 0.3);
+
+            position: relative;
+            &:after {
+                content: "";
+                display: block;
+                position: absolute;
+                top: 110%;
+                left: 0;
+                right: 0;
+                height: 8em;
+                background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0));
+            }
+        }
+    }
+}
+
+.PersonViewTableHead-avatarColumn,
+.PersonViewTableHead-savedColumn {
+    $w: 2.2rem;
+
+    width: $w;
+    min-width: $w;
+    max-width: $w;
+    background-color: white;
+}
+
+.PersonViewTableHead-savedColumn {
+    text-align: center;
+    &:before {
+        @include icon($fa-var-star-o);
+        color: $c-ui-darker;
+    }
+}
+
+.PersonViewTableHead-column {
+    background-color: white;
+    color: $c-ui-darker;
+}

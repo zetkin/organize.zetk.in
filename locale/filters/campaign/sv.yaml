@@ -21,4 +21,5 @@ timeframe:
         before: Före ett visst datum
         between: Mellan två datum
         future: I framtiden
+        inlast: De senaste dagarna
         past: Fram till idag

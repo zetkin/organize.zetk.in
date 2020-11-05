@@ -8,9 +8,19 @@ import Button from '../misc/Button';
 import { createPerson } from '../../actions/person';
 
 
-@connect(state => state)
+@connect(state => ({
+    fieldTypes: state.personFields.fieldTypes,
+}))
 @injectIntl
 export default class AddPersonPane extends PaneBase {
+    componentDidMount() {
+        super.componentDidMount();
+
+        if (!this.props.fieldTypes || !this.props.fieldTypes.items) {
+            this.props.dispatch(retrieveFieldTypesForOrganization());
+        }
+    }
+
     getPaneTitle(data) {
         return this.props.intl.formatMessage({ id: 'panes.addPerson.title' });
     }
@@ -24,6 +34,7 @@ export default class AddPersonPane extends PaneBase {
 
         return (
             <PersonForm ref="personForm" person={ initialData }
+                fieldTypes={ this.props.fieldTypes }
                 onSubmit={ this.onSubmit.bind(this) }/>
         );
     }

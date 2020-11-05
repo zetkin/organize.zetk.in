@@ -6,12 +6,14 @@ import PersonForm from '../forms/PersonForm';
 import Button from '../misc/Button';
 import DraggableAvatar from '../misc/DraggableAvatar';
 import LoadingIndicator from '../misc/LoadingIndicator';
+import { retrieveFieldTypesForOrganization } from '../../actions/personField';
 import { retrievePerson, updatePerson, deletePerson }
     from '../../actions/person';
 import { getListItemById } from '../../utils/store';
 
 
 const mapStateToProps = (state, props) => ({
+    fieldTypes: state.personFields.fieldTypes,
     personItem: getListItemById(
                     state.people.personList,
                     props.paneData.params[0])
@@ -27,6 +29,10 @@ export default class EditPersonPane extends PaneBase {
 
         if (!person) {
             this.props.dispatch(retrievePerson(personId));
+        }
+
+        if (!this.props.fieldTypes || !this.props.fieldTypes.items) {
+            this.props.dispatch(retrieveFieldTypesForOrganization());
         }
     }
 
@@ -48,6 +54,7 @@ export default class EditPersonPane extends PaneBase {
             else {
                 return [
                     <PersonForm key="form" ref="personForm"
+                        fieldTypes={ this.props.fieldTypes }
                         person={ this.props.personItem.data }
                         onSubmit={ this.onSubmit.bind(this) }/>,
 

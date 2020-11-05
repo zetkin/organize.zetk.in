@@ -1,0 +1,91 @@
+.JoinFormPane {
+    .InfoListItem-desc {
+        position: relative;
+        max-height: 8em;
+        overflow: hidden;
+        font-style: italic;
+
+        &::before {
+            @include icon($fa-var-info-circle);
+        }
+
+        &::after {
+            // Fade out if too long text
+            content:'';
+            width:100%;
+            height:100%;
+            position:absolute;
+            left:0;
+            top:0;
+            background:linear-gradient(transparent 4em, #f9f9f9);
+        }
+    }
+
+    .InfoListItem-access {
+        &::before {
+            @include icon($fa-var-eye);
+        }
+    }
+
+    .InfoListItem-editLink {
+        font-size: 1em;
+    }
+
+    .ReorderableItem {
+        cursor: grab;
+
+        .JoinFormPane-field {
+            @include card();
+            padding: 1em;
+            font-size: 1.1em;
+            margin: 0.5em 0;
+
+            &:before {
+                @include icon($fa-var-user);
+            }
+
+            &.custom {
+                &:before {
+                    @include icon($fa-var-puzzle-piece);
+                }
+            }
+        }
+    }
+
+    .JoinFormPane-deleteFieldButton {
+        float: right;
+        color: $c-brand-delete;
+        max-width: 1.5em;
+        height: 1.5em;
+        overflow: hidden;
+        white-space: nowrap;
+
+        transition: max-width 0.4s;
+
+        &:before {
+            @include icon($fa-var-trash);
+        }
+
+        &:hover {
+            color: darken($c-brand-delete, 10);
+            max-width: 10em;
+        }
+    }
+
+    .JoinFormPane-addField {
+        text-align: center;
+        border: 2px dashed $c-ui-dark;
+        padding: 1em;
+        margin: 1em 0;
+    }
+
+    .ActionBox {
+        code {
+            display: block;
+            font-size: 1.4em;
+            margin: 0.5em 0 0;
+            padding: 0.2em 0.1em;
+            background-color: rgba(#fff,0.05);
+        }
+    }
+}

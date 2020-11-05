@@ -1,0 +1,104 @@
+.PersonViewTable {
+    table {
+        display: block;
+        overflow-x: scroll;
+    }
+
+    .person_query,
+    .person_tag {
+        max-width: 6em;
+        min-width: 6em;
+        text-align: center;
+    }
+
+    .person_field {
+        max-width: 10rem;
+        min-width: 10rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .survey_response {
+        width: auto;
+        max-width: 20rem;
+        min-width: 14rem;
+    }
+
+    padding-bottom: 10rem;
+}
+
+.PersonViewTable-tools {
+    display: flex;
+    justify-content: flex-start;
+
+    margin: 0 0 0.5em;
+
+    .PersonViewTable-downloadButton {
+        margin-right: 1em;
+        padding-right: 1em;
+        border-right: 1px solid $c-ui-dark;
+
+        .Button {
+            &:before {
+                @include icon($fa-var-cloud-download);
+            }
+        }
+    }
+
+    .PersonViewTable-searchInput {
+        position: relative;
+        margin-right: 1em;
+
+        &:before {
+            @include icon($fa-var-search);
+            position: absolute;
+            font-size: 1.3em;
+            top: 0.4em;
+            left: 0.4em;
+        }
+
+        input {
+            @include input-base;
+            padding: 0.7em 0.5em 0.7em 2em;
+            margin-bottom: 0;
+        }
+    }
+
+    .PersonViewTable-pages {
+        margin-right: 1em;
+    }
+
+    .PersonViewTable-count {
+        span {
+            margin-right: 1em;
+        }
+
+        align-self: center;
+        color: $c-ui-dark;
+        font-style: italic;
+    }
+}
+
+.PersonViewTable-placeholder {
+    background-color: darken($c-ui-bg, 4);
+    padding: 2rem;
+    text-align: center;
+
+    @include large-screen {
+        padding: 4rem 25%;
+    }
+
+    color: $c-ui-darker;
+
+    transition: background-color 0.2s;
+}
+
+.PersonViewTable-placeholder {
+    padding: 2rem;
+    text-align: center;
+
+    @include large-screen {
+        padding: 4rem 25%;
+    }
+}

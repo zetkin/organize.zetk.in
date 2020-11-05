@@ -1,0 +1,42 @@
+.JoinSubmissionPane {
+    .ActionBox {
+        &.done {
+            .ActionBox-header {
+                &:before {
+                    @include icon($fa-var-check);
+                }
+            }
+        }
+
+        .Button {
+            @include inline-button($icon: $fa-var-check);
+        }
+    }
+}
+
+.JoinSubmissionPane-person {
+    @include card;
+    display: flex;
+    padding: 0.5em;
+    cursor: pointer;
+    margin: 1em 0 0;
+
+    &:hover {
+        background-color: darken(white, 2);
+    }
+
+    .Avatar {
+        width: 4em;
+        height: 4em;
+        align-self: center;
+        flex-shrink: 0;
+        padding-top: 0;
+    }
+
+    .JoinSubmissionPane-personName {
+        display: inline-block;
+        margin: 0 0 0 0.5em;
+        font-size: 1.5em;
+        align-self: center;
+    }
+}

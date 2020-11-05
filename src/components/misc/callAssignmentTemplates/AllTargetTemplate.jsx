@@ -7,6 +7,7 @@ export default class AllTargetTemplate extends React.Component {
     render() {
         return (
             <AssignmentTemplate type="allTarget"
+                messagePath="panes.addCallAssignment.templates"
                 selected={ this.props.selected }
                 onSelect={ this.props.onSelect }>
             </AssignmentTemplate>

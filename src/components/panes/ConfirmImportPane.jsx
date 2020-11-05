@@ -2,6 +2,7 @@ import React from 'react';
 import isEmail from 'validator/lib/isEmail';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
+import getDate from '../../utils/getDate';
 
 import PaneBase from './PaneBase';
 import { getListItemById } from '../../utils/store';
@@ -11,7 +12,8 @@ import InfoList from '../misc/InfoList';
 
 const genderOptions = new Set(['f','m','o','_']);
 
-@connect(state => ({ importer: state.importer }))
+@connect(state => ({ importer: state.importer, 
+                     fieldTypes: state.personFields.fieldTypes }))
 @injectIntl
 export default class ConfirmImportPane extends PaneBase {
     getPaneTitle(data) {
@@ -20,18 +22,21 @@ export default class ConfirmImportPane extends PaneBase {
         } else {
             return this.props.intl.formatMessage({ id: 'panes.confirmImport.errorTitle' });
         }
-        
     }
 
     getFieldID(item) {
         if (item.data.type == "id") {
-            return item.data.config.origin;
+            return { type: item.data.config.origin, name: item.data.config.origin };
         } else if (item.data.type == "person_data") {
-            return item.data.config.field;
+            return { type: item.data.config.field, name: item.data.config.field };
         } else if (item.data.type == "person_tag") {
-            return item.data.type;
+            return { type: item.data.type };
+        } else if (item.data.type == "person_field") {
+            const field = this.props.fieldTypes.items.find((f) => 
+                f.data.id == item.data.config.field_id);
+            return { type: field.data.type, name: 'field.' + item.data.config.field_id };
         } else {
-            return "unknown_type";
+            return { type: "unknown_type" };
         }
     }
 
@@ -43,11 +48,11 @@ export default class ConfirmImportPane extends PaneBase {
                 continue;
             }
             // Create a reasonable key name
-            let typeName = this.getFieldID(items[i]);
-            if (typeName in typeCount) {
-                typeCount[typeName].push(i)
-            } else {
-                typeCount[typeName]= [i];
+            let column = this.getFieldID(items[i]);
+            if (column.name && column.name in typeCount) {
+                typeCount[column.name].push(i)
+            } else if(column.name) {
+                typeCount[column.name]= [i];
             }
         }
 
@@ -76,6 +81,10 @@ export default class ConfirmImportPane extends PaneBase {
     }
 
     addError(column, row, msgSuffix) {
+        if(this.props.importer.tableSet.tableList.items[0].data.useFirstRowAsHeader) {
+            // If first row is header, adjust the row
+            row = row + 1;
+        }
         if (column in this.errors) {
             this.errors[column].msgNumbers.rows.push(row);
         } else {
@@ -100,15 +109,15 @@ export default class ConfirmImportPane extends PaneBase {
             for (let colidx = 0; colidx < columns.length; colidx++) {
                 const column = this.getFieldID(columns[colidx]);
                 if(row.values[colidx]) {
-                    switch(column) {
+                    switch(column.type) {
                         case 'email':
                             if(!isEmail(row.values[colidx].trim()) && row.values[colidx] != '') {
-                                this.addError(column, rowidx+1, 'Invalid');
+                                this.addError(column.type, rowidx+1, 'Invalid');
                             }
                             break;
                         case 'gender':
                             if(!genderOptions.has(row.values[colidx]) && row.values[colidx] != '') {
-                                this.addError(column, rowidx+1, 'Invalid');
+                                this.addError(column.type, rowidx+1, 'Invalid');
                             }
                             break;
                         case 'first_name':
@@ -116,7 +125,7 @@ export default class ConfirmImportPane extends PaneBase {
                                 first_name = true;
                             }
                             if(row.values[colidx].length > 50) {
-                                this.addError(column, rowidx+1, 'TooLong');
+                                this.addError(column.type, rowidx+1, 'TooLong');
                             }
                             break;
                         case 'last_name':
@@ -125,32 +134,32 @@ export default class ConfirmImportPane extends PaneBase {
                             }
                         case 'city':
                             if(row.values[colidx].length > 50) {
-                                this.addError(column, rowidx+1, 'TooLong');
+                                this.addError(column.type, rowidx+1, 'TooLong');
                             }
                             break;
                         case 'phone':
                         case 'alt_phone':
                             if(row.values[colidx].length > 60) {
-                                this.addError(column, rowidx+1, 'TooLong');
+                                this.addError(column.type, rowidx+1, 'TooLong');
                             }
                             const value = row.values[colidx].replace(/[^\x00-\x7FåÅäÄöÖéÉèÈØøÆæ]/g, '');
                             if(!value.match(/^[0-9\-\−\–\—\+\s\(\)]*$/)) {
-                                this.addError(column, rowidx+1, 'Invalid');
+                                this.addError(column.type, rowidx+1, 'Invalid');
                             }
                             break;
                         case 'zip_code':
                             if(row.values[colidx].length > 10) {
-                                this.addError(column, rowidx+1, 'TooLong');
+                                this.addError(column.type, rowidx+1, 'TooLong');
                             }
                             break;
                         case 'country':
                             if(row.values[colidx].length > 60) {
-                                this.addError(column, rowidx+1, 'TooLong');
+                                this.addError(column.type, rowidx+1, 'TooLong');
                             }
                             break;
                         case 'external':
                             if(row.values[colidx].trim().length > 12) {
-                                this.addError(column, rowidx+1, 'TooLong');
+                                this.addError(column.type, rowidx+1, 'TooLong');
                             }
                             if(row.values[colidx].trim().length > 0) {
                                 id = true;
@@ -158,7 +167,7 @@ export default class ConfirmImportPane extends PaneBase {
                             break;
                         case 'zetkin':
                             if(!row.values[colidx].trim().match(/^[0-9]*$/)) {
-                                this.addError(column, rowidx+1, 'Invalid');
+                                this.addError(column.type, rowidx+1, 'Invalid');
                             }
                             if(row.values[colidx].trim().length > 0) {
                                 id = true;
@@ -167,8 +176,23 @@ export default class ConfirmImportPane extends PaneBase {
                         case 'co_address':
                         case 'street_address':
                             if(row.values[colidx].length > 120) {
-                                this.addError(column, rowidx+1, 'TooLong');
+                                this.addError(column.type, rowidx+1, 'TooLong');
                             }
+                            break;
+                        case 'date':
+                            if(!getDate(row.values[colidx])) {
+                                this.addError(column.type, rowidx+1, 'Invalid')
+                            }
+                            break;
+                        case 'url':
+                            try {
+                                new URL(row.values[colidx])
+                            } catch(err) {
+                                this.addError(column.type, rowidx+1, 'Invalid')
+                            }
+                            break;
+                        case 'text':
+                            // Anything goes
                             break;
                     }
                 }

@@ -34,8 +34,10 @@ subSections:
         groups: Groups
         import: Import
         invite: Invite
+        joining: Joining
         list: People
         manage: Manage
+        views: Views
     settings:
         officials: Officials
     survey:

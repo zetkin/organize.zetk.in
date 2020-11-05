@@ -1,0 +1,4 @@
+confirmButton: Download CSV
+p0: Avoid exporting data from Zetkin when you can, to make sure all data is kept in order.
+p1: Most organizing tasks can be taken care of in Zetkin. Exporting makes sense when you want to copy data to another system.
+title: Create CSV file?

@@ -1,0 +1,27 @@
+.JoinSubmissionList {
+    &.List {
+        max-width: 485px;
+    }
+
+    .ListHeader {
+        width: calc(100% + 9em);
+
+        li:nth-child(1) {
+            @include col(3,12);
+        }
+
+        li:nth-child(2) {
+            @include col(7,12);
+        }
+
+        li:nth-child(3) {
+            @include col(2,12);
+            text-align: right;
+        }
+    }
+
+    .ListItem {
+        margin-left: 9em;
+        padding: 0;
+    }
+}

@@ -11,6 +11,13 @@ import { createPersonTag } from '../../actions/personTag';
 @connect(state => state)
 @injectIntl
 export default class AddPersonTagPane extends PaneBase {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            shouldShowButton: false,
+        };
+    }
     getPaneTitle(data) {
         const formatMessage = this.props.intl.formatMessage;
         return formatMessage({ id: 'panes.addPersonTag.title' });
@@ -23,17 +30,22 @@ export default class AddPersonTagPane extends PaneBase {
 
         return (
             <PersonTagForm ref="form" tag={ initialData }
+                onValueChange={ this.onValueChange.bind(this) }
                 onSubmit={ this.onSubmit.bind(this) }/>
         );
     }
 
     renderPaneFooter(data) {
-        return (
-            <Button
-                labelMsg="panes.addPersonTag.saveButton"
-                onClick={ this.onSubmit.bind(this) }
-                className="AddPersonTagPane-saveButton"/>
-        );
+        if(this.state.shouldShowButton) {
+            return (
+                <Button
+                    labelMsg="panes.addPersonTag.saveButton"
+                    onClick={this.onSubmit.bind(this)}
+                    className="AddPersonTagPane-saveButton"/>
+            );
+        } else {
+            return null
+        }
     }
 
     onSubmit(ev) {
@@ -43,5 +55,10 @@ export default class AddPersonTagPane extends PaneBase {
 
         this.props.dispatch(createPersonTag(values));
         this.closePane();
+    }
+    onValueChange(name, value) {
+        if (name === "title") {
+            this.setState({ shouldShowButton: !!value})
+        }
     }
 }
