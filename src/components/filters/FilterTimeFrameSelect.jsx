@@ -113,6 +113,7 @@ export default class FilterTimeFrameSelect extends React.Component {
             case 'inlast':
                 days = this.state.days || '30';
                 after = `-${days}d`;
+                before = '+1d'; // Before is <, +1d here meanns including today
         }
 
         this.setState({ timeframe: value, before, after, days }, () =>
@@ -123,6 +124,7 @@ export default class FilterTimeFrameSelect extends React.Component {
         let stateChange = { [name]: value };
         if(name == 'days') {
             stateChange['after'] = `-${value}d`;
+            stateChange['before'] = '+1d';
         }
 
         this.setState(stateChange, () =>
@@ -151,7 +153,11 @@ function stateFromConfig(config) {
         inlast = config.after.match(/^-(\d+)d$/)
     }
 
-    if (config.before && config.after) {
+    if(config.after && inlast) {
+        state.timeframe = 'inlast';
+        state.days = inlast[1];
+    }
+    else if (config.before && config.after) {
         state.timeframe = 'between';
     }
     else if (config.before == 'now') {
@@ -162,11 +168,7 @@ function stateFromConfig(config) {
     }
     else if (config.after == 'now') {
         state.timeframe = 'future';
-    }
-    else if(config.after && inlast) {
-        state.timeframe = 'inlast';
-        state.days = inlast[1];
-    }
+    } 
     else if (config.after) {
         state.timeframe = 'after';
     }
