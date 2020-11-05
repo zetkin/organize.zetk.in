@@ -150,6 +150,7 @@ export default class CallHistoryFilter extends FilterBase {
 
         if (this.state.timeframe == 'inlast') {
             after = '-' + this.state.days + 'd';
+            before = '+1d';
         }
 
         const cfg = {
@@ -235,21 +236,19 @@ function stateFromConfig(config) {
     }
 
     state.timeframe = 'any';
-    if (config.before && config.after) {
+    let match = /-([0-9]*)d/.exec(config.after);
+    if(config.after && match) {
+        state.timeframe = 'inlast';
+        state.days = match[1];
+    }
+    else if (config.before && config.after) {
         state.timeframe = 'between';
     }
     else if (config.before) {
         state.timeframe = 'before';
     }
     else if (config.after) {
-        let match = /-([0-9]*)d/.exec(config.after);
-        if (match) {
-            state.timeframe = 'inlast';
-            state.days = match[1];
-        }
-        else {
-            state.timeframe = 'after';
-        }
+        state.timeframe = 'after';
     }
 
     return state;

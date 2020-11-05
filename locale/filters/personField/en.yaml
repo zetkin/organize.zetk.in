@@ -1,4 +1,6 @@
-size: Number of most active people
+labels:
+    days: days
+selectField: Choose a field to filter on
 timeframe:
     label: Timeframe
     options:

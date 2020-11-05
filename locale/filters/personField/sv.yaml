@@ -1,7 +1,6 @@
-dateOptions:
-    after: Efter ett visst datum
-    any: Närsomhelst
-survey: Enkät
+labels:
+    days: dagar
+selectField: Välj ett fält att söka på 
 timeframe:
     label: Tidsram
     options:
@@ -11,4 +10,4 @@ timeframe:
         between: Mellan två datum
         future: I framtiden
         inlast: De senaste dagarna
-        past: I det förflutna
+        past: Fram till idag

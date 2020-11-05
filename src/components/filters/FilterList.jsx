@@ -62,6 +62,7 @@ export default class FilterList extends React.Component {
             'campaign_participation': msg('filters.types.campaignParticipation'),
             'most_active': msg('filters.types.mostActive'),
             'person_data': msg('filters.types.personData'),
+            'person_field': msg('filters.types.personField'),
             'person_tags': msg('filters.types.personTags'),
             'random': msg('filters.types.random'),
             'sub_query': msg('filters.types.subQuery'),

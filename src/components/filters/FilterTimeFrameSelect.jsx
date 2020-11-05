@@ -1,14 +1,16 @@
 import React from 'react';
-import { injectIntl } from 'react-intl';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 
 import SelectInput from '../forms/inputs/SelectInput';
 import DateInput from '../forms/inputs/DateInput';
+import IntInput from '../forms/inputs/IntInput';
 
 
 @injectIntl
 export default class FilterTimeFrameSelect extends React.Component {
     static defaultProps = {
         future: true,
+        inlast: true,
     }
 
     constructor(props) {
@@ -29,10 +31,25 @@ export default class FilterTimeFrameSelect extends React.Component {
             'after': msg('options.after'),
             'before': msg('options.before'),
             'between': msg('options.between'),
+            'inlast': msg('options.inlast'),
         };
 
         if (!this.props.future) {
             delete DATE_OPTIONS['future'];
+        }
+        if (!this.props.inlast) {
+            delete DATE_OPTIONS['inlast'];
+        }
+
+        let daysInput = null;
+        if (timeframe == 'inlast') {
+            daysInput = (
+                <div className="FilterTimeFrameSelect-days">
+                    <IntInput key="days" name="days" value={ this.state.days }
+                        onValueChange={ this.onChangeSimpleField.bind(this) }/>
+                    <Msg tagName="label" id="filters.personField.labels.days"/>
+                </div>
+            );
         }
 
         let afterInput = null;
@@ -64,6 +81,7 @@ export default class FilterTimeFrameSelect extends React.Component {
 
                 { afterInput }
                 { beforeInput }
+                { daysInput }
             </div>
         );
     }
@@ -71,6 +89,7 @@ export default class FilterTimeFrameSelect extends React.Component {
     onSelectTimeframe(name, value) {
         let before = undefined;
         let after = undefined;
+        let days = undefined;
         let today = Date.create();
         let todayStr = today.format('{yyyy}-{MM}-{dd}');
 
@@ -91,14 +110,24 @@ export default class FilterTimeFrameSelect extends React.Component {
                 after = todayStr;
                 before = today.addDays(30).format('{yyyy}-{MM}-{dd}');
                 break;
+            case 'inlast':
+                days = this.state.days || '30';
+                after = `-${days}d`;
+                before = '+1d'; // Before is <, +1d here meanns including today
         }
 
-        this.setState({ timeframe: value, before, after }, () =>
+        this.setState({ timeframe: value, before, after, days }, () =>
             this.dispatchChange());
     }
 
     onChangeSimpleField(name, value) {
-        this.setState({ [name]: value }, () =>
+        let stateChange = { [name]: value };
+        if(name == 'days') {
+            stateChange['after'] = `-${value}d`;
+            stateChange['before'] = '+1d';
+        }
+
+        this.setState(stateChange, () =>
             this.dispatchChange());
     }
 
@@ -119,7 +148,16 @@ function stateFromConfig(config) {
         timeframe: 'any',
     };
 
-    if (config.before && config.after) {
+    let inlast;
+    if(config.after) {
+        inlast = config.after.match(/^-(\d+)d$/)
+    }
+
+    if(config.after && inlast) {
+        state.timeframe = 'inlast';
+        state.days = inlast[1];
+    }
+    else if (config.before && config.after) {
         state.timeframe = 'between';
     }
     else if (config.before == 'now') {
@@ -130,7 +168,7 @@ function stateFromConfig(config) {
     }
     else if (config.after == 'now') {
         state.timeframe = 'future';
-    }
+    } 
     else if (config.after) {
         state.timeframe = 'after';
     }
