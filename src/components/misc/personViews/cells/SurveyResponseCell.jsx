@@ -23,7 +23,9 @@ const truncText = (s, maxLength=200) => {
 export default function SurveyResponseCell(props) {
     let responses = null;
     if (props.content && props.content.length) {
-        responses = props.content.map(response => (
+        const lines = props.content.filter(line => !!line.text && !!line.text.length);
+
+        responses = lines.map(response => (
             <div key={ response.submission_id }
                 className="SurveyResponseCell-response"
                 onClick={ () => props.openPane('surveysubmission', response.submission_id) }>
