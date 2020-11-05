@@ -8,6 +8,7 @@ import Form from '../forms/Form';
 import SelectInput from '../forms/inputs/SelectInput';
 import TextInput from '../forms/inputs/TextInput';
 import DateInput from '../forms/inputs/DateInput';
+import { retrieveFieldTypesForOrganization } from '../../actions/personField';
 
 
 @injectIntl
@@ -24,6 +25,16 @@ export default class PersonFieldFilter extends FilterBase {
                 this.props.fieldTypes.items.find(f => f.data.slug == this.props.config.field) : null,
             config: this.props.config || {},
         };
+    }
+
+    componentDidMount() {
+        super.componentDidMount();
+
+        const fieldTypes = this.props.fieldTypes;
+
+        if (!fieldTypes || !fieldTypes.items || !fieldTypes.items.length) {
+            this.props.dispatch(retrieveFieldTypesForOrganization());
+        }
     }
 
     renderFilterForm(config) {
