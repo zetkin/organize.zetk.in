@@ -40,7 +40,7 @@ export default class JoinFormForm extends React.Component {
         return (
             <Form className="JoinFormForm" ref="form" { ...this.props }>
                 <TextInput labelMsg="forms.joinForm.title" name="title"
-                    initialValue={ form.title }/>
+                    initialValue={ form.title } maxLength={ 120 }/>
                 <TextArea labelMsg="forms.joinForm.description" name="description"
                     initialValue={ form.description }/>
                 {/*

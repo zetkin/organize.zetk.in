@@ -29,7 +29,6 @@ export default class PersonViewColumnForm extends React.Component {
                 <Form key="form" ref="form" { ...this.props }>
                     <TextInput labelMsg="forms.personViewColumn.title" name="title"
                         initialValue={ column.title }/>
-
                     <TextArea labelMsg="forms.personViewColumn.description" name="description"
                         initialValue={ column.description || '' }/>
                 </Form>
