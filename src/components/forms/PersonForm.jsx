@@ -25,32 +25,31 @@ export default class PersonForm extends React.Component {
 
             const nativeFields = [
                 <TextInput labelMsg="forms.person.externalId" key="ext_id" name="ext_id"
-                    initialValue={ person.ext_id }/>,
+                    initialValue={ person.ext_id } maxLength={12}/>,
                 <TextInput labelMsg="forms.person.firstName" key="first_name" name="first_name"
-                    initialValue={ person.first_name }/>,
+                    initialValue={ person.first_name } maxLength={50}/>,
                 <TextInput labelMsg="forms.person.lastName" key="last_name" name="last_name"
-                    initialValue={ person.last_name }/>,
+                    initialValue={ person.last_name } maxLength={50}/>,
                 <SelectInput labelMsg="forms.person.gender" key="gender" name="gender"
                     options={ genderOptions }
                     optionLabelsAreMessages={ true }
                     initialValue={ person.gender }/>,
                 <TextInput labelMsg="forms.person.email" key="email" name="email"
-                    initialValue={ person.email }/>,
+                    initialValue={ person.email } maxLength={75}/>,
                 <TextInput labelMsg="forms.person.phone" key="phone" name="phone"
-                    initialValue={ person.phone }/>,
+                    initialValue={ person.phone } maxLength={60}/>,
                 <TextInput labelMsg="forms.person.altPhone" key="alt_phone" name="alt_phone"
-                    initialValue={ person.alt_phone }/>,
-
+                    initialValue={ person.alt_phone } maxLength={60}/>,
                 <TextInput labelMsg="forms.person.coAddress" key="co_address" name="co_address"
-                    initialValue={ person.co_address }/>,
+                    initialValue={ person.co_address } maxLength={120}/>,
                 <TextInput labelMsg="forms.person.streetAddress" key="street_address" name="street_address"
-                    initialValue={ person.street_address }/>,
+                    initialValue={ person.street_address } maxLength={120}/>,
                 <TextInput labelMsg="forms.person.zip" key="zip_code" name="zip_code"
-                    initialValue={ person.zip_code }/>,
+                    initialValue={ person.zip_code } maxLength={10}/>,
                 <TextInput labelMsg="forms.person.city" key="city" name="city"
-                    initialValue={ person.city }/>,
+                    initialValue={ person.city } maxLength={50}/>,
                 <TextInput labelMsg="forms.person.country" key="country" name="country"
-                    initialValue={ person.country }/>,
+                    initialValue={ person.country } maxLength={60}/>,
             ];
 
             const allFields = nativeFields.concat(fieldTypes.items
