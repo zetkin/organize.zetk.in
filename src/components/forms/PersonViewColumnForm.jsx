@@ -28,7 +28,7 @@ export default class PersonViewColumnForm extends React.Component {
             <div className="PersonViewColumnForm">
                 <Form key="form" ref="form" { ...this.props }>
                     <TextInput labelMsg="forms.personViewColumn.title" name="title"
-                        initialValue={ column.title }/>
+                        initialValue={ column.title } maxLength={ 80 }/>
                     <TextArea labelMsg="forms.personViewColumn.description" name="description"
                         initialValue={ column.description || '' }/>
                 </Form>

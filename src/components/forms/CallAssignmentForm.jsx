@@ -31,7 +31,7 @@ export default class CallAssignmentForm extends React.Component {
         return (
             <Form className="CallAssignmentForm" ref="form" { ...this.props }>
                 <TextInput labelMsg="forms.callAssignment.title" name="title"
-                    initialValue={ assignment.title }/>
+                    initialValue={ assignment.title } maxLength={ 64 }/>
                 <TextArea labelMsg="forms.callAssignment.description" name="description"
                     initialValue={ assignment.description }/>
 

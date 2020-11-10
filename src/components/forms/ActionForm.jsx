@@ -68,7 +68,7 @@ export default class ActionForm extends React.Component {
                     onEdit={ this.props.onEditActivity }
                     initialValue={ action.activity.id }/>
                 <TextInput labelMsg="forms.action.title" name="title"
-                    initialValue={ action.title }/>
+                    initialValue={ action.title } maxLength={ 300 }/>
                 <TextArea labelMsg="forms.action.info" name="info_text"
                     initialValue={ action.info_text }/>
 

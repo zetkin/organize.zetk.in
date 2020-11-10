@@ -12,7 +12,7 @@ export default class ActivityForm extends React.Component {
         return (
             <Form ref="form" {...this.props }>
                 <TextInput labelMsg="forms.activity.title" name="title"
-                    initialValue={ activity.title }/>
+                    initialValue={ activity.title } maxLength={ 50 }/>
                 <TextArea labelMsg="forms.activity.description" name="info_text"
                     initialValue={ activity.info_text }/>
             </Form>
