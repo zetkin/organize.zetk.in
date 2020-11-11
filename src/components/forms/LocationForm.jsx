@@ -12,7 +12,7 @@ export default class LocationForm extends React.Component {
         return (
             <Form ref="form" { ...this.props }>
                 <TextInput labelMsg="forms.location.title" name="title"
-                    initialValue={ loc.title }/>
+                    initialValue={ loc.title } maxLength={ 100 }/>
 
                 <TextArea labelMsg="forms.location.info" name="info_text"
                     initialValue={ loc.info_text }/>

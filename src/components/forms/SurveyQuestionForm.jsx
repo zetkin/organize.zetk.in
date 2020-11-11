@@ -76,7 +76,7 @@ export default class SurveyQuestionForm extends React.Component {
                 { ...this.props }>
                 <TextInput name="question"
                     labelMsg="forms.surveyQuestion.question"
-                    initialValue={ question.question }/>
+                    initialValue={ question.question } maxLength={ 256 }/>
                 <TextArea name="description"
                     labelMsg="forms.surveyQuestion.description"
                     initialValue={ question.description }/>

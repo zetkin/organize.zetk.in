@@ -12,7 +12,7 @@ export default class RouteForm extends React.Component {
         return (
             <Form ref="form" {...this.props }>
                 <TextInput labelMsg="forms.route.title" name="title"
-                    initialValue={ route.title }/>
+                    initialValue={ route.title } maxLength={ 200 }/>
                 <TextArea labelMsg="forms.route.description" name="info_text"
                     initialValue={ route.info_text }/>
             </Form>

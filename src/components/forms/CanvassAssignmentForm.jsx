@@ -24,7 +24,7 @@ export default class CanvassAssignmentForm extends React.Component {
         return (
             <Form className="CanvassAssignmentForm" ref="form" { ...this.props }>
                 <TextInput labelMsg="forms.canvassAssignment.title" name="title"
-                    initialValue={ assignment.title }/>
+                    initialValue={ assignment.title } maxLength={ 100 }/>
                 <TextArea labelMsg="forms.canvassAssignment.description" name="description"
                     initialValue={ assignment.description }/>
 

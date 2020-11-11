@@ -5,8 +5,9 @@ import InputBase from './InputBase';
 
 @injectIntl
 export default class TextInput extends InputBase {
+
     renderInput() {
-        let placeholder;
+        let placeholder; 
 
         if(this.props.placeholder) {
             placeholder = this.props.intl.formatMessage(
@@ -14,7 +15,7 @@ export default class TextInput extends InputBase {
         }
 
         return (
-            <input type="text" value={ this.props.value }
+            <input type="text" maxLength={ this.props.maxLength } value={ this.props.value }
                 placeholder={ placeholder }
                 onChange={ this.onChange.bind(this) }/>
         );
