@@ -10,7 +10,7 @@ export default class InputBase extends React.Component {
         labelMsg: React.PropTypes.string,
         initialValue: React.PropTypes.string,
         className: React.PropTypes.string,
-        maxLength: React.PropTypes.int
+        maxLength: React.PropTypes.number
     };
 
     constructor(props) {
