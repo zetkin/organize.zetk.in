@@ -6,10 +6,6 @@ import InputBase from './InputBase';
 @injectIntl
 export default class TextInput extends InputBase {
 
-    constructor(props) {
-    super(props);
-    }
-
     renderInput() {
         let placeholder; 
 
