@@ -18,7 +18,7 @@ export default class TextInput extends InputBase {
                 { id: this.props.placeholder });
         }
 
-        const maxLength = this.props.maxLength ? this.props.maxLength : 0
+        const maxLength = this.props.maxLength ? this.props.maxLength : null
 
         return (
             <input type="text" maxLength={ maxLength } value={ this.props.value }
