@@ -40,7 +40,7 @@ export default class PersonViewsPane extends RootPaneBase {
     }
 
     componentDidMount() {
-        super.componentDidMount();
+        super.componentDidMount(); 
 
         const viewId = this.getParam(0);
         if (viewId && viewId != 'new') {
@@ -174,6 +174,7 @@ export default class PersonViewsPane extends RootPaneBase {
                             content={ viewItem.data.title }
                             onChange={ this.onChange.bind(this, 'title') }
                             placeholder={ this.props.intl.formatMessage({ id: 'panes.personViews.placeholders.title' }) }
+                            maxLength={ 5 }
                             />
                         <EditableText tagName="p" key="description"
                             content={ viewItem.data.description }
