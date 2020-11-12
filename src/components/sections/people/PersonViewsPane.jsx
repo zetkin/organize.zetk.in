@@ -174,7 +174,7 @@ export default class PersonViewsPane extends RootPaneBase {
                             content={ viewItem.data.title }
                             onChange={ this.onChange.bind(this, 'title') }
                             placeholder={ this.props.intl.formatMessage({ id: 'panes.personViews.placeholders.title' }) }
-                            maxLength={ 5 }
+                            maxLength={ 80 }
                             />
                         <EditableText tagName="p" key="description"
                             content={ viewItem.data.description }
@@ -292,7 +292,7 @@ export default class PersonViewsPane extends RootPaneBase {
             [attr]: value,
         };
 
-        this.props.dispatch(updatePersonView(viewId, data));
+        this.props.dispatch(updatePersonView(viewId, data));       
     }
 
     onQueryCreate(title) {

@@ -8,7 +8,6 @@ export default class EditableText extends React.Component {
 
         this.state = {
             editing: false,
-            content: "",
         };
     }
 
@@ -53,7 +52,6 @@ export default class EditableText extends React.Component {
                 } else {
                     ev.target.innerText = this.state.content
                 }
-                this.props.onChange()            
             },
             dangerouslySetInnerHTML: {
                 __html: this.state.editing ? this.props.content : (this.props.content || this.props.placeholder),
