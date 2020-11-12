@@ -46,23 +46,17 @@ export default class EditableText extends React.Component {
                 });
             },
             onInput: ev => {
-                let text = ev.target.innerText;
-                if (text.length <= this.props.maxLength) {
+                if (this.props.maxLength && ev.target.innerText.length <= this.props.maxLength) {
                     this.setState({
-                        content: text,
+                        content: ev.target.innerText,
                     });
                 } else {
-                    text = this.state.content
+                    ev.target.innerText = this.state.content
                 }
-                console.log(this.state.content)
-
-                const content = this.state.content;
-                if(this.props.maxLength && value.length > this.props.maxLength) {
-                    return
-                }   this.props.onChange(attr, value);   
+                this.props.onChange()            
             },
             dangerouslySetInnerHTML: {
-                __html: this.state.editing? this.props.content : (this.props.content || this.props.placeholder),
+                __html: this.state.editing ? this.props.content : (this.props.content || this.props.placeholder),
             },
         };
 
