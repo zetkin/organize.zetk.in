@@ -59,6 +59,15 @@ export default class EditableText extends React.Component {
                     });
                 };
             },
+            onKeyDown: () => {
+                if (this.props.onKeyDown) {
+                    document.addEventListener('keydown', ev => {
+                        if (ev.key === 'Enter') {
+                            ev.preventDefault()
+                        }
+                    });
+                }
+            },
             dangerouslySetInnerHTML: {
                 __html: this.state.editing? this.props.content : (this.props.content || this.props.placeholder),
             },
