@@ -174,7 +174,7 @@ export default class PersonViewsPane extends RootPaneBase {
                             content={ viewItem.data.title }
                             onChange={ this.onChange.bind(this, 'title') }
                             placeholder={ this.props.intl.formatMessage({ id: 'panes.personViews.placeholders.title' }) }
-                            onKeyDown={ true }
+                            preventEnter={ true }
                             maxLength={ 80 }
                             />
                         <EditableText tagName="p" key="description"
