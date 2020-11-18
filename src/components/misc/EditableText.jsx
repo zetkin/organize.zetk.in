@@ -47,7 +47,7 @@ export default class EditableText extends React.Component {
             onInput: ev => {
                 if (this.props.maxLength && ev.target.innerText.length <= this.props.maxLength) {
                     this.setState({
-                        input: ev.target.innerText
+                        input: ev.target.innerText.replace('\n', '')
                     });
                 }
                 else if (this.props.maxLength && ev.target.innerText.length > this.props.maxLength) {
