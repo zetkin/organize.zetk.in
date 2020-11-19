@@ -33,7 +33,7 @@ export default class EditableText extends React.Component {
                 this.setState(state);
             },
             onBlur: ev => {
-                const text = ev.target.innerText;
+                const text = ev.target.innerText.replace('\n', '');
                 if (text != this.props.content) {
                     if (this.props.onChange) {
                         this.props.onChange(text);
