@@ -26,10 +26,6 @@ export default class EditableText extends React.Component {
                     editing: true,
                 };
 
-                if (text != this.props.content && text == this.props.placeholder) {
-                    state.text = '';
-                }
-
                 this.setState(state);
             },
             onBlur: ev => {
