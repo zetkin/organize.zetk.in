@@ -33,8 +33,8 @@ export default class EditableText extends React.Component {
                 if (text != this.props.content) {
                     if (this.props.onChange) {
                         this.props.onChange(text);
-                    };
-                };
+                    }
+                }
 
                 this.setState({
                     editing: false,
@@ -45,13 +45,13 @@ export default class EditableText extends React.Component {
                     const regex = /^[\w\W]$/;
                     if (ev.key.match(regex)) {
                         ev.preventDefault()
-                    };
-                };
+                    }
+                }
                 if (this.props.preventEnter) {
                     if (ev.key === 'Enter') {
                         ev.preventDefault()
-                    };
-                };
+                    }
+                }
             },
             dangerouslySetInnerHTML: {
                 __html: this.state.editing? this.props.content : (this.props.content || this.props.placeholder),
