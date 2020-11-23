@@ -58,7 +58,7 @@ export function createPersonViewColumn(viewId, data) {
         const orgId = getState().org.activeId;
 
         if(data.title.length > 80) {
-          data.title = data.title.substring(0,77) + '...';
+            data.title = data.title.substring(0,77) + '...';
         }
 
         dispatch({
