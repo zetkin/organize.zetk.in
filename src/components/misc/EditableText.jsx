@@ -46,6 +46,12 @@ export default class EditableText extends React.Component {
                         ev.preventDefault()
                     }
                 }
+                if (ev.target.innerText.length > this.props.maxLength) {
+                    const regex = /^[\w\W ]$/;
+                    if (ev.key.match(regex)) {
+                        ev.preventDefault()
+                    }
+                }
             },
             dangerouslySetInnerHTML: {
                 __html: this.state.editing? this.props.content : (this.props.content || this.props.placeholder),
