@@ -41,7 +41,7 @@ export default class EditableText extends React.Component {
                 });
             },
             onKeyDown: (ev) => {
-                if (this.props.preventEnter) {
+                if (!this.props.multiline) {
                     if (ev.key === 'Enter') {
                         ev.preventDefault()
                     }
