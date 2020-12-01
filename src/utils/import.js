@@ -199,3 +199,29 @@ function guessColumnConfigFromName(name) {
         return { type, config };
     }
 }
+
+let flattenedOrgs = {};
+
+export function flattenOrgs(org, subOrgs) {
+    let orgData = org.data ? org.data : org;
+    let orgId = orgData.id;
+    if(flattenedOrgs[orgId]) {
+        // subOrgs given a specific orgId are unlikely to change during runtime
+        // to avoid unecessary caculations, cache the results per orgId
+        return flattenedOrgs[orgId];
+    }
+    let orgs = {};
+    // activeOrg contains no is_active attribute, hence allow undefined
+    if(orgData.is_active || orgData.is_active === undefined) {
+        orgs[orgId] = orgData.title;
+    }
+    if(subOrgs) {
+        subOrgs.forEach(o => {
+            const fo = flattenOrgs(o, o.data ? o.data.sub_orgs : o.sub_orgs);
+            orgs = {...orgs, ...fo};
+        })
+    }
+    flattenedOrgs[orgId] = orgs;
+    return orgs;
+}
+
