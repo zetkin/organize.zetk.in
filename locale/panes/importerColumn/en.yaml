@@ -1,6 +1,7 @@
 instructions: Select a column type and edit settings here.
 title: 'Settings for column: { column }'
 typeOptions:
+    organization: Organization
     personData: Personal data
     personField: Custom fields
     personTag: Tags

@@ -81,9 +81,6 @@ settings:
             zip: Postnummer
         h: Välj fält
         instructions: Vilka personuppgifter finns i den här kolumnen?
-    personTag:
-        emptyLabel: Etiketter för tomma rader
-        valueLabel: 'Etiketter för rader med värde: { value }'
     personGender:
         emptyLabel: Kön för tomma rader
         female: Kvinna
@@ -91,6 +88,12 @@ settings:
         other: Annat
         unknown: Okänd
         valueLabel: 'Kön för rader med värde: {value}'
+    personOrganization:
+        emptyLable: Organisation för tomma rader
+        valueLabel: 'Organisation för rader med värde: {value}'
+    personTag:
+        emptyLabel: Etiketter för tomma rader
+        valueLabel: 'Etiketter för rader med värde: { value }'
 summary:
     personTag:
         summary: |-

@@ -3,6 +3,7 @@ column:
     colOptions:
         complex:
             tag: Tags
+            organization: Organization
         id:
             external: External ID
             zetkin: Zetkin ID
@@ -95,7 +96,9 @@ settings:
         other: Other
         unknown: Unknown
         valueLabel: 'Gender for rows with value: {value}'
-
+    personOrganization:
+        emptyLable: Organization for emptry rows
+        valueLabel: 'Organization for rows with value: {value}'
     personTag:
         emptyLabel: Tags for empty rows
         valueLabel: 'Tags for rows with value: {value}'
