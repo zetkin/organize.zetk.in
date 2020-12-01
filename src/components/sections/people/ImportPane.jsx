@@ -17,6 +17,8 @@ import {
     retrieveImportLogs
 } from '../../../actions/importer';
 
+import { retrieveSubOrgsRecursive } from '../../../actions/subOrg'
+
 
 @connect(state => ({ importer: state.importer }))
 export default class ImportPane extends RootPaneBase {
@@ -35,6 +37,10 @@ export default class ImportPane extends RootPaneBase {
                 this.props.dispatch(retrieveImportLogs());
             }
         }
+    }
+
+    componentDidMount() {
+        this.props.dispatch(retrieveSubOrgsRecursive());
     }
 
     renderPaneContent(data) {
