@@ -37,6 +37,7 @@ import queries from './queries';
 import routes from './routes';
 import search from './search';
 import selections from './selections';
+import subOrgs from './subOrgs';
 import surveys from './surveys';
 import surveySubmissions from './surveySubmissions';
 import timelines from './timelines';
@@ -81,6 +82,7 @@ const appReducer = combineReducers({
     routes,
     search,
     selections,
+    subOrgs,
     surveys,
     surveySubmissions,
     timelines,
