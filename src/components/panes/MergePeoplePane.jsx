@@ -39,7 +39,7 @@ const NATIVE_FIELDS = [
     'phone',
     'co_address',
     'street_address',
-    'zip',
+    'zip_code',
     'city',
     'country',
 ];
