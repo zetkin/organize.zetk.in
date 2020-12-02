@@ -7,6 +7,7 @@ import Button from '../misc/Button';
 import PaneBase from './PaneBase';
 import PersonCollection from '../misc/personcollection/PersonCollection';
 import { PCDuplicateItem } from '../misc/personcollection/items';
+import { retrieveFieldTypesForOrganization } from '../../actions/personField';
 import {
     addDuplicatePerson,
     removeDuplicatePerson,
@@ -26,10 +27,11 @@ const mapStateToProps = (state, props) => {
 
     return {
         duplicateItem,
+        fieldTypes: state.personFields.fieldTypes,
     }
 };
 
-const OVERRIDE_FIELDS = [
+const NATIVE_FIELDS = [
     'ext_id',
     'first_name',
     'last_name',
@@ -42,6 +44,18 @@ const OVERRIDE_FIELDS = [
     'country',
 ];
 
+const fieldsFromProps = props => {
+    const fields = NATIVE_FIELDS.concat();
+
+    if (props.fieldTypes && props.fieldTypes.items) {
+        props.fieldTypes.items.forEach(item => {
+            fields.push(item.data);
+        });
+    }
+
+    return fields;
+};
+
 const stateFromProps = props => {
     let override = {};
     let objects = props.duplicateItem.data.objects.concat();
@@ -52,7 +66,7 @@ const stateFromProps = props => {
         return 0;
     });
 
-    OVERRIDE_FIELDS.forEach(field => {
+    fieldsFromProps(props).forEach(field => {
         // Get unique non-null values
         let values = objects
             .map(o => o[field])
@@ -88,6 +102,10 @@ export default class MergePeoplePane extends PaneBase {
         }
     }
 
+    componentDidMount() {
+        this.props.dispatch(retrieveFieldTypesForOrganization());
+    }
+
     componentWillReceiveProps(nextProps) {
         if (!this.props.duplicateItem && nextProps.duplicateItem) {
             this.setState(stateFromProps(nextProps));
@@ -99,12 +117,17 @@ export default class MergePeoplePane extends PaneBase {
             let canChange = false;
             let objects = this.props.duplicateItem.data.objects;
 
-            let overrideItems = OVERRIDE_FIELDS.map(field => {
-                let msgId = 'panes.mergePeople.override.fields.' + field;
-                let values = objects
-                    .map(o => o[field])
+            let overrideItems = fieldsFromProps(this.props).map(field => {
+                const fieldName = (typeof field === 'string')? field : field.slug;
+
+                if (field.type && field.type == 'json') {
+                    return null;
+                }
+
+                const values = objects
+                    .map(o => o[fieldName])
                     .filter(val => !!val)
-                    .map(val => val.trim())
+                    .map(val => val.trim? val.trim() : val)
                     .filter((val, idx, arr) => arr.lastIndexOf(val) === idx);
 
                 let valueElem = null;
@@ -117,8 +140,8 @@ export default class MergePeoplePane extends PaneBase {
                     ));
 
                     valueElem = (
-                        <select key={ field } value={ this.state.override[field] }
-                            onChange={ this.onOverrideChange.bind(this, field) }>
+                        <select key={ fieldName } value={ this.state.override[fieldName] }
+                            onChange={ this.onOverrideChange.bind(this, fieldName) }>
                             { options }
                         </select>
                     );
@@ -126,15 +149,27 @@ export default class MergePeoplePane extends PaneBase {
                 else if (values.length == 1) {
                     valueElem = <span>{ values[0] }</span>;
                 }
+                else {
+                    valueElem = <span>-</span>;
+                }
 
                 if (valueElem) {
                     let classes = cx('MergePeoplePane-fieldItem', {
                         multiple: values.length > 1,
                     });
 
+                    let label = null;
+                    if (typeof field === 'string') {
+                        const msgId = 'panes.mergePeople.override.fields.' + field;
+                        label = <Msg tagName="label" id={ msgId }/>;
+                    }
+                    else {
+                        label = <label>{ field.title }</label>;
+                    }
+
                     return (
-                        <li key={ field } className={ classes }>
-                            <Msg tagName="label" id={ msgId }/>
+                        <li key={ fieldName } className={ classes }>
+                            { label }
                             { valueElem }
                         </li>
                     );
