@@ -26,6 +26,8 @@ export default class PersonViewTable extends React.Component {
         this.state = {
             page: 0,
             searchStr: '',
+            sortIndex: null,
+            sortInverted: false,
         };
     }
 
@@ -62,6 +64,9 @@ export default class PersonViewTable extends React.Component {
                     viewId={ viewId }
                     columnList={ colList }
                     openPane={ this.props.openPane }
+                    sortIndex={ this.state.sortIndex }
+                    sortInverted={ this.state.sortInverted }
+                    onSort={ this.onSort.bind(this) }
                     />
             );
 
@@ -113,6 +118,22 @@ export default class PersonViewTable extends React.Component {
 
                     // Store final count of visible rows for label
                     numVisible = visibleRows.length;
+
+                    // Sort, if a column is selected for sorting
+                    if (this.state.sortIndex !== null) {
+                        visibleRows = visibleRows.concat().sort((row0, row1) => {
+                            const val0 = row0.data.content[this.state.sortIndex] || '';
+                            const val1 = row1.data.content[this.state.sortIndex] || '';
+
+                            let x = val0.toString().localeCompare(val1.toString());
+
+                            if (this.state.sortInverted) {
+                                x *= -1;
+                            }
+
+                            return x;
+                        });
+                    }
 
                     tableBody = (
                         <tbody>
@@ -199,6 +220,32 @@ export default class PersonViewTable extends React.Component {
                 { addSection }
             </div>
         );
+    }
+
+    onSort(idx) {
+        // Already sorting?
+        if (this.state.sortIndex == idx) {
+            if (this.state.sortInverted) {
+                // Already inverted. Reset sort!
+                this.setState({
+                    sortIndex: null,
+                    sortInverted: false,
+                });
+            }
+            else {
+                // Not inverted. Invert!
+                this.setState({
+                    sortInverted: true,
+                });
+            }
+        }
+        else {
+            // Not already sorting. Sort default (not inverted).
+            this.setState({
+                sortIndex: idx,
+                sortInverted: false,
+            });
+        }
     }
 
     onClickDownload() {
