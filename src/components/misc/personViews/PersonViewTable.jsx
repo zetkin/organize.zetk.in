@@ -38,6 +38,14 @@ export default class PersonViewTable extends React.Component {
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (!nextProps.rowList || !nextProps.rowList.items.length) {
+            this.setState({
+                scrollLeft: 0,
+            });
+        }
+    }
+
     componentDidUpdate() {
         const { columnList, rowList, viewId } = this.props;
 
