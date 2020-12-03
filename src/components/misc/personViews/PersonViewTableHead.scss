@@ -7,7 +7,6 @@
     th {
         padding: 0.5em;
 
-        font-size: 0.8em;
         font-weight: normal;
         text-align: left;
 
@@ -69,14 +68,15 @@
     }
 }
 
-.PersonViewTableHead-avatarColumn,
-.PersonViewTableHead-savedColumn {
+th.PersonViewTableHead-avatarColumn,
+th.PersonViewTableHead-savedColumn {
     $w: 2.2rem;
 
     width: $w;
     min-width: $w;
     max-width: $w;
     background-color: white;
+    text-align: center;
 }
 
 .PersonViewTableHead-savedColumn {
