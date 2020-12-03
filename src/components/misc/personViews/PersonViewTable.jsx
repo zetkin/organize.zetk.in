@@ -1,4 +1,3 @@
-import cx from 'classnames';
 import React from 'react';
 import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -7,6 +6,7 @@ import Button from '../Button';
 import LoadingIndicator from '../LoadingIndicator';
 import PageSelect from '../PageSelect';
 import PersonSelectWidget from '../PersonSelectWidget';
+import PersonViewAddRow from './PersonViewAddRow';
 import PersonViewTableHead from './PersonViewTableHead';
 import PersonViewTableRow from './PersonViewTableRow';
 import {
@@ -135,6 +135,10 @@ export default class PersonViewTable extends React.Component {
                                 onRemove={ row => this.props.dispatch(removePersonViewRow(viewId, row.id)) }
                                 />
                         ))}
+                            <PersonViewAddRow
+                                columnList={ colList }
+                                rowList={ this.props.rowList }
+                                onSelect={ this.props.onPersonAdd }/>
                         </tbody>
                     );
                 }
@@ -155,14 +159,6 @@ export default class PersonViewTable extends React.Component {
             );
         }
 
-        const addSection = this.props.showAddSection? (
-            <div className="PersonViewTable-addPerson">
-                <PersonSelectWidget
-                    isPending={ this.props.rowList && this.props.rowList.addIsPending }
-                    onSelect={ this.props.onPersonAdd }/>
-            </div>
-        ) : null;
-
         let countMsgId = 'misc.personViewTable.tools.count.default';
         if (this.state.searchStr && pageSelect) {
             countMsgId = 'misc.personViewTable.tools.count.filteredPaginated';
@@ -174,12 +170,8 @@ export default class PersonViewTable extends React.Component {
             countMsgId = 'misc.personViewTable.tools.count.paginated';
         }
 
-        const classes = cx('PersonViewTable', {
-            withAdd: !!addSection,
-        });
-
         return (
-            <div className={ classes }>
+            <div className="PersonViewTable">
                 <div className="PersonViewTable-tools">
                     <div className="PersonViewTable-downloadButton">
                         <Button
@@ -212,7 +204,6 @@ export default class PersonViewTable extends React.Component {
                     </table>
                 </div>
                 { placeholder }
-                { addSection }
             </div>
         );
     }

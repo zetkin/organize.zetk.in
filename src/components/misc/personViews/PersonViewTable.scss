@@ -92,13 +92,9 @@
             overflow: scroll;
         }
     }
-}
 
-.PersonViewTable.withAdd {
-    @include large-screen {
-        .PersonViewTable-table {
-            bottom: 100px;
-        }
+    table {
+        font-size: inherit;
     }
 }
 
