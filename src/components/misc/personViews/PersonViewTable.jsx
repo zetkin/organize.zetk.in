@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import React from 'react';
 import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -26,6 +27,14 @@ export default class PersonViewTable extends React.Component {
         this.state = {
             page: 0,
             searchStr: '',
+            scrollLeft: 0,
+        };
+
+        // Creating this here to avoid having to bind
+        this.onScroll = ev => {
+            this.setState({
+                scrollLeft: ev.target.scrollLeft,
+            });
         };
     }
 
@@ -62,6 +71,7 @@ export default class PersonViewTable extends React.Component {
                     viewId={ viewId }
                     columnList={ colList }
                     openPane={ this.props.openPane }
+                    scrollLeft={ this.state.scrollLeft }
                     />
             );
 
@@ -115,7 +125,7 @@ export default class PersonViewTable extends React.Component {
                     numVisible = visibleRows.length;
 
                     tableBody = (
-                        <tbody>
+                        <tbody onScroll={ this.onScroll }>
                         {visibleRows.map(rowItem => (
                             <PersonViewTableRow key={ rowItem.data.id }
                                 columnList={ colList }
@@ -164,8 +174,12 @@ export default class PersonViewTable extends React.Component {
             countMsgId = 'misc.personViewTable.tools.count.paginated';
         }
 
+        const classes = cx('PersonViewTable', {
+            withAdd: !!addSection,
+        });
+
         return (
-            <div className="PersonViewTable">
+            <div className={ classes }>
                 <div className="PersonViewTable-tools">
                     <div className="PersonViewTable-downloadButton">
                         <Button
@@ -191,10 +205,12 @@ export default class PersonViewTable extends React.Component {
                             }}/> : null }
                     </div>
                 </div>
-                <table>
-                    { tableHead }
-                    { tableBody }
-                </table>
+                <div className="PersonViewTable-table">
+                    <table>
+                        { tableHead }
+                        { tableBody }
+                    </table>
+                </div>
                 { placeholder }
                 { addSection }
             </div>

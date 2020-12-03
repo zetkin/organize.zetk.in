@@ -1,4 +1,9 @@
 .PersonViewTableHead {
+    @include large-screen {
+        position: absolute;
+        left: 0;
+    }
+
     th {
         padding: 0.5em;
 
@@ -33,11 +38,11 @@
     }
 
     .PersonViewTableHead-newColumn {
-        min-width: 14em;
-        max-width: 14em;
+        min-width: 12rem;
+        max-width: 12rem;
         text-align: center;
-        padding-left: 1em;
-        padding-right: 1em;
+        padding-left: 1rem;
+        padding-right: 1rem;
         border: 2px dashed rgba(0,0,0, 0.2);
         color: $c-ui-dark;
 

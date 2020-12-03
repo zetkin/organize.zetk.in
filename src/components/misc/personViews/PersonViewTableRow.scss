@@ -25,6 +25,14 @@
     }
 }
 
+.PersonViewTableRow-placeholder {
+    min-width: 12rem;
+    max-width: 12rem;
+    text-align: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
 .PersonViewTableRow {
     &.saved {
         .PersonViewTableRow-saved {

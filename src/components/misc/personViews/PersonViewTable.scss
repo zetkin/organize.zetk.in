@@ -1,13 +1,8 @@
 .PersonViewTable {
-    table {
-        display: block;
-        overflow-x: scroll;
-    }
-
     .person_query,
     .person_tag {
-        max-width: 6em;
-        min-width: 6em;
+        max-width: 6rem;
+        min-width: 6rem;
         text-align: center;
     }
 
@@ -80,12 +75,49 @@
     }
 }
 
+.PersonViewTable-table {
+    @include large-screen {
+        position: absolute;
+        top: 2.5rem;
+        right: 0;
+        left: 0;
+        bottom: 0;
+
+        tbody {
+            position: absolute;
+            top: 2.5em;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow: scroll;
+        }
+    }
+}
+
+.PersonViewTable.withAdd {
+    @include large-screen {
+        .PersonViewTable-table {
+            bottom: 100px;
+        }
+    }
+}
+
+.PersonViewTable-addPerson {
+    @include large-screen {
+        position: absolute;
+        bottom: 0;
+        left: 1em;
+        right: 1em;
+    }
+}
+
 .PersonViewTable-placeholder {
     background-color: darken($c-ui-bg, 4);
     padding: 2rem;
     text-align: center;
 
     @include large-screen {
+        margin-top: 3rem;
         padding: 4rem 25%;
     }
 
