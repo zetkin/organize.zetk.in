@@ -35,7 +35,17 @@
 
 .PersonViewTableRow {
     td {
+        $border-color: darken($c-ui-bg, 5);
         font-size: 1.2em;
+        padding: 0.2em 0.4em;
+        border-bottom: 1px solid $border-color;
+        border-right: 1px solid $border-color;
+    }
+
+    .PersonViewTableRow-avatar,
+    .PersonViewTableRow-saved {
+        padding: 0;
+        border-right: 1px solid transparent;
     }
 
     &.saved {
