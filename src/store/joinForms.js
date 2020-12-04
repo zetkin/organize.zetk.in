@@ -28,10 +28,6 @@ export default function joinForms(state = null, action) {
         });
     }
     else if (action.type == types.RETRIEVE_JOIN_SUBMISSIONS + '_FULFILLED') {
-        const filters = {
-            state: action.meta.state,
-            form: action.meta.formId,
-        };
         return Object.assign({}, state, {
             submissionList: createList(action.payload.data.data),
         });
