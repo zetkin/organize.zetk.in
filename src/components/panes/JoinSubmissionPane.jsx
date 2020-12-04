@@ -120,8 +120,13 @@ export default class JoinSubmissionPane extends PaneBase {
                     <ul className="JoinSubmissionPane-personData">
                     {this.props.formItem.data.fields.map(fieldName => {
                         const fieldItem = this.props.fieldTypes.items.find(item => item.data.slug == fieldName);
-                        const label = fieldItem? fieldItem.data.title : this.props.intl.formatMessage({ id: `misc.fields.${fieldName}` });
 
+                        // Exclude JSON fields
+                        if (fieldItem && fieldItem.data.type == 'json') {
+                            return null;
+                        }
+
+                        const label = fieldItem? fieldItem.data.title : this.props.intl.formatMessage({ id: `misc.fields.${fieldName}` });
                         const value = person[fieldName];
 
                         return (
