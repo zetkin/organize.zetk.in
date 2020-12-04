@@ -12,6 +12,20 @@
             @include inline-button($icon: $fa-var-check);
         }
     }
+
+    .InfoList {
+        .InfoListItem-form:before {
+            @include icon($fa-var-list);
+        }
+
+        .InfoListItem-submitted:before {
+            @include icon($fa-var-clock-o);
+        }
+
+        .InfoListItem-state:before {
+            @include icon($fa-var-check);
+        }
+    }
 }
 
 .JoinSubmissionPane-personData {
