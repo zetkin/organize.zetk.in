@@ -16,7 +16,7 @@ export default function PersonViewTableHead(props) {
     });
 
     return (
-        <thead className="PersonViewTableHead">
+        <thead className="PersonViewTableHead" style={{ left: -1 * props.scrollLeft }}>
             <tr>
                 <th className="PersonViewTableHead-avatarColumn"></th>
                 <th className="PersonViewTableHead-savedColumn"></th>

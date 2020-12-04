@@ -6,6 +6,7 @@ import Button from '../Button';
 import LoadingIndicator from '../LoadingIndicator';
 import PageSelect from '../PageSelect';
 import PersonSelectWidget from '../PersonSelectWidget';
+import PersonViewAddRow from './PersonViewAddRow';
 import PersonViewTableHead from './PersonViewTableHead';
 import PersonViewTableRow from './PersonViewTableRow';
 import {
@@ -26,7 +27,23 @@ export default class PersonViewTable extends React.Component {
         this.state = {
             page: 0,
             searchStr: '',
+            scrollLeft: 0,
         };
+
+        // Creating this here to avoid having to bind
+        this.onScroll = ev => {
+            this.setState({
+                scrollLeft: ev.target.scrollLeft,
+            });
+        };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (!nextProps.rowList || !nextProps.rowList.items.length) {
+            this.setState({
+                scrollLeft: 0,
+            });
+        }
     }
 
     componentDidUpdate() {
@@ -62,6 +79,7 @@ export default class PersonViewTable extends React.Component {
                     viewId={ viewId }
                     columnList={ colList }
                     openPane={ this.props.openPane }
+                    scrollLeft={ this.state.scrollLeft }
                     />
             );
 
@@ -115,7 +133,7 @@ export default class PersonViewTable extends React.Component {
                     numVisible = visibleRows.length;
 
                     tableBody = (
-                        <tbody>
+                        <tbody onScroll={ this.onScroll }>
                         {visibleRows.map(rowItem => (
                             <PersonViewTableRow key={ rowItem.data.id }
                                 columnList={ colList }
@@ -125,6 +143,10 @@ export default class PersonViewTable extends React.Component {
                                 onRemove={ row => this.props.dispatch(removePersonViewRow(viewId, row.id)) }
                                 />
                         ))}
+                            <PersonViewAddRow
+                                columnList={ colList }
+                                rowList={ this.props.rowList }
+                                onSelect={ this.props.onPersonAdd }/>
                         </tbody>
                     );
                 }
@@ -144,14 +166,6 @@ export default class PersonViewTable extends React.Component {
                 </div>
             );
         }
-
-        const addSection = this.props.showAddSection? (
-            <div className="PersonViewTable-addPerson">
-                <PersonSelectWidget
-                    isPending={ this.props.rowList && this.props.rowList.addIsPending }
-                    onSelect={ this.props.onPersonAdd }/>
-            </div>
-        ) : null;
 
         let countMsgId = 'misc.personViewTable.tools.count.default';
         if (this.state.searchStr && pageSelect) {
@@ -191,12 +205,13 @@ export default class PersonViewTable extends React.Component {
                             }}/> : null }
                     </div>
                 </div>
-                <table>
-                    { tableHead }
-                    { tableBody }
-                </table>
+                <div className="PersonViewTable-table">
+                    <table>
+                        { tableHead }
+                        { tableBody }
+                    </table>
+                </div>
                 { placeholder }
-                { addSection }
             </div>
         );
     }

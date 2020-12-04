@@ -25,9 +25,35 @@
     }
 }
 
+.PersonViewTableRow-placeholder {
+    min-width: 12rem;
+    max-width: 12rem;
+    text-align: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
 .PersonViewTableRow {
+    td {
+        $border-color: darken($c-ui-bg, 5);
+        font-size: 1.2em;
+        padding: 0.2em 0.4em;
+        border-bottom: 1px solid $border-color;
+        border-right: 1px solid $border-color;
+    }
+
+    .PersonViewTableRow-avatar,
+    .PersonViewTableRow-saved {
+        padding: 0;
+        border-right: 1px solid transparent;
+    }
+
     &.saved {
         .PersonViewTableRow-saved {
+            width: 2.2rem;
+            min-width: 2.2rem;
+            max-width: 2.2rem;
+
             &:before {
                 @include icon($fa-var-star);
                 color: $c-brand-comp-dark;
