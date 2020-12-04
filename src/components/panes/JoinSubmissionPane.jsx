@@ -48,13 +48,13 @@ export default class JoinSubmissionPane extends PaneBase {
         this.props.dispatch(retrieveFieldTypesForOrganization());
 
         if (this.props.subItem && this.props.subItem.data && !this.props.formItem) {
-            this.props.dispatch(retrieveJoinForm(nextProps.subItem.data.form.id));
+            this.props.dispatch(retrieveJoinForm(this.props.subItem.data.form.id));
         }
     }
 
     componentDidUpdate() {
         if (this.props.subItem && this.props.subItem.data && !this.props.formItem) {
-            this.props.dispatch(retrieveJoinForm(nextProps.subItem.data.form.id));
+            this.props.dispatch(retrieveJoinForm(this.props.subItem.data.form.id));
         }
     }
 
