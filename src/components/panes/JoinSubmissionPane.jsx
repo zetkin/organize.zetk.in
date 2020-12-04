@@ -12,8 +12,10 @@ import Button from '../misc/Button';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import { getListItemById } from '../../utils/store';
+import { retrieveFieldTypesForOrganization } from '../../actions/personField';
 import {
     acceptJoinSubmission,
+    retrieveJoinForm,
     retrieveJoinSubmission,
 } from '../../actions/joinForm';
 import InfoList from '../misc/InfoList';
@@ -21,10 +23,19 @@ import InfoList from '../misc/InfoList';
 
 const ADDR_FIELDS = [ 'co_address', 'street_address', 'zip_code', 'city', 'country' ];
 
-const mapStateToProps = (state, props) => ({
-    subItem: getListItemById(state.joinForms.submissionList,
-        props.paneData.params[0]),
-});
+const mapStateToProps = (state, props) => {
+    const subItem = getListItemById(state.joinForms.submissionList,
+        props.paneData.params[0]);
+
+    if (subItem) {
+        return {
+            fieldTypes: state.personFields.fieldTypes,
+            formItem: getListItemById(state.joinForms.formList,
+                subItem.data.form.id),
+            subItem: subItem,
+        }
+    }
+};
 
 @connect(mapStateToProps)
 @injectIntl
@@ -34,6 +45,17 @@ export default class JoinSubmissionPane extends PaneBase {
 
         const subId = this.getParam(0);
         this.props.dispatch(retrieveJoinSubmission(subId));
+        this.props.dispatch(retrieveFieldTypesForOrganization());
+
+        if (this.props.subItem && this.props.subItem.data && !this.props.formItem) {
+            this.props.dispatch(retrieveJoinForm(nextProps.subItem.data.form.id));
+        }
+    }
+
+    componentDidUpdate() {
+        if (this.props.subItem && this.props.subItem.data && !this.props.formItem) {
+            this.props.dispatch(retrieveJoinForm(nextProps.subItem.data.form.id));
+        }
     }
 
     getPaneTitle() {
@@ -52,19 +74,11 @@ export default class JoinSubmissionPane extends PaneBase {
     }
 
     renderPaneContent() {
-        const { subItem } = this.props;
+        const { formItem, fieldTypes, subItem } = this.props;
 
-        if (subItem) {
+        if (formItem && fieldTypes && subItem) {
             const state = subItem.data.state;
             const person = subItem.data.person_data;
-
-            let addrFields = ADDR_FIELDS.filter(f => person[f]).map(field => (
-                <span key={ field } className="JoinSubmissionPane-infoValue">
-                    { person[field] }
-                </span>
-            ));
-
-            const phoneNumbers = [ person.phone, person.alt_phone ].filter(pn => !!pn);
 
             let actionContent = null;
             let actionButton = null;
@@ -100,14 +114,28 @@ export default class JoinSubmissionPane extends PaneBase {
                 );
             }
 
+            const dataSection = (state == 'pending')? (
+                <div key="data">
+                    <Msg tagName="h3" id="panes.joinSubmission.data.h"/>
+                    <ul className="JoinSubmissionPane-personData">
+                    {this.props.formItem.data.fields.map(fieldName => {
+                        const fieldItem = this.props.fieldTypes.items.find(item => item.data.slug == fieldName);
+                        const label = fieldItem? fieldItem.data.title : this.props.intl.formatMessage({ id: `misc.fields.${fieldName}` });
+
+                        const value = person[fieldName];
+
+                        return (
+                            <li key={ fieldName }>
+                                <span className="JoinSubmissionPane-fieldLabel">{ label }</span>
+                                <span className="JoinSubmissionPane-fieldValue">{ value.toString() } </span>
+                            </li>
+                        );
+                    })}
+                    </ul>
+                </div>
+            ) : null;
+
             return [
-                <InfoList key="info"
-                    data={[
-                        { name: 'email', value: person.email },
-                        { name: 'phone', value: phoneNumbers.join(', ') },
-                        { name: 'address', value: addrFields.length? addrFields : null },
-                    ]}
-                />,
                 <div key="meta">
                     <Msg tagName="h3" id="panes.joinSubmission.meta.h"/>
                     <InfoList
@@ -121,6 +149,7 @@ export default class JoinSubmissionPane extends PaneBase {
                         ]}
                     />
                 </div>,
+                dataSection,
                 <ActionBox key="action"
                     status={ state == 'accepted'? 'done' : 'warning' }
                     headerMsg={ `panes.joinSubmission.action.${state}.h` }

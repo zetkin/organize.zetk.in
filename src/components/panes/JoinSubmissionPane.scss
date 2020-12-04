@@ -14,6 +14,24 @@
     }
 }
 
+.JoinSubmissionPane-personData {
+    border-bottom: 1px solid darken($c-ui-bg, 10);
+    padding-bottom: 1em;
+
+    li {
+        margin-bottom: 0.5em;
+    }
+
+    .JoinSubmissionPane-fieldLabel {
+        display: block;
+    }
+
+    .JoinSubmissionPane-fieldValue {
+        font-size: 1.4em;
+        display: block;
+    }
+}
+
 .JoinSubmissionPane-person {
     @include card;
     display: flex;
