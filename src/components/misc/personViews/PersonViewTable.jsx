@@ -79,9 +79,20 @@ export default class PersonViewTable extends React.Component {
                         const searchStr = this.state.searchStr.toLowerCase();
 
                         visibleRows = visibleRows.filter(item => {
-                            return item.data.content.some(cell => {
-                                if (cell && cell.toLowerCase) {
-                                    return cell.toLowerCase().indexOf(searchStr) >= 0;
+                            return item.data.content.some((cell, idx) => {
+                                const col = colList.items[idx].data;
+
+                                let text = null;
+
+                                if (cell && col.type == 'survey_response') {
+                                    text = cell.map(r => r.text).join('\n');
+                                }
+                                else if (typeof cell == 'string') {
+                                    text = cell;
+                                }
+
+                                if (text) {
+                                    return text.toLowerCase().indexOf(searchStr) >= 0;
                                 }
                                 else {
                                     return false;
