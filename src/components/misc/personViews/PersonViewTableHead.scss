@@ -15,10 +15,11 @@
         text-overflow: ellipsis;
 
         cursor: pointer;
-
     }
 
     .PersonViewTableHead-column {
+        position: relative;
+
         &:before {
             content: "";
             display: inline-block;
@@ -32,6 +33,52 @@
             &:before {
                 @include icon($fa-var-pencil);
                 opacity: 1;
+            }
+
+            .PersonViewTableHead-columnSort {
+                opacity: 1.0;
+            }
+        }
+
+        .PersonViewTableHead-columnSort {
+            opacity: 0;
+            display: block;
+            position: absolute;
+            right: 0.2rem;
+            top: 0.2rem;
+            bottom: 0.2rem;
+            padding-top: 0.2rem;
+            padding-left: 0.1rem;
+            background-color: rgba(white, 0.9);
+
+            transition: opacity 0.4s;
+
+            &:before {
+                opacity: 0.5;
+                @include icon($fa-var-sort);
+            }
+
+            &:hover {
+                &:before {
+                    opacity: 1.0;
+                }
+            }
+        }
+
+        &.sorted {
+            .PersonViewTableHead-columnSort {
+                opacity: 1.0;
+
+                &:before {
+                    opacity: 1.0;
+                    @include icon($fa-var-sort-asc);
+                }
+            }
+
+            &.inverted {
+                .PersonViewTableHead-columnSort:before {
+                    @include icon($fa-var-sort-desc);
+                }
             }
         }
     }
