@@ -6,6 +6,7 @@ import RootPaneBase from '../RootPaneBase';
 import Button from '../../misc/Button';
 import JoinFormList from '../../lists/JoinFormList';
 import JoinSubmissionList from '../../lists/JoinSubmissionList';
+import SelectInput from '../../forms/inputs/SelectInput';
 import ViewSwitch from '../../misc/ViewSwitch';
 import { getListItemById } from '../../../utils/store';
 import {
@@ -38,6 +39,39 @@ export default class JoiningPane extends RootPaneBase {
         this.props.dispatch(retrieveJoinSubmissions());
     }
 
+    getPaneFilters(data, filters) {
+        let formOptions = {}
+        if (this.props.formList && this.props.formList.items) {
+            this.props.formList.items.forEach(item => {
+                formOptions[item.data.id] = item.data.title;
+            });
+        }
+
+        return [
+            <div key="joinForm">
+                <Msg tagName="label" id="panes.joinSubmission.filters.joinForm.label"/>
+                <SelectInput name="joinForm"
+                    options={ formOptions }
+                    value={ filters.joinForm }
+                    nullOptionMsg="panes.joinSubmission.filters.joinForm.nullOption"
+                    orderAlphabetically={ true }
+                    onValueChange={ this.onFilterChange.bind(this) }
+                    />
+                <Msg tagName="label" id="panes.joinSubmission.filters.state.label"/>
+                <SelectInput name="state"
+                    value={ filters.state }
+                    nullOptionMsg="panes.joinSubmission.filters.state.nullOption"
+                    options={{
+                        'accepted': 'panes.joinSubmission.filters.state.accepted',
+                        'pending': 'panes.joinSubmission.filters.state.pending',
+                    }}
+                    optionLabelsAreMessages={ true }
+                    onValueChange={ this.onFilterChange.bind(this) }
+                    />
+            </div>
+        ];
+    }
+
     renderPaneContent(data) {
         if (this.state.viewMode == 'submissions') {
             return (
@@ -54,6 +88,24 @@ export default class JoiningPane extends RootPaneBase {
                     onItemClick={ item => this.openPane('joinform', item.data.id) }
                     />
             );
+        }
+    }
+
+    onLoadPage(page) {
+        const {filters} = this.state;
+        const joinForm = filters.joinForm ? filters.joinForm : null;
+
+        this.props.dispatch(retrieveJoinSubmissions(joinForm, filters.state, page));
+    }
+
+    onFiltersApply(filters) {
+        this.setState({ filters });
+
+        if (filters.joinForm) {
+            this.props.dispatch(retrieveJoinSubmissions(filters.joinForm, filters.state));
+        }
+        else {
+            this.props.dispatch(retrieveJoinSubmissions(null, filters.state));
         }
     }
 

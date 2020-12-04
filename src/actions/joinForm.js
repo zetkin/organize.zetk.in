@@ -94,14 +94,30 @@ export function retrieveJoinForms() {
     };
 }
 
-export function retrieveJoinSubmissions() {
+export function retrieveJoinSubmissions(formId = null, state = null, page = 0, perPage = 20) {
     return ({ dispatch, getState, z }) => {
+        const filters = [];
         let orgId = getState().org.activeId;
+        let promise;
+
+        if(state !== null) {
+            state = state ? (state == 'accepted' ? 1 : 0) : null;
+            filters.push(['state', '==', state ? 1 : 0]);
+        }
+
+        if (formId) {
+            promise = z.resource('orgs', orgId, 'join_forms', formId, 'submissions')
+                .get(page, perPage, filters);
+        } else {
+            promise = z.resource('orgs', orgId, 'join_submissions')
+                .get(page, perPage, filters);
+        }
 
         dispatch({
             type: types.RETRIEVE_JOIN_SUBMISSIONS,
+            meta: { page, state, formId },
             payload: {
-                promise: z.resource('orgs', orgId, 'join_submissions').get(),
+                promise: promise,
             }
         });
     };
