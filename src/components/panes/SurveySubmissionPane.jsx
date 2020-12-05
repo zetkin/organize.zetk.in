@@ -124,7 +124,8 @@ export default class SurveySubmissionPane extends PaneBase {
                     </p>
 
                     <SubmissionRespondent submission={ sub }
-                        onConnect={ this.onConnectClick.bind(this) }/>
+                        onConnect={ this.onConnectClick.bind(this) }
+                        onAvatarClick={ this.onAvatarClick.bind(this) }/>
                 </div>,
                 <div key="responses" className="SurveySubmissionPane-responses">
                     <Msg tagName="h3" id="panes.surveySubmission.responses.h"/>
@@ -141,7 +142,12 @@ export default class SurveySubmissionPane extends PaneBase {
         let surveyId = this.getParam(0);
         this.openPane('linksubmission', surveyId);
     }
+
+    onAvatarClick(person) {
+        this.openPane('person', person.id);
+    }
 }
+
 
 let SubmissionRespondent = props => {
     let sub = props.submission;
@@ -162,7 +168,8 @@ let SubmissionRespondent = props => {
         );
 
         if (sub.respondent.id) {
-            avatar = <Avatar person={ sub.respondent }/>;
+
+            avatar = <Avatar person={ sub.respondent } onClick={ (ev) => props.onAvatarClick(sub.respondent) }/>;
             connection = (
                 <div className="SurveySubmissionPane-connection connected"
                     onClick={ props.onConnect }>
