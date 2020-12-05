@@ -21,7 +21,20 @@ import {
 import InfoList from '../misc/InfoList';
 
 
-const ADDR_FIELDS = [ 'co_address', 'street_address', 'zip_code', 'city', 'country' ];
+const NATIVE_FIELDS = [
+    'ext_id',
+    'first_name',
+    'last_name',
+    'email',
+    'phone',
+    'alt_phone',
+    'co_address',
+    'street_address',
+    'zip_code',
+    'city',
+    'country',
+];
+
 
 const mapStateToProps = (state, props) => {
     const subItem = getListItemById(state.joinForms.submissionList,
@@ -122,14 +135,22 @@ export default class JoinSubmissionPane extends PaneBase {
                     <Msg tagName="h3" id="panes.joinSubmission.data.h"/>
                     <ul className="JoinSubmissionPane-personData">
                     {this.props.formItem.data.fields.map(fieldName => {
+                        let label;
+
                         const fieldItem = this.props.fieldTypes.items.find(item => item.data.slug == fieldName);
 
                         // Exclude JSON fields
-                        if (fieldItem && fieldItem.data.type == 'json') {
-                            return null;
+                        if (fieldItem) {
+                            if (fieldItem.data.type == 'json') {
+                                return null;
+                            }
+
+                            label = fieldItem.data.title;
+                        }
+                        else if (NATIVE_FIELDS.includes(fieldName)) {
+                            label = this.props.intl.formatMessage({ id: `misc.fields.${fieldName}` });
                         }
 
-                        const label = fieldItem? fieldItem.data.title : this.props.intl.formatMessage({ id: `misc.fields.${fieldName}` });
                         const value = person[fieldName];
 
                         return (
