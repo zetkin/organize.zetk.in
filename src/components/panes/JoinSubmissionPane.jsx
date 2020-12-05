@@ -35,6 +35,9 @@ const mapStateToProps = (state, props) => {
             subItem: subItem,
         }
     }
+    else {
+        return {};
+    }
 };
 
 @connect(mapStateToProps)
