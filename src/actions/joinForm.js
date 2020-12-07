@@ -98,11 +98,12 @@ export function retrieveJoinSubmissions(formId = null, state = null, page = 0, p
     return ({ dispatch, getState, z }) => {
         const filters = [];
         let orgId = getState().org.activeId;
+        let accepted = null;
         let promise;
 
         if(state !== null) {
-            state = state ? (state == 'accepted' ? 1 : 0) : null;
-            filters.push(['state', '==', state ? 1 : 0]);
+            accepted = state ? (state == 'accepted' ? 1 : 0) : null;
+            filters.push(['accepted', '==', accepted ? 1 : 0]);
         }
 
         if (formId) {
@@ -115,7 +116,7 @@ export function retrieveJoinSubmissions(formId = null, state = null, page = 0, p
 
         dispatch({
             type: types.RETRIEVE_JOIN_SUBMISSIONS,
-            meta: { page, state, formId },
+            meta: { page, accepted, formId },
             payload: {
                 promise: promise,
             }
