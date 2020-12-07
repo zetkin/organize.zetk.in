@@ -6,6 +6,8 @@ action:
         acceptButton: Accept
         h: Request pending
         p: Click Accept to add {person} to your database.
+data:
+    h: Data submitted
 meta:
     h: Meta-data
     state:
