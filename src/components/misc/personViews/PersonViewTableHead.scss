@@ -5,7 +5,8 @@
     }
 
     th {
-        padding: 0.5em;
+        padding: 0.4rem 0.4rem;
+        border-left: 1px solid $c-ui-bg;
 
         font-weight: normal;
         text-align: left;
@@ -15,6 +16,10 @@
         text-overflow: ellipsis;
 
         cursor: pointer;
+
+        &:first-of-type {
+            border-left-width: 0;
+        }
     }
 
     .PersonViewTableHead-column {
@@ -32,6 +37,7 @@
         &:hover {
             &:before {
                 @include icon($fa-var-pencil);
+                font-size: 0.9em;
                 opacity: 1;
             }
 
@@ -117,11 +123,12 @@
 
 th.PersonViewTableHead-avatarColumn,
 th.PersonViewTableHead-savedColumn {
-    $w: 2.2rem;
+    $w: 36px;
 
     width: $w;
     min-width: $w;
     max-width: $w;
+    padding: 0;
     background-color: white;
     text-align: center;
 }
