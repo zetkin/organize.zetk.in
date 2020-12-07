@@ -1,4 +1,8 @@
 .PersonViewTable {
+    table {
+        border-spacing: 0;
+    }
+
     .person_query,
     .person_tag {
         max-width: 6rem;
