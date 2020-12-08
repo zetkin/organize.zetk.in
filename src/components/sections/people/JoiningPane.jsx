@@ -29,6 +29,7 @@ export default class JoiningPane extends RootPaneBase {
 
         this.state = Object.assign({}, this.state, {
             viewMode: 'submissions',
+            toolbar: 'column-reverse'
         });
     }
 
@@ -40,6 +41,9 @@ export default class JoiningPane extends RootPaneBase {
     }
 
     getPaneFilters(data, filters) {
+        if(this.state.viewMode !== 'submissions') {
+            return null;
+        }
         let formOptions = {}
         if (this.props.formList && this.props.formList.items) {
             this.props.formList.items.forEach(item => {
@@ -121,7 +125,26 @@ export default class JoiningPane extends RootPaneBase {
             <ViewSwitch key="viewSwitch"
                 states={ viewStates }
                 selected={ this.state.viewMode }
-                onSwitch={ viewMode => this.setState({ viewMode }) }
+                onSwitch={
+                    viewMode => {
+                        let newState;
+                        if(viewMode == 'submissions') {
+                            newState = {
+                                toolbar: 'column-reverse',
+                            }
+                        } else {
+                            newState = {
+                                toolbar: '',
+                                showFilters: false,
+                            }
+                        }
+                        this.setState(
+                            {
+                                viewMode,
+                                ...newState,
+                            }) 
+                    }
+                }
                 />,
         ];
         if (this.state.viewMode == 'forms') {

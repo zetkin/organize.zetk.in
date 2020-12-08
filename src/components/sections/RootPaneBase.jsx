@@ -101,8 +101,12 @@ export default class RootPaneBase extends React.Component {
                 );
             }
 
+            let toolbarClass = '';
+            if(this.state.toolbar == 'column-reverse') {
+                toolbarClass = ' RootPaneBase-toolbar-column-reverse';
+            }
             toolbar = (
-                <div className="RootPaneBase-toolbar">
+                <div className={ "RootPaneBase-toolbar" + toolbarClass }>
                     { filterButton }
                     { toolbar }
                 </div>

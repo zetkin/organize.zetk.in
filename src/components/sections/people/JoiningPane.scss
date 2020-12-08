@@ -11,4 +11,15 @@
     .ViewSwitch-state-forms:before {
         @include icon($fa-var-cog);
     }
+
+    .RootPaneBase-toolbar-column-reverse {
+        display: flex;
+        flex-direction: column-reverse;
+        margin-left: -1em;
+
+        .RootPaneBase-filterButton {
+            margin-top: 0.5em;
+            margin-left: 0.8em;
+        }
+    }
 }
