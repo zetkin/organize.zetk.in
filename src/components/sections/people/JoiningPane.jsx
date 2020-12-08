@@ -78,6 +78,8 @@ export default class JoiningPane extends RootPaneBase {
                 <JoinSubmissionList
                     submissionList={ this.props.submissionList }
                     onItemClick={ item => this.openPane('joinsubmission', item.data.id) }
+                    enablePagination={ true }
+                    onLoadPage={ this.onLoadPage.bind(this) }
                     />
             );
         }
