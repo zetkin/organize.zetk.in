@@ -38,7 +38,7 @@ export default function joinForms(state = null, action) {
                 submissionList: createList(null, {
                     isPending: true,
                     error: null,
-                    lastPage: Math.max(state.submissionList.lastPage, action.meta.page),
+                    lastPage: action.meta.page,
                 }),
             });
         }
@@ -48,7 +48,7 @@ export default function joinForms(state = null, action) {
                 submissionList: Object.assign({}, state.submissionList, {
                     isPending: true,
                     error:null,
-                    lastPage: Math.max(state.submissionList.lastPage, action.meta.page),
+                    lastPage: action.meta.page,
                 })
             });
         }
@@ -58,7 +58,7 @@ export default function joinForms(state = null, action) {
             submissionList: updateOrAddListItems(state.submissionList, action.payload.data.data, {
                 isPending: false,
                 error: null,
-                lastPage: Math.max(state.submissionList.lastPage, action.meta.page),
+                lastPage: action.meta.page,
             }),
         });
     }
