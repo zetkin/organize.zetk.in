@@ -127,14 +127,9 @@ export default class JoiningPane extends RootPaneBase {
                 selected={ this.state.viewMode }
                 onSwitch={
                     viewMode => {
-                        let newState;
-                        if(viewMode == 'submissions') {
+                        let newState = {};
+                        if(viewMode === 'forms') {
                             newState = {
-                                toolbar: 'column-reverse',
-                            }
-                        } else {
-                            newState = {
-                                toolbar: '',
                                 showFilters: false,
                             }
                         }
