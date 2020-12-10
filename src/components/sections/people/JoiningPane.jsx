@@ -29,7 +29,6 @@ export default class JoiningPane extends RootPaneBase {
 
         this.state = Object.assign({}, this.state, {
             viewMode: 'submissions',
-            toolbar: 'column-reverse'
         });
     }
 
