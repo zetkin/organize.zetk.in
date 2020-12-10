@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import FilterBase from './FilterBase';
 import SelectInput from '../forms/inputs/SelectInput';
+import IntInput from '../forms/inputs/IntInput';
 import TagCloud from '../misc/tagcloud/TagCloud';
 import { retrievePersonTags } from '../../actions/personTag';
 import { createSelection } from '../../actions/selection';
@@ -19,6 +20,7 @@ export default class PersonTagsFilter extends FilterBase {
         this.state = {
             condition: props.config.condition || 'all',
             tags: props.config.tags || [],
+            atleast: 2,
         };
     }
 
@@ -46,6 +48,7 @@ export default class PersonTagsFilter extends FilterBase {
         const CONDITION_OPTIONS = {
             'all': msg('filters.personTags.opOptions.all'),
             'any': msg('filters.personTags.opOptions.any'),
+            'atleast': msg('filters.personTags.opOptions.atleast'),
             'none': msg('filters.personTags.opOptions.none'),
         };
 
@@ -55,11 +58,16 @@ export default class PersonTagsFilter extends FilterBase {
             .filter(tagItem => tagItem)
             .map(tagItem => tagItem.data);
 
+        const atleast = this.state.condition === 'atleast' ? 
+                <IntInput key="atleast" value={ this.state.atleast }
+                    onValueChange={ this.onAtLeastChange.bind(this) } /> : null;
+
         return [
             <SelectInput key="condition" name="condition"
                 labelMsg="filters.personTags.opLabel"
                 options={ CONDITION_OPTIONS } value={ this.state.condition }
                 onValueChange={ this.onSelectCondition.bind(this) }/>,
+            atleast,
             <TagCloud key="tags" tags={ tags }
                 showAddButton={ true } showRemoveButtons={ true }
                 onAdd={ this.onAddTag.bind(this) }
@@ -69,6 +77,7 @@ export default class PersonTagsFilter extends FilterBase {
 
     getConfig() {
         return {
+            atleast: this.state.atleast,
             condition: this.state.condition,
             tags: this.state.tags,
         };
@@ -101,4 +110,10 @@ export default class PersonTagsFilter extends FilterBase {
         this.setState({ condition: value }, () =>
             this.onConfigChange());
     }
+
+    onAtLeastChange(name, value) {
+        this.setState({ atleast: parseInt(value) }, () => 
+            this.onConfigChange());
+    }
+
 }

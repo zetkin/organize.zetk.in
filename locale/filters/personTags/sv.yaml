@@ -2,4 +2,5 @@ opLabel: Matcha personer som
 opOptions:
     all: har alla följande etiketter
     any: har någon av följande etiketter
+    atleast: har ett minimiantal av följande etiketter
     none: inte har någon av följande etiketter

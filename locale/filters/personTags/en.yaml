@@ -2,4 +2,5 @@ opLabel: Match people who
 opOptions:
     all: Have all of the following tags
     any: Have any of the following tags
+    atleast: Have a minimum number of the following tags
     none: Don't have any of the following tags
