@@ -243,6 +243,7 @@ class PersonQueryColumnTemplate extends React.Component {
                 <SelectInput name="query_id"
                     labelMsg="panes.addViewColumn.config.personQuery.query"
                     options={ queryOptions }
+                    orderAlphabetically={ true }
                     value={ props.config.query_id }
                     onValueChange={ this.onConfigChange.bind(this) }
                     />
@@ -299,6 +300,7 @@ class PersonTagColumnTemplate extends React.Component {
                 <SelectInput name="tag_id"
                     labelMsg="panes.addViewColumn.config.personTag.tag"
                     options={ tagOptions }
+                    orderAlphabetically={ true }
                     value={ props.config.tag_id }
                     onValueChange={ this.onConfigChange.bind(this) }
                     />
