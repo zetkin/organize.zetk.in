@@ -181,6 +181,7 @@ export default class PersonViewsPane extends RootPaneBase {
                             content={ viewItem.data.description }
                             onChange={ this.onChange.bind(this, 'description') }
                             placeholder={ this.props.intl.formatMessage({ id: 'panes.personViews.placeholders.description' }) }
+                            multiline={ true }
                             />
                     </div>,
                     <div key="mode" className="PersonViewsPane-singleViewModes">
