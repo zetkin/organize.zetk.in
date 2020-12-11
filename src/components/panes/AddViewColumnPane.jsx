@@ -299,6 +299,7 @@ class PersonTagColumnTemplate extends React.Component {
                 <SelectInput name="tag_id"
                     labelMsg="panes.addViewColumn.config.personTag.tag"
                     options={ tagOptions }
+                    orderAlphabetically={ true }
                     value={ props.config.tag_id }
                     onValueChange={ this.onConfigChange.bind(this) }
                     />
