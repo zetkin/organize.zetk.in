@@ -80,7 +80,10 @@ export default class App extends React.Component {
 
             if (this.props.view.panes.length) {
                 const subSectionType = this.props.view.panes[0].type;
-                titles.push(this.props.intl.formatMessage({ id: `sections.subSections.${sectionType}.${subSectionType}` }));
+                const subSectionMsgId = `sections.subSections.${sectionType}.${subSectionType}`;
+                if (this.props.intl.messages[subSectionMsgId]) {
+                    titles.push(this.props.intl.formatMessage({ id: subSectionMsgId }));
+                }
             }
         }
 
