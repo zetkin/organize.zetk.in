@@ -57,6 +57,10 @@ export function createPersonViewColumn(viewId, data) {
     return ({ dispatch, getState, z }) => {
         const orgId = getState().org.activeId;
 
+        if(data.title.length > 80) {
+            data.title = data.title.substring(0,77) + '...';
+        }
+
         dispatch({
             type: types.CREATE_PERSON_VIEW_COLUMN,
             meta: { viewId },
