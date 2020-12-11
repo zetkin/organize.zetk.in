@@ -174,11 +174,14 @@ export default class PersonViewsPane extends RootPaneBase {
                             content={ viewItem.data.title }
                             onChange={ this.onChange.bind(this, 'title') }
                             placeholder={ this.props.intl.formatMessage({ id: 'panes.personViews.placeholders.title' }) }
+                            multiline={ false }
+                            maxLength={ 80 }
                             />
                         <EditableText tagName="p" key="description"
                             content={ viewItem.data.description }
                             onChange={ this.onChange.bind(this, 'description') }
                             placeholder={ this.props.intl.formatMessage({ id: 'panes.personViews.placeholders.description' }) }
+                            multiline={ true }
                             />
                     </div>,
                     <div key="mode" className="PersonViewsPane-singleViewModes">

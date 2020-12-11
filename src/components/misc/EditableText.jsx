@@ -26,14 +26,10 @@ export default class EditableText extends React.Component {
                     editing: true,
                 };
 
-                if (text != this.props.content && text == this.props.placeholder) {
-                    state.text = '';
-                }
-
                 this.setState(state);
             },
             onBlur: ev => {
-                const text = ev.target.innerText;
+                const text = ev.target.innerText.replace('\n', '');
                 if (text != this.props.content) {
                     if (this.props.onChange) {
                         this.props.onChange(text);
@@ -43,6 +39,19 @@ export default class EditableText extends React.Component {
                 this.setState({
                     editing: false,
                 });
+            },
+            onKeyDown: (ev) => {
+                if (!this.props.multiline) {
+                    if (ev.key === 'Enter') {
+                        ev.preventDefault()
+                    }
+                }
+                if (ev.target.innerText.length > this.props.maxLength) {
+                    const regex = /^[\w\W ]$/;
+                    if (ev.key.match(regex)) {
+                        ev.preventDefault()
+                    }
+                }
             },
             dangerouslySetInnerHTML: {
                 __html: this.state.editing? this.props.content : (this.props.content || this.props.placeholder),
