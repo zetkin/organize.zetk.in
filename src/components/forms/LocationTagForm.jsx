@@ -18,7 +18,7 @@ export default class LocationTagForm extends React.Component {
         return (
             <Form ref="form" {...this.props }>
                 <TextInput labelMsg="forms.locationTag.title" name="title"
-                    initialValue={ tag.title }/>
+                    initialValue={ tag.title } maxLength={ 60 }/>
                 <TextArea labelMsg="forms.locationTag.info" name="info_text"
                     initialValue={ tag.info_text }/>
             </Form>

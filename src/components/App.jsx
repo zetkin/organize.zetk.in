@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux';
@@ -16,6 +17,7 @@ import Section from './sections/Section';
 
 
 @connect(state => state)
+@injectIntl
 @DragDropContext(HTML5Backend)
 export default class App extends React.Component {
     constructor(props) {
@@ -39,10 +41,12 @@ export default class App extends React.Component {
     }
 
     render() {
+        const sectionType = this.props.view.section;
+
         let stateJson = JSON.stringify(this.props.initialState);
 
         let SectionComponent;
-        switch (this.props.view.section) {
+        switch (sectionType) {
             case '':
                 SectionComponent = Dashboard;
                 break;
@@ -61,7 +65,7 @@ export default class App extends React.Component {
         }
 
         let section = (
-            <SectionComponent section={ this.props.view.section }
+            <SectionComponent section={ sectionType }
                 dispatch={ this.props.dispatch }
                 panes={ this.props.view.panes }/>
         );
@@ -70,12 +74,33 @@ export default class App extends React.Component {
           'animationComplete': this.state.animationComplete
         });
 
+        const titles = [ 'Zetkin Organize' ];
+        if (!!sectionType) {
+            titles.push(this.props.intl.formatMessage({ id: `sections.labels.${sectionType}` }));
+
+            if (this.props.view.panes.length) {
+                const subSectionType = this.props.view.panes[0].type;
+                const subSectionMsgId = `sections.subSections.${sectionType}.${subSectionType}`;
+                if (this.props.intl.messages[subSectionMsgId]) {
+                    titles.push(this.props.intl.formatMessage({ id: subSectionMsgId }));
+                }
+            }
+        }
+
+        const title = titles.concat().reverse().join(' | ');
+
+        const gaMeasurementId = process.env.GA_MEASUREMENT_ID;
+        const gaElements = gaMeasurementId? [
+            <script key="script" async src={ `https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}` }></script>,
+            <GoogleAnalytics key="ga" measurementId={ gaMeasurementId }/>
+        ] : null;
+
         return (
             <html>
                 <head>
                     <script src="https://use.typekit.net/tqq3ylv.js"></script>
                     <script>{"try{Typekit.load({ async: true })}catch(e){}"}</script>
-                    <title>Zetkin Organize</title>
+                    <title>{ title }</title>
                     <meta name="viewport" content="width=device-width, initial-scale=1"/>
                     <script src="/static/main.js"></script>
                     <link rel="stylesheet" type="text/css"
@@ -84,6 +109,7 @@ export default class App extends React.Component {
                           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCih1zeZELzFJxP2SFkNJVDLs2ZCT_y3gY&libraries=visualization,geometry"/>
                     <link rel="icon" type="image/png"
                         href="/static/images/favicon.png"/>
+                    { gaElements }
                 </head>
                 <body>
                     <div className={appClasses}>
@@ -97,7 +123,6 @@ export default class App extends React.Component {
                     <script type="text/json"
                         id="App-initialState"
                         dangerouslySetInnerHTML={{ __html: stateJson }}/>
-                    <GoogleAnalytics/>
                 </body>
             </html>
         );

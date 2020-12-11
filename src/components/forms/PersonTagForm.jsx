@@ -26,7 +26,7 @@ export default class PersonTagForm extends React.Component {
         return (
             <Form ref="form" {...this.props }>
                 <TextInput labelMsg="forms.personTag.title" name="title"
-                    initialValue={ tag.title }/>
+                    initialValue={ tag.title } maxLength={ 60 }/>
                 <TextArea labelMsg="forms.personTag.info" name="description"
                     initialValue={ tag.description }/>
                 <SelectInput labelMsg="forms.personTag.visibility.label" name="hidden"

@@ -19,7 +19,7 @@ export default class GroupForm extends React.Component {
         return (
             <Form ref="form" {...this.props }>
                 <TextInput labelMsg="forms.group.title" name="title"
-                    initialValue={ group.title }/>
+                    initialValue={ group.title } maxLength={ 120 }/>
                 <TextArea labelMsg="forms.group.description" name="description"
                     initialValue={ group.description }/>
             </Form>

@@ -1,8 +1,13 @@
 .PersonViewTableHead {
-    th {
-        padding: 0.5em;
+    @include large-screen {
+        position: absolute;
+        left: 0;
+    }
 
-        font-size: 0.8em;
+    th {
+        padding: 0.4rem 0.4rem;
+        border-left: 1px solid $c-ui-bg;
+
         font-weight: normal;
         text-align: left;
 
@@ -12,9 +17,14 @@
 
         cursor: pointer;
 
+        &:first-of-type {
+            border-left-width: 0;
+        }
     }
 
     .PersonViewTableHead-column {
+        position: relative;
+
         &:before {
             content: "";
             display: inline-block;
@@ -27,17 +37,64 @@
         &:hover {
             &:before {
                 @include icon($fa-var-pencil);
+                font-size: 0.9em;
                 opacity: 1;
+            }
+
+            .PersonViewTableHead-columnSort {
+                opacity: 1.0;
+            }
+        }
+
+        .PersonViewTableHead-columnSort {
+            opacity: 0;
+            display: block;
+            position: absolute;
+            right: 0.2rem;
+            top: 0.2rem;
+            bottom: 0.2rem;
+            padding-top: 0.2rem;
+            padding-left: 0.1rem;
+            background-color: rgba(white, 0.9);
+
+            transition: opacity 0.4s;
+
+            &:before {
+                opacity: 0.5;
+                @include icon($fa-var-sort);
+            }
+
+            &:hover {
+                &:before {
+                    opacity: 1.0;
+                }
+            }
+        }
+
+        &.sorted {
+            .PersonViewTableHead-columnSort {
+                opacity: 1.0;
+
+                &:before {
+                    opacity: 1.0;
+                    @include icon($fa-var-sort-asc);
+                }
+            }
+
+            &.inverted {
+                .PersonViewTableHead-columnSort:before {
+                    @include icon($fa-var-sort-desc);
+                }
             }
         }
     }
 
     .PersonViewTableHead-newColumn {
-        min-width: 14em;
-        max-width: 14em;
+        min-width: 12rem;
+        max-width: 12rem;
         text-align: center;
-        padding-left: 1em;
-        padding-right: 1em;
+        padding-left: 1rem;
+        padding-right: 1rem;
         border: 2px dashed rgba(0,0,0, 0.2);
         color: $c-ui-dark;
 
@@ -64,14 +121,16 @@
     }
 }
 
-.PersonViewTableHead-avatarColumn,
-.PersonViewTableHead-savedColumn {
-    $w: 2.2rem;
+th.PersonViewTableHead-avatarColumn,
+th.PersonViewTableHead-savedColumn {
+    $w: 36px;
 
     width: $w;
     min-width: $w;
     max-width: $w;
+    padding: 0;
     background-color: white;
+    text-align: center;
 }
 
 .PersonViewTableHead-savedColumn {

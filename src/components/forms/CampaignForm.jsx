@@ -33,7 +33,7 @@ export default class CampaignForm extends React.Component {
 
         let content = [
             <TextInput key="title" labelMsg="forms.campaign.title" name="title"
-                initialValue={ campaign.title }/>,
+                initialValue={ campaign.title } maxLength={ 100 }/>,
             <SelectInput key="label" labelMsg="forms.campaign.published.label" name="published"
                 initialValue={ published }
                 options={ publishedOptions }

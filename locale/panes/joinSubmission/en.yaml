@@ -6,8 +6,19 @@ action:
         acceptButton: Accept
         h: Request pending
         p: Click Accept to add {person} to your database.
+data:
+    h: Data submitted
 meta:
     h: Meta-data
     state:
         accepted: Accepted
         pending: Request pending
+filters:
+    joinForm:
+        label: Join form
+        nullOption: Any form
+    state:
+        label: Status
+        accepted: Accepted
+        pending: Request pending
+        nullOption: Regardless of status

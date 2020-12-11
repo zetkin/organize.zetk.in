@@ -37,6 +37,7 @@
         .Avatar {
             @include col(2,12, $align:middle, $first:true);
             max-height: 70px; // Keep ratio if image is broken
+            cursor: pointer;
         }
 
         .SurveySubmissionPane-unknown {

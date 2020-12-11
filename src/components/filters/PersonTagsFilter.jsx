@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import FilterBase from './FilterBase';
 import SelectInput from '../forms/inputs/SelectInput';
+import IntInput from '../forms/inputs/IntInput';
 import TagCloud from '../misc/tagcloud/TagCloud';
 import { retrievePersonTags } from '../../actions/personTag';
 import { createSelection } from '../../actions/selection';
@@ -19,6 +20,7 @@ export default class PersonTagsFilter extends FilterBase {
         this.state = {
             condition: props.config.condition || 'all',
             tags: props.config.tags || [],
+            min_matching: props.config.min_matching || 2,
         };
     }
 
@@ -46,6 +48,7 @@ export default class PersonTagsFilter extends FilterBase {
         const CONDITION_OPTIONS = {
             'all': msg('filters.personTags.opOptions.all'),
             'any': msg('filters.personTags.opOptions.any'),
+            'some': msg('filters.personTags.opOptions.some'),
             'none': msg('filters.personTags.opOptions.none'),
         };
 
@@ -55,11 +58,17 @@ export default class PersonTagsFilter extends FilterBase {
             .filter(tagItem => tagItem)
             .map(tagItem => tagItem.data);
 
+        const some = this.state.condition === 'some' ? 
+                <IntInput key="some" value={ this.state.min_matching }
+                    labelMsg="filters.personTags.someLabel"
+                    onValueChange={ this.onMinMatchingChange.bind(this) } /> : null;
+
         return [
             <SelectInput key="condition" name="condition"
                 labelMsg="filters.personTags.opLabel"
                 options={ CONDITION_OPTIONS } value={ this.state.condition }
                 onValueChange={ this.onSelectCondition.bind(this) }/>,
+            some,
             <TagCloud key="tags" tags={ tags }
                 showAddButton={ true } showRemoveButtons={ true }
                 onAdd={ this.onAddTag.bind(this) }
@@ -69,6 +78,7 @@ export default class PersonTagsFilter extends FilterBase {
 
     getConfig() {
         return {
+            min_matching: this.state.min_matching,
             condition: this.state.condition,
             tags: this.state.tags,
         };
@@ -101,4 +111,10 @@ export default class PersonTagsFilter extends FilterBase {
         this.setState({ condition: value }, () =>
             this.onConfigChange());
     }
+
+    onMinMatchingChange(name, value) {
+        this.setState({ min_matching: parseInt(value) }, () => 
+            this.onConfigChange());
+    }
+
 }

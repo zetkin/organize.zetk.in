@@ -1,17 +1,22 @@
 .PersonViewTableRow-avatar {
-    height: 2.2rem;
-    min-height: 2.2rem;
+    height: 36px;
+    width: 36px;
+    min-width: 36px;
+    max-width: 36px;
+    min-height: 36px;
     text-align: center;
 
     .Avatar {
-        width: 2.2rem;
-        height: 2.2rem;
+        width: 36px;
+        height: 36px;
         cursor: pointer;
     }
 }
 
 .PersonViewTableRow-saved {
     text-align: center;
+    min-width: 36px;
+    max-width: 36px;
     cursor: pointer;
 
     &:before {
@@ -25,9 +30,39 @@
     }
 }
 
+.PersonViewTableRow-placeholder {
+    min-width: 12rem;
+    max-width: 12rem;
+    text-align: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
 .PersonViewTableRow {
+    td {
+        $border-color: darken($c-ui-bg, 5);
+        font-size: 1.2em;
+        padding: 0.2rem 0.4rem;
+        border-bottom: 1px solid $border-color;
+        border-left: 1px solid $border-color;
+    }
+
+    .PersonViewTableRow-avatar {
+        border-bottom: 1px solid $c-ui-bg;
+    }
+
+    .PersonViewTableRow-avatar,
+    .PersonViewTableRow-saved {
+        padding: 0;
+        border-left: 1px solid transparent;
+    }
+
     &.saved {
         .PersonViewTableRow-saved {
+            width: 36px;
+            min-width: 36px;
+            max-width: 36px;
+
             &:before {
                 @include icon($fa-var-star);
                 color: $c-brand-comp-dark;

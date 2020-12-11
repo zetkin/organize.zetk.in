@@ -6,7 +6,6 @@ import FilterBase from './FilterBase';
 import Form from '../forms/Form';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
 import SelectInput from '../forms/inputs/SelectInput';
-import TextInput from '../forms/inputs/TextInput';
 import { retrieveSurveys, retrieveSurvey } from '../../actions/survey';
 
 

@@ -76,6 +76,7 @@ export default connect()(function PersonViewTableRow(props) {
                 onClick={ () => rowData.saved? props.onRemove(rowData) : props.onAdd(rowData) }
                 />
             { cells }
+            <td className="PersonViewTableRow-placeholder"/>
         </tr>
     );
 });

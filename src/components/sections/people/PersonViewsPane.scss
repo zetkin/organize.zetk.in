@@ -1,3 +1,10 @@
+.PersonViewsPane {
+    .RootPaneBase-content {
+        overflow: auto;
+        padding-top: 4rem;
+    }
+}
+
 .PersonViewsPane-viewList {
     display: flex;
     flex-wrap: wrap;
@@ -141,5 +148,13 @@
 }
 
 .PersonViewsPane-singleViewTable {
-    clear: both;
+    @include large-screen {
+        .PersonViewTable {
+            position: fixed;
+            top: 280px;
+            left: 110px;
+            right: 0;
+            bottom: 0;
+        }
+    }
 }

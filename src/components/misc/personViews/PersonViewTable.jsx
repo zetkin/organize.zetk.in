@@ -6,6 +6,7 @@ import Button from '../Button';
 import LoadingIndicator from '../LoadingIndicator';
 import PageSelect from '../PageSelect';
 import PersonSelectWidget from '../PersonSelectWidget';
+import PersonViewAddRow from './PersonViewAddRow';
 import PersonViewTableHead from './PersonViewTableHead';
 import PersonViewTableRow from './PersonViewTableRow';
 import {
@@ -26,7 +27,25 @@ export default class PersonViewTable extends React.Component {
         this.state = {
             page: 0,
             searchStr: '',
+            scrollLeft: 0,
+            sortIndex: null,
+            sortInverted: false,
         };
+
+        // Creating this here to avoid having to bind
+        this.onScroll = ev => {
+            this.setState({
+                scrollLeft: ev.target.scrollLeft,
+            });
+        };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (!nextProps.rowList || !nextProps.rowList.items.length) {
+            this.setState({
+                scrollLeft: 0,
+            });
+        }
     }
 
     componentDidUpdate() {
@@ -62,6 +81,10 @@ export default class PersonViewTable extends React.Component {
                     viewId={ viewId }
                     columnList={ colList }
                     openPane={ this.props.openPane }
+                    scrollLeft={ this.state.scrollLeft }
+                    sortIndex={ this.state.sortIndex }
+                    sortInverted={ this.state.sortInverted }
+                    onSort={ this.onSort.bind(this) }
                     />
             );
 
@@ -79,9 +102,20 @@ export default class PersonViewTable extends React.Component {
                         const searchStr = this.state.searchStr.toLowerCase();
 
                         visibleRows = visibleRows.filter(item => {
-                            return item.data.content.some(cell => {
-                                if (cell && cell.toLowerCase) {
-                                    return cell.toLowerCase().indexOf(searchStr) >= 0;
+                            return item.data.content.some((cell, idx) => {
+                                const col = colList.items[idx].data;
+
+                                let text = null;
+
+                                if (cell && col.type == 'survey_response') {
+                                    text = cell.map(r => r.text).join('\n');
+                                }
+                                else if (typeof cell == 'string') {
+                                    text = cell;
+                                }
+
+                                if (text) {
+                                    return text.toLowerCase().indexOf(searchStr) >= 0;
                                 }
                                 else {
                                     return false;
@@ -114,8 +148,24 @@ export default class PersonViewTable extends React.Component {
                     // Store final count of visible rows for label
                     numVisible = visibleRows.length;
 
+                    // Sort, if a column is selected for sorting
+                    if (this.state.sortIndex !== null) {
+                        visibleRows = visibleRows.concat().sort((row0, row1) => {
+                            const val0 = row0.data.content[this.state.sortIndex] || '';
+                            const val1 = row1.data.content[this.state.sortIndex] || '';
+
+                            let x = val0.toString().localeCompare(val1.toString());
+
+                            if (this.state.sortInverted) {
+                                x *= -1;
+                            }
+
+                            return x;
+                        });
+                    }
+
                     tableBody = (
-                        <tbody>
+                        <tbody onScroll={ this.onScroll }>
                         {visibleRows.map(rowItem => (
                             <PersonViewTableRow key={ rowItem.data.id }
                                 columnList={ colList }
@@ -125,6 +175,10 @@ export default class PersonViewTable extends React.Component {
                                 onRemove={ row => this.props.dispatch(removePersonViewRow(viewId, row.id)) }
                                 />
                         ))}
+                            <PersonViewAddRow
+                                columnList={ colList }
+                                rowList={ this.props.rowList }
+                                onSelect={ this.props.onPersonAdd }/>
                         </tbody>
                     );
                 }
@@ -144,14 +198,6 @@ export default class PersonViewTable extends React.Component {
                 </div>
             );
         }
-
-        const addSection = this.props.showAddSection? (
-            <div className="PersonViewTable-addPerson">
-                <PersonSelectWidget
-                    isPending={ this.props.rowList && this.props.rowList.addIsPending }
-                    onSelect={ this.props.onPersonAdd }/>
-            </div>
-        ) : null;
 
         let countMsgId = 'misc.personViewTable.tools.count.default';
         if (this.state.searchStr && pageSelect) {
@@ -191,14 +237,41 @@ export default class PersonViewTable extends React.Component {
                             }}/> : null }
                     </div>
                 </div>
-                <table>
-                    { tableHead }
-                    { tableBody }
-                </table>
+                <div className="PersonViewTable-table">
+                    <table>
+                        { tableHead }
+                        { tableBody }
+                    </table>
+                </div>
                 { placeholder }
-                { addSection }
             </div>
         );
+    }
+
+    onSort(idx) {
+        // Already sorting?
+        if (this.state.sortIndex == idx) {
+            if (this.state.sortInverted) {
+                // Already inverted. Reset sort!
+                this.setState({
+                    sortIndex: null,
+                    sortInverted: false,
+                });
+            }
+            else {
+                // Not inverted. Invert!
+                this.setState({
+                    sortInverted: true,
+                });
+            }
+        }
+        else {
+            // Not already sorting. Sort default (not inverted).
+            this.setState({
+                sortIndex: idx,
+                sortInverted: false,
+            });
+        }
     }
 
     onClickDownload() {

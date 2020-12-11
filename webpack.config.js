@@ -75,6 +75,7 @@ const config = {
             'process.env.ZETKIN_DOMAIN': JSON.stringify(DOMAIN),
             'process.env.ZETKIN_APP_ID': JSON.stringify(APP_ID),
             'process.env.ZETKIN_USE_TLS': JSON.stringify(USE_TLS),
+            'process.env.GA_MEASUREMENT_ID': JSON.stringify(process.env.GA_MEASUREMENT_ID),
         }),
         new webpack.NoEmitOnErrorsPlugin(),
     ],

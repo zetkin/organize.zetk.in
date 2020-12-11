@@ -21,7 +21,7 @@ export default class SurveyTextBlockForm extends React.Component {
             <Form className="SurveyTextBlockForm" ref="form" { ...this.props }>
                 <TextInput name="header"
                     labelMsg="forms.surveyTextBlock.header"
-                    initialValue={ textBlock.header }/>
+                    initialValue={ textBlock.header } maxLength={ 256 }/>
                 <TextArea name="content"
                     labelMsg="forms.surveyTextBlock.content"
                     initialValue={ textBlock.content }/>
