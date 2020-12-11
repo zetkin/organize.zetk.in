@@ -84,6 +84,8 @@ export default class App extends React.Component {
                           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCih1zeZELzFJxP2SFkNJVDLs2ZCT_y3gY&libraries=visualization,geometry"/>
                     <link rel="icon" type="image/png"
                         href="/static/images/favicon.png"/>
+                    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8CC8SJCRQ9"></script>
+                    <GoogleAnalytics/>
                 </head>
                 <body>
                     <div className={appClasses}>
@@ -97,7 +99,6 @@ export default class App extends React.Component {
                     <script type="text/json"
                         id="App-initialState"
                         dangerouslySetInnerHTML={{ __html: stateJson }}/>
-                    <GoogleAnalytics/>
                 </body>
             </html>
         );
