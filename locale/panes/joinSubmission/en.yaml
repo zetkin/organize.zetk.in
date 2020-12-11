@@ -13,3 +13,12 @@ meta:
     state:
         accepted: Accepted
         pending: Request pending
+filters:
+    joinForm:
+        label: Join form
+        nullOption: Any form
+    state:
+        label: Status
+        accepted: Accepted
+        pending: Request pending
+        nullOption: Regardless of status

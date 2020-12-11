@@ -27,9 +27,39 @@ export default function joinForms(state = null, action) {
             formList: createList(action.payload.data.data),
         });
     }
+    else if (action.type == types.RETRIEVE_JOIN_SUBMISSIONS + '_PENDING') {
+        const filters = {
+            formId: action.meta.formId,
+            accepted: action.meta.accepted,
+        }
+        if (action.meta.formId != state.submissionFilters.formId || action.meta.accepted != state.submissionFilters.accepted) {
+            return Object.assign({}, state, {
+                submissionFilters: filters,
+                submissionList: createList(null, {
+                    isPending: true,
+                    error: null,
+                    lastPage: action.meta.page,
+                }),
+            });
+        }
+        else {
+            return Object.assign({}, state, {
+                submissionFilters: filters,
+                submissionList: Object.assign({}, state.submissionList, {
+                    isPending: true,
+                    error:null,
+                    lastPage: action.meta.page,
+                })
+            });
+        }
+    }
     else if (action.type == types.RETRIEVE_JOIN_SUBMISSIONS + '_FULFILLED') {
         return Object.assign({}, state, {
-            submissionList: createList(action.payload.data.data),
+            submissionList: updateOrAddListItems(state.submissionList, action.payload.data.data, {
+                isPending: false,
+                error: null,
+                lastPage: action.meta.page,
+            }),
         });
     }
     else if (action.type == types.RETRIEVE_JOIN_SUBMISSION + '_FULFILLED'
@@ -37,13 +67,15 @@ export default function joinForms(state = null, action) {
 
         const sub = action.payload.data.data;
         return Object.assign({}, state, {
-            submissionList: updateOrAddListItem(state.submissionList, sub.id, sub),
+            submissionList: updateOrAddListItem(state.submissionList, sub.id, sub,
+                { isPending: false, error: null }),
         });
     }
     else {
         return state || {
             formList: createList(),
             submissionList: createList(),
+            submissionFilters: {},
         };
     }
 }
