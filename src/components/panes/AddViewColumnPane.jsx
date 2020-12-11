@@ -243,6 +243,7 @@ class PersonQueryColumnTemplate extends React.Component {
                 <SelectInput name="query_id"
                     labelMsg="panes.addViewColumn.config.personQuery.query"
                     options={ queryOptions }
+                    orderAlphabetically={ true }
                     value={ props.config.query_id }
                     onValueChange={ this.onConfigChange.bind(this) }
                     />
