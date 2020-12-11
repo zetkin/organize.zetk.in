@@ -20,7 +20,7 @@ export default class PersonTagsFilter extends FilterBase {
         this.state = {
             condition: props.config.condition || 'all',
             tags: props.config.tags || [],
-            atleast: 2,
+            min_matching: props.config.min_matching || 2,
         };
     }
 
@@ -48,7 +48,7 @@ export default class PersonTagsFilter extends FilterBase {
         const CONDITION_OPTIONS = {
             'all': msg('filters.personTags.opOptions.all'),
             'any': msg('filters.personTags.opOptions.any'),
-            'atleast': msg('filters.personTags.opOptions.atleast'),
+            'some': msg('filters.personTags.opOptions.some'),
             'none': msg('filters.personTags.opOptions.none'),
         };
 
@@ -58,16 +58,17 @@ export default class PersonTagsFilter extends FilterBase {
             .filter(tagItem => tagItem)
             .map(tagItem => tagItem.data);
 
-        const atleast = this.state.condition === 'atleast' ? 
-                <IntInput key="atleast" value={ this.state.atleast }
-                    onValueChange={ this.onAtLeastChange.bind(this) } /> : null;
+        const some = this.state.condition === 'some' ? 
+                <IntInput key="some" value={ this.state.min_matching }
+                    labelMsg="filters.personTags.someLabel"
+                    onValueChange={ this.onMinMatchingChange.bind(this) } /> : null;
 
         return [
             <SelectInput key="condition" name="condition"
                 labelMsg="filters.personTags.opLabel"
                 options={ CONDITION_OPTIONS } value={ this.state.condition }
                 onValueChange={ this.onSelectCondition.bind(this) }/>,
-            atleast,
+            some,
             <TagCloud key="tags" tags={ tags }
                 showAddButton={ true } showRemoveButtons={ true }
                 onAdd={ this.onAddTag.bind(this) }
@@ -77,7 +78,7 @@ export default class PersonTagsFilter extends FilterBase {
 
     getConfig() {
         return {
-            atleast: this.state.atleast,
+            min_matching: this.state.min_matching,
             condition: this.state.condition,
             tags: this.state.tags,
         };
@@ -111,8 +112,8 @@ export default class PersonTagsFilter extends FilterBase {
             this.onConfigChange());
     }
 
-    onAtLeastChange(name, value) {
-        this.setState({ atleast: parseInt(value) }, () => 
+    onMinMatchingChange(name, value) {
+        this.setState({ min_matching: parseInt(value) }, () => 
             this.onConfigChange());
     }
 
