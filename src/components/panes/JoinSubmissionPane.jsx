@@ -151,7 +151,7 @@ export default class JoinSubmissionPane extends PaneBase {
                             label = this.props.intl.formatMessage({ id: `misc.fields.${fieldName}` });
                         }
 
-                        const value = person[fieldName];
+                        const value = person[fieldName] || '';
 
                         return (
                             <li key={ fieldName }>
