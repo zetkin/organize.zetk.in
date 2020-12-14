@@ -124,6 +124,22 @@ export default class PersonViewTable extends React.Component {
                         });
                     }
 
+                    // Sort, if a column is selected for sorting
+                    if (this.state.sortIndex !== null) {
+                        visibleRows = visibleRows.concat().sort((row0, row1) => {
+                            const val0 = row0.data.content[this.state.sortIndex] || '';
+                            const val1 = row1.data.content[this.state.sortIndex] || '';
+
+                            let x = val0.toString().localeCompare(val1.toString());
+
+                            if (this.state.sortInverted) {
+                                x *= -1;
+                            }
+
+                            return x;
+                        });
+                    }
+
                     // Store match count for label
                     numMatches = visibleRows.length;
 
@@ -147,22 +163,6 @@ export default class PersonViewTable extends React.Component {
 
                     // Store final count of visible rows for label
                     numVisible = visibleRows.length;
-
-                    // Sort, if a column is selected for sorting
-                    if (this.state.sortIndex !== null) {
-                        visibleRows = visibleRows.concat().sort((row0, row1) => {
-                            const val0 = row0.data.content[this.state.sortIndex] || '';
-                            const val1 = row1.data.content[this.state.sortIndex] || '';
-
-                            let x = val0.toString().localeCompare(val1.toString());
-
-                            if (this.state.sortInverted) {
-                                x *= -1;
-                            }
-
-                            return x;
-                        });
-                    }
 
                     tableBody = (
                         <tbody onScroll={ this.onScroll }>
