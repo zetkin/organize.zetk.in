@@ -358,11 +358,11 @@ class SurveyResponseColumnTemplate extends React.Component {
                 if (elementList && elementList.items) {
                     questionSelect = (
                         <SelectInput name="question_id"
-                             labelMsg="panes.addViewColumn.config.surveyResponse.question"
-                             nullOptionMsg="panes.addViewColumn.config.surveyResponse.questionNullOption"
-                             options={ questionOptions }
-                             value={ this.props.config.question_id }
-                             onValueChange={ this.onConfigChange.bind(this) }
+                            labelMsg="panes.addViewColumn.config.surveyResponse.question"
+                            nullOptionMsg="panes.addViewColumn.config.surveyResponse.questionNullOption"
+                            options={ questionOptions }
+                            value={ this.props.config.question_id }
+                            onValueChange={ this.onConfigChange.bind(this) }
                             />
                     );
                 }
@@ -378,11 +378,11 @@ class SurveyResponseColumnTemplate extends React.Component {
                 onSelect={ this.props.onSelect }
                 >
                 <SelectInput name="survey_id"
-                     labelMsg="panes.addViewColumn.config.surveyResponse.survey"
-                     nullOptionMsg="panes.addViewColumn.config.surveyResponse.surveyNullOption"
-                     options={ surveyOptions }
-                     value={ this.props.config.survey_id }
-                     onValueChange={ this.onConfigChange.bind(this) }
+                    labelMsg="panes.addViewColumn.config.surveyResponse.survey"
+                    nullOptionMsg="panes.addViewColumn.config.surveyResponse.surveyNullOption"
+                    options={ surveyOptions }
+                    value={ this.props.config.survey_id }
+                    onValueChange={ this.onConfigChange.bind(this) }
                     />
                 { questionSelect }
             </AssignmentTemplate>
