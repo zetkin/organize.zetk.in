@@ -41,9 +41,11 @@ export default class AddViewColumnPane extends PaneBase {
     constructor(props) {
         super(props);
 
+        const shouldShowButton = Boolean(true)
         this.state = {
             type: 'person_field',
             config: Object.assign({}, DEFAULT_CONFIGS.person_field),
+            shouldShowButton: shouldShowButton,
         };
     }
 
@@ -87,17 +89,25 @@ export default class AddViewColumnPane extends PaneBase {
     }
 
     renderPaneFooter(data) {
-        return (
-            <Button
-                labelMsg="panes.addViewColumn.saveButton"
-                onClick={ this.onSubmit.bind(this) }
-                className="AddPersonTagPane-saveButton"/>
-        );
+        if (this.state.shouldShowButton) {
+            return (
+                <Button
+                    labelMsg="panes.addViewColumn.saveButton"
+                    onClick={this.onSubmit.bind(this)}
+                    className="AddPersonTagPane-saveButton"/>
+            );
+        } else {
+            return null;
+        }
     }
 
     onTypeSelect(type) {
         const config = Object.assign({}, DEFAULT_CONFIGS[type]);
-        this.setState({ type, config });
+        if (type === "survey_response") {
+            this.setState({ type, config, shouldShowButton: false});
+        } else {
+            this.setState({ type, config });
+        }
     }
 
     onSubmit(ev) {
@@ -109,7 +119,6 @@ export default class AddViewColumnPane extends PaneBase {
             type: this.state.type,
             config: this.state.config,
         };
-
         this.props.dispatch(createPersonViewColumn(viewId, values));
         this.closePane();
     }
@@ -349,34 +358,33 @@ class SurveyResponseColumnTemplate extends React.Component {
                 if (elementList && elementList.items) {
                     questionSelect = (
                         <SelectInput name="question_id"
-                            labelMsg="panes.addViewColumn.config.surveyResponse.question"
-                            nullOptionMsg="panes.addViewColumn.config.surveyResponse.questionNullOption"
-                            options={ questionOptions }
-                            value={ this.props.config.question_id }
-                            onValueChange={ this.onConfigChange.bind(this) }
-                            />
+                                     labelMsg="panes.addViewColumn.config.surveyResponse.question"
+                                     nullOptionMsg="panes.addViewColumn.config.surveyResponse.questionNullOption"
+                                     options={questionOptions}
+                                     value={this.props.config.question_id}
+                                     onValueChange={this.onConfigChange.bind(this)}
+                        />
                     );
                 }
-            }
-            else {
+            } else {
                 questionSelect = <LoadingIndicator/>;
             }
         }
 
         return (
             <AssignmentTemplate type="survey_response"
-                messagePath="panes.addViewColumn.templates"
-                selected={ this.props.selected }
-                onSelect={ this.props.onSelect }
-                >
+                                messagePath="panes.addViewColumn.templates"
+                                selected={this.props.selected}
+                                onSelect={this.props.onSelect}
+            >
                 <SelectInput name="survey_id"
-                    labelMsg="panes.addViewColumn.config.surveyResponse.survey"
-                    nullOptionMsg="panes.addViewColumn.config.surveyResponse.surveyNullOption"
-                    options={ surveyOptions }
-                    value={ this.props.config.survey_id }
-                    onValueChange={ this.onConfigChange.bind(this) }
-                    />
-                { questionSelect }
+                             labelMsg="panes.addViewColumn.config.surveyResponse.survey"
+                             nullOptionMsg="panes.addViewColumn.config.surveyResponse.surveyNullOption"
+                             options={surveyOptions}
+                             value={this.props.config.survey_id}
+                             onValueChange={this.onConfigChange.bind(this)}
+                />
+                {questionSelect}
             </AssignmentTemplate>
         );
     }
@@ -385,14 +393,15 @@ class SurveyResponseColumnTemplate extends React.Component {
         const column = {
             config: Object.assign({}, this.props.config, {
                 [attr]: val,
-            })
+            }),
+            shouldShowButton: false,
         };
 
         if (column.config.survey_id && column.config.question_id) {
             const questionList = this.props.elementsBySurvey[column.config.survey_id];
             const selectedQuestionItem = questionList.items
                 .find(item => item.data.id == column.config.question_id);
-
+            column.shouldShowButton = true;
             column.title = selectedQuestionItem.data.question.question;
         }
 
