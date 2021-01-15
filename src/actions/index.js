@@ -51,6 +51,7 @@ export const RETRIEVE_TAGS_FOR_PERSON = 'RETRIEVE_TAGS_FOR_PERSON';
 export const UPDATE_PERSON_TAG = 'UPDATE_PERSON_TAG';
 export const ADD_TAGS_TO_PERSON = 'ADD_TAGS_TO_PERSON';
 export const REMOVE_TAG_FROM_PERSON = 'REMOVE_TAG_FROM_PERSON';
+export const DELETE_TAG = 'DELETE_TAG';
 
 // Actions related to person views
 export const ADD_PERSON_VIEW_ROW = 'ADD_PERSON_VIEW_ROW';
