@@ -91,8 +91,11 @@ export default class PersonViewTable extends React.Component {
             if (rowList) {
                 if (rowList.isPending) {
                     placeholder = <LoadingIndicator/>;
+                } else {
+                    placeholder = this.props.placeholder;
                 }
-                else if (rowList.items && rowList.items.length) {
+                
+                if (rowList.items && rowList.items.length) {
                     let visibleRows = rowList.items;
 
                     // Store total length for label
@@ -183,20 +186,23 @@ export default class PersonViewTable extends React.Component {
                     );
                 }
                 else {
-                    placeholder = this.props.placeholder;
+                    tableBody = (
+                        <tbody>
+                            <tr className="PersonViewTable-placeholder">
+                                <td/>
+                                <td/>
+                                <td colSpan={3}>
+                                    { placeholder }
+                                </td>
+                            </tr>
+                            <PersonViewAddRow
+                                    columnList={ colList }
+                                    rowList={ this.props.rowList }
+                                    onSelect={ this.props.onPersonAdd }/>
+                        </tbody>
+                    )
                 }
             }
-            else {
-                placeholder = this.props.placeholder;
-            }
-        }
-
-        if (placeholder) {
-            placeholder = (
-                <div className="PersonViewTable-placeholder">
-                    { placeholder }
-                </div>
-            );
         }
 
         let countMsgId = 'misc.personViewTable.tools.count.default';
@@ -243,7 +249,6 @@ export default class PersonViewTable extends React.Component {
                         { tableBody }
                     </table>
                 </div>
-                { placeholder }
             </div>
         );
     }
