@@ -125,6 +125,17 @@
     }
 }
 
+.PersonViewsPane-deleteViewLink {
+    margin-top: -1em;
+    text-decoration: underline;
+    color: $c-text;
+
+    span:before {
+        @include icon($fa-var-trash);
+        color: $c-brand-delete;
+    }
+}
+
 .PersonViewsPane-singleViewModes {
     min-height: 7rem;
 

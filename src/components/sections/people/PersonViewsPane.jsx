@@ -177,6 +177,11 @@ export default class PersonViewsPane extends RootPaneBase {
                             multiline={ false }
                             maxLength={ 80 }
                             />
+                        <div className="PersonViewsPane-deleteViewLink">
+                            <a onClick={ this.onClickDelete.bind(this) }>
+                                <Msg id="panes.personViews.view.delete" />
+                            </a>
+                        </div>
                         <EditableText tagName="p" key="description"
                             content={ viewItem.data.description }
                             onChange={ this.onChange.bind(this, 'description') }
@@ -241,6 +246,16 @@ export default class PersonViewsPane extends RootPaneBase {
     onClickDownload() {
         const viewId = this.getParam(0);
         this.openPane('confirmexport', viewId, this.state.query);
+    }
+
+    onClickDelete() {
+        const viewId = this.getParam(0);
+        const viewItem = getListItemById(this.props.views.viewList, viewId);
+        let title = ''
+        if(viewItem) {
+            title = viewItem.data.title;
+        }
+        this.openPane('confirmdelete', viewId, 'view');
     }
 
     onClickNew() {

@@ -53,6 +53,22 @@ export function createPersonView(data, defaultColumns=[]) {
     };
 }
 
+export function deletePersonView(viewId) {
+    return ({ dispatch, getState, z }) => {
+        const orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.DELETE_PERSON_VIEW,
+            meta: { viewId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'people', 'views', viewId).del(),
+            }
+        });
+    };
+}
+
+
+
 export function createPersonViewColumn(viewId, data) {
     return ({ dispatch, getState, z }) => {
         const orgId = getState().org.activeId;
