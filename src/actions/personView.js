@@ -61,7 +61,7 @@ export function deletePersonView(viewId) {
             type: types.DELETE_PERSON_VIEW,
             meta: { viewId },
             payload: {
-                promise: z.resource('orgs', orgId, 'people', 'views', viewId).delete(),
+                promise: z.resource('orgs', orgId, 'people', 'views', viewId).del(),
             }
         });
     };

@@ -199,6 +199,7 @@ export default class PersonViewsPane extends RootPaneBase {
                             placeholder={ placeholder }
                             showAddSection={ this.state.viewMode == 'saved' }
                             onDownload={ this.onClickDownload.bind(this) }
+                            onDelete={ this.onClickDelete.bind(this) }
                             onPersonAdd={ person => this.props.dispatch(addPersonViewRow(viewId, person.id)) }
                             />
                     </div>
@@ -241,6 +242,16 @@ export default class PersonViewsPane extends RootPaneBase {
     onClickDownload() {
         const viewId = this.getParam(0);
         this.openPane('confirmexport', viewId, this.state.query);
+    }
+
+    onClickDelete() {
+        const viewId = this.getParam(0);
+        const viewItem = getListItemById(this.props.views.viewList, viewId);
+        let title = ''
+        if(viewItem) {
+            title = viewItem.data.title;
+        }
+        this.openPane('confirmdelete', viewId, 'view');
     }
 
     onClickNew() {

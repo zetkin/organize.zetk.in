@@ -212,13 +212,18 @@ export default class PersonViewTable extends React.Component {
 
         return (
             <div className="PersonViewTable">
-                <div className="PersonViewTable-tools">
-                    <div className="PersonViewTable-downloadButton">
+                <div className="PersonViewTable-tools"> 
+                    <div className="PersonViewTable-buttons">
                         <Button
                             labelMsg="misc.personViewTable.tools.downloadButton"
                             onClick={ this.onClickDownload.bind(this) }
-                            />
+                            /> 
+                        <Button
+                            labelMsg="misc.personViewTable.tools.deleteButton"
+                            onClick={ this.onClickDelete.bind(this) }
+                            /> 
                     </div>
+
                     <div className="PersonViewTable-searchInput">
                         <input type="text"
                             placeholder={ this.props.intl.formatMessage({ id: 'misc.personViewTable.tools.search.placeholder' }) }
@@ -277,6 +282,12 @@ export default class PersonViewTable extends React.Component {
     onClickDownload() {
         if (this.props.onDownload) {
             this.props.onDownload();
+        }
+    }
+
+    onClickDelete() {
+        if(this.props.onDelete) {
+            this.props.onDelete();
         }
     }
 }
