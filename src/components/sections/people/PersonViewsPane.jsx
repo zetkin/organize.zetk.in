@@ -256,6 +256,7 @@ export default class PersonViewsPane extends RootPaneBase {
             title = viewItem.data.title;
         }
         this.openPane('confirmdelete', viewId, 'view');
+        this.gotoPane('views');
     }
 
     onClickNew() {
