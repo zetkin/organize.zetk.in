@@ -109,6 +109,10 @@ export default class ConfirmImportPane extends PaneBase {
             for (let colidx = 0; colidx < columns.length; colidx++) {
                 const column = this.getFieldID(columns[colidx]);
                 if(row.values[colidx]) {
+                    if(typeof(row.values[colidx]) !== 'string') {
+                        row.values[colidx] = row.values[colidx].toString();
+                    }
+
                     switch(column.type) {
                         case 'email':
                             if(!isEmail(row.values[colidx].trim()) && row.values[colidx] != '') {
