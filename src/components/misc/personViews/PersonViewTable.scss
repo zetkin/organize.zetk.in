@@ -113,17 +113,30 @@
 
 .PersonViewTable-placeholder {
     background-color: darken($c-ui-bg, 4);
-    padding: 2rem;
-    text-align: center;
+    transition: background-color 0.2s;
 
-    @include large-screen {
-        margin-top: 3rem;
-        padding: 4rem 25%;
+    td:first-child,td:nth-child(2) {
+        $w: 36px;
+
+        width: $w;
+        min-width: $w;
+        max-width: $w;
+        padding: 0;
     }
 
-    color: $c-ui-darker;
+    td:nth-child(3) {
+        position: relative;
+        padding: 2rem;
+        text-align: center;
+        width: 100%;
 
-    transition: background-color 0.2s;
+        @include large-screen {
+            margin-top: 3rem;
+            padding: 4rem 25%;
+        }
+
+        color: $c-ui-darker;
+    }
 }
 
 .PersonViewTable-placeholder {
