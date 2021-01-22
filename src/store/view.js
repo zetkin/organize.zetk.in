@@ -79,6 +79,17 @@ export default function viewState(state = null, action) {
             panes
         });
     }
+    else if (action.type == types.DELETE_PERSON_VIEW + '_FULFILLED') {
+        let panes = [{
+            id: '$' + makeRandomString(6),
+            type: 'views',
+            params: [],
+        }];
+
+        return Object.assign({}, state, {
+            panes
+        });
+    }
     else if (action.type == types.REPLACE_PANE) {
         let panes = state.panes.concat();
         panes[action.payload.index] = {
