@@ -100,3 +100,18 @@ export function removeTagFromPerson(id, tagId) {
         });
     };
 }
+
+export function deletePersonTag(id) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.DELETE_TAG,
+            meta: { id },
+            payload: {
+                promise: z.resource('orgs', orgId,
+                    'people', 'tags', id).del(),
+            }
+        });
+    };
+}

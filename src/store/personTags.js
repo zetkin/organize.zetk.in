@@ -4,6 +4,7 @@ import {
     createList,
     updateOrAddListItem,
     updateOrAddListItems,
+    removeListItem,
 } from '../utils/store';
 
 
@@ -27,6 +28,11 @@ export default function personTags(state = null, action) {
             return Object.assign({}, state, {
                 tagList: updateOrAddListItem(state.tagList,
                     tag.id, tag)
+            });
+
+        case types.DELETE_TAG + '_FULFILLED':
+            return Object.assign({}, state, {
+                tagList: removeListItem(state.tagList, action.meta.id),
             });
 
         default:
