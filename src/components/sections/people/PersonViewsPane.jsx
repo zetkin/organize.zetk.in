@@ -177,6 +177,11 @@ export default class PersonViewsPane extends RootPaneBase {
                             multiline={ false }
                             maxLength={ 80 }
                             />
+                        <div className="PersonViewsPane-deleteViewLink">
+                            <a onClick={ this.onClickDelete.bind(this) }>
+                                <Msg id="panes.personViews.view.delete" />
+                            </a>
+                        </div>
                         <EditableText tagName="p" key="description"
                             content={ viewItem.data.description }
                             onChange={ this.onChange.bind(this, 'description') }
@@ -199,7 +204,6 @@ export default class PersonViewsPane extends RootPaneBase {
                             placeholder={ placeholder }
                             showAddSection={ this.state.viewMode == 'saved' }
                             onDownload={ this.onClickDownload.bind(this) }
-                            onDelete={ this.onClickDelete.bind(this) }
                             onPersonAdd={ person => this.props.dispatch(addPersonViewRow(viewId, person.id)) }
                             />
                     </div>

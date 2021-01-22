@@ -33,20 +33,14 @@
 
     margin: 0 0 0.5em;
 
-    .PersonViewTable-buttons {
+    .PersonViewTable-downloadButton {
         margin-right: 1em;
         padding-right: 1em;
         border-right: 1px solid $c-ui-dark;
 
-        .Button:first-child {
+        .Button {
             &:before {
                 @include icon($fa-var-cloud-download);
-            }
-        }
-        .Button:last-child {
-            &:before {
-                @include icon($fa-var-trash-o);
-                color: $c-brand-delete;
             }
         }
     }
