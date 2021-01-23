@@ -49,7 +49,7 @@ export default class PersonViewTable extends React.Component {
     }
 
     componentDidUpdate() {
-        const { columnList, rowList, viewId } = this.props;
+        const { rowList, viewId } = this.props;
 
         if (rowList && rowList.items) {
             // Find dirty rows and retrieve their data anew
@@ -69,7 +69,6 @@ export default class PersonViewTable extends React.Component {
         let placeholder;
         let tableHead;
         let tableBody;
-        let loadingIndicator;
         let pageSelect = null;
         let numMatches;
         let numTotal;
