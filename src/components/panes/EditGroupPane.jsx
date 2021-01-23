@@ -66,7 +66,7 @@ export default class EditGroupPane extends PaneBase {
         ev.preventDefault();
 
         let groupId = this.getParam(0);
-        let values = this.refs.form.getValues();
+        let values = this.refs.form.getChangedValues();
 
         this.props.dispatch(updateGroup(groupId, values));
         this.closePane();
