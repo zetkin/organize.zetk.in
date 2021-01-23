@@ -30,6 +30,7 @@ export default class PersonTagList extends React.Component {
             <List className="PersonTagList"
                 headerColumns={ columns } itemComponent={ PersonTagListItem }
                 list={ this.props.tagList }
+                defaultSortField="title"
                 onItemClick={ this.props.onItemClick }
                 />
         );
