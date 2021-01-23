@@ -88,7 +88,7 @@ export default class EditPersonTagPane extends PaneBase {
         ev.preventDefault();
 
         let tagId = this.getParam(0);
-        let values = this.refs.form.getValues();
+        let values = this.refs.form.getChangedValues();
 
         this.props.dispatch(updatePersonTag(tagId, values));
         this.closePane();

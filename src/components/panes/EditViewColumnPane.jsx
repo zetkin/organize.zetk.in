@@ -76,7 +76,7 @@ export default class EditViewColumnPane extends PaneBase {
 
         const viewId = this.getParam(0);
         const columnId = this.getParam(1);
-        const values = this.refs.form.getValues();
+        const values = this.refs.form.getChangedValues();
 
         this.props.dispatch(updatePersonViewColumn(viewId, columnId, values));
         this.closePane();
