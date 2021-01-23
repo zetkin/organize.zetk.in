@@ -30,6 +30,7 @@ export default class PersonQueryList extends React.Component {
             <List className="PersonQueryList"
                 headerColumns={ columns } itemComponent={ PersonQueryListItem }
                 list={ this.props.queryList }
+                defaultSortField="title"
                 onItemClick={ this.props.onItemClick }
                 />
         );
