@@ -144,7 +144,7 @@ export default class PersonViewsPane extends RootPaneBase {
                 let querySelect = null;
                 if (this.state.viewMode == 'query') {
                     const queryList = this.props.queryList;
-                    const queries = queryList.items.map(i => i.data).filter(q => !!q.title);
+                    const queries = queryList.items.map(i => i.data).filter(q => !!q.title).sort((a, b) => a.title.localeCompare(b.title));
 
                     querySelect = (
                         <RelSelectInput name="query"
