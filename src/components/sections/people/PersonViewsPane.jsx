@@ -245,7 +245,9 @@ export default class PersonViewsPane extends RootPaneBase {
 
     onClickDownload() {
         const viewId = this.getParam(0);
-        this.openPane('confirmexport', viewId, this.state.query);
+        const queryId = (this.state.viewMode === 'saved') ? undefined : this.state.query;
+
+        this.openPane('confirmexport', viewId, queryId);
     }
 
     onClickDelete() {
