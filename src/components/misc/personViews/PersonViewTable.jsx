@@ -133,13 +133,24 @@ export default class PersonViewTable extends React.Component {
                                 const val1 = row1.data.content[this.state.sortIndex] || '';
 
                                 let x = 0;
-                                
-                                  if (Array.isArray(val0) && typeof(val0[0]) != ‘undefined’ && typeof(val1[0]) != ‘undefined’) {
+
+                                  if (Array.isArray(val0) && typeof(val0[0]) != 'undefined' && typeof(val1[0]) != 'undefined') {
                                      x = val0[0].text.toLowerCase().toString().localeCompare(val1[0].text.toLowerCase().toString());
-                                  }
-                                  else {
+                                  } else {
                                  x = val0.toString().localeCompare(val1.toString());
                               }
+
+                                if(typeof(val0[0]) == 'undefined' && typeof(val1[0]) != 'undefined') {
+                                  return 1;
+                                }
+                                if(typeof(val0[0]) != 'undefined' && typeof(val1[0]) == 'undefined') {
+                                  return -1;
+                                }
+                                if(typeof(val0[0]) == 'undefined' && typeof(val1[0]) == 'undefined') {
+                                  return 0;
+                                }
+
+
                                 if (this.state.sortInverted) {
                                     x *= -1;
                                 }
