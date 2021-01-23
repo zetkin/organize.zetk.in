@@ -215,6 +215,7 @@ export default class PersonViewsPane extends RootPaneBase {
             }
         }
         else if (this.props.views.viewList.items) {
+            const sortedViewItems = this.props.views.viewList.items.sort((v1, v2) => v1.data.title.localeCompare(v2.data.title));
             return (
                 <ul className="PersonViewsPane-viewList">
                     <li
@@ -226,7 +227,7 @@ export default class PersonViewsPane extends RootPaneBase {
                             <Msg id="panes.personViews.newBlankButton"/>
                         </span>
                     </li>
-                {this.props.views.viewList.items.map(viewItem => (
+                {sortedViewItems.map(viewItem => (
                     <li key={ viewItem.data.id }
                         className="PersonViewsPane-viewItem"
                         onClick={ () => this.gotoPane('views', viewItem.data.id) }
