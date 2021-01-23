@@ -134,20 +134,21 @@ export default class PersonViewTable extends React.Component {
 
                                 let x = 0;
 
-                                  if (Array.isArray(val0) && typeof(val0[0]) != 'undefined' && typeof(val1[0]) != 'undefined') {
-                                     x = val0[0].text.toLowerCase().toString().localeCompare(val1[0].text.toLowerCase().toString());
-                                  } else {
-                                 x = val0.toString().localeCompare(val1.toString());
-                              }
+                                if (Array.isArray(val0) && typeof(val0[0]) != 'undefined' && typeof(val1[0]) != 'undefined') {
+                                    x = val0[0].text.toLowerCase().toString().localeCompare(val1[0].text.toLowerCase().toString());
+                                }
+                                else {
+                                    x = val0.toString().localeCompare(val1.toString());
+                                }
 
                                 if(typeof(val0[0]) == 'undefined' && typeof(val1[0]) != 'undefined') {
-                                  return 1;
+                                    return 1;
                                 }
                                 if(typeof(val0[0]) != 'undefined' && typeof(val1[0]) == 'undefined') {
-                                  return -1;
+                                    return -1;
                                 }
                                 if(typeof(val0[0]) == 'undefined' && typeof(val1[0]) == 'undefined') {
-                                  return 0;
+                                    return 0;
                                 }
 
 
