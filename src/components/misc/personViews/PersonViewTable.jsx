@@ -93,7 +93,7 @@ export default class PersonViewTable extends React.Component {
                 } else {
                     placeholder = this.props.placeholder;
                 }
-                
+
                 if (rowList.items && rowList.items.length) {
                     let visibleRows = rowList.items;
 
@@ -128,19 +128,24 @@ export default class PersonViewTable extends React.Component {
 
                     // Sort, if a column is selected for sorting
                     if (this.state.sortIndex !== null) {
-                        visibleRows = visibleRows.concat().sort((row0, row1) => {
-                            const val0 = row0.data.content[this.state.sortIndex] || '';
-                            const val1 = row1.data.content[this.state.sortIndex] || '';
+                            visibleRows = visibleRows.concat().sort((row0, row1) => {
+                                const val0 = row0.data.content[this.state.sortIndex] || '';
+                                const val1 = row1.data.content[this.state.sortIndex] || '';
 
-                            let x = val0.toString().localeCompare(val1.toString());
-
-                            if (this.state.sortInverted) {
-                                x *= -1;
-                            }
-
-                            return x;
-                        });
-                    }
+                                let x = 0;
+                                
+                                  if (Array.isArray(val0) && typeof(val0[0]) != ‘undefined’ && typeof(val1[0]) != ‘undefined’) {
+                                     x = val0[0].text.toLowerCase().toString().localeCompare(val1[0].text.toLowerCase().toString());
+                                  }
+                                  else {
+                                 x = val0.toString().localeCompare(val1.toString());
+                              }
+                                if (this.state.sortInverted) {
+                                    x *= -1;
+                                }
+                                return x;
+                            });
+                        }
 
                     // Store match count for label
                     numMatches = visibleRows.length;
