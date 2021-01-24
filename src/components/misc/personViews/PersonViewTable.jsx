@@ -155,7 +155,7 @@ export default class PersonViewTable extends React.Component {
                                 x *= -1;
                             }
 
-                                return x;
+                            return x;
                         });
                     }
 
