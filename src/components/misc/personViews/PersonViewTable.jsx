@@ -154,9 +154,10 @@ export default class PersonViewTable extends React.Component {
                             if (this.state.sortInverted) {
                                 x *= -1;
                             }
+
                                 return x;
                         });
-                      }
+                    }
 
                     // Store match count for label
                     numMatches = visibleRows.length;
