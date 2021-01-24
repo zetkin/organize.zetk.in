@@ -10,6 +10,8 @@ placeholders:
 view:
     addColumn: Add column
     backLink: All views
+    hideHeader: Hide header
+    showHeader: Show header
     empty: This view is empty. Add a person below, or pick a Smart Search query above to populate the view.
     delete: Detete view
     missingQuery: Select a Smart Search query above.

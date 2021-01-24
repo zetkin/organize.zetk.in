@@ -85,6 +85,12 @@
     }
 }
 
+.PersonViewsPane-topLinks {
+    display: flex;
+    width: 100vw;
+    justify-content: space-between;
+}
+
 .PersonViewsPane-backLink {
     font-size: 1rem;
     color: $c-ui-darker;
@@ -101,6 +107,39 @@
     &:hover {
         &:before {
             left: -0.1em;
+        }
+    }
+}
+
+.PersonViewsPane-collapseHeaderLink {
+    @extend .PersonViewsPane-backLink;
+    font-size: 1rem;
+    color: $c-ui-darker;
+    @include large-screen {
+        margin-right: 11.3%;
+    }
+
+    &:before {
+        @include icon($fa-var-chevron-up);
+        transition: top 0.2s;
+    }
+
+    &:hover {
+        &:before {
+            top: -0.1em;
+        }
+    }
+}
+
+.PersonViewsPane-collapseHeaderLink-collapsed {
+    @extend .PersonViewsPane-collapseHeaderLink;
+    &:before {
+        @include icon($fa-var-chevron-down);
+    }
+
+    &:hover {
+        &:before {
+            top: 0.1em;
         }
     }
 }
@@ -125,6 +164,11 @@
     }
 }
 
+.PersonViewsPane-singleViewHeader-collapsed {
+    @extend .PersonViewsPane-singleViewHeader;
+    display: none;
+}
+
 .PersonViewsPane-deleteViewLink {
     margin-top: -1em;
     text-decoration: underline;
@@ -137,7 +181,7 @@
 }
 
 .PersonViewsPane-singleViewModes {
-    min-height: 7rem;
+    min-height: 0rem;
 
     @include large-screen {
         float: right;
@@ -169,3 +213,13 @@
         }
     }
 }
+
+.PersonViewsPane-singleViewTable-collapsed {
+    @extend .PersonViewsPane-singleViewTable;
+    @include large-screen {
+        .PersonViewTable { 
+            top: 8.6rem;
+        }
+    }
+}
+

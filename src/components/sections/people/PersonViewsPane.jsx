@@ -36,6 +36,7 @@ export default class PersonViewsPane extends RootPaneBase {
 
         this.state = {
             viewMode: 'saved',
+            collapseHeader: false,
         };
     }
 
@@ -115,10 +116,22 @@ export default class PersonViewsPane extends RootPaneBase {
 
         if (viewId) {
             return (
-                <div key="backLink" className="PersonViewsPane-backLink">
-                    <a onClick={ () => this.gotoPane('views') }>
-                        <Msg id="panes.personViews.view.backLink"/>
-                    </a>
+                <div key="topLinks" className="PersonViewsPane-topLinks">
+                    <div key="backLink" className="PersonViewsPane-backLink">
+                        <a onClick={ () => this.gotoPane('views') }>
+                            <Msg id="panes.personViews.view.backLink"/>
+                        </a>
+                    </div>,
+                    <div key="collapseLink" className={ "PersonViewsPane-collapseHeaderLink" + (
+                    this.state.collapseHeader ? "-collapsed" : "" )} >
+                        <a onClick={ this.onClickCollapseHeader.bind(this) }>
+                            { this.state.collapseHeader ? 
+                                <Msg id="panes.personViews.view.showHeader" />
+                                :
+                                <Msg id="panes.personViews.view.hideHeader" />
+                            }
+                        </a>
+                    </div>,
                 </div>
             );
         }
@@ -168,7 +181,7 @@ export default class PersonViewsPane extends RootPaneBase {
                 }
 
                 return [
-                    <div key="header" className="PersonViewsPane-singleViewHeader">
+                    <div key="header" className={"PersonViewsPane-singleViewHeader" + (this.state.collapseHeader ? "-collapsed" : "") }>
                         <EditableText tagName="h1" key="title"
                             flash={ true }
                             content={ viewItem.data.title }
@@ -195,7 +208,7 @@ export default class PersonViewsPane extends RootPaneBase {
                             />
                         { querySelect }
                     </div>,
-                    <div key="view" className="PersonViewsPane-singleViewTable">
+                    <div key="view" className={ "PersonViewsPane-singleViewTable" + (this.state.collapseHeader ? "-collapsed" : "") }>
                         <PersonViewTable
                             viewId={ viewId }
                             openPane={ this.openPane.bind(this) }
@@ -256,6 +269,12 @@ export default class PersonViewsPane extends RootPaneBase {
             title = viewItem.data.title;
         }
         this.openPane('confirmdelete', viewId, 'view');
+    }
+
+    onClickCollapseHeader() {
+        this.setState({ 
+            collapseHeader: !this.state.collapseHeader,
+        })
     }
 
     onClickNew() {
