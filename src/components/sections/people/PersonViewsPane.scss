@@ -87,13 +87,20 @@
 
 .PersonViewsPane-topLinks {
     display: flex;
-    width: 100vw;
+    width: 100%;
     justify-content: space-between;
+    &:before {
+        content: none;
+    }
+    &:after {
+        content: none;
+    }
 }
 
 .PersonViewsPane-backLink {
     font-size: 1rem;
     color: $c-ui-darker;
+    margin-right: 1rem;
 
     &:before {
         @include icon($fa-var-chevron-left);
@@ -115,9 +122,6 @@
     @extend .PersonViewsPane-backLink;
     font-size: 1rem;
     color: $c-ui-darker;
-    @include large-screen {
-        margin-right: 11.3%;
-    }
 
     &:before {
         @include icon($fa-var-chevron-up);
@@ -220,6 +224,19 @@
         .PersonViewTable { 
             top: 8.6rem;
         }
+    }
+}
+
+// Fix for problem where view mode buttons are unusable in the collapsed header mode
+.PersonViewTable {
+    pointer-events: none;
+
+    .PersonViewTable-tools {
+        width: max-content;
+        pointer-events: auto;
+    }
+    .PersonViewTable-table {
+        pointer-events: auto;
     }
 }
 

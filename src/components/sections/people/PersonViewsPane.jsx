@@ -131,7 +131,7 @@ export default class PersonViewsPane extends RootPaneBase {
                                 <Msg id="panes.personViews.view.hideHeader" />
                             }
                         </a>
-                    </div>,
+                    </div>
                 </div>
             );
         }
@@ -164,7 +164,9 @@ export default class PersonViewsPane extends RootPaneBase {
                             value={ this.state.query } objects={ queries } showEditLink={ true }
                             onValueChange={ (name, val) => this.setState({ query: val }) }
                             onCreate={ this.onQueryCreate.bind(this) }
-                            onEdit={ this.onQueryEdit.bind(this) }/>
+                            onEdit={ this.onQueryEdit.bind(this) }
+                            hidden={ this.state.collapseHeader }
+                            />
                     );
 
                     if (this.state.query) {
@@ -204,7 +206,11 @@ export default class PersonViewsPane extends RootPaneBase {
                     </div>,
                     <div key="mode" className="PersonViewsPane-singleViewModes">
                         <ViewSwitch states={ viewStates } selected={ this.state.viewMode }
-                            onSwitch={ vs => this.setState({ viewMode: vs }) }
+                            onSwitch={ vs => this.setState({ 
+                                viewMode: vs, 
+                                collapseHeader: vs == 'query' ? false : this.state.collapseHeader
+                            })
+                            }
                             />
                         { querySelect }
                     </div>,
