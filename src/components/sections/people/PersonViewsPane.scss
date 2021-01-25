@@ -85,9 +85,22 @@
     }
 }
 
+.PersonViewsPane-topLinks {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    &:before {
+        content: none;
+    }
+    &:after {
+        content: none;
+    }
+}
+
 .PersonViewsPane-backLink {
     font-size: 1rem;
     color: $c-ui-darker;
+    margin-right: 1rem;
 
     &:before {
         @include icon($fa-var-chevron-left);
@@ -101,6 +114,36 @@
     &:hover {
         &:before {
             left: -0.1em;
+        }
+    }
+}
+
+.PersonViewsPane-collapseHeaderLink {
+    @extend .PersonViewsPane-backLink;
+    font-size: 1rem;
+    color: $c-ui-darker;
+
+    &:before {
+        @include icon($fa-var-chevron-up);
+        transition: top 0.2s;
+    }
+
+    &:hover {
+        &:before {
+            top: -0.1em;
+        }
+    }
+}
+
+.PersonViewsPane-collapseHeaderLink-collapsed {
+    @extend .PersonViewsPane-collapseHeaderLink;
+    &:before {
+        @include icon($fa-var-chevron-down);
+    }
+
+    &:hover {
+        &:before {
+            top: 0.1em;
         }
     }
 }
@@ -125,6 +168,11 @@
     }
 }
 
+.PersonViewsPane-singleViewHeader-collapsed {
+    @extend .PersonViewsPane-singleViewHeader;
+    display: none;
+}
+
 .PersonViewsPane-deleteViewLink {
     margin-top: -1em;
     text-decoration: underline;
@@ -137,7 +185,7 @@
 }
 
 .PersonViewsPane-singleViewModes {
-    min-height: 7rem;
+    min-height: 0rem;
 
     @include large-screen {
         float: right;
@@ -169,3 +217,26 @@
         }
     }
 }
+
+.PersonViewsPane-singleViewTable-collapsed {
+    @extend .PersonViewsPane-singleViewTable;
+    @include large-screen {
+        .PersonViewTable { 
+            top: 8.6rem;
+        }
+    }
+}
+
+// Fix for problem where view mode buttons are unusable in the collapsed header mode
+.PersonViewTable {
+    pointer-events: none;
+
+    .PersonViewTable-tools {
+        width: max-content;
+        pointer-events: auto;
+    }
+    .PersonViewTable-table {
+        pointer-events: auto;
+    }
+}
+

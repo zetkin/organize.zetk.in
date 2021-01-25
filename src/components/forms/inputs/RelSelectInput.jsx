@@ -44,6 +44,7 @@ export default class RelSelectInput extends InputBase {
         const valueField = this.props.valueField;
         const selected = (value && objects)?
             objects.find(o => o[valueField] == value) : null;
+        const hidden = this.props.hidden || false;
 
         var inputValue = this.state.inputValue;
         if (inputValue === undefined) {
@@ -52,7 +53,8 @@ export default class RelSelectInput extends InputBase {
 
         const classes = cx({
             'RelSelectInput': true,
-            'focused': this.state.inputFocused
+            'focused': this.state.inputFocused,
+            'hidden': hidden
         });
 
         const filteredObjects = this.getFilteredObjects();
