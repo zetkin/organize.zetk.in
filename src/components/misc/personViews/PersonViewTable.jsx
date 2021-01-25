@@ -134,21 +134,24 @@ export default class PersonViewTable extends React.Component {
 
                             let x = 0;
 
-                            if (Array.isArray(val0) && typeof(val0[0]) != 'undefined' && typeof(val1[0]) != 'undefined') {
-                                x = val0[0].text.toLowerCase().toString().localeCompare(val1[0].text.toLowerCase().toString());
+                            if (Array.isArray(val0)) {
+                                if (typeof val0[0] != 'undefined' && typeof val1[0] != 'undefined') {
+                                    x = val0[0].text.localeCompare(val1[0].text);
+                                }
+                                else {
+                                    if(typeof(val0[0]) == 'undefined' && typeof(val1[0]) != 'undefined') {
+                                        return 1;
+                                    }
+                                    if(typeof(val0[0]) != 'undefined' && typeof(val1[0]) == 'undefined') {
+                                        return -1;
+                                    }
+                                    if(typeof(val0[0]) == 'undefined' && typeof(val1[0]) == 'undefined') {
+                                        return 0;
+                                    }
+                               }
                             }
                             else {
-                                x = val0.toString().localeCompare(val1.toString());
-                            }
-
-                            if(typeof(val0[0]) == 'undefined' && typeof(val1[0]) != 'undefined') {
-                                return 1;
-                            }
-                            if(typeof(val0[0]) != 'undefined' && typeof(val1[0]) == 'undefined') {
-                                return -1;
-                            }
-                            if(typeof(val0[0]) == 'undefined' && typeof(val1[0]) == 'undefined') {
-                                return 0;
+                                x = val0.localeCompare(val1);
                             }
 
                             if (this.state.sortInverted) {
