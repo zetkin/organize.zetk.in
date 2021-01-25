@@ -93,7 +93,7 @@ export default class PersonViewTable extends React.Component {
                 } else {
                     placeholder = this.props.placeholder;
                 }
-                
+
                 if (rowList.items && rowList.items.length) {
                     let visibleRows = rowList.items;
 
@@ -132,7 +132,27 @@ export default class PersonViewTable extends React.Component {
                             const val0 = row0.data.content[this.state.sortIndex] || '';
                             const val1 = row1.data.content[this.state.sortIndex] || '';
 
-                            let x = val0.toString().localeCompare(val1.toString());
+                            let x = 0;
+
+                            if (Array.isArray(val0)) {
+                                if (typeof val0[0] != 'undefined' && typeof val1[0] != 'undefined') {
+                                    x = val0[0].text.localeCompare(val1[0].text);
+                                }
+                                else {
+                                    if(typeof(val0[0]) == 'undefined' && typeof(val1[0]) != 'undefined') {
+                                        return 1;
+                                    }
+                                    if(typeof(val0[0]) != 'undefined' && typeof(val1[0]) == 'undefined') {
+                                        return -1;
+                                    }
+                                    if(typeof(val0[0]) == 'undefined' && typeof(val1[0]) == 'undefined') {
+                                        return 0;
+                                    }
+                               }
+                            }
+                            else {
+                                x = val0.localeCompare(val1);
+                            }
 
                             if (this.state.sortInverted) {
                                 x *= -1;
