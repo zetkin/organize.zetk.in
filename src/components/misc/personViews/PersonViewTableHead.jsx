@@ -21,11 +21,9 @@ export default function PersonViewTableHead(props) {
 
         return (
             <th key={ colItem.data.id } className={ classes }
-                onClick={ () => props.openPane('editviewcolumn', props.viewId, colItem.data.id) }>
+                onClick={ onClickSort }>
                 { colItem.data.title }
-                <a className="PersonViewTableHead-columnSort"
-                    onClick={ onClickSort }
-                    />
+                <a className="PersonViewTableHead-columnSort"/>
             </th>
         );
     });
