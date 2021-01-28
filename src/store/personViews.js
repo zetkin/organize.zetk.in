@@ -95,7 +95,11 @@ export default function personViews(state = null, action) {
             },
             rowsByView: {
                 ...state.rowsByView,
-                [viewId]: undefined,
+                [viewId]: null,
+            },
+            matchesByViewAndQuery: {
+                ...state.matchesByViewAndQuery,
+                [viewId]: {},
             },
         })
     }
