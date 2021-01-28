@@ -43,6 +43,7 @@ import EditLocationPane from './EditLocationPane';
 import EditLocationTagPane from './EditLocationTagPane';
 import EditPersonPane from './EditPersonPane';
 import EditPersonTagPane from './EditPersonTagPane';
+import EditPersonViewPane from './EditPersonViewPane';
 import EditQueryPane from './EditQueryPane';
 import EditRoutePane from './EditRoutePane';
 import EditSurveyPane from './EditSurveyPane';
@@ -121,6 +122,7 @@ var _panes = {
     'editlocationtag': EditLocationTagPane,
     'editperson': EditPersonPane,
     'editpersontag': EditPersonTagPane,
+    'editpersonview': EditPersonViewPane,
     'editquery': EditQueryPane,
     'editroute': EditRoutePane,
     'editsurvey': EditSurveyPane,

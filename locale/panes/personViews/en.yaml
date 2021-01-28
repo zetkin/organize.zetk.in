@@ -18,3 +18,4 @@ view:
     modes:
         saved: Saved
         query: Smart Search
+    settings: Configure view
