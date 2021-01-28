@@ -36,4 +36,7 @@ templates:
     survey_response:
         instructions: Print out people's responses to a given survey question.
         title: Survey response
+    person_notes:
+        instructions: Print out organizer notes on people.
+        title: Person notes
 title: New column
