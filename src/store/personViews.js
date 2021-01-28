@@ -2,6 +2,7 @@ import * as types from '../actions';
 
 import {
     createList,
+    getListItemById,
     removeListItem,
     updateOrAddListItem,
     updateOrIgnoreListItem,
@@ -77,6 +78,26 @@ export default function personViews(state = null, action) {
         return Object.assign({}, state, {
             viewList: updateOrAddListItem(state.viewList, view.id, view),
         });
+    }
+    else if (action.type == types.REORDER_PERSON_VIEW_COLUMNS + '_FULFILLED') {
+        const viewId = action.meta.viewId;
+        const oldColList = state.columnsByView[viewId];
+        const newColList = {
+            ...oldColList,
+            // Updating the column order will trigger the view to re-fetch rows
+            items: action.payload.data.data.order.map(id => getListItemById(oldColList, id)),
+        };
+
+        return Object.assign({}, state, {
+            columnsByView: {
+                ...state.columnsByView,
+                [viewId]: newColList,
+            },
+            rowsByView: {
+                ...state.rowsByView,
+                [viewId]: undefined,
+            },
+        })
     }
     else if (action.type == types.DELETE_PERSON_VIEW + '_FULFILLED') {
         const viewId = action.meta.viewId;

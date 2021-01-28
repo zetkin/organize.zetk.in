@@ -267,3 +267,20 @@ export function removePersonViewColumn(viewId, columnId) {
         });
     };
 }
+
+export function reorderViewColumns(viewId, order) {
+    return ({ dispatch, getState, z }) => {
+        const orgId = getState().org.activeId;
+        const data = {
+            order: order.map(id => parseInt(id)),
+        };
+
+        dispatch({
+            type: types.REORDER_PERSON_VIEW_COLUMNS,
+            meta: { viewId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'people', 'views', viewId, 'column_order').patch(data),
+            }
+        });
+    };
+}
