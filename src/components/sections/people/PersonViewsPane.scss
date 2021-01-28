@@ -101,6 +101,7 @@
     font-size: 1rem;
     color: $c-ui-darker;
     margin-right: 1rem;
+    cursor: pointer;
 
     &:before {
         @include icon($fa-var-chevron-left);
@@ -119,31 +120,19 @@
 }
 
 .PersonViewsPane-collapseHeaderLink {
-    @extend .PersonViewsPane-backLink;
     font-size: 1rem;
     color: $c-ui-darker;
+    cursor: pointer;
 
-    &:before {
+    &:after {
         @include icon($fa-var-chevron-up);
-        transition: top 0.2s;
+
+        transition: transform 0.2s;
     }
 
-    &:hover {
-        &:before {
-            top: -0.1em;
-        }
-    }
-}
-
-.PersonViewsPane-collapseHeaderLink-collapsed {
-    @extend .PersonViewsPane-collapseHeaderLink;
-    &:before {
-        @include icon($fa-var-chevron-down);
-    }
-
-    &:hover {
-        &:before {
-            top: 0.1em;
+    &.collapsed {
+        &:after {
+            transform: rotate(180deg);
         }
     }
 }
