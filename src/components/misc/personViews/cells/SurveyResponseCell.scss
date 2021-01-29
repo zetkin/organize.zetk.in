@@ -3,6 +3,10 @@
     margin: 0 0 0.5em;
     font-style: italic;
 
+    &:first-child:last-child {
+        margin: 0;
+    }
+
     &:hover {
         &:after {
             @include icon($fa-var-info-circle);
