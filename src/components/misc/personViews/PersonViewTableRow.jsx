@@ -7,6 +7,7 @@ import Avatar from '../Avatar';
 import BooleanViewCell from './cells/BooleanViewCell';
 import PlainTextViewCell from './cells/PlainTextViewCell';
 import SurveyResponseCell from './cells/SurveyResponseCell';
+import SurveySubmittedCell from './cells/SurveySubmittedCell';
 
 import {
     addTagsToPerson,
@@ -49,6 +50,10 @@ export default connect()(function PersonViewTableRow(props) {
             }
             else if (col.type == 'survey_response') {
                 return <SurveyResponseCell { ...cellProps }
+                    openPane={ props.openPane }/>;
+            }
+            else if (col.type == 'survey_submitted') {
+                return <SurveySubmittedCell { ...cellProps }
                     openPane={ props.openPane }/>;
             }
             else {
