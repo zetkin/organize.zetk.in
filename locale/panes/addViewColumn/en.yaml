@@ -22,6 +22,9 @@ config:
         questionNullOption: (Pick a question)
         survey: Survey
         surveyNullOption: (Pick a survey)
+    surveySubmitted:
+        survey: Survey
+        surveyNullOption: (Pick a survey)
 saveButton: Add column
 templates:
     person_field:
@@ -36,4 +39,7 @@ templates:
     survey_response:
         instructions: Print out people's responses to a given survey question.
         title: Survey response
+    survey_submitted:
+        instructions: Print out the date of the most recent submission to a given survey.
+        title: Survey submit date
 title: New column

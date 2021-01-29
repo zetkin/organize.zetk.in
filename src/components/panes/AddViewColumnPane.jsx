@@ -28,7 +28,10 @@ const DEFAULT_CONFIGS = {
     survey_response: {
         survey_id: null,
         question_id: null,
-    }
+    },
+    survey_submitted: {
+        survey_id: null,
+    },
 };
 
 
@@ -83,6 +86,12 @@ export default class AddViewColumnPane extends PaneBase {
                 surveyList={ this.props.surveyList }
                 config={ this.state.config }
                 selected={ this.state.type == 'survey_response' }
+                onChange={ column => this.setState(column) }
+                onSelect={ this.onTypeSelect.bind(this) }/>,
+            <SurveySubmittedColumnTemplate key="survey_submitted"
+                surveyList={ this.props.surveyList }
+                config={ this.state.config }
+                selected={ this.state.type == 'survey_submitted' }
                 onChange={ column => this.setState(column) }
                 onSelect={ this.onTypeSelect.bind(this) }/>,
         ];
@@ -409,6 +418,62 @@ class SurveyResponseColumnTemplate extends React.Component {
                 .find(item => item.data.id == column.config.question_id);
 
             column.title = selectedQuestionItem.data.question.question;
+        }
+
+        this.props.onChange(column);
+    }
+}
+
+@connect((state, props) => ({
+    surveyList: state.surveys.surveyList,
+}))
+class SurveySubmittedColumnTemplate extends React.Component {
+    componentDidUpdate(prevProps) {
+        const surveyId = this.props.config.survey_id;
+        if (surveyId != prevProps.config.survey_id) {
+            this.props.dispatch(retrieveSurvey(surveyId));
+        }
+    }
+
+    render() {
+        let surveyOptions = [];
+
+        if (this.props.surveyList && this.props.surveyList.items) {
+            surveyOptions = this.props.surveyList.items.reduce((options, item) => {
+                options[item.data.id] = item.data.title;
+                return options;
+            }, {});
+        }
+
+        return (
+            <AssignmentTemplate type="survey_submitted"
+                messagePath="panes.addViewColumn.templates"
+                selected={ this.props.selected }
+                onSelect={ this.props.onSelect }
+                >
+                <SelectInput name="survey_id"
+                    labelMsg="panes.addViewColumn.config.surveySubmitted.survey"
+                    nullOptionMsg="panes.addViewColumn.config.surveySubmitted.surveyNullOption"
+                    options={ surveyOptions }
+                    value={ this.props.config.survey_id }
+                    onValueChange={ this.onConfigChange.bind(this) }
+                    />
+            </AssignmentTemplate>
+        );
+    }
+
+    onConfigChange(attr, val) {
+        const column = {
+            config: Object.assign({}, this.props.config, {
+                [attr]: val,
+            })
+        };
+
+        if (column.config.survey_id) {
+            const selectedSurveyItem = this.props.surveyList.items
+                .find(item => item.data.id == column.config.survey_id);
+
+            column.title = selectedSurveyItem.data.title;
         }
 
         this.props.onChange(column);
