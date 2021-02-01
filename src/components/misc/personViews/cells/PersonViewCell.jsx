@@ -49,7 +49,8 @@ export default class PersonViewCell extends React.Component {
                 resultList = (
                     <ul>
                     {searchStore.results.map(match => (
-                        <li key={ match.data.id }>
+                        <li key={ match.data.id }
+                            onClick={ this.onPersonClick.bind(this, match.data) }>
                             <Avatar person={ match.data }/>
                             <span>
                                 { match.data.first_name } { match.data.last_name }
@@ -74,14 +75,27 @@ export default class PersonViewCell extends React.Component {
             );
         }
 
+        const avatar = this.props.content?
+            <Avatar person={ this.props.content }/> : null;
+
         return (
             <td className={ classes }>
-                <Avatar person={{ id: this.props.content }}
+                <div className="PersonViewCell-avatar"
                     onClick={ this.onClickCurrent.bind(this) }
-                    />
+                    >
+                    { avatar }
+                </div>
                 { selectDialog }
             </td>
         );
+    }
+
+    onPersonClick(person) {
+        if (this.props.onSelect) {
+            this.props.onSelect(person);
+        }
+
+        this.closeSelectDialog();
     }
 
     onQueryChange(name, query) {
@@ -118,11 +132,15 @@ export default class PersonViewCell extends React.Component {
     onClickOutside(ev) {
         const selectDialog = ReactDOM.findDOMNode(this.refs.selectDialog);
         if (selectDialog && !selectDialog.contains(ev.target)) {
-            this.setState({
-                showSelect: false,
-            });
-
-            document.removeEventListener('click', this.onClickOutside);
+            this.closeSelectDialog();
         }
+    }
+
+    closeSelectDialog() {
+        this.setState({
+            showSelect: false,
+        });
+
+        document.removeEventListener('click', this.onClickOutside);
     }
 }

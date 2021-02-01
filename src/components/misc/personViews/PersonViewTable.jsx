@@ -203,6 +203,7 @@ export default class PersonViewTable extends React.Component {
                                 openPane={ this.props.openPane }
                                 onAdd={ row => this.props.dispatch(addPersonViewRow(viewId, row.id)) }
                                 onRemove={ row => this.props.dispatch(removePersonViewRow(viewId, row.id)) }
+                                viewId={ viewId }
                                 />
                         ))}
                             <PersonViewAddRow

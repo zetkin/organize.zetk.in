@@ -1,9 +1,24 @@
 .PersonViewCell {
     position: relative;
 
+    .PersonViewCell-avatar {
+        width: 36px;
+        height: 36px;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+
+        background-color: rgba(0,0,0, 0.05);
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: rgba(0,0,0, 0.1);
+        }
+    }
+
     .Avatar {
-        width: 3em;
-        height: 3em;
+        width: 100%;
+        height: 100%;
     }
 }
 
@@ -17,6 +32,7 @@
     height: 20em;
     box-shadow: 0 0 1rem rgba(0,0,0,0.1);
     padding: 0.5em;
+    text-align: left;
 
     &:after {
         content: "";
