@@ -131,12 +131,22 @@ export default class PersonViewTable extends React.Component {
                         const colType = colList.items[this.state.sortIndex].data.type;
 
                         visibleRows = visibleRows.concat().sort((row0, row1) => {
-                            let val0 = row0.data.content[this.state.sortIndex] || '';
-                            let val1 = row1.data.content[this.state.sortIndex] || '';
+                            let val0 = row0.data.content[this.state.sortIndex];
+                            let val1 = row1.data.content[this.state.sortIndex] || null;
 
                             let x = 0;
 
-                            if (Array.isArray(val0)) {
+                            if (colType == 'local_bool' || colType == 'person_tag') {
+                                // Treat boolean values as integers (1 or 0)
+                                x = +val1 - +val0;
+                            }
+                            else if (!val0) {
+                                return val1? 1 : 0;
+                            }
+                            else if (!val1) {
+                                return val0? -1 : 0;
+                            }
+                            else if (Array.isArray(val0)) {
                                 if (typeof val0[0] != 'undefined' && typeof val1[0] != 'undefined') {
                                     if (val0[0].text && val1[0].text) {
                                         x = val0[0].text.localeCompare(val1[0].text);
@@ -158,11 +168,7 @@ export default class PersonViewTable extends React.Component {
                                     if(typeof(val0[0]) == 'undefined' && typeof(val1[0]) == 'undefined') {
                                         return 0;
                                     }
-                               }
-                            }
-                            else if (colType == 'local_bool' || colType == 'person_tag') {
-                                // Treat boolean values as integers (1 or 0)
-                                x = +val1 - +val0;
+                                }
                             }
                             else {
                                 if (colType == 'local_person') {
