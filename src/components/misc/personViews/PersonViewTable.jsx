@@ -128,9 +128,11 @@ export default class PersonViewTable extends React.Component {
 
                     // Sort, if a column is selected for sorting
                     if (this.state.sortIndex !== null) {
+                        const colType = colList.items[this.state.sortIndex].data.type;
+
                         visibleRows = visibleRows.concat().sort((row0, row1) => {
-                            const val0 = row0.data.content[this.state.sortIndex] || '';
-                            const val1 = row1.data.content[this.state.sortIndex] || '';
+                            let val0 = row0.data.content[this.state.sortIndex] || '';
+                            let val1 = row1.data.content[this.state.sortIndex] || '';
 
                             let x = 0;
 
@@ -158,7 +160,16 @@ export default class PersonViewTable extends React.Component {
                                     }
                                }
                             }
+                            else if (colType == 'local_bool' || colType == 'person_tag') {
+                                // Treat boolean values as integers (1 or 0)
+                                x = +val1 - +val0;
+                            }
                             else {
+                                if (colType == 'local_person') {
+                                    val0 = `${val0.first_name} ${val0.last_name}`;
+                                    val1 = `${val1.first_name} ${val1.last_name}`;
+                                }
+
                                 x = val0.localeCompare(val1);
                             }
 
