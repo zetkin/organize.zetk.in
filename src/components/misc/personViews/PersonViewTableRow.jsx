@@ -89,6 +89,7 @@ export default connect()(function PersonViewTableRow(props) {
 
                 return (
                     <PersonViewCell { ...cellProps }
+                        openPane={ props.openPane }
                         onSelect={ onSelect }
                         />
                 );

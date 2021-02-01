@@ -63,7 +63,9 @@ export default class PersonViewCell extends React.Component {
             else if (this.props.content) {
                 resultList = (
                     <div className="PersonViewCell-current">
-                        <Avatar person={ this.props.content }/>
+                        <Avatar person={ this.props.content }
+                            onClick={ () => this.props.openPane('person', this.props.content.id) }
+                            />
                         <div>
                             { this.props.content.first_name } { this.props.content.last_name }
                         </div>
@@ -155,5 +157,7 @@ export default class PersonViewCell extends React.Component {
         });
 
         document.removeEventListener('click', this.onClickOutside);
+
+        this.props.dispatch(clearSearch(this.state.fieldId));
     }
 }
