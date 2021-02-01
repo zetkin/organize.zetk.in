@@ -140,51 +140,6 @@ export default function personViews(state = null, action) {
             })
         });
     }
-    else if (action.type == types.UPDATE_PERSON_VIEW_CELL + '_FULFILLED') {
-        const viewId = action.meta.viewId;
-        const colIdx = state.columnsByView[viewId].items.findIndex(colItem => colItem.data.id == action.meta.columnId);
-        const oldRowItem = getListItemById(state.rowsByView[viewId], action.meta.rowId);
-        const newRowData = {
-            ...oldRowItem.data,
-            content: oldRowItem.data.content.map((val, idx) => {
-                if (idx == colIdx) {
-                    // Replace value with the one returned from the server, or null
-                    return action.payload.data? action.payload.data.data.value : null;
-                }
-                else {
-                    // Don't change existing value
-                    return val;
-                }
-            }),
-        };
-
-        const newState = Object.assign({}, state, {
-            rowsByView: Object.assign({}, state.rowsByView, {
-                [viewId]: updateOrIgnoreListItem(state.rowsByView[viewId], newRowData.id, newRowData),
-            })
-        });
-
-        // Also update any occurances of row in view-queries
-        if (state.matchesByViewAndQuery[viewId]) {
-            const affectedQueries = {};
-            Object.keys(state.matchesByViewAndQuery[viewId]).forEach(queryId => {
-                const oldList = state.matchesByViewAndQuery[viewId][queryId];
-                const newList = updateOrIgnoreListItem(oldList, newRowData.id, newRowData);
-
-                if (newList != oldList) {
-                    affectedQueries[queryId] = newList;
-                }
-            });
-
-            if (Object.keys(affectedQueries).length) {
-                newState.matchesByViewAndQuery = Object.assign({}, state.matchesByViewAndQuery, {
-                    [viewId]: Object.assign({}, state.matchesByViewAndQuery[viewId], affectedQueries),
-                });
-            }
-        }
-
-        return newState;
-    }
     else if (action.type == types.RETRIEVE_PERSON_VIEW_ROW + '_FULFILLED') {
         const viewId = action.meta.viewId;
         const row = action.payload.data.data
@@ -454,6 +409,10 @@ export default function personViews(state = null, action) {
                     // Add any affected views to list
                     affectedViewIds.push(viewId)
                 });
+        }
+        else if (action.type == types.UPDATE_PERSON_VIEW_CELL + '_FULFILLED') {
+            dirtyPersonIds.push(action.meta.rowId);
+            affectedViewIds.push(action.meta.viewId);
         }
 
         // Were any people in any views affected? Then and only then should
