@@ -1,5 +1,6 @@
 cells:
     local_person:
+        clear: Clear
         inputLabel: Select a person
         inputPlaceholder: Start typing to search
 tools:

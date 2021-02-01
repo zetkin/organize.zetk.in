@@ -146,8 +146,16 @@ export default function personViews(state = null, action) {
         const oldRowItem = getListItemById(state.rowsByView[viewId], action.meta.rowId);
         const newRowData = {
             ...oldRowItem.data,
-            content: oldRowItem.data.content.map((val, idx) =>
-                (idx == colIdx)? action.payload.data.data.value : val),
+            content: oldRowItem.data.content.map((val, idx) => {
+                if (idx == colIdx) {
+                    // Replace value with the one returned from the server, or null
+                    return action.payload.data? action.payload.data.data.value : null;
+                }
+                else {
+                    // Don't change existing value
+                    return val;
+                }
+            }),
         };
 
         const newState = Object.assign({}, state, {

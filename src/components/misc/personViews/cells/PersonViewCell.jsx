@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import cx from 'classnames';
-import { injectIntl } from 'react-intl';
+import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -58,6 +58,19 @@ export default class PersonViewCell extends React.Component {
                         </li>
                     ))}
                     </ul>
+                );
+            }
+            else if (this.props.content) {
+                resultList = (
+                    <div className="PersonViewCell-current">
+                        <Avatar person={ this.props.content }/>
+                        <div>
+                            { this.props.content.first_name } { this.props.content.last_name }
+                        </div>
+                        <a onClick={ this.onPersonClick.bind(this, { id: null }) }>
+                            <Msg id="misc.personViewTable.cells.local_person.clear"/>
+                        </a>
+                    </div>
                 );
             }
 

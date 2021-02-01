@@ -51,6 +51,24 @@
     input {
         width: 100%;
     }
+
+    .PersonViewCell-current {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .Avatar {
+            width: 5em;
+            height: 5em;
+        }
+
+        a {
+            text-decoration: underline;
+        }
+    }
 }
 
 .PersonViewCell-selectResults {

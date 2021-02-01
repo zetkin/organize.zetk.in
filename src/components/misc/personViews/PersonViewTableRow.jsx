@@ -84,7 +84,7 @@ export default connect()(function PersonViewTableRow(props) {
                     const rowId = rowData.id;
                     const viewId = props.viewId;
 
-                    props.dispatch(updatePersonViewCell(viewId, rowId, colId, person.id));
+                    props.dispatch(updatePersonViewCell(viewId, rowId, colId, person? person.id : null));
                 };
 
                 return (
