@@ -16,6 +16,10 @@
             @include icon($fa-var-check);
         }
 
+        &.person_tag:before {
+            @include icon($fa-var-tag);
+        }
+
         &.interactive {
             background-color: $c-brand-comp-light;
             color: white;
@@ -36,6 +40,10 @@
         &.interactive:hover {
             &:before {
                 @include icon($fa-var-check);
+            }
+
+            &.person_tag:before {
+                @include icon($fa-var-tag);
             }
         }
     }
