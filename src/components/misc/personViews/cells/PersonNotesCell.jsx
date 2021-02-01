@@ -9,7 +9,7 @@ export default function PersonNotesCell(props) {
             <div key={ n.id }
                 className="PersonNotesCell-note"
                 onClick={ () => props.openPane('notes', 'person', n.person_id) } >
-                { n.text.replace(/<[^>]*>/g, '') }
+                { truncText(n.text.replace(/<[^>]*>/g, '')) }
             </div>
         ));
 
