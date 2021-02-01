@@ -31,6 +31,14 @@
                     @include icon($fa-var-times);
                 }
             }
+
+            &.local_bool {
+                background-color: $c-brand-success;
+
+                &:hover {
+                    background-color: lighten($c-brand-success, 10);
+                }
+            }
         }
     }
 
