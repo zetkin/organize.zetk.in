@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Avatar from '../../Avatar';
+import LoadingIndicator from '../../LoadingIndicator';
 import TextInput from '../../../forms/inputs/TextInput';
 import {
     beginSearch,
@@ -45,20 +46,34 @@ export default class PersonViewCell extends React.Component {
             const searchStore = this.props.search[this.state.fieldId];
 
             let resultList = null;
-            if (searchStore && searchStore.results) {
-                resultList = (
-                    <ul>
-                    {searchStore.results.map(match => (
-                        <li key={ match.data.id }
-                            onClick={ this.onPersonClick.bind(this, match.data) }>
-                            <Avatar person={ match.data }/>
-                            <span>
-                                { match.data.first_name } { match.data.last_name }
-                            </span>
-                        </li>
-                    ))}
-                    </ul>
-                );
+            if (searchStore && searchStore.isPending) {
+                resultList = <LoadingIndicator/>;
+            }
+            else if (searchStore && searchStore.results) {
+                if (searchStore.results.length) {
+                    resultList = (
+                        <ul>
+                        {searchStore.results.map(match => (
+                            <li key={ match.data.id }
+                                onClick={ this.onPersonClick.bind(this, match.data) }>
+                                <Avatar person={ match.data }/>
+                                <span>
+                                    { match.data.first_name } { match.data.last_name }
+                                </span>
+                            </li>
+                        ))}
+                        </ul>
+                    );
+                }
+                else if (searchStore.query) {
+                    resultList = (
+                        <div className="PersonViewCell-noMatches">
+                            <Msg id="misc.personViewTable.cells.local_person.noMatches"
+                                values={{ query: searchStore.query }}
+                                />
+                        </div>
+                    );
+                }
             }
             else if (this.props.content) {
                 resultList = (
