@@ -17,6 +17,7 @@ export default class TextInput extends InputBase {
         return (
             <input type="text" maxLength={ this.props.maxLength } value={ this.props.value }
                 placeholder={ placeholder }
+                onFocus={ this.props.onFocus }
                 onChange={ this.onChange.bind(this) }/>
         );
     }

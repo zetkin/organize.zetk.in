@@ -1,3 +1,7 @@
+cells:
+    local_person:
+        inputLabel: Select a person
+        inputPlaceholder: Start typing to search
 tools:
     count:
         default: Showing {visible} rows
