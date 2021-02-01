@@ -26,8 +26,8 @@
     position: absolute;
     background-color: white;
     z-index: 1000;
-    top: 80%;
-    left: -6em;
+    top: 90%;
+    left: -5em;
     width: 16em;
     height: 20em;
     box-shadow: 0 0 1rem rgba(0,0,0,0.1);
@@ -48,8 +48,15 @@
         margin-top: -6px;
     }
 
-    input {
+    .InputBase {
         width: 100%;
+
+        label {
+            display: block;
+            text-align: center;
+            color: $c-ui-darker;
+            margin: 0 0 0.3em;
+        }
     }
 
     .PersonViewCell-current {
