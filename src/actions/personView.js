@@ -254,6 +254,20 @@ export function updatePersonViewColumn(viewId, columnId, data) {
     };
 }
 
+export function updatePersonViewCell(viewId, rowId, columnId, value) {
+    return ({ dispatch, getState, z }) => {
+        const orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.UPDATE_PERSON_VIEW_CELL,
+            meta: { viewId, rowId, columnId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'people', 'views', viewId, 'rows', rowId, 'cells', columnId).put({ value }),
+            }
+        });
+    };
+}
+
 export function removePersonViewColumn(viewId, columnId) {
     return ({ dispatch, getState, z }) => {
         const orgId = getState().org.activeId;
