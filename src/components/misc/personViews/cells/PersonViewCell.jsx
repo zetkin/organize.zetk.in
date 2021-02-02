@@ -79,7 +79,7 @@ export default class PersonViewCell extends React.Component {
                 resultList = (
                     <div className="PersonViewCell-current">
                         <Avatar person={ this.props.content }
-                            onClick={ () => this.props.openPane('person', this.props.content.id) }
+                            onClick={ this.onCurrentClick.bind(this) }
                             />
                         <div>
                             { this.props.content.first_name } { this.props.content.last_name }
@@ -118,6 +118,11 @@ export default class PersonViewCell extends React.Component {
                 { selectDialog }
             </td>
         );
+    }
+
+    onCurrentClick() {
+        this.props.openPane('person', this.props.content.id);
+        this.closeSelectDialog();
     }
 
     onPersonClick(person) {
