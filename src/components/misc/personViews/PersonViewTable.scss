@@ -3,10 +3,17 @@
         border-spacing: 0;
     }
 
+    .local_bool,
     .person_query,
     .person_tag {
         max-width: 6rem;
         min-width: 6rem;
+        text-align: center;
+    }
+
+    .local_person {
+        max-width: 5rem;
+        min-width: 5rem;
         text-align: center;
     }
 

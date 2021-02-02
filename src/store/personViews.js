@@ -410,6 +410,10 @@ export default function personViews(state = null, action) {
                     affectedViewIds.push(viewId)
                 });
         }
+        else if (action.type == types.UPDATE_PERSON_VIEW_CELL + '_FULFILLED') {
+            dirtyPersonIds.push(action.meta.rowId);
+            affectedViewIds.push(action.meta.viewId);
+        }
 
         // Were any people in any views affected? Then and only then should
         // we copy the state (immutable) and start flagging.

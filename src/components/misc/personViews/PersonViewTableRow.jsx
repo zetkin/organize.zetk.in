@@ -5,10 +5,13 @@ import cx from 'classnames';
 import Avatar from '../Avatar';
 
 import BooleanViewCell from './cells/BooleanViewCell';
+import PersonViewCell from './cells/PersonViewCell';
 import PlainTextViewCell from './cells/PlainTextViewCell';
 import SurveyResponseCell from './cells/SurveyResponseCell';
 import SurveySubmittedCell from './cells/SurveySubmittedCell';
 import PersonNotesCell from './cells/PersonNotesCell';
+
+import { updatePersonViewCell } from '../../../actions/personView';
 
 import {
     addTagsToPerson,
@@ -60,6 +63,36 @@ export default connect()(function PersonViewTableRow(props) {
             else if (col.type == 'person_notes') {
                 return <PersonNotesCell { ...cellProps }
                     openPane={ props.openPane }/>;
+            }
+            else if (col.type == 'local_bool') {
+                const onToggle = value => {
+                    const colId = col.id;
+                    const rowId = rowData.id;
+                    const viewId = props.viewId;
+
+                    props.dispatch(updatePersonViewCell(viewId, rowId, colId, value));
+                };
+
+                return <BooleanViewCell { ...cellProps }
+                    interactive={ true }
+                    onToggle={ onToggle }
+                    />;
+            }
+            else if (col.type == 'local_person') {
+                const onSelect = person => {
+                    const colId = col.id;
+                    const rowId = rowData.id;
+                    const viewId = props.viewId;
+
+                    props.dispatch(updatePersonViewCell(viewId, rowId, colId, person? person.id : null));
+                };
+
+                return (
+                    <PersonViewCell { ...cellProps }
+                        openPane={ props.openPane }
+                        onSelect={ onSelect }
+                        />
+                );
             }
             else {
                 return <PlainTextViewCell { ...cellProps }/>;
