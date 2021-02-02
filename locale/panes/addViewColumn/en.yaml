@@ -42,4 +42,7 @@ templates:
     survey_submitted:
         instructions: Print out the date of the most recent submission to a given survey.
         title: Survey submit date
+    person_notes:
+        instructions: Print out organizer notes on people.
+        title: Person notes
 title: New column

@@ -192,9 +192,14 @@ export default class PersonViewsPane extends RootPaneBase {
                             multiline={ false }
                             maxLength={ 80 }
                             />
-                        <div className="PersonViewsPane-deleteViewLink">
-                            <a onClick={ this.onClickDelete.bind(this) }>
+                        <div className="PersonViewsPane-adminLinks">
+                            <a className="PersonViewsPane-deleteLink"
+                                onClick={ this.onClickDelete.bind(this) }>
                                 <Msg id="panes.personViews.view.delete" />
+                            </a>
+                            <a className="PersonViewsPane-settingsLink"
+                                onClick={ () => this.openPane('editpersonview', viewId) }>
+                                <Msg id="panes.personViews.view.settings" />
                             </a>
                         </div>
                         <EditableText tagName="p" key="description"

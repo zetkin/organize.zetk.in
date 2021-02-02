@@ -2,6 +2,7 @@ import * as types from '../actions';
 
 import {
     createList,
+    getListItemById,
     removeListItem,
     updateOrAddListItem,
     updateOrIgnoreListItem,
@@ -77,6 +78,30 @@ export default function personViews(state = null, action) {
         return Object.assign({}, state, {
             viewList: updateOrAddListItem(state.viewList, view.id, view),
         });
+    }
+    else if (action.type == types.REORDER_PERSON_VIEW_COLUMNS + '_FULFILLED') {
+        const viewId = action.meta.viewId;
+        const oldColList = state.columnsByView[viewId];
+        const newColList = {
+            ...oldColList,
+            // Updating the column order will trigger the view to re-fetch rows
+            items: action.payload.data.data.order.map(id => getListItemById(oldColList, id)),
+        };
+
+        return Object.assign({}, state, {
+            columnsByView: {
+                ...state.columnsByView,
+                [viewId]: newColList,
+            },
+            rowsByView: {
+                ...state.rowsByView,
+                [viewId]: null,
+            },
+            matchesByViewAndQuery: {
+                ...state.matchesByViewAndQuery,
+                [viewId]: {},
+            },
+        })
     }
     else if (action.type == types.DELETE_PERSON_VIEW + '_FULFILLED') {
         const viewId = action.meta.viewId;
@@ -312,7 +337,22 @@ export default function personViews(state = null, action) {
         const dirtyPersonIds = [];
         const affectedViewIds = [];
 
-        if (action.type == types.ADD_TAGS_TO_PERSON + '_FULFILLED') {
+        if (action.type == types.CREATE_PERSON_NOTE + '_FULFILLED') {
+            dirtyPersonIds.push(action.meta.id);
+
+            Object.keys(state.columnsByView)
+                .filter(viewId => {
+                    const columnList = state.columnsByView[viewId];
+                    return columnList.items && columnList.items.some(item => {
+                        return (item.data && item.data.type == 'person_notes');
+                    });
+                })
+                .forEach(viewId => {
+                    // Add any affected views to list
+                    affectedViewIds.push(viewId)
+                });
+        }
+        else if (action.type == types.ADD_TAGS_TO_PERSON + '_FULFILLED') {
             dirtyPersonIds.push(action.meta.id);
 
             Object.keys(state.columnsByView)

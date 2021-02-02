@@ -70,6 +70,11 @@ export default class AddViewColumnPane extends PaneBase {
                 selected={ this.state.type == 'person_field' }
                 onChange={ column => this.setState(column) }
                 onSelect={ this.onTypeSelect.bind(this) }/>,
+            <PersonNotesColumnTemplate key="person_notes"
+                config={ this.state.config }
+                selected={ this.state.type == 'person_notes' }
+                onChange={ column => this.setState(column) }
+                onSelect={ this.onTypeSelect.bind(this) }/>,
             <PersonTagColumnTemplate key="person_tag"
                 tagList={ this.props.tagList }
                 config={ this.state.config }
@@ -212,6 +217,36 @@ class PersonFieldColumnTemplate extends React.Component {
         }
 
         this.props.onChange(column);
+    }
+}
+
+@injectIntl
+class PersonNotesColumnTemplate extends React.Component {
+
+    componentDidMount() {
+        const column = {
+            title: this.props.intl.formatMessage({
+                id: 'panes.addViewColumn.templates.person_notes.title'
+            }),
+            config: {
+                limit: 1,
+            }
+        };
+
+        this.props.onChange(column);
+    }
+
+    render() {
+        const props = this.props;
+
+        return (
+            <AssignmentTemplate type="person_notes"
+                messagePath="panes.addViewColumn.templates"
+                selected={ props.selected }
+                onSelect={ props.onSelect }
+                >
+            </AssignmentTemplate>
+        );
     }
 }
 

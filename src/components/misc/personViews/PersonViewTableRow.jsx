@@ -8,6 +8,7 @@ import BooleanViewCell from './cells/BooleanViewCell';
 import PlainTextViewCell from './cells/PlainTextViewCell';
 import SurveyResponseCell from './cells/SurveyResponseCell';
 import SurveySubmittedCell from './cells/SurveySubmittedCell';
+import PersonNotesCell from './cells/PersonNotesCell';
 
 import {
     addTagsToPerson,
@@ -54,6 +55,10 @@ export default connect()(function PersonViewTableRow(props) {
             }
             else if (col.type == 'survey_submitted') {
                 return <SurveySubmittedCell { ...cellProps }
+                    openPane={ props.openPane }/>;
+            }
+            else if (col.type == 'person_notes') {
+                return <PersonNotesCell { ...cellProps }
                     openPane={ props.openPane }/>;
             }
             else {
