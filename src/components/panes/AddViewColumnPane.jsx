@@ -541,7 +541,7 @@ class LocalColumnTemplate extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.selected && !prevProps.selected) {
-            this.onTitleChange();
+            this.onTitleChange(this.state.title);
         }
     }
 
@@ -558,24 +558,22 @@ class LocalColumnTemplate extends React.Component {
                 <TextInput name="title"
                     labelMsg="panes.addViewColumn.config.localBool.title"
                     value={ this.state.title }
-                    onValueChange={ this.onTitleChange.bind(this) }
+                    onValueChange={ (attr, val) => this.onTitleChange(val) }
                     />
             </AssignmentTemplate>
         );
     }
 
-    onTitleChange(attr, val) {
-        this.setState({
-            title: val,
-        });
-
-        const column = {
-            title: val,
-        };
+    onTitleChange(title) {
+        const column = { title };
 
         if (!column.title) {
             this.props.intl.formatMessage(
                 { id: `panes.addViewColumn.templates.${this.props.type}.defaultTitle` });
+        }
+
+        if (this.state.title != title) {
+            this.setState({ title });
         }
 
         column.config = {};
