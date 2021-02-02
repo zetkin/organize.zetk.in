@@ -312,7 +312,22 @@ export default function personViews(state = null, action) {
         const dirtyPersonIds = [];
         const affectedViewIds = [];
 
-        if (action.type == types.ADD_TAGS_TO_PERSON + '_FULFILLED') {
+        if (action.type == types.CREATE_PERSON_NOTE + '_FULFILLED') {
+            dirtyPersonIds.push(action.meta.id);
+
+            Object.keys(state.columnsByView)
+                .filter(viewId => {
+                    const columnList = state.columnsByView[viewId];
+                    return columnList.items && columnList.items.some(item => {
+                        return (item.data && item.data.type == 'person_notes');
+                    });
+                })
+                .forEach(viewId => {
+                    // Add any affected views to list
+                    affectedViewIds.push(viewId)
+                });
+        }
+        else if (action.type == types.ADD_TAGS_TO_PERSON + '_FULFILLED') {
             dirtyPersonIds.push(action.meta.id);
 
             Object.keys(state.columnsByView)
