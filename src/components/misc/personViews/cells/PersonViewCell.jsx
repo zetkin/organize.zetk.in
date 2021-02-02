@@ -49,7 +49,7 @@ export default class PersonViewCell extends React.Component {
             if (searchStore && searchStore.isPending) {
                 resultList = <LoadingIndicator/>;
             }
-            else if (searchStore && searchStore.results) {
+            else if (searchStore && searchStore.results && searchStore.query) {
                 if (searchStore.results.length) {
                     resultList = (
                         <ul>
@@ -65,7 +65,7 @@ export default class PersonViewCell extends React.Component {
                         </ul>
                     );
                 }
-                else if (searchStore.query) {
+                else {
                     resultList = (
                         <div className="PersonViewCell-noMatches">
                             <Msg id="misc.personViewTable.cells.local_person.noMatches"
