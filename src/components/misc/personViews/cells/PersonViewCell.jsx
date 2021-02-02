@@ -94,6 +94,7 @@ export default class PersonViewCell extends React.Component {
             selectDialog = (
                 <div ref="selectDialog" className="PersonViewCell-select">
                     <TextInput name="search"
+                        autoFocus={ true }
                         onFocus={ this.onFocus.bind(this) }
                         onValueChange={ this.onQueryChange.bind(this) }
                         labelMsg="misc.personViewTable.cells.local_person.inputLabel"
