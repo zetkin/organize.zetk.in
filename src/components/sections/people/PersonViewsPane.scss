@@ -173,14 +173,29 @@
     display: none;
 }
 
-.PersonViewsPane-deleteViewLink {
+.PersonViewsPane-adminLinks {
     margin-top: -1em;
-    text-decoration: underline;
     color: $c-text;
 
-    span:before {
+    a {
+        display: inline-block;
+        margin-right: 1em;
+        text-decoration: underline;
+        opacity: 0.6;
+        transition: opacity 0.2s;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .PersonViewsPane-deleteLink:before {
         @include icon($fa-var-trash);
-        color: $c-brand-delete;
+        //color: $c-brand-delete;
+    }
+
+    .PersonViewsPane-settingsLink:before {
+        @include icon($fa-var-cog);
     }
 }
 
