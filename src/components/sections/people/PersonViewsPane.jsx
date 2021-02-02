@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import { connect } from 'react-redux';
 import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import React from 'react';
@@ -113,24 +114,26 @@ export default class PersonViewsPane extends RootPaneBase {
 
     renderPaneTop() {
         const viewId = this.getParam(0);
+        const collapseClasses = cx('PersonViewsPane-collapseHeaderLink', {
+            collapsed: this.state.collapseHeader,
+        });
 
         if (viewId) {
             return (
                 <div key="topLinks" className="PersonViewsPane-topLinks">
-                    <div key="backLink" className="PersonViewsPane-backLink">
-                        <a onClick={ () => this.gotoPane('views') }>
-                            <Msg id="panes.personViews.view.backLink"/>
-                        </a>
+                    <div key="backLink" className="PersonViewsPane-backLink"
+                        onClick={ () => this.gotoPane('views') }
+                        >
+                        <Msg id="panes.personViews.view.backLink"/>
                     </div>,
-                    <div key="collapseLink" className={ "PersonViewsPane-collapseHeaderLink" + (
-                    this.state.collapseHeader ? "-collapsed" : "" )} >
-                        <a onClick={ this.onClickCollapseHeader.bind(this) }>
-                            { this.state.collapseHeader ? 
-                                <Msg id="panes.personViews.view.showHeader" />
-                                :
-                                <Msg id="panes.personViews.view.hideHeader" />
-                            }
-                        </a>
+                    <div key="collapseLink" className={ collapseClasses }
+                        onClick={ this.onClickCollapseHeader.bind(this) }
+                        >
+                        { this.state.collapseHeader ?
+                            <Msg id="panes.personViews.view.showHeader" />
+                            :
+                            <Msg id="panes.personViews.view.hideHeader" />
+                        }
                     </div>
                 </div>
             );
