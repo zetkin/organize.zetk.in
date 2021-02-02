@@ -1,10 +1,19 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { injectIntl } from 'react-intl';
 
 import InputBase from './InputBase';
 
 @injectIntl
 export default class TextInput extends InputBase {
+    componentDidMount() {
+        if (this.props.autoFocus) {
+            const input = ReactDOM.findDOMNode(this.refs.input);
+            if (input) {
+                input.focus();
+            }
+        }
+    }
 
     renderInput() {
         let placeholder; 
@@ -15,7 +24,8 @@ export default class TextInput extends InputBase {
         }
 
         return (
-            <input type="text" maxLength={ this.props.maxLength } value={ this.props.value }
+            <input type="text" ref="input"
+                maxLength={ this.props.maxLength } value={ this.props.value }
                 placeholder={ placeholder }
                 onFocus={ this.props.onFocus }
                 onChange={ this.onChange.bind(this) }/>
