@@ -25,22 +25,7 @@
     .PersonViewTableHead-column {
         position: relative;
 
-        &:before {
-            content: "";
-            display: inline-block;
-            width: 0;
-            opacity: 0;
-
-            transition: width 0.1s, opacity 0.1s 0.05s;
-        }
-
         &:hover {
-            &:before {
-                @include icon($fa-var-pencil);
-                font-size: 0.9em;
-                opacity: 1;
-            }
-
             .PersonViewTableHead-columnSort {
                 opacity: 1.0;
             }

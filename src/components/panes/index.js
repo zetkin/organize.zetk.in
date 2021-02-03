@@ -29,6 +29,7 @@ import CampaignPane from './CampaignPane';
 import CanvassAssignmentPane from './CanvassAssignmentPane';
 import ConfirmImportPane from './ConfirmImportPane';
 import ConfirmExportPane from './ConfirmExportPane';
+import ConfirmDeletePane from './ConfirmDeletePane';
 import LinkSubmissionPane from './LinkSubmissionPane';
 import EditActionPane from './EditActionPane';
 import EditActivityPane from './EditActivityPane';
@@ -42,6 +43,7 @@ import EditLocationPane from './EditLocationPane';
 import EditLocationTagPane from './EditLocationTagPane';
 import EditPersonPane from './EditPersonPane';
 import EditPersonTagPane from './EditPersonTagPane';
+import EditPersonViewPane from './EditPersonViewPane';
 import EditQueryPane from './EditQueryPane';
 import EditRoutePane from './EditRoutePane';
 import EditSurveyPane from './EditSurveyPane';
@@ -120,6 +122,7 @@ var _panes = {
     'editlocationtag': EditLocationTagPane,
     'editperson': EditPersonPane,
     'editpersontag': EditPersonTagPane,
+    'editpersonview': EditPersonViewPane,
     'editquery': EditQueryPane,
     'editroute': EditRoutePane,
     'editsurvey': EditSurveyPane,
@@ -136,6 +139,7 @@ var _panes = {
     'joinsubmission': JoinSubmissionPane,
     'confirmimport': ConfirmImportPane,
     'confirmexport': ConfirmExportPane,
+    'confirmdelete': ConfirmDeletePane,
     'location': LocationPane,
     'mergepeople': MergePeoplePane,
     'moveparticipants': MoveParticipantsPane,

@@ -53,6 +53,22 @@ export function createPersonView(data, defaultColumns=[]) {
     };
 }
 
+export function deletePersonView(viewId) {
+    return ({ dispatch, getState, z }) => {
+        const orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.DELETE_PERSON_VIEW,
+            meta: { viewId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'people', 'views', viewId).del(),
+            }
+        });
+    };
+}
+
+
+
 export function createPersonViewColumn(viewId, data) {
     return ({ dispatch, getState, z }) => {
         const orgId = getState().org.activeId;
@@ -238,6 +254,22 @@ export function updatePersonViewColumn(viewId, columnId, data) {
     };
 }
 
+export function updatePersonViewCell(viewId, rowId, columnId, value) {
+    return ({ dispatch, getState, z }) => {
+        const orgId = getState().org.activeId;
+
+        const resource = z.resource('orgs', orgId, 'people', 'views', viewId, 'rows', rowId, 'cells', columnId)
+
+        dispatch({
+            type: types.UPDATE_PERSON_VIEW_CELL,
+            meta: { viewId, rowId, columnId },
+            payload: {
+                promise: value? resource.put({ value }) : resource.del(),
+            }
+        });
+    };
+}
+
 export function removePersonViewColumn(viewId, columnId) {
     return ({ dispatch, getState, z }) => {
         const orgId = getState().org.activeId;
@@ -247,6 +279,23 @@ export function removePersonViewColumn(viewId, columnId) {
             meta: { viewId, columnId },
             payload: {
                 promise: z.resource('orgs', orgId, 'people', 'views', viewId, 'columns', columnId).del(),
+            }
+        });
+    };
+}
+
+export function reorderViewColumns(viewId, order) {
+    return ({ dispatch, getState, z }) => {
+        const orgId = getState().org.activeId;
+        const data = {
+            order: order.map(id => parseInt(id)),
+        };
+
+        dispatch({
+            type: types.REORDER_PERSON_VIEW_COLUMNS,
+            meta: { viewId },
+            payload: {
+                promise: z.resource('orgs', orgId, 'people', 'views', viewId, 'column_order').patch(data),
             }
         });
     };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { injectIntl } from 'react-intl';
+import { FormattedMessage as Msg, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import AssignmentTemplate from '../misc/callAssignmentTemplates/AssignmentTemplate';
@@ -8,6 +8,7 @@ import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import PersonViewColumnForm from '../forms/PersonViewColumnForm';
 import SelectInput from '../forms/inputs/SelectInput';
+import TextInput from '../forms/inputs/TextInput';
 import { createPersonViewColumn } from '../../actions/personView';
 import { retrievePersonTags } from '../../actions/personTag';
 import { retrieveQueries } from '../../actions/query';
@@ -28,7 +29,10 @@ const DEFAULT_CONFIGS = {
     survey_response: {
         survey_id: null,
         question_id: null,
-    }
+    },
+    survey_submitted: {
+        survey_id: null,
+    },
 };
 
 
@@ -62,9 +66,15 @@ export default class AddViewColumnPane extends PaneBase {
 
     renderPaneContent(data) {
         return [
+            <Msg key="global" tagName="h3" id="panes.addViewColumn.global.h"/>,
             <PersonFieldColumnTemplate key="person_field"
                 config={ this.state.config }
                 selected={ this.state.type == 'person_field' }
+                onChange={ column => this.setState(column) }
+                onSelect={ this.onTypeSelect.bind(this) }/>,
+            <PersonNotesColumnTemplate key="person_notes"
+                config={ this.state.config }
+                selected={ this.state.type == 'person_notes' }
                 onChange={ column => this.setState(column) }
                 onSelect={ this.onTypeSelect.bind(this) }/>,
             <PersonTagColumnTemplate key="person_tag"
@@ -83,6 +93,23 @@ export default class AddViewColumnPane extends PaneBase {
                 surveyList={ this.props.surveyList }
                 config={ this.state.config }
                 selected={ this.state.type == 'survey_response' }
+                onChange={ column => this.setState(column) }
+                onSelect={ this.onTypeSelect.bind(this) }/>,
+            <SurveySubmittedColumnTemplate key="survey_submitted"
+                surveyList={ this.props.surveyList }
+                config={ this.state.config }
+                selected={ this.state.type == 'survey_submitted' }
+                onChange={ column => this.setState(column) }
+                onSelect={ this.onTypeSelect.bind(this) }/>,
+            <Msg key="local" tagName="h3" id="panes.addViewColumn.local.h"/>,
+            <LocalColumnTemplate key="local_bool" type="local_bool"
+                config={ this.state.config }
+                selected={ this.state.type == 'local_bool' }
+                onChange={ column => this.setState(column) }
+                onSelect={ this.onTypeSelect.bind(this) }/>,
+            <LocalColumnTemplate key="local_person" type="local_person"
+                config={ this.state.config }
+                selected={ this.state.type == 'local_person' }
                 onChange={ column => this.setState(column) }
                 onSelect={ this.onTypeSelect.bind(this) }/>,
         ];
@@ -203,6 +230,36 @@ class PersonFieldColumnTemplate extends React.Component {
         }
 
         this.props.onChange(column);
+    }
+}
+
+@injectIntl
+class PersonNotesColumnTemplate extends React.Component {
+
+    componentDidMount() {
+        const column = {
+            title: this.props.intl.formatMessage({
+                id: 'panes.addViewColumn.templates.person_notes.title'
+            }),
+            config: {
+                limit: 1,
+            }
+        };
+
+        this.props.onChange(column);
+    }
+
+    render() {
+        const props = this.props;
+
+        return (
+            <AssignmentTemplate type="person_notes"
+                messagePath="panes.addViewColumn.templates"
+                selected={ props.selected }
+                onSelect={ props.onSelect }
+                >
+            </AssignmentTemplate>
+        );
     }
 }
 
@@ -410,6 +467,116 @@ class SurveyResponseColumnTemplate extends React.Component {
 
             column.title = selectedQuestionItem.data.question.question;
         }
+
+        this.props.onChange(column);
+    }
+}
+
+@connect((state, props) => ({
+    surveyList: state.surveys.surveyList,
+}))
+class SurveySubmittedColumnTemplate extends React.Component {
+    componentDidUpdate(prevProps) {
+        const surveyId = this.props.config.survey_id;
+        if (surveyId != prevProps.config.survey_id) {
+            this.props.dispatch(retrieveSurvey(surveyId));
+        }
+    }
+
+    render() {
+        let surveyOptions = [];
+
+        if (this.props.surveyList && this.props.surveyList.items) {
+            surveyOptions = this.props.surveyList.items.reduce((options, item) => {
+                options[item.data.id] = item.data.title;
+                return options;
+            }, {});
+        }
+
+        return (
+            <AssignmentTemplate type="survey_submitted"
+                messagePath="panes.addViewColumn.templates"
+                selected={ this.props.selected }
+                onSelect={ this.props.onSelect }
+                >
+                <SelectInput name="survey_id"
+                    labelMsg="panes.addViewColumn.config.surveySubmitted.survey"
+                    nullOptionMsg="panes.addViewColumn.config.surveySubmitted.surveyNullOption"
+                    options={ surveyOptions }
+                    value={ this.props.config.survey_id }
+                    onValueChange={ this.onConfigChange.bind(this) }
+                    />
+            </AssignmentTemplate>
+        );
+    }
+
+    onConfigChange(attr, val) {
+        const column = {
+            config: Object.assign({}, this.props.config, {
+                [attr]: val,
+            })
+        };
+
+        if (column.config.survey_id) {
+            const selectedSurveyItem = this.props.surveyList.items
+                .find(item => item.data.id == column.config.survey_id);
+
+            column.title = selectedSurveyItem.data.title;
+        }
+
+        this.props.onChange(column);
+    }
+}
+
+@injectIntl
+class LocalColumnTemplate extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            title: props.intl.formatMessage(
+                { id: `panes.addViewColumn.templates.${this.props.type}.defaultTitle` }),
+        };
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.selected && !prevProps.selected) {
+            this.onTitleChange(this.state.title);
+        }
+    }
+
+    render() {
+        let surveyOptions = [];
+
+
+        return (
+            <AssignmentTemplate type={ this.props.type }
+                messagePath="panes.addViewColumn.templates"
+                selected={ this.props.selected }
+                onSelect={ this.props.onSelect }
+                >
+                <TextInput name="title"
+                    labelMsg="panes.addViewColumn.config.localBool.title"
+                    value={ this.state.title }
+                    onValueChange={ (attr, val) => this.onTitleChange(val) }
+                    />
+            </AssignmentTemplate>
+        );
+    }
+
+    onTitleChange(title) {
+        const column = { title };
+
+        if (!column.title) {
+            this.props.intl.formatMessage(
+                { id: `panes.addViewColumn.templates.${this.props.type}.defaultTitle` });
+        }
+
+        if (this.state.title != title) {
+            this.setState({ title });
+        }
+
+        column.config = {};
 
         this.props.onChange(column);
     }

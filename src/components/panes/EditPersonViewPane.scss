@@ -1,0 +1,34 @@
+.EditPersonViewPane {
+    h3 {
+        margin: 1em 0 0;
+    }
+}
+
+.EditPersonViewPane-columnItem {
+    @include card;
+    display: flex;
+    padding: 1em;
+    margin: 0.5em 0;
+    cursor: pointer;
+    justify-content: space-between;
+    text-align: left;
+
+    span:before {
+        @include icon($fa-var-arrows);
+        cursor: grab;
+        width: 1fr;
+    }
+
+    &:after {
+        @include icon($fa-var-pencil);
+        opacity: 0;
+        transition: opacity 0.3s;
+        width: 1fr;
+    }
+
+    &:hover {
+        &:after {
+            opacity: 1;
+        }
+    }
+}

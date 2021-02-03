@@ -1,3 +1,9 @@
+cells:
+    local_person:
+        clear: Clear
+        inputLabel: Select a person
+        inputPlaceholder: Start typing to search
+        noMatches: No people found matching "{query}". Try to keep typing.
 tools:
     count:
         default: Showing {visible} rows

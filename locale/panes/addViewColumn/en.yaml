@@ -1,4 +1,6 @@
 config:
+    localBool:
+        title: Column title
     personField:
         field: Field
         fieldOptions:
@@ -22,8 +24,23 @@ config:
         questionNullOption: (Pick a question)
         survey: Survey
         surveyNullOption: (Pick a survey)
+    surveySubmitted:
+        survey: Survey
+        surveyNullOption: (Pick a survey)
+global:
+    h: From the database
+local:
+    h: Local to this view
 saveButton: Add column
 templates:
+    local_bool:
+        defaultTitle: Toggle
+        instructions: Simple checkbox to indicate some status.
+        title: Checkbox toggle
+    local_person:
+        defaultTitle: Person
+        instructions: Use this to assign a person to each row, e.g. a mentor or organizer in charge.
+        title: Other person
     person_field:
         instructions: Shows basic personal information, like name or e-mail.
         title: Person field
@@ -36,4 +53,10 @@ templates:
     survey_response:
         instructions: Print out people's responses to a given survey question.
         title: Survey response
+    survey_submitted:
+        instructions: Print out the date of the most recent submission to a given survey.
+        title: Survey submit date
+    person_notes:
+        instructions: Print out organizer notes on people.
+        title: Person notes
 title: New column

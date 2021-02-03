@@ -49,7 +49,7 @@ export default class PersonViewTable extends React.Component {
     }
 
     componentDidUpdate() {
-        const { columnList, rowList, viewId } = this.props;
+        const { rowList, viewId } = this.props;
 
         if (rowList && rowList.items) {
             // Find dirty rows and retrieve their data anew
@@ -69,7 +69,6 @@ export default class PersonViewTable extends React.Component {
         let placeholder;
         let tableHead;
         let tableBody;
-        let loadingIndicator;
         let pageSelect = null;
         let numMatches;
         let numTotal;
@@ -91,8 +90,11 @@ export default class PersonViewTable extends React.Component {
             if (rowList) {
                 if (rowList.isPending) {
                     placeholder = <LoadingIndicator/>;
+                } else {
+                    placeholder = this.props.placeholder;
                 }
-                else if (rowList.items && rowList.items.length) {
+
+                if (rowList.items && rowList.items.length) {
                     let visibleRows = rowList.items;
 
                     // Store total length for label
@@ -126,11 +128,56 @@ export default class PersonViewTable extends React.Component {
 
                     // Sort, if a column is selected for sorting
                     if (this.state.sortIndex !== null) {
-                        visibleRows = visibleRows.concat().sort((row0, row1) => {
-                            const val0 = row0.data.content[this.state.sortIndex] || '';
-                            const val1 = row1.data.content[this.state.sortIndex] || '';
+                        const colType = colList.items[this.state.sortIndex].data.type;
 
-                            let x = val0.toString().localeCompare(val1.toString());
+                        visibleRows = visibleRows.concat().sort((row0, row1) => {
+                            let val0 = row0.data.content[this.state.sortIndex];
+                            let val1 = row1.data.content[this.state.sortIndex] || null;
+
+                            let x = 0;
+
+                            if (colType == 'local_bool' || colType == 'person_tag') {
+                                // Treat boolean values as integers (1 or 0)
+                                x = +val1 - +val0;
+                            }
+                            else if (!val0) {
+                                return val1? 1 : 0;
+                            }
+                            else if (!val1) {
+                                return val0? -1 : 0;
+                            }
+                            else if (Array.isArray(val0)) {
+                                if (typeof val0[0] != 'undefined' && typeof val1[0] != 'undefined') {
+                                    if (val0[0].text && val1[0].text) {
+                                        x = val0[0].text.localeCompare(val1[0].text);
+                                    }
+                                    else if (val0[0].submitted && val1[0].submitted) {
+                                        x = new Date(val0[0].submitted) - new Date(val1[0].submitted);
+                                    }
+                                    else {
+                                        x = 0;
+                                    }
+                                }
+                                else {
+                                    if(typeof(val0[0]) == 'undefined' && typeof(val1[0]) != 'undefined') {
+                                        return 1;
+                                    }
+                                    if(typeof(val0[0]) != 'undefined' && typeof(val1[0]) == 'undefined') {
+                                        return -1;
+                                    }
+                                    if(typeof(val0[0]) == 'undefined' && typeof(val1[0]) == 'undefined') {
+                                        return 0;
+                                    }
+                                }
+                            }
+                            else {
+                                if (colType == 'local_person') {
+                                    val0 = `${val0.first_name} ${val0.last_name}`;
+                                    val1 = `${val1.first_name} ${val1.last_name}`;
+                                }
+
+                                x = val0.localeCompare(val1);
+                            }
 
                             if (this.state.sortInverted) {
                                 x *= -1;
@@ -173,6 +220,7 @@ export default class PersonViewTable extends React.Component {
                                 openPane={ this.props.openPane }
                                 onAdd={ row => this.props.dispatch(addPersonViewRow(viewId, row.id)) }
                                 onRemove={ row => this.props.dispatch(removePersonViewRow(viewId, row.id)) }
+                                viewId={ viewId }
                                 />
                         ))}
                             <PersonViewAddRow
@@ -183,20 +231,23 @@ export default class PersonViewTable extends React.Component {
                     );
                 }
                 else {
-                    placeholder = this.props.placeholder;
+                    tableBody = (
+                        <tbody>
+                            <tr className="PersonViewTable-placeholder">
+                                <td/>
+                                <td/>
+                                <td colSpan={3}>
+                                    { placeholder }
+                                </td>
+                            </tr>
+                            <PersonViewAddRow
+                                    columnList={ colList }
+                                    rowList={ this.props.rowList }
+                                    onSelect={ this.props.onPersonAdd }/>
+                        </tbody>
+                    )
                 }
             }
-            else {
-                placeholder = this.props.placeholder;
-            }
-        }
-
-        if (placeholder) {
-            placeholder = (
-                <div className="PersonViewTable-placeholder">
-                    { placeholder }
-                </div>
-            );
         }
 
         let countMsgId = 'misc.personViewTable.tools.count.default';
@@ -243,7 +294,6 @@ export default class PersonViewTable extends React.Component {
                         { tableBody }
                     </table>
                 </div>
-                { placeholder }
             </div>
         );
     }

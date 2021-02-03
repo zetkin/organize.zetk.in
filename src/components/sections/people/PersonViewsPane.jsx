@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import { connect } from 'react-redux';
 import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import React from 'react';
@@ -36,6 +37,7 @@ export default class PersonViewsPane extends RootPaneBase {
 
         this.state = {
             viewMode: 'saved',
+            collapseHeader: false,
         };
     }
 
@@ -112,13 +114,27 @@ export default class PersonViewsPane extends RootPaneBase {
 
     renderPaneTop() {
         const viewId = this.getParam(0);
+        const collapseClasses = cx('PersonViewsPane-collapseHeaderLink', {
+            collapsed: this.state.collapseHeader,
+        });
 
         if (viewId) {
             return (
-                <div key="backLink" className="PersonViewsPane-backLink">
-                    <a onClick={ () => this.gotoPane('views') }>
+                <div key="topLinks" className="PersonViewsPane-topLinks">
+                    <div key="backLink" className="PersonViewsPane-backLink"
+                        onClick={ () => this.gotoPane('views') }
+                        >
                         <Msg id="panes.personViews.view.backLink"/>
-                    </a>
+                    </div>,
+                    <div key="collapseLink" className={ collapseClasses }
+                        onClick={ this.onClickCollapseHeader.bind(this) }
+                        >
+                        { this.state.collapseHeader ?
+                            <Msg id="panes.personViews.view.showHeader" />
+                            :
+                            <Msg id="panes.personViews.view.hideHeader" />
+                        }
+                    </div>
                 </div>
             );
         }
@@ -144,14 +160,16 @@ export default class PersonViewsPane extends RootPaneBase {
                 let querySelect = null;
                 if (this.state.viewMode == 'query') {
                     const queryList = this.props.queryList;
-                    const queries = queryList.items.map(i => i.data).filter(q => !!q.title);
+                    const queries = queryList.items.map(i => i.data).filter(q => !!q.title).sort((a, b) => a.title.localeCompare(b.title));
 
                     querySelect = (
                         <RelSelectInput name="query"
                             value={ this.state.query } objects={ queries } showEditLink={ true }
                             onValueChange={ (name, val) => this.setState({ query: val }) }
                             onCreate={ this.onQueryCreate.bind(this) }
-                            onEdit={ this.onQueryEdit.bind(this) }/>
+                            onEdit={ this.onQueryEdit.bind(this) }
+                            hidden={ this.state.collapseHeader }
+                            />
                     );
 
                     if (this.state.query) {
@@ -168,7 +186,7 @@ export default class PersonViewsPane extends RootPaneBase {
                 }
 
                 return [
-                    <div key="header" className="PersonViewsPane-singleViewHeader">
+                    <div key="header" className={"PersonViewsPane-singleViewHeader" + (this.state.collapseHeader ? "-collapsed" : "") }>
                         <EditableText tagName="h1" key="title"
                             flash={ true }
                             content={ viewItem.data.title }
@@ -177,6 +195,16 @@ export default class PersonViewsPane extends RootPaneBase {
                             multiline={ false }
                             maxLength={ 80 }
                             />
+                        <div className="PersonViewsPane-adminLinks">
+                            <a className="PersonViewsPane-deleteLink"
+                                onClick={ this.onClickDelete.bind(this) }>
+                                <Msg id="panes.personViews.view.delete" />
+                            </a>
+                            <a className="PersonViewsPane-settingsLink"
+                                onClick={ () => this.openPane('editpersonview', viewId) }>
+                                <Msg id="panes.personViews.view.settings" />
+                            </a>
+                        </div>
                         <EditableText tagName="p" key="description"
                             content={ viewItem.data.description }
                             onChange={ this.onChange.bind(this, 'description') }
@@ -186,11 +214,15 @@ export default class PersonViewsPane extends RootPaneBase {
                     </div>,
                     <div key="mode" className="PersonViewsPane-singleViewModes">
                         <ViewSwitch states={ viewStates } selected={ this.state.viewMode }
-                            onSwitch={ vs => this.setState({ viewMode: vs }) }
+                            onSwitch={ vs => this.setState({ 
+                                viewMode: vs, 
+                                collapseHeader: vs == 'query' ? false : this.state.collapseHeader
+                            })
+                            }
                             />
                         { querySelect }
                     </div>,
-                    <div key="view" className="PersonViewsPane-singleViewTable">
+                    <div key="view" className={ "PersonViewsPane-singleViewTable" + (this.state.collapseHeader ? "-collapsed" : "") }>
                         <PersonViewTable
                             viewId={ viewId }
                             openPane={ this.openPane.bind(this) }
@@ -210,6 +242,7 @@ export default class PersonViewsPane extends RootPaneBase {
             }
         }
         else if (this.props.views.viewList.items) {
+            const sortedViewItems = this.props.views.viewList.items.sort((v1, v2) => v1.data.title.localeCompare(v2.data.title));
             return (
                 <ul className="PersonViewsPane-viewList">
                     <li
@@ -221,7 +254,7 @@ export default class PersonViewsPane extends RootPaneBase {
                             <Msg id="panes.personViews.newBlankButton"/>
                         </span>
                     </li>
-                {this.props.views.viewList.items.map(viewItem => (
+                {sortedViewItems.map(viewItem => (
                     <li key={ viewItem.data.id }
                         className="PersonViewsPane-viewItem"
                         onClick={ () => this.gotoPane('views', viewItem.data.id) }
@@ -240,7 +273,25 @@ export default class PersonViewsPane extends RootPaneBase {
 
     onClickDownload() {
         const viewId = this.getParam(0);
-        this.openPane('confirmexport', viewId, this.state.query);
+        const queryId = (this.state.viewMode === 'saved') ? undefined : this.state.query;
+
+        this.openPane('confirmexport', viewId, queryId);
+    }
+
+    onClickDelete() {
+        const viewId = this.getParam(0);
+        const viewItem = getListItemById(this.props.views.viewList, viewId);
+        let title = ''
+        if(viewItem) {
+            title = viewItem.data.title;
+        }
+        this.openPane('confirmdelete', viewId, 'view');
+    }
+
+    onClickCollapseHeader() {
+        this.setState({ 
+            collapseHeader: !this.state.collapseHeader,
+        })
     }
 
     onClickNew() {

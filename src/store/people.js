@@ -181,6 +181,19 @@ export default function people(state = null, action) {
                 duplicateList: removeListItem(state.duplicateList, action.meta.id),
             });
 
+        case types.DELETE_TAG + '_FULFILLED':
+            // Remove deleted tag from taglist of all people
+            const personList = state.personList;
+            personList.items = personList.items.map(p => {
+                if(p.data.tagList)
+                    p.data.tagList.items = p.data.tagList.items.filter(
+                                        t => t.data &&t.data.id != action.meta.id)
+                return p;
+            });
+            return Object.assign({}, state, {
+                personList: personList,
+            });
+
         default:
             return state || {
                 personList: createList(),

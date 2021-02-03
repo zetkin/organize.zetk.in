@@ -5,7 +5,7 @@
     "type": "git",
     "url": "git://github.com/zetkin/organizer-dashboard.git"
   },
-  "version": "24.0.3",
+  "version": "25.0.0",
   "main": "app",
   "scripts": {
     "postinstall": "./bin/npm/postinstall",
@@ -43,7 +43,7 @@
     "gulp-newer": "^1.1.0",
     "gulp-react": "^2.0.0",
     "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.2.0",
+    "gulp-sass": "^3.0.0",
     "gulp-shell": "^0.4.0",
     "gulp-streamify": "0.0.5",
     "gulp-uglify": "^1.1.0",

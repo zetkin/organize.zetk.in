@@ -5,10 +5,12 @@ import { connect } from 'react-redux';
 import PaneBase from './PaneBase';
 import PersonTagForm from '../forms/PersonTagForm';
 import Button from '../misc/Button';
+import DeleteButton from '../misc/DeleteButton';
 import { getListItemById } from '../../utils/store';
 import {
     retrievePersonTag,
     updatePersonTag,
+    deletePersonTag,
 } from '../../actions/personTag';
 
 
@@ -57,11 +59,13 @@ export default class EditPersonTagPane extends PaneBase {
         if (data.tagItem) {
             let tag = data.tagItem.data;
 
-            return (
+            return [
                 <PersonTagForm ref="form" tag= { tag }
                     onValueChange={ this.onValueChange.bind(this) }
-                    onSubmit={ this.onSubmit.bind(this) }/>
-            );
+                    onSubmit={ this.onSubmit.bind(this) }/>,
+                <DeleteButton key="deleteButton"
+                    onClick={ this.onDeleteClick.bind(this) }/>
+            ];
         }
         else {
             return null;
@@ -74,7 +78,7 @@ export default class EditPersonTagPane extends PaneBase {
                 <Button className="EditPersonTagPane-saveButton"
                     labelMsg="panes.editPersonTag.saveButton"
                     onClick={ this.onSubmit.bind(this) }/>
-        );
+            );
         } else {
             return null;
         }
@@ -84,7 +88,7 @@ export default class EditPersonTagPane extends PaneBase {
         ev.preventDefault();
 
         let tagId = this.getParam(0);
-        let values = this.refs.form.getValues();
+        let values = this.refs.form.getChangedValues();
 
         this.props.dispatch(updatePersonTag(tagId, values));
         this.closePane();
@@ -94,5 +98,11 @@ export default class EditPersonTagPane extends PaneBase {
         if (name === "title") {
             this.setState({ shouldShowButton: !!value})
         }
+    }
+
+    onDeleteClick() {
+        const tagId = this.getParam(0);
+        this.props.dispatch(deletePersonTag(tagId));
+        this.closePane();
     }
 }

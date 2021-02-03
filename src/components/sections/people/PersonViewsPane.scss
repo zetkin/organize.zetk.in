@@ -85,9 +85,23 @@
     }
 }
 
+.PersonViewsPane-topLinks {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    &:before {
+        content: none;
+    }
+    &:after {
+        content: none;
+    }
+}
+
 .PersonViewsPane-backLink {
     font-size: 1rem;
     color: $c-ui-darker;
+    margin-right: 1rem;
+    cursor: pointer;
 
     &:before {
         @include icon($fa-var-chevron-left);
@@ -101,6 +115,24 @@
     &:hover {
         &:before {
             left: -0.1em;
+        }
+    }
+}
+
+.PersonViewsPane-collapseHeaderLink {
+    font-size: 1rem;
+    color: $c-ui-darker;
+    cursor: pointer;
+
+    &:after {
+        @include icon($fa-var-chevron-up);
+
+        transition: transform 0.2s;
+    }
+
+    &.collapsed {
+        &:after {
+            transform: rotate(180deg);
         }
     }
 }
@@ -125,8 +157,39 @@
     }
 }
 
+.PersonViewsPane-singleViewHeader-collapsed {
+    @extend .PersonViewsPane-singleViewHeader;
+    display: none;
+}
+
+.PersonViewsPane-adminLinks {
+    margin-top: -1em;
+    color: $c-text;
+
+    a {
+        display: inline-block;
+        margin-right: 1em;
+        text-decoration: underline;
+        opacity: 0.6;
+        transition: opacity 0.2s;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .PersonViewsPane-deleteLink:before {
+        @include icon($fa-var-trash);
+        //color: $c-brand-delete;
+    }
+
+    .PersonViewsPane-settingsLink:before {
+        @include icon($fa-var-cog);
+    }
+}
+
 .PersonViewsPane-singleViewModes {
-    min-height: 7rem;
+    min-height: 0rem;
 
     @include large-screen {
         float: right;
@@ -158,3 +221,26 @@
         }
     }
 }
+
+.PersonViewsPane-singleViewTable-collapsed {
+    @extend .PersonViewsPane-singleViewTable;
+    @include large-screen {
+        .PersonViewTable { 
+            top: 8.6rem;
+        }
+    }
+}
+
+// Fix for problem where view mode buttons are unusable in the collapsed header mode
+.PersonViewTable {
+    pointer-events: none;
+
+    .PersonViewTable-tools {
+        width: max-content;
+        pointer-events: auto;
+    }
+    .PersonViewTable-table {
+        pointer-events: auto;
+    }
+}
+
