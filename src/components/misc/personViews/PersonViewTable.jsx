@@ -136,7 +136,7 @@ export default class PersonViewTable extends React.Component {
 
                             let x = 0;
 
-                            if (colType == 'local_bool' || colType == 'person_tag') {
+                            if (colType == 'local_bool' || colType == 'person_tag' || colType == 'person_query') {
                                 // Treat boolean values as integers (1 or 0)
                                 x = +val1 - +val0;
                             }
