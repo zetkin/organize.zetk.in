@@ -14,7 +14,8 @@ export default class RelSelectInput extends InputBase {
         this.state = {
             inputFocused: false,
             focusedIndex: undefined,
-            inputValue: undefined
+            inputValue: undefined,
+            selectedIndex: undefined
         };
     }
 
@@ -44,7 +45,6 @@ export default class RelSelectInput extends InputBase {
         const valueField = this.props.valueField;
         const selected = (value && objects)?
             objects.find(o => o[valueField] == value) : null;
-
         var inputValue = this.state.inputValue;
         if (inputValue === undefined) {
             inputValue = (selected? this.getLabel(selected) : '');
@@ -113,6 +113,7 @@ export default class RelSelectInput extends InputBase {
                     onFocus={ this.onFocus.bind(this) }
                     onKeyDown={ this.onKeyDown.bind(this) }
                     onBlur={ this.onBlur.bind(this) }/>
+
                 <ul ref="objectList">
                 {filteredObjects.map(function(obj, idx) {
                     const value = obj[valueField];
@@ -187,14 +188,42 @@ export default class RelSelectInput extends InputBase {
         }
     }
 
+    /* Scroll the list by setting its scrollTop to the top of the picked element.
+       const listDOMNode = ;
+       scrollListToSelectedIndex(
+           ReactDOM.findDOMNode(this.refs.objectList),
+           this.state.selectedIndex
+       )
+    */
+    scrollListToSelectedIndex(listDOMNode, selectedIndex) {
+        if (!selectedIndex) {
+            console.log("scrollListToSelectedIndex: missing selectedIndex.")
+            return;
+        }
+
+        if (!listDOMNode) {
+            console.log("scrollListToSelectedIndex: missing listDOMNode.")
+            return;
+        }
+
+        console.log("scrollListToSelectedIndex doing things with selectedInde.", selectedIndex)
+        const element = listDOMNode.children[selectedIndex];
+        listDOMNode.scrollTop = Math.min(
+            listDOMNode.scrollHeight,
+            listDOMNode.scrollTop + element.offsetHeight
+        );
+
+        console.log("scrollListToSelectedIndex: scrollHeight", listDOMNode.scrollHeight);
+        console.log("scrollListToSelectedIndex: scrollTop + element.offsetHeight", listDOMNode.scrollTop + element.offsetHeight);
+    }
+
     onKeyDown(ev) {
         const focusedIndex = this.state.focusedIndex;
-        const objects = this.getFilteredObjects();
         const valueCount = this.values.length;
         const maxIndex = valueCount - 1;
         const listDOMNode = ReactDOM.findDOMNode(this.refs.objectList);
 
-        if (ev.keyCode == 40) {
+        if (ev.key == "Down" || ev.key == "ArrowDown") { // "Down" is an IE/Edge-specific value
             // User pressed down, increment or set to zero if undefined
             this.setState({
                 focusedIndex: Math.min(maxIndex,
@@ -205,14 +234,13 @@ export default class RelSelectInput extends InputBase {
             const newFocusedIndex = this.state.focusedIndex;
             if(newFocusedIndex !== undefined && newFocusedIndex != 0) {
                 const element = listDOMNode.children[newFocusedIndex];
-                listDOMNode.scrollTop = Math.min(listDOMNode.scrollHeight, 
-                    listDOMNode.scrollTop + element.offsetHeight);
+                listDOMNode.scrollTop = Math.min(listDOMNode.scrollHeight, listDOMNode.scrollTop + element.offsetHeight);
             }
 
 
             ev.preventDefault();
         }
-        else if (ev.keyCode == 38) {
+        else if (ev.key == "Up" || ev.key == "ArrowUp" ) {  // "Up" is IE/Edge
             // User pressed up, decrement or set to last if undefined
             this.setState({
                 focusedIndex: Math.max(0, (focusedIndex === undefined)?
@@ -230,7 +258,7 @@ export default class RelSelectInput extends InputBase {
 
             ev.preventDefault();
         }
-        else if (ev.keyCode == 13) {
+        else if (ev.key == "Enter") {
             if (focusedIndex >= 0 && focusedIndex < valueCount) {
                 const value = this.values[focusedIndex];
                 if (value == '+') {
@@ -249,7 +277,7 @@ export default class RelSelectInput extends InputBase {
             ReactDOM.findDOMNode(this.refs.input).blur();
             ev.preventDefault();
         }
-        else if (ev.keyCode == 27) {
+        else if (ev.key == "Esc" || ev.key == "Escape") { // "Esc" is IE/Edge
             const inputDOMNode = ReactDOM.findDOMNode(this.refs.input);
             inputDOMNode.blur();
         }
@@ -282,6 +310,11 @@ export default class RelSelectInput extends InputBase {
             inputValue: undefined,
             inputFocused: true
         });
+
+        this.scrollListToSelectedIndex(
+            ReactDOM.findDOMNode(this.refs.objectList),
+            this.state.selectedIndex
+        );
     }
 
     onBlur(ev) {
@@ -316,6 +349,13 @@ export default class RelSelectInput extends InputBase {
 
             this.props.onValueChange(name, value);
         }
+
+        setTimeout(() => {
+            const selectedIndex = (this.props.value && this.props.objects)? this.props.objects.findIndex(o => o[this.props.valueField] == this.props.value) : null;
+            this.setState({
+                selectedIndex: selectedIndex
+            });
+        }, 200);
     }
 
     selectNull() {
