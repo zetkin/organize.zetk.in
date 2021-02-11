@@ -180,24 +180,21 @@ export function executeImport(tableId) {
             columns[genderIdx].config = { field: 'gender' }
         }
 
-        // Find the organization field if it exists
-        let orgIdx = columns.findIndex(i => i.type == 'organization');
-
-        // Map organization column
-        if(orgIdx > -1) {
-            let mappings = columns[orgIdx].config.mappings;
-            rows = rows.map(r => {
-                let value = r[orgIdx];
-                let new_value = mappings.find(m => {
-                    if(m.value === value) {
-                        return true;
-                    }
+        for(const idx in columns) {
+            if(columns[idx].type == 'organization') {
+                // Map organization column
+                let mappings = columns[idx].config.mappings;
+                rows = rows.map(r => {
+                    let value = r[idx];
+                    let new_value = mappings.find(m => {
+                        if(m.value === value) {
+                            return true;
+                        }
+                    });
+                    r[idx] = new_value && new_value.org ? Number(new_value.org) : null;
+                    return r;
                 });
-                r[orgIdx] = new_value && new_value.org ? Number(new_value.org) : null;
-                return r;
-            });
-
-            columns[orgIdx].type = 'organization';
+            }
         }
 
         let data = { columns, rows };
