@@ -98,6 +98,7 @@ settings:
         valueLabel: 'Gender for rows with value: {value}'
     personOrganization:
         emptyLabel: Organization for empty rows
+        noneLabel: None
         valueLabel: 'Organization for rows with value: {value}'
     personTag:
         emptyLabel: Tags for empty rows

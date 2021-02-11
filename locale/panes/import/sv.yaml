@@ -90,6 +90,7 @@ settings:
         valueLabel: 'Kön för rader med värde: {value}'
     personOrganization:
         emptyLabel: Organisation för tomma rader
+        noneLabel: Ingen
         valueLabel: 'Organisation för rader med värde: {value}'
     personTag:
         emptyLabel: Etiketter för tomma rader

@@ -20,7 +20,13 @@ export default class PersonGenderColumnValue extends React.Component {
         let config = this.props.column.config;
 
         let mapping = config.mappings.find(m => m.value == value);
-        let orgTitle = mapping && mapping.org ? this.orgs[mapping.org] : '';
+
+        let orgTitle;
+        if(mapping && mapping.org && mapping.org != this.props.activeOrg.id) {
+            orgTitle = this.orgs[mapping.org];
+        } else {
+            orgTitle = '';
+        }
 
         return (
             <span>{ orgTitle }</span>

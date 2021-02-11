@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage as Msg } from 'react-intl';
+import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import SelectInput from '../../../forms/inputs/SelectInput';
@@ -13,6 +13,7 @@ import { flattenOrgs } from '../../../../utils/import';
     subOrgs: state.subOrgs.items,
     activeOrg: state.user.activeMembership.organization,
 }))
+@injectIntl
 export default class PersonOrganizationColumnSettings extends React.Component {
     static propTypes = {
         config: React.PropTypes.object.isRequired,
@@ -22,6 +23,7 @@ export default class PersonOrganizationColumnSettings extends React.Component {
     constructor(props) {
         super(props)
         this.orgOptions = flattenOrgs(props.activeOrg, props.subOrgs);
+        this.orgOptions[props.activeOrg.id] = this.props.intl.formatMessage({ id: 'panes.import.settings.personOrganization.noneLabel' });
     }
 
     render() {
