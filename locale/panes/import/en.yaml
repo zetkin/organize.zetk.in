@@ -97,7 +97,7 @@ settings:
         unknown: Unknown
         valueLabel: 'Gender for rows with value: {value}'
     personOrganization:
-        emptyLable: Organization for emptry rows
+        emptyLabel: Organization for empty rows
         valueLabel: 'Organization for rows with value: {value}'
     personTag:
         emptyLabel: Tags for empty rows

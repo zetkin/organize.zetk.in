@@ -89,7 +89,7 @@ settings:
         unknown: Okänd
         valueLabel: 'Kön för rader med värde: {value}'
     personOrganization:
-        emptyLable: Organisation för tomma rader
+        emptyLabel: Organisation för tomma rader
         valueLabel: 'Organisation för rader med värde: {value}'
     personTag:
         emptyLabel: Etiketter för tomma rader
