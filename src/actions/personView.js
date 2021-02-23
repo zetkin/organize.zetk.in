@@ -105,8 +105,14 @@ export function exportPersonView(viewId, queryId) {
 
             // Add all rows
             rowList.items.forEach(rowItem => {
-                const data = rowItem.data;
-                rows.push([data.id].concat(data.content));
+                let content = rowItem.data.content;
+                if(typeof(content == 'object') {
+                    if(content instanceof Array) {
+                        content = content.join("\n");
+                    }
+                }
+
+                rows.push([data.id].concat(content));
             });
         }
 
