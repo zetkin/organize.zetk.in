@@ -105,12 +105,29 @@ export function exportPersonView(viewId, queryId) {
 
             // Add all rows
             rowList.items.forEach(rowItem => {
-                let content = rowItem.data.content;
-                if(typeof(content == 'object') {
-                    if(content instanceof Array) {
-                        content = content.join("\n");
+                const data = rowItem.data;
+                let content = data.content;
+
+                content = content.map(item => {
+                    if(item && typeof(item) == 'object') {
+                        if(item instanceof Array) {
+                            // Assumes text type array items
+                            const arrayItems = item.map(i => {
+                                if(i.text) {
+                                    return i.text;
+                                } else if(i.submitted) {
+                                    return i.submitted;
+                                }
+                            });
+                            return arrayItems.join("\n");
+                        } else if(item.first_name && item.last_name) {
+                            // Person object
+                            return `${item.first_name} ${item.last_name}`;
+                        }
                     }
-                }
+
+                    return item;
+                });
 
                 rows.push([data.id].concat(content));
             });
