@@ -28,7 +28,8 @@ export default class Form extends React.Component {
 
         return (
             <form className={ classes }
-                onSubmit={ this.onSubmit.bind(this) }>
+                onSubmit={ this.onSubmit.bind(this) }
+                autoComplete="off" >
                 <ul>
                 {inputs.map(function(input, index) {
                     if (typeof input === 'string') {
