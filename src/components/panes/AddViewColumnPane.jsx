@@ -167,6 +167,7 @@ class PersonFieldColumnTemplate extends React.Component {
             'ext_id',
             'first_name',
             'last_name',
+            'gender',
             'email',
             'phone',
             'alt_phone',

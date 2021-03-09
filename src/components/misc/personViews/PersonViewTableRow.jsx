@@ -10,6 +10,7 @@ import PlainTextViewCell from './cells/PlainTextViewCell';
 import SurveyResponseCell from './cells/SurveyResponseCell';
 import SurveySubmittedCell from './cells/SurveySubmittedCell';
 import PersonNotesCell from './cells/PersonNotesCell';
+import GenderViewCell from './cells/GenderViewCell';
 
 import { updatePersonViewCell } from '../../../actions/personView';
 
@@ -93,6 +94,9 @@ export default connect()(function PersonViewTableRow(props) {
                         onSelect={ onSelect }
                         />
                 );
+            }
+            else if(col.type == 'person_field' && col.config.field == 'gender') {
+                return <GenderViewCell { ...cellProps } />
             }
             else {
                 return <PlainTextViewCell { ...cellProps }/>;
