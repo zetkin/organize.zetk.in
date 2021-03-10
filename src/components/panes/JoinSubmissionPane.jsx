@@ -25,6 +25,7 @@ const NATIVE_FIELDS = [
     'ext_id',
     'first_name',
     'last_name',
+    'gender',
     'email',
     'phone',
     'alt_phone',
@@ -151,7 +152,15 @@ export default class JoinSubmissionPane extends PaneBase {
                             label = this.props.intl.formatMessage({ id: `misc.fields.${fieldName}` });
                         }
 
-                        const value = person[fieldName] || '';
+                        let value;
+                        if(fieldName == 'gender') {
+                            value = this.props.intl.formatMessage({ id: `misc.fields.genderOptions.${person[fieldName]}` })
+                        }
+                        else { 
+                            value = person[fieldName];
+                        }
+
+                        value = value || '';
 
                         return (
                             <li key={ fieldName }>

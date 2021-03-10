@@ -10,3 +10,7 @@ last_name: Last name
 phone: Phone number
 street_address: Street address
 zip: Zip code
+genderOptions:
+  f: Female
+  m: Male
+  o: Other
