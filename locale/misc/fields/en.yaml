@@ -14,3 +14,5 @@ genderOptions:
   f: Female
   m: Male
   o: Other
+  null: Unknown
+  _: Unknown
