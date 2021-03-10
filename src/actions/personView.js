@@ -106,9 +106,8 @@ export function exportPersonView(viewId, queryId) {
             // Add all rows
             rowList.items.forEach(rowItem => {
                 const data = rowItem.data;
-                let content = data.content;
 
-                content = content.map(item => {
+                const content = data.content.map(item => {
                     if(item && typeof(item) == 'object') {
                         if(item instanceof Array) {
                             // Assumes text type array items
@@ -124,6 +123,9 @@ export function exportPersonView(viewId, queryId) {
                             // Person object
                             return `${item.first_name} ${item.last_name}`;
                         }
+                    }
+                    else if(typeof(item) === 'boolean') {
+                        return item ? 'x' : '';
                     }
 
                     return item;
