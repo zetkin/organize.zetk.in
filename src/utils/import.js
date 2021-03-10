@@ -67,7 +67,7 @@ export function parseCSV(file) {
 }
 
 export function parseWorkbook(data) {
-    let wb = xlsx.read(data, { type: 'binary', cellStyles: true });
+    let wb = xlsx.read(data, { type: 'binary', cellStyles: true, dateNF: 'yyyy"-"mm"-"dd'});
 
     let tableSet = {
         tableList: createList(),
@@ -103,7 +103,7 @@ export function parseWorkbook(data) {
                 let rowValues = table.columnList.items.map((col, idx) => {
                     let addr = xlsx.utils.encode_cell({ r, c: idx });
                     let cell = sheet[addr];
-                    return cell? (cell.w || cell.v) : undefined;
+                    return cell? (cell.d || cell.w || cell.v) : undefined;
                 });
 
                 // Only include if there are non-null values in the row
