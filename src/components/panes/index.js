@@ -10,6 +10,7 @@ import AddGroupPane from './AddGroupPane';
 import AddJoinFormPane from './AddJoinFormPane';
 import AddPersonPane from './AddPersonPane';
 import AddPersonTagPane from './AddPersonTagPane';
+import AddPersonFieldPane from './AddPersonFieldPane';
 import AddLocationPane from './AddLocationPane';
 import AddLocationTagPane from './AddLocationTagPane'
 import AddSurveyPane from './AddSurveyPane';
@@ -43,6 +44,7 @@ import EditLocationPane from './EditLocationPane';
 import EditLocationTagPane from './EditLocationTagPane';
 import EditPersonPane from './EditPersonPane';
 import EditPersonTagPane from './EditPersonTagPane';
+import EditPersonFieldPane from './EditPersonFieldPane';
 import EditPersonViewPane from './EditPersonViewPane';
 import EditQueryPane from './EditQueryPane';
 import EditRoutePane from './EditRoutePane';
@@ -94,6 +96,7 @@ var _panes = {
     'addjoinform': AddJoinFormPane,
     'addperson': AddPersonPane,
     'addpersontag': AddPersonTagPane,
+    'addpersonfield': AddPersonFieldPane,
     'addsurvey': AddSurveyPane,
     'addsurveyquestion': AddSurveyQuestionPane,
     'addsurveytextblock': AddSurveyTextBlockPane,
@@ -122,6 +125,7 @@ var _panes = {
     'editlocationtag': EditLocationTagPane,
     'editperson': EditPersonPane,
     'editpersontag': EditPersonTagPane,
+    'editpersonfield': EditPersonFieldPane,
     'editpersonview': EditPersonViewPane,
     'editquery': EditQueryPane,
     'editroute': EditRoutePane,

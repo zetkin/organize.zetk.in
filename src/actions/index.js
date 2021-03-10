@@ -31,6 +31,11 @@ export const MERGE_PERSON_DUPLICATES = 'MERGE_PERSON_DUPLICATES';
 export const ADD_DUPLICATE_PERSON = 'ADD_DUPLICATE_PERSON';
 export const REMOVE_DUPLICATE_PERSON = 'REMOVE_DUPLICATE_PERSON';
 
+// Actions related to person field types
+export const CREATE_PERSON_FIELD = 'CREATE_PERSON_FIELD';
+export const DELETE_PERSON_FIELD = 'DELETE_PERSON_FIELD';
+export const UPDATE_PERSON_FIELD = 'UPDATE_PERSON_FIELD';
+
 // Redux actions related to person groups
 export const CREATE_GROUP = 'CREATE_GROUP';
 export const RETRIEVE_GROUPS = 'RETRIEVE_GROUPS';

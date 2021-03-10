@@ -7,17 +7,21 @@ import Button from '../../misc/Button';
 import LoadingIndicator from '../../misc/LoadingIndicator';
 import PersonQueryList from '../../lists/PersonQueryList';
 import PersonTagList from '../../lists/PersonTagList';
+import PersonFieldList from '../../lists/PersonFieldList';
 import RootPaneBase from '../RootPaneBase';
 import ViewSwitch from '../../misc/ViewSwitch';
 import { findDuplicates, clearDuplicates } from '../../../actions/person';
 import { retrieveQueries } from '../../../actions/query';
 import { retrievePersonTags } from '../../../actions/personTag';
+import { retrievePersonFields } from '../../../actions/personTag';
+import { retrieveFieldTypesForOrganization } from '../../../actions/personField';
 
 
 const mapStateToProps = state => ({
     tagList: state.personTags.tagList,
     queryList: state.queries.queryList,
     duplicateList: state.people.duplicateList,
+    fieldList: state.personFields.fieldTypes,
 });
 
 
@@ -44,6 +48,9 @@ export default class ManagePeoplePane extends RootPaneBase {
             }
             else if (this.state.viewMode == 'tags') {
                 this.props.dispatch(retrievePersonTags());
+            }
+            else if (this.state.viewMode == 'fields') {
+                this.props.dispatch(retrieveFieldTypesForOrganization());
             }
         }
     }
@@ -159,6 +166,13 @@ export default class ManagePeoplePane extends RootPaneBase {
                 </div>
             );
         }
+        else if(this.state.viewMode == 'fields') {
+            return (
+                <PersonFieldList fieldList={ this.props.fieldList }
+                    onItemClick={ item => this.openPane('editpersonfield', item.data.id) }
+                    />
+            );
+        }
     }
 
     getPaneTools(data) {
@@ -166,6 +180,7 @@ export default class ManagePeoplePane extends RootPaneBase {
             'queries': 'panes.managePeople.viewMode.queries',
             'tags': 'panes.managePeople.viewMode.tags',
             'duplicates': 'panes.managePeople.viewMode.duplicates',
+            'fields': 'panes.managePeople.viewMode.fields',
         };
 
         let tools = [
