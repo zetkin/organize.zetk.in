@@ -106,7 +106,32 @@ export function exportPersonView(viewId, queryId) {
             // Add all rows
             rowList.items.forEach(rowItem => {
                 const data = rowItem.data;
-                rows.push([data.id].concat(data.content));
+
+                const content = data.content.map(item => {
+                    if(item && typeof(item) == 'object') {
+                        if(item instanceof Array) {
+                            // Assumes text type array items
+                            const arrayItems = item.map(i => {
+                                if(i.text) {
+                                    return i.text;
+                                } else if(i.submitted) {
+                                    return i.submitted;
+                                }
+                            });
+                            return arrayItems.join("\n");
+                        } else if(item.first_name && item.last_name) {
+                            // Person object
+                            return `${item.first_name} ${item.last_name}`;
+                        }
+                    }
+                    else if(typeof(item) === 'boolean') {
+                        return item ? 'x' : '';
+                    }
+
+                    return item;
+                });
+
+                rows.push([data.id].concat(content));
             });
         }
 
