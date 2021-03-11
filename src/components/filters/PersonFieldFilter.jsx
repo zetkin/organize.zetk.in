@@ -37,6 +37,15 @@ export default class PersonFieldFilter extends FilterBase {
         }
     }
 
+    componentWillReceiveProps(nextProps, nextState) {
+        if(this.props.fieldTypes.items.length !== nextProps.fieldTypes.items.length) {
+            this.setState({
+                field: nextProps.config.field ? 
+                    nextProps.fieldTypes.items.find(f => f.data.slug == this.props.config.field) : null,
+            })
+        }
+    }
+
     renderFilterForm(config) {
         const msg = id => this.props.intl.formatMessage({ id });
         let fieldOptions = {
