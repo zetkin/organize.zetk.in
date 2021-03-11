@@ -4,6 +4,11 @@ cells:
         inputLabel: Select a person
         inputPlaceholder: Start typing to search
         noMatches: No people found matching "{query}". Try to keep typing.
+    gender:
+        female: Female
+        male: Male
+        other: Other
+        unknown: Unkown
 tools:
     count:
         default: Showing {visible} rows
