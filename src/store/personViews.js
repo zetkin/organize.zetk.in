@@ -414,6 +414,23 @@ export default function personViews(state = null, action) {
             dirtyPersonIds.push(action.meta.rowId);
             affectedViewIds.push(action.meta.viewId);
         }
+        else if (action.type == types.UPDATE_PERSON + '_FULFILLED') {
+            const pId = action.payload.data.data.id
+            dirtyPersonIds.push(pId);
+
+            Object.keys(state.rowsByView)
+                .filter(viewId => {
+                    // Filter views that contain the dirty person object
+                    const rowList = state.rowsByView[viewId];
+                    if (rowList.items) {
+                        return rowList.items.find(row => row.data.id === pId)
+                    }
+                })
+                .forEach(viewId => {
+                    // Add any affected views to list
+                    affectedViewIds.push(viewId)
+                });
+        }
 
         // Were any people in any views affected? Then and only then should
         // we copy the state (immutable) and start flagging.
