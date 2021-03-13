@@ -419,13 +419,6 @@ export default function personViews(state = null, action) {
             dirtyPersonIds.push(pId);
 
             Object.keys(state.rowsByView)
-                .filter(viewId => {
-                    // Filter views that contain the dirty person object
-                    const rowList = state.rowsByView[viewId];
-                    if (rowList.items) {
-                        return rowList.items.find(row => row.data.id === pId)
-                    }
-                })
                 .forEach(viewId => {
                     // Add any affected views to list
                     affectedViewIds.push(viewId)
