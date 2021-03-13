@@ -154,7 +154,17 @@ export default class JoinSubmissionPane extends PaneBase {
 
                         let value;
                         if(fieldName == 'gender') {
-                            value = this.props.intl.formatMessage({ id: `misc.fields.genderOptions.${person[fieldName]}` })
+                            const genderOptions = {
+                                'f': 'female',
+                                'm': 'male',
+                                'o': 'other'
+                            }
+                            let gender = genderOptions[person.gender];
+                            if(gender == undefined) {
+                                gender = 'unknown';
+                            }
+
+                            value = this.props.intl.formatMessage({ id: `misc.fields.genderOptions.${gender}` })
                         }
                         else { 
                             value = person[fieldName];

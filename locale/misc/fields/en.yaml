@@ -11,8 +11,7 @@ phone: Phone number
 street_address: Street address
 zip: Zip code
 genderOptions:
-  f: Female
-  m: Male
-  o: Other
-  null: Unknown
-  _: Unknown
+  female: Female
+  male: Male
+  other: Other
+  unknown: Unknown
