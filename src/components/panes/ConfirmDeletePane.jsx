@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import DeleteButton from '../misc/DeleteButton';
 import PaneBase from './PaneBase';
 import { deletePersonView } from '../../actions/personView';
+import { deleteSurveySubmission } from '../../actions/surveySubmission';
 
 
 @connect()
@@ -25,6 +26,9 @@ export default class ConfirmDeletePane extends PaneBase {
         if(data.type == 'view') {
             messageId = "panes.confirmDelete.deleteView";
         }
+        else if(data.type == 'surveysubmission') {
+            messageId = "panes.confirmDelete.deleteSurveySubmission";
+        }
 
         return [
             <Msg key="p0" tagName="p" id={ messageId } />,
@@ -43,6 +47,9 @@ export default class ConfirmDeletePane extends PaneBase {
         const type = this.getParam(1);
         if(type == 'view') {
             this.props.dispatch(deletePersonView(id));
+        }
+        else if(type == 'surveysubmission') {
+            this.props.dispatch(deleteSurveySubmission(id));
         }
         this.closePane();
     }

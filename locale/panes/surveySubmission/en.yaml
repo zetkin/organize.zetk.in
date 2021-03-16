@@ -6,3 +6,4 @@ responses:
     emptyResponse: Question not answered
     h: Questions and answers
 title: Submitted survey
+delete: Delete response

@@ -66,6 +66,11 @@ export default function surveySubmissions(state = null, action) {
                 submissionData.id, submissionData, { isPending: false, error: null }),
         });
     }
+    else if (action.type == types.DELETE_SURVEY_SUBMISSION + '_FULFILLED') {
+        return Object.assign({}, state, {
+            submissionList: removeListItem(state.submissionList, action.meta.id),
+        });
+    }
     else {
         return state || {
             submissionList: createList(),
