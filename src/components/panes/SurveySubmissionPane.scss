@@ -27,6 +27,10 @@
         }
     }
 
+    .SurveySubmissionPane-deleteLink:before {
+        @include icon($fa-var-trash);
+    }
+
     .SurveySubmissionPane-respondent {
         position: relative;
 
