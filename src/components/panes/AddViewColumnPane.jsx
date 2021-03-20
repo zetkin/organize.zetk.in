@@ -238,16 +238,18 @@ class PersonFieldColumnTemplate extends React.Component {
 class PersonNotesColumnTemplate extends React.Component {
 
     componentDidMount() {
-        const column = {
-            title: this.props.intl.formatMessage({
-                id: 'panes.addViewColumn.templates.person_notes.title'
-            }),
-            config: {
-                limit: 1,
-            }
-        };
+        if(this.props.selected) {
+            const column = {
+                title: this.props.intl.formatMessage({
+                    id: 'panes.addViewColumn.templates.person_notes.title'
+                }),
+                config: {
+                    limit: 1,
+                }
+            };
 
-        this.props.onChange(column);
+            this.props.onChange(column);
+        }
     }
 
     render() {
