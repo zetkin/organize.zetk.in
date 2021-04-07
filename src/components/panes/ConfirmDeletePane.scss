@@ -1,0 +1,16 @@
+.PaneBase.ConfirmDeletePane {
+    p:nth-of-type(2) {
+        &:before {
+            @include icon($fa-var-warning);
+            color: $c-ui-warning;
+        }
+    }
+
+    li {
+        &:before {
+            @include icon($fa-var-exclamation-circle);
+            margin-left: 2em;
+        }
+        font-size: 1rem;
+    }
+}
