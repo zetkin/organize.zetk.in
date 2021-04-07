@@ -95,6 +95,11 @@ export default function people(state = null, action) {
                 personList: removeListItem(state.personList, action.meta.id),
             });
 
+        case types.DELETE_CONNECTION + '_FULFILLED':
+            return Object.assign({}, state, {
+                personList: removeListItem(state.personList, action.meta.person),
+            });
+
         case types.RETRIEVE_TAGS_FOR_PERSON + '_PENDING':
             person = {
                 id: action.meta.id,
