@@ -31,6 +31,10 @@ export const MERGE_PERSON_DUPLICATES = 'MERGE_PERSON_DUPLICATES';
 export const ADD_DUPLICATE_PERSON = 'ADD_DUPLICATE_PERSON';
 export const REMOVE_DUPLICATE_PERSON = 'REMOVE_DUPLICATE_PERSON';
 
+// Redux actions related to person connections to organizations
+export const DELETE_CONNECTION = 'DELETE_CONNECTION';
+export const RETRIEVE_CONNECTIONS = 'RETRIEVE_CONNECTIONS';
+
 // Redux actions related to person groups
 export const CREATE_GROUP = 'CREATE_GROUP';
 export const RETRIEVE_GROUPS = 'RETRIEVE_GROUPS';
