@@ -56,3 +56,16 @@ export function updateSurveySubmission(id, data, paneId) {
         });
     };
 }
+
+export function deleteSurveySubmission(id) {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.DELETE_SURVEY_SUBMISSION,
+            meta: { id },
+            payload: {
+                promise: z.resource('orgs', orgId, 'survey_submissions', id).del(),
+            }
+        });
+    };
+}

@@ -77,7 +77,7 @@
     "verifiera": "^1.2.0",
     "webpack": "^2.2.1",
     "worker-loader": "^0.8.1",
-    "xlsx": "^0.8.0",
+    "xlsx": "^0.16.9",
     "zetkin": "~1.2.0"
   },
   "devDependencies": {

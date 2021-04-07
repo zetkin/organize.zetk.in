@@ -6,3 +6,4 @@ responses:
     emptyResponse: Frågan besvarades inte
     h: Frågor och svar
 title: Inskickad enkät
+delete: Ta bort svar
