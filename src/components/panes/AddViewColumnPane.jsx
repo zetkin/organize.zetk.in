@@ -237,10 +237,10 @@ class PersonFieldColumnTemplate extends React.Component {
 @injectIntl
 class PersonNotesColumnTemplate extends React.Component {
 
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.selected && nextProps.config.limit == undefined) {
+    componentDidUpdate(prevProps) {
+        if(this.props.selected && !prevProps.selected) {
             const column = {
-                title: nextProps.intl.formatMessage({
+                title: this.props.intl.formatMessage({
                     id: 'panes.addViewColumn.templates.person_notes.title'
                 }),
                 config: {
@@ -248,7 +248,7 @@ class PersonNotesColumnTemplate extends React.Component {
                 }
             };
 
-            nextProps.onChange(column);
+            this.props.onChange(column);
         }
     }
 
@@ -390,9 +390,11 @@ class PersonTagColumnTemplate extends React.Component {
 }))
 class SurveyResponseColumnTemplate extends React.Component {
     componentDidUpdate(prevProps) {
-        const surveyId = this.props.config.survey_id;
-        if (surveyId != prevProps.config.survey_id) {
-            this.props.dispatch(retrieveSurvey(surveyId));
+        if(this.props.selected) {
+            const surveyId = this.props.config.survey_id;
+            if (surveyId != prevProps.config.survey_id && surveyId != null) {
+                this.props.dispatch(retrieveSurvey(surveyId));
+            }
         }
     }
 
@@ -480,9 +482,11 @@ class SurveyResponseColumnTemplate extends React.Component {
 }))
 class SurveySubmittedColumnTemplate extends React.Component {
     componentDidUpdate(prevProps) {
-        const surveyId = this.props.config.survey_id;
-        if (surveyId != prevProps.config.survey_id) {
-            this.props.dispatch(retrieveSurvey(surveyId));
+        if(this.props.selected) {
+            const surveyId = this.props.config.survey_id;
+            if (surveyId != prevProps.config.survey_id && surveyId != null) {
+                this.props.dispatch(retrieveSurvey(surveyId));
+            }
         }
     }
 
