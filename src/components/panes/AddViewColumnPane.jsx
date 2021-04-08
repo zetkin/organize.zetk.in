@@ -237,10 +237,10 @@ class PersonFieldColumnTemplate extends React.Component {
 @injectIntl
 class PersonNotesColumnTemplate extends React.Component {
 
-    componentDidMount() {
-        if(this.props.selected) {
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.selected && nextProps.config.limit == undefined) {
             const column = {
-                title: this.props.intl.formatMessage({
+                title: nextProps.intl.formatMessage({
                     id: 'panes.addViewColumn.templates.person_notes.title'
                 }),
                 config: {
@@ -248,7 +248,7 @@ class PersonNotesColumnTemplate extends React.Component {
                 }
             };
 
-            this.props.onChange(column);
+            nextProps.onChange(column);
         }
     }
 
