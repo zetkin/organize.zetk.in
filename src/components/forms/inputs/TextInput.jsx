@@ -29,7 +29,7 @@ export default class TextInput extends InputBase {
                 placeholder={ placeholder }
                 onFocus={ this.props.onFocus }
                 onChange={ this.onChange.bind(this) }
-                onBlur={ this.props.onBlur }/>
+                onBlur={ this.onBlur.bind(this) }/>
         );
     }
 }
