@@ -1,5 +1,7 @@
 import React from 'react';
 
+import normalizeUrl from 'normalize-url';
+
 import Form from './Form';
 import IntInput from './inputs/IntInput';
 import DateInput from './inputs/DateInput';
@@ -71,9 +73,16 @@ export default class ActionForm extends React.Component {
                     initialValue={ action.title } maxLength={ 300 }/>
                 <TextArea labelMsg="forms.action.info" name="info_text"
                     initialValue={ action.info_text }/>
-
+                <TextInput labelMsg="forms.action.url" name="url"
+                    initialValue={ action.url } maxLength={ 500 }
+                    onBlur={ this.onChangeUrl.bind(this) }/>
             </Form>
         );
+    }
+
+    onChangeUrl(ev) {
+        const url = ev.target.value;
+        ev.target.value = normalizeUrl(url);
     }
 
     getValues() {
