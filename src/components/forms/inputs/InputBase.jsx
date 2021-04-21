@@ -37,14 +37,9 @@ export default class InputBase extends React.Component {
                 { this.renderInput() }
             </div>
         );
-    } 
-
-    onChange(ev) {
-        this.props.onValueChange(this.props.name, ev.target.value);
     }
 
-    onBlur(ev) {
-        this.props.onBlur(ev);
+    onChange(ev) {
         this.props.onValueChange(this.props.name, ev.target.value);
     }
 }
