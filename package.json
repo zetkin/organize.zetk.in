@@ -52,6 +52,7 @@
     "lodash.debounce": "^4.0.8",
     "negotiator": "^0.6.1",
     "node-yaml": "^3.0.3",
+    "normalize-url": "^3.3.0",
     "object-subset": "0.0.4",
     "papaparse": "^5.2.0",
     "raven": "^1.2.1",

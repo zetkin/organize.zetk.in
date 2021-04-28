@@ -27,6 +27,7 @@ import {
     retrieveActionParticipants,
 } from '../../actions/participant';
 import InfoList from '../misc/InfoList';
+import truncText from '../../utils/truncText';
 
 
 const mapStateToProps = (state, props) => {
@@ -228,6 +229,11 @@ export default class ActionPane extends PaneBase {
                     }, {
                         name: 'activity',
                         value: action.activity? action.activity.title : ''
+                    }, {
+                        name: 'url',
+                        value: truncText(action.url, 30),
+                        href: action.url,
+                        target: '_blank',
                     }, {
                         name: 'editLink',
                         msgId: 'panes.action.editLink',
