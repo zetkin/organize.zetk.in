@@ -237,17 +237,19 @@ class PersonFieldColumnTemplate extends React.Component {
 @injectIntl
 class PersonNotesColumnTemplate extends React.Component {
 
-    componentDidMount() {
-        const column = {
-            title: this.props.intl.formatMessage({
-                id: 'panes.addViewColumn.templates.person_notes.title'
-            }),
-            config: {
-                limit: 1,
-            }
-        };
+    componentDidUpdate(prevProps) {
+        if(this.props.selected && !prevProps.selected) {
+            const column = {
+                title: this.props.intl.formatMessage({
+                    id: 'panes.addViewColumn.templates.person_notes.title'
+                }),
+                config: {
+                    limit: 1,
+                }
+            };
 
-        this.props.onChange(column);
+            this.props.onChange(column);
+        }
     }
 
     render() {
@@ -388,9 +390,11 @@ class PersonTagColumnTemplate extends React.Component {
 }))
 class SurveyResponseColumnTemplate extends React.Component {
     componentDidUpdate(prevProps) {
-        const surveyId = this.props.config.survey_id;
-        if (surveyId != prevProps.config.survey_id) {
-            this.props.dispatch(retrieveSurvey(surveyId));
+        if(this.props.selected) {
+            const surveyId = this.props.config.survey_id;
+            if (surveyId != prevProps.config.survey_id && surveyId != null) {
+                this.props.dispatch(retrieveSurvey(surveyId));
+            }
         }
     }
 
@@ -478,9 +482,11 @@ class SurveyResponseColumnTemplate extends React.Component {
 }))
 class SurveySubmittedColumnTemplate extends React.Component {
     componentDidUpdate(prevProps) {
-        const surveyId = this.props.config.survey_id;
-        if (surveyId != prevProps.config.survey_id) {
-            this.props.dispatch(retrieveSurvey(surveyId));
+        if(this.props.selected) {
+            const surveyId = this.props.config.survey_id;
+            if (surveyId != prevProps.config.survey_id && surveyId != null) {
+                this.props.dispatch(retrieveSurvey(surveyId));
+            }
         }
     }
 
