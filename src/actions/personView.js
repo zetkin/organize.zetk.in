@@ -139,11 +139,13 @@ export function exportPersonView(viewId, queryId) {
         const csvStr = csvFormatRows(rows);
         const blob = new Blob([ csvStr ], { type: 'text/csv' });
         const now = new Date();
+        let orgName = getState().user.activeMembership.organization.title;
+        orgName = orgName.toLowerCase().replace(/\s/g,'-').replace(/[^a-z\-]/g, '')
         const dateStr = now.format('%Y%m%d');
         const timeStr = now.format('%H%m%S');
         const a = document.createElement('a');
         a.setAttribute('href', URL.createObjectURL(blob));
-        a.setAttribute('download', `${dateStr}_${timeStr}.csv`);
+        a.setAttribute('download', `${orgName}_${dateStr}_${timeStr}.csv`);
         a.style.display = 'none';
 
         document.body.appendChild(a);
