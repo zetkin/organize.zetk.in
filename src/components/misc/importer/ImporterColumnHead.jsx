@@ -8,7 +8,10 @@ import { resolveSummaryComponent } from './summary';
 
 
 @injectIntl
-@connect(state => ({ fieldTypes: state.personFields.fieldTypes }))
+@connect(state => ({ 
+    fieldTypes: state.personFields.fieldTypes,
+    subOrgs: state.subOrgs,
+}))
 export default class ImporterColumnHead extends React.Component {
     static propTypes = {
         column: React.PropTypes.object.isRequired,
@@ -37,6 +40,10 @@ export default class ImporterColumnHead extends React.Component {
         const COMPLEX_OPTIONS = {
             'person_tag': col('colOptions.complex.tag'),
         };
+
+        if(this.props.subOrgs.items.length > 0) {
+            COMPLEX_OPTIONS['organization'] = col('colOptions.complex.organization');
+        }
 
         const FIELD_OPTIONS = this.props.fieldTypes.items.reduce((obj, field) => {
             if(field.data.type !== 'json') {
@@ -178,6 +185,8 @@ export default class ImporterColumnHead extends React.Component {
                     field_id: field_id,
                     field_type: field.data.type,
                 }
+            } else if (value === 'organization') {
+                props.type = 'organization';
             }
 
             this.props.onChangeColumn(columnId, props);
