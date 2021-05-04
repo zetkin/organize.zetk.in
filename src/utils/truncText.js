@@ -1,4 +1,7 @@
 export default (s, maxLength=200) => {
+    if (s == null) {
+        return '';
+    }
     if (s.length < maxLength) {
         return s;
     }
@@ -11,7 +14,12 @@ export default (s, maxLength=200) => {
                 out += ' ' + word;
             }
             else {
-                return out + '...';
+                if(out.length > 0) {
+                    return out + '...';
+                } else {
+                    return s.substr(0, maxLength) + '...';
+                }
+
             }
         }
     }

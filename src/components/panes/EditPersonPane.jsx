@@ -7,7 +7,7 @@ import Button from '../misc/Button';
 import DraggableAvatar from '../misc/DraggableAvatar';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import { retrieveFieldTypesForOrganization } from '../../actions/personField';
-import { retrievePerson, updatePerson, deletePerson }
+import { retrievePerson, updatePerson }
     from '../../actions/person';
 import { getListItemById } from '../../utils/store';
 
@@ -16,7 +16,8 @@ const mapStateToProps = (state, props) => ({
     fieldTypes: state.personFields.fieldTypes,
     personItem: getListItemById(
                     state.people.personList,
-                    props.paneData.params[0])
+                    props.paneData.params[0]),
+    activeOrg: state.org.activeId,
 });
 
 @connect(mapStateToProps)
@@ -58,10 +59,10 @@ export default class EditPersonPane extends PaneBase {
                         person={ this.props.personItem.data }
                         onSubmit={ this.onSubmit.bind(this) }/>,
 
-                    <Button key="deleteButton"
-                        labelMsg="panes.editPerson.deleteButton"
-                        onClick={ this.onDeleteClick.bind(this) }
-                        className="EditPersonPane-deleteButton"/>
+                    <Button key="removeButton"
+                        labelMsg="panes.editPerson.removeButton"
+                        onClick={ this.onRemoveClick.bind(this) }
+                        className="EditPersonPane-removeButton"/>
                 ];
             }
         }
@@ -90,10 +91,12 @@ export default class EditPersonPane extends PaneBase {
         this.closePane();
     }
 
-    onDeleteClick(ev) {
-        var personId = this.getParam(0);
+    onRemoveClick(ev) {
+        const personId = this.getParam(0);
+	// We want to remove membership from active org
+	const connectionOrg = this.props.activeOrg;
 
-        this.props.dispatch(deletePerson(personId));
+        this.openPane('confirmdelete', personId, 'connection', connectionOrg);
         this.closePane();
     }
 }

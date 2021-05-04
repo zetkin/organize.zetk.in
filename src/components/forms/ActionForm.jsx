@@ -6,6 +6,7 @@ import DateInput from './inputs/DateInput';
 import TextArea from './inputs/TextArea';
 import TextInput from './inputs/TextInput';
 import TimeInput from './inputs/TimeInput';
+import URLInput from './inputs/URLInput';
 import RelSelectInput from './inputs/RelSelectInput';
 import { retrieveLocations } from '../../actions/location';
 import { retrieveCampaigns } from '../../actions/campaign';
@@ -71,7 +72,8 @@ export default class ActionForm extends React.Component {
                     initialValue={ action.title } maxLength={ 300 }/>
                 <TextArea labelMsg="forms.action.info" name="info_text"
                     initialValue={ action.info_text }/>
-
+                <URLInput labelMsg="forms.action.url" name="url"
+                    initialValue={ action.url } maxLength={ 500 } />
             </Form>
         );
     }

@@ -75,12 +75,7 @@
     &::before {
         z-index: 1000;
         content: "";
-        display: block;
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
         background-color: black;
         visibility: hidden;
         opacity: 0;
@@ -95,7 +90,8 @@
         }
 
         .OrgUserMenu-info ul {
-            display: block;
+            display: flex;
+            flex-direction: column;
         }
 
         color: white;
