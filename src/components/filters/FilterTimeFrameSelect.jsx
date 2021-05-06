@@ -86,6 +86,10 @@ export default class FilterTimeFrameSelect extends React.Component {
         );
     }
 
+    validDate(dateString) {
+        return (new Date(dateString)).isValid();
+    }
+
     onSelectTimeframe(name, value) {
         let before = undefined;
         let after = undefined;
@@ -101,14 +105,30 @@ export default class FilterTimeFrameSelect extends React.Component {
                 before = 'now';
                 break;
             case 'after':
-                after = todayStr;
+                if(this.state.after && this.validDate(this.state.after)) {
+                    after = this.state.after;
+                } else {
+                    after = todayStr;
+                }
                 break;
             case 'before':
-                before = todayStr;
+                if(this.state.before && this.validDate(this.state.before)) {
+                    before = this.state.before;
+                } else {
+                    before = todayStr;
+                }
                 break;
             case 'between':
-                after = todayStr;
-                before = today.addDays(30).format('{yyyy}-{MM}-{dd}');
+                if(this.state.after && this.validDate(this.state.after)) {
+                    after = this.state.after;
+                } else {
+                    after = todayStr;
+                }
+                if(this.state.before && this.validDate(this.state.before)) {
+                    before = this.state.before;
+                } else {
+                    before = today.addDays(30).format('{yyyy}-{MM}-{dd}');
+                }
                 break;
             case 'inlast':
                 days = this.state.days || '30';
