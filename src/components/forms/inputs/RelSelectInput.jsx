@@ -27,6 +27,13 @@ export default class RelSelectInput extends InputBase {
         }
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if(this.state.inputFocused && !prevState.inputFocused && this.selectedRef) {
+            // Scroll the selected element into view if the input is newly focused
+            this.selectedRef.scrollIntoView();
+        }
+    }
+
     componentDidMount() {
         const listDOMNode = ReactDOM.findDOMNode(this.refs.objectList);
         listDOMNode.addEventListener('mousewheel', onWheelStopPropagation);
@@ -133,7 +140,13 @@ export default class RelSelectInput extends InputBase {
                     }
 
                     return (
-                        <li key={ value } className={ classes }>
+                        <li key={ value } className={ classes }
+                            ref={ ref => {
+                                    if(obj == selected) {
+                                        this.selectedRef = ref;
+                                    }
+                                }
+                            }>
                             <label className="RelSelectInput-itemLabel"
                                 onMouseDown={ this.onClickOption.bind(this, obj) }>
                                 { this.getLabel(obj) }
