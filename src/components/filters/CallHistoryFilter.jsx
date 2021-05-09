@@ -196,6 +196,10 @@ export default class CallHistoryFilter extends FilterBase {
             this.onConfigChange());
     }
 
+    validDate(dateString) {
+        return (new Date(dateString)).isValid();
+    }
+
     onSelectTimeframe(name, value) {
         let before = undefined;
         let after = undefined;
@@ -204,17 +208,33 @@ export default class CallHistoryFilter extends FilterBase {
 
         switch (value) {
             case 'after':
-                after = today;
+                if(this.state.after && this.validDate(this.state.after)) {
+                    after = this.state.after;
+                } else {
+                    after = today;
+                }
                 break;
             case 'before':
-                before = today;
+                if(this.state.before && this.validDate(this.state.before)) {
+                    before = this.state.before;
+                } else {
+                    before = today;
+                }
                 break;
             case 'inlast':
                 days = 30;
                 break;
             case 'between':
-                after = today;
-                before = (new Date()).advance({ days: 30 }).format('{yyyy}-{MM}-{dd}');
+                if(this.state.after && this.validDate(this.state.after)) {
+                    after = this.state.after;
+                } else {
+                    after = today;
+                }
+                if(this.state.before && this.validDate(this.state.before)) {
+                    before = this.state.before;
+                } else {
+                    before = (new Date()).advance({ days: 30 }).format('{yyyy}-{MM}-{dd}');
+                }
                 break;
         }
 
