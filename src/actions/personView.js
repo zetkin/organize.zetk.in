@@ -17,6 +17,71 @@ export function addPersonViewRow(viewId, personId) {
     };
 }
 
+export function copyPersonView(id, copyIntl) {
+    return ({ dispatch, getState, z }) => {
+        // Get the current view
+        const viewData = getState().personViews.viewList.items.find(v => v.data.id == id);
+        // copyIntl is the internationalized name of "copy". This is not so nice,
+        // but the alternative is to set up intl outside react-components
+        const viewPostData = {
+            title: `${viewData.data.title} (${copyIntl})`,
+            description: viewData.data.description,
+        }
+        const columnData = getState().personViews.columnsByView[id].items;
+        const columnPostData = columnData.map(c => {
+            return {
+                title: c.data.title,
+                type: c.data.type,
+                config: c.data.config,
+            }
+        });
+
+        const rowData = getState().personViews.rowsByView[id].items;
+        const rows = rowData.map(r => r.data.id)
+        const orgId = getState().org.activeId;
+
+        let viewRes = null;
+
+        dispatch({
+                type: types.CREATE_PERSON_VIEW,
+                payload: {
+                    // Copy the view
+                    promise: z.resource('orgs', orgId, 'people', 'views')
+                        .post(viewPostData)
+                        .then(res => {
+                            viewRes = res;
+
+                            // Copy the columns
+                            let promise = Promise.resolve();
+
+                            columnPostData.forEach(colData => {
+                                promise = promise.then(() =>
+                                    z.resource('orgs', orgId, 'people', 'views', viewRes.data.data.id, 'columns').post(colData));
+                            });
+
+                            return promise;
+                        })
+                        .then(() => {
+                            // Copy the rows
+                            let promises = []
+                            rows.forEach(personId => {
+                                promises.push(
+                                    z.resource('orgs', orgId, 'people',
+                                        'views', viewRes.data.data.id, 'rows', personId).put()
+                                )
+                            })
+                            return Promise.all(promises);
+
+                            // TODO: Copy local values
+                        })
+                        .then(() => viewRes),
+                }
+            });
+
+
+    };
+}
+
 export function createPersonView(data, defaultColumns=[]) {
     return ({ dispatch, getState, z }) => {
         const orgId = getState().org.activeId;

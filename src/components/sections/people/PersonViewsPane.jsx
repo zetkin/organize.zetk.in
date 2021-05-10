@@ -19,6 +19,7 @@ import {
     retrievePersonViewRows,
     retrievePersonViews,
     updatePersonView,
+    copyPersonView,
 } from '../../../actions/personView';
 import { getListItemById } from '../../../utils/store';
 
@@ -204,6 +205,10 @@ export default class PersonViewsPane extends RootPaneBase {
                                 onClick={ () => this.openPane('editpersonview', viewId) }>
                                 <Msg id="panes.personViews.view.settings" />
                             </a>
+                            <a className="PersonViewsPane-copyLink"
+                                onClick={ this.onClickCopy.bind(this) }>
+                                <Msg id="panes.personViews.view.copy" />
+                            </a>
                         </div>
                         <EditableText tagName="p" key="description"
                             content={ viewItem.data.description }
@@ -269,6 +274,16 @@ export default class PersonViewsPane extends RootPaneBase {
         else if (this.props.views.viewList.isPending) {
             return <LoadingIndicator/>;
         }
+    }
+    
+    onClickCopy() {
+        const viewId = this.getParam(0);
+        // This feels a bit weird but avoids having to set up intl outside react-components
+        const copyIntl = this.props.intl.formatMessage(
+                    { id: 'panes.personViews.newView.copy' }
+                )
+        this.props.dispatch(copyPersonView(viewId, copyIntl));
+        this.gotoPane('views', 'new');
     }
 
     onClickDownload() {

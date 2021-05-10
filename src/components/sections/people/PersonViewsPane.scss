@@ -186,6 +186,10 @@
     .PersonViewsPane-settingsLink:before {
         @include icon($fa-var-cog);
     }
+
+    .PersonViewsPane-copyLink:before {
+        @include icon($fa-var-copy);
+    }
 }
 
 .PersonViewsPane-singleViewModes {
