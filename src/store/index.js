@@ -15,6 +15,7 @@ import callAssignments from './callAssignments';
 import calls from './calls';
 import canvassAssignments from './canvassAssignments';
 import campaigns from './campaigns';
+import connections from './connections';
 import dashboard from './dashboard';
 import documents from './documents';
 import groups from './groups';
@@ -37,6 +38,7 @@ import queries from './queries';
 import routes from './routes';
 import search from './search';
 import selections from './selections';
+import subOrgs from './subOrgs';
 import surveys from './surveys';
 import surveySubmissions from './surveySubmissions';
 import timelines from './timelines';
@@ -59,6 +61,7 @@ const appReducer = combineReducers({
     calls,
     canvassAssignments,
     campaigns,
+    connections,
     dashboard,
     documents,
     groups,
@@ -81,6 +84,7 @@ const appReducer = combineReducers({
     routes,
     search,
     selections,
+    subOrgs,
     surveys,
     surveySubmissions,
     timelines,

@@ -4,18 +4,20 @@ newView:
         firstName: 'First name'
         lastName: 'Last name'
     defaultTitle: 'Unnamed view'
+    copy: copy
 placeholders:
     title: 'Click to edit title'
     description: 'Click to add a description'
 view:
     addColumn: Add column
     backLink: All views
-    hideHeader: Hide header
-    showHeader: Show header
-    empty: This view is empty. Add a person below, or pick a Smart Search query above to populate the view.
+    copy: Copy view
     delete: Detete view
+    empty: This view is empty. Add a person below, or pick a Smart Search query above to populate the view.
+    hideHeader: Hide header
     missingQuery: Select a Smart Search query above.
     modes:
         saved: Saved
         query: Smart Search
     settings: Configure view
+    showHeader: Show header

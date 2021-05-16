@@ -27,6 +27,13 @@ export default class RelSelectInput extends InputBase {
         }
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if(this.state.inputFocused && !prevState.inputFocused && this.selectedRef) {
+            // Scroll the selected element into view if the input is newly focused
+            this.selectedRef.scrollIntoView();
+        }
+    }
+
     componentDidMount() {
         const listDOMNode = ReactDOM.findDOMNode(this.refs.objectList);
         listDOMNode.addEventListener('mousewheel', onWheelStopPropagation);
@@ -39,12 +46,13 @@ export default class RelSelectInput extends InputBase {
 
     renderInput() {
         const value = this.props.value;
-        const objects = this.props.objects;
+        let objects = this.props.objects;
         const showEditLink = this.props.showEditLink;
         const valueField = this.props.valueField;
         const selected = (value && objects)?
             objects.find(o => o[valueField] == value) : null;
         const hidden = this.props.hidden || false;
+        const disableFiltering = this.props.disableFiltering;
 
         var inputValue = this.state.inputValue;
         if (inputValue === undefined) {
@@ -57,9 +65,11 @@ export default class RelSelectInput extends InputBase {
             'hidden': hidden
         });
 
-        const filteredObjects = this.getFilteredObjects();
+        if (!disableFiltering) {
+            objects = this.getFilteredObjects()
+        };
 
-        this.values = filteredObjects.map(o => o[valueField]);
+        this.values = objects.map(o => o[valueField]);
 
         var createOption = null;
         if (this.props.showCreateOption) {
@@ -116,7 +126,7 @@ export default class RelSelectInput extends InputBase {
                     onKeyDown={ this.onKeyDown.bind(this) }
                     onBlur={ this.onBlur.bind(this) }/>
                 <ul ref="objectList">
-                {filteredObjects.map(function(obj, idx) {
+                {objects.map(function(obj, idx) {
                     const value = obj[valueField];
                     const classes = cx({
                         'selected': (obj == selected),
@@ -130,7 +140,13 @@ export default class RelSelectInput extends InputBase {
                     }
 
                     return (
-                        <li key={ value } className={ classes }>
+                        <li key={ value } className={ classes }
+                            ref={ ref => {
+                                    if(obj == selected) {
+                                        this.selectedRef = ref;
+                                    }
+                                }
+                            }>
                             <label className="RelSelectInput-itemLabel"
                                 onMouseDown={ this.onClickOption.bind(this, obj) }>
                                 { this.getLabel(obj) }
@@ -157,7 +173,6 @@ export default class RelSelectInput extends InputBase {
             return obj.title || obj[this.props.valueField];
         }
     };
-
 
     getFilteredObjects() {
         let filter = this.state.inputValue;

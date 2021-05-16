@@ -90,6 +90,32 @@ export default function viewState(state = null, action) {
             panes
         });
     }
+    else if (action.type == types.DELETE_SURVEY_SUBMISSION + '_FULFILLED') {
+        // Remove the SurveySubmissionPane with the id of the deleted submission
+        const paneIdx = state.panes.findIndex(pane => {
+            pane.type != 'surveysubmission' && pane.params[0] != action.meta.id
+        })
+
+        let panes = state.panes;
+        panes.splice(paneIdx, 1);
+
+        return Object.assign({}, state, {
+            panes
+        });
+    }
+    else if (action.type == types.DELETE_CONNECTION + '_FULFILLED') {
+        // Remove the SurveySubmissionPane with the id of the deleted submission
+        const paneIdx = state.panes.findIndex(pane => {
+            pane.type != 'person' && pane.params[0] != action.meta.id
+        })
+
+        let panes = state.panes;
+        panes.splice(paneIdx, 1);
+
+        return Object.assign({}, state, {
+            panes
+        });
+    }
     else if (action.type == types.REPLACE_PANE) {
         let panes = state.panes.concat();
         panes[action.payload.index] = {

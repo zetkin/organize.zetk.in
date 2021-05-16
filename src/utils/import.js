@@ -67,7 +67,7 @@ export function parseCSV(file) {
 }
 
 export function parseWorkbook(data) {
-    let wb = xlsx.read(data, { type: 'binary', cellStyles: true });
+    let wb = xlsx.read(data, { type: 'binary', cellStyles: true, dateNF: 'yyyy"-"mm"-"dd'});
 
     let tableSet = {
         tableList: createList(),
@@ -103,7 +103,7 @@ export function parseWorkbook(data) {
                 let rowValues = table.columnList.items.map((col, idx) => {
                     let addr = xlsx.utils.encode_cell({ r, c: idx });
                     let cell = sheet[addr];
-                    return cell? (cell.w || cell.v) : undefined;
+                    return cell? (cell.d || cell.w || cell.v) : undefined;
                 });
 
                 // Only include if there are non-null values in the row
@@ -199,3 +199,29 @@ function guessColumnConfigFromName(name) {
         return { type, config };
     }
 }
+
+let flattenedOrgs = {};
+
+export function flattenOrgs(org, subOrgs) {
+    let orgData = org.data ? org.data : org;
+    let orgId = orgData.id;
+    if(flattenedOrgs[orgId]) {
+        // subOrgs given a specific orgId are unlikely to change during runtime
+        // to avoid unecessary caculations, cache the results per orgId
+        return flattenedOrgs[orgId];
+    }
+    let orgs = {};
+    // activeOrg contains no is_active attribute, hence allow undefined
+    if(orgData.is_active || orgData.is_active === undefined) {
+        orgs[orgId] = orgData.title;
+    }
+    if(subOrgs) {
+        subOrgs.forEach(o => {
+            const fo = flattenOrgs(o, o.data ? o.data.sub_orgs : o.sub_orgs);
+            orgs = {...orgs, ...fo};
+        })
+    }
+    flattenedOrgs[orgId] = orgs;
+    return orgs;
+}
+

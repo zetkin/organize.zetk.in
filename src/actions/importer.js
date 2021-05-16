@@ -1,6 +1,6 @@
 import * as types from '.';
 
-import { parseCSV, parseWorkbook } from '../utils/import';
+import { parseCSV, parseWorkbook, flattenOrgs } from '../utils/import';
 import { getListItemById } from '../utils/store';
 
 const XLS_SUFFIXES = ['xlsx', 'xls'];
@@ -105,6 +105,28 @@ export function updateImportColumn(tableId, columnId, props) {
 
                 props.config = { mappings };
             }
+            else if (props.type == 'organization') {
+                let colIndex = table.columnList.items.indexOf(columnItem);
+                const activeOrg = getState().user.activeMembership.organization;
+                const subOrgs = getState().subOrgs.items;
+                let organizations = flattenOrgs(activeOrg, subOrgs);
+                let mappings = [];
+
+                for (let r = 0; r < table.rows.length; r++) {
+                    let value = table.rows[r].values[colIndex];
+
+                    if(!mappings.find(m => m.value === value)) {
+                        let lcValue = value? value.toString().toLowerCase() : value;
+                        let orgItem = Object.keys(organizations).find(i =>
+                            (i === lcValue));
+
+                        let org = orgItem ? orgItem.id : activeOrg.id;
+                        mappings.push({ value, org })
+                    }
+                }
+
+                props.config = { mappings };
+            }
         }
 
         dispatch({
@@ -156,6 +178,23 @@ export function executeImport(tableId) {
 
             columns[genderIdx].type = 'person_data';
             columns[genderIdx].config = { field: 'gender' }
+        }
+
+        for(const idx in columns) {
+            if(columns[idx].type == 'organization') {
+                // Map organization column
+                let mappings = columns[idx].config.mappings;
+                rows = rows.map(r => {
+                    let value = r[idx];
+                    let new_value = mappings.find(m => {
+                        if(m.value === value) {
+                            return true;
+                        }
+                    });
+                    r[idx] = new_value && new_value.org ? Number(new_value.org) : null;
+                    return r;
+                });
+            }
         }
 
         let data = { columns, rows };

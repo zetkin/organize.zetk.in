@@ -97,6 +97,7 @@ export default class PersonSelectWidget extends React.Component {
                     onQueryChange={ this.onQueryChange.bind(this) }
                     showCreateOption={ false }
                     objects={ people }
+                    disableFiltering = { true }
                     />
             );
 

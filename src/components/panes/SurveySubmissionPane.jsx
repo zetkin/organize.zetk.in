@@ -81,7 +81,8 @@ export default class SurveySubmissionPane extends PaneBase {
             return;
 
         this.props.dispatch(retrieveSurvey(subItem.data.survey.id));
-    }
+    } 
+
 
     renderPaneContent(data) {
         if (data.submissionItem && !data.submissionItem.isPending) {
@@ -114,6 +115,12 @@ export default class SurveySubmissionPane extends PaneBase {
 
             return [
                 <div key="info" className="SurveySubmissionPane-info">
+                    <p>
+                        <a className="SurveySubmissionPane-deleteLink"
+                            onClick={ this.onDeleteClick.bind(this) }>
+                            <Msg id="panes.surveySubmission.delete" />
+                        </a>
+                    </p>
                     <p className="SurveySubmissionPane-infoSurvey">
                         { sub.survey.title }</p>
                     <p className="SurveySubmissionPane-infoDate">
@@ -126,6 +133,8 @@ export default class SurveySubmissionPane extends PaneBase {
                     <SubmissionRespondent submission={ sub }
                         onConnect={ this.onConnectClick.bind(this) }
                         onAvatarClick={ this.onAvatarClick.bind(this) }/>
+
+
                 </div>,
                 <div key="responses" className="SurveySubmissionPane-responses">
                     <Msg tagName="h3" id="panes.surveySubmission.responses.h"/>
@@ -145,6 +154,11 @@ export default class SurveySubmissionPane extends PaneBase {
 
     onAvatarClick(person) {
         this.openPane('person', person.id);
+    }
+
+    onDeleteClick() {
+        const responseId = this.props.submissionItem.data.id;
+        this.openPane('confirmdelete', responseId, 'surveysubmission');
     }
 }
 

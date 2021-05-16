@@ -1,3 +1,6 @@
 confirmButton: Radera
+deleteConnection: Vill du ta bort personen från din organisation?
+deleteConnectionOrgs: 'Det här kommer även ta bort personen från:'
 deleteView: Vill du radera den här vyn?
+deleteSurveySubmission: Vill du radera det här enkätsvaret?
 title: Bekräfta radera

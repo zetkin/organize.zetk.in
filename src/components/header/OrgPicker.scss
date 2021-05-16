@@ -6,6 +6,8 @@
     @include list-unstyled;
     margin-left: 1.7em;
     font-size: 0.8em;
+    overflow-y: auto;
+    max-height: 70vh;
 }
 
 .OrgPicker-item {

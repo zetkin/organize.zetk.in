@@ -45,6 +45,12 @@
         }
     }
 
+    .InfoListItem-url {
+        &::before {
+            @include icon($fa-var-link);
+        }
+    }
+
     .InfoListItem-activity {
         &::before {
             @include icon($fa-var-hand-rock-o);

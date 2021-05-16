@@ -1,6 +1,7 @@
 instructions: Välj en kolumn-typ och redigera inställningar här.
 title: 'Inställningar för kolumn: { column }'
 typeOptions:
+    organization: Organisation
     personData: Personuppgifter
     personTag: Etiketter
     unknown: Välj en kolumn-typ
