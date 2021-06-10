@@ -20,7 +20,10 @@ export default function queries(state = null, action) {
         case types.RETRIEVE_QUERIES + '_FULFILLED':
             return Object.assign({}, state, {
                 queryList: updateOrAddListItems(state.queryList,
-                    action.payload.data.data,
+                    action.payload.data.data.map(query => {
+                        query.isShared = query.organization.id != action.meta.orgId;
+                        return query;
+                    }),
                     { isPending: false, error: null })
             });
 
@@ -33,6 +36,7 @@ export default function queries(state = null, action) {
 
         case types.RETRIEVE_QUERY + '_FULFILLED':
             query = action.payload.data.data;
+            query.isShared = action.meta.orgId != query.organization.id;
 
             return Object.assign({}, state, {
                 queryList: updateOrAddListItem(state.queryList,
