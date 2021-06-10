@@ -23,6 +23,13 @@ export default class PersonQueryListItem extends React.Component {
                     <span className="PersonQueryListItem-description">
                         { query.info_text }</span>
                 </div>
+                <div className="PersonQueryListItem-orgcol">
+                    { query.isShared ?
+                        <span className="PersonQueryListItem-shared">
+                            { query.organization.title }
+                        </span> : null
+                    }
+                </div>
             </div>
         );
     }
