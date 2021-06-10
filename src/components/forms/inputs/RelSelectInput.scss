@@ -24,7 +24,6 @@
 
         li {
             position: relative;
-            cursor: pointer;
             font-size: 1.1em;
 
             .RelSelectInput-itemLabel {
@@ -72,7 +71,7 @@
                     }
                 }
 
-                .RelSelectInput-editLink {
+                .RelSelectInput-editLink, .RelSelectInput-shared {
                     display: block;
                 }
             }
@@ -86,7 +85,7 @@
                 }
             }
 
-            .RelSelectInput-editLink {
+            .RelSelectInput-editLink, .RelSelectInput-shared {
                 position: absolute;
                 right: 0;
                 top: 0;
@@ -100,7 +99,9 @@
                 @include small-screen {
                     display: block;
                 }
+            }
 
+            .RelSelectInput-editLink {
                 &:before {
                     @include icon($fa-var-pencil);
                     line-height: 2.4em;
@@ -112,6 +113,17 @@
 
                 &:hover {
                     color: darken(#888, 30)
+                }
+            }
+
+            .RelSelectInput-shared {
+                &:before {
+                    @include icon($fa-var-share-alt);
+                    line-height: 2.4em;
+
+                    @include small-screen {
+                        line-height: 3em;
+                    }
                 }
             }
         }
