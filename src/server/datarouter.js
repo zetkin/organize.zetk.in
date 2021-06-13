@@ -35,83 +35,54 @@ export default messages => {
     router.use(localizeHandler());
 
     router.get(/action:(\d+)$/, waitForActions(req => [
-        retrieveAction(req.params[0]),
-        retrieveActionResponses(req.params[0]),
-        retrieveActionParticipants(req.params[0]),
     ]));
 
     router.get([/people$/, /people\/list$/], waitForActions(req => [
-        retrievePeople()
     ]));
 
     router.get(/people\/import$/, waitForActions(req => [
-        retrievePersonTags(),
     ]));
 
     router.get(/person:(\d+)$/, waitForActions(req => [
-        retrievePerson(req.params[0])
     ]));
 
     router.get([/maps$/, /maps\/locations$/], waitForActions(req => [
-        retrieveLocations()
     ]));
 
     router.get(/addlocation$/, waitForActions(req => [
-        retrieveLocations()
     ]));
 
     router.get(/location:(\d+)$/, waitForActions(req => [
-        retrieveLocation(req.params[0])
     ]));
 
     router.get(/campaigns$/, waitForActions(req => [
-        retrieveCampaigns(),
     ]));
 
     router.get(/campaign\/locations$/, waitForActions(req => [
-        retrieveActions(),
-        retrieveCampaigns(),
     ]));
 
     router.get(/campaign:(\d+)$/, waitForActions(req => [
-        retrieveCampaign(req.params[0])
     ]));
 
     router.get(/campaign\/dashboard$/, waitForActions(req => [
-        retrieveCampaigns()
     ]));
 
     router.get(/campaign\/playback$/, waitForActions(req => [
-        retrieveActions(),
-        retrieveActivities(),
-        retrieveCampaigns(),
-        retrieveLocations()
     ]));
 
     router.get(/campaign\/distribution$/, waitForActions(req => [
-        retrieveActions(),
-        retrieveActivities(),
-        retrieveCampaigns()
     ]));
 
     router.get(/campaign\/actions$/, waitForActions(req => [
-        retrieveActions(),
-        retrieveActivities(),
-        retrieveCampaigns(),
     ]));
 
     router.get(/dialog\/startassignment$/, waitForActions(req => [
-        retrieveCampaigns(),
     ]));
 
     router.get(/editaction:(\d+)$/, waitForActions(req => [
-        retrieveAction(req.params[0]),
-        retrieveActivities(),
-        retrieveLocations()
     ]));
 
     router.get(/actionday:([-0-9]*)/, waitForActions(req => [
-        retrieveActionsOnDay(req.params[0]),
     ]));
 
     return router;
