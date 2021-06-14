@@ -5,7 +5,7 @@
     "type": "git",
     "url": "git://github.com/zetkin/organizer-dashboard.git"
   },
-  "version": "25.0.2",
+  "version": "27.0.0",
   "main": "app",
   "scripts": {
     "postinstall": "./bin/npm/postinstall",
