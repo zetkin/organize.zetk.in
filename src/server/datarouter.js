@@ -11,6 +11,7 @@ import { retrieveLocations, retrieveLocation } from '../actions/location';
 import { retrievePeople, retrievePerson } from '../actions/person';
 import { retrievePersonTags } from '../actions/personTag';
 import { getUserInfo, getUserMemberships } from '../actions/user';
+import { setActiveOrg } from '../actions/user';
 
 
 export default messages => {
@@ -30,6 +31,38 @@ export default messages => {
         getUserInfo(),
         getUserMemberships(),
     ]));
+
+    // Route for switching organizations
+    router.get('*', (req, res, next) => {
+        let state = req.store.getState();
+        let orgId = null;
+
+        let orgIsValid = orgId =>
+            !!state.user.memberships.find(m => m.organization.id == orgId);
+
+        if (req.query.org && orgIsValid(req.query.org)) {
+            // Will store organization from querystring in cookie and redirect.
+            // The next request will fall into the next condition.
+            res.cookie('activeOrgId', req.query.org);
+            res.redirect('/');
+            return;
+        }
+        else if (req.cookies.activeOrgId) {
+            // Will use organization from cookie, if (still) valid
+            if (orgIsValid(req.cookies.activeOrgId)) {
+                req.store.dispatch(setActiveOrg(req.cookies.activeOrgId));
+            }
+            else {
+                res.clearCookie('activeOrgId');
+            }
+
+            next();
+        }
+        else {
+            // Will use default, which is first organization
+            next();
+        }
+    });
 
     // TODO: Change scope depending on URL
     router.use(localizeHandler());
