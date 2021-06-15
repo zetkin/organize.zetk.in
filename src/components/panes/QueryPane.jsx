@@ -49,11 +49,21 @@ export default class QueryPane extends PaneBase {
     }
 
     getPaneSubTitle(data) {
-        return (
-            <a key="editLink" onClick={ this.onEditClick.bind(this) }>
-                <Msg id="panes.query.editLink"/>
-            </a>
-        );
+        if(data.queryItem && data.queryItem.data) {
+            if(data.queryItem.data.isShared === true) {
+                return <Msg id="panes.query.shared" values={{
+                            org: data.queryItem.data.organization.title
+                        }}/>
+            } else {
+                return (
+                    <a key="editLink" onClick={ this.onEditClick.bind(this) }>
+                        <Msg id="panes.query.editLink"/>
+                    </a>
+                );
+            }
+        } else {
+            return null;
+        }
     }
 
     renderPaneContent(data) {

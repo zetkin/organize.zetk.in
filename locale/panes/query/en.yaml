@@ -1,4 +1,5 @@
 editLink: Edit this Smart Search query
+shared: 'Query is shared from {org}'
 summary:
     diff: Compare with another query
     size: '{size, plural, =0 {No search results} =1 {One search result} other {# search results}}'

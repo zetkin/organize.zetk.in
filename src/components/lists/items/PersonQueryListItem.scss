@@ -1,4 +1,9 @@
 .PersonQueryListItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap-reverse;
+
     .PersonQueryListItem-title {
         display: block;
         font-size: 1.1em;
@@ -21,5 +26,14 @@
         @include small-screen {
             font-size: 0.8em;
         }
+    }
+
+    .PersonQueryListItem-shared {
+        font-size: 0.8em;
+        color: lighten($c-text, 60);
+        &:before {
+            @include icon($fa-var-share-alt);
+        }
+        text-align: left;
     }
 }

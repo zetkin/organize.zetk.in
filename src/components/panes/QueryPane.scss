@@ -1,12 +1,21 @@
 .PaneBase.QueryPane {
     min-width: 480px;
 
-    small a {
+    small {
         display: block;
         margin-bottom: 2em;
-        cursor:pointer;
-        &::before {
-            @include icon($fa-var-pencil);
+        
+        >a {
+            cursor:pointer;
+            &::before {
+                @include icon($fa-var-pencil);
+            }
+        }
+        
+        >span {
+            &::before {
+                @include icon($fa-var-share-alt);
+            }
         }
     }
 
@@ -38,4 +47,8 @@
             @include icon($fa-var-refresh);
         }
     }
+}
+
+.QueryPane-sharedQuery {
+    font-size: 0.5em;
 }

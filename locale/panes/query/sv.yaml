@@ -1,4 +1,5 @@
 editLink: Redigera den här Smarta sökningen
+shared: 'Sökningen är delad från {org}'
 summary:
     diff: Jämför med en annan sökning
     size: '{size, plural, =0 {Inga sökträffar} =1 {En sökträff} other {# sökträffar}}'

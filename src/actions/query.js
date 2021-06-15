@@ -8,6 +8,7 @@ export function retrieveQueries() {
 
         dispatch({
             type: types.RETRIEVE_QUERIES,
+            meta: { orgId },
             payload: {
                 promise: z.resource('orgs', orgId, 'people', 'queries').get(),
             }
@@ -20,7 +21,7 @@ export function retrieveQuery(id) {
         let orgId = getState().org.activeId;
         dispatch({
             type: types.RETRIEVE_QUERY,
-            meta: { id },
+            meta: { id, orgId },
             payload: {
                 promise: z.resource('orgs', orgId, 'people', 'queries',
                     id).get()

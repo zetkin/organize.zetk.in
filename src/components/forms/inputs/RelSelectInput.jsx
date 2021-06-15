@@ -133,9 +133,11 @@ export default class RelSelectInput extends InputBase {
                         'focused': (idx === this.state.focusedIndex)
                     });
 
-                    var editLink = null;
-                    if (showEditLink) {
-                        editLink = <a className="RelSelectInput-editLink"
+                    var itemIcon = null;
+                    if (obj.isShared) {
+                        itemIcon = <span className="RelSelectInput-shared" />
+                    } else if(showEditLink) {
+                        itemIcon = <a className="RelSelectInput-editLink"
                             onClick={ this.onClickEdit.bind(this, obj) }/>;
                     }
 
@@ -151,7 +153,7 @@ export default class RelSelectInput extends InputBase {
                                 onMouseDown={ this.onClickOption.bind(this, obj) }>
                                 { this.getLabel(obj) }
                             </label>
-                            { editLink }
+                            { itemIcon }
                         </li>
                     );
                 }, this)}
