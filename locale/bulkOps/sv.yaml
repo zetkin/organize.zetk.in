@@ -6,7 +6,7 @@ ops:
               other {# aktioner}}
     person:
         delete: |
-            Radera {count, plural,
+            Ta bort {count, plural,
                 =1 {en person}
                 other {# personer}}
         export: |

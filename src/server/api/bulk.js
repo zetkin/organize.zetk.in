@@ -167,7 +167,7 @@ let operations = {
                 const promises = req.body.objects
                     .filter(id => id != userPersonId)
                     .map(id =>
-                        req.z.resource('orgs', orgId, 'people', id).del());
+                        req.z.resource('orgs', orgId, 'people', id, 'connections', orgId).del());
 
                 return Promise.all(promises);
             });
