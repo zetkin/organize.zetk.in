@@ -6,7 +6,7 @@ ops:
               other {# actions}}
     person:
         delete: |-
-            Delete {count, plural,
+            Remove {count, plural,
               =1 {one person}
               other {# persons}}
         export: |-
