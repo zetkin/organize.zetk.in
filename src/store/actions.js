@@ -94,7 +94,6 @@ export default function actions(state = null, action) {
                 }
                 return cmp;
             });
-            console.log(actions);
 
             return Object.assign({}, state, {
                 actionList: createList(actions),
