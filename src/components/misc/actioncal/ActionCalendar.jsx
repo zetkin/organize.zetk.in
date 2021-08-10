@@ -8,8 +8,14 @@ export default class ActionCalendar extends React.Component {
     render() {
         let actions = this.props.actions;
 
-        actions.sort((a0, a1) =>
-            (new Date(a0.start_time)) - (new Date(a1.start_time)));
+        actions.sort((a0, a1) => {
+            let cmp = (new Date(a0.start_time)) - (new Date(a1.start_time));
+            if (cmp == 0) {
+                // If the dates are the same, fall back to sorting on id
+                cmp = a0.id - a1.id;
+            }
+            return cmp;
+        });
 
         var startDate = this.props.startDate;
         var endDate = this.props.endDate;

@@ -85,8 +85,19 @@ export default function actions(state = null, action) {
             });
 
         case types.RETRIEVE_ACTIONS + '_FULFILLED':
+            let actions = action.payload.data.data;
+            actions.sort((a,b) => {
+                let cmp = (new Date(a.start_time)) - (new Date(b.start_time));
+                if (cmp == 0) {
+                    // If the dates are the same, fall back to sorting on id
+                    cmp = a.id - b.id;
+                }
+                return cmp;
+            });
+            console.log(actions);
+
             return Object.assign({}, state, {
-                actionList: createList(action.payload.data.data),
+                actionList: createList(actions),
             });
 
         case types.RETRIEVE_ACTIONS_ON_DAY + '_FULFILLED':
