@@ -65,6 +65,15 @@ export const filteredActionList = createSelector(
     }
 );
 
+const actionSortFunc = (a, b) => {
+    let cmp = (new Date(a.start_time)) - (new Date(b.start_time));
+    if (cmp == 0) {
+        // If the dates are the same, fall back to sorting on id
+        cmp = a.id - b.id;
+    }
+    return cmp;
+};
+
 export default function actions(state = null, action) {
     let actionData;
 
@@ -85,24 +94,14 @@ export default function actions(state = null, action) {
             });
 
         case types.RETRIEVE_ACTIONS + '_FULFILLED':
-            let actions = action.payload.data.data;
-            actions.sort((a,b) => {
-                let cmp = (new Date(a.start_time)) - (new Date(b.start_time));
-                if (cmp == 0) {
-                    // If the dates are the same, fall back to sorting on id
-                    cmp = a.id - b.id;
-                }
-                return cmp;
-            });
-
             return Object.assign({}, state, {
-                actionList: createList(actions),
+                actionList: createList(action.payload.data.data, {}, actionSortFunc),
             });
 
         case types.RETRIEVE_ACTIONS_ON_DAY + '_FULFILLED':
             return Object.assign({}, state, {
                 actionList: updateOrAddListItems(state.actionList,
-                    action.payload.data.data),
+                    action.payload.data.data, null, actionSortFunc),
             });
 
         case types.RETRIEVE_ACTIONS + '_REJECTED':
@@ -124,7 +123,7 @@ export default function actions(state = null, action) {
             actionData = action.payload.action;
             return Object.assign({}, state, {
                 actionList: updateOrAddListItem(state.actionList,
-                    actionData.id, actionData, { isPending: false, error: null }),
+                    actionData.id, actionData, { isPending: false, error: null }, actionSortFunc),
             });
 
         case types.CREATE_ACTION + '_FULFILLED':
@@ -133,13 +132,13 @@ export default function actions(state = null, action) {
             actionData = action.payload.data.data
             return Object.assign({}, state, {
                 actionList: updateOrAddListItem(state.actionList,
-                    actionData.id, actionData, { isPending: false, error: null }),
+                    actionData.id, actionData, { isPending: false, error: null }, actionSortFunc),
             });
 
         case types.DELETE_ACTION + '_FULFILLED':
             return Object.assign({}, state, {
                 actionList: removeListItem(state.actionList,
-                    action.meta.id, { pending: false, error: null }),
+                    action.meta.id, { pending: false, error: null }, actionSortFunc),
             });
 
         case types.HIGHLIGHT_ACTION_ACTIVITY:

@@ -1,9 +1,9 @@
-export function createList(items, meta = {}) {
+export function createList(items, meta = {}, sortFunc) {
     return {
         isPending: meta.isPending || false,
         lastPage: 0,
         error: meta.error || null,
-        items: createListItems(items || []),
+        items: createListItems(items || [], sortFunc),
     };
 }
 
@@ -15,11 +15,14 @@ export function createListItem(data, meta = {}) {
     };
 }
 
-export function createListItems(rawList) {
+export function createListItems(rawList, sortFunc) {
+    if (sortFunc) {
+        rawList.sort(sortFunc);
+    }
     return rawList.map(i => createListItem(i));
 }
 
-export function updateOrAddListItem(list, id, newData, meta) {
+export function updateOrAddListItem(list, id, newData, meta, sortFunc) {
     list = list || createList();
 
     let updated = false;
@@ -39,6 +42,10 @@ export function updateOrAddListItem(list, id, newData, meta) {
 
     if (!updated) {
         items.push(createListItem(newData, meta));
+    }
+
+    if(sortFunc) {
+        items.sort(sortFunc);
     }
 
     return Object.assign({}, list, { items });
