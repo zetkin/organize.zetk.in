@@ -44,7 +44,7 @@ export default messages => {
             // Will store organization from querystring in cookie and redirect.
             // The next request will fall into the next condition.
             res.cookie('activeOrgId', req.query.org);
-            res.redirect('/');
+            res.redirect(req.path);
             return;
         }
         else if (req.cookies.activeOrgId) {
