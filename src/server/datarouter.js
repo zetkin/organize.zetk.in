@@ -34,8 +34,14 @@ export default messages => {
 
     // Route for switching organizations
     router.get('*', (req, res, next) => {
+        const decodedUrl = decodeURIComponent(req.url);
+        if(decodedUrl !== req.url) {
+            res.redirect(decodedUrl);
+        }
+
         let state = req.store.getState();
         let orgId = null;
+
 
         let orgIsValid = orgId =>
             !!state.user.memberships.find(m => m.organization.id == orgId);
