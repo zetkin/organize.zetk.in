@@ -42,7 +42,6 @@ export default messages => {
         let state = req.store.getState();
         let orgId = null;
 
-
         let orgIsValid = orgId =>
             !!state.user.memberships.find(m => m.organization.id == orgId);
 
