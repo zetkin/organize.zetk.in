@@ -212,12 +212,14 @@ export default class MergePeoplePane extends PaneBase {
     }
 
     renderPaneFooter(paneData) {
-        return (
-            <Button className="MergePeoplePane-execute"
-                labelMsg="panes.mergePeople.execButton"
-                onClick={ this.onClickExecute.bind(this) }
-                />
-        );
+        if (this.props.duplicateItem.data.objects.length > 1) {
+            return (
+                <Button className="MergePeoplePane-execute"
+                    labelMsg="panes.mergePeople.execButton"
+                    onClick={ this.onClickExecute.bind(this) }
+                    />
+            );
+        }
     }
 
     onClickExecute() {
