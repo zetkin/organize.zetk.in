@@ -119,7 +119,7 @@ export default class ManagePeoplePane extends RootPaneBase {
                             <Button className="ManagePeoplePane-mergeButton"
                                 labelMsg="panes.managePeople.duplicates.item.mergeButton"
                                 labelValues={{ count: dup.objects.length }}
-                                onClick={ () => this.openPane('mergepeople', '$' + dup.objects[0].id) }
+                                onClick={ () => this.openPane('mergepeople', dup.id) }
                                 />
                         </div>
                     );

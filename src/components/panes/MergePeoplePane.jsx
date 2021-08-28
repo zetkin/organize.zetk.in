@@ -20,8 +20,7 @@ const mapStateToProps = (state, props) => {
     if (state.people.duplicateList && state.people.duplicateList.items) {
         duplicateItem = state.people.duplicateList.items
             .find(i => {
-                let id = '$' + i.data.objects[0].id.toString();
-                return id == props.paneData.params[0];
+                return i.data.id == props.paneData.params[0];
             });
     }
 
