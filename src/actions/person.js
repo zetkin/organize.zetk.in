@@ -1,3 +1,4 @@
+import makeRandomString from '../utils/makeRandomString';
 import * as types from './';
 
 
@@ -63,6 +64,16 @@ export function deletePerson(id) {
                 promise: z.resource('orgs', orgId, 'people', id).del()
             }
         });
+    };
+}
+
+export function createDuplicateSet(people) {
+    return {
+        type: types.CREATE_PERSON_DUPLICATE_SET,
+        payload: {
+            id: '$' + makeRandomString(6),
+            people,
+        }
     };
 }
 
