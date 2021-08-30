@@ -2,7 +2,7 @@ import express from 'express';
 
 import { createLocalizeHandler } from './locale';
 import { configureStore } from '../store';
-import { retrieveActions, retrieveAction, retrieveActionsOnDay } from '../actions/action';
+import { retrieveAction, retrieveActionsOnDay } from '../actions/action';
 import { retrieveActionParticipants } from '../actions/participant';
 import { retrieveActionResponses } from '../actions/actionResponse';
 import { retrieveActivities } from '../actions/activity';
@@ -34,6 +34,11 @@ export default messages => {
 
     // Route for switching organizations
     router.get('*', (req, res, next) => {
+        const decodedUrl = decodeURIComponent(req.url);
+        if(decodedUrl !== req.url) {
+            res.redirect(decodedUrl);
+        }
+
         let state = req.store.getState();
         let orgId = null;
 
@@ -44,7 +49,7 @@ export default messages => {
             // Will store organization from querystring in cookie and redirect.
             // The next request will fall into the next condition.
             res.cookie('activeOrgId', req.query.org);
-            res.redirect('/');
+            res.redirect(req.path);
             return;
         }
         else if (req.cookies.activeOrgId) {
@@ -102,7 +107,6 @@ export default messages => {
     ]));
 
     router.get(/campaign\/locations$/, waitForActions(req => [
-        retrieveActions(),
         retrieveCampaigns(),
     ]));
 
@@ -115,20 +119,17 @@ export default messages => {
     ]));
 
     router.get(/campaign\/playback$/, waitForActions(req => [
-        retrieveActions(),
         retrieveActivities(),
         retrieveCampaigns(),
         retrieveLocations()
     ]));
 
     router.get(/campaign\/distribution$/, waitForActions(req => [
-        retrieveActions(),
         retrieveActivities(),
         retrieveCampaigns()
     ]));
 
     router.get(/campaign\/actions$/, waitForActions(req => [
-        retrieveActions(),
         retrieveActivities(),
         retrieveCampaigns(),
     ]));

@@ -186,6 +186,16 @@ export default function people(state = null, action) {
                 duplicateList: removeListItem(state.duplicateList, action.meta.id),
             });
 
+        case types.CREATE_PERSON_DUPLICATE_SET:
+            return Object.assign({}, state, {
+                duplicateList: updateOrAddListItem(state.duplicateList, action.payload.id, {
+                    id: action.payload.id,
+                    objects: action.payload.people || [],
+                    manual: true,
+                    scores: [],
+                }),
+            });
+
         case types.DELETE_TAG + '_FULFILLED':
             // Remove deleted tag from taglist of all people
             const personList = state.personList;
