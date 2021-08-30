@@ -20,8 +20,7 @@ const mapStateToProps = (state, props) => {
     if (state.people.duplicateList && state.people.duplicateList.items) {
         duplicateItem = state.people.duplicateList.items
             .find(i => {
-                let id = '$' + i.data.objects[0].id.toString();
-                return id == props.paneData.params[0];
+                return i.data.id == props.paneData.params[0];
             });
     }
 
@@ -213,12 +212,14 @@ export default class MergePeoplePane extends PaneBase {
     }
 
     renderPaneFooter(paneData) {
-        return (
-            <Button className="MergePeoplePane-execute"
-                labelMsg="panes.mergePeople.execButton"
-                onClick={ this.onClickExecute.bind(this) }
-                />
-        );
+        if (this.props.duplicateItem.data.objects.length > 1) {
+            return (
+                <Button className="MergePeoplePane-execute"
+                    labelMsg="panes.mergePeople.execButton"
+                    onClick={ this.onClickExecute.bind(this) }
+                    />
+            );
+        }
     }
 
     onClickExecute() {

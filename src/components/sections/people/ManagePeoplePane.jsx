@@ -9,7 +9,7 @@ import PersonQueryList from '../../lists/PersonQueryList';
 import PersonTagList from '../../lists/PersonTagList';
 import RootPaneBase from '../RootPaneBase';
 import ViewSwitch from '../../misc/ViewSwitch';
-import { findDuplicates, clearDuplicates } from '../../../actions/person';
+import { findDuplicates, clearDuplicates, createDuplicateSet } from '../../../actions/person';
 import { retrieveQueries } from '../../../actions/query';
 import { retrievePersonTags } from '../../../actions/personTag';
 
@@ -74,6 +74,9 @@ export default class ManagePeoplePane extends RootPaneBase {
         }
         else if (this.state.viewMode == 'duplicates') {
             let content = null;
+            const nonManualItems = (this.props.duplicateList
+                && this.props.duplicateList.items
+                && this.props.duplicateList.items.filter(i => !i.data.manual)) || [];
 
             // TODO: Handle errors separately?
             if (!this.props.duplicateList || this.props.duplicateList.error) {
@@ -91,8 +94,8 @@ export default class ManagePeoplePane extends RootPaneBase {
             else if (this.props.duplicateList.isPending) {
                 content = <LoadingIndicator/>;
             }
-            else if (this.props.duplicateList.items.length) {
-                let items = this.props.duplicateList.items.map(i => {
+            else if (nonManualItems.length) {
+                let items = nonManualItems.map(i => {
                     let dup = i.data;
                     let objectItems = dup.objects.map(o => {
                         return (
@@ -119,7 +122,7 @@ export default class ManagePeoplePane extends RootPaneBase {
                             <Button className="ManagePeoplePane-mergeButton"
                                 labelMsg="panes.managePeople.duplicates.item.mergeButton"
                                 labelValues={{ count: dup.objects.length }}
-                                onClick={ () => this.openPane('mergepeople', '$' + dup.objects[0].id) }
+                                onClick={ () => this.openPane('mergepeople', dup.id) }
                                 />
                         </div>
                     );
@@ -190,6 +193,19 @@ export default class ManagePeoplePane extends RootPaneBase {
                     className="ManagePeoplePane-addButton"
                     labelMsg="panes.managePeople.tags.addButton"
                     onClick={ () => this.openPane('addpersontag') }
+                    />,
+            );
+        }
+        else if (this.state.viewMode == 'duplicates') {
+            tools.push(
+                <Button key="mergeButton"
+                    className="ManagePeoplePane-addButton"
+                    labelMsg="panes.managePeople.duplicates.addButton"
+                    onClick={ () => {
+                        const action = createDuplicateSet();
+                        this.props.dispatch(action);
+                        this.openPane('mergepeople', action.payload.id);
+                    }}
                     />,
             );
         }

@@ -1,4 +1,5 @@
 duplicates:
+    addButton: Create manual merge
     empty:
         h: No duplicates found
         p: >
