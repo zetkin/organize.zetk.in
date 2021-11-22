@@ -3,7 +3,6 @@ import cx from 'classnames';
 
 import { componentClassNames } from '../';
 
-
 export default class FilterBase extends React.Component {
     static propTypes = {
         config: React.PropTypes.object.isRequired,
@@ -48,5 +47,9 @@ export default class FilterBase extends React.Component {
             let config = this.getConfig();
             this.props.onConfigChange(config);
         }
+    }
+
+    onChangeOrganizations(orgState) {
+        this.setState(orgState, () => this.onConfigChange());
     }
 }

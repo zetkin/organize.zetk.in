@@ -16,6 +16,7 @@ import {
     retrieveQuery,
     removeQuery
 } from '../../actions/query';
+import { retrieveSubOrgsRecursive } from '../../actions/subOrg';
 
 
 const mapStateToProps = (state, props) => ({
@@ -41,6 +42,8 @@ export default class EditQueryPane extends PaneBase {
         else {
             const queryId = this.getParam(0);
             this.props.dispatch(retrieveQuery(queryId));
+            this.props.dispatch(retrieveQuery(queryId));
+            this.props.dispatch(retrieveSubOrgsRecursive());
         }
     }
 
