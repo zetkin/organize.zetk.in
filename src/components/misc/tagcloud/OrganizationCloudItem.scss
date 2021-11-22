@@ -1,0 +1,60 @@
+.OrganizationCloudItem {
+    @include organization;
+
+    @include small-screen {
+        margin: 0 8px 8px 0;
+    }
+
+    .OrganizationCloudItem-removeButton, .OrganizationCloudItem-editButton {
+        position: absolute;
+        right: 0;
+        margin-top: -1px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        color: lighten($c-text, 60);
+
+        &:hover {
+            color: lighten($c-text, 40);
+        }
+    }
+
+    .OrganizationCloudItem-removeButton {
+        @include small-screen {
+            margin-top: 0;
+            opacity: 1;
+            position: static;
+        }
+    }
+
+    .OrganizationCloudItem-removeButton:after {
+        @include icon($fa-var-remove);
+        margin-right: 0;
+
+        @include small-screen {
+            text-align: right;
+            height: 0;
+            line-height: 0;
+        }
+    }
+
+    .OrganizationCloudItem-editButton {
+        margin-top: -2px;
+
+        @include small-screen {
+            display: none;
+        }
+
+        &:after {
+            @include icon($fa-var-pencil);
+            margin-right: 0;
+        }
+    }
+
+    &:hover {
+
+        .OrganizationCloudItem-removeButton, .OrganizationCloudItem-editButton {
+            cursor: pointer;
+            opacity: 1;
+        }
+    }
+}

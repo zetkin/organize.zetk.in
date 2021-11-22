@@ -1,0 +1,23 @@
+.SelectPersonTagsPane {
+
+    .TagCloud {
+        min-height: 32px;
+        margin-top: 2em;
+    }
+
+    .TagCloudItem {
+        cursor: pointer;
+    }
+
+    .SelectPersonTagsPane-tagsFilter {
+        margin-top: 1em;
+    }
+
+    .SelectPersonTagsPane-saveButton {
+        @include inline-button($color:$c-brand-confirm, $icon:$fa-var-floppy-o);
+    }
+    .SelectPersonTagsPane-createButton {
+        @include inline-button($icon:$fa-var-tag);
+        margin-bottom: 1em;
+    }
+}
