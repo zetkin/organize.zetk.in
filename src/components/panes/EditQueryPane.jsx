@@ -43,8 +43,8 @@ export default class EditQueryPane extends PaneBase {
             const queryId = this.getParam(0);
             this.props.dispatch(retrieveQuery(queryId));
             this.props.dispatch(retrieveQuery(queryId));
-            this.props.dispatch(retrieveSubOrgsRecursive());
         }
+        this.props.dispatch(retrieveSubOrgsRecursive());
     }
 
     componentWillReceiveProps(nextProps) {
