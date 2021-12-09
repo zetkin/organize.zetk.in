@@ -36,10 +36,10 @@ export function retrieveLocationsRecursive() {
         dispatch({
             type: types.RETRIEVE_LOCATIONS,
             payload: {
-                promise: z.resource('orgs', orgId, 'locations').get(),
+                promise: z.resource('orgs', orgId, 'locations?recursive').get(),
             },
             meta: {
-                recursive: false,
+                recursive: true,
             },
         });
     };

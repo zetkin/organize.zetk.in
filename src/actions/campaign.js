@@ -35,7 +35,7 @@ export function retrieveCampaignsRecursive() {
         dispatch({
             type: types.RETRIEVE_CAMPAIGNS,
             payload: {
-                promise: z.resource('orgs', orgId, 'campaigns').get(),
+                promise: z.resource('orgs', orgId, 'campaigns?recursive').get(),
             },
             meta: {
                 recursive: true,

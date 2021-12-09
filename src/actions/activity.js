@@ -34,10 +34,10 @@ export function retrieveActivitiesRecursive() {
         dispatch({
             type: types.RETRIEVE_ACTIVITIES,
             payload: {
-                promise: z.resource('orgs', orgId, 'activities').get(),
+                promise: z.resource('orgs', orgId, 'activities?recursive').get(),
             },
             meta: {
-                recursive: false,
+                recursive: true,
             },
         });
     };
