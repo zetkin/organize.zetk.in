@@ -4,15 +4,21 @@ import { connect } from 'react-redux';
 
 import FilterBase from './FilterBase';
 import FilterTimeFrameSelect from './FilterTimeFrameSelect';
+import FilterOrganizationSelect from './FilterOrganizationSelect';
 import Form from '../forms/Form';
 import SelectInput from '../forms/inputs/SelectInput';
 import TextInput from '../forms/inputs/TextInput';
 import DateInput from '../forms/inputs/DateInput';
-import { retrieveFieldTypesForOrganization } from '../../actions/personField';
+import filterByOrg from '../../utils/filterByOrg';
+import { retrieveFieldTypesForOrganizationTree } from '../../actions/personField';
+import { flattenOrganizationsFromState } from '../../utils/flattenOrganizations';
 
 
 @injectIntl
-@connect(state => ({ fieldTypes: state.personFields.fieldTypes }))
+@connect(state => ({
+    fieldTypes: state.personFields.fieldTypes,
+    orgList: flattenOrganizationsFromState(state)
+}))
 export default class PersonFieldFilter extends FilterBase {
     constructor(props) {
         super(props);
@@ -23,7 +29,11 @@ export default class PersonFieldFilter extends FilterBase {
         this.state = {
             field: this.props.config.field ? 
                 this.props.fieldTypes.items.find(f => f.data.slug == this.props.config.field) : null,
-            config: this.props.config || {},
+            config: {
+                ...this.props.config,
+                organizationOption: this.props.config.organizationOption || 'all',
+                specificOrganizations: this.props.config.specificOrganizations || [],
+            },
         };
     }
 
@@ -32,8 +42,8 @@ export default class PersonFieldFilter extends FilterBase {
 
         const fieldTypes = this.props.fieldTypes;
 
-        if (!fieldTypes || !fieldTypes.items || !fieldTypes.items.length) {
-            this.props.dispatch(retrieveFieldTypesForOrganization());
+        if (!fieldTypes || !fieldTypes.items || !fieldTypes.items.length || !fieldTypes.recursive) {
+            this.props.dispatch(retrieveFieldTypesForOrganizationTree());
         }
     }
 
@@ -51,7 +61,9 @@ export default class PersonFieldFilter extends FilterBase {
         let fieldOptions = {
             '_': msg('filters.personField.selectField'),
         }
-        fieldOptions = this.props.fieldTypes.items.reduce((obj, field) => {
+        let fieldTypeItems = this.props.fieldTypes.items || [];
+        fieldTypeItems = filterByOrg(this.props.orgList, fieldTypeItems, this.state.config);
+        fieldOptions = fieldTypeItems.reduce((obj, field) => {
             if(field.data.type !== 'json') {
                 obj[field.data.slug] = field.data.title;
             }
@@ -82,6 +94,11 @@ export default class PersonFieldFilter extends FilterBase {
         }
 
         return [
+            <FilterOrganizationSelect
+                config={ config } 
+                openPane={ this.props.openPane }
+                onChangeOrganizations={ this.onChangeOrganizations.bind(this) }
+                />,
             <SelectInput key="selectField" name="field"
                 options={ fieldOptions } value={ this.state.field ? this.state.field.data.slug : '_' }
                 onValueChange={ this.onSelectField }/>,
@@ -99,6 +116,8 @@ export default class PersonFieldFilter extends FilterBase {
             return {
                 field: this.state.field.data.slug,
                 search: values.search,
+                organizationOption: this.state.config.organizationOption,
+                specificOrganizations: this.state.config.specificOrganizations,
             }
         } else {
             // If date, config has been set by onSelectTimeframe
@@ -113,6 +132,8 @@ export default class PersonFieldFilter extends FilterBase {
                 field: field,
                 config: {
                     field: field.data.slug,
+                    organizationOption: this.state.config.organizationOption,
+                    specificOrganizations: this.state.config.specificOrganizations,
                 }
             }, this.onConfigChange.bind(this));
         } else {
@@ -120,6 +141,8 @@ export default class PersonFieldFilter extends FilterBase {
                 field: field,
                 config: {
                     field: field.data.slug,
+                    organizationOption: this.state.config.organizationOption,
+                    specificOrganizations: this.state.config.specificOrganizations,
                 }
             }, this.onConfigChange.bind(this));
         }
@@ -130,8 +153,16 @@ export default class PersonFieldFilter extends FilterBase {
             config: { 
                 field: this.state.field.data.slug,
                 after: after, 
-                before: before, 
+                before: before,
+                organizationOption: this.state.config.organizationOption,
+                specificOrganizations: this.state.config.specificOrganizations,
             }
         }, this.onConfigChange.bind(this));
+    }
+
+    onChangeOrganizations(orgState) {
+        let config = this.state.config;
+        config = Object.assign(config, orgState);
+        this.setState({ config  }, () => this.onConfigChange());
     }
 }

@@ -48,8 +48,8 @@ export default function personFields(state = null, action) {
     }
     else if (action.type == types.RETRIEVE_FIELDS_FOR_ORGANIZATION + '_FULFILLED') {
         return Object.assign({}, state, {
-            fieldTypes: Object.assign({}, state.fieldTypes, 
-                createList(action.payload.data.data),
+            fieldTypes: Object.assign({}, state.fieldTypes,
+                createList(action.payload.data.data, { recursive: action.meta.recursive }),
             ),
         });
     }
