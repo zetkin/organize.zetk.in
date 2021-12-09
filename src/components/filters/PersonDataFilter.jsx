@@ -2,6 +2,7 @@ import React from 'react';
 import { injectIntl } from 'react-intl';
 
 import FilterBase from './FilterBase';
+import FilterOrganizationSelect from './FilterOrganizationSelect';
 import Form from '../forms/Form';
 import SelectInput from '../forms/inputs/SelectInput';
 import TextInput from '../forms/inputs/TextInput';
@@ -61,6 +62,11 @@ export default class PersonDataFilter extends FilterBase {
         });
 
         return [
+            <FilterOrganizationSelect
+                config={ config } 
+                openPane={ this.props.openPane }
+                onChangeOrganizations={ this.onChangeOrganizations.bind(this) }
+                />,
             <Form key="form" ref="form"
                 onValueChange={ this.onConfigChange.bind(this) }>
                 { fieldInputs }
@@ -80,7 +86,11 @@ export default class PersonDataFilter extends FilterBase {
             return o;
         }, {});
 
-        return { fields };
+        return {
+            fields,
+            organizationOption: this.state.organizationOption || 'all',
+            specificOrganizations: this.state.specificOrganizations || [],
+        };
     }
 
     onAddNewField(name, value) {
