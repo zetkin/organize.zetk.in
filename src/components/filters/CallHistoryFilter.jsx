@@ -8,10 +8,16 @@ import DateInput from '../forms/inputs/DateInput';
 import IntInput from '../forms/inputs/IntInput';
 import SelectInput from '../forms/inputs/SelectInput';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
-import { retrieveCallAssignments } from '../../actions/callAssignment';
+import FilterOrganizationSelect from './FilterOrganizationSelect';
+import filterByOrg from '../../utils/filterByOrg';
+import { retrieveCallAssignments, retrieveCallAssignmentsRecursive } from '../../actions/callAssignment';
+import { flattenOrganizationsFromState } from '../../utils/flattenOrganizations';
 
 
-@connect(state => ({ callAssignments: state.callAssignments }))
+@connect(state => ({ 
+    callAssignments: state.callAssignments,
+    orgList: flattenOrganizationsFromState(state),
+}))
 @injectIntl
 export default class CallHistoryFilter extends FilterBase {
     constructor(props) {
@@ -29,14 +35,16 @@ export default class CallHistoryFilter extends FilterBase {
 
         let assignmentList = this.props.callAssignments.assignmentList;
 
-        if (assignmentList.items.length == 0 && !assignmentList.isPending) {
-            this.props.dispatch(retrieveCallAssignments());
+        if (assignmentList.items.length == 0 && !assignmentList.isPending || !nextProps.callAssignments.assignmentList.recursive) {
+            this.props.dispatch(retrieveCallAssignmentsRecursive());
         }
     }
 
     renderFilterForm(config) {
         let assignmentStore = this.props.callAssignments;
-        let assignments = assignmentStore.assignmentList.items.map(i => i.data);
+        let assignments = assignmentStore.assignmentList.items;
+        assignments = filterByOrg(this.props.orgList, assignments, this.state).map(i => i.data);
+
         let timeframe = this.state.timeframe;
         let op = this.state.op;
 
@@ -120,6 +128,12 @@ export default class CallHistoryFilter extends FilterBase {
         }
 
         return [
+            <FilterOrganizationSelect
+                    config={ config } 
+                    openPane={ this.props.openPane }
+                    onChangeOrganizations={ this.onChangeOrganizations.bind(this) }
+                    />,
+
             <SelectInput key="operator" name="operator"
                 label="Match people who have been"
                 options={ OPERATOR_OPTIONS } value={ this.state.op }
@@ -163,6 +177,9 @@ export default class CallHistoryFilter extends FilterBase {
         if (this.state.minTimes) {
             cfg.minTimes = parseInt(this.state.minTimes);
         }
+
+        cfg.organizationOption = this.state.organizationOption;
+        cfg.specificOrganizations = this.state.specificOrganizations;
 
         return cfg;
     }
@@ -270,6 +287,9 @@ function stateFromConfig(config) {
     else if (config.after) {
         state.timeframe = 'after';
     }
+
+    state.organizationOption = config.organizationOption || 'all';
+    state.specificOrganizations = config.specificOrganizations || [];
 
     return state;
 }
