@@ -29,6 +29,11 @@ export default class UserFilter extends FilterBase {
         };
 
         return [
+            <FilterOrganizationSelect
+                config={ config } 
+                openPane={ this.props.openPane }
+                onChangeOrganizations={ this.onChangeOrganizations.bind(this) }
+                />,
             <SelectInput key="isUser" name="is_user"
                 labelMsg="filters.user.isUser.label"
                 options={ options } value={ value }
@@ -41,6 +46,8 @@ export default class UserFilter extends FilterBase {
     getConfig() {
         return {
             is_user: !!this.state.is_user,
+            organizationOption: this.state.organizationOption,
+            specificOrganizations: this.state.specificOrganizations,
         };
     }
 
