@@ -7,6 +7,7 @@ import PaneBase from './PaneBase';
 import OrganizationCloud from '../misc/tagcloud/OrganizationCloud';
 import TextInput from '../forms/inputs/TextInput';
 import { getListItemById } from '../../utils/store';
+import flattenOrganizations from '../../utils/flattenOrganizations';
 import { addToSelection, removeFromSelection, finishSelection }
     from '../../actions/selection';
 
@@ -37,7 +38,7 @@ export default class SelectOrganizationsPane extends PaneBase {
 
         return {
             selectionItem: getListItemById(selectionList, selectionId),
-            orgList: getOrganizationList(this.props),
+            orgList: flattenOrganizations(this.props.subOrgs.items, this.props.user.activeMembership.organization),
         };
     }
 
@@ -122,7 +123,3 @@ export default class SelectOrganizationsPane extends PaneBase {
     }
 }
 
-function getOrganizationList(props) {
-    // Concat the list of suborgs with the active organization to make complete list of relevant orgs
-    return props.subOrgs.items.map(org => org.data).concat(props.user.activeMembership.organization);
-}

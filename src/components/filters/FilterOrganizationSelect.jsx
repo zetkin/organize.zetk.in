@@ -6,6 +6,7 @@ import { createSelection } from '../../actions/selection';
 import SelectInput from '../forms/inputs/SelectInput';
 import OrganizationCloud from '../misc/tagcloud/OrganizationCloud';
 import { getListItemById } from '../../utils/store';
+import flattenOrganizations from '../../utils/flattenOrganizations';
 
 
 const mapStateToProps = state => ({
@@ -31,19 +32,19 @@ export default class FilterOrganizationSelect extends React.Component {
 
         let organizationOption = this.state.organizationOption;
 
-        const msg = id => this.props.intl.formatMessage({ id: this.props.labelMsgStem + '.' + id });
+        const msg = id => this.props.intl.formatMessage({ id: 'filters.organizations.' + id });
 
         const ORGANIZATION_OPTIONS = {
-            'current': msg('options.current'),
-            'all': msg('options.all'),
-            'suborgs': msg('options.suborgs'),
-            'specific': msg('options.specific'),
+            'all': msg('all'),
+            'current': msg('current'),
+            'suborgs': msg('suborgs'),
+            'specific': msg('specific'),
         };
 
         let specificOrganizationInput = null;
         if (organizationOption == 'specific') {
             if(this.props.subOrgs) {
-                const organizationList = getOrganizationList(this.props);
+                const organizationList = flattenOrganizations(this.props.subOrgs.items, this.props.activeOrganization);
                 const organizations = this.state.specificOrganizations
                     .map(orgId => organizationList.find(org => org.id == orgId));
                 specificOrganizationInput = (
@@ -63,7 +64,6 @@ export default class FilterOrganizationSelect extends React.Component {
         return (
             <div className="FilterOrganizationSelect">
                 <SelectInput key="organization" name="organization"
-                    labelMsg={ this.props.labelMsgStem + '.label' }
                     options={ ORGANIZATION_OPTIONS }
                     value={ this.state.organizationOption }
                     onValueChange={ this.onSelectOrganization.bind(this) }/>
@@ -118,14 +118,9 @@ export default class FilterOrganizationSelect extends React.Component {
     }
 }
 
-function getOrganizationList(props) {
-    // Concat the list of suborgs with the active organization to make complete list of relevant orgs
-    return props.subOrgs.items.map(org => org.data).concat(props.activeOrganization);
-}
-
 function stateFromConfig(config) {
     return {
-        organizationOption: config.organizationOption || 'current',
+        organizationOption: config.organizationOption || 'all',
         specificOrganizations: config.specificOrganizations || [],
     }
 }
