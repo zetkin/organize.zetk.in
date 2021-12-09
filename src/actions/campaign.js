@@ -21,6 +21,24 @@ export function retrieveCampaigns() {
             type: types.RETRIEVE_CAMPAIGNS,
             payload: {
                 promise: z.resource('orgs', orgId, 'campaigns').get(),
+            },
+            meta: {
+                recursive: false,
+            }
+        });
+    };
+}
+
+export function retrieveCampaignsRecursive() {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_CAMPAIGNS,
+            payload: {
+                promise: z.resource('orgs', orgId, 'campaigns').get(),
+            },
+            meta: {
+                recursive: true,
             }
         });
     };

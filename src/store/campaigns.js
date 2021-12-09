@@ -25,6 +25,7 @@ export default function campaigns(state = null, action) {
                 campaignList: {
                     isPending: false,
                     error: null,
+                    recursive: action.meta.recursive,
                     items: createListItems(action.payload.data.data)
                 }
             });

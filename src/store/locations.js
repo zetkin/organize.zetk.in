@@ -1,10 +1,10 @@
 import {
-    createList, 
+    createList,
     createListItems,
     updateOrAddListItem,
     updateOrAddListItems,
     removeListItem,
-    getListItemById 
+    getListItemById
 } from '../utils/store';
 
 import {
@@ -40,6 +40,7 @@ export default function locations(state = null, action) {
                 locationList: {
                     isPending: false,
                     error: null,
+                    recursive: action.meta.recursive,
                     items: createListItems(action.payload.data.data),
                 },
             });
