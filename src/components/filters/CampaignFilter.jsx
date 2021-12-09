@@ -47,15 +47,15 @@ export default class CampaignFilter extends FilterBase {
 
         const { campaignList, activityList, locationList } = this.props;
 
-        if (campaignList.items.length == 0 && !campaignList.isPending || !campaignList.recursive) {
+        if ((campaignList.items.length == 0 || !campaignList.recursive) && !campaignList.isPending) {
             this.props.dispatch(retrieveCampaignsRecursive());
         }
 
-        if (activityList.items.length == 0 && !activityList.isPending || ! activityList.recursive) {
+        if ((activityList.items.length == 0 || ! activityList.recursive) && !activityList.isPending) {
             this.props.dispatch(retrieveActivitiesRecursive());
         }
 
-        if (locationList.items.length == 0 && !locationList.isPending || !locationList.recursive) {
+        if ((locationList.items.length == 0 || !locationList.recursive) && !locationList.isPending) {
             this.props.dispatch(retrieveLocationsRecursive());
         }
     }
