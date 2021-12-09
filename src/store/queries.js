@@ -21,7 +21,11 @@ export default function queries(state = null, action) {
             return Object.assign({}, state, {
                 queryList: updateOrAddListItems(state.queryList,
                     action.payload.data.data,
-                    { isPending: false, error: null })
+                    {
+                        isPending: false,
+                        error: null,
+                        recursive: action.meta.recursive
+                    }),
             });
 
         case types.RETRIEVE_QUERY + '_PENDING':
