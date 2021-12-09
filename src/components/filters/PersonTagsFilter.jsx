@@ -3,10 +3,11 @@ import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import FilterBase from './FilterBase';
+import FilterOrganizationSelect from './FilterOrganizationSelect';
 import SelectInput from '../forms/inputs/SelectInput';
 import IntInput from '../forms/inputs/IntInput';
 import TagCloud from '../misc/tagcloud/TagCloud';
-import { retrievePersonTags } from '../../actions/personTag';
+import { retrievePersonTagsRecursive } from '../../actions/personTag';
 import { createSelection } from '../../actions/selection';
 import { getListItemById } from '../../utils/store';
 
@@ -21,6 +22,8 @@ export default class PersonTagsFilter extends FilterBase {
             condition: props.config.condition || 'all',
             tags: props.config.tags || [],
             min_matching: props.config.min_matching || 2,
+            organizationOption: props.config.organizationOption || 'all',
+            specificOrganizations: props.config.specificOrganizations || [],
         };
     }
 
@@ -29,6 +32,8 @@ export default class PersonTagsFilter extends FilterBase {
             this.setState({
                 condition: nextProps.config.condition,
                 tags: nextProps.config.tags,
+                organizationOption: nextProps.config.organizationOption,
+                specificOrganizations: nextProps.config.specificOrganizations,
             });
         }
     }
@@ -38,8 +43,8 @@ export default class PersonTagsFilter extends FilterBase {
 
         let tagList = this.props.personTags.tagList;
 
-        if (tagList.items.length == 0 && !tagList.isPending) {
-            this.props.dispatch(retrievePersonTags());
+        if ((tagList.items.length == 0 || tagList.recursive) && !tagList.isPending) {
+            this.props.dispatch(retrievePersonTagsRecursive());
         }
     }
 
@@ -64,6 +69,11 @@ export default class PersonTagsFilter extends FilterBase {
                     onValueChange={ this.onMinMatchingChange.bind(this) } /> : null;
 
         return [
+            <FilterOrganizationSelect
+                config={ config } 
+                openPane={ this.props.openPane }
+                onChangeOrganizations={ this.onChangeOrganizations.bind(this) }
+                />,
             <SelectInput key="condition" name="condition"
                 labelMsg="filters.personTags.opLabel"
                 options={ CONDITION_OPTIONS } value={ this.state.condition }
@@ -81,6 +91,8 @@ export default class PersonTagsFilter extends FilterBase {
             min_matching: this.state.min_matching,
             condition: this.state.condition,
             tags: this.state.tags,
+            organizationOption: this.state.organizationOption,
+            specificOrganizations: this.state.specificOrganizations,
         };
     }
 
@@ -98,7 +110,7 @@ export default class PersonTagsFilter extends FilterBase {
 
         // TODO: Use action in the future instead,
         //       once panes have been refactored as a redux store
-        this.props.openPane('selectpersontags', action.payload.id);
+        this.props.openPane('selectpersontags', action.payload.id, this.state.organizationOption, JSON.stringify(this.state.specificOrganizations));
     }
 
     onRemoveTag(tag) {
