@@ -8,9 +8,17 @@ import RootPaneBase from '../RootPaneBase';
 import { retrieveCampaigns } from '../../../actions/campaign';
 
 
-const mapStateToProps = state => ({
-    campaigns: state.campaigns
-});
+const mapStateToProps = state => {
+    const orgId = state.user.activeMembership.organization.id;
+    const campaigns = state.campaigns;
+    if(campaigns.campaignList && !campaigns.campaignList.isPending) {
+        campaigns.campaignList.items = campaigns.campaignList.items.filter(i => i.data.organization.id == orgId);
+    }
+
+    return {
+        campaigns: campaigns
+    }
+};
 
 @connect(mapStateToProps)
 export default class AllCampaignsPane extends RootPaneBase {

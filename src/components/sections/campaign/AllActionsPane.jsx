@@ -23,14 +23,35 @@ import {
 import LoadingIndicator from '../../misc/LoadingIndicator';
 
 
-const mapStateToProps = state => ({
-    actions: state.actions,
-    campaigns: state.campaigns,
-    locationList: state.locations.locationList,
-    activityList: state.activities.activityList,
-    filteredActionList: filteredActionList(state),
-    selectionList: state.selections.selectionList,
-});
+const mapStateToProps = state => {
+    // FIXME: This is a temporary fix until a proper UI filter has been implemented
+    const orgId = state.user.activeMembership.organization.id;
+
+    const actions = state.actions;
+    if(actions.actionList && !actions.actionList.isPending) {
+        actions.actionList.items = actions.actionList.items.filter(i => i.data.organization.id == orgId);
+    }
+
+    const campaigns = state.campaigns;
+    if(campaigns.campaignList && !campaigns.campaignList.isPending) {
+        campaigns.campaignList.items = campaigns.campaignList.items.filter(i => i.data.organization.id == orgId);
+    }
+
+    const activityList = state.activities.activityList;
+    activityList.items = activityList.items.filter(i => i.data.organization.id == orgId);
+
+    const locationList = state.locations.locationList;
+    locationList.items = locationList.items.filter(i => i.data.organization.id == orgId);
+
+    return{
+        actions: actionList,
+        campaigns: campaignList,
+        locationList: locationList,
+        activityList: activityList,
+        filteredActionList: filteredActionList(state),
+        selectionList: state.selections.selectionList, 
+    }
+};
 
 @connect(mapStateToProps)
 export default class AllActionsPane extends CampaignSectionPaneBase {
