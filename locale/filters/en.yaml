@@ -15,3 +15,9 @@ types:
     surveyResponse: Survey response (text)
     surveySubmission: Survey submission
     user: Zetkin user
+organizations:
+    current: Current organization
+    suborgs: Sub-organizations
+    all: Any organization
+    specific: Specified organizations
+
