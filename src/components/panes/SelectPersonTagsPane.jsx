@@ -6,10 +6,12 @@ import Button from '../misc/Button';
 import PaneBase from './PaneBase';
 import TagCloud from '../misc/tagcloud/TagCloud';
 import TextInput from '../forms/inputs/TextInput';
-import { retrievePersonTags } from '../../actions/personTag';
+import { retrievePersonTagsRecursive } from '../../actions/personTag';
 import { getListItemById } from '../../utils/store';
 import { addToSelection, removeFromSelection, finishSelection }
     from '../../actions/selection';
+import filterByOrg from '../../utils/filterByOrg';
+import { flattenOrganizationsFromState } from '../../utils/flattenOrganizations';
 
 
 @connect(state => state)
@@ -28,16 +30,28 @@ export default class SelectPersonTagsPane extends PaneBase {
     componentDidMount() {
         super.componentDidMount();
 
-        this.props.dispatch(retrievePersonTags());
+        this.props.dispatch(retrievePersonTagsRecursive());
     }
 
     getRenderData() {
         let selectionId = this.getParam(0);
         let selectionList = this.props.selections.selectionList;
 
+        let organizationOption = this.getParam(1, 'current');
+        let selectedOrganizations = JSON.parse(this.getParam(2, '[]'));
+
+        let orgList = flattenOrganizationsFromState(this.props);
+        let tagListItems = filterByOrg(
+            orgList, 
+            this.props.personTags.tagList.items, 
+            { organizationOption, selectedOrganizations }
+        );
+
         return {
             selectionItem: getListItemById(selectionList, selectionId),
-            tagList: this.props.personTags.tagList,
+            tagList: {
+                items: tagListItems
+            },
         };
     }
 
