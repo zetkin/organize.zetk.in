@@ -44,8 +44,8 @@ const mapStateToProps = state => {
     locationList.items = locationList.items.filter(i => i.data.organization.id == orgId);
 
     return{
-        actions: actionList,
-        campaigns: campaignList,
+        actions: actions,
+        campaigns: campaigns,
         locationList: locationList,
         activityList: activityList,
         filteredActionList: filteredActionList(state),
