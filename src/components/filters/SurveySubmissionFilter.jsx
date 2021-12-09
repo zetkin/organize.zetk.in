@@ -3,14 +3,18 @@ import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import FilterBase from './FilterBase';
+import FilterOrganizationSelect from './FilterOrganizationSelect';
 import FilterTimeFrameSelect from './FilterTimeFrameSelect';
 import Form from '../forms/Form';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
-import { retrieveSurveys } from '../../actions/survey';
+import filterByOrg from '../../utils/filterByOrg';
+import { flattenOrganizationsFromState } from '../../utils/flattenOrganizations';
+import { retrieveSurveysRecursive } from '../../actions/survey';
 
 
 const mapStateToProps = state => ({
     surveyList: state.surveys.surveyList,
+    orgList: flattenOrganizationsFromState(state),
 });
 
 @connect(mapStateToProps)
@@ -31,15 +35,21 @@ export default class SurveySubmissionFilter extends FilterBase {
 
         let surveyList = this.props.surveyList;
 
-        if (surveyList.items.length == 0 && !surveyList.isPending) {
-            this.props.dispatch(retrieveSurveys());
+        if ((surveyList.items.length == 0 || !surveyList.recursive) && !surveyList.isPending) {
+            this.props.dispatch(retrieveSurveysRecursive());
         }
     }
 
     renderFilterForm(config) {
-        let surveys = this.props.surveyList.items.map(i => i.data);
+        let surveys = this.props.surveyList.items || [];
+        surveys = filterByOrg(this.props.orgList, surveys, this.state).map(i => i.data);
 
         return [
+            <FilterOrganizationSelect
+                config={ config } 
+                openPane={ this.props.openPane }
+                onChangeOrganizations={ this.onChangeOrganizations.bind(this) }
+                />,
             <RelSelectInput name="survey" key="surveySelect"
                 labelMsg="filters.surveySubmission.survey"
                 objects={ surveys } value={ this.state.survey }
@@ -61,6 +71,8 @@ export default class SurveySubmissionFilter extends FilterBase {
             survey: this.state.survey,
             after: this.state.after,
             before: this.state.before,
+            organizationOption: this.state.organizationOption,
+            specificOrganizations: this.state.specificOrganizations,
         };
     }
 
@@ -83,6 +95,8 @@ function stateFromConfig(config) {
         survey: config.survey,
         after: config.after,
         before: config.before,
+        organizationOption: config.organizationOption || 'all',
+        specificOrganizations: config.specificOrganizations || [],
     };
 
     return state;

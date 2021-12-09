@@ -8,6 +8,24 @@ export function retrieveSurveys() {
             type: types.RETRIEVE_SURVEYS,
             payload: {
                 promise: z.resource('orgs', orgId, 'surveys').get(),
+            },
+            meta: {
+                recursive: false,
+            }
+        });
+    };
+}
+
+export function retrieveSurveysRecursive() {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_SURVEYS,
+            payload: {
+                promise: z.resource('orgs', orgId, 'surveys?recursive').get(),
+            },
+            meta: {
+                recursive: true,
             }
         });
     };
@@ -28,7 +46,16 @@ export function createSurvey(data, paneId) {
 
 export function retrieveSurvey(id) {
     return ({ dispatch, getState, z }) => {
-        let orgId = getState().org.activeId;
+        let orgId;
+        let survey;
+        if(survey.surveyList && survey.surveyList.items) {
+            survey = getState().surveys.surveyList.items.find(i => i.data.id == id);
+        }
+        if(survey) {
+            orgId = survey.data.organization.id;
+        } else {
+            orgId = getState().org.activeId;
+        }
         dispatch({
             type: types.RETRIEVE_SURVEY,
             meta: { id },
