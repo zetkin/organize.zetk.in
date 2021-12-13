@@ -199,4 +199,8 @@ export default class SurveyOptionFilter extends FilterBase {
 
         this.setState(state, () => this.onConfigChange());
     }
+
+    onChangeOrganizations(orgState) {
+        this.setState(orgState, () => this.onConfigChange());
+    }
 }

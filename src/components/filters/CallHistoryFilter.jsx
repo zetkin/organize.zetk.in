@@ -27,7 +27,9 @@ export default class CallHistoryFilter extends FilterBase {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState(stateFromConfig(nextProps.config));
+        if (nextProps.config !== this.props.config) {
+            this.setState(stateFromConfig(nextProps.config));
+        }
     }
 
     componentDidMount() {
@@ -257,6 +259,10 @@ export default class CallHistoryFilter extends FilterBase {
 
         this.setState({ timeframe: value, before, after, days }, () =>
             this.onConfigChange());
+    }
+
+    onChangeOrganizations = (orgState) => {
+        this.setState(orgState, () => this.onConfigChange());
     }
 }
 

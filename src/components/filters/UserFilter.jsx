@@ -57,4 +57,8 @@ export default class UserFilter extends FilterBase {
 
         this.setState({ is_user: isUser }, () => this.onConfigChange());
     }
+
+    onChangeOrganizations(orgState) {
+        this.setState(orgState, () => this.onConfigChange());
+    }
 }

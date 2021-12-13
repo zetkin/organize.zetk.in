@@ -113,4 +113,8 @@ export default class SubQueryFilter extends FilterBase {
     onQuerySelect(name, value) {
         this.setState({ queryId: value }, () => this.onConfigChange());
     }
+
+    onChangeOrganizations(orgState) {
+        this.setState(orgState, () => this.onConfigChange());
+    }
 }

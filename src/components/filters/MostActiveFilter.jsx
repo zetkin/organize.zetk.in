@@ -20,7 +20,9 @@ export default class MostActiveFilter extends FilterBase {
     }
 
     componentWillReceiveProps({ config }) {
-        this.setState(config);
+        if (nextProps.config !== this.props.config) {
+            this.setState(config);
+        }
     }
 
     renderFilterForm(config) {
@@ -61,4 +63,8 @@ export default class MostActiveFilter extends FilterBase {
         organizationOption: this.state.organizationOption,
         specificOrganizations: this.state.specificOrganizations,
     })
+
+    onChangeOrganizations(orgState) {
+        this.setState(orgState, () => this.onConfigChange());
+    }
 }

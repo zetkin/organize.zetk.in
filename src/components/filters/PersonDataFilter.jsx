@@ -98,4 +98,8 @@ export default class PersonDataFilter extends FilterBase {
             nextField: value,
         });
     }
+
+    onChangeOrganizations(orgState) {
+        this.setState(orgState, () => this.onConfigChange());
+    }
 }

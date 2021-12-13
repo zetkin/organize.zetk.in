@@ -39,7 +39,9 @@ export default class CampaignFilter extends FilterBase {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState(stateFromConfig(nextProps.config));
+        if (nextProps.config !== this.props.config) {
+            this.setState(stateFromConfig(nextProps.config));
+        }
     }
 
     componentDidMount() {
@@ -164,6 +166,15 @@ export default class CampaignFilter extends FilterBase {
         let state = {};
         state[name] = value;
         this.setState(state, () => this.onConfigChange());
+    }
+
+    onChangeOrganizations(orgState) {
+        this.setState(orgState, () => this.onConfigChange());
+    }
+
+    setState(partialState, callback) {
+        super.setState(partialState, callback)
+        console.log(this, partialState)
     }
 }
 

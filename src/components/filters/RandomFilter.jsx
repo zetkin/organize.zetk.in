@@ -150,4 +150,8 @@ export default class RandomFilter extends FilterBase {
         const seed = makeRandomString(6);
         this.setState({ seed }, () => this.onConfigChange());
     }
+
+    onChangeOrganizations(orgState) {
+        this.setState(orgState, () => this.onConfigChange());
+    }
 }

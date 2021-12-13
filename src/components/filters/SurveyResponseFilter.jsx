@@ -89,6 +89,10 @@ export default class SurveyResponseFilter extends FilterBase {
         state[name] = value;
         this.setState(state, () => this.onConfigChange());
     }
+
+    onChangeOrganizations(orgState) {
+        this.setState(orgState, () => this.onConfigChange());
+    }
 }
 
 function stateFromConfig(config) {

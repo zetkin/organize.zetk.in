@@ -48,8 +48,4 @@ export default class FilterBase extends React.Component {
             this.props.onConfigChange(config);
         }
     }
-
-    onChangeOrganizations(orgState) {
-        this.setState(orgState, () => this.onConfigChange());
-    }
 }

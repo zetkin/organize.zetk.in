@@ -129,4 +129,8 @@ export default class PersonTagsFilter extends FilterBase {
             this.onConfigChange());
     }
 
+    onChangeOrganizations(orgState) {
+        this.setState(orgState, () => this.onConfigChange());
+    }
+
 }

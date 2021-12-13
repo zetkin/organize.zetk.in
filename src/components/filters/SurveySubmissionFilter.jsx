@@ -87,6 +87,10 @@ export default class SurveySubmissionFilter extends FilterBase {
     onSelectTimeframe({ after, before }) {
         this.setState({ after, before }, () => this.onConfigChange());
     }
+
+    onChangeOrganizations(orgState) {
+        this.setState(orgState, () => this.onConfigChange());
+    }
 }
 
 function stateFromConfig(config) {
