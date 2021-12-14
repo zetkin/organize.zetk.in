@@ -1,0 +1,21 @@
+availableHeader: |-
+    {numSelected, plural,
+        =0 {Select organizations}
+        other {Select more organizations}
+    }
+orgsFilter:
+    label: Filter
+    placeholder: Start typing to filter organizations
+okButton: |-
+    { numSelected, plural,
+        =0 {Close without selecting}
+        =1 {Select one organization}
+        other {Select # organizations}
+    }
+selectedHeader: |-
+    {numSelected, plural,
+        =0 {None selected}
+        =1 {One organization selected}
+        other {# organizations selected}
+    }
+title: Select organizationss

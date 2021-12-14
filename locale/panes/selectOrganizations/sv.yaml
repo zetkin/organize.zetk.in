@@ -1,0 +1,21 @@
+availableHeader: |-
+    {numSelected, plural,
+        =0 {Välj organisationser}
+        other {Välj fler organisationer}
+    }
+orgsFilter:
+    label: Filter
+    placeholder: Börja skriva för att filtrera organisationer
+okButton: |-
+    { numSelected, plural,
+        =0 {Stäng utan att välja}
+        =1 {Välj en organisation}
+        other {Välj # organisation}
+    }
+selectedHeader: |-
+    {numSelected, plural,
+        =0 {Ingen vald}
+        =1 {En organisation vald}
+        other {# organisationer valda}
+    }
+title: Välj organisationer
