@@ -85,8 +85,8 @@ export default function queries(state = null, action) {
 
         case types.RETRIEVE_CALL_ASSIGNMENTS + '_FULFILLED':
             let assignments = action.payload.data.data;
-            let queries = assignments.map(a => a.target)
-                .concat(assignments.map(a => a.goal));
+            let queries = assignments.map(a => Object.assign(a.target, { organization: a.organization }))
+                .concat(assignments.map(a => Object.assign(a.goal, { organization: a.organization })));
 
             return Object.assign({}, state, {
                 queryList: updateOrAddListItems(state.queryList,
