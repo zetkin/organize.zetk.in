@@ -20,7 +20,7 @@ export default class MostActiveFilter extends FilterBase {
     }
 
     componentWillReceiveProps({ config }) {
-        if (nextProps.config !== this.props.config) {
+        if (config !== this.props.config) {
             this.setState(config);
         }
     }

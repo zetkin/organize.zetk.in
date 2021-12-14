@@ -28,7 +28,9 @@ export default class SurveyResponseFilter extends FilterBase {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState(stateFromConfig(nextProps.config));
+        if (nextProps.config !== this.props.config) {
+            this.setState(stateFromConfig(nextProps.config));
+        }
     }
 
     componentDidMount() {
