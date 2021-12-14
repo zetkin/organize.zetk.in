@@ -48,7 +48,8 @@ export function retrieveSurvey(id) {
     return ({ dispatch, getState, z }) => {
         let orgId;
         let survey;
-        if(survey.surveyList && survey.surveyList.items) {
+        const surveys = getState().surveys;
+        if(surveys.surveyList && surveys.surveyList.items) {
             survey = getState().surveys.surveyList.items.find(i => i.data.id == id);
         }
         if(survey) {
