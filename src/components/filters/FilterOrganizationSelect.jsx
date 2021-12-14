@@ -32,11 +32,11 @@ export default class FilterOrganizationSelect extends React.Component {
 
         let organizationOption = this.state.organizationOption;
 
-        const msg = id => this.props.intl.formatMessage({ id: 'filters.organizations.' + id });
+        const msg = (id, values={}) => this.props.intl.formatMessage({ id: 'filters.organizations.' + id }, values);
 
         const ORGANIZATION_OPTIONS = {
             'all': msg('all'),
-            'current': msg('current'),
+            'current': msg('current', {currentOrg: this.props.activeOrganization.title}),
             'suborgs': msg('suborgs'),
             'specific': msg('specific'),
         };
