@@ -1,23 +1,19 @@
-.SelectPersonTagsPane {
+.SelectOrganizationsPane {
 
-    .TagCloud {
+    .OrganizationCloud {
         min-height: 32px;
         margin-top: 2em;
     }
 
-    .TagCloudItem {
+    .OrganizationCloudItem {
         cursor: pointer;
     }
 
-    .SelectPersonTagsPane-tagsFilter {
+    .SelectOrganizationsPane-orgsFilter {
         margin-top: 1em;
     }
 
-    .SelectPersonTagsPane-saveButton {
+    .SelectOrganizationsPane-saveButton {
         @include inline-button($color:$c-brand-confirm, $icon:$fa-var-floppy-o);
-    }
-    .SelectPersonTagsPane-createButton {
-        @include inline-button($icon:$fa-var-tag);
-        margin-bottom: 1em;
     }
 }

@@ -27,9 +27,6 @@ export default class SelectOrganizationsPane extends PaneBase {
 
     componentDidMount() {
         super.componentDidMount();
-
-        /*
-        this.props.dispatch(retrievePersonTags());*/
     }
 
     getRenderData() {
@@ -71,20 +68,20 @@ export default class SelectOrganizationsPane extends PaneBase {
         let numSelected = orgsSelected.length;
 
         return [
-            <Msg iName="h3" key="selectedHeader"
+            <Msg tagName="h3" key="selectedHeader"
                 id="panes.selectOrganizations.selectedHeader"
                 values={{ numSelected }}/>,
             <OrganizationCloud key="selectedOrganizations" organizations={ orgsSelected }
                 showRemoveButtons={ true }
                 onRemove={ this.onRemove.bind(this) }/>,
-            <Msg iName="h3" key="availableHeader"
+            <Msg tagName="h3" key="availableHeader"
                 id="panes.selectOrganizations.availableHeader"
                 values={{ numSelected }}/>,
             <TextInput key="isFilter" name="orgsFilter"
-                className="SelectOrganizationsPane-isFilter"
-                labelMsg="panes.selectOrganizations.isFilter.label"
-                placeholder="panes.selectOrganizations.isFilter.placeholder"
-                value={ this.state.isFilter }
+                className="SelectOrganizationsPane-orgsFilter"
+                labelMsg="panes.selectOrganizations.orgsFilter.label"
+                placeholder="panes.selectOrganizations.orgsFilter.placeholder"
+                value={ this.state.orgsFilter }
                 onValueChange={ this.onChangeOrgsFilter.bind(this) }/>,
             <OrganizationCloud key="availableOrganizations" organizations={ orgsAvailable }
                 onSelect={ this.onSelect.bind(this) }/>,
@@ -119,7 +116,7 @@ export default class SelectOrganizationsPane extends PaneBase {
     }
 
     onChangeOrgsFilter(name, value) {
-        this.setState({ ...this.state, isFilter: value});
+        this.setState({ ...this.state, orgsFilter: value});
     }
 }
 
