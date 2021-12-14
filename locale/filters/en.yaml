@@ -16,8 +16,8 @@ types:
     surveySubmission: Survey submission
     user: Zetkin user
 organizations:
-    current: Current organization
-    suborgs: Sub-organizations
-    all: Any organization
-    specific: Specified organizations
+    current: Search in { currentOrg }
+    suborgs: Search in sub-organizations
+    all: Search in any organization
+    specific: Search in specified organizations...
 

@@ -13,3 +13,9 @@ types:
     surveyResponse: Enkätsvar (fritext)
     surveySubmission: Inskickad enkät
     user: Zetkin-användare
+organizations:
+    current: Sök i { currentOrg }
+    suborgs: Sök i underorganisationer
+    all: Sök i alla organisationer
+    specific: Sök i valda organisationer...
+
