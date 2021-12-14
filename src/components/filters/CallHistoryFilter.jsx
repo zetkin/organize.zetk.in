@@ -37,7 +37,7 @@ export default class CallHistoryFilter extends FilterBase {
 
         let assignmentList = this.props.callAssignments.assignmentList;
 
-        if (assignmentList.items.length == 0 && !assignmentList.isPending || !nextProps.callAssignments.assignmentList.recursive) {
+        if ((assignmentList.items.length == 0 || !this.props.callAssignments.assignmentList.recursive) && !assignmentList.isPending) {
             this.props.dispatch(retrieveCallAssignmentsRecursive());
         }
     }
