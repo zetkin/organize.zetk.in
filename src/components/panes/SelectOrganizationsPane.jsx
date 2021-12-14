@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Button from '../misc/Button';
 import PaneBase from './PaneBase';
-import OrganizationCloud from '../misc/tagcloud/OrganizationCloud';
+import OrganizationCloud from '../misc/clouds/OrganizationCloud';
 import TextInput from '../forms/inputs/TextInput';
 import { getListItemById } from '../../utils/store';
 import flattenOrganizations from '../../utils/flattenOrganizations';

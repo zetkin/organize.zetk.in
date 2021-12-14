@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createSelection } from '../../actions/selection';
 
 import SelectInput from '../forms/inputs/SelectInput';
-import OrganizationCloud from '../misc/tagcloud/OrganizationCloud';
+import OrganizationCloud from '../misc/clouds/OrganizationCloud';
 import { getListItemById } from '../../utils/store';
 import flattenOrganizations from '../../utils/flattenOrganizations';
 

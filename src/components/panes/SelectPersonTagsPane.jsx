@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Button from '../misc/Button';
 import PaneBase from './PaneBase';
-import TagCloud from '../misc/tagcloud/TagCloud';
+import TagCloud from '../misc/clouds/TagCloud';
 import TextInput from '../forms/inputs/TextInput';
 import { retrievePersonTagsRecursive } from '../../actions/personTag';
 import { getListItemById } from '../../utils/store';

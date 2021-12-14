@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import TagCloud from '../../misc/tagcloud/TagCloud';
+import TagCloud from '../../misc/clouds/TagCloud';
 import { getListItemById } from '../../../utils/store';
 import { createSelection } from '../../../actions/selection';
 

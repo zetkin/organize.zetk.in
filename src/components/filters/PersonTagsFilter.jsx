@@ -6,7 +6,7 @@ import FilterBase from './FilterBase';
 import FilterOrganizationSelect from './FilterOrganizationSelect';
 import SelectInput from '../forms/inputs/SelectInput';
 import IntInput from '../forms/inputs/IntInput';
-import TagCloud from '../misc/tagcloud/TagCloud';
+import TagCloud from '../misc/clouds/TagCloud';
 import { retrievePersonTagsRecursive } from '../../actions/personTag';
 import { createSelection } from '../../actions/selection';
 import { getListItemById } from '../../utils/store';
