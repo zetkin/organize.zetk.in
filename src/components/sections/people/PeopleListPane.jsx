@@ -22,11 +22,20 @@ import {
 } from '../../../actions/query';
 
 
-const mapStateToProps = state => ({
-    people: state.people,
-    queries: state.queries,
-    selections: state.selections,
-});
+const mapStateToProps = state => {
+    const orgId = state.user.activeMembership.organization.id;
+
+    const queries = state.queries;
+    if(queries.queryList && !queries.queryList.isPending) {
+        queries.queryList.items = queries.queryList.items.filter(i => i.data.organization.id == orgId);
+    }
+
+    return {
+        people: state.people,
+        queries: queries,
+        selections: state.selections,
+    }
+};
 
 
 @connect(mapStateToProps)

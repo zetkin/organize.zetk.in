@@ -24,10 +24,20 @@ import {
 import { getListItemById } from '../../../utils/store';
 
 
-const mapStateToProps = state => ({
-    queryList: state.queries.queryList,
-    views: state.personViews,
-});
+const mapStateToProps = state => {
+    const orgId = state.user.activeMembership.organization.id;
+
+    let queryList = state.queries.queryList; 
+    if(queryList && !queryList.isPending) {
+        queryList.items = queryList.items.filter(i => 
+            i.data.organization.id == orgId);
+    }
+
+    return {
+        queryList: queryList,
+        views: state.personViews,
+    }
+};
 
 
 @connect(mapStateToProps)
