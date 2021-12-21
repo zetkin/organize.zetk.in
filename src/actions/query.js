@@ -2,6 +2,25 @@ import * as types from '.';
 import { getListItemById } from '../utils/store';
 
 
+function mapOrganizationParams(data) {
+    data.filter_spec = data.filter_spec.map(spec => {
+        if(spec.config.organizationOption) {
+            if(spec.config.organizationOption != 'specific') {
+                spec.config.organizations = spec.config.organizationOption;
+            } else {
+                spec.config.organizations = spec.config.specificOrganizations;
+            }
+
+            delete spec.config.organizationOption;
+            delete spec.config.specificOrganizations;
+        }
+
+        return spec;
+    });
+
+    return data;
+}
+
 export function retrieveQueries() {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
@@ -78,6 +97,8 @@ export function createQuery(data, paneId) {
 }
 
 export function updateQuery(id, data) {
+    data = mapOrganizationParams(data);
+
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
 
@@ -144,6 +165,8 @@ export function updateQueryFilter(id, filterIndex, filterConfig) {
         let data = {
             filter_spec: filterSpec,
         };
+
+        data = mapOrganizationParams(data);
 
         dispatch({
             type: types.UPDATE_QUERY_FILTER,
