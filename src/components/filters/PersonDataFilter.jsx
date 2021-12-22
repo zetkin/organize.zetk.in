@@ -13,10 +13,15 @@ export default class PersonDataFilter extends FilterBase {
     constructor(props) {
         super(props);
 
+        const noField = !Object.keys(props.config)
+            .every(k => k == 'organizationOption' || k == 'specificOrganizations');
+
         this.state = {
             // Show first_name field if there are no fields in config
-            nextField: (Object.keys(props.config).length == 0)?
+            nextField: noField ?
                 'first_name' : undefined,
+            organizationOption: props.config.organizationOption,
+            specificOrganizations: props.config.specificOrganizations,
         };
     }
 
