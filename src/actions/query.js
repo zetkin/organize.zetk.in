@@ -2,10 +2,12 @@ import * as types from '.';
 import { getListItemById } from '../utils/store';
 
 
-function mapOrganizationParams(data) {
+function mapOrganizationParams(data, state) {
     data.filter_spec = data.filter_spec.map(spec => {
         if(spec.config.organizationOption) {
-            if(spec.config.organizationOption != 'specific') {
+            if(spec.config.organizationOption == 'current') {
+                spec.config.organizations = [state.user.activeMembership.organization.id];
+            } else if(spec.config.organizationOption != 'specific') {
                 spec.config.organizations = spec.config.organizationOption;
             } else {
                 spec.config.organizations = spec.config.specificOrganizations;
@@ -58,7 +60,9 @@ export function retrieveQuery(id) {
         let orgId = getState().org.activeId;
         dispatch({
             type: types.RETRIEVE_QUERY,
-            meta: { id },
+            meta: {
+                id,
+            },
             payload: {
                 promise: z.resource('orgs', orgId, 'people', 'queries',
                     id).get()
@@ -97,9 +101,9 @@ export function createQuery(data, paneId) {
 }
 
 export function updateQuery(id, data) {
-    data = mapOrganizationParams(data);
 
     return ({ dispatch, getState, z }) => {
+        data = mapOrganizationParams(data, getState());
         let orgId = getState().org.activeId;
 
         dispatch({
@@ -166,7 +170,7 @@ export function updateQueryFilter(id, filterIndex, filterConfig) {
             filter_spec: filterSpec,
         };
 
-        data = mapOrganizationParams(data);
+        data = mapOrganizationParams(data, getState());
 
         dispatch({
             type: types.UPDATE_QUERY_FILTER,
