@@ -5,7 +5,7 @@ import { FormattedMessage as Msg } from 'react-intl';
 import PaneBase from './PaneBase';
 import Link from '../misc/Link';
 import StaticMap from '../misc/StaticMap';
-import TagCloud from '../misc/tagcloud/TagCloud'
+import TagCloud from '../misc/clouds/TagCloud'
 
 import {
     retrieveLocation,

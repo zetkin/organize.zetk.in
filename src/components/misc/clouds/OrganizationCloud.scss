@@ -1,4 +1,4 @@
-@mixin tag {
+@mixin organization {
     position: relative;
     float: left;
     background-color: darken($c-ui-bg, 6);
@@ -15,9 +15,9 @@
     }
 }
 
-.TagCloud {
-    .TagCloud-addButton {
-        @include tag;
+.OrganizationCloud {
+    .OrganizationCloud-addButton {
+        @include organization;
         background: lighten($c-ui-bg, 5);
         border: 1px solid darken($c-ui-bg, 5);
         top:-1px;

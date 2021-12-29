@@ -7,9 +7,17 @@ import { retrieveCallAssignments } from '../../../actions/callAssignment';
 
 import CallAssignmentList from '../../lists/CallAssignmentList'
 
-const mapStateToProps = (state, props) => ({
-    assignmentList: state.callAssignments.assignmentList,
-});
+const mapStateToProps = (state, props) => {
+    // Only display current org assignments
+    // FIXME: This is a temporary fix until a proper UI filter has been implemented
+    const list = state.callAssignments.assignmentList;
+    const orgId = state.user.activeMembership.organization.id;
+    list.items = list.items.filter(i => i.data.organization.id == orgId);
+
+    return {
+        assignmentList: list, 
+    }
+};
 
 @connect(mapStateToProps)
 export default class AllCallAssignmentsPane extends RootPaneBase {

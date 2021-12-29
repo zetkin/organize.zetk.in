@@ -36,6 +36,7 @@ export default function callAssignments(state = null, action) {
                 assignmentList: {
                     isPending: false,
                     error: null,
+                    recursive: action.recursive,
                     items: createListItems(action.payload.data.data)
                 }
             });

@@ -3,6 +3,7 @@ import React from 'react';
 import FilterBase from './FilterBase';
 import IntInput from '../forms/inputs/IntInput';
 import FilterTimeFrameSelect from './FilterTimeFrameSelect';
+import FilterOrganizationSelect from './FilterOrganizationSelect';
 import Button from '../misc/Button';
 import { injectIntl } from 'react-intl';
 
@@ -19,11 +20,19 @@ export default class MostActiveFilter extends FilterBase {
     }
 
     componentWillReceiveProps({ config }) {
-        this.setState(config);
+        if (config !== this.props.config) {
+            this.setState(config);
+        }
     }
 
     renderFilterForm(config) {
         return [
+            <FilterOrganizationSelect
+                config={ config } 
+                openPane={ this.props.openPane }
+                onChangeOrganizations={ this.onChangeOrganizations.bind(this) }
+                />,
+
             <IntInput key="size" name="size"
                 className="MostActiveFilter-size"
                 labelMsg="filters.mostActive.size"
@@ -51,5 +60,11 @@ export default class MostActiveFilter extends FilterBase {
         size: parseInt(this.state.size),
         after: this.state.after,
         before: this.state.before,
+        organizationOption: this.state.organizationOption,
+        specificOrganizations: this.state.specificOrganizations,
     })
+
+    onChangeOrganizations(orgState) {
+        this.setState(orgState, () => this.onConfigChange());
+    }
 }

@@ -22,7 +22,25 @@ export function retrieveLocations() {
             type: types.RETRIEVE_LOCATIONS,
             payload: {
                 promise: z.resource('orgs', orgId, 'locations').get(),
-            }
+            },
+            meta: {
+                recursive: false,
+            },
+        });
+    };
+}
+
+export function retrieveLocationsRecursive() {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_LOCATIONS,
+            payload: {
+                promise: z.resource('orgs', orgId, 'locations?recursive').get(),
+            },
+            meta: {
+                recursive: true,
+            },
         });
     };
 }

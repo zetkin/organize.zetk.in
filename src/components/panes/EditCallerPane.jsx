@@ -3,7 +3,7 @@ import { injectIntl, FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
 import PaneBase from './PaneBase';
-import TagCloud from '../misc/tagcloud/TagCloud';
+import TagCloud from '../misc/clouds/TagCloud';
 import { getListItemById } from '../../utils/store';
 import { createSelection } from '../../actions/selection';
 import {

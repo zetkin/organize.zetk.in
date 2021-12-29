@@ -1,0 +1,19 @@
+.SelectOrganizationsPane {
+
+    .OrganizationCloud {
+        min-height: 32px;
+        margin-top: 2em;
+    }
+
+    .OrganizationCloudItem {
+        cursor: pointer;
+    }
+
+    .SelectOrganizationsPane-orgsFilter {
+        margin-top: 1em;
+    }
+
+    .SelectOrganizationsPane-saveButton {
+        @include inline-button($color:$c-brand-confirm, $icon:$fa-var-floppy-o);
+    }
+}

@@ -19,13 +19,36 @@ import {
 import { filteredActionList } from '../../../store/actions';
 
 
-const mapStateToProps = state => ({
-    actions: state.actions,
-    campaigns: state.campaigns,
-    activityList: state.activities.activityList,
-    locationList: state.locations.locationList,
-    filteredActionList: filteredActionList(state)
-});
+const mapStateToProps = state => {
+    // FIXME: This is a temporary fix until a proper UI filter has been implemented
+    const orgId = state.user.activeMembership.organization.id;
+
+    const actions = state.actions;
+    if(actions.actionList && !actions.actionList.isPending) {
+        actions.actionList.items = actions.actionList.items.filter(i => i.data.organization.id == orgId);
+    }
+
+    const campaigns = state.campaigns;
+    if(campaigns.campaignList && !campaigns.campaignList.isPending) {
+        campaigns.campaignList.items = campaigns.campaignList.items.filter(i => i.data.organization.id == orgId);
+    }
+
+    const activityList = state.activities.activityList;
+    activityList.items = activityList.items.filter(i => i.data.organization.id == orgId);
+
+    const locationList = state.locations.locationList;
+    locationList.items = locationList.items.filter(i => i.data.organization.id == orgId);
+
+
+
+    return {
+        actions: actions,
+        campaigns: campaigns,
+        activityList: activityList,
+        locationList: locationList,
+        filteredActionList: filteredActionList(state)
+    }
+};
 
 @connect(mapStateToProps)
 export default class ActionDistributionPane extends CampaignSectionPaneBase {

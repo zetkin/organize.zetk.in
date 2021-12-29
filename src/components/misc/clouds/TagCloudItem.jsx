@@ -38,6 +38,12 @@ export default class TagCloudItem extends React.Component {
                 <span className="TagCloudItem-title"
                     onClick={ this.onSelect.bind(this, tag) }>
                         { tag.title }</span>
+                { this.props.displayOrg ?
+                    <span className="TagCloudItem-organization">
+                        { tag.organization.title }
+                    </span> : null
+                }
+                    
                 { editButton }
                 { removeButton }
             </li>

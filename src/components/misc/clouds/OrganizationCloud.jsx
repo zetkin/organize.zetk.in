@@ -1,12 +1,12 @@
 import React from 'react';
 import { FormattedMessage as Msg } from 'react-intl';
 
-import TagCloudItem from './TagCloudItem';
+import OrganizationCloudItem from './OrganizationCloudItem';
 
 
-export default class TagCloud extends React.Component {
+export default class OrganizationCloud extends React.Component {
     static propTypes = {
-        tags: React.PropTypes.array.isRequired,
+        organizations: React.PropTypes.array.isRequired,
         onAdd: React.PropTypes.func,
         onEdit: React.PropTypes.func,
         onRemove: React.PropTypes.func,
@@ -26,17 +26,17 @@ export default class TagCloud extends React.Component {
         let addButton = null;
         if (this.props.showAddButton) {
             addButton = (
-                <li className="TagCloud-addButton"
+                <li className="OrganizationCloud-addButton"
                     onClick={ this.props.onAdd }>
-                    <Msg id="misc.tagCloud.addButton"/>
+                    <Msg id="misc.organizationCloud.addButton"/>
                 </li>
             );
         }
 
         return (
-            <ul className="TagCloud">
-            { this.props.tags.map(tag => (
-                <TagCloudItem key={ tag.id } tag={ tag }
+            <ul className="OrganizationCloud">
+            { this.props.organizations.map(org => (
+                <OrganizationCloudItem key={ org.id } organization={ org }
                     showEditButton={ this.props.showEditButtons }
                     showRemoveButton={ this.props.showRemoveButtons }
                     onEdit={ this.props.onEdit }

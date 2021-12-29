@@ -3,6 +3,7 @@ export function createList(items, meta = {}) {
         isPending: meta.isPending || false,
         lastPage: 0,
         error: meta.error || null,
+        recursive: meta.recursive || false,
         items: createListItems(items || []),
     };
 }

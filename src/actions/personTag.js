@@ -35,6 +35,25 @@ export function retrievePersonTags() {
             type: types.RETRIEVE_PERSON_TAGS,
             payload: {
                 promise: z.resource('orgs', orgId, 'people', 'tags').get(),
+            },
+            meta: {
+                recursive: false,
+            }
+        });
+    };
+}
+
+export function retrievePersonTagsRecursive() {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_PERSON_TAGS,
+            payload: {
+                promise: z.resource('orgs', orgId, 'people', 'tags?recursive').get(),
+            },
+            meta: {
+                recursive: true,
             }
         });
     };
