@@ -85,23 +85,37 @@ export default class SurveyPane extends PaneBase {
                 );
             }
 
+            let statusMsgId = null;
+            if (survey.archived) {
+                statusMsgId = 'panes.survey.summary.status.archived';
+            } else {
+                statusMsgId = 'panes.survey.summary.status.active';
+            }
+            let infoListData = [
+                { name: 'desc', value: survey.info_text },
+                { name: 'access', msgId: accessLabelMsgId },
+                { name: 'anonymous', msgId: anonymousLabelMsgId },
+                { name: survey.archived ? 'archived' : 'active', msgId: statusMsgId },
+            ]
+
+            if (!survey.archived) {
+                infoListData.push({ name: 'link', href: linkUrl, target: '_blank', msgId: 'panes.survey.summary.viewLink' })
+            }
+
+            infoListData.push({ name: 'editLink', onClick: this.onEditSummaryClick.bind(this), msgId: 'panes.survey.summary.editLink' });
+
             return [
                 <InfoList key="summary-infolist"
-                    data={[
-                        { name: 'desc', value: survey.info_text },
-                        { name: 'access', msgId: accessLabelMsgId },
-                        { name: 'anonymous', msgId: anonymousLabelMsgId },
-                        { name: 'link', href: linkUrl, target: '_blank', msgId: 'panes.survey.summary.viewLink' },
-                        { name: 'editLink', onClick: this.onEditSummaryClick.bind(this), msgId: 'panes.survey.summary.editLink' }
-                    ]}
+                    data={infoListData}
                 />,
                 <div key="content"
                     className="SurveyPane-content">
                     <Msg tagName="h3" id="panes.survey.content.h"/>
                     { contentBreakdown }
+                    { !survey.archived ? 
                     <Button className="SurveyPane-contentEdit"
                         labelMsg="panes.survey.content.editLink"
-                        onClick={ this.onEditContentClick.bind(this) }/>
+                        onClick={ this.onEditContentClick.bind(this) }/> : null }
                 </div>
             ];
         }

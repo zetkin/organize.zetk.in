@@ -16,6 +16,7 @@ export default class SurveyListItem extends React.Component {
         let access = null;
         let callers_only = null;
         let allow_anonymous = null;
+        let status = null;
 
         if (survey.access === "open") {
             access = <Msg id="lists.surveyList.item.access.open"/>;
@@ -31,6 +32,21 @@ export default class SurveyListItem extends React.Component {
         }
         else {
             allow_anonymous = <Msg id="lists.surveyList.item.anonymous.deny"/>;
+        }
+
+        if (!survey.archived) {
+            status = (
+                <span className="SurveyListItem-status-active">
+                    <Msg id="lists.surveyList.item.status.active"/>
+                </span>
+            )
+        }
+        else {
+            status = (
+                <span className="SurveyListItem-status-archived">
+                    <Msg id="lists.surveyList.item.status.archived"/>
+                </span>
+            )
         }
 
         if (survey.callers_only) {
@@ -52,6 +68,9 @@ export default class SurveyListItem extends React.Component {
                     </span>
                     <span className="SurveyListItem-anonymous">
                         { allow_anonymous }
+                    </span>
+                    <span className="SurveyListItem-status">
+                        { status }
                     </span>
                     { callers_only }
                 </div>

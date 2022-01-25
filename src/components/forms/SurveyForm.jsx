@@ -28,6 +28,11 @@ export default class SurveyForm extends React.Component {
             'sign': 'forms.survey.signatureOptions.sign',
         };
 
+        let statusOptions = {
+            'active': 'forms.survey.statusOptions.active',
+            'archived': 'forms.survey.statusOptions.archived'
+        }
+
         survey.signature = survey.allow_anonymous? 'anon' : 'sign';
 
         return (
@@ -42,6 +47,9 @@ export default class SurveyForm extends React.Component {
                 <SelectInput labelMsg="forms.survey.signature" name="signature"
                     initialValue={ survey.signature }
                     options={ signatureOptions } optionLabelsAreMessages={ true }/>
+                <SelectInput labelMsg="forms.survey.status" name="status"
+                    initialValue={ survey.archived ? "archived" : "active" }
+                    options={ statusOptions } optionLabelsAreMessages={ true  }/>
             </Form>
         );
     }
@@ -59,6 +67,11 @@ export default class SurveyForm extends React.Component {
         if ('signature' in values) {
             values.allow_anonymous = (values.signature == 'anon');
             delete values['signature'];
+        }
+
+        if ('status' in values) {
+            values['archive'] = values['status'] == 'archived' ? true : false;
+            delete values['status'];
         }
 
         return values;

@@ -23,3 +23,6 @@ summary:
         deny: Only allow signed submissions
     editLink: Edit settings
     viewLink: Open in activist portal
+    status:
+        active: Active
+        archived: Archived

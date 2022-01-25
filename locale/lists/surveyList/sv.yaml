@@ -3,6 +3,7 @@ header:
     allowAnonymous: Tillåten signering
     callersOnly: Endast ringare
     survey: Enkät
+    status: Status
 item:
     access:
         auth: Endast inloggade
@@ -11,3 +12,6 @@ item:
         allow: Tillåt anonyma
         deny: Kräv signatur
     callersOnly: Endast för ringare
+    status:
+        active: Aktiv
+        archived: Arkiverad

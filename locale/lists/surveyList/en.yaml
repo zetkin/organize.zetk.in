@@ -3,6 +3,7 @@ header:
     allowAnonymous: Signature policy
     callersOnly: Callers only
     survey: Survey
+    status: Status
 item:
     access:
         auth: Connected only
@@ -11,3 +12,6 @@ item:
         allow: Allow anonymous
         deny: Require signature
     callersOnly: Callers only
+    status:
+        active: Active
+        archived: Archived

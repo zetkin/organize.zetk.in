@@ -7,4 +7,8 @@ signature: Signature policy
 signatureOptions:
     anon: Allow anonymous submissions
     sign: Require name and e-mail signature
+status: Status
+statusOptions:
+    active: Active
+    archived: Archived
 title: Title
