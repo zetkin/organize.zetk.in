@@ -8,7 +8,6 @@ signatureOptions:
     anon: Tillåt anonyma svar
     sign: Kräv signatur med namn och e-post
 status: Status
-statusOptions:
-    active: Aktiv
-    archived: Arkiverad
 title: Titel
+published: Publiceringsdatum
+expires: Arkiveringsdatum

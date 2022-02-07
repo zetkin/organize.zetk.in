@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Form from './Form';
+import DateInput from './inputs/DateInput';
 import TextArea from './inputs/TextArea';
 import TextInput from './inputs/TextInput';
 import SelectInput from './inputs/SelectInput';
@@ -28,9 +29,18 @@ export default class SurveyForm extends React.Component {
             'sign': 'forms.survey.signatureOptions.sign',
         };
 
-        let statusOptions = {
-            'active': 'forms.survey.statusOptions.active',
-            'archived': 'forms.survey.statusOptions.archived'
+        let publishedDate;
+        if(survey.published) {
+            publishedDate = (Date.create(survey.published))
+                .setUTC(true)
+                .format('{yyyy}-{MM}-{dd}');
+        }
+
+        let expiresDate;
+        if(survey.expires) {
+            expiresDate = (Date.create(survey.expires))
+                .setUTC(true)
+                .format('{yyyy}-{MM}-{dd}');
         }
 
         survey.signature = survey.allow_anonymous? 'anon' : 'sign';
@@ -47,9 +57,10 @@ export default class SurveyForm extends React.Component {
                 <SelectInput labelMsg="forms.survey.signature" name="signature"
                     initialValue={ survey.signature }
                     options={ signatureOptions } optionLabelsAreMessages={ true }/>
-                <SelectInput labelMsg="forms.survey.status" name="status"
-                    initialValue={ survey.archived ? "archived" : "active" }
-                    options={ statusOptions } optionLabelsAreMessages={ true  }/>
+                <DateInput labelMsg="forms.survey.published" name="published"
+                    initialValue={ publishedDate }/>
+                <DateInput labelMsg="forms.survey.expires" name="expires"
+                    initialValue={ expiresDate }/>
             </Form>
         );
     }
@@ -67,11 +78,6 @@ export default class SurveyForm extends React.Component {
         if ('signature' in values) {
             values.allow_anonymous = (values.signature == 'anon');
             delete values['signature'];
-        }
-
-        if ('status' in values) {
-            values['archive'] = values['status'] == 'archived' ? true : false;
-            delete values['status'];
         }
 
         return values;

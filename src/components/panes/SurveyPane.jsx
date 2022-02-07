@@ -85,17 +85,40 @@ export default class SurveyPane extends PaneBase {
                 );
             }
 
-            let statusMsgId = null;
-            if (survey.archived) {
-                statusMsgId = 'panes.survey.summary.status.archived';
+            let statusMsgId;
+            let statusName;
+            if (survey.published) {
+                if (new Date(survey.published) > new Date()) {
+                    statusName = 'draft';
+                    statusMsgId = 'panes.survey.summary.status.draftUntil';
+                } else {
+                    if (survey.expires) {
+                        if (new Date(survey.expires) > new Date()) {
+                            statusName = 'active';
+                            statusMsgId = 'panes.survey.summary.status.activeUntil';
+                        } else {
+                            statusName = 'archived';
+                            statusMsgId = 'panes.survey.summary.status.archived';
+                        }
+                    } else {
+                        statusName = 'active';
+                        statusMsgId = 'panes.survey.summary.status.active';
+                    }
+                }
             } else {
-                statusMsgId = 'panes.survey.summary.status.active';
+                statusName = 'draft';
+                statusMsgId = 'panes.survey.summary.status.draft';
             }
+
             let infoListData = [
                 { name: 'desc', value: survey.info_text },
                 { name: 'access', msgId: accessLabelMsgId },
                 { name: 'anonymous', msgId: anonymousLabelMsgId },
-                { name: survey.archived ? 'archived' : 'active', msgId: statusMsgId },
+                { name: statusName, msgId: statusMsgId, 
+                    msgValues: { 
+                        expires: (new Date(survey.expires)).format('{yyyy}-{MM}-{dd}'),
+                        published: (new Date(survey.published)).format('{yyyy}-{MM}-{dd}'),
+                    } },
             ]
 
             if (!survey.archived) {

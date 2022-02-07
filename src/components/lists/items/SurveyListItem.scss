@@ -26,7 +26,7 @@
     }
 
     .SurveyListItem-callers {
-        @include col(3,12);
+        @include col(2,12);
 
         &:before {
             @include icon($fa-var-phone);
@@ -34,7 +34,7 @@
     }
 
     .SurveyListItem-status {
-        @include col(3,12);
+        @include col(4,12);
 
         .SurveyListItem-status-active {
             &:before {
@@ -48,5 +48,10 @@
             }
         }
 
+        .SurveyListItem-status-draft {
+            &:before {
+                @include icon($fa-var-pencil);
+            }
+        }
     }
 }

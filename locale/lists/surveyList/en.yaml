@@ -14,4 +14,7 @@ item:
     callersOnly: Callers only
     status:
         active: Active
+        activeUntil: 'Active until { expires }'
+        draft: Draft
+        draftUntil: 'Publishes { published }'
         archived: Archived

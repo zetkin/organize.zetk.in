@@ -34,20 +34,39 @@ export default class SurveyListItem extends React.Component {
             allow_anonymous = <Msg id="lists.surveyList.item.anonymous.deny"/>;
         }
 
-        if (!survey.archived) {
-            status = (
-                <span className="SurveyListItem-status-active">
-                    <Msg id="lists.surveyList.item.status.active"/>
-                </span>
-            )
+        let statusMsgId;
+        let statusName;
+        if (survey.published) {
+            if (new Date(survey.published) > new Date()) {
+                statusName = 'draft';
+                statusMsgId = 'lists.surveyList.item.status.draftUntil';
+            } else {
+                if (survey.expires) {
+                    if (new Date(survey.expires) > new Date()) {
+                        statusName = 'active';
+                        statusMsgId = 'lists.surveyList.item.status.activeUntil';
+                    } else {
+                        statusName = 'archived';
+                        statusMsgId = 'lists.surveyList.item.status.archived';
+                    }
+                } else {
+                    statusName = 'active';
+                    statusMsgId = 'lists.surveyList.item.status.active';
+                }
+            }
+        } else {
+            statusName = 'draft';
+            statusMsgId = 'lists.surveyList.item.status.draft';
         }
-        else {
-            status = (
-                <span className="SurveyListItem-status-archived">
-                    <Msg id="lists.surveyList.item.status.archived"/>
-                </span>
-            )
-        }
+
+        status = (
+            <span className={ `SurveyListItem-status-${statusName}` }>
+                <Msg id={ statusMsgId } values={ {
+                    expires: (new Date(survey.expires)).format('{yyyy}-{MM}-{dd}'),
+                    published: (new Date(survey.published)).format('{yyyy}-{MM}-{dd}'),
+                } }  />
+            </span>
+        );
 
         if (survey.callers_only) {
             callers_only = (
