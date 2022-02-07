@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Button from '../misc/Button';
 import PaneBase from './PaneBase';
-import TagCloud from '../misc/tagcloud/TagCloud';
+import TagCloud from '../misc/clouds/TagCloud';
 import { retrieveLocationTags } from '../../actions/locationTag';
 import { getListItemById } from '../../utils/store';
 import { addToSelection, removeFromSelection, finishSelection }

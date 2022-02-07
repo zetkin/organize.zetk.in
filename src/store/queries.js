@@ -7,6 +7,24 @@ import {
 } from '../utils/store';
 
 
+function mapOrganizationParams(data) {
+    data.filter_spec = data.filter_spec.map(spec => {
+        if(spec.config.organizations) {
+            if(spec.config.organizations instanceof Array) {
+                spec.config.organizationOption = 'specific';
+                spec.config.specificOrganizations = spec.config.organizations;
+            } else {
+                spec.config.organizationOption = spec.config.organizations;
+            }
+            delete spec.config.organizations;
+        }
+
+        return spec;
+    });
+
+    return data;
+}
+
 export default function queries(state = null, action) {
     let query;
     switch (action.type) {
@@ -18,10 +36,16 @@ export default function queries(state = null, action) {
             });
 
         case types.RETRIEVE_QUERIES + '_FULFILLED':
+            const data = action.payload.data.data.map(
+                filter => mapOrganizationParams(filter));
             return Object.assign({}, state, {
                 queryList: updateOrAddListItems(state.queryList,
-                    action.payload.data.data,
-                    { isPending: false, error: null })
+                    data,
+                    {
+                        isPending: false,
+                        error: null,
+                        recursive: action.meta.recursive
+                    }),
             });
 
         case types.RETRIEVE_QUERY + '_PENDING':
@@ -32,7 +56,7 @@ export default function queries(state = null, action) {
             });
 
         case types.RETRIEVE_QUERY + '_FULFILLED':
-            query = action.payload.data.data;
+            query = mapOrganizationParams(action.payload.data.data);
 
             return Object.assign({}, state, {
                 queryList: updateOrAddListItem(state.queryList,
@@ -41,7 +65,7 @@ export default function queries(state = null, action) {
 
         case types.CREATE_QUERY + '_FULFILLED':
         case types.UPDATE_QUERY + '_FULFILLED':
-            query = action.payload.data.data;
+            query = mapOrganizationParams(action.payload.data.data);
 
             // Clear match list since the query changed
             query.matchList = null;
@@ -81,8 +105,8 @@ export default function queries(state = null, action) {
 
         case types.RETRIEVE_CALL_ASSIGNMENTS + '_FULFILLED':
             let assignments = action.payload.data.data;
-            let queries = assignments.map(a => a.target)
-                .concat(assignments.map(a => a.goal));
+            let queries = assignments.map(a => Object.assign(a.target, { organization: a.organization }))
+                .concat(assignments.map(a => Object.assign(a.goal, { organization: a.organization })));
 
             return Object.assign({}, state, {
                 queryList: updateOrAddListItems(state.queryList,

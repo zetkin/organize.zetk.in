@@ -26,6 +26,25 @@ export function retrieveCallAssignments() {
             payload: {
                 promise: z.resource('orgs', orgId, 'call_assignments').get(),
             },
+            meta: {
+                recursive: true,
+            },
+        });
+    };
+}
+
+export function retrieveCallAssignmentsRecursive() {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+
+        dispatch({
+            type: types.RETRIEVE_CALL_ASSIGNMENTS,
+            payload: {
+                promise: z.resource('orgs', orgId, 'call_assignments?recursive').get(),
+            },
+            meta: {
+                recursive: true,
+            },
         });
     };
 }

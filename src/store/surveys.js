@@ -25,8 +25,8 @@ export default function surveys(state = null, action) {
 
         case types.RETRIEVE_SURVEYS + '_FULFILLED':
             return Object.assign({}, state, {
-                surveyList: updateOrAddListItems(state.surveyList,
-                    action.payload.data.data, { isPending: false })
+                surveyList: createList(action.payload.data.data,
+                    { isPending: false, recursive: action.meta.recursive })
             });
 
         case types.RETRIEVE_SURVEYS + '_REJECTED':

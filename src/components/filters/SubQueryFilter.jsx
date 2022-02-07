@@ -3,18 +3,23 @@ import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import FilterBase from './FilterBase';
+import FilterOrganizationSelect from './FilterOrganizationSelect';
 import SelectInput from '../forms/inputs/SelectInput';
 
-import { retrieveCallAssignments } from '../../actions/callAssignment';
-import { retrieveQueries } from '../../actions/query';
+import { retrieveCallAssignmentsRecursive } from '../../actions/callAssignment';
+import { retrieveQueriesRecursive } from '../../actions/query';
+import filterByOrg from '../../utils/filterByOrg';
+import { flattenOrganizationsFromState } from '../../utils/flattenOrganizations';
 
 const mapStateToProps = state => {
     const assignmentList = state.callAssignments.assignmentList;
     const queryList = state.queries.queryList;
+    const orgList = flattenOrganizationsFromState(state);
 
     return {
         assignmentList,
         queryList,
+        orgList,
     };
 };
 
@@ -27,27 +32,32 @@ export default class SubQueryFilter extends FilterBase {
 
         this.state = {
             queryId: props.config.query_id,
+            organizationOption: props.config.organizationOptions || 'all',
+            specificOrganizations: props.config.specificOrganizations || [],
         };
     }
 
     componentDidMount() {
         super.componentDidMount();
 
-        this.props.dispatch(retrieveCallAssignments());
-        this.props.dispatch(retrieveQueries());
+        this.props.dispatch(retrieveCallAssignmentsRecursive());
+        this.props.dispatch(retrieveQueriesRecursive());
     }
 
     componentReceivedProps(nextProps) {
         if (nextProps.config !== this.props.config) {
             this.setState({
                 queryId: nextProps.config.query_id,
+                organizationOption: nextProps.config.organizationOption,
+                specificOrganizations: nextProps.config.specificOrganizations,
             });
         }
     }
 
     renderFilterForm(config) {
         const SA_OPTIONS = {}
-        const queryItems = this.props.queryList.items || [];
+        let queryItems = this.props.queryList.items || [];
+        queryItems = filterByOrg(this.props.orgList, queryItems, this.state)
         queryItems
             .filter(item => item.data.type == 'standalone')
             .forEach(item => {
@@ -56,7 +66,8 @@ export default class SubQueryFilter extends FilterBase {
             });
 
         const CA_OPTIONS = {}
-        const assignmentItems = this.props.assignmentList.items || [];
+        let assignmentItems = this.props.assignmentList.items || [];
+        assignmentItems = filterByOrg(this.props.orgList, assignmentItems, this.state)
         assignmentItems.forEach(item => {
             const ca = item.data;
 
@@ -77,6 +88,11 @@ export default class SubQueryFilter extends FilterBase {
         };
 
         return [
+            <FilterOrganizationSelect
+                config={ config } 
+                openPane={ this.props.openPane }
+                onChangeOrganizations={ this.onChangeOrganizations.bind(this) }
+                />,
             <SelectInput key="isUser" name="is_user"
                 labelMsg="filters.subQuery.queryLabel"
                 options={ OPTIONS } value={ this.state.queryId }
@@ -89,10 +105,16 @@ export default class SubQueryFilter extends FilterBase {
     getConfig() {
         return {
             query_id: this.state.queryId,
+            organizationOption: this.state.organizationOption,
+            specificOrganizations: this.state.specificOrganizations,
         };
     }
 
     onQuerySelect(name, value) {
         this.setState({ queryId: value }, () => this.onConfigChange());
+    }
+
+    onChangeOrganizations(orgState) {
+        this.setState(orgState, () => this.onConfigChange());
     }
 }

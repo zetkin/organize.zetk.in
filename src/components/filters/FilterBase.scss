@@ -46,4 +46,10 @@
             opacity: 1;
         }
     }
+
+    .TagCloud-orgSeparator {
+        &:after {
+            background-color: white;
+        }
+    }
 }

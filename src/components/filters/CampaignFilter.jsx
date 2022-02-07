@@ -5,22 +5,27 @@ import { connect } from 'react-redux';
 import FilterBase from './FilterBase';
 import Form from '../forms/Form';
 import FilterTimeFrameSelect from './FilterTimeFrameSelect';
+import FilterOrganizationSelect from './FilterOrganizationSelect';
 import SelectInput from '../forms/inputs/SelectInput';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
-import { retrieveCampaigns } from '../../actions/campaign';
-import { retrieveActivities } from '../../actions/activity';
-import { retrieveLocations } from '../../actions/location';
+import filterByOrg from '../../utils/filterByOrg';
+import { flattenOrganizationsFromState } from '../../utils/flattenOrganizations';
+import { retrieveCampaignsRecursive } from '../../actions/campaign';
+import { retrieveActivitiesRecursive } from '../../actions/activity';
+import { retrieveLocationsRecursive } from '../../actions/location';
 
 
 const mapStateToProps = state => {
     const campaignList = state.campaigns.campaignList;
     const locationList = state.locations.locationList;
     const activityList = state.activities.activityList;
+    const orgList = flattenOrganizationsFromState(state);
 
     return {
         activityList,
         campaignList,
         locationList,
+        orgList,
     };
 };
 
@@ -34,7 +39,9 @@ export default class CampaignFilter extends FilterBase {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState(stateFromConfig(nextProps.config));
+        if (nextProps.config !== this.props.config) {
+            this.setState(stateFromConfig(nextProps.config));
+        }
     }
 
     componentDidMount() {
@@ -42,16 +49,16 @@ export default class CampaignFilter extends FilterBase {
 
         const { campaignList, activityList, locationList } = this.props;
 
-        if (campaignList.items.length == 0 && !campaignList.isPending) {
-            this.props.dispatch(retrieveCampaigns());
+        if ((campaignList.items.length == 0 || !campaignList.recursive) && !campaignList.isPending) {
+            this.props.dispatch(retrieveCampaignsRecursive());
         }
 
-        if (activityList.items.length == 0 && !activityList.isPending) {
-            this.props.dispatch(retrieveActivities());
+        if ((activityList.items.length == 0 || ! activityList.recursive) && !activityList.isPending) {
+            this.props.dispatch(retrieveActivitiesRecursive());
         }
 
-        if (locationList.items.length == 0 && !locationList.isPending) {
-            this.props.dispatch(retrieveLocations());
+        if ((locationList.items.length == 0 || !locationList.recursive) && !locationList.isPending) {
+            this.props.dispatch(retrieveLocationsRecursive());
         }
     }
 
@@ -68,27 +75,39 @@ export default class CampaignFilter extends FilterBase {
         };
 
         const CAMPAIGN_OPTIONS = {};
-        const campaignItems = this.props.campaignList.items || [];
+        // Filter campaigns by selected organizations
+        let campaignItems = this.props.campaignList.items || [];
+        campaignItems = filterByOrg(this.props.orgList, campaignItems, this.state);
         campaignItems.forEach(item => {
             const campaign = item.data;
             CAMPAIGN_OPTIONS[campaign.id] = campaign.title;
         });
 
         const LOCATION_OPTIONS = {};
-        const locationItems = this.props.locationList.items || [];
+        // Filter locations by selected organizations
+        let locationItems = this.props.locationList.items || [];
+        locationItems = filterByOrg(this.props.orgList, locationItems, this.state);
         locationItems.forEach(item => {
             const location = item.data;
             LOCATION_OPTIONS[location.id] = location.title;
         });
 
         const ACTIVITY_OPTIONS = {};
-        const activityItems = this.props.activityList.items || [];
+        // Filter activities by selected organizations
+        let activityItems = this.props.activityList.items || [];
+        activityItems = filterByOrg(this.props.orgList, activityItems, this.state);
         activityItems.forEach(item => {
             const activity = item.data;
             ACTIVITY_OPTIONS[activity.id] = activity.title;
         });
 
         return [
+            <FilterOrganizationSelect
+                config={ config } 
+                openPane={ this.props.openPane }
+                onChangeOrganizations={ this.onChangeOrganizations.bind(this) }
+                />,
+
             <SelectInput key="operator" name="op"
                 labelMsg="filters.campaign.participantStatus"
                 options={ OP_STATE_OPTIONS } value={ this.state.op }
@@ -134,6 +153,8 @@ export default class CampaignFilter extends FilterBase {
             state: (opFields[1] == 'su')? 'signed_up' : 'booked',
             before: this.state.before,
             after: this.state.after,
+            organizationOption: this.state.organizationOption,
+            specificOrganizations: this.state.specificOrganizations,
         };
     }
 
@@ -145,6 +166,15 @@ export default class CampaignFilter extends FilterBase {
         let state = {};
         state[name] = value;
         this.setState(state, () => this.onConfigChange());
+    }
+
+    onChangeOrganizations(orgState) {
+        this.setState(orgState, () => this.onConfigChange());
+    }
+
+    setState(partialState, callback) {
+        super.setState(partialState, callback)
+        console.log(this, partialState)
     }
 }
 
@@ -159,6 +189,8 @@ function stateFromConfig(config) {
         location: config.location,
         before: config.before,
         after: config.after,
+        organizationOption: config.organizationOption || 'all',
+        specificOrganizations: config.specificOrganizations || [],
     }
 
     return state;

@@ -24,6 +24,7 @@
             opacity: 1;
             position: static;
         }
+        margin-top: 0;
     }
 
     .TagCloudItem-removeButton:after {
@@ -48,6 +49,11 @@
             @include icon($fa-var-pencil);
             margin-right: 0;
         }
+    }
+
+    .TagCloudItem-organization {
+        font-size: 0.6em;
+        display: block;
     }
 
     &:hover {

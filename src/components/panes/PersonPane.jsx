@@ -6,7 +6,7 @@ import Link from '../misc/Link';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import DraggableAvatar from '../misc/DraggableAvatar';
-import TagCloud from '../misc/tagcloud/TagCloud';
+import TagCloud from '../misc/clouds/TagCloud';
 import { getListItemById } from '../../utils/store';
 import { retrievePerson } from '../../actions/person';
 import { createSelection } from '../../actions/selection';

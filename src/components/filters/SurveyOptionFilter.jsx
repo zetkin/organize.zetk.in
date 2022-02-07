@@ -3,15 +3,19 @@ import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import FilterBase from './FilterBase';
+import FilterOrganizationSelect from './FilterOrganizationSelect';
 import Form from '../forms/Form';
 import RelSelectInput from '../forms/inputs/RelSelectInput';
 import SelectInput from '../forms/inputs/SelectInput';
-import { retrieveSurveys, retrieveSurvey } from '../../actions/survey';
+import filterByOrg from '../../utils/filterByOrg';
+import { flattenOrganizationsFromState } from '../../utils/flattenOrganizations';
+import { retrieveSurveysRecursive, retrieveSurvey } from '../../actions/survey';
 
 
 const mapStateToProps = state => ({
     surveyList: state.surveys.surveyList,
     elementsBySurvey: state.surveys.elementsBySurvey,
+    orgList: flattenOrganizationsFromState(state),
 });
 
 @connect(mapStateToProps)
@@ -36,8 +40,8 @@ export default class SurveyOptionFilter extends FilterBase {
 
         let surveyList = this.props.surveyList;
 
-        if (surveyList.items.length == 0 && !surveyList.isPending) {
-            this.props.dispatch(retrieveSurveys());
+        if ((surveyList.items.length == 0 || !surveyList.items.recursive) && !surveyList.isPending) {
+            this.props.dispatch(retrieveSurveysRecursive());
         }
 
         if (this.state.survey) {
@@ -46,7 +50,9 @@ export default class SurveyOptionFilter extends FilterBase {
     }
 
     renderFilterForm(config) {
-        let surveys = this.props.surveyList.items.map(i => i.data);
+        let surveys = this.props.surveyList.items || [];
+        surveys = filterByOrg(this.props.orgList, surveys, this.state).map(i => i.data);
+
         let questionSelect;
         let optionSelect;
 
@@ -96,6 +102,11 @@ export default class SurveyOptionFilter extends FilterBase {
         }
 
         return [
+            <FilterOrganizationSelect
+                config={ config } 
+                openPane={ this.props.openPane }
+                onChangeOrganizations={ this.onChangeOrganizations.bind(this) }
+                />,
             <RelSelectInput name="survey" key="surveySelect"
                 labelMsg="filters.surveyOption.survey"
                 objects={ surveys } value={ this.state.survey }
@@ -112,6 +123,8 @@ export default class SurveyOptionFilter extends FilterBase {
             question: this.state.question,
             survey: this.state.survey,
             options: this.state.option? [ this.state.option ] : undefined,
+            organizationOption: this.state.organizationOption,
+            specificOrganizations: this.state.specificOrganizations,
         };
 
         return config;
@@ -126,6 +139,8 @@ export default class SurveyOptionFilter extends FilterBase {
             survey: config.survey,
             option: (config.options && config.options.length)?
                 config.options[0] : undefined,
+            organizationOption: config.organizationOption || 'all',
+            specificOrganizations: config.specificOrganizations || [],
         };
 
         if (state.survey && (!state.question || !state.option)) {
@@ -183,5 +198,9 @@ export default class SurveyOptionFilter extends FilterBase {
         }
 
         this.setState(state, () => this.onConfigChange());
+    }
+
+    onChangeOrganizations(orgState) {
+        this.setState(orgState, () => this.onConfigChange());
     }
 }

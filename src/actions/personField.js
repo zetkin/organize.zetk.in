@@ -20,7 +20,26 @@ export function retrieveFieldTypesForOrganization() {
             type: types.RETRIEVE_FIELDS_FOR_ORGANIZATION,
             payload: {
                 promise: z.resource('orgs', orgId, 'people', 'fields').get()
-            }
+            },
+            meta: {
+                recursive: false
+            },
         });
     };
 }
+
+export function retrieveFieldTypesForOrganizationTree() {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_FIELDS_FOR_ORGANIZATION,
+            payload: {
+                promise: z.resource('orgs', orgId, 'people', 'fields?recursive').get()
+            },
+            meta: {
+                recursive: true
+            },
+        });
+    };
+}
+

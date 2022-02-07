@@ -24,6 +24,7 @@ export default function activities(state = null, action) {
                 activityList: {
                     isPending: false,
                     error: null,
+                    recursive: action.recursive,
                     items: createListItems(action.payload.data.data)
                 }
             });

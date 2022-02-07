@@ -1,6 +1,7 @@
 import React from 'react';
 
 import FilterBase from './FilterBase';
+import FilterOrganizationSelect from './FilterOrganizationSelect';
 import IntInput from '../forms/inputs/IntInput';
 import SelectInput from '../forms/inputs/SelectInput';
 import Button from '../misc/Button';
@@ -12,11 +13,13 @@ export default class RandomFilter extends FilterBase {
     constructor(props) {
         super(props);
 
-        const { amount, seed, unit } = this.mapConfigToState(props.config);
+        const { amount, seed, unit, organizationOption, specificOrganizations } = this.mapConfigToState(props.config);
         this.state = {
             amount: amount || 20,
             seed: seed || makeRandomString(6),
-            unit: unit || 'people'
+            unit: unit || 'people',
+            organizationOption: organizationOption || 'all',
+            specificOrganizations: specificOrganizations || [],
         };
     }
 
@@ -44,18 +47,34 @@ export default class RandomFilter extends FilterBase {
             : (size > 0 && size < 1) ? 'percentage' : 'people';
         const amount = Math.round(size * (unit === 'percentage' ? 100 : 1))
 
-        return { amount, unit, seed }
+        return { 
+            amount,
+            unit,
+            seed,
+            organizationOption: config.organizationOption,
+            specificOrganizations: config.specificOrganizations,
+        }
     }
 
     // We use fractions in the backend
     // e.g 70% => 0.7
     mapStateToConfig = () => {
-        const { amount, seed, unit } = this.state;
+        const { 
+            amount, 
+            seed, 
+            unit, 
+            organizationOption, 
+            specificOrganizations } = this.state;
         const size = !Number.isNaN(amount)
             ? amount / (unit === 'percentage' ? 100 : 1)
             : 0;
 
-        return { size, seed };
+        return {
+            size,
+            seed,
+            organizationOption,
+            specificOrganizations,
+        };
     }
 
     renderFilterForm(config) {
@@ -67,6 +86,11 @@ export default class RandomFilter extends FilterBase {
         };
 
         return [
+            <FilterOrganizationSelect
+                config={ config } 
+                openPane={ this.props.openPane }
+                onChangeOrganizations={ this.onChangeOrganizations.bind(this) }
+                />,
             <IntInput key="size" name="size"
                 className="RandomFilter-size"
                 labelMsg="filters.random.size"
@@ -125,5 +149,9 @@ export default class RandomFilter extends FilterBase {
     onSeedChange = () => {
         const seed = makeRandomString(6);
         this.setState({ seed }, () => this.onConfigChange());
+    }
+
+    onChangeOrganizations(orgState) {
+        this.setState(orgState, () => this.onConfigChange());
     }
 }

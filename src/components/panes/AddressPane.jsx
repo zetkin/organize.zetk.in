@@ -6,7 +6,7 @@ import InfoList from '../misc/InfoList';
 import LoadingIndicator from '../misc/LoadingIndicator';
 import PaneBase from './PaneBase';
 import Route from '../misc/elements/Route';
-import TagCloud from '../misc/tagcloud/TagCloud';
+import TagCloud from '../misc/clouds/TagCloud';
 import { getListItemById } from '../../utils/store';
 import { dmsStringFromLatLng } from '../../utils/location';
 import { createSelection } from '../../actions/selection';

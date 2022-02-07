@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage as Msg } from 'react-intl';
 import { connect } from 'react-redux';
 
-import TagCloud from '../../tagcloud/TagCloud';
+import TagCloud from '../../clouds/TagCloud';
 import { retrievePersonTags } from '../../../../actions/personTag';
 import { createSelection } from '../../../../actions/selection';
 import { getListItemsByIds } from '../../../../utils/store';

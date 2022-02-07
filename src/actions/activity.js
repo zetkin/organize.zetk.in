@@ -20,7 +20,25 @@ export function retrieveActivities() {
             type: types.RETRIEVE_ACTIVITIES,
             payload: {
                 promise: z.resource('orgs', orgId, 'activities').get(),
-            }
+            },
+            meta: {
+                recursive: false,
+            },
+        });
+    };
+}
+
+export function retrieveActivitiesRecursive() {
+    return ({ dispatch, getState, z }) => {
+        let orgId = getState().org.activeId;
+        dispatch({
+            type: types.RETRIEVE_ACTIVITIES,
+            payload: {
+                promise: z.resource('orgs', orgId, 'activities?recursive').get(),
+            },
+            meta: {
+                recursive: true,
+            },
         });
     };
 }

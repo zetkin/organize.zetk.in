@@ -2,6 +2,7 @@ import React from 'react';
 import { injectIntl } from 'react-intl';
 
 import FilterBase from './FilterBase';
+import FilterOrganizationSelect from './FilterOrganizationSelect';
 import Form from '../forms/Form';
 import SelectInput from '../forms/inputs/SelectInput';
 import TextInput from '../forms/inputs/TextInput';
@@ -12,10 +13,15 @@ export default class PersonDataFilter extends FilterBase {
     constructor(props) {
         super(props);
 
+        const noField = !Object.keys(props.config)
+            .every(k => k == 'organizationOption' || k == 'specificOrganizations');
+
         this.state = {
             // Show first_name field if there are no fields in config
-            nextField: (Object.keys(props.config).length == 0)?
+            nextField: noField ?
                 'first_name' : undefined,
+            organizationOption: props.config.organizationOption,
+            specificOrganizations: props.config.specificOrganizations,
         };
     }
 
@@ -61,6 +67,11 @@ export default class PersonDataFilter extends FilterBase {
         });
 
         return [
+            <FilterOrganizationSelect
+                config={ config } 
+                openPane={ this.props.openPane }
+                onChangeOrganizations={ this.onChangeOrganizations.bind(this) }
+                />,
             <Form key="form" ref="form"
                 onValueChange={ this.onConfigChange.bind(this) }>
                 { fieldInputs }
@@ -80,12 +91,20 @@ export default class PersonDataFilter extends FilterBase {
             return o;
         }, {});
 
-        return { fields };
+        return {
+            fields,
+            organizationOption: this.state.organizationOption || 'all',
+            specificOrganizations: this.state.specificOrganizations || [],
+        };
     }
 
     onAddNewField(name, value) {
         this.setState({
             nextField: value,
         });
+    }
+
+    onChangeOrganizations(orgState) {
+        this.setState(orgState, () => this.onConfigChange());
     }
 }
