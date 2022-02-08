@@ -85,23 +85,60 @@ export default class SurveyPane extends PaneBase {
                 );
             }
 
+            let statusMsgId;
+            let statusName;
+            if (survey.published) {
+                if (new Date(survey.published) > new Date()) {
+                    statusName = 'draft';
+                    statusMsgId = 'panes.survey.summary.status.draftUntil';
+                } else {
+                    if (survey.expires) {
+                        if (new Date(survey.expires) > new Date()) {
+                            statusName = 'active';
+                            statusMsgId = 'panes.survey.summary.status.activeUntil';
+                        } else {
+                            statusName = 'archived';
+                            statusMsgId = 'panes.survey.summary.status.archived';
+                        }
+                    } else {
+                        statusName = 'active';
+                        statusMsgId = 'panes.survey.summary.status.active';
+                    }
+                }
+            } else {
+                statusName = 'draft';
+                statusMsgId = 'panes.survey.summary.status.draft';
+            }
+
+            let infoListData = [
+                { name: 'desc', value: survey.info_text },
+                { name: 'access', msgId: accessLabelMsgId },
+                { name: 'anonymous', msgId: anonymousLabelMsgId },
+                { name: statusName, msgId: statusMsgId, 
+                    msgValues: { 
+                        expires: (new Date(survey.expires)).format('{yyyy}-{MM}-{dd}'),
+                        published: (new Date(survey.published)).format('{yyyy}-{MM}-{dd}'),
+                    } },
+            ]
+
+            if (!survey.archived) {
+                infoListData.push({ name: 'link', href: linkUrl, target: '_blank', msgId: 'panes.survey.summary.viewLink' })
+            }
+
+            infoListData.push({ name: 'editLink', onClick: this.onEditSummaryClick.bind(this), msgId: 'panes.survey.summary.editLink' });
+
             return [
                 <InfoList key="summary-infolist"
-                    data={[
-                        { name: 'desc', value: survey.info_text },
-                        { name: 'access', msgId: accessLabelMsgId },
-                        { name: 'anonymous', msgId: anonymousLabelMsgId },
-                        { name: 'link', href: linkUrl, target: '_blank', msgId: 'panes.survey.summary.viewLink' },
-                        { name: 'editLink', onClick: this.onEditSummaryClick.bind(this), msgId: 'panes.survey.summary.editLink' }
-                    ]}
+                    data={infoListData}
                 />,
                 <div key="content"
                     className="SurveyPane-content">
                     <Msg tagName="h3" id="panes.survey.content.h"/>
                     { contentBreakdown }
+                    { !survey.archived ? 
                     <Button className="SurveyPane-contentEdit"
                         labelMsg="panes.survey.content.editLink"
-                        onClick={ this.onEditContentClick.bind(this) }/>
+                        onClick={ this.onEditContentClick.bind(this) }/> : null }
                 </div>
             ];
         }

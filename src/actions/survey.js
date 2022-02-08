@@ -34,6 +34,8 @@ export function retrieveSurveysRecursive() {
 export function createSurvey(data, paneId) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
+        data.published = data.published == '' ? null : data.published;
+        data.expires = data.expires == '' ? null : data.expires;
         dispatch({
             type: types.CREATE_SURVEY,
             meta: { paneId },
@@ -70,6 +72,12 @@ export function retrieveSurvey(id) {
 export function updateSurvey(id, data) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
+        if(data.published == '') {
+            data.published = null;
+        }
+        if(data.expires == '') {
+            data.expires = null;
+        }
         dispatch({
             type: types.UPDATE_SURVEY,
             meta: { id },

@@ -16,6 +16,7 @@ export default class SurveyListItem extends React.Component {
         let access = null;
         let callers_only = null;
         let allow_anonymous = null;
+        let status = null;
 
         if (survey.access === "open") {
             access = <Msg id="lists.surveyList.item.access.open"/>;
@@ -32,6 +33,40 @@ export default class SurveyListItem extends React.Component {
         else {
             allow_anonymous = <Msg id="lists.surveyList.item.anonymous.deny"/>;
         }
+
+        let statusMsgId;
+        let statusName;
+        if (survey.published) {
+            if (new Date(survey.published) > new Date()) {
+                statusName = 'draft';
+                statusMsgId = 'lists.surveyList.item.status.draftUntil';
+            } else {
+                if (survey.expires) {
+                    if (new Date(survey.expires) > new Date()) {
+                        statusName = 'active';
+                        statusMsgId = 'lists.surveyList.item.status.activeUntil';
+                    } else {
+                        statusName = 'archived';
+                        statusMsgId = 'lists.surveyList.item.status.archived';
+                    }
+                } else {
+                    statusName = 'active';
+                    statusMsgId = 'lists.surveyList.item.status.active';
+                }
+            }
+        } else {
+            statusName = 'draft';
+            statusMsgId = 'lists.surveyList.item.status.draft';
+        }
+
+        status = (
+            <span className={ `SurveyListItem-status-${statusName}` }>
+                <Msg id={ statusMsgId } values={ {
+                    expires: (new Date(survey.expires)).format('{yyyy}-{MM}-{dd}'),
+                    published: (new Date(survey.published)).format('{yyyy}-{MM}-{dd}'),
+                } }  />
+            </span>
+        );
 
         if (survey.callers_only) {
             callers_only = (
@@ -52,6 +87,9 @@ export default class SurveyListItem extends React.Component {
                     </span>
                     <span className="SurveyListItem-anonymous">
                         { allow_anonymous }
+                    </span>
+                    <span className="SurveyListItem-status">
+                        { status }
                     </span>
                     { callers_only }
                 </div>

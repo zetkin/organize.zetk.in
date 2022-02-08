@@ -10,7 +10,7 @@
     }
 
     .SurveyListItem-access {
-        @include col(4,12, $first:true);
+        @include col(3,12, $first:true);
 
         &:before {
             @include icon($fa-var-eye);
@@ -18,7 +18,7 @@
     }
 
     .SurveyListItem-anonymous {
-        @include col(4,12);
+        @include col(3,12);
 
         &:before {
             @include icon($fa-var-pencil-square-o);
@@ -26,10 +26,32 @@
     }
 
     .SurveyListItem-callers {
-        @include col(4,12);
+        @include col(2,12);
 
         &:before {
             @include icon($fa-var-phone);
+        }
+    }
+
+    .SurveyListItem-status {
+        @include col(4,12);
+
+        .SurveyListItem-status-active {
+            &:before {
+                @include icon($fa-var-check);
+            }
+        }
+
+        .SurveyListItem-status-archived {
+            &:before {
+                @include icon($fa-var-archive);
+            }
+        }
+
+        .SurveyListItem-status-draft {
+            &:before {
+                @include icon($fa-var-pencil);
+            }
         }
     }
 }

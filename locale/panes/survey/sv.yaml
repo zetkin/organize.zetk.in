@@ -23,3 +23,6 @@ summary:
         deny: Tillåt endast signerade svar
     editLink: Redigera inställningar
     viewLink: Visa i aktivistportalen
+    status:
+        active: Aktiv
+        archived: Arkvierad
