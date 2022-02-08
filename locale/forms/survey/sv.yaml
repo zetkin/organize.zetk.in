@@ -7,4 +7,7 @@ signature: Policy för signering
 signatureOptions:
     anon: Tillåt anonyma svar
     sign: Kräv signatur med namn och e-post
+status: Status
 title: Titel
+published: Publiceringsdatum
+expires: Arkiveringsdatum

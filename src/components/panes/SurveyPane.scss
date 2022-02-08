@@ -39,6 +39,24 @@
         }
     }
 
+    .InfoListItem-archived {
+        &::before {
+            @include icon($fa-var-archive);
+        }
+    }
+
+    .InfoListItem-active {
+        &::before {
+            @include icon($fa-var-check);
+        }
+    }
+
+    .InfoListItem-draft {
+        &::before {
+            @include icon($fa-var-pencil);
+        }
+    }
+
     .InfoListItem-editLink {
         font-size: 1em;
     }
