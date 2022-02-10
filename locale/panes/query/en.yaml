@@ -3,3 +3,7 @@ summary:
     diff: Compare with another query
     size: '{size, plural, =0 {No search results} =1 {One search result} other {# search results}}'
     refresh: Refresh results
+    orgAccess:
+        sameorg: Accessible to this organization only
+        suborgs: Accessible to sub-organizations
+    ownership: Belongs to { organization }

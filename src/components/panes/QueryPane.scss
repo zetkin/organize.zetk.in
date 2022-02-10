@@ -21,6 +21,18 @@
         }
     }
 
+    .InfoListItem-org_access {
+        &::before {
+            @include icon($fa-var-eye);
+        }
+    }
+
+    .InfoListItem-ownership {
+        &::before {
+            @include icon($fa-var-sitemap);
+        }
+    }
+
     .InfoListItem-size {
         &::before {
             @include icon($fa-var-users);

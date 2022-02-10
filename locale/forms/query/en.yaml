@@ -1,2 +1,6 @@
 description: Description
 title: Title
+orgAccess: Access
+orgAccessOptions:
+    sameorg: This organization
+    suborgs: Sub-organizations
