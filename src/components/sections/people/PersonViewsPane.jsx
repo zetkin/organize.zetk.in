@@ -25,17 +25,10 @@ import { getListItemById } from '../../../utils/store';
 
 
 const mapStateToProps = state => {
-    const orgId = state.user.activeMembership.organization.id;
-
-    let queryList = state.queries.queryList; 
-    if(queryList && !queryList.isPending) {
-        queryList.items = queryList.items.filter(i => 
-            i.data.organization.id == orgId);
-    }
-
     return {
-        queryList: queryList,
+        queryList: state.queries.queryList,
         views: state.personViews,
+        activeOrg: state.org.activeId,
     }
 };
 
@@ -171,7 +164,11 @@ export default class PersonViewsPane extends RootPaneBase {
                 let querySelect = null;
                 if (this.state.viewMode == 'query') {
                     const queryList = this.props.queryList;
-                    const queries = queryList.items.map(i => i.data).filter(q => !!q.title).sort((a, b) => a.title.localeCompare(b.title));
+                    const queries = queryList.items.map(i => { 
+                        // Mark shared surveys as non-editable
+                        i.data.noEdit = i.data.organization.id != this.props.activeOrg;
+                        return i.data 
+                    }).filter(q => !!q.title).sort((a, b) => a.title.localeCompare(b.title));
 
                     querySelect = (
                         <RelSelectInput name="query"

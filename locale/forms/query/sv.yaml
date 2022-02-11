@@ -1,2 +1,6 @@
 description: Beskrivning
 title: Titel
+orgAccess: Tillgänglighet
+orgAccessOptions:
+    sameorg: Den här organisationen
+    suborgs: Underorganisationer

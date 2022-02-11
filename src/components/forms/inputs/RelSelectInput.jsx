@@ -134,7 +134,7 @@ export default class RelSelectInput extends InputBase {
                     });
 
                     var editLink = null;
-                    if (showEditLink) {
+                    if (showEditLink && !obj.noEdit) {
                         editLink = <a className="RelSelectInput-editLink"
                             onClick={ this.onClickEdit.bind(this, obj) }/>;
                     }

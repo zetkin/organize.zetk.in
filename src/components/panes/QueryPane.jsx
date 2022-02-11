@@ -12,6 +12,7 @@ import LoadingIndicator from '../misc/LoadingIndicator';
 const mapStateToProps = (state, props) => ({
     queryItem: getListItemById(state.queries.queryList,
         props.paneData.params[0]),
+    activeOrg: state.org.activeId,
 });
 
 @connect(mapStateToProps)
@@ -41,6 +42,7 @@ export default class QueryPane extends PaneBase {
     getRenderData() {
         return {
             queryItem: this.props.queryItem,
+            activeOrg: this.props.activeOrg,
         };
     }
 
@@ -49,22 +51,43 @@ export default class QueryPane extends PaneBase {
     }
 
     getPaneSubTitle(data) {
-        return (
-            <a key="editLink" onClick={ this.onEditClick.bind(this) }>
+        if (data.queryItem && 
+            data.queryItem.data && 
+            data.queryItem.data.organization && 
+            data.queryItem.data.organization.id == data.activeOrg) {
+
+            return (<a key="editLink" onClick={ this.onEditClick.bind(this) }>
                 <Msg id="panes.query.editLink"/>
-            </a>
-        );
+            </a>);
+        } else {
+            return null;
+        }
     }
 
     renderPaneContent(data) {
         let item = data.queryItem;
         if (item && item.data && item.data.matchList) {
             let matchList = item.data.matchList;
-            let content = [];
+            let content = []; 
 
             let summary = [
                 { name: 'desc', value: data.queryItem.data.info_text },
             ];
+ 
+            if (item.data.organization && item.data.organization.id != data.activeOrg) {
+                summary.push({
+                    name: 'ownership',
+                    msgId: `panes.query.summary.ownership`,
+                    msgValues: {
+                        organization: item.data.organization.title,
+                    }
+                })
+            } else {
+                summary.push({
+                    name: 'org_access',
+                    msgId: `panes.query.summary.orgAccess.${item.data.org_access}`,
+                })
+            }
 
             if (!matchList.isPending) {
                 summary.push({ name: 'size',

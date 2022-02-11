@@ -2,3 +2,7 @@ editLink: Redigera den här Smarta sökningen
 summary:
     diff: Jämför med en annan sökning
     size: '{size, plural, =0 {Inga sökträffar} =1 {En sökträff} other {# sökträffar}}'
+    orgAccess:
+        sameorg: Tillgänglig för den här organisationen
+        suborgs: Tillgänglig för underorganisationer
+    ownership: Tillhör { organization }
