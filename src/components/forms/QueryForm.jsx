@@ -3,6 +3,7 @@ import React from 'react';
 import Form from './Form';
 import TextInput from './inputs/TextInput';
 import TextArea from './inputs/TextArea';
+import SelectInput from './inputs/SelectInput';
 
 
 export default class QueryForm extends React.Component {
@@ -16,6 +17,11 @@ export default class QueryForm extends React.Component {
     render() {
         let query = this.props.query || {};
 
+        const accessOptions = {
+            'sameorg': 'forms.query.orgAccessOptions.sameorg',
+            'suborgs': 'forms.query.orgAccessOptions.suborgs',
+        }
+
         return (
             <Form ref="form" { ...this.props }>
                 <TextInput labelMsg="forms.query.title" name="title"
@@ -23,6 +29,11 @@ export default class QueryForm extends React.Component {
 
                 <TextArea labelMsg="forms.query.description" name="info_text"
                     initialValue={ query.info_text }/>
+
+                <SelectInput labelMsg="forms.query.orgAccess" name="org_access"
+                    initialValue={ query.org_access }
+                    options={ accessOptions } optionLabelsAreMessages={ true }/>
+
             </Form>
         );
     }

@@ -23,17 +23,11 @@ import {
 
 
 const mapStateToProps = state => {
-    const orgId = state.user.activeMembership.organization.id;
-
-    const queries = state.queries;
-    if(queries.queryList && !queries.queryList.isPending) {
-        queries.queryList.items = queries.queryList.items.filter(i => i.data.organization.id == orgId);
-    }
-
     return {
         people: state.people,
-        queries: queries,
+        queries: state.queries,
         selections: state.selections,
+        activeOrg: state.org.activeId,
     }
 };
 
@@ -146,7 +140,11 @@ export default class PeopleListPane extends RootPaneBase {
         // Only include queries that have a title
         // TODO: Find some better way to filter out call assignment queries,
         //       e.g. a proper type attribute on the query
-        let queries = queryList.items.map(i => i.data).filter(q => q.title);
+        let queries = queryList.items.map(i => { 
+            // Mark shared surveys as non-editable
+            i.data.noEdit = i.data.organization.id != this.props.activeOrg;
+            return i.data 
+        }).filter(q => q.title);
 
         let querySelectNullLabel = formatMessage(
             { id: 'panes.peopleList.querySelect.nullLabel' });
