@@ -22,6 +22,10 @@ summary:
         allow: Tillåt anonyma svar
         deny: Tillåt endast signerade svar
     editLink: Redigera inställningar
+    orgAccess:
+        sameorg: Tillgänglig för den här organisationen
+        suborgs: Tillgänglig för underorganisationer
+    ownership: Tillhör { organization }
     viewLink: Visa i aktivistportalen
     status:
         active: Aktiv

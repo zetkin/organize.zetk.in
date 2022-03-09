@@ -11,3 +11,7 @@ status: Status
 title: Titel
 published: Publiceringsdatum
 expires: Arkiveringsdatum
+orgAccess: Åtkomst för underoganisationer
+orgAccessOptions:
+    sameorg: This organization
+    suborgs: Sub-organizations
