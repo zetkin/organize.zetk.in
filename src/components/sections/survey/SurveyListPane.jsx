@@ -9,13 +9,10 @@ import { retrieveSurveys } from '../../../actions/survey';
 
 
 const mapStateToProps = state => {
-    // FIXME: This is a temporary fix until a proper UI filter has been implemented
-    const list = state.surveys.surveyList;
-    const orgId = state.user.activeMembership.organization.id;
-    list.items = list.items.filter(i => i.data.organization.id == orgId);
     return {
-    surveyList: list,
-}};
+        surveyList: state.surveys.surveyList,
+    }
+};
 
 
 @connect(mapStateToProps)

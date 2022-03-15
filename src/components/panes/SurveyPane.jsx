@@ -18,6 +18,7 @@ const mapStateToProps = (state, props) => {
     return {
         elementList: state.surveys.elementsBySurvey[surveyId.toString()],
         surveyItem: getListItemById(state.surveys.surveyList, surveyId),
+        activeOrg: state.org.activeId,
     };
 };
 
@@ -49,6 +50,8 @@ export default class SurveyPane extends PaneBase {
         if (surveyItem && !surveyItem.isPending) {
             let survey = surveyItem.data;
             let accessLabelMsgId = 'panes.survey.summary.access.' + survey.access;
+            let orgAccessLabelMsgId = 'panes.survey.summary.orgAccess.' + survey.org_access;
+            const surveyEditable = survey.organization && survey.organization.id == this.props.activeOrg;
 
             let anonymousLabelMsgId = null;
             if (survey.allow_anonymous) {
@@ -121,11 +124,28 @@ export default class SurveyPane extends PaneBase {
                     } },
             ]
 
+            if (!surveyEditable) {
+                infoListData.push({
+                    name: 'ownership',
+                    msgId: `panes.survey.summary.ownership`,
+                    msgValues: {
+                        organization: survey.organization.title,
+                    }
+                })
+            } else {
+                infoListData.push({
+                    name: 'org_access',
+                    msgId: orgAccessLabelMsgId,
+                })
+            }
+
             if (!survey.archived) {
                 infoListData.push({ name: 'link', href: linkUrl, target: '_blank', msgId: 'panes.survey.summary.viewLink' })
             }
 
-            infoListData.push({ name: 'editLink', onClick: this.onEditSummaryClick.bind(this), msgId: 'panes.survey.summary.editLink' });
+            if (surveyEditable) {
+                infoListData.push({ name: 'editLink', onClick: this.onEditSummaryClick.bind(this), msgId: 'panes.survey.summary.editLink' });
+            }
 
             return [
                 <InfoList key="summary-infolist"
@@ -135,7 +155,7 @@ export default class SurveyPane extends PaneBase {
                     className="SurveyPane-content">
                     <Msg tagName="h3" id="panes.survey.content.h"/>
                     { contentBreakdown }
-                    { !survey.archived ? 
+                    { !survey.archived && surveyEditable ? 
                     <Button className="SurveyPane-contentEdit"
                         labelMsg="panes.survey.content.editLink"
                         onClick={ this.onEditContentClick.bind(this) }/> : null }

@@ -11,3 +11,7 @@ status: Status
 title: Title
 published: Publishing date
 expires: Archiving date
+orgAccess: Organization access
+orgAccessOptions:
+    sameorg: This organization
+    suborgs: Sub-organizations

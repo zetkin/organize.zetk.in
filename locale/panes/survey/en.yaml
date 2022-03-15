@@ -22,6 +22,10 @@ summary:
         allow: Allow anonymous submissions
         deny: Only allow signed submissions
     editLink: Edit settings
+    orgAccess:
+        sameorg: Accessible to this organization only
+        suborgs: Accessible to sub-organizations
+    ownership: Belongs to { organization }
     viewLink: Open in activist portal
     status:
         active: Active
