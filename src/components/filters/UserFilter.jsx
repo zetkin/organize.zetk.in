@@ -2,6 +2,7 @@ import React from 'react';
 
 import FilterBase from './FilterBase';
 import SelectInput from '../forms/inputs/SelectInput';
+import FilterOrganizationSelect from './FilterOrganizationSelect';
 
 
 export default class UserFilter extends FilterBase {
