@@ -142,7 +142,7 @@ export default class PeopleListPane extends RootPaneBase {
         //       e.g. a proper type attribute on the query
         let queries = queryList.items.map(i => { 
             // Mark shared surveys as non-editable
-            i.data.noEdit = i.data.organization.id != this.props.activeOrg;
+            i.data.noEdit = i.data.organization && i.data.organization.id != this.props.activeOrg;
             return i.data 
         }).filter(q => q.title);
 
