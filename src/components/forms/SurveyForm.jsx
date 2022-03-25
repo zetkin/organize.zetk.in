@@ -24,6 +24,11 @@ export default class SurveyForm extends React.Component {
             'auth': 'forms.survey.accessOptions.auth',
         };
 
+        let orgAccessOptions = {
+            'suborgs': 'forms.survey.orgAccessOptions.suborgs',
+            'sameorg': 'forms.survey.orgAccessOptions.sameorg',
+        };
+
         let signatureOptions = {
             'anon': 'forms.survey.signatureOptions.anon',
             'sign': 'forms.survey.signatureOptions.sign',
@@ -57,6 +62,9 @@ export default class SurveyForm extends React.Component {
                 <SelectInput labelMsg="forms.survey.signature" name="signature"
                     initialValue={ survey.signature }
                     options={ signatureOptions } optionLabelsAreMessages={ true }/>
+                <SelectInput labelMsg="forms.survey.orgAccess" name="org_access"
+                    initialValue={ survey.org_access }
+                    options={ orgAccessOptions } optionLabelsAreMessages={ true }/>
                 <DateInput labelMsg="forms.survey.published" name="published"
                     initialValue={ publishedDate }/>
                 <DateInput labelMsg="forms.survey.expires" name="expires"

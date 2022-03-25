@@ -1,7 +1,7 @@
 export default (orgList, collection, config) => {
     let filterOrgs;
     if(config.organizationOption == 'all') {
-        filterOrgs = orgList;
+        return collection;
     } else if(config.organizationOption == 'suborgs') {
         // activeOrg is the first org in list returned by flattenOrganizations, exclude it
         filterOrgs = orgList.slice(1)

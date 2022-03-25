@@ -38,13 +38,13 @@ export default class SelectPersonTagsPane extends PaneBase {
         let selectionList = this.props.selections.selectionList;
 
         let organizationOption = this.getParam(1, 'current');
-        let selectedOrganizations = JSON.parse(this.getParam(2, '[]'));
+        let specificOrganizations = JSON.parse(this.getParam(2, '[]'));
 
         let orgList = flattenOrganizationsFromState(this.props);
         let tagListItems = filterByOrg(
             orgList, 
             this.props.personTags.tagList.items, 
-            { organizationOption, selectedOrganizations }
+            { organizationOption, specificOrganizations }
         );
 
         return {
