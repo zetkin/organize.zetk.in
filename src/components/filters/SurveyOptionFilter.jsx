@@ -40,7 +40,7 @@ export default class SurveyOptionFilter extends FilterBase {
 
         let surveyList = this.props.surveyList;
 
-        if ((surveyList.items.length == 0 || !surveyList.items.recursive) && !surveyList.isPending) {
+        if (surveyList.items && (surveyList.items.length == 0 || !surveyList.items.recursive) && !surveyList.isPending) {
             this.props.dispatch(retrieveSurveysRecursive());
         }
 

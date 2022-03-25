@@ -14,5 +14,5 @@ export default (orgList, collection, config) => {
     }
     filterOrgs = filterOrgs.map(o => o.id);
 
-    return collection.filter(item => filterOrgs.includes(item.data.organization.id));
+    return collection.filter(item => item.data.organization && filterOrgs.includes(item.data.organization.id));
 }
