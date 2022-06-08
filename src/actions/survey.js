@@ -51,21 +51,19 @@ export function retrieveSurvey(id) {
         let orgId;
         let survey;
         const surveys = getState().surveys;
-        if(surveys.surveyList && surveys.surveyList.items) {
+        if(surveys.surveyList && surveys.surveyList.items && !surveys.isPending) {
             survey = getState().surveys.surveyList.items.find(i => i.data.id == id);
-        }
-        if(survey) {
-            orgId = survey.data.organization.id;
-        } else {
-            orgId = getState().org.activeId;
-        }
-        dispatch({
-            type: types.RETRIEVE_SURVEY,
-            meta: { id },
-            payload: {
-                promise: z.resource('orgs', orgId, 'surveys', id).get(),
+            if(survey && !survey.isPending) {
+                orgId = survey.data.organization.id;
+                dispatch({
+                    type: types.RETRIEVE_SURVEY,
+                    meta: { id },
+                    payload: {
+                        promise: z.resource('orgs', orgId, 'surveys', id).get(),
+                    }
+                });
             }
-        });
+        }
     };
 }
 
