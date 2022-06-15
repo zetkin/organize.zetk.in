@@ -1,0 +1,18 @@
+assignment: Vilket uppdrag?
+anyAssignment: Oavsett uppdrag
+numCallers: Max antal ringare
+operator: Ringare som...
+operators:
+    assigned: tilldelats
+    notassigned: ej tilldelats
+    numCalls: ringt ett antal samtal
+    mostActive: varit mest aktiva
+matching:
+    min: Minst
+    max: Max
+    options:
+      any: Oavsett antal
+      min: Minst ett visst antal gånger
+      between: Mellan två antal gånger
+      max: Max ett visst antal gånger
+      none: Aldrig ringt

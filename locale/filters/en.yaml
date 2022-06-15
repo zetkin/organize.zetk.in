@@ -3,6 +3,7 @@ dropInstructions: Drop filter here to re-order
 types:
     all: Everyone
     callHistory: Call history
+    caller: Callers
     campaignParticipation: Campaign participation
     joinDate: Join date
     mostActive: Most active campaigners

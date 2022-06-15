@@ -1,0 +1,18 @@
+assignment: In which call assignment?
+numCallers: Maximum number of callers
+anyAssignment: Any assignnment
+operators:
+    assigned: were assigned to
+    notassigned: were not assigned to
+    numCalls: made a certain number of calls
+    mostActive: were most active
+operator: Callers who...
+matching:
+    min: Minimum
+    max: Maximum
+    options:
+      any: Any number of times
+      min: At least a certain number of times
+      max: At most a certain number of times
+      between: Between two number of times
+      none: Never called
