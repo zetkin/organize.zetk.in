@@ -32,6 +32,7 @@ export default class SubQueryFilter extends FilterBase {
 
         this.state = {
             queryId: props.config.query_id,
+            operator: props.config.operator || 'in',
             organizationOption: props.config.organizationOptions || 'all',
             specificOrganizations: props.config.specificOrganizations || [],
         };
@@ -48,6 +49,7 @@ export default class SubQueryFilter extends FilterBase {
         if (nextProps.config !== this.props.config) {
             this.setState({
                 queryId: nextProps.config.query_id,
+                operator: nextProps.config.operator,
                 organizationOption: nextProps.config.organizationOption,
                 specificOrganizations: nextProps.config.specificOrganizations,
             });
@@ -93,8 +95,16 @@ export default class SubQueryFilter extends FilterBase {
                 openPane={ this.props.openPane }
                 onChangeOrganizations={ this.onChangeOrganizations.bind(this) }
                 />,
-            <SelectInput key="isUser" name="is_user"
+            <SelectInput key="operator" name="operator"
                 labelMsg="filters.subQuery.queryLabel"
+                options={{
+                    "in": this.props.intl.formatMessage({ id: "filters.subQuery.operator.in" }),
+                    "notin": this.props.intl.formatMessage({ id: "filters.subQuery.operator.notin"}),
+                }}
+                value={ this.state.operator }
+                onValueChange={ this.onChangeOperator.bind(this) }
+                />,
+            <SelectInput key="isUser" name="is_user"
                 options={ OPTIONS } value={ this.state.queryId }
                 orderAlphabetically={ true }
                 onValueChange={ this.onQuerySelect.bind(this) }
@@ -105,6 +115,7 @@ export default class SubQueryFilter extends FilterBase {
     getConfig() {
         return {
             query_id: this.state.queryId,
+            operator: this.state.operator,
             organizationOption: this.state.organizationOption,
             specificOrganizations: this.state.specificOrganizations,
         };
@@ -116,5 +127,9 @@ export default class SubQueryFilter extends FilterBase {
 
     onChangeOrganizations(orgState) {
         this.setState(orgState, () => this.onConfigChange());
+    }
+
+    onChangeOperator(name, value) {
+        this.setState({ operator: value }, () => this.onConfigChange());
     }
 }
