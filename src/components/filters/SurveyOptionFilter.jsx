@@ -30,7 +30,8 @@ export default class SurveyOptionFilter extends FilterBase {
     componentWillReceiveProps(nextProps) {
         this.setState(this.stateFromProps(nextProps));
 
-        if (nextProps.config.survey && nextProps.config.survey != this.props.config.survey) {
+        if (nextProps.config.survey && nextProps.config.survey != this.props.config.survey 
+                || !nextProps.elementsBySurvey[nextProps.config.survey]) {
             this.props.dispatch(retrieveSurvey(this.state.survey));
         }
     }
