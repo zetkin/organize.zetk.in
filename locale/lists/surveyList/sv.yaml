@@ -8,9 +8,10 @@ item:
     access:
         auth: Endast inloggade
         open: Vem som helst
-    anonymous:
-        allow: Tillåt anonyma
-        deny: Kräv signatur
+    siganture:
+        allow_anonymous: Tillåt anonyma
+        require_signature: Kräv signatur
+        force_anonymous: Kräv anonyma
     callersOnly: Endast för ringare
     status:
         active: Aktiv

@@ -8,9 +8,10 @@ item:
     access:
         auth: Connected only
         open: Anyone
-    anonymous:
-        allow: Allow anonymous
-        deny: Require signature
+    signature:
+        allow_anonymous: Allow anonymous
+        require_signature: Require signature
+        force_anonymous: Require anonymous
     callersOnly: Callers only
     status:
         active: Active
