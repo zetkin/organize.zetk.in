@@ -39,7 +39,7 @@
         }
     }
 
-    .InfoListItem-anonymous {
+    .InfoListItem-signature {
         &::before {
             @include icon($fa-var-pencil-square-o);
         }
