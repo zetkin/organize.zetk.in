@@ -3,11 +3,9 @@ anyAssignment: Oavsett uppdrag
 numCallers: Max antal ringare
 operator: Ringare som...
 operators:
-    assigned: tilldelats
-    notassigned: ej tilldelats
     numCalls: ringt ett antal samtal
     mostActive: varit mest aktiva
-matching:
+num_callers:
     min: Minst
     max: Max
     options:

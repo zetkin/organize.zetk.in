@@ -3,7 +3,7 @@ dropInstructions: Släpp filter här för att byta ordning
 types:
     all: Alla i organisationen
     callHistory: Ringhistorik
-    callers: Ringare
+    callers: Ringardeltagande
     campaignParticipation: Kampanjdeltagande
     joinDate: Inträdesdatum
     personData: Personuppgifter

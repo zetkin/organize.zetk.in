@@ -59,7 +59,7 @@ export default class FilterList extends React.Component {
         const filterTypes = {
             'all': msg('filters.types.all'),
             'call_history': msg('filters.types.callHistory'),
-            'caller': msg('filters.types.caller'),
+            'caller_participation': msg('filters.types.callerParticipation'),
             'campaign_participation': msg('filters.types.campaignParticipation'),
             'most_active': msg('filters.types.mostActive'),
             'person_data': msg('filters.types.personData'),

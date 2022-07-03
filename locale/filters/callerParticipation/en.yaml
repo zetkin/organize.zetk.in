@@ -2,12 +2,10 @@ assignment: In which call assignment?
 numCallers: Maximum number of callers
 anyAssignment: Any assignnment
 operators:
-    assigned: were assigned to
-    notassigned: were not assigned to
     numCalls: made a certain number of calls
     mostActive: were most active
 operator: Callers who...
-matching:
+num_calls:
     min: Minimum
     max: Maximum
     options:

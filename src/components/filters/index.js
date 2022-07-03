@@ -1,6 +1,6 @@
 import AllFilter from './AllFilter';
 import CallHistoryFilter from './CallHistoryFilter';
-import CallerFilter from './CallerFilter';
+import CallerParticipationFilter from './CallerParticipationFilter';
 import CampaignFilter from './CampaignFilter';
 import MostActiveFilter from './MostActiveFilter';
 import PersonDataFilter from './PersonDataFilter';
@@ -16,7 +16,7 @@ import UserFilter from './UserFilter';
 const filterComponents = {
     'all': AllFilter,
     'call_history': CallHistoryFilter,
-    'caller': CallerFilter,
+    'caller_participation': CallerParticipationFilter,
     'campaign_participation': CampaignFilter,
     'most_active': MostActiveFilter,
     'person_data': PersonDataFilter,
