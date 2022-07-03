@@ -15,7 +15,6 @@ export default class SurveyListItem extends React.Component {
         let survey = this.props.data;
         let access = null;
         let callers_only = null;
-        let allow_anonymous = null;
         let status = null;
 
         if (survey.access === "open") {
@@ -27,12 +26,7 @@ export default class SurveyListItem extends React.Component {
 
         let accessClassNames  = cx('SurveyListItem-access', survey.access );
 
-        if (survey.allow_anonymous) {
-            allow_anonymous = <Msg id="lists.surveyList.item.anonymous.allow"/>;
-        }
-        else {
-            allow_anonymous = <Msg id="lists.surveyList.item.anonymous.deny"/>;
-        }
+        let signature = <Msg id={ `lists.surveyList.item.signature.${survey.signature}` } />
 
         let statusMsgId;
         let statusName;
@@ -85,8 +79,8 @@ export default class SurveyListItem extends React.Component {
                     <span className="SurveyListItem-access">
                         { access }
                     </span>
-                    <span className="SurveyListItem-anonymous">
-                        { allow_anonymous }
+                    <span className={ `SurveyListItem-signature` }>
+                        { signature }
                     </span>
                     <span className="SurveyListItem-status">
                         { status }

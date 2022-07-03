@@ -18,9 +18,10 @@ summary:
         auth: Öppen endast för anslutna användare
         list: Öppen endast för specifika personer
         open: Öppen för vem som helst
-    anonymous:
-        allow: Tillåt anonyma svar
-        deny: Tillåt endast signerade svar
+    signature:
+        allow_anonymous: Tillåt anonyma svar
+        require_signature: Tillåt endast signerade svar
+        force_anonymous: Tillåt endast anonyma svar
     editLink: Redigera inställningar
     orgAccess:
         sameorg: Tillgänglig för den här organisationen

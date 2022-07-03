@@ -30,8 +30,9 @@ export default class SurveyForm extends React.Component {
         };
 
         let signatureOptions = {
-            'anon': 'forms.survey.signatureOptions.anon',
-            'sign': 'forms.survey.signatureOptions.sign',
+            'allow_anonymous': 'forms.survey.signatureOptions.anon',
+            'require_signature': 'forms.survey.signatureOptions.sign',
+            'force_anonymous': 'forms.survey.signatureOptions.forceanon',
         };
 
         let publishedDate;
@@ -47,8 +48,6 @@ export default class SurveyForm extends React.Component {
                 .setUTC(true)
                 .format('{yyyy}-{MM}-{dd}');
         }
-
-        survey.signature = survey.allow_anonymous? 'anon' : 'sign';
 
         return (
             <Form className="SurveyForm" ref="form" { ...this.props }>
@@ -75,18 +74,12 @@ export default class SurveyForm extends React.Component {
 
     getValues() {
         let values = this.refs.form.getValues();
-        values.allow_anonymous = (values.signature == 'anon');
-        delete values['signature'];
 
         return values;
     }
 
     getChangedValues() {
         let values = this.refs.form.getChangedValues();
-        if ('signature' in values) {
-            values.allow_anonymous = (values.signature == 'anon');
-            delete values['signature'];
-        }
 
         return values;
     }

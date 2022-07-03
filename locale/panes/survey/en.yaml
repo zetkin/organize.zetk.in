@@ -18,9 +18,10 @@ summary:
         auth: Open for connected users only
         list: Open for specific people only
         open: Open for anyone
-    anonymous:
-        allow: Allow anonymous submissions
-        deny: Only allow signed submissions
+    signature:
+        allow_anonymous: Allow anonymous submissions
+        require_signature: Only allow signed submissions
+        force_anonymous: Only allow anonymous submissions
     editLink: Edit settings
     orgAccess:
         sameorg: Accessible to this organization only

@@ -53,13 +53,7 @@ export default class SurveyPane extends PaneBase {
             let orgAccessLabelMsgId = 'panes.survey.summary.orgAccess.' + survey.org_access;
             const surveyEditable = survey.organization && survey.organization.id == this.props.activeOrg;
 
-            let anonymousLabelMsgId = null;
-            if (survey.allow_anonymous) {
-                anonymousLabelMsgId = 'panes.survey.summary.anonymous.allow';
-            }
-            else {
-                anonymousLabelMsgId = 'panes.survey.summary.anonymous.deny';
-            }
+            let signatureLabelMsgId = `panes.survey.summary.signature.${survey.signature}`;
 
             let linkUrl = '//www.' + process.env.ZETKIN_DOMAIN + '/o/'
                 + survey.organization.id + '/surveys/' + survey.id;
@@ -116,7 +110,7 @@ export default class SurveyPane extends PaneBase {
             let infoListData = [
                 { name: 'desc', value: survey.info_text },
                 { name: 'access', msgId: accessLabelMsgId },
-                { name: 'anonymous', msgId: anonymousLabelMsgId },
+                { name: 'signature', msgId: signatureLabelMsgId },
                 { name: statusName, msgId: statusMsgId, 
                     msgValues: { 
                         expires: (new Date(survey.expires)).format('{yyyy}-{MM}-{dd}'),
