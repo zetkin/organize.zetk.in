@@ -9,6 +9,10 @@ import {
 
 function mapOrganizationParams(data) {
     data.filter_spec = data.filter_spec.map(spec => {
+        if(!spec.config) {
+            spec.config = {};
+        }
+
         if(spec.config.organizations) {
             if(spec.config.organizations instanceof Array) {
                 spec.config.organizationOption = 'specific';
