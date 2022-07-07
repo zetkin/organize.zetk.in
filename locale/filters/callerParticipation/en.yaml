@@ -1,10 +1,5 @@
 assignment: In which call assignment?
-numCallers: Maximum number of callers
 anyAssignment: Any assignnment
-operators:
-    numCalls: made a certain number of calls
-    mostActive: were most active
-operator: Callers who...
 num_calls:
     min: Minimum
     max: Maximum

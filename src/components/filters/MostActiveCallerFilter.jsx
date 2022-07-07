@@ -20,7 +20,7 @@ import { flattenOrganizationsFromState } from '../../utils/flattenOrganizations'
     orgList: flattenOrganizationsFromState(state),
 }))
 @injectIntl
-export default class CallerParticipationFilter extends FilterBase {
+export default class MostActiveCallerFilter extends FilterBase {
     constructor(props) {
         super(props);
 
@@ -50,12 +50,13 @@ export default class CallerParticipationFilter extends FilterBase {
 
         const msg = id => this.props.intl.formatMessage({ id });
 
-        const matchingSelect = (
-            <FilterMatchingSelect
-                config={ this.state.num_calls }
-                labelMsgStem='filters.callerParticipation.num_calls'
-                onChange={ this.onChangeMatching.bind(this) } />
-        );
+        const numCallersInput = (
+            <div className="MostActiveCallerFilter-num_callers">
+                <Msg tagName="label" id={ "filters.mostActiveCaller.numCallers" } />
+                <IntInput key="num_callers" name="num_callers" value={ this.state.num_callers }
+                    onValueChange={ this.onChangeNumCallers.bind(this) }/>
+            </div>
+        )
 
         return [
             <FilterOrganizationSelect
@@ -64,15 +65,15 @@ export default class CallerParticipationFilter extends FilterBase {
                 onChangeOrganizations={ this.onChangeOrganizations.bind(this) }
                 />,
 
-            matchingSelect,
+            numCallersInput,
 
             <RelSelectInput key="assignment" name="assignment"
-                labelMsg="filters.callerParticipation.assignment"
+                labelMsg="filters.mostActiveCaller.assignment"
                 objects={ assignments } value={ this.state.assignment }
                 onValueChange={ this.onChangeAssignment.bind(this) }
                 showCreateOption={ false }
                 allowNull={ true }
-                nullLabel={ msg("filters.callerParticipation.anyAssignment") }
+                nullLabel={ msg("filters.mostActiveCaller.anyAssignment") }
                 />,
         ];
     }
@@ -113,7 +114,7 @@ export default class CallerParticipationFilter extends FilterBase {
     getConfig() {
         return {
             assignment: this.state.assignment,
-            num_calls: this.state.num_calls,
+            num_callers: this.state.num_callers,
             organizationOption: this.state.organizationOption,
             specificOrganizations: this.state.specificOrganizations,
         };
@@ -121,11 +122,10 @@ export default class CallerParticipationFilter extends FilterBase {
 }
 
 function stateFromConfig(config) {
-    const num_calls = config.num_calls || { min: 1 };
 
     const state = {
             assignment: config.assignment,
-            num_calls: num_calls,
+            num_callers: config.num_callers || 10,
             organizationOption: config.organizationOption || 'current',
             specificOrganizations: config.specificOrganizations || [],
         };

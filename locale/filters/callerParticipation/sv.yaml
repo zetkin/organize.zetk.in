@@ -1,10 +1,5 @@
 assignment: Vilket uppdrag?
 anyAssignment: Oavsett uppdrag
-numCallers: Max antal ringare
-operator: Ringare som...
-operators:
-    numCalls: ringt ett antal samtal
-    mostActive: varit mest aktiva
 num_callers:
     min: Minst
     max: Max

@@ -6,6 +6,8 @@ types:
     callers: Ringardeltagande
     campaignParticipation: Kampanjdeltagande
     joinDate: Inträdesdatum
+    mostActive: Mest aktiva kampanjdeltagare
+    mostActiveCaller: Mest aktiva ringare
     personData: Personuppgifter
     personTags: Etiketter
     random: Slumpmässigt urval

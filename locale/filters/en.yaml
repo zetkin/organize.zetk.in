@@ -7,6 +7,7 @@ types:
     campaignParticipation: Campaign participation
     joinDate: Join date
     mostActive: Most active campaigners
+    mostActiveCaller: Most active callers
     personData: Personal data
     personField: Custom field
     personTags: Tags
