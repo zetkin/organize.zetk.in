@@ -52,12 +52,104 @@ let operations = {
             'Contact name',
             'Contact e-mail',
             'Contact phone',
+            'Participant name',
+            'Participant e-mail',
+            'Participant phone',
         ];
 
-        let contacts = {};
-        let actions;
-        let maxActionsSupportedInExport = 100;
+        const maxActionsSupportedInExport = 100;
+        const cappedSelectedActions = req.body.objects.slice(0, maxActionsSupportedInExport);
 
+        return Promise.all( cappedSelectedActions.map(a =>
+                req.z.resource('orgs', orgId, 'actions', a).get()
+                    .then(action => {
+                        const participantsPromise = req.z.resource('orgs', orgId, 'actions', a, 'participants').get();
+
+                        return participantsPromise.then(participants => ({
+                            action: action.data.data,
+                            participants: participants.data.data,
+                        }))
+            })))
+            .then(actions => {
+                actions.forEach(action => {
+                    if (action.action.contact) {
+                        // action.action.contact only contains limited information about the conact,
+                        // find the full person object from the participants
+                        const contact = action.participants.find(p => p.id == action.action.contact.id);
+                        action.full_contact = contact;
+                    }
+                })
+
+                return actions;
+            })
+            .then(actions => {
+                const numRows = actions.reduce((rows, action) => rows + 1 + action.participants.length, 0)
+                let lastCell = xlsx.utils.encode_cell(
+                    { c: HEADER.length, r: numRows });
+
+                let wb = {
+                    SheetNames: ['Zetkin'],
+                    Sheets: {
+                        Zetkin: {
+                            '!ref': xlsx.utils.encode_range('A1', lastCell),
+                        },
+                    },
+                };
+
+                // First write header
+                HEADER.forEach((h, col) => {
+                    let addr = xlsx.utils.encode_cell({ c: col, r: 0 });
+                    wb.Sheets.Zetkin[addr] = { v: h };
+                });
+
+                let row = 0;
+                actions.forEach((action, actionIndex) => {
+                    row += 1;
+                    const startTime = new Date(action.action.start_time);
+                    const endTime = new Date(action.action.end_time);
+
+                    const values = [
+                        action.action.id,
+                        startTime.format('{yyyy}-{MM}-{dd}'),
+                        startTime.format('{HH}:{mm}'),
+                        endTime.format('{HH}:{mm}'),
+                        action.action.location.title,
+                        action.action.activity.title,
+                    ];
+
+                    if (action.full_contact) {
+                        values.push(
+                            action.full_contact.first_name + ' ' + action.full_contact.last_name,
+                            action.full_contact.email,
+                            action.full_contact.phone,
+                        );
+                    }
+                    values.forEach((value, col) => {
+                        let addr = xlsx.utils.encode_cell({ c: col, r: row });
+                        wb.Sheets.Zetkin[addr] = { v: value };
+                    });
+
+                    action.participants.forEach(p => {
+                        row += 1;
+                        let part = ['', '', '', '', '', '', '', '', '', `${p.first_name} ${p.last_name}`, p.email, p.phone];
+                        part.forEach((value, col) => {
+                            let addr = xlsx.utils.encode_cell({ c: col, r: row });
+                            wb.Sheets.Zetkin[addr] = { v: value };
+                        })
+                    })
+                });
+
+                let buf = xlsx.write(wb, {
+                    bookType: 'xlsx',
+                    bookSST: false,
+                    type: 'buffer',
+                });
+
+                res.attachment('action-export.xlsx')
+                    .send(buf);
+            })
+        },
+    /*
         return req.z.resource('orgs', orgId, 'actions').get()
             .then(result => {
                 let cappedSelectedActions = req.body.objects.slice(0, maxActionsSupportedInExport);
@@ -86,64 +178,7 @@ let operations = {
                 });
 
                 return promise;
-            })
-            .then(() => {
-                let lastCell = xlsx.utils.encode_cell(
-                    { c: HEADER.length, r: actions.length });
-
-                let wb = {
-                    SheetNames: ['Zetkin'],
-                    Sheets: {
-                        Zetkin: {
-                            '!ref': xlsx.utils.encode_range('A1', lastCell),
-                        },
-                    },
-                };
-
-                // First write header
-                HEADER.forEach((h, col) => {
-                    let addr = xlsx.utils.encode_cell({ c: col, r: 0 });
-                    wb.Sheets.Zetkin[addr] = { v: h };
-                });
-
-                actions.forEach((action, row) => {
-                    const startTime = new Date(action.start_time);
-                    const endTime = new Date(action.end_time);
-
-                    const values = [
-                        action.id,
-                        startTime.format('{yyyy}-{MM}-{dd}'),
-                        startTime.format('{HH}:{mm}'),
-                        endTime.format('{HH}:{mm}'),
-                        action.location.title,
-                        action.activity.title,
-                    ];
-
-                    if (action.contact) {
-                        const contact = contacts[action.contact.id.toString()];
-                        values.push(
-                            contact.first_name + ' ' + contact.last_name,
-                            contact.email,
-                            contact.phone,
-                        );
-                    }
-
-                    values.forEach((value, col) => {
-                        let addr = xlsx.utils.encode_cell({ c: col, r: row + 1 });
-                        wb.Sheets.Zetkin[addr] = { v: value };
-                    });
-                });
-
-                let buf = xlsx.write(wb, {
-                    bookType: 'xlsx',
-                    bookSST: false,
-                    type: 'buffer',
-                });
-
-                res.attachment('action-export.xlsx')
-                    .send(buf);
-            });
-    },
+            })*/
 
     'person.tag': (req, res) => {
         let z = req.z;
