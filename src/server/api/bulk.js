@@ -149,36 +149,6 @@ let operations = {
                     .send(buf);
             })
         },
-    /*
-        return req.z.resource('orgs', orgId, 'actions').get()
-            .then(result => {
-                let cappedSelectedActions = req.body.objects.slice(0, maxActionsSupportedInExport);
-
-                actions = result.data.data.filter(a =>
-                    cappedSelectedActions.indexOf(a.id) >= 0);
-
-                // Make a list of contact IDs
-                actions.forEach(action => {
-                    if (action.contact) {
-                        contacts[action.contact.id.toString()] = null;
-                    }
-                });
-
-                // Load all contacts
-                let promise = Promise.resolve();
-                Object.keys(contacts).forEach(id => {
-                    promise = promise.then(() => {
-                        return req.z.resource('orgs', orgId, 'people', id)
-                            .get()
-                            .then(result => {
-                                const person = result.data.data;
-                                contacts[person.id.toString()] = person;
-                            });
-                    });
-                });
-
-                return promise;
-            })*/
 
     'person.tag': (req, res) => {
         let z = req.z;
