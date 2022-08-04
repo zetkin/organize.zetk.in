@@ -52,44 +52,40 @@ let operations = {
             'Contact name',
             'Contact e-mail',
             'Contact phone',
+            'Participant name',
+            'Participant e-mail',
+            'Participant phone',
         ];
 
-        let contacts = {};
-        let actions;
-        let maxActionsSupportedInExport = 100;
+        const maxActionsSupportedInExport = 100;
+        const cappedSelectedActions = req.body.objects.slice(0, maxActionsSupportedInExport);
 
-        return req.z.resource('orgs', orgId, 'actions').get()
-            .then(result => {
-                let cappedSelectedActions = req.body.objects.slice(0, maxActionsSupportedInExport);
+        return Promise.all( cappedSelectedActions.map(a =>
+                req.z.resource('orgs', orgId, 'actions', a).get()
+                    .then(action => {
+                        const participantsPromise = req.z.resource('orgs', orgId, 'actions', a, 'participants').get();
 
-                actions = result.data.data.filter(a =>
-                    cappedSelectedActions.indexOf(a.id) >= 0);
-
-                // Make a list of contact IDs
+                        return participantsPromise.then(participants => ({
+                            action: action.data.data,
+                            participants: participants.data.data,
+                        }))
+            })))
+            .then(actions => {
                 actions.forEach(action => {
-                    if (action.contact) {
-                        contacts[action.contact.id.toString()] = null;
+                    if (action.action.contact) {
+                        // action.action.contact only contains limited information about the conact,
+                        // find the full person object from the participants
+                        const contact = action.participants.find(p => p.id == action.action.contact.id);
+                        action.full_contact = contact;
                     }
-                });
+                })
 
-                // Load all contacts
-                let promise = Promise.resolve();
-                Object.keys(contacts).forEach(id => {
-                    promise = promise.then(() => {
-                        return req.z.resource('orgs', orgId, 'people', id)
-                            .get()
-                            .then(result => {
-                                const person = result.data.data;
-                                contacts[person.id.toString()] = person;
-                            });
-                    });
-                });
-
-                return promise;
+                return actions;
             })
-            .then(() => {
+            .then(actions => {
+                const numRows = actions.reduce((rows, action) => rows + 1 + action.participants.length, 0)
                 let lastCell = xlsx.utils.encode_cell(
-                    { c: HEADER.length, r: actions.length });
+                    { c: HEADER.length, r: numRows });
 
                 let wb = {
                     SheetNames: ['Zetkin'],
@@ -106,32 +102,41 @@ let operations = {
                     wb.Sheets.Zetkin[addr] = { v: h };
                 });
 
-                actions.forEach((action, row) => {
-                    const startTime = new Date(action.start_time);
-                    const endTime = new Date(action.end_time);
+                let row = 0;
+                actions.forEach((action, actionIndex) => {
+                    row += 1;
+                    const startTime = new Date(action.action.start_time);
+                    const endTime = new Date(action.action.end_time);
 
                     const values = [
-                        action.id,
+                        action.action.id,
                         startTime.format('{yyyy}-{MM}-{dd}'),
                         startTime.format('{HH}:{mm}'),
                         endTime.format('{HH}:{mm}'),
-                        action.location.title,
-                        action.activity.title,
+                        action.action.location.title,
+                        action.action.activity.title,
                     ];
 
-                    if (action.contact) {
-                        const contact = contacts[action.contact.id.toString()];
+                    if (action.full_contact) {
                         values.push(
-                            contact.first_name + ' ' + contact.last_name,
-                            contact.email,
-                            contact.phone,
+                            action.full_contact.first_name + ' ' + action.full_contact.last_name,
+                            action.full_contact.email,
+                            action.full_contact.phone,
                         );
                     }
-
                     values.forEach((value, col) => {
-                        let addr = xlsx.utils.encode_cell({ c: col, r: row + 1 });
+                        let addr = xlsx.utils.encode_cell({ c: col, r: row });
                         wb.Sheets.Zetkin[addr] = { v: value };
                     });
+
+                    action.participants.forEach(p => {
+                        row += 1;
+                        let part = ['', '', '', '', '', '', '', '', '', `${p.first_name} ${p.last_name}`, p.email, p.phone];
+                        part.forEach((value, col) => {
+                            let addr = xlsx.utils.encode_cell({ c: col, r: row });
+                            wb.Sheets.Zetkin[addr] = { v: value };
+                        })
+                    })
                 });
 
                 let buf = xlsx.write(wb, {
@@ -142,8 +147,8 @@ let operations = {
 
                 res.attachment('action-export.xlsx')
                     .send(buf);
-            });
-    },
+            })
+        },
 
     'person.tag': (req, res) => {
         let z = req.z;
