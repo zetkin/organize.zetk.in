@@ -1,7 +1,9 @@
 import AllFilter from './AllFilter';
 import CallHistoryFilter from './CallHistoryFilter';
+import CallerParticipationFilter from './CallerParticipationFilter';
 import CampaignFilter from './CampaignFilter';
 import MostActiveFilter from './MostActiveFilter';
+import MostActiveCallerFilter from './MostActiveCallerFilter';
 import PersonDataFilter from './PersonDataFilter';
 import PersonFieldFilter from './PersonFieldFilter';
 import PersonTagsFilter from './PersonTagsFilter';
@@ -15,8 +17,10 @@ import UserFilter from './UserFilter';
 const filterComponents = {
     'all': AllFilter,
     'call_history': CallHistoryFilter,
+    'caller_participation': CallerParticipationFilter,
     'campaign_participation': CampaignFilter,
     'most_active': MostActiveFilter,
+    'most_active_caller': MostActiveCallerFilter,
     'person_data': PersonDataFilter,
     'person_field': PersonFieldFilter,
     'person_tags': PersonTagsFilter,

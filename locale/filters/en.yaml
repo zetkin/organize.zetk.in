@@ -3,9 +3,11 @@ dropInstructions: Drop filter here to re-order
 types:
     all: Everyone
     callHistory: Call history
+    callerParticipation: Caller participation
     campaignParticipation: Campaign participation
     joinDate: Join date
     mostActive: Most active campaigners
+    mostActiveCaller: Most active callers
     personData: Personal data
     personField: Custom field
     personTags: Tags

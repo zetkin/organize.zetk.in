@@ -3,8 +3,11 @@ dropInstructions: Släpp filter här för att byta ordning
 types:
     all: Alla i organisationen
     callHistory: Ringhistorik
+    callers: Ringardeltagande
     campaignParticipation: Kampanjdeltagande
     joinDate: Inträdesdatum
+    mostActive: Mest aktiva kampanjdeltagare
+    mostActiveCaller: Mest aktiva ringare
     personData: Personuppgifter
     personTags: Etiketter
     random: Slumpmässigt urval
