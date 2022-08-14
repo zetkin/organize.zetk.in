@@ -1,0 +1,11 @@
+assignment: In which call assignment?
+anyAssignment: Any assignnment
+num_calls:
+    min: Minimum
+    max: Maximum
+    options:
+      any: Any number of times
+      min: At least a certain number of times
+      max: At most a certain number of times
+      between: Between two number of times
+      none: Never called

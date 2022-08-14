@@ -12,7 +12,6 @@ const mapStateToProps = (state, props) => {
     // FIXME: This is a temporary fix until a proper UI filter has been implemented
     const list = state.callAssignments.assignmentList;
     const orgId = state.user.activeMembership.organization.id;
-    list.items = list.items.filter(i => i.data.organization.id == orgId);
 
     return {
         assignmentList: list, 

@@ -324,7 +324,10 @@ export default class AddCallAssignmentPane extends PaneBase {
         else if (this.state.step == 'form') {
             ev.preventDefault();
 
-            let values = this.refs.form.getValues();
+            let values = {
+                expose_target_details: true,
+                ...this.refs.form.getValues(),
+            };
 
             if (this.state.targetType == 'allTarget') {
                 values.target_filters = [{

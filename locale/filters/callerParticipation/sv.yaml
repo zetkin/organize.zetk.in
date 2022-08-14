@@ -1,0 +1,11 @@
+assignment: Vilket uppdrag?
+anyAssignment: Oavsett uppdrag
+num_callers:
+    min: Minst
+    max: Max
+    options:
+      any: Oavsett antal
+      min: Minst ett visst antal gånger
+      between: Mellan två antal gånger
+      max: Max ett visst antal gånger
+      none: Aldrig ringt
