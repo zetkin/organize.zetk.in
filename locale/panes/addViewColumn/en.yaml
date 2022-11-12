@@ -25,6 +25,11 @@ config:
         questionNullOption: (Pick a question)
         survey: Survey
         surveyNullOption: (Pick a survey)
+    surveyOptions:
+        question: Question
+        questionNullOption: (Pick a question)
+        survey: Survey
+        surveyNullOption: (Pick a survey)
     surveySubmitted:
         survey: Survey
         surveyNullOption: (Pick a survey)
@@ -54,6 +59,9 @@ templates:
     survey_response:
         instructions: Print out people's responses to a given survey question.
         title: Survey response
+    survey_options:
+        instructions: Print out people's responses to a given survey question.
+        title: Survey options
     survey_submitted:
         instructions: Print out the date of the most recent submission to a given survey.
         title: Survey submit date
