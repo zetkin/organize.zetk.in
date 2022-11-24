@@ -8,6 +8,7 @@ import BooleanViewCell from './cells/BooleanViewCell';
 import PersonViewCell from './cells/PersonViewCell';
 import PlainTextViewCell from './cells/PlainTextViewCell';
 import SurveyResponseCell from './cells/SurveyResponseCell';
+import SurveyOptionCell from './cells/SurveyOptionCell';
 import SurveySubmittedCell from './cells/SurveySubmittedCell';
 import PersonNotesCell from './cells/PersonNotesCell';
 import GenderViewCell from './cells/GenderViewCell';
@@ -55,6 +56,10 @@ export default connect()(function PersonViewTableRow(props) {
             }
             else if (col.type == 'survey_response') {
                 return <SurveyResponseCell { ...cellProps }
+                    openPane={ props.openPane }/>;
+            }
+            else if (col.type == 'survey_option') {
+                return <SurveyOptionCell { ...cellProps }
                     openPane={ props.openPane }/>;
             }
             else if (col.type == 'survey_submitted') {
