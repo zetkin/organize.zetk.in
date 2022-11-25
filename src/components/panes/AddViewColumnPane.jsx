@@ -95,12 +95,18 @@ export default class AddViewColumnPane extends PaneBase {
                 selected={ this.state.type == 'survey_response' }
                 onChange={ column => this.setState(column) }
                 onSelect={ this.onTypeSelect.bind(this) }/>,
+            <SurveyOptionsColumnTemplate key="survey_options"
+                surveyList={ this.props.surveyList }
+                config={ this.state.config }
+                selected={ this.state.type == 'survey_options' }
+                onChange={ column => this.setState(column) }
+                onSelect={ this.onTypeSelect.bind(this) }/>,
             <SurveySubmittedColumnTemplate key="survey_submitted"
                 surveyList={ this.props.surveyList }
                 config={ this.state.config }
                 selected={ this.state.type == 'survey_submitted' }
                 onChange={ column => this.setState(column) }
-                onSelect={ this.onTypeSelect.bind(this) }/>,
+                onSelect={ this.onTypeSelect.bind(this) }/>, 
             <Msg key="local" tagName="h3" id="panes.addViewColumn.local.h"/>,
             <LocalColumnTemplate key="local_bool" type="local_bool"
                 config={ this.state.config }
@@ -384,11 +390,11 @@ class PersonTagColumnTemplate extends React.Component {
     }
 }
 
-@connect((state, props) => ({
-    surveyList: state.surveys.surveyList,
-    elementsBySurvey: state.surveys.elementsBySurvey,
-}))
-class SurveyResponseColumnTemplate extends React.Component {
+/* 
+ * SurveyResponseColumnTemplate and SurveyOptionsColumnTemplate are essentially the same,
+ * create a common ancestor for them to avoid uncessessary code duplication
+ */
+class AbstractSurveyQuestionColumnTemplate extends React.Component { 
     componentDidUpdate(prevProps) {
         if(this.props.selected) {
             const surveyId = this.props.config.survey_id;
@@ -416,7 +422,7 @@ class SurveyResponseColumnTemplate extends React.Component {
             if (elementList && elementList.items) {
                 const questionOptions = elementList.items.reduce((options, item) => {
                     // Ignore text blocks and non-free-text questions
-                    if (item.data.type == 'question' && item.data.question.response_type == 'text') {
+                    if (item.data.type == 'question' && item.data.question.response_type == this.responseType) {
                         options[item.data.id] = item.data.question.question;
                     }
 
@@ -426,8 +432,8 @@ class SurveyResponseColumnTemplate extends React.Component {
                 if (elementList && elementList.items) {
                     questionSelect = (
                         <SelectInput name="question_id"
-                            labelMsg="panes.addViewColumn.config.surveyResponse.question"
-                            nullOptionMsg="panes.addViewColumn.config.surveyResponse.questionNullOption"
+                            labelMsg={ `${this.labelStem}.question` }
+                            nullOptionMsg={ `${this.labelStem}.questionNullOption` }
                             options={ questionOptions }
                             value={ this.props.config.question_id }
                             onValueChange={ this.onConfigChange.bind(this) }
@@ -441,14 +447,14 @@ class SurveyResponseColumnTemplate extends React.Component {
         }
 
         return (
-            <AssignmentTemplate type="survey_response"
+            <AssignmentTemplate type={ this.type }
                 messagePath="panes.addViewColumn.templates"
                 selected={ this.props.selected }
                 onSelect={ this.props.onSelect }
                 >
                 <SelectInput name="survey_id"
-                    labelMsg="panes.addViewColumn.config.surveyResponse.survey"
-                    nullOptionMsg="panes.addViewColumn.config.surveyResponse.surveyNullOption"
+                    labelMsg={ `${this.labelStem}.survey` }
+                    nullOptionMsg={ `${this.labelStem}.surveyNullOption` }
                     options={ surveyOptions }
                     value={ this.props.config.survey_id }
                     onValueChange={ this.onConfigChange.bind(this) }
@@ -474,6 +480,34 @@ class SurveyResponseColumnTemplate extends React.Component {
         }
 
         this.props.onChange(column);
+    }
+}
+
+@connect((state, props) => ({
+    surveyList: state.surveys.surveyList,
+    elementsBySurvey: state.surveys.elementsBySurvey,
+}))
+class SurveyOptionsColumnTemplate extends AbstractSurveyQuestionColumnTemplate {
+    constructor(props) {
+        super(props);
+
+        this.responseType = 'options';
+        this.labelStem = 'panes.addViewColumn.config.surveyOptions';
+        this.type = 'survey_options';
+    }
+}
+
+@connect((state, props) => ({
+    surveyList: state.surveys.surveyList,
+    elementsBySurvey: state.surveys.elementsBySurvey,
+}))
+class SurveyResponseColumnTemplate extends AbstractSurveyQuestionColumnTemplate {
+    constructor(props) {
+        super(props);
+
+        this.responseType = 'text';
+        this.labelStem = 'panes.addViewColumn.config.surveyResponse';
+        this.type = 'survey_response';
     }
 }
 
