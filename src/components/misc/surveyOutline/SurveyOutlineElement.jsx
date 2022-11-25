@@ -32,7 +32,7 @@ export default class SurveyOutlineElement extends React.Component {
             );
         }
 
-        let typeClassNames  = cx('SurveyOutlineElement-type', element.type );
+        let typeClassNames  = cx('SurveyOutlineElement-type', element.type, element.hidden ? 'hidden' : 'visible' );
 
         return (
             <div className="SurveyOutlineElement"
