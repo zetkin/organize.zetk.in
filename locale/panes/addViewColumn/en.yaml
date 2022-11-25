@@ -32,6 +32,11 @@ config:
         surveyNullOption: (Pick a survey)
         option: Option
         optionNullOption: (Pick an option)
+    surveyOptions:
+        question: Question
+        questionNullOption: (Pick a question)
+        survey: Survey
+        surveyNullOption: (Pick a survey)
     surveySubmitted:
         survey: Survey
         surveyNullOption: (Pick a survey)
@@ -64,6 +69,9 @@ templates:
     survey_option:
         instructions: Indicate in view who has checked a survey option and who hasn't.
         title: Survey option
+    survey_options:
+        instructions: Print out people's responses to a given survey question.
+        title: Survey options
     survey_submitted:
         instructions: Print out the date of the most recent submission to a given survey.
         title: Survey submit date

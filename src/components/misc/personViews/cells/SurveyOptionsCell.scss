@@ -1,0 +1,48 @@
+.SurveyOptionsCell {
+    cursor: pointer;
+    margin: 0 0 0.5em;
+    font-style: italic;
+
+    width: 18rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+
+    .SurveyOption-container {
+        width: 18rem;
+        display: flex;
+
+        &:hover {
+            &:after {
+                @include icon($fa-var-info-circle);
+                color: $c-brand-comp-light;
+                font-size: 0.9em;
+
+                height: auto;
+                line-height: inherit;
+            }
+        }
+    }
+
+    .SurveyOption-option {
+        @include tag
+
+        font-size: 1em;
+        min-width: 6em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .SurveyOption-more {
+        @include tag;
+
+        background-color: darken($c-ui-bg, 20);
+        width: 2.7em;
+        font-size: 1em;
+        white-space: nowrap;
+        border-radius: 2.7em;
+        margin-left: auto;
+    }
+}
