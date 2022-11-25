@@ -1,4 +1,7 @@
 description: Beskrivning/hjälptext
+hiddenOptions:
+  visible: Synlig
+  hidden: Dold
 optionsWidget: Flervalsregler
 optionsWidgetOptions:
     checkbox: Tillåt flera svarsalternativ
@@ -13,3 +16,4 @@ textWidget: Typ av textfält
 textWidgetOptions:
     multi: Flera rader
     single: Enkelrad
+visibility: Synlighet

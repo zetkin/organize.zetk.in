@@ -54,6 +54,11 @@ export default class AddSurveyQuestionPane extends PaneBase {
             question: this.refs.form.getValues(),
         };
 
+        if ('hidden' in data.question) {
+            data.hidden = data.question.hidden == 'hidden';
+            delete data.question.hidden;
+        }
+
         this.props.dispatch(createSurveyElement(surveyId, data,
             this.props.paneData.id));
     }
