@@ -13,6 +13,7 @@ export default class SurveyQuestionForm extends React.Component {
             question: React.PropTypes.string,
             description: React.PropTypes.string,
             response_type: React.PropTypes.string,
+            hidden: React.PropTypes.bool,
         }),
     }
 
@@ -34,6 +35,11 @@ export default class SurveyQuestionForm extends React.Component {
         let typeOptions = {
             'text': 'forms.surveyQuestion.responseTypeOptions.text',
             'options': 'forms.surveyQuestion.responseTypeOptions.options',
+        };
+        
+        let hiddenOptions = {
+            visible: 'forms.surveyQuestion.hiddenOptions.visible',
+            hidden: 'forms.surveyQuestion.hiddenOptions.hidden',
         };
 
         let responseConfig = null;
@@ -86,6 +92,11 @@ export default class SurveyQuestionForm extends React.Component {
                     options={ typeOptions }
                     optionLabelsAreMessages={ true }/>
                 { responseConfig }
+                <SelectInput name="hidden"
+                    labelMsg="forms.surveyQuestion.visibility"
+                    initialValue={ question.hidden ? 'hidden' : 'visible' }
+                    options={ hiddenOptions }
+                    optionLabelsAreMessages={ true }/>
             </Form>
         );
     }

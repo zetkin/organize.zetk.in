@@ -31,6 +31,22 @@
                 @include icon($fa-var-align-left);
             }
         }
+
+        &.visible {
+            &:after {
+                @include icon($fa-var-eye);
+                float: right;
+                margin-right: 2em;
+            }
+        }
+
+        &.hidden {
+            &:after {
+                @include icon($fa-var-eye-slash);
+                float: right;
+                margin-right: 2em;
+            }
+        }
     }
 
     .SurveyOutlineElement-content {

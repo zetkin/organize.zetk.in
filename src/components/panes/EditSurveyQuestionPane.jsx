@@ -55,6 +55,7 @@ export default class EditSurveyQuestionPane extends PaneBase {
         let elementItem = this.props.elementItem;
         if (elementItem && elementItem.data) {
             let question = elementItem.data.question;
+            question.hidden = elementItem.data.hidden;
 
             let optionContainer = null;
             if (question.response_type == 'options' && question.options) {
@@ -142,9 +143,14 @@ export default class EditSurveyQuestionPane extends PaneBase {
 
         let surveyId = this.getParam(0);
         let elementId = this.getParam(1);
-        let data = {
+        const data = {
             question: this.refs.form.getChangedValues(),
         };
+
+        if ('hidden' in data.question) {
+            data.hidden = data.question.hidden == 'hidden';
+            delete data.question.hidden;
+        }
 
         this.props.dispatch(updateSurveyElement(surveyId, elementId, data));
         this.closePane();
