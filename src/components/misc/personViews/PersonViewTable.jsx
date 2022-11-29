@@ -159,13 +159,18 @@ export default class PersonViewTable extends React.Component {
                                 const joinOptions = (joinedString, option) => joinedString + option.text;
                                 const joinedOptions0 = latest0.selected.reduce(joinOptions, '');
                                 const joinedOptions1 = latest1.selected.reduce(joinOptions, '');
-                                x = joinedOptions1.localeCompare(joinedOptions0);
+                                x = joinedOptions0.localeCompare(joinedOptions1);
                             }
                             else if (colType == 'person_notes') {
                                 const joinNotes = (joinedString, option) => joinedString + option.text;
                                 const joinedNotes0 = val0.reduce(joinNotes, '');
                                 const joinedNotes1 = val1.reduce(joinNotes, '');
-                                x = joinedNotes1.localeCompare(joinedNotes0);
+                                x = joinedNotes0.localeCompare(joinedNotes1);
+                            }
+                            else if (colType == 'local_person') {
+                                const name0 = val0 ? val0.first_name + val0.last_name : '';
+                                const name1 = val1 ? val1.first_name + val1.last_name : '';
+                                x = name0.localeCompare(name1);
                             }
                             else if (!val0) {
                                 return val1? 1 : 0;
