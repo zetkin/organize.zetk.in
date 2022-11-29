@@ -140,6 +140,26 @@ export default class PersonViewTable extends React.Component {
                                 // Treat boolean values as integers (1 or 0)
                                 x = +val1 - +val0;
                             }
+                            else if (colType == 'survey_option') {
+                                // Find whether option has been selected in any of the submissions and treat bool as integer
+                                x = +!!val1.find(s => s.selected) - +!!val0.find(s => s.selected);
+                            } else if (colType == 'survey_options') {
+                                // Find latest submissions with any selected options
+                                const findLatest = (latest, submission) => 
+                                    !latest.selected.length || 
+                                        submission.submission_id >= latest.submission_id && 
+                                        submission.selected.length ? submission : latest;
+
+                                const latest0 = val0.reduce(findLatest, { selected: [] });
+                                const latest1 = val1.reduce(findLatest, { selected: [] });
+
+                                // Return -1, 0 or 1 by comparing joined options of latest submissions
+                                // Reducer joins option object texts
+                                const joinOptions = (joinedString, option) => joinedString + option.text;
+                                const joinedOptions0 = latest0.selected.reduce(joinOptions, '');
+                                const joinedOptions1 = latest1.selected.reduce(joinOptions, '');
+                                x = joinedOptions1.localeCompare(joinedOptions0);
+                            }
                             else if (!val0) {
                                 return val1? 1 : 0;
                             }
