@@ -1,4 +1,7 @@
 description: Description/help text
+hiddenOptions:
+  visible: Visible
+  hidden: Hidden
 optionsWidget: Rules for options
 optionsWidgetOptions:
     checkbox: Allow multiple selected options
@@ -13,3 +16,4 @@ textWidget: Text field type
 textWidgetOptions:
     multi: Multiple-line field
     single: Single-line field
+visibility: Visibility

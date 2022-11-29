@@ -5,6 +5,7 @@
 
     .local_bool,
     .person_query,
+    .survey_option,
     .person_tag {
         max-width: 6rem;
         min-width: 6rem;
@@ -32,6 +33,12 @@
     }
 
     .survey_response {
+        width: auto;
+        max-width: 18rem;
+        min-width: 18rem;
+    }
+
+    .survey_options {
         width: auto;
         max-width: 18rem;
         min-width: 18rem;

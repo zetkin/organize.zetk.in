@@ -95,12 +95,24 @@ export default class AddViewColumnPane extends PaneBase {
                 selected={ this.state.type == 'survey_response' }
                 onChange={ column => this.setState(column) }
                 onSelect={ this.onTypeSelect.bind(this) }/>,
+            <SurveyOptionColumnTemplate key="survey_option"
+                surveyList={ this.props.surveyList }
+                config={ this.state.config }
+                selected={ this.state.type == 'survey_option' }
+                onChange={ column => this.setState(column) }
+                onSelect={ this.onTypeSelect.bind(this) }/>,
+            <SurveyOptionsColumnTemplate key="survey_options"
+                surveyList={ this.props.surveyList }
+                config={ this.state.config }
+                selected={ this.state.type == 'survey_options' }
+                onChange={ column => this.setState(column) }
+                onSelect={ this.onTypeSelect.bind(this) }/>,
             <SurveySubmittedColumnTemplate key="survey_submitted"
                 surveyList={ this.props.surveyList }
                 config={ this.state.config }
                 selected={ this.state.type == 'survey_submitted' }
                 onChange={ column => this.setState(column) }
-                onSelect={ this.onTypeSelect.bind(this) }/>,
+                onSelect={ this.onTypeSelect.bind(this) }/>, 
             <Msg key="local" tagName="h3" id="panes.addViewColumn.local.h"/>,
             <LocalColumnTemplate key="local_bool" type="local_bool"
                 config={ this.state.config }
@@ -384,11 +396,11 @@ class PersonTagColumnTemplate extends React.Component {
     }
 }
 
-@connect((state, props) => ({
-    surveyList: state.surveys.surveyList,
-    elementsBySurvey: state.surveys.elementsBySurvey,
-}))
-class SurveyResponseColumnTemplate extends React.Component {
+/* 
+ * SurveyResponseColumnTemplate and SurveyOptionsColumnTemplate are essentially the same,
+ * create a common ancestor for them to avoid uncessessary code duplication
+ */
+class AbstractSurveyQuestionColumnTemplate extends React.Component { 
     componentDidUpdate(prevProps) {
         if(this.props.selected) {
             const surveyId = this.props.config.survey_id;
@@ -412,11 +424,14 @@ class SurveyResponseColumnTemplate extends React.Component {
 
         const surveyId = this.props.config.survey_id;
         if (surveyId) {
-            const elementList = this.props.elementsBySurvey[surveyId];
+            let elementList;
+            if (this.props.elementsBySurvey) {
+                elementList = this.props.elementsBySurvey[surveyId];
+            }
             if (elementList && elementList.items) {
                 const questionOptions = elementList.items.reduce((options, item) => {
                     // Ignore text blocks and non-free-text questions
-                    if (item.data.type == 'question' && item.data.question.response_type == 'text') {
+                    if (item.data.type == 'question' && item.data.question.response_type == this.responseType) {
                         options[item.data.id] = item.data.question.question;
                     }
 
@@ -426,8 +441,8 @@ class SurveyResponseColumnTemplate extends React.Component {
                 if (elementList && elementList.items) {
                     questionSelect = (
                         <SelectInput name="question_id"
-                            labelMsg="panes.addViewColumn.config.surveyResponse.question"
-                            nullOptionMsg="panes.addViewColumn.config.surveyResponse.questionNullOption"
+                            labelMsg={ `${this.labelStem}.question` }
+                            nullOptionMsg={ `${this.labelStem}.questionNullOption` }
                             options={ questionOptions }
                             value={ this.props.config.question_id }
                             onValueChange={ this.onConfigChange.bind(this) }
@@ -441,14 +456,14 @@ class SurveyResponseColumnTemplate extends React.Component {
         }
 
         return (
-            <AssignmentTemplate type="survey_response"
+            <AssignmentTemplate type={ this.type }
                 messagePath="panes.addViewColumn.templates"
                 selected={ this.props.selected }
                 onSelect={ this.props.onSelect }
                 >
                 <SelectInput name="survey_id"
-                    labelMsg="panes.addViewColumn.config.surveyResponse.survey"
-                    nullOptionMsg="panes.addViewColumn.config.surveyResponse.surveyNullOption"
+                    labelMsg={ `${this.labelStem}.survey` }
+                    nullOptionMsg={ `${this.labelStem}.surveyNullOption` }
                     options={ surveyOptions }
                     value={ this.props.config.survey_id }
                     onValueChange={ this.onConfigChange.bind(this) }
@@ -474,6 +489,154 @@ class SurveyResponseColumnTemplate extends React.Component {
         }
 
         this.props.onChange(column);
+    }
+}
+
+@connect((state, props) => ({
+    surveyList: state.surveys.surveyList,
+    elementsBySurvey: state.surveys.elementsBySurvey,
+}))
+class SurveyOptionColumnTemplate extends React.Component { 
+    componentDidUpdate(prevProps) {
+        if(this.props.selected) {
+            const surveyId = this.props.config.survey_id;
+            if (surveyId != prevProps.config.survey_id && surveyId != null) {
+                this.props.dispatch(retrieveSurvey(surveyId));
+            }
+        }
+    }
+
+    render() {
+        let surveyOptions = [];
+
+        if (this.props.surveyList && this.props.surveyList.items) {
+            surveyOptions = this.props.surveyList.items.reduce((options, item) => {
+                options[item.data.id] = item.data.title;
+                return options;
+            }, {});
+        }
+
+        let questionSelect = null;
+        let optionSelect = null;
+
+        const surveyId = this.props.config.survey_id;
+        if (surveyId) {
+            const elementList = this.props.elementsBySurvey[surveyId];
+            if (elementList && elementList.items) {
+                const questionOptions = elementList.items.reduce((options, item) => {
+                    // Ignore text blocks and non-free-text questions
+                    if (item.data.type == 'question' && item.data.question.response_type == 'options') {
+                        options[item.data.id] = item.data.question.question;
+                    }
+
+                    return options;
+                }, {});
+
+                if (elementList && elementList.items) {
+                    questionSelect = (
+                        <SelectInput name="question_id"
+                            labelMsg="panes.addViewColumn.config.surveyOption.question"
+                            nullOptionMsg="panes.addViewColumn.config.surveyOption.questionNullOption"
+                            options={ questionOptions }
+                            value={ this.props.config.question_id }
+                            onValueChange={ this.onConfigChange.bind(this) }
+                            />
+                    );
+
+                    if (this.props.config.question_id) {
+                        const questionList = this.props.elementsBySurvey[this.props.config.survey_id];
+                        const selectedQuestionItem = questionList.items
+                            .find(item => item.data.id == this.props.config.question_id);
+                        const optionOptions = selectedQuestionItem.data.question.options.reduce((options, opt) => {
+                            options[opt.id] = opt.text;
+                            return options;
+                        }, {});
+                        optionSelect = (
+                         <SelectInput name="option_id"
+                            labelMsg="panes.addViewColumn.config.surveyOption.option"
+                            nullOptionMsg="panes.addViewColumn.config.surveyOption.optionNullOption"
+                            options={ optionOptions }
+                            value={ this.props.config.option_id }
+                            onValueChange={ this.onConfigChange.bind(this) }
+                            />   
+                        );
+                    }
+                }
+            }
+            else {
+                questionSelect = <LoadingIndicator/>;
+            }
+        }
+
+        return (
+            <AssignmentTemplate
+                type="survey_option"
+                messagePath="panes.addViewColumn.templates"
+                selected={ this.props.selected }
+                onSelect={ this.props.onSelect }
+                >
+                <SelectInput name="survey_id"
+                    labelMsg="panes.addViewColumn.config.surveyOption.survey"
+                    nullOptionMsg="panes.addViewColumn.config.surveyOption.surveyNullOption"
+                    options={ surveyOptions }
+                    value={ this.props.config.survey_id }
+                    onValueChange={ this.onConfigChange.bind(this) }
+                    />
+                { questionSelect }
+                { optionSelect }
+            </AssignmentTemplate>
+        );
+    }
+
+    onConfigChange(attr, val) {
+        const column = {
+            config: Object.assign({}, this.props.config, {
+                [attr]: val,
+            })
+        };
+
+        if (column.config.survey_id && column.config.question_id) {
+            const questionList = this.props.elementsBySurvey[column.config.survey_id];
+
+            if (column.config.option_id) {
+                const selectedQuestionItem = questionList.items
+                    .find(item => item.data.id == column.config.question_id);
+                const selectedOption = selectedQuestionItem.data.question.options
+                    .find((option) => option.id == column.config.option_id);
+
+                column.title = selectedOption.text;
+            } 
+        }
+
+        this.props.onChange(column);
+    }
+}
+
+@connect((state, props) => ({
+    surveyList: state.surveys.surveyList,
+    elementsBySurvey: state.surveys.elementsBySurvey,
+}))
+class SurveyOptionsColumnTemplate extends AbstractSurveyQuestionColumnTemplate {
+    constructor(props) {
+        super(props);
+
+        this.responseType = 'options';
+        this.labelStem = 'panes.addViewColumn.config.surveyOptions';
+        this.type = 'survey_options';
+    }
+}
+
+@connect((state, props) => ({
+    surveyList: state.surveys.surveyList,
+    elementsBySurvey: state.surveys.elementsBySurvey,
+}))
+class SurveyResponseColumnTemplate extends AbstractSurveyQuestionColumnTemplate {
+    constructor(props) {
+        super(props);
+
+        this.responseType = 'text';
+        this.labelStem = 'panes.addViewColumn.config.surveyResponse';
+        this.type = 'survey_response';
     }
 }
 
