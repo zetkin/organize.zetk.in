@@ -130,6 +130,9 @@ export default class PersonViewTable extends React.Component {
                     if (this.state.sortIndex !== null) {
                         const colType = colList.items[this.state.sortIndex].data.type;
 
+                        // Reducer function for joining objects with text attributes
+                        const joinText = (joined, object) => joined + object.text;
+
                         visibleRows = visibleRows.concat().sort((row0, row1) => {
                             let val0 = row0.data.content[this.state.sortIndex];
                             let val1 = row1.data.content[this.state.sortIndex] || null;
@@ -139,6 +142,47 @@ export default class PersonViewTable extends React.Component {
                             if (colType == 'local_bool' || colType == 'person_tag' || colType == 'person_query') {
                                 // Treat boolean values as integers (1 or 0)
                                 x = +val1 - +val0;
+                            }
+                            else if (colType == 'survey_option') {
+                                // Find whether option has been selected in any of the submissions and treat bool as integer
+                                x = +!!val1.find(s => s.selected) - +!!val0.find(s => s.selected);
+                            }
+                            else if (colType == 'survey_options') {
+                                // Find latest submissions with any selected options
+                                const findLatest = (latest, submission) => 
+                                    !latest.selected.length || 
+                                        submission.submission_id >= latest.submission_id && 
+                                        submission.selected.length ? submission : latest;
+
+                                const latest0 = val0.reduce(findLatest, { selected: [] });
+                                const latest1 = val1.reduce(findLatest, { selected: [] });
+
+                                // Return -1, 0 or 1 by comparing joined options of latest submissions
+                                // Reducer joins option object texts
+                                const joinedOptions0 = latest0.selected.reduce(joinText, '');
+                                const joinedOptions1 = latest1.selected.reduce(joinText, '');
+                                x = joinedOptions0.localeCompare(joinedOptions1);
+                            }
+                            else if (colType == 'person_notes') {
+                                const joinedNotes0 = val0.reduce(joinText, '');
+                                const joinedNotes1 = val1.reduce(joinText, '');
+                                x = joinedNotes0.localeCompare(joinedNotes1);
+                            }
+                            else if (colType == 'local_person') {
+                                const name0 = val0 ? val0.first_name + val0.last_name : '';
+                                const name1 = val1 ? val1.first_name + val1.last_name : '';
+                                x = name0.localeCompare(name1);
+                            }
+                            else if (colType == 'survey_response') {
+                                const joinedResponses0 = val0.reduce(joinText, '');
+                                const joinedResponses1 = val1.reduce(joinText, '');
+                                x = joinedResponses0.localeCompare(joinedResponses1);
+                            }
+                            else if (colType == 'survey_submitted') {
+                                const getLatest = (latest, sub) => latest ? (new Date(sub.submitted) > new Date(latest.submitted) ? sub : latest) : sub;
+                                const latest0 = val0.reduce(getLatest, { submitted: 0 });
+                                const latest1 = val1.reduce(getLatest, { submitted: 0 });
+                                x = new Date(latest1.submitted) < new Date(latest0.submitted) ? 1 : -1;
                             }
                             else if (!val0) {
                                 return val1? 1 : 0;
