@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import cx from 'classnames';
 
 import AlertMessages from './misc/AlertMessages';
-import GoogleAnalytics from './misc/GoogleAnalytics';
 import Header from './header/Header';
 import Dashboard from './dashboard/Dashboard';
 import NotFoundPage from './NotFoundPage';
@@ -90,12 +89,6 @@ export default class App extends React.Component {
 
         const title = titles.concat().reverse().join(' | ');
 
-        const gaMeasurementId = process.env.GA_MEASUREMENT_ID;
-        const gaElements = gaMeasurementId? [
-            <script key="script" async src={ `https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}` }></script>,
-            <GoogleAnalytics key="ga" measurementId={ gaMeasurementId }/>
-        ] : null;
-
         return (
             <html>
                 <head>
@@ -110,7 +103,6 @@ export default class App extends React.Component {
                           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCih1zeZELzFJxP2SFkNJVDLs2ZCT_y3gY&libraries=visualization,geometry"/>
                     <link rel="icon" type="image/png"
                         href="/static/images/favicon.png"/>
-                    { gaElements }
                 </head>
                 <body>
                     <div className={appClasses}>
