@@ -14,6 +14,7 @@ import KeyboardShortcuts from './KeyboardShortcuts';
 import { clearSearch } from '../actions/search';
 
 import Section from './sections/Section';
+import CleanStateJson from '../common/misc/CleanStateJson';
 
 
 @connect(state => state)
@@ -120,9 +121,7 @@ export default class App extends React.Component {
                         <KeyboardShortcuts/>
                         <AlertMessages/>
                     </div>
-                    <script type="text/json"
-                        id="App-initialState"
-                        dangerouslySetInnerHTML={{ __html: stateJson }}/>
+                    <CleanStateJson state={this.props.initialState}/>
                 </body>
             </html>
         );

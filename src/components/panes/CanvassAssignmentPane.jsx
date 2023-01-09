@@ -17,6 +17,7 @@ import {
     retrieveCanvassAssignmentRoutes,
     updateCanvassAssignment,
 } from '../../actions/canvassAssignment';
+import CleanHtml from '../../common/misc/CleanHtml';
 
 
 const mapStateToProps = (state, props) => {
@@ -91,7 +92,7 @@ export default class CanvassAssignmentPane extends PaneBase {
                     className="CanvassAssignmentPane-instructions">
                     <Msg tagName="h3"
                         id="panes.canvassAssignment.instructions.h"/>
-                    <div dangerouslySetInnerHTML={{ __html: instructions }}/>
+                    <CleanHtml component="div" dirtyHtml={ instructions }/>
                     <Link msgId="panes.canvassAssignment.instructions.editLink"
                         onClick={ this.onClickEditInstructions.bind(this) }/>
                 </div>,
