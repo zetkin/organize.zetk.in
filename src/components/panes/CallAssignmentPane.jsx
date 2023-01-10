@@ -19,6 +19,7 @@ import {
     retrieveCallAssignmentStats,
 } from '../../actions/callAssignment';
 import InfoList from '../misc/InfoList';
+import CleanHtml from '../../common/misc/CleanHtml';
 
 
 const mapStateToProps = (state, props) => {
@@ -166,7 +167,7 @@ export default class CallAssignmentPane extends PaneBase {
                     className="CallAssignmentPane-instructions">
                     <Msg tagName="h3"
                         id="panes.callAssignment.instructions.h"/>
-                    <div dangerouslySetInnerHTML={{ __html: instructions }}/>
+                    <CleanHtml component="div" dirtyHtml={instructions}/>
                     <Link msgId="panes.callAssignment.instructions.editLink"
                         onClick={ this.onClickEditInstructions.bind(this) }/>
                 </div>,

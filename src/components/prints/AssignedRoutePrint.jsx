@@ -8,6 +8,8 @@ import Avatar from '../misc/Avatar';
 import Route from '../misc/elements/Route';
 import AddressMap from '../sections/canvass/elements/AddressMap';
 import InfoList from '../misc/InfoList';
+import CleanStateJson from '../../common/misc/CleanStateJson';
+import CleanHtml from '../../common/misc/CleanHtml';
 
 
 const mapStateToProps = state => {
@@ -34,7 +36,6 @@ export default class AssignedRoutePrint extends React.Component {
     }
 
     render() {
-        let stateJson = JSON.stringify(this.props.initialState);
         let content = null;
 
         if (this.state.inBrowser) {
@@ -97,9 +98,7 @@ export default class AssignedRoutePrint extends React.Component {
                 </head>
                 <body data-component="AssignedRoutePrint" className="AssignedRoutePrint">
                     { content }
-                    <script type="text/json"
-                        id="App-initialState"
-                        dangerouslySetInnerHTML={{ __html: stateJson }}/>
+                    <CleanStateJson state={this.props.initialState}/>
                 </body>
             </html>
         );
@@ -210,8 +209,9 @@ function InstructionsPage(props) {
                 { props.assignment.description }
             </div>
 
-            <div className="AssignedRoutePrint-instructions"
-                dangerouslySetInnerHTML={{ __html: instructions }}
+            <CleanHtml component="div"
+                className="AssignedRoutePrint-instructions"
+                dirtyHtml={ instructions }
                 />
 
             <div className="AssignedRoutePrint-routeDescription">

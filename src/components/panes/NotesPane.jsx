@@ -8,6 +8,7 @@ import PaneBase from './PaneBase';
 import { getListItemById } from '../../utils/store';
 import { retrievePerson } from '../../actions/person';
 import { createNote, retrieveNotes } from '../../actions/note';
+import CleanHtml from '../../common/misc/CleanHtml';
 
 let RichTextEditor = null;
 if (typeof window != 'undefined') {
@@ -118,9 +119,11 @@ export default class NotesPane extends PaneBase {
                                             time: <FormattedTime value={ noteItem.data.created }/>,
                                         }}/>
                                 </div>
-                                <div className="NotesPane-noteContent"
-                                    dangerouslySetInnerHTML={{ __html: noteItem.data.text }}
-                                    />
+                                <CleanHtml
+                                    component="div"
+                                    className="NotesPane-noteContent"
+                                    dirtyHtml={ noteItem.data.text }
+                                />
                             </div>
                         );
                     });
