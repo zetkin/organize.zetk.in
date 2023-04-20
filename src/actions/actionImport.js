@@ -101,7 +101,7 @@ export function executeActionImport(campaignId) {
                         num_participants_required: row.parsed.participants,
                         info_text: row.parsed.info,
                         title: row.parsed.title,
-                        published: yesterday,
+                        published: yesterday.toISOString(),
                     };
 
                     const actionPromise = z.resource('orgs', orgId,

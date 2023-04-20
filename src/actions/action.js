@@ -105,8 +105,7 @@ export function createAction(campaignId, data) {
         let yesterday = new Date();
         yesterday.setHours(0,0,0,0);
         yesterday.setDate(yesterday.getDate()-1);
-
-        data.published = yesterday;
+        data.published = yesterday.toISOString();
         dispatch({
             type: types.CREATE_ACTION,
             meta: { campaignId },
