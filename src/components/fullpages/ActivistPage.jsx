@@ -1,7 +1,5 @@
 import React from 'react';
 
-import GoogleAnalytics from '../misc/GoogleAnalytics';
-
 
 export default class ActivistPage extends React.Component {
     render() {
@@ -19,7 +17,6 @@ export default class ActivistPage extends React.Component {
                     <p>
                         <a href="/logout">Sign out and log in as organizer</a>
                     </p>
-                    <GoogleAnalytics />
                 </body>
             </html>
         );

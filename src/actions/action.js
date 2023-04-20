@@ -100,6 +100,13 @@ export function updateAction(id, data) {
 export function createAction(campaignId, data) {
     return ({ dispatch, getState, z }) => {
         let orgId = getState().org.activeId;
+
+        // This is a fix to make sure all created actions are set to be published yesterday
+        let yesterday = new Date();
+        yesterday.setHours(0,0,0,0);
+        yesterday.setDate(yesterday.getDate()-1);
+
+        data.published = yesterday;
         dispatch({
             type: types.CREATE_ACTION,
             meta: { campaignId },

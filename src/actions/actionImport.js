@@ -88,6 +88,11 @@ export function executeActionImport(campaignId) {
                         .addHours(row.parsed.endTime[0])
                         .addMinutes(row.parsed.endTime[1]);
 
+                    // This is a fix to make sure all created actions are set to be published yesterday
+                    let yesterday = new Date();
+                    yesterday.setHours(0,0,0,0);
+                    yesterday.setDate(yesterday.getDate()-1);
+
                     const data = {
                         start_time: startDateTime.toISOString(),
                         end_time: endDateTime.toISOString(),
@@ -96,6 +101,7 @@ export function executeActionImport(campaignId) {
                         num_participants_required: row.parsed.participants,
                         info_text: row.parsed.info,
                         title: row.parsed.title,
+                        published: yesterday,
                     };
 
                     const actionPromise = z.resource('orgs', orgId,
