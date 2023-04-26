@@ -139,9 +139,12 @@ export default class PersonViewTable extends React.Component {
 
                             let x = 0;
 
-                            if (colType == 'local_bool' || colType == 'person_tag' || colType == 'person_query') {
+                            if (colType == 'local_bool' || colType == 'person_query') {
                                 // Treat boolean values as integers (1 or 0)
                                 x = +val1 - +val0;
+                            }
+                            else if (colType == 'person_tag') {
+                                x = !!val0 < !!val1 ? 1 : -1;
                             }
                             else if (colType == 'survey_option') {
                                 // Find whether option has been selected in any of the submissions and treat bool as integer
@@ -162,7 +165,7 @@ export default class PersonViewTable extends React.Component {
                                 const joinedOptions0 = latest0.selected.reduce(joinText, '');
                                 const joinedOptions1 = latest1.selected.reduce(joinText, '');
                                 x = joinedOptions0.localeCompare(joinedOptions1);
-                            }
+                            } 
                             else if (colType == 'person_notes') {
                                 const joinedNotes0 = val0.reduce(joinText, '');
                                 const joinedNotes1 = val1.reduce(joinText, '');
