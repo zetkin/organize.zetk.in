@@ -7,7 +7,7 @@ continueImportButton: Fortsätt import
 countryTooLong: Land längre än 60 tecken på rad { rows }.
 duplicatesInfo: Du har valt dublettkolumner
 emailInvalid: Ogiltig e-postadress på rad { rows }.
-externalTooLong: Externt ID längre än 12 tecken på rad { rows }.
+externalTooLong: Externt ID längre än 96 tecken på rad { rows }.
 first_nameTooLong: Förnamn längre än 50 tecken på rad { rows }.
 genderInvalid: Ogilitigt kön på rad { rows }. Gitliga värden är m för män, f för kvinnor, o för annat, och blank eller _ för okänd.
 inconsistentRow: Antalet rader i en kolumn stämmer inte överrens med antalet konfigurerade kolumner.
