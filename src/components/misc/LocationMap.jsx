@@ -1,37 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import { getLocationAverage } from '../../utils/location';
 
 
 export default class LocationMap extends React.Component {
     static propTypes = {
+        pendingLocation: React.PropTypes.object,
         locations: React.PropTypes.array,
+        locationsForBounds: React.PropTypes.array,
         style: React.PropTypes.object,
         zoom: React.PropTypes.number,
+        onLocationChange: React.PropTypes.func,
     };
 
     componentDidMount() {
-        var ctrDOMNode = ReactDOM.findDOMNode(this.refs.mapContainer);
+        let center;
+        if (this.props.pendingLocation) {
+            center = [this.props.pendingLocation.lat, this.props.pendingLocation.lng];
+        }
         var mapOptions = {
-            center: getLocationAverage({}),
+            center: center,
             disableDefaultUI: true,
-            zoomControl: true,
+            zoomControl: false, // We're setting zoom control with custom location later
             zoom: this.props.zoom || 4,
         };
 
-        // TODO: create nicer looking svg path
-        this.iconSettings =  {
-               path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
-               fillColor: '#ee323e',
-               fillOpacity: 1,
-               strokeColor: '#ac0e18',
-        }
-
         this.centerSetFromData = false;
-        this.map = new google.maps.Map(ctrDOMNode, mapOptions);
+        this.map = L.map('mapContainer', mapOptions).addLayer(L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'));
+        L.control.zoom({
+            position: 'topright'
+        }).addTo(this.map);
         if (this.props.onMapClick) {
-            google.maps.event.addListener(this.map, 'click', this.onMapClick.bind(this));
+            this.map.on('click', this.onMapClick);
         }
         this.markers = [];
 
@@ -48,28 +48,25 @@ export default class LocationMap extends React.Component {
         var marker;
         // Remove old markers
         while (marker = this.markers.pop()) {
-            marker.setMap(null);
-            google.maps.event.clearInstanceListeners(marker);
+            this.map.removeLayer(marker);
         }
     }
 
     render() {
         return (
             <div className="LocationMap"
-                ref="mapContainer" style={ this.props.style }/>
+                id="mapContainer" style={ this.props.style }/>
         )
     }
 
     resetMarkers() {
         var i;
         var marker;
-        var bounds;
 
         var locations = this.props.locations;
         // Remove old markers
         while (marker = this.markers.pop()) {
-            marker.setMap(null);
-            google.maps.event.clearInstanceListeners(marker);
+            this.map.removeLayer(marker);
         }
 
         var pendingId;
@@ -77,18 +74,16 @@ export default class LocationMap extends React.Component {
             this.createMarker({data: this.props.pendingLocation}, true);
             pendingId = this.props.pendingLocation.id;
 
-            this.map.setZoom(this.props.zoom || 16);
-            this.map.setCenter(new google.maps.LatLng(
-                this.props.pendingLocation.lat,
-                this.props.pendingLocation.lng));
-
+            const loc = L.LatLng(this.props.pendingLocation.lat, this.props.pendingLocation.lng);
+            const zoom = this.props.zoom || 16;
+            //this.map.setView(loc, zoom);
             this.centerSetFromData = true;
         }
 
         if (locations) {
             for (i = 0; i < locations.length; i++) {
                 if (pendingId !== locations[i].data.id) {
-                    this.createMarker(locations[i], false, bounds);
+                    this.createMarker(locations[i], false);
                 }
             }
         }
@@ -106,71 +101,48 @@ export default class LocationMap extends React.Component {
 
     positionMap(locations) {
         var i;
-        var bounds = new google.maps.LatLngBounds();
+        var bounds = [];
         // create Bounds and  loop through locations and 
         for (i = 0; i < locations.length; i++) {
-            var latLng = new google.maps.LatLng(locations[i].data.lat, locations[i].data.lng);
-            bounds.extend(latLng);
+            var latLng = [locations[i].data.lat, locations[i].data.lng];
+            bounds.push(latLng)
         }
-        this.map.setCenter(bounds.getCenter());
-        this.map.fitBounds(bounds);
+        const latLngBounds = L.latLngBounds(bounds);
+        this.map.fitBounds(latLngBounds);
 
         if (this.map.getZoom() > 15) {
             this.map.setZoom(15);
         }
     }
 
-    createMarker(loc, editable, bounds) {
-        var marker;
-        var latLng = new google.maps.LatLng(loc.data.lat, loc.data.lng);
+    createMarker(loc, editable) {
+        const marker = L.marker([loc.data.lat, loc.data.lng], { 
+            title: loc.data.title, 
+            draggable: editable,
+            autoPan: editable}
+        ).addTo(this.map);
 
-        marker = new google.maps.Marker({
-            position: latLng,
-            map: this.map,
-            draggable: editable, 
-            title: loc.data.title,
-        });
-
-        // if editable only drag the marker (all info already vibile)
+        // If editable only drag the marker (all info already vibile)
         if (editable) {
-            var iconSettings = this.iconSettings;
-            marker.setIcon(iconSettings);
-            google.maps.event.addListener(marker, 'dragend', 
-                    this.onMarkerDragEnd.bind(this, marker, loc));
+            marker.on('move', (event) => {
+                const pos = event.latlng;
+                if (this.props.onLocationChange) {
+                    this.props.onLocationChange({
+                        id: this.props.pendingLocation.id,
+                        lat: pos.lat,
+                        lng: pos.lng,
+                    });
+                }
+            })
         }
         else {
-            google.maps.event.addListener(marker, 'click',
-            this.onMarkerClick.bind(this, marker, loc));
+            marker.on('click', () => {
+                if (this.props.onLocationSelect) {
+                    this.props.onLocationSelect(loc);
+                }
+            });
         }
 
         this.markers.push(marker);
-    }
-
-    onMarkerDragEnd(marker, locationData) {
-        var pos = marker.getPosition();
-        if (this.props.onLocationChange) {
-            this.props.onLocationChange({
-                id: this.props.pendingLocation.id,
-                lat: pos.lat(),
-                lng: pos.lng()
-            });
-        }
-    }
-
-    onMarkerClick(marker, locationData) {
-        if (this.props.onLocationSelect) {
-            this.props.onLocationSelect(locationData);
-        }
-    }
-    
-    onMapClick(ev) {
-        var position = ev.latLng;
-        if (this.props.onMapClick) {
-            this.props.onMapClick({
-                lat: position.lat(),
-                lng: position.lng()
-            });
-        }
-
     }
 }

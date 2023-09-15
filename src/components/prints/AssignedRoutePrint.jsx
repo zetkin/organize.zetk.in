@@ -91,10 +91,11 @@ export default class AssignedRoutePrint extends React.Component {
                     <script src="/static/main.js"></script>
                     <link rel="stylesheet" type="text/css"
                         href="/static/css/style.css"/>
-                    <script type="text/javascript"
-                          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCih1zeZELzFJxP2SFkNJVDLs2ZCT_y3gY&libraries=visualization,geometry"/>
                     <link rel="icon" type="image/png"
                         href="/static/images/favicon.png"/>
+                    <link rel="stylesheet"
+                        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+                    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
                 </head>
                 <body data-component="AssignedRoutePrint" className="AssignedRoutePrint">
                     { content }
