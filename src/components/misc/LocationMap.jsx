@@ -13,6 +13,11 @@ export default class LocationMap extends React.Component {
         onLocationChange: React.PropTypes.func,
     };
 
+    constructor(props) {
+        super(props);
+        this.mapContainerId = (Math.random() + 1).toString(36).substring(7);
+    }
+
     componentDidMount() {
         let center;
         if (this.props.pendingLocation) {
@@ -26,7 +31,7 @@ export default class LocationMap extends React.Component {
         };
 
         this.centerSetFromData = false;
-        this.map = L.map('mapContainer', mapOptions).addLayer(L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'));
+        this.map = L.map(this.mapContainerId, mapOptions).addLayer(L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'));
         L.control.zoom({
             position: 'topright'
         }).addTo(this.map);
@@ -55,7 +60,7 @@ export default class LocationMap extends React.Component {
     render() {
         return (
             <div className="LocationMap"
-                id="mapContainer" style={ this.props.style }/>
+                id={this.mapContainerId} style={ this.props.style }/>
         )
     }
 
