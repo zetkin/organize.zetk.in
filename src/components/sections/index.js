@@ -6,7 +6,6 @@ import AllCanvassAssignmentsPane from './canvass/AllCanvassAssignmentsPane';
 import AllRoutesPane from './canvass/AllRoutesPane';
 import AllVisitsPane from './canvass/AllVisitsPane';
 import CallLogPane from './dialog/CallLogPane';
-import CampaignPlaybackPane from './campaign/CampaignPlaybackPane';
 import GroupListPane from './people/GroupListPane';
 import InvitePane from './people/InvitePane';
 import JoiningPane from './people/JoiningPane';
@@ -44,8 +43,6 @@ export const SECTIONS = {
                 startPane: AllActionsPane },
             { path: 'distribution',
                 startPane: ActionDistributionPane },
-            { path: 'playback',
-                startPane: CampaignPlaybackPane },
             { path: 'campaigns',
                 startPane: AllCampaignsPane }
         ],
