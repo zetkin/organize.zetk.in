@@ -37,7 +37,6 @@ RUN npm install
 ## Install the app itself
 
 COPY . ./
-RUN npm install --unsafe-perm
 
 # Init
 
