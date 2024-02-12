@@ -22,7 +22,7 @@ export default class AddressMap extends React.Component {
 
         return (
             <div className={ classes }>
-                <div className="AddressMap-map" ref="map"/>
+                <div className="AddressMap-map" id="mapContainer"/>
             </div>
         );
     }
@@ -31,41 +31,48 @@ export default class AddressMap extends React.Component {
         var mapOptions = {
             clickableIcons: false,
             disableDefaultUI: true,
-            zoomControl: true,
+            zoomControl: false,
             zoom: 13,
+            boxZoom: false,
         };
 
-        this.defaultIcon = {
-            url: '/static/images/address-marker-black.png',
-            scaledSize: { width: MARKER_SIZE, height: MARKER_SIZE },
-            anchor: { x: MARKER_OFFS, y: MARKER_OFFS },
-        };
+        this.defaultIcon = L.icon({
+            iconUrl: '/static/images/address-marker-black.png',
+            iconSize: [ MARKER_SIZE, MARKER_SIZE ],
+            iconAnchor: [ MARKER_OFFS,  MARKER_OFFS ],
+        });
 
-        this.activeIcon = {
-            url: '/static/images/address-marker-red.png',
-            scaledSize: { width: MARKER_SIZE, height: MARKER_SIZE },
-            anchor: { x: MARKER_OFFS, y: MARKER_OFFS },
-        };
+        this.activeIcon = L.icon({
+            iconUrl: '/static/images/address-marker-red.png',
+            iconSize: [ MARKER_SIZE, MARKER_SIZE ],
+            iconAnchor: [ MARKER_OFFS, MARKER_OFFS ],
+        });
 
-        this.selectedIcon = {
-            url: '/static/images/address-marker-blue.png',
-            scaledSize: { width: MARKER_SIZE, height: MARKER_SIZE },
-            anchor: { x: MARKER_OFFS, y: MARKER_OFFS },
-        };
+        this.selectedIcon = L.icon({
+            iconUrl: '/static/images/address-marker-blue.png',
+            scaledSize: [ MARKER_SIZE, MARKER_SIZE ],
+            anchor: [ MARKER_OFFS, MARKER_OFFS ],
+        });
 
         this.centerSetFromData = false;
-        this.map = new google.maps.Map(this.refs.map, mapOptions);
+        this.map = L.map('mapContainer', mapOptions).addLayer(L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'));
+        L.control.zoom({
+            position: 'bottomright'
+        }).addTo(this.map);
 
         this.markers = [];
         this.resetMarkers();
 
         if (this.markers.length) {
-            let bounds = new google.maps.LatLngBounds();
-            this.markers.forEach(m => bounds.extend(m.marker.getPosition()));
+            let bounds = [];
+            this.markers.forEach(m => {
+                const loc = m.marker.getLatLng()
+                bounds.push([loc.lat, loc.lng]);
+            });
             this.map.fitBounds(bounds);
         }
 
-        this.map.addListener('mousedown', this.onMapMouseDown.bind(this));
+        this.map.on('mousedown', this.onMapMouseDown.bind(this));
 
         window.addEventListener('keydown', this.onKeyDown = this.onKeyDown.bind(this));
         window.addEventListener('keyup', this.onKeyUp = this.onKeyUp.bind(this));
@@ -102,8 +109,8 @@ export default class AddressMap extends React.Component {
 
         // Remove existing markers
         while (marker = this.markers.pop()) {
-            marker.marker.setMap(null);
-            google.maps.event.clearInstanceListeners(marker.marker);
+            marker.marker.off()
+            marker.marker.remove();
         }
 
         if (this.props.addresses) {
@@ -111,22 +118,20 @@ export default class AddressMap extends React.Component {
             let selection = this.props.selection;
 
             addresses.forEach(addr => {
-                let latLng = new google.maps.LatLng(addr.latitude, addr.longitude);
+                let latLng = L.latLng(addr.latitude, addr.longitude);
                 let icon = this.defaultIcon;
 
                 if (selection && selection.selectedIds.indexOf(addr.id) >= 0) {
                     icon = this.selectedIcon;
                 }
 
-                marker = new google.maps.Marker({
-                    icon: icon,
-                    position: latLng,
-                    map: this.map,
+                marker = L.marker(latLng, {
                     title: stringFromAddress(addr),
                     zIndex: 0,
-                });
+                    icon: icon,
+                }).addTo(this.map);
 
-                marker.addListener('click', this.onMarkerClick.bind(this, addr));
+                marker.on('click', this.onMarkerClick.bind(this, addr));
 
                 this.markers.push({
                     marker, addr
@@ -163,9 +168,9 @@ export default class AddressMap extends React.Component {
                 zIndex = 2;
             }
 
-            if (curIcon.url != nextIcon.url) {
+            if (curIcon.options.iconUrl != nextIcon.options.iconUrl) {
                 m.marker.setIcon(nextIcon);
-                m.marker.setZIndex(zIndex);
+                m.marker.setZIndexOffset(zIndex);
             }
         });
     }
@@ -199,30 +204,32 @@ export default class AddressMap extends React.Component {
             }
             else {
                 this.mapDragMode = 'selecting';
-                this.mouseDownPos = ev.latLng.toJSON();
+                this.mouseDownPos = ev.latlng;
 
-                this.map.addListener('mousemove', this.onMapMouseMove.bind(this));
+                L.setOptions(this.map, {
+                    draggable: false,
+                    draggableCursor: 'crosshair',
+                });
+
+                this.map.on('mousemove', this.onMapMouseMove.bind(this));
             }
 
-            this.map.addListener('mouseup', this.onMapMouseUp.bind(this));
+            this.map.on('mouseup', this.onMapMouseUp.bind(this));
         }
     }
 
     onMapMouseMove(ev) {
-        let bounds = new google.maps.LatLngBounds(this.mouseDownPos, this.mouseDownPos);
+        let bounds = L.latLngBounds(this.mouseDownPos, this.mouseDownPos);
 
-        bounds.extend(ev.latLng);
+        bounds.extend(ev.latlng);
         if (this.selectionRect) {
             this.selectionRect.setBounds(bounds);
         }
         else {
-            this.selectionRect = new google.maps.Rectangle({
-                map: this.map,
-                bounds: bounds,
-                clickable: false,
-                fillOpacity: 0.05,
-                strokeWeight: 1,
-            });
+            this.selectionRect = L.rectangle(bounds, {
+                weight: 1,
+                color: 'red',
+            }).addTo(this.map);
         }
     }
 
@@ -232,7 +239,7 @@ export default class AddressMap extends React.Component {
             let bounds = this.selectionRect.getBounds();
             let selection = this.props.selection;
             let markers = this.markers
-                .filter(m => bounds.contains(m.marker.getPosition()));
+                .filter(m => bounds.contains(m.marker.getLatLng()));
 
             if (this.altIsDown) {
                 markers
@@ -252,15 +259,15 @@ export default class AddressMap extends React.Component {
 
             // Clean up
             this.mouseDownPos = null;
-            this.selectionRect.setMap(null);
+            this.selectionRect.remove();
         }
 
         this.mapDragMode = null;
         this.selectionRect = null;
         this.resetDragState();
 
-        google.maps.event.clearListeners(this.map, 'mousemove');
-        google.maps.event.clearListeners(this.map, 'mouseup');
+        this.map.off('mousemove');
+        this.map.off('mouseup');
     }
 
     onKeyDown(ev) {
@@ -290,8 +297,13 @@ export default class AddressMap extends React.Component {
             || (this.mapDragMode == 'panning')
             || !!this.spaceIsDown;
 
-        this.map.setOptions({
-            draggable: draggable,
+        if(draggable) {
+            this.map.dragging.enable();
+        } else {
+            this.map.dragging.disable();
+        }
+
+        L.setOptions(this.map, {
             scrollwheel: true,
             draggableCursor: draggable? 'grab' : 'crosshair',
         });

@@ -46,15 +46,14 @@ export default class RouteFromAddressesPane extends PaneBase {
             return sum + (addr? addr.household_count : 0);
         }, 0);
 
-        let bounds = new google.maps.LatLngBounds();
+        let boundsArray = [];
         selection.selectedIds.forEach(addrId => {
             let addr = this.props.addressById[addrId];
-            bounds.extend(new google.maps.LatLng(
-                addr.latitude, addr.longitude));
+            boundsArray.push([addr.latitude, addr.longitude]);
         });
+        const bounds = L.latLngBounds(boundsArray);
 
-        let dist = google.maps.geometry.spherical.computeDistanceBetween(
-            bounds.getSouthWest(), bounds.getNorthEast());
+        let dist = bounds.getSouthWest().distanceTo(bounds.getNorthEast());
 
         let content = [
             <InfoList

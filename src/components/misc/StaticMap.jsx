@@ -26,18 +26,8 @@ export default class StaticMap extends React.Component {
             let lat = loc.lat;
             let lng = loc.lng;
 
-            const imgSrc = url.format({
-                protocol: 'https',
-                hostname: 'maps.googleapis.com',
-                pathname: '/maps/api/staticmap',
-                query: {
-                    center: (lat + 0.0002) + ',' + lng,
-                    markers: lat + ',' + lng,
-                    zoom: 17,
-                    size: this.props.width + 'x' + this.props.height,
-                    key: 'AIzaSyAHVagqI3RTd0psf57oA6gzKqVyjp8FS8w',
-                }
-            });
+            // Static maps disabled because no simple reliable options and this code will soon be discontinued.
+            // For now only show the coordinates.
 
             // Convert lat/lng to degrees, minutes and seconds, which is more
             // readable than the decimal value with tons of decimals.
@@ -47,10 +37,6 @@ export default class StaticMap extends React.Component {
             let lngStr = lngDMS.deg.toString()
                 .concat('° ', lngDMS.min, '\' ', lngDMS.sec, '" ', lngDMS.dir);
 
-            map = (
-                <img src={ imgSrc }/>
-            );
-
             coordinates = (
                 <div className="StaticMap-coordinates">
                     <span className="StaticMap-lat">{ latStr }</span>
@@ -59,12 +45,6 @@ export default class StaticMap extends React.Component {
             );
         }
         else {
-            map = (
-                 <div className="StaticMap-placeholder">
-                    <Msg id="misc.staticMap.setPositionLink"/>
-                </div>
-            );
-
             coordinates = (
                 <div className="StaticMap-coordinates">
                     <Msg id="misc.staticMap.noCoordinates"/>
@@ -75,7 +55,6 @@ export default class StaticMap extends React.Component {
         return (
             <div className="StaticMap"
                 onClick={ this.onClick.bind(this) }>
-                { map }
                 { coordinates }
             </div>
         );
