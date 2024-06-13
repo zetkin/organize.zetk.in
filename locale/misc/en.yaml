@@ -1,3 +1,6 @@
+calendar:
+  noLocation: 'No physical location'
+  noActivity: 'Untitled event'
 callAssignmentTemplates:
     inform:
         desc: We call until we've spoken to everyone once to inform them about…

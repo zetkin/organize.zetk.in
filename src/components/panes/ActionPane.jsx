@@ -71,7 +71,7 @@ export default class ActionPane extends PaneBase {
         if (data.actionItem && data.actionItem.data && !data.actionItem.isPending) {
             let action = data.actionItem.data;
             return this.props.intl.formatMessage({ id: 'panes.action.title' }, {
-                activity: action.title ? action.title : action.activity.title,
+		    activity: action.title ? action.title : action.activity ? action.activity.title : this.props.intl.formatMessage({ id: 'misc.calendar.noActivity' }),
             });
         }
         else {

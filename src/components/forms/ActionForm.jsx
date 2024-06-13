@@ -48,7 +48,7 @@ export default class ActionForm extends React.Component {
                     objects={ campaigns } showEditLink={ true }
                     onCreate={ this.props.onCreateCampaign }
                     onEdit={ this.props.onEditCampaign }
-                    initialValue={ action.campaign.id }/>
+                    initialValue={ action.campaign ? action.campaign.id : null }/>
                 <DateInput labelMsg="forms.action.date" name="date"
                     initialValue={ date }/>
                 <TimeInput labelMsg="forms.action.startTime" name="start_time"
@@ -62,12 +62,12 @@ export default class ActionForm extends React.Component {
                     objects={ locations } showEditLink={ true }
                     onCreate={ this.props.onCreateLocation }
                     onEdit={ this.props.onEditLocation }
-                    initialValue={ action.location.id }/>
+                    initialValue={ action.location ? action.location.id : null }/>
                 <RelSelectInput labelMsg="forms.action.activity" name="activity_id"
                     objects={ activities } showEditLink={ true }
                     onCreate={ this.props.onCreateActivity }
                     onEdit={ this.props.onEditActivity }
-                    initialValue={ action.activity.id }/>
+                    initialValue={ action.activity ? action.activity.id : null }/>
                 <TextInput labelMsg="forms.action.title" name="title"
                     initialValue={ action.title } maxLength={ 300 }/>
                 <TextArea labelMsg="forms.action.info" name="info_text"
