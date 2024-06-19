@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import { DropTarget } from 'react-dnd';
+import { injectIntl } from 'react-intl';
 
 import ParticipantList from './elements/ParticipantList';
 import ContactSlot from './elements/ContactSlot';
@@ -84,6 +85,7 @@ function collectContact(connect, monitor) {
 
 @DropTarget('person', actionTarget, collectParticipant)
 @DropTarget('person', contactTarget, collectContact)
+@injectIntl
 export default class ActionListItem extends React.Component {
     static propTypes = {
         data: React.PropTypes.object.isRequired,
@@ -272,9 +274,9 @@ export default class ActionListItem extends React.Component {
                 </div>
                 <div className="ActionListItem-info">
                     <h3 className="activity">
-                        { action.title ? action.title : action.activity.title }</h3>
+                        { action.title ? action.title : (action.activity ? action.activity.title : this.props.intl.formatMessage({ id: 'misc.calendar.noActivity' })) }</h3>
                     <span className="location">
-                        { action.location.title }</span>
+                        { action.location ? action.location.title : this.props.intl.formatMessage({ id: 'misc.calendar.noLocation' }) }</span>
                 </div>
 
                 { contactSlot }

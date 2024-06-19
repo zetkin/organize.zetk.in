@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { DragSource } from 'react-dnd';
 import cx from 'classnames';
 
@@ -31,6 +32,7 @@ function collect(connect, monitor) {
 }
 
 @DragSource('action', actionSource, collect)
+@injectIntl
 export default class ActionItem extends React.Component {
     render() {
         const action = this.props.action;
@@ -45,11 +47,11 @@ export default class ActionItem extends React.Component {
             <li className={ className }
                 onClick={ this.onClick.bind(this) }>
                 <span className="location">
-                    { action.location.title }</span>
+                    { action.location ? action.location.title : this.props.intl.formatMessage( { id: 'misc.calendar.noLocation' }) }</span>
                 <span className="time">
                     { timeLabel }</span>
                 <span className="activity">
-                    { action.title ? action.title : action.activity.title }</span>
+                    { action.title ? action.title : (action.activity ? action.activity.title : this.props.intl.formatMessage({id: 'misc.calendar.noActivity'})) }</span>
             </li>
         );
     }
